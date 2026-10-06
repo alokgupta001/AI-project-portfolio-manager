@@ -1,0 +1,13 @@
+
+> enterprise-ppm@0.1.0 test:e2e
+> playwright test
+
+
+Running 2 tests using 1 worker
+
+(node:15964) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 [chromium] › tests\browser\foundation.spec.ts:3:5 › web renders the real API database checkpoint and reloads it (1.2s)
+  ok 2 [chromium] › tests\browser\foundation.spec.ts:38:5 › mobile foundation remains readable without horizontal overflow (567ms)
+
+  2 passed (3.2s)

@@ -1,0 +1,48 @@
+{
+  "date": "2026-10-05",
+  "operation": "Sprint 00 source and prompt preservation",
+  "files": [
+    {
+      "original": "C:\\Users\\alokg\\OneDrive\\Documents\\AI-Powered Enterprise PPM.docx",
+      "copy": "docs/source/AI-Powered Enterprise PPM.docx",
+      "sha256": "A7AB89ED7C96C10E54A494E034E7F13F2F4A9D32D34551BA78472E201E6E2C72",
+      "byte_identical": true
+    },
+    {
+      "original": "C:\\Users\\alokg\\.codex\\attachments\\0e95eb37-9f1a-422c-b048-d4c7e37f7a1e\\Pasted text.txt",
+      "copy": "docs/source/Supplementary-Specification.txt",
+      "sha256": "91495E03CFBFF971FCEE5E7A184A512C18C400324C88313A10C4DEA8F6FEDA7D",
+      "byte_identical": true
+    },
+    {
+      "original": "C:\\Users\\alokg\\OneDrive\\Documents\\Codex\\PPM-Prompt-Pack\\00-START-HERE.md",
+      "copy": "docs/prompts/00-START-HERE.md",
+      "sha256": "222AA79D367FB9CED74A5AFD7DFB21A7BF12A8316E15C9E5F462977C14BE0BC1",
+      "byte_identical": true
+    },
+    {
+      "original": "C:\\Users\\alokg\\OneDrive\\Documents\\Codex\\PPM-Prompt-Pack\\01-MASTER-PROMPT.md",
+      "copy": "docs/prompts/01-MASTER-PROMPT.md",
+      "sha256": "ECFEB22C4197DC5B89EF53E0D4993606AFD36509573E28BEE94D83A2B97FD3AF",
+      "byte_identical": true
+    },
+    {
+      "original": "C:\\Users\\alokg\\OneDrive\\Documents\\Codex\\PPM-Prompt-Pack\\02-ORDERED-SPRINT-PROMPTS.md",
+      "copy": "docs/prompts/02-ORDERED-SPRINT-PROMPTS.md",
+      "sha256": "B3710DFF4DFA09B4BD6041F0D98B74E291B13F8660C16F7989ED5FFA5E8C4914",
+      "byte_identical": true
+    },
+    {
+      "original": "C:\\Users\\alokg\\OneDrive\\Documents\\Codex\\PPM-Prompt-Pack\\03-SPRINT-REPORT-TEMPLATE.md",
+      "copy": "docs/prompts/03-SPRINT-REPORT-TEMPLATE.md",
+      "sha256": "813A0F0F4332DD175BDC87952DEBC4AC87CFDC8E2244A40093CB87AE43935894",
+      "byte_identical": true
+    },
+    {
+      "original": "C:\\Users\\alokg\\OneDrive\\Documents\\Codex\\PPM-Prompt-Pack\\04-FOLLOW-UP-HANDOFF-TEMPLATE.md",
+      "copy": "docs/prompts/04-FOLLOW-UP-HANDOFF-TEMPLATE.md",
+      "sha256": "580C89EBCE985BD039425246ADB285DA58E4B8B348C0C2ACE43B4F7EEE72D6A8",
+      "byte_identical": true
+    }
+  ]
+}

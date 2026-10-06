@@ -1,0 +1,17 @@
+# Dedicated browser acceptance project: no local or demo identity data is changed.
+name: enterprise-ppm-identity-test
+services:
+  migrate:
+    environment:
+      PPM_APP_ENV: test
+      PPM_MIGRATION_DATABASE_URL: postgresql+asyncpg://ppm_owner:${PPM_OWNER_PASSWORD}@postgres:5432/ppm_test
+  api:
+    environment:
+      PPM_APP_ENV: test
+      PPM_DATABASE_URL: postgresql+asyncpg://ppm_app:${PPM_APP_PASSWORD}@postgres:5432/ppm_test
+      PPM_REDIS_URL: redis://redis:6379/1
+  worker:
+    environment:
+      PPM_APP_ENV: test
+      PPM_DATABASE_URL: postgresql+asyncpg://ppm_app:${PPM_APP_PASSWORD}@postgres:5432/ppm_test
+      PPM_REDIS_URL: redis://redis:6379/1

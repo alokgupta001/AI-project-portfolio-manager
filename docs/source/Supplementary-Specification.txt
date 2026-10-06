@@ -1,0 +1,70 @@
+Here is a complete, detailed project specification document for your AI-Driven Enterprise Project Portfolio Management (PPM) Platform.
+
+---
+
+# Project Specification: AI-Driven Enterprise Project Portfolio Management (PPM)
+
+## 1. Project Goal
+
+The primary goal of this platform is to eliminate the subjective "watermelon effect" (where projects appear green/on-track on the outside but are red/failing on the inside) in enterprise project tracking. By leveraging a multi-agent AI architecture, the system provides objective, automated, real-time risk assessments, schedule variance predictions, and root-cause analysis, empowering stakeholders to make data-driven decisions before bottlenecks become critical.
+
+## 2. What is Going to be Built
+
+An end-to-end enterprise platform featuring a highly interactive, modern web dashboard for project managers and executives, backed by a robust asynchronous API. The core of the system is an AI orchestrator that continuously ingests project artifacts (status updates, timelines, resource allocation) and deploys specialized AI agents to evaluate financial, operational, and scheduling risks.
+
+## 3. Recommended Tech Stack
+
+* **Frontend:** Next.js (React), Tailwind CSS (styling), Framer Motion (animations), Recharts / Chart.js (for radar and Gantt charts), Zustand (state management).
+* **Backend:** Python (v3.10+), FastAPI (asynchronous API), Uvicorn (ASGI server), Pydantic (data validation).
+* **Database & Migrations:** PostgreSQL (utilizing JSONB for semi-structured AI logs), SQLAlchemy (Async ORM), Alembic (schema migrations).
+* **AI & ML Integration:** LangChain (Multi-Agent framework), OpenAI API / HuggingFace models, Scikit-learn, XGBoost.
+* **Infrastructure & Deployment:** AWS (EC2 / ECS for containerized deployment, RDS for PostgreSQL, S3 for artifact storage), Docker.
+
+---
+
+## 4. System Modules: Requirements & Creative Features
+
+### Module 1: Intelligent User & Tenant Management
+
+* **Functional Requirements:** JWT-based stateless authentication, Role-Based Access Control (RBAC) for Admin, Project Manager, and Viewer roles, and multi-tenant organization isolation.
+* **Non-Functional Requirements:** Secure password hashing (bcrypt), sub-second login latency, scalable tenant data partitioning.
+* **Creative Extra Feature:** **WebAuthn / Passkey Integration.** Allow executives to log in seamlessly using their device's biometrics (Windows Hello / TouchID) for a frictionless, passwordless experience.
+
+### Module 2: The Command Center (Frontend Dashboard)
+
+* **Functional Requirements:** Real-time visibility into all active projects, health scores, timeline variance, and resource utilization.
+* **Non-Functional Requirements:** 60fps rendering for complex charts, fully responsive design, less than 2-second First Contentful Paint (FCP).
+* **Creative Extra Feature:** **Glassmorphism UI & AI Thought Streaming.** The interface will feature a sleek dark mode with frosted glass elements. When the AI is calculating risks, instead of a boring spinner, the UI will use Server-Sent Events (SSE) to stream the AI's "thought process" in real-time (e.g., `[ANALYZING_JIRA_TICKETS]... [CALCULATING_RESOURCE_BURN]... [DETECTED_BOTTLENECK]`).
+
+### Module 3: Multi-Agent AI Risk Engine (The Core)
+
+* **Functional Requirements:** Deploy distinct AI agents (e.g., Financial Agent, Schedule Agent, Sentiment Agent). Each agent analyzes specific data streams and outputs structured risk scores and mitigation strategies.
+* **Non-Functional Requirements:** Strictly asynchronous processing to prevent event-loop blocking. Pydantic schema validation to ensure the AI never returns malformed JSON. Resilient fallback rules if the LLM API times out.
+* **Creative Extra Feature:** **The "Time Machine" Simulator.** An interactive slider on the dashboard that lets managers run "What-If" scenarios. (e.g., *"If I pull two backend developers off Project A and move them to Project B, simulate the new risk scores and delay probabilities for both."*)
+
+### Module 4: Dynamic Reporting & Alerting
+
+* **Functional Requirements:** Generate automated weekly executive summaries. Trigger instant alerts (via Email/Slack) if a project's risk threshold spikes unexpectedly.
+* **Non-Functional Requirements:** 99.9% uptime for the alerting worker queue. Clean HTML email templates.
+* **Creative Extra Feature:** **Daily Executive Podcast (Text-to-Speech).** Instead of just sending a PDF, the system compiles the daily portfolio risks and uses an advanced TTS model to generate a custom 2-minute "Daily Briefing" audio file that executives can listen to on their commute.
+
+---
+
+## 5. Machine Learning & Data Pipeline Details
+
+To build the predictive elements of the platform without relying entirely on expensive API calls to LLMs, custom ML models can be trained and deployed for specific tasks.
+
+### ML Use Cases
+
+1. **Schedule Variance Prediction:** A regression model to predict how many days a project will be delayed based on historical team velocity, bug counts, and scope changes.
+2. **Risk Categorization:** A classifier (Random Forest or XGBoost) to categorize projects into High, Medium, or Low risk based on quantitative metrics.
+3. **Team Sentiment Analysis:** An NLP pipeline (using fine-tuned DistilBERT) to analyze developer standup notes or commit messages for signs of burnout or hidden blockers.
+
+### Recommended Datasets for Training
+
+To train and fine-tune your local ML models, you can utilize the following publicly available datasets:
+
+* **PROMISE Software Engineering Repository:** Contains historical datasets on software project management, effort estimation, and defect prediction.
+* **JIRA Defect & Issue Datasets:** Available on platforms like Kaggle (e.g., "Jira Dataset for Software Defect Prediction"), which contain real-world issue tracking data, resolution times, and priority levels.
+* **Git Commit Logs & Pull Request Timelines:** You can scrape anonymized open-source repositories (using GitHub's API) to build a dataset mapping PR review times and commit frequencies to project delays.
+* **Synthetic Project Data Generation:** Write a Python script using the `Faker` library combined with an LLM to generate thousands of realistic project logs, standup notes, and risk scenarios specifically tailored to your database schema (PostgreSQL JSONB structures).

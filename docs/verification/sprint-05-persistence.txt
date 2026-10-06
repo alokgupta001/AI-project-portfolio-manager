@@ -1,0 +1,14 @@
+PASS: real Redis -> Linux Celery worker -> PostgreSQL checkpoint 44e56ee2-3bb9-4603-98e8-bf33e4dc8a5c
+PASS: storage persistence write
+ Container enterprise-ppm-redis-1 Restarting 
+ Container enterprise-ppm-worker-1 Restarting 
+ Container enterprise-ppm-web-1 Restarting 
+ Container enterprise-ppm-api-1 Restarting 
+ Container enterprise-ppm-postgres-1 Restarting 
+ Container enterprise-ppm-web-1 Started 
+ Container enterprise-ppm-api-1 Started 
+ Container enterprise-ppm-redis-1 Started 
+ Container enterprise-ppm-postgres-1 Started 
+ Container enterprise-ppm-worker-1 Started 
+PASS: storage persistence verify
+PASS: database checkpoint survived PostgreSQL/Redis/API/worker/web restart: 44e56ee2-3bb9-4603-98e8-bf33e4dc8a5c

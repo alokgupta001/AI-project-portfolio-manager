@@ -1,0 +1,11 @@
+* text=auto
+*.sh text eol=lf
+*.py text eol=lf
+*.json text eol=lf
+*.yaml text eol=lf
+*.yml text eol=lf
+*.lock text eol=lf
+*.docx binary
+# Preserved originals must keep their manifest hashes on every platform.
+docs/source/Supplementary-Specification.txt -text
+docs/prompts/0*.md -text

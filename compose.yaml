@@ -1,0 +1,112 @@
+name: enterprise-ppm
+
+x-backend: &backend
+  build:
+    context: .
+    dockerfile: infra/api.Dockerfile
+  environment: &backend-env
+    PPM_APP_ENV: local
+    PPM_JWT_SECRET: ${PPM_JWT_SECRET:?Run bootstrap first}
+    PPM_WEB_ORIGIN: ${PPM_WEB_ORIGIN:-http://localhost:3000}
+    PPM_COOKIE_SECURE: "true"
+    PPM_DATABASE_URL: postgresql+asyncpg://ppm_app:${PPM_APP_PASSWORD:?Run bootstrap first}@postgres:5432/ppm_local
+    PPM_REDIS_URL: redis://redis:6379/0
+    PPM_STORAGE_ROOT: /var/ppm/objects
+  volumes:
+    - objects:/var/ppm/objects
+  init: true
+
+services:
+  postgres:
+    image: postgres:18@sha256:5a5a84b19854a9ffaa54082c166ff4ec27473a361e496e5ea167f298f2da9722
+    environment:
+      POSTGRES_PASSWORD: ${PPM_POSTGRES_PASSWORD:?Run bootstrap first}
+      POSTGRES_DB: ppm_local
+      PPM_OWNER_PASSWORD: ${PPM_OWNER_PASSWORD:?Run bootstrap first}
+      PPM_APP_PASSWORD: ${PPM_APP_PASSWORD:?Run bootstrap first}
+    ports:
+      - "127.0.0.1:${PPM_POSTGRES_PORT:-15432}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql
+      - ./infra/postgres/init.sh:/docker-entrypoint-initdb.d/10-ppm.sh:ro
+    healthcheck:
+      test: [CMD-SHELL, "pg_isready -U postgres -d ppm_local"]
+      interval: 3s
+      timeout: 3s
+      retries: 30
+  redis:
+    image: redis:8@sha256:6f81e8915c60b065a524e6967e0ad1c639ba6efa84d669f823683ea04d9150ee
+    command: [redis-server, --appendonly, "yes"]
+    ports:
+      - "127.0.0.1:${PPM_REDIS_PORT:-16379}:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: [CMD, redis-cli, ping]
+      interval: 3s
+      timeout: 3s
+      retries: 30
+  migrate:
+    <<: *backend
+    environment:
+      <<: *backend-env
+      PPM_MIGRATION_DATABASE_URL: postgresql+asyncpg://ppm_owner:${PPM_OWNER_PASSWORD:?Run bootstrap first}@postgres:5432/ppm_local
+    command: [alembic, upgrade, head]
+    depends_on:
+      postgres: {condition: service_healthy}
+  api:
+    <<: *backend
+    ports:
+      - "127.0.0.1:${PPM_API_PORT:-8000}:8000"
+    depends_on:
+      migrate: {condition: service_completed_successfully}
+      redis: {condition: service_healthy}
+    healthcheck:
+      test: [CMD, python, -c, "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/api/v1/health/ready', timeout=5)"]
+      interval: 5s
+      timeout: 6s
+      retries: 20
+  worker:
+    <<: *backend
+    command: [celery, -A, ppm_worker.app:celery_app, worker, --loglevel=WARNING, --concurrency=2, --hostname=foundation@%h]
+    depends_on:
+      api: {condition: service_healthy}
+  web:
+    build:
+      context: .
+      dockerfile: infra/web.Dockerfile
+    environment:
+      API_ORIGIN: http://api:8000
+      PPM_WEB_ORIGIN: ${PPM_WEB_ORIGIN:-http://localhost:3000}
+      NEXT_TELEMETRY_DISABLED: "1"
+    ports:
+      - "127.0.0.1:${PPM_WEB_PORT:-3000}:3000"
+    depends_on:
+      api: {condition: service_healthy}
+    init: true
+    healthcheck:
+      test: [CMD, node, -e, "fetch('http://127.0.0.1:3000').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+      interval: 10s
+      timeout: 10s
+      retries: 20
+  test:
+    <<: *backend
+    profiles: [test]
+    environment:
+      <<: *backend-env
+      PPM_APP_ENV: test
+      PPM_DATABASE_URL: postgresql+asyncpg://ppm_app:${PPM_APP_PASSWORD:?Run bootstrap first}@postgres:5432/ppm_test
+      PPM_MIGRATION_DATABASE_URL: postgresql+asyncpg://ppm_owner:${PPM_OWNER_PASSWORD:?Run bootstrap first}@postgres:5432/ppm_test
+      PPM_REDIS_URL: redis://redis:6379/1
+      PPM_STORAGE_ROOT: /tmp/ppm-test-objects
+      PPM_RUN_INTEGRATION: "1"
+    command: [python, scripts/test_backend.py]
+    volumes: []
+    depends_on:
+      postgres: {condition: service_healthy}
+      redis: {condition: service_healthy}
+
+volumes:
+  postgres_data:
+  redis_data:
+  objects:

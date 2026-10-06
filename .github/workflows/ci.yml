@@ -1,0 +1,60 @@
+name: Foundation checks
+on:
+  push:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  foundation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: '24'
+          cache: npm
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+      - name: Install locked dependencies
+        run: |
+          python -m pip install uv==0.11.15
+          uv sync --frozen
+          npm ci
+      - name: Static checks and contract drift
+        run: |
+          .venv/bin/ruff check services scripts tests
+          .venv/bin/ruff format --check services scripts tests
+          .venv/bin/mypy services/api/ppm_api services/worker/ppm_worker
+          .venv/bin/pytest -q -m 'not integration'
+          .venv/bin/python scripts/check_sources.py
+          npm run contracts:check
+          npm run lint
+          npm run typecheck
+          npm run format:check
+          npm audit --audit-level=high
+      - name: Build and run isolated local stack
+        run: |
+          .venv/bin/python scripts/bootstrap.py
+          docker compose config --quiet
+          docker compose up --build -d --wait
+          docker compose --profile test run --rm test
+          docker compose exec -T api python scripts/smoke_worker.py
+      - name: Browser and persistence acceptance
+        run: |
+          npx playwright install --with-deps chromium
+          node scripts/check-identity-browser.mjs
+          node scripts/check-persistence.mjs
+      - name: Upload browser evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: foundation-browser-evidence
+          path: |
+            artifacts/local/
+            playwright-report/
+            test-results/
+      - name: Stop this CI stack
+        if: always()
+        run: docker compose down

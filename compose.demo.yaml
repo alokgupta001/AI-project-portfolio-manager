@@ -1,0 +1,15 @@
+# Separate project name and database prevent demo records mixing with local/test data.
+name: enterprise-ppm-demo
+services:
+  migrate:
+    environment:
+      PPM_APP_ENV: demo
+      PPM_MIGRATION_DATABASE_URL: postgresql+asyncpg://ppm_owner:${PPM_OWNER_PASSWORD}@postgres:5432/ppm_demo
+  api:
+    environment:
+      PPM_APP_ENV: demo
+      PPM_DATABASE_URL: postgresql+asyncpg://ppm_app:${PPM_APP_PASSWORD}@postgres:5432/ppm_demo
+  worker:
+    environment:
+      PPM_APP_ENV: demo
+      PPM_DATABASE_URL: postgresql+asyncpg://ppm_app:${PPM_APP_PASSWORD}@postgres:5432/ppm_demo

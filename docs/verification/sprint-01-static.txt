@@ -1,0 +1,42 @@
+Check: sources
+PASS: 7 preserved sources/prompts match SHA256 manifest
+Check: ruff
+All checks passed!
+Check: format_python
+21 files already formatted
+Check: mypy
+Success: no issues found in 8 source files
+Check: contracts
+
+> enterprise-ppm@0.1.0 contracts:check
+> node scripts/contracts.mjs --check
+
+OpenAPI and TypeScript contracts match.
+Check: lint
+
+> enterprise-ppm@0.1.0 lint
+> eslint apps/web packages/contracts/src tests/browser
+
+Check: types
+
+> enterprise-ppm@0.1.0 typecheck
+> npm run typecheck --workspace @ppm/web
+
+
+> @ppm/web@0.1.0 typecheck
+> tsc --noEmit
+
+Check: format_web
+
+> enterprise-ppm@0.1.0 format:check
+> prettier --check apps/web packages/contracts/src tests/browser package.json
+
+Checking formatting...
+[warn] tests/browser/foundation.spec.ts
+[warn] Code style issues found in the above file. Run Prettier with --write to fix.
+
+> enterprise-ppm@0.1.0 format:check
+> prettier --check apps/web packages/contracts/src tests/browser package.json
+
+Checking formatting...
+All matched files use Prettier code style!

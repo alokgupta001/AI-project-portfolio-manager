@@ -1,0 +1,5 @@
+**/.next
+**/node_modules
+packages/contracts/src/schema.d.ts
+apps/web/next-env.d.ts
+**/tsconfig.tsbuildinfo

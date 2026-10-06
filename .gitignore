@@ -1,0 +1,35 @@
+# Local secrets and environment overrides
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+# Runtime and generated output
+node_modules/
+.next/
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+dist/
+build/
+coverage/
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfplan
+# Editor and local operating-system state
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+# Machine-specific datasets and generated sensitive output
+data/private/
+artifacts/private/
+artifacts/local/
+data/local/
+test-results/
+playwright-report/
+*.tsbuildinfo

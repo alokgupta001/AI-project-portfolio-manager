@@ -1,0 +1,225 @@
+ Image enterprise-ppm-demo-migrate Building 
+ Image enterprise-ppm-demo-api Building 
+ Image enterprise-ppm-demo-worker Building 
+ Image enterprise-ppm-demo-web Building 
+#1 [internal] load local bake definitions
+#1 reading from stdin 2.15kB done
+#1 DONE 0.0s
+
+#2 [web internal] load build definition from web.Dockerfile
+#2 transferring dockerfile: 607B 0.0s done
+#2 DONE 0.1s
+
+#3 [worker internal] load build definition from api.Dockerfile
+#3 transferring dockerfile: 774B 0.0s done
+#3 DONE 0.1s
+
+#4 [migrate internal] load metadata for docker.io/library/python:3.12-slim-bookworm@sha256:54c85f3c47607a77f32adec749d3c81d1348bf25833671f512b26a9b6d778cb3
+#4 DONE 0.1s
+
+#5 [web internal] load metadata for docker.io/library/node:24-bookworm-slim@sha256:0e0ff40c39bc087845bfb27465a0df4ea419520094bc35842ff83dd8cbe6f9b6
+#5 DONE 0.1s
+
+#6 [web internal] load .dockerignore
+#6 transferring context: 205B done
+#6 DONE 0.0s
+
+#7 [worker internal] load build context
+#7 DONE 0.0s
+
+#8 [web internal] load build context
+#8 DONE 0.0s
+
+#9 [worker  1/10] FROM docker.io/library/python:3.12-slim-bookworm@sha256:54c85f3c47607a77f32adec749d3c81d1348bf25833671f512b26a9b6d778cb3
+#9 resolve docker.io/library/python:3.12-slim-bookworm@sha256:54c85f3c47607a77f32adec749d3c81d1348bf25833671f512b26a9b6d778cb3 0.1s done
+#9 resolve docker.io/library/python:3.12-slim-bookworm@sha256:54c85f3c47607a77f32adec749d3c81d1348bf25833671f512b26a9b6d778cb3 0.1s done
+#9 DONE 0.1s
+
+#10 [web 1/9] FROM docker.io/library/node:24-bookworm-slim@sha256:0e0ff40c39bc087845bfb27465a0df4ea419520094bc35842ff83dd8cbe6f9b6
+#10 resolve docker.io/library/node:24-bookworm-slim@sha256:0e0ff40c39bc087845bfb27465a0df4ea419520094bc35842ff83dd8cbe6f9b6 0.1s done
+#10 DONE 0.1s
+
+#7 [worker internal] load build context
+#7 transferring context: 2.67kB 0.0s done
+#7 DONE 0.0s
+
+#11 [api  4/10] COPY pyproject.toml uv.lock ./
+#11 CACHED
+
+#12 [api  7/10] COPY scripts ./scripts
+#12 CACHED
+
+#13 [api  9/10] COPY alembic.ini ./
+#13 CACHED
+
+#14 [api  2/10] WORKDIR /app
+#14 CACHED
+
+#15 [api  3/10] RUN pip install --no-cache-dir uv==0.11.15
+#15 CACHED
+
+#16 [api  6/10] COPY services ./services
+#16 CACHED
+
+#17 [api  5/10] RUN uv sync --frozen --no-managed-python
+#17 CACHED
+
+#18 [api  8/10] COPY tests ./tests
+#18 CACHED
+
+#19 [api 10/10] RUN useradd --uid 10001 --create-home ppm && mkdir -p /var/ppm/objects && chown -R ppm:ppm /var/ppm && chown ppm:ppm /app
+#19 CACHED
+
+#12 [migrate  7/10] COPY scripts ./scripts
+#12 CACHED
+
+#15 [migrate  3/10] RUN pip install --no-cache-dir uv==0.11.15
+#15 CACHED
+
+#13 [migrate  9/10] COPY alembic.ini ./
+#13 CACHED
+
+#14 [migrate  2/10] WORKDIR /app
+#14 CACHED
+
+#16 [migrate  6/10] COPY services ./services
+#16 CACHED
+
+#18 [migrate  8/10] COPY tests ./tests
+#18 CACHED
+
+#11 [migrate  4/10] COPY pyproject.toml uv.lock ./
+#11 CACHED
+
+#17 [migrate  5/10] RUN uv sync --frozen --no-managed-python
+#17 CACHED
+
+#8 [web internal] load build context
+#8 transferring context: 449.48kB 0.1s done
+#8 DONE 0.1s
+
+#20 [migrate] exporting to image
+#20 exporting layers done
+#20 exporting manifest sha256:872d8a23a85cf853b2c210aa18ec43d514bf5c42b3f498a0cadbd1cd20d87629 0.0s done
+#20 exporting config sha256:8e3a7db280788f635b5a1ea3ec0ece398459a5d99c2e2b2d0e8f46b300326028 0.0s done
+#20 ...
+
+#21 [web 5/9] COPY packages/contracts/package.json packages/contracts/package.json
+#21 CACHED
+
+#22 [web 6/9] RUN npm ci --no-audit --no-fund
+#22 CACHED
+
+#23 [web 7/9] COPY apps/web ./apps/web
+#23 CACHED
+
+#24 [web 8/9] COPY packages/contracts ./packages/contracts
+#24 CACHED
+
+#25 [web 2/9] WORKDIR /app
+#25 CACHED
+
+#26 [web 3/9] COPY package.json package-lock.json ./
+#26 CACHED
+
+#27 [web 4/9] COPY apps/web/package.json apps/web/package.json
+#27 CACHED
+
+#28 [web 9/9] RUN npm run build && chown -R node:node /app/apps/web/.next
+#28 CACHED
+
+#20 [migrate] exporting to image
+#20 exporting attestation manifest sha256:58a38216fc355ab4728f313088609dc61211c0cabea39ef58f6c64be6b4fbfd0
+#20 exporting attestation manifest sha256:58a38216fc355ab4728f313088609dc61211c0cabea39ef58f6c64be6b4fbfd0 0.3s done
+#20 exporting manifest list sha256:67cdd962291a2006bfee223a2c54090ffbad383463d983b464e6a801d9188a5c
+#20 exporting manifest list sha256:67cdd962291a2006bfee223a2c54090ffbad383463d983b464e6a801d9188a5c 0.1s done
+#20 naming to docker.io/library/enterprise-ppm-demo-migrate:latest 0.0s done
+#20 unpacking to docker.io/library/enterprise-ppm-demo-migrate:latest
+#20 ...
+
+#29 [worker] exporting to image
+#29 exporting layers done
+#29 exporting manifest sha256:8681d36e472f219c3faa8830b745c7637093ae635089a9349f1611b8360aaba2 0.0s done
+#29 exporting config sha256:5a7c3bdd58804347cd19ac33785c2a8fc1482479dc592ca7bc85b96431c63cc9 0.0s done
+#29 exporting attestation manifest sha256:444f972760037f9e93c8e536e9d16f258ccf29416ea8530c03e7c2881eae1699 0.2s done
+#29 exporting manifest list sha256:ead7e6e91a8085a2aa9a68225c358a2082f1d2c0dc1cfd362704f0c597d893d2 0.1s done
+#29 naming to docker.io/library/enterprise-ppm-demo-worker:latest 0.1s done
+#29 unpacking to docker.io/library/enterprise-ppm-demo-worker:latest 0.1s done
+#29 DONE 0.7s
+
+#20 [migrate] exporting to image
+#20 unpacking to docker.io/library/enterprise-ppm-demo-migrate:latest 0.1s done
+#20 DONE 0.9s
+
+#30 [api] exporting to image
+#30 exporting layers 0.0s done
+#30 exporting manifest sha256:353a6afc27084e0fce75126e911a7cbeacf1054fe5a0957cd6a2431e923ef2f0 0.0s done
+#30 exporting config sha256:ada4d7506f3f8fe42f2dcbdd6216a6276dcfa448fe036dc42569159825dd9746 0.0s done
+#30 exporting attestation manifest sha256:d2135ca34732b11b518f50c87583d26f63f8e563aaef1658999d5e3b5337e626 0.2s done
+#30 exporting manifest list sha256:1dd5e5468b98278c82880cc5857e576cdbd042b219a602a2faeb81cae377547d 0.2s done
+#30 naming to docker.io/library/enterprise-ppm-demo-api:latest 0.1s done
+#30 unpacking to docker.io/library/enterprise-ppm-demo-api:latest 0.1s done
+#30 DONE 0.9s
+
+#31 [web] exporting to image
+#31 exporting layers 0.0s done
+#31 exporting manifest sha256:b2c6dd07c14c320f6c34f8dba37f77b5a2bc30ccf3e699705f7fcdc3576828fe 0.2s done
+#31 exporting config sha256:c6efeb1793e3dbfd47dfca416eed5036f12881ca78f08d8c16eb89825577fe3e 0.2s done
+#31 exporting attestation manifest sha256:d76b9ed5c924709c20a114528aff9be71dedd66a40e6a2005a14a6bac2bab42d 0.1s done
+#31 exporting manifest list sha256:d13788e7bddd4574afc0e3050c017061cd679230094ad6abf8d0d06b5e8261a7
+#31 exporting manifest list sha256:d13788e7bddd4574afc0e3050c017061cd679230094ad6abf8d0d06b5e8261a7 0.1s done
+#31 naming to docker.io/library/enterprise-ppm-demo-web:latest 0.0s done
+#31 unpacking to docker.io/library/enterprise-ppm-demo-web:latest 0.1s done
+#31 DONE 1.0s
+
+#32 [worker] resolving provenance for metadata file
+#32 DONE 0.3s
+
+#33 [web] resolving provenance for metadata file
+#33 DONE 0.1s
+
+#34 [api] resolving provenance for metadata file
+#34 DONE 0.3s
+
+#35 [migrate] resolving provenance for metadata file
+#35 DONE 0.0s
+ Image enterprise-ppm-demo-web Built 
+ Image enterprise-ppm-demo-worker Built 
+ Image enterprise-ppm-demo-migrate Built 
+ Image enterprise-ppm-demo-api Built 
+ Container enterprise-ppm-demo-web-1 Recreate 
+ Container enterprise-ppm-demo-web-1 Recreated 
+ Container enterprise-ppm-demo-redis-1 Starting 
+ Container enterprise-ppm-demo-postgres-1 Starting 
+ Container enterprise-ppm-demo-postgres-1 Started 
+ Container enterprise-ppm-demo-postgres-1 Waiting 
+ Container enterprise-ppm-demo-redis-1 Started 
+ Container enterprise-ppm-demo-postgres-1 Healthy 
+ Container enterprise-ppm-demo-migrate-1 Starting 
+ Container enterprise-ppm-demo-migrate-1 Started 
+ Container enterprise-ppm-demo-migrate-1 Waiting 
+ Container enterprise-ppm-demo-redis-1 Waiting 
+ Container enterprise-ppm-demo-redis-1 Healthy 
+ Container enterprise-ppm-demo-migrate-1 Exited 
+ Container enterprise-ppm-demo-api-1 Starting 
+ Container enterprise-ppm-demo-api-1 Started 
+ Container enterprise-ppm-demo-api-1 Waiting 
+ Container enterprise-ppm-demo-api-1 Waiting 
+ Container enterprise-ppm-demo-api-1 Healthy 
+ Container enterprise-ppm-demo-worker-1 Starting 
+ Container enterprise-ppm-demo-api-1 Healthy 
+ Container enterprise-ppm-demo-web-1 Starting 
+ Container enterprise-ppm-demo-web-1 Started 
+ Container enterprise-ppm-demo-worker-1 Started 
+ Container enterprise-ppm-demo-postgres-1 Waiting 
+ Container enterprise-ppm-demo-redis-1 Waiting 
+ Container enterprise-ppm-demo-migrate-1 Waiting 
+ Container enterprise-ppm-demo-api-1 Waiting 
+ Container enterprise-ppm-demo-worker-1 Waiting 
+ Container enterprise-ppm-demo-web-1 Waiting 
+ Container enterprise-ppm-demo-api-1 Healthy 
+ Container enterprise-ppm-demo-redis-1 Healthy 
+ Container enterprise-ppm-demo-postgres-1 Healthy 
+ Container enterprise-ppm-demo-worker-1 Healthy 
+ Container enterprise-ppm-demo-migrate-1 Exited 
+ Container enterprise-ppm-demo-web-1 Healthy 
