@@ -1,0 +1,108 @@
+ Container enterprise-ppm-redis-1 Running 
+ Container enterprise-ppm-postgres-1 Running 
+ Container enterprise-ppm-postgres-1 Waiting 
+ Container enterprise-ppm-redis-1 Waiting 
+ Container enterprise-ppm-postgres-1 Healthy 
+ Container enterprise-ppm-redis-1 Healthy 
+ Container enterprise-ppm-test-run-4728a0662e2b Creating 
+ Container enterprise-ppm-test-run-4728a0662e2b Created 
+{"event": "http_request", "request_id": "4eb86cfa-0897-4c38-82d3-9a005e07a306", "method": "GET", "route": "/api/v1/auth/csrf", "status": 200, "duration_ms": 36.22}
+{"event": "http_request", "request_id": "0b189910-bb27-423c-b181-1d8dcf0e068e", "method": "POST", "route": "/api/v1/auth/login", "status": 200, "duration_ms": 284.23}
+{"event": "http_request", "request_id": "0c26e247-7edb-42b1-bd93-e496e1248b00", "method": "POST", "route": "/api/v1/auth/switch", "status": 200, "duration_ms": 15.91}
+{"event": "http_request", "request_id": "75355659-3ae0-4605-95ec-d723bfc66531", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 37.13}
+{"event": "http_request", "request_id": "439e7614-4b60-48e9-a909-4dda2f338173", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 15.15}
+{"event": "http_request", "request_id": "cfb860ea-8076-4ea3-a51f-0e5dbe0ff15b", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 26.22}
+{"event": "http_request", "request_id": "7f5213fe-49b0-4218-a649-1d2c02b87cb9", "method": "PATCH", "route": "/api/v1/delivery/{kind}/{id_}", "status": 200, "duration_ms": 21.85}
+{"event": "http_request", "request_id": "b85a1114-28b1-42ba-90c7-da87d67d6253", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 39.13}
+{"event": "http_request", "request_id": "8648e164-288f-48f8-a6a8-4c4fdd7702c1", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 15.44}
+{"event": "http_request", "request_id": "7766bade-77ea-4ae1-811a-45bc1c3b8921", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 18.4}
+{"event": "http_request", "request_id": "56f4a39c-c882-41cf-98a1-48366cc8181c", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 71.55}
+{"event": "http_request", "request_id": "6533379f-4212-47ac-a0a7-d21156d96d85", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 17.26}
+{"event": "http_request", "request_id": "b1f50a3d-a7e4-4be1-a791-d38350ffb5cc", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 17.33}
+{"event": "http_request", "request_id": "dc55808d-7b56-44b4-a558-d6eb356304dd", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 17.67}
+{"event": "http_request", "request_id": "e46c24c0-2e06-458b-a42b-f0eb432cb1fc", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 17.75}
+{"event": "http_request", "request_id": "94c6d8a3-72be-4b25-b463-414825fa88b4", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 18.45}
+{"event": "http_request", "request_id": "cee37594-03c3-43bf-8340-7c8688e5a798", "method": "GET", "route": "/api/v1/command/snapshot", "status": 200, "duration_ms": 93.15}
+.COMMAND_BASELINE projects=2 resources=1 statements=48 compute_ms=79.92
+{"event": "http_request", "request_id": "16dac6c6-b051-4a67-bbf8-d2e4e5f7ac79", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 17.36}
+{"event": "http_request", "request_id": "16ea5fe8-7c28-478c-8320-edb3c3232908", "method": "GET", "route": "/api/v1/command/snapshot", "status": 200, "duration_ms": 54.94}
+{"event": "http_request", "request_id": "9b07f6e6-edc1-4410-a3e4-ef73e94bf6e6", "method": "PATCH", "route": "/api/v1/delivery/{kind}/{id_}", "status": 422, "duration_ms": 9.14}
+{"event": "http_request", "request_id": "9ca63f15-057c-40fa-a425-38c67fb4b362", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 20.87}
+{"event": "http_request", "request_id": "7efd9dbc-11df-47bd-8fdc-85c2e983addb", "method": "POST", "route": "/api/v1/auth/login", "status": 200, "duration_ms": 272.94}
+{"event": "http_request", "request_id": "c19bc47f-27d0-4d22-9683-9f5a2679dc55", "method": "POST", "route": "/api/v1/auth/switch", "status": 200, "duration_ms": 18.02}
+{"event": "http_request", "request_id": "7165ca82-6cce-4993-b50b-837a9a2779ff", "method": "GET", "route": "/api/v1/command/snapshot", "status": 200, "duration_ms": 117.32}
+{"event": "http_request", "request_id": "eeb092c4-f688-4005-a9b5-7ec027de3cb5", "method": "GET", "route": "/api/v1/auth/csrf", "status": 200, "duration_ms": 50.48}
+{"event": "http_request", "request_id": "97d07121-1ada-4e5f-942e-bd5577014d98", "method": "POST", "route": "/api/v1/auth/login", "status": 200, "duration_ms": 319.18}
+{"event": "http_request", "request_id": "e96aef7a-b9eb-4be3-a2f2-4dc6f6c350b0", "method": "POST", "route": "/api/v1/auth/switch", "status": 200, "duration_ms": 14.62}
+{"event": "http_request", "request_id": "9764662a-f027-4af1-93f6-66ca04469648", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 40.02}
+{"event": "http_request", "request_id": "d3a31152-8593-4d17-a98e-0bed981711b5", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 21.71}
+{"event": "http_request", "request_id": "da90ce83-e1bf-4359-ae19-f7d6fc5cef15", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 24.75}
+{"event": "http_request", "request_id": "ca7fd0d9-c793-4155-b9d2-92759d87f470", "method": "PATCH", "route": "/api/v1/delivery/{kind}/{id_}", "status": 200, "duration_ms": 19.25}
+{"event": "http_request", "request_id": "d6e25bc7-dfcd-4011-9c1e-eceb8c821caa", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 21.15}
+{"event": "http_request", "request_id": "9ce7384a-2cc6-4515-b6e8-57575137ef19", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 20.93}
+{"event": "http_request", "request_id": "6f3bc350-6cc7-4deb-a870-690f50648e1c", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 16.36}
+{"event": "http_request", "request_id": "d54535d4-d257-4722-9520-9a7a822e1a72", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 17.66}
+{"event": "http_request", "request_id": "d4781088-ec03-43e5-a030-7d4a53170b76", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 39.39}
+{"event": "http_request", "request_id": "e8cb641a-2fc9-4e6e-a87b-affca7c730fd", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 21.2}
+{"event": "http_request", "request_id": "9d0207b1-f588-422b-acf7-0a98c20415e0", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 25.27}
+{"event": "http_request", "request_id": "7f8d42b5-d559-4961-a696-ab84be5247ed", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 20.24}
+{"event": "http_request", "request_id": "f812c1c2-c76a-44e6-ae91-22d9912c57a4", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 17.32}
+{"event": "http_request", "request_id": "9e961efb-e0f8-4d66-bdcc-1de73a484252", "method": "PATCH", "route": "/api/v1/delivery/{kind}/{id_}", "status": 422, "duration_ms": 6.93}
+{"event": "http_request", "request_id": "791bd2a0-ba31-4aed-9127-db88e0a3ec5b", "method": "PATCH", "route": "/api/v1/delivery/{kind}/{id_}", "status": 200, "duration_ms": 19.61}
+{"event": "http_request", "request_id": "c438ceb9-9e4f-4446-9075-fc774a7946b5", "method": "PATCH", "route": "/api/v1/delivery/{kind}/{id_}", "status": 422, "duration_ms": 6.53}
+{"event": "http_request", "request_id": "2e93ca1f-4108-47b5-828d-7f9cf3945973", "method": "PATCH", "route": "/api/v1/delivery/{kind}/{id_}", "status": 200, "duration_ms": 15.79}
+{"event": "http_request", "request_id": "73d7de72-46fb-4514-b9f9-5f91e555c165", "method": "PATCH", "route": "/api/v1/delivery/{kind}/{id_}", "status": 409, "duration_ms": 12.36}
+{"event": "http_request", "request_id": "913c9b73-3f06-4367-8e7d-5de55041edf6", "method": "PATCH", "route": "/api/v1/delivery/{kind}/{id_}", "status": 200, "duration_ms": 17.56}
+{"event": "http_request", "request_id": "9366dae6-ad2f-4b1a-abe8-a7c9fe3db5ae", "method": "PATCH", "route": "/api/v1/delivery/{kind}/{id_}", "status": 412, "duration_ms": 10.89}
+{"event": "http_request", "request_id": "859f9b63-f2cc-498a-b0ad-9f1566032fff", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 14.0}
+{"event": "http_request", "request_id": "21b446fb-cf62-4131-9979-f594997f5dcc", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 16.38}
+{"event": "http_request", "request_id": "b5d270b1-811f-4e71-82a3-9b9de5668e0d", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 20.12}
+{"event": "http_request", "request_id": "e732c0aa-e975-498e-a61b-4bace2035aed", "method": "PATCH", "route": "/api/v1/delivery/{kind}/{id_}", "status": 200, "duration_ms": 19.12}
+{"event": "http_request", "request_id": "bea1cea7-0262-4924-b379-c92c4f8cb0ff", "method": "PATCH", "route": "/api/v1/delivery/{kind}/{id_}", "status": 200, "duration_ms": 18.07}
+{"event": "http_request", "request_id": "e2d6212c-6f96-411f-ac44-ba6a25fdbf7a", "method": "PATCH", "route": "/api/v1/delivery/{kind}/{id_}", "status": 200, "duration_ms": 18.94}
+{"event": "http_request", "request_id": "ee343c10-b40b-474d-ab16-05e61cd73006", "method": "PATCH", "route": "/api/v1/delivery/{kind}/{id_}", "status": 200, "duration_ms": 18.25}
+{"event": "http_request", "request_id": "eaee3d5e-b9f8-477c-8cde-b3f3c14b6ade", "method": "PATCH", "route": "/api/v1/delivery/{kind}/{id_}", "status": 200, "duration_ms": 20.63}
+{"event": "http_request", "request_id": "f281ec84-941d-4185-a506-6931261da8fa", "method": "PATCH", "route": "/api/v1/delivery/{kind}/{id_}", "status": 409, "duration_ms": 14.25}
+{"event": "http_request", "request_id": "5ce8ea0d-34a9-4044-a901-c7d41c248b3b", "method": "PATCH", "route": "/api/v1/delivery/{kind}/{id_}", "status": 200, "duration_ms": 23.72}
+{"event": "http_request", "request_id": "b3e03d8e-cf5c-430a-a313-fec66de5ef01", "method": "GET", "route": "/api/v1/command/snapshot", "status": 200, "duration_ms": 68.38}
+{"event": "http_request", "request_id": "889c4ee8-8977-4e1b-99d1-7731600717ff", "method": "GET", "route": "/api/v1/delivery/project-summary/{id_}", "status": 200, "duration_ms": 23.41}
+{"event": "http_request", "request_id": "295a69dc-84f5-4200-b218-0663a89d31a1", "method": "GET", "route": "/api/v1/command/snapshot", "status": 200, "duration_ms": 40.4}
+{"event": "http_request", "request_id": "efbcfa43-e037-41d5-9204-5bc275d53979", "method": "GET", "route": "/api/v1/command/snapshot", "status": 200, "duration_ms": 32.54}
+{"event": "http_request", "request_id": "db9b9b1c-bff9-4b69-a6cf-10c0f8aaf309", "method": "GET", "route": "/api/v1/auth/csrf", "status": 200, "duration_ms": 38.05}
+{"event": "http_request", "request_id": "1acd30f0-fb89-4b3e-9f86-a10bbd9f50a9", "method": "POST", "route": "/api/v1/auth/login", "status": 200, "duration_ms": 315.24}
+{"event": "http_request", "request_id": "4b391904-ab25-4484-9d24-05a1e4bcf6bb", "method": "POST", "route": "/api/v1/auth/switch", "status": 200, "duration_ms": 12.63}
+{"event": "http_request", "request_id": "0b0ef797-5e5a-4291-bc5d-e85f442ebe06", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 43.04}
+{"event": "http_request", "request_id": "d158ce74-2ac6-496f-8f9c-5591ac07a01a", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 18.66}
+{"event": "http_request", "request_id": "a59aa1d7-8d0f-49e1-8bc8-2130d036d825", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 18.99}
+{"event": "http_request", "request_id": "191bfeca-880c-4e0c-9cef-e2a7181a5e76", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 18.8}
+{"event": "http_request", "request_id": "d29b3f14-f2b4-40c0-b096-75c3cb230f53", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 17.24}
+{"event": "http_request", "request_id": "36b6fc6c-e162-403e-92c1-eb292bd71718", "method": "POST", "route": "/api/v1/auth/login", "status": 200, "duration_ms": 261.87}
+{"event": "http_request", "request_id": "249446b5-847d-45a0-84fb-7339b4fe8a82", "method": "POST", "route": "/api/v1/auth/switch", "status": 200, "duration_ms": 10.32}
+{"event": "http_request", "request_id": "78f9ef95-7cc4-46a2-8e1c-d8d79cb855f7", "method": "GET", "route": "/api/v1/command/snapshot", "status": 200, "duration_ms": 55.89}
+{"event": "http_request", "request_id": "ac6ebab0-e2e3-4074-a355-0afbc4ef553f", "method": "GET", "route": "/api/v1/delivery/{kind}", "status": 200, "duration_ms": 11.64}
+{"event": "http_request", "request_id": "4ecd564f-4179-4657-adee-bbb3831b31ec", "method": "GET", "route": "/api/v1/delivery/{kind}/{id_}", "status": 404, "duration_ms": 6.64}
+{"event": "http_request", "request_id": "05920a44-a454-418b-91bc-274c82b8833a", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 13.77}
+{"event": "http_request", "request_id": "d35e3895-ad45-4787-9433-90b057b499cc", "method": "PATCH", "route": "/api/v1/delivery/{kind}/{id_}", "status": 200, "duration_ms": 13.57}
+{"event": "http_request", "request_id": "d653fb1e-88e3-42b6-81de-a30c11ad5151", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 403, "duration_ms": 11.39}
+{"event": "http_request", "request_id": "a1bc44a6-3ab4-4f4d-af4d-e72eabf812f3", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 403, "duration_ms": 10.38}
+{"event": "http_request", "request_id": "f0cd5ce4-c9d6-4602-bd13-11d904a00820", "method": "POST", "route": "/api/v1/auth/login", "status": 200, "duration_ms": 252.07}
+{"event": "http_request", "request_id": "163b9bf3-290f-422a-9895-a2982590ed09", "method": "POST", "route": "/api/v1/auth/switch", "status": 200, "duration_ms": 10.51}
+{"event": "http_request", "request_id": "99efb6b0-8b4d-4ab0-af9b-64abb49865f6", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 18.41}
+{"event": "http_request", "request_id": "3e7f9423-6cfd-4e0a-8b9d-21c808490d9c", "method": "POST", "route": "/api/v1/auth/login", "status": 200, "duration_ms": 244.24}
+{"event": "http_request", "request_id": "f245d003-066b-499a-83ad-8550a6be6357", "method": "POST", "route": "/api/v1/auth/switch", "status": 200, "duration_ms": 8.9}
+{"event": "http_request", "request_id": "b5a1c4fb-b3a5-4ac2-830a-b7c6394cd317", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 20.21}
+{"event": "http_request", "request_id": "23478fe9-c731-4269-98b9-9cb18438e3d9", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 12.68}
+{"event": "http_request", "request_id": "5e7cc04c-72fa-48e9-9839-0b8961f44788", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 409, "duration_ms": 9.48}
+{"event": "http_request", "request_id": "034e834e-c6a1-4972-a445-b8f63f816907", "method": "GET", "route": "/api/v1/command/snapshot", "status": 200, "duration_ms": 38.25}
+{"event": "csrf_rejected", "request_id": "065ac176-b309-441c-9a6f-00715d0016b6", "method": "POST", "status": 403}
+{"event": "http_request", "request_id": "dcfda25c-0aa9-4d01-a7fd-8cd345b15fe3", "method": "POST", "route": "/api/v1/auth/login", "status": 200, "duration_ms": 239.85}
+{"event": "http_request", "request_id": "dfb08000-cb19-421a-8958-b64b2d6645d1", "method": "POST", "route": "/api/v1/auth/switch", "status": 200, "duration_ms": 12.4}
+{"event": "http_request", "request_id": "fa9fdead-2fd0-446e-9a57-a9402c049eb6", "method": "PATCH", "route": "/api/v1/delivery/{kind}/{id_}", "status": 200, "duration_ms": 11.77}
+{"event": "http_request", "request_id": "dda65c40-3ff3-4050-89f2-8f31d2b707fd", "method": "POST", "route": "/api/v1/auth/login", "status": 200, "duration_ms": 250.6}
+{"event": "http_request", "request_id": "c5cb56f9-68c6-4c27-9e7f-306aa2b09437", "method": "POST", "route": "/api/v1/auth/switch", "status": 200, "duration_ms": 9.45}
+{"event": "http_request", "request_id": "8dca3078-42fd-4d9c-b95c-3c92ee2425b1", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 404, "duration_ms": 9.68}
+{"event": "http_request", "request_id": "6643fc5d-c784-4fd1-ac86-e5e7e83d1ef6", "method": "GET", "route": "/api/v1/command/snapshot", "status": 200, "duration_ms": 29.26}
+{"event": "http_request", "request_id": "7bed576e-0854-434f-9337-9c37abfaf8ac", "method": "GET", "route": "/api/v1/command/snapshot", "status": 404, "duration_ms": 8.16}
+{"event": "http_request", "request_id": "36366fca-af75-46a7-a3ce-ecb8749f3c3e", "method": "GET", "route": "/api/v1/command/snapshot", "status": 422, "duration_ms": 5.07}
+...
+4 passed in 7.04s

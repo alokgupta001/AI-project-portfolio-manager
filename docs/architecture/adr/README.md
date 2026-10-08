@@ -15,3 +15,7 @@ Records 001–006 are the Sprint 00 **proposed baseline**. Record 007 describes 
 | [009](009-enterprise-shell.md) | Enterprise shell, native accessible primitives, semantic themes and deferred UI dependencies |
 | [010](010-delivery-system-of-record.md) | Scoped delivery records, immutable plans/ledger, typed consumers and isolated demo |
 | [011](011-resource-capacity.md) | Independent resources, local-date capacity, workforce grants and immutable allocation snapshots |
+
+- [012 — Versioned assessments and quarantined evidence](012-assessment-engine.md): implemented Sprint 06 boundaries.
+
+- [ADR 013 — Shared deterministic command-center snapshots](013-command-center.md)

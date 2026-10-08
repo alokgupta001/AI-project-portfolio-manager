@@ -1374,3 +1374,148 @@ body > main > footer {
   margin-top: 0.3rem;
   color: var(--muted);
 }
+
+.assessment-columns {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.25rem;
+}
+.assessment-card {
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--line);
+}
+.assessment-workspace fieldset {
+  min-width: 0;
+  border: 1px solid var(--line);
+  border-radius: 0.75rem;
+  padding: 1rem;
+  margin: 1rem 0;
+}
+.assessment-score {
+  margin: 1rem 0;
+}
+.assessment-track {
+  height: 0.7rem;
+  background: var(--surface-alt);
+  border-radius: 1rem;
+  margin-top: 0.3rem;
+  overflow: hidden;
+}
+.assessment-track > div {
+  height: 100%;
+  background: var(--accent);
+}
+.assessment-workspace .button-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0.75rem 0;
+}
+.assessment-workspace .panel {
+  min-width: 0;
+}
+.assessment-workspace table {
+  width: 100%;
+}
+@media (max-width: 900px) {
+  .assessment-columns {
+    grid-template-columns: 1fr;
+  }
+}
+
+.evidence-preview {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  max-height: 24rem;
+  overflow: auto;
+  padding: 1rem;
+  background: var(--surface-alt);
+}
+
+.assessment-workspace .page-heading {
+  display: block;
+}
+.assessment-workspace .table-scroll table {
+  min-width: 620px;
+}
+.assessment-workspace .table-scroll th,
+.assessment-workspace .table-scroll td {
+  overflow-wrap: normal;
+}
+
+/* Sprint 07 command center */
+.command-filters {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  gap: 1rem;
+}
+.command-filters > small {
+  flex-basis: 100%;
+}
+.command-filters label {
+  min-width: 10rem;
+  flex: 1;
+}
+.command-bars {
+  display: grid;
+  gap: 1rem;
+  padding: 1rem 0;
+}
+.command-track {
+  height: 12px;
+  background: var(--line);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.command-track > div {
+  height: 100%;
+  background: var(--accent);
+}
+.command-discrepancy {
+  border-left: 4px solid #b45309;
+  padding: 1rem;
+  background: var(--surface);
+}
+.command-records {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+  gap: 1rem;
+}
+.command-records article {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 1rem;
+  overflow-wrap: anywhere;
+}
+.table-scroll small {
+  display: block;
+  font-weight: normal;
+}
+
+.command-workspace {
+  display: grid;
+  gap: 20px;
+  min-width: 0;
+}
+.command-workspace .table-scroll table {
+  min-width: 700px;
+}
+.command-workspace .table-scroll th,
+.command-workspace .table-scroll td {
+  overflow-wrap: normal;
+}
+.command-workspace .tabs,
+.command-workspace .button-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+.command-workspace .button-row {
+  margin-top: 16px;
+}
+.command-records article > button {
+  display: block;
+  margin-top: 12px;
+}

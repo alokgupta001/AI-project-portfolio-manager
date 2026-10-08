@@ -33,16 +33,6 @@ export function ThemeControl() {
 }
 export const futureModules = [
   {
-    name: "Maturity assessments",
-    sprint: "06",
-    detail: "Understand capabilities and improvement gaps.",
-  },
-  {
-    name: "Portfolio intelligence",
-    sprint: "07",
-    detail: "Explore health, delivery and risk evidence.",
-  },
-  {
     name: "AI PMO copilot",
     sprint: "14",
     detail: "Ask questions grounded in your organization's data.",
@@ -110,6 +100,8 @@ export function Shell({
   const destinations = [
     { name: "Workspace overview", href: "/", icon: "◈" },
     { name: "Projects", href: "/projects", icon: "▤" },
+    { name: "Maturity assessments", href: "/assessments", icon: "◉" },
+    { name: "Command center", href: "/command-center", icon: "◈" },
     { name: "Resource planning", href: "/resources", icon: "▦" },
     { name: "Portfolios", href: "/portfolios", icon: "▦" },
     ...(role === "Admin"
@@ -229,15 +221,19 @@ export function Shell({
                 ? "Overview"
                 : path === "/design-system"
                   ? "Component gallery"
-                  : path.startsWith("/resources")
-                    ? "Resource planning"
-                    : path.startsWith("/projects")
-                      ? "Projects"
-                      : path.startsWith("/portfolios")
-                        ? "Portfolios"
-                        : path === "/organization"
-                          ? "Organization setup"
-                          : "Account & access"}
+                  : path.startsWith("/command-center")
+                    ? "Command center"
+                    : path.startsWith("/assessments")
+                      ? "Maturity assessments"
+                      : path.startsWith("/resources")
+                        ? "Resource planning"
+                        : path.startsWith("/projects")
+                          ? "Projects"
+                          : path.startsWith("/portfolios")
+                            ? "Portfolios"
+                            : path === "/organization"
+                              ? "Organization setup"
+                              : "Account & access"}
             </span>
           </nav>
           {children}

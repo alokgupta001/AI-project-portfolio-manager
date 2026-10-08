@@ -9,14 +9,18 @@ from sqlalchemy.engine import make_url
 url = os.environ.get("PPM_MIGRATION_DATABASE_URL", "")
 if os.environ.get("PPM_APP_ENV") != "test" or make_url(url).database != "ppm_test":
     raise SystemExit("Refusing migration lifecycle check outside ppm_test/test environment")
+
+env = os.environ.copy()
+env["PYTHONPATH"] = os.pathsep.join(["services/api", "services/worker", "."])
+
 commands = [
-    ["alembic", "upgrade", "head"],
-    ["alembic", "downgrade", "base"],
-    ["alembic", "upgrade", "head"],
-    ["alembic", "upgrade", "head"],
-    ["alembic", "check"],
+    [sys.executable, "-m", "alembic", "upgrade", "head"],
+    [sys.executable, "-m", "alembic", "downgrade", "base"],
+    [sys.executable, "-m", "alembic", "upgrade", "head"],
+    [sys.executable, "-m", "alembic", "upgrade", "head"],
+    [sys.executable, "-m", "alembic", "check"],
     [sys.executable, "-m", "pytest", "-q"],
 ]
 for command in commands:
     print("Running:", " ".join(command), flush=True)
-    subprocess.run(command, check=True)
+    subprocess.run(command, check=True, env=env)

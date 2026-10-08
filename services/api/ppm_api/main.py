@@ -15,7 +15,11 @@ from redis.asyncio import Redis
 from sqlalchemy import select, text
 from starlette.exceptions import HTTPException
 
+import ppm_api.assessment_tables  # noqa: F401 — registers assessment tables into TABLES
+import ppm_api.command_tables  # noqa: F401
+from ppm_api.assessment import router as assessment_router
 from ppm_api.capacity import router as capacity_router
+from ppm_api.command import router as command_router
 from ppm_api.config import Settings, load_settings
 from ppm_api.database import FoundationState, make_engine
 from ppm_api.delivery import DomainError
@@ -70,7 +74,9 @@ def create_app(settings: Settings | None = None) -> FastAPI:
             await app.state.engine.dispose()
 
     app = FastAPI(title="Enterprise PPM foundation", version="0.1.0", lifespan=lifespan)
+    app.include_router(command_router)
     app.include_router(capacity_router)
+    app.include_router(assessment_router)
 
     @app.middleware("http")
     async def request_context(request: Request, call_next: Callable[..., Awaitable[Any]]) -> Any:
@@ -172,7 +178,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
                 if result.scalar_one_or_none() is None:
                     raise RuntimeError("Missing migration checkpoint")
                 revision = await conn.scalar(text("SELECT version_num FROM alembic_version"))
-                if revision != "0004_capacity":
+                if revision != "0006_command_center":
                     raise RuntimeError("Schema revision mismatch")
 
         async def redis_probe() -> None:

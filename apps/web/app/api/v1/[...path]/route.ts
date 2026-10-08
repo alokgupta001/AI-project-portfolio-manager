@@ -30,7 +30,8 @@ async function proxy(
   const body = ["GET", "HEAD"].includes(request.method)
     ? undefined
     : await request.text();
-  if (body && body.length > 16384) return new Response(null, { status: 413 });
+  if (body && body.length > (path[0] === "assessment" ? 2097152 : 16384))
+    return new Response(null, { status: 413 });
   try {
     const result = await fetch(
       `${origin}/api/v1/${path.join("/")}${request.nextUrl.search}`,
@@ -44,10 +45,15 @@ async function proxy(
       },
     );
     const output = new Headers({
-      "Content-Type": "application/json",
+      "Content-Type": result.headers.get("content-type") || "application/json",
       "Cache-Control": "no-store",
     });
-    for (const name of ["x-request-id", "retry-after"]) {
+    for (const name of [
+      "x-request-id",
+      "retry-after",
+      "content-disposition",
+      "x-content-type-options",
+    ]) {
       const value = result.headers.get(name);
       if (value) output.set(name, value);
     }
@@ -65,4 +71,10 @@ async function proxy(
   }
 }
 
-export { proxy as GET, proxy as POST, proxy as PATCH, proxy as DELETE };
+export {
+  proxy as GET,
+  proxy as POST,
+  proxy as PATCH,
+  proxy as PUT,
+  proxy as DELETE,
+};

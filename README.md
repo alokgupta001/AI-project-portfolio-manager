@@ -1,18 +1,18 @@
 # Enterprise PPM Intelligence and Transformation Platform
 
-Sprint 05 adds resource profiles, working calendars, staffing, capacity/effort measures
-and immutable allocation snapshots to the existing delivery workspace. Source specifications
-are preserved. Assessments, AI and cloud deployment remain planned.
+Sprint 07 adds a portfolio command center with four dashboards, traceable deterministic
+metrics, risk management and saved views to the delivery/resource/assessment workspace.
+Source specifications are preserved. AI and cloud deployment remain planned.
 
 ## Start here
 
 Continuing in Antigravity? Use [the token-efficient agent entry point](ANTIGRAVITY.md)
 and its copy-ready prompt. Current checkpoint remains in the latest handoff.
 
-1. Follow [identity setup and first-admin activation](docs/IDENTITY-DEVELOPMENT.md), then open [resource planning](http://localhost:3000/resources). Read the [Sprint 05 report](docs/sprints/SPRINT-05-REPORT.md) and [actual checks](docs/verification/SPRINT-05-CHECKS.md).
+1. Follow [identity setup and first-admin activation](docs/IDENTITY-DEVELOPMENT.md), then open the [command center](http://localhost:3000/command-center). Read the [Sprint 07 report](docs/sprints/SPRINT-07-REPORT.md) and [actual checks](docs/verification/SPRINT-07-CHECKS.md).
 2. Review the [decision register](docs/requirements/decisions-and-assumptions.md), especially scope interpretations, deployment, data handling, and budget-dependent choices.
 3. Use the [roadmap](docs/requirements/roadmap.md) and [coverage matrix](docs/requirements/coverage.md) to follow the implementation sequence.
-4. Before a separately authorized Sprint 06, read the [latest handoff](docs/handoffs/LATEST.md) and use its prepared next prompt.
+4. Before a separately authorized Sprint 08, read the [latest handoff](docs/handoffs/LATEST.md) and follow its continuation instructions.
 
 ## Documentation map
 
@@ -34,6 +34,6 @@ and its copy-ready prompt. Current checkpoint remains in the latest handoff.
 
 Open `C:\Users\alokg\OneDrive\Documents\Codex\enterprise-ppm` as the project folder. Use Python 3.12 to run `scripts/bootstrap.py`, then `docker compose up --build -d --wait` with Docker's Linux engine running. The setup guide covers executable paths, frozen installs and test commands. Web/API ports are 3000/8000; database/broker host ports are 15432/16379. Configuration secrets remain in ignored `.env`.
 
-Sprint 04 is complete locally. Start with `/organization` as Admin, then `/portfolios` and `/projects`. The normal local Demo tenant was preserved; [isolated business demo](docs/DEMO-DEVELOPMENT.md) runs on port 3002 with its own activation. Git has no commit or remote; hosted CI has not run. Sprint 05 requires separate authorization.
+Sprint 06 is complete locally at migration `0005_assessment`. Existing normal data and the installation checkpoint were preserved. The [isolated business demo](docs/DEMO-DEVELOPMENT.md) uses port 3002 with its own activation. Sprint 06 changes remain uncommitted; hosted CI has not run. Sprint 07 requires separate authorization.
 
 Workspace: http://localhost:3000 · Component gallery: `/design-system` (sign-in required) · Operator diagnostics: `/system`. See the [frontend contract](docs/contracts/frontend.md) for reusable components.

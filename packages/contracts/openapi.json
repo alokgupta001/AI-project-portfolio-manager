@@ -1,6 +1,50 @@
 {
   "components": {
     "schemas": {
+      "AccessInput": {
+        "additionalProperties": false,
+        "properties": {
+          "active": {
+            "default": true,
+            "title": "Active",
+            "type": "boolean"
+          },
+          "assessment_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Assessment Id"
+          },
+          "framework_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Framework Id"
+          },
+          "user_id": {
+            "format": "uuid",
+            "title": "User Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "user_id"
+        ],
+        "title": "AccessInput",
+        "type": "object"
+      },
       "AccountView": {
         "properties": {
           "email": {
@@ -47,6 +91,56 @@
           "organizations"
         ],
         "title": "AccountView",
+        "type": "object"
+      },
+      "ActionInput": {
+        "additionalProperties": false,
+        "properties": {
+          "note": {
+            "default": "",
+            "maxLength": 2000,
+            "title": "Note",
+            "type": "string"
+          }
+        },
+        "title": "ActionInput",
+        "type": "object"
+      },
+      "Adjustment": {
+        "additionalProperties": false,
+        "properties": {
+          "answer_id": {
+            "format": "uuid",
+            "title": "Answer Id",
+            "type": "string"
+          },
+          "reviewer_note": {
+            "maxLength": 2000,
+            "minLength": 1,
+            "title": "Reviewer Note",
+            "type": "string"
+          },
+          "reviewer_score": {
+            "anyOf": [
+              {
+                "maximum": 100.0,
+                "minimum": 0.0,
+                "type": "number"
+              },
+              {
+                "pattern": "^(?!^[-+.]*$)[+-]?0*(?:\\d{0,3}|(?=[\\d.]{1,8}0*$)\\d{0,3}\\.\\d{0,4}0*$)",
+                "type": "string"
+              }
+            ],
+            "title": "Reviewer Score"
+          }
+        },
+        "required": [
+          "answer_id",
+          "reviewer_score",
+          "reviewer_note"
+        ],
+        "title": "Adjustment",
         "type": "object"
       },
       "AlignmentInput-Input": {
@@ -352,6 +446,344 @@
         "title": "AllocationInput",
         "type": "object"
       },
+      "AnswerBatchInput": {
+        "additionalProperties": false,
+        "properties": {
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/AnswerInput"
+            },
+            "maxItems": 500,
+            "title": "Items",
+            "type": "array"
+          }
+        },
+        "required": [
+          "items"
+        ],
+        "title": "AnswerBatchInput",
+        "type": "object"
+      },
+      "AnswerInput": {
+        "additionalProperties": false,
+        "properties": {
+          "evidence_text": {
+            "default": "",
+            "maxLength": 8000,
+            "title": "Evidence Text",
+            "type": "string"
+          },
+          "question_id": {
+            "format": "uuid",
+            "title": "Question Id",
+            "type": "string"
+          },
+          "value": {
+            "anyOf": [
+              {
+                "maxLength": 8000,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Value"
+          }
+        },
+        "required": [
+          "question_id"
+        ],
+        "title": "AnswerInput",
+        "type": "object"
+      },
+      "AnswerRecord": {
+        "additionalProperties": false,
+        "properties": {
+          "evidence_text": {
+            "default": "",
+            "maxLength": 8000,
+            "title": "Evidence Text",
+            "type": "string"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "question_id": {
+            "format": "uuid",
+            "title": "Question Id",
+            "type": "string"
+          },
+          "reviewer_note": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reviewer Note"
+          },
+          "reviewer_score": {
+            "anyOf": [
+              {
+                "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reviewer Score"
+          },
+          "value": {
+            "anyOf": [
+              {
+                "maxLength": 8000,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Value"
+          }
+        },
+        "required": [
+          "question_id",
+          "id",
+          "reviewer_score",
+          "reviewer_note"
+        ],
+        "title": "AnswerRecord",
+        "type": "object"
+      },
+      "AssessmentDetail": {
+        "additionalProperties": false,
+        "properties": {
+          "answers": {
+            "items": {
+              "$ref": "#/components/schemas/AnswerRecord"
+            },
+            "title": "Answers",
+            "type": "array"
+          },
+          "assessment": {
+            "$ref": "#/components/schemas/AssessmentRecord"
+          },
+          "notes": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Notes",
+            "type": "array"
+          },
+          "snapshot": {
+            "$ref": "#/components/schemas/FrameworkInput-Output"
+          }
+        },
+        "required": [
+          "assessment",
+          "snapshot",
+          "answers",
+          "notes"
+        ],
+        "title": "AssessmentDetail",
+        "type": "object"
+      },
+      "AssessmentRecord": {
+        "additionalProperties": false,
+        "properties": {
+          "assigned_to": {
+            "format": "uuid",
+            "title": "Assigned To",
+            "type": "string"
+          },
+          "can_answer": {
+            "title": "Can Answer",
+            "type": "boolean"
+          },
+          "can_read_evidence": {
+            "title": "Can Read Evidence",
+            "type": "boolean"
+          },
+          "can_review": {
+            "title": "Can Review",
+            "type": "boolean"
+          },
+          "department_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Department Id"
+          },
+          "dimension_scores": {
+            "items": {
+              "$ref": "#/components/schemas/DimensionScoreDetail"
+            },
+            "title": "Dimension Scores",
+            "type": "array"
+          },
+          "framework_name": {
+            "title": "Framework Name",
+            "type": "string"
+          },
+          "framework_version": {
+            "title": "Framework Version",
+            "type": "integer"
+          },
+          "framework_version_id": {
+            "format": "uuid",
+            "title": "Framework Version Id",
+            "type": "string"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "name": {
+            "maxLength": 160,
+            "minLength": 1,
+            "title": "Name",
+            "type": "string"
+          },
+          "overall_score": {
+            "anyOf": [
+              {
+                "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Overall Score"
+          },
+          "provisional": {
+            "title": "Provisional",
+            "type": "boolean"
+          },
+          "reviewer_id": {
+            "format": "uuid",
+            "title": "Reviewer Id",
+            "type": "string"
+          },
+          "revision": {
+            "title": "Revision",
+            "type": "integer"
+          },
+          "status": {
+            "enum": [
+              "draft",
+              "submitted",
+              "in_review",
+              "returned",
+              "completed"
+            ],
+            "title": "Status",
+            "type": "string"
+          },
+          "team_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Team Id"
+          }
+        },
+        "required": [
+          "name",
+          "framework_version_id",
+          "assigned_to",
+          "reviewer_id",
+          "id",
+          "revision",
+          "status",
+          "framework_name",
+          "framework_version",
+          "overall_score",
+          "dimension_scores",
+          "provisional",
+          "can_read_evidence",
+          "can_answer",
+          "can_review"
+        ],
+        "title": "AssessmentRecord",
+        "type": "object"
+      },
+      "AssignmentInput": {
+        "additionalProperties": false,
+        "properties": {
+          "assigned_to": {
+            "format": "uuid",
+            "title": "Assigned To",
+            "type": "string"
+          },
+          "department_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Department Id"
+          },
+          "framework_version_id": {
+            "format": "uuid",
+            "title": "Framework Version Id",
+            "type": "string"
+          },
+          "name": {
+            "maxLength": 160,
+            "minLength": 1,
+            "title": "Name",
+            "type": "string"
+          },
+          "reviewer_id": {
+            "format": "uuid",
+            "title": "Reviewer Id",
+            "type": "string"
+          },
+          "team_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Team Id"
+          }
+        },
+        "required": [
+          "name",
+          "framework_version_id",
+          "assigned_to",
+          "reviewer_id"
+        ],
+        "title": "AssignmentInput",
+        "type": "object"
+      },
       "AuditView": {
         "properties": {
           "action": {
@@ -565,6 +997,168 @@
           "snapshot"
         ],
         "title": "BaselineView",
+        "type": "object"
+      },
+      "BenefitInput-Input": {
+        "additionalProperties": false,
+        "properties": {
+          "archived": {
+            "default": false,
+            "title": "Archived",
+            "type": "boolean"
+          },
+          "description": {
+            "default": "",
+            "maxLength": 4000,
+            "title": "Description",
+            "type": "string"
+          },
+          "kind": {
+            "const": "benefits",
+            "default": "benefits",
+            "title": "Kind",
+            "type": "string"
+          },
+          "name": {
+            "maxLength": 160,
+            "minLength": 1,
+            "title": "Name",
+            "type": "string"
+          },
+          "period_end": {
+            "format": "date",
+            "title": "Period End",
+            "type": "string"
+          },
+          "period_start": {
+            "format": "date",
+            "title": "Period Start",
+            "type": "string"
+          },
+          "project_id": {
+            "format": "uuid",
+            "title": "Project Id",
+            "type": "string"
+          },
+          "realized": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "pattern": "^(?!^[-+.]*$)[+-]?0*(?:\\d{0,16}|(?=[\\d.]{1,19}0*$)\\d{0,16}\\.\\d{0,2}0*$)",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Realized"
+          },
+          "target": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "pattern": "^(?!^[-+.]*$)[+-]?0*(?:\\d{0,16}|(?=[\\d.]{1,19}0*$)\\d{0,16}\\.\\d{0,2}0*$)",
+                "type": "string"
+              }
+            ],
+            "title": "Target"
+          },
+          "unit": {
+            "maxLength": 40,
+            "minLength": 1,
+            "title": "Unit",
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "project_id",
+          "unit",
+          "target",
+          "period_start",
+          "period_end"
+        ],
+        "title": "BenefitInput",
+        "type": "object"
+      },
+      "BenefitInput-Output": {
+        "additionalProperties": false,
+        "properties": {
+          "archived": {
+            "default": false,
+            "title": "Archived",
+            "type": "boolean"
+          },
+          "description": {
+            "default": "",
+            "maxLength": 4000,
+            "title": "Description",
+            "type": "string"
+          },
+          "kind": {
+            "const": "benefits",
+            "default": "benefits",
+            "title": "Kind",
+            "type": "string"
+          },
+          "name": {
+            "maxLength": 160,
+            "minLength": 1,
+            "title": "Name",
+            "type": "string"
+          },
+          "period_end": {
+            "format": "date",
+            "title": "Period End",
+            "type": "string"
+          },
+          "period_start": {
+            "format": "date",
+            "title": "Period Start",
+            "type": "string"
+          },
+          "project_id": {
+            "format": "uuid",
+            "title": "Project Id",
+            "type": "string"
+          },
+          "realized": {
+            "anyOf": [
+              {
+                "pattern": "^(?!^[-+.]*$)[+-]?0*(?:\\d{0,16}|(?=[\\d.]{1,19}0*$)\\d{0,16}\\.\\d{0,2}0*$)",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Realized"
+          },
+          "target": {
+            "pattern": "^(?!^[-+.]*$)[+-]?0*(?:\\d{0,16}|(?=[\\d.]{1,19}0*$)\\d{0,16}\\.\\d{0,2}0*$)",
+            "title": "Target",
+            "type": "string"
+          },
+          "unit": {
+            "maxLength": 40,
+            "minLength": 1,
+            "title": "Unit",
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "project_id",
+          "unit",
+          "target",
+          "period_start",
+          "period_end"
+        ],
+        "title": "BenefitInput",
         "type": "object"
       },
       "BlockerInput": {
@@ -1394,6 +1988,150 @@
         "title": "CapacityWeek",
         "type": "object"
       },
+      "CommandSnapshot": {
+        "properties": {
+          "amber": {
+            "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+            "title": "Amber",
+            "type": "string"
+          },
+          "compute_ms": {
+            "title": "Compute Ms",
+            "type": "number"
+          },
+          "computed_at": {
+            "format": "date-time",
+            "title": "Computed At",
+            "type": "string"
+          },
+          "end": {
+            "format": "date",
+            "title": "End",
+            "type": "string"
+          },
+          "limitations": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Limitations",
+            "type": "array"
+          },
+          "metric_version": {
+            "const": "command-v1",
+            "default": "command-v1",
+            "title": "Metric Version",
+            "type": "string"
+          },
+          "policy_revision": {
+            "title": "Policy Revision",
+            "type": "integer"
+          },
+          "portfolio_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Portfolio Id"
+          },
+          "projects": {
+            "items": {
+              "$ref": "#/components/schemas/ProjectMetrics"
+            },
+            "title": "Projects",
+            "type": "array"
+          },
+          "records": {
+            "items": {
+              "$ref": "#/components/schemas/RecordView"
+            },
+            "title": "Records",
+            "type": "array"
+          },
+          "red": {
+            "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+            "title": "Red",
+            "type": "string"
+          },
+          "resources": {
+            "items": {
+              "$ref": "#/components/schemas/ResourceMetric"
+            },
+            "title": "Resources",
+            "type": "array"
+          },
+          "risk_rule": {
+            "const": "risk-rule-v1",
+            "default": "risk-rule-v1",
+            "title": "Risk Rule",
+            "type": "string"
+          },
+          "scope": {
+            "default": "Current authorized projects only; hidden projects are not counted",
+            "title": "Scope",
+            "type": "string"
+          },
+          "stale_days": {
+            "title": "Stale Days",
+            "type": "integer"
+          },
+          "start": {
+            "format": "date",
+            "title": "Start",
+            "type": "string"
+          },
+          "teams": {
+            "items": {
+              "$ref": "#/components/schemas/TeamMetric"
+            },
+            "title": "Teams",
+            "type": "array"
+          },
+          "timezone": {
+            "title": "Timezone",
+            "type": "string"
+          },
+          "totals": {
+            "items": {
+              "$ref": "#/components/schemas/Metric"
+            },
+            "title": "Totals",
+            "type": "array"
+          },
+          "velocity": {
+            "items": {
+              "$ref": "#/components/schemas/Velocity"
+            },
+            "title": "Velocity",
+            "type": "array"
+          }
+        },
+        "required": [
+          "computed_at",
+          "start",
+          "end",
+          "timezone",
+          "portfolio_id",
+          "policy_revision",
+          "amber",
+          "red",
+          "stale_days",
+          "projects",
+          "totals",
+          "records",
+          "velocity",
+          "resources",
+          "teams",
+          "limitations",
+          "compute_ms"
+        ],
+        "title": "CommandSnapshot",
+        "type": "object"
+      },
       "CompleteChallenge": {
         "additionalProperties": false,
         "properties": {
@@ -1622,6 +2360,158 @@
           "status"
         ],
         "title": "DependencyStatus",
+        "type": "object"
+      },
+      "Dimension-Input": {
+        "additionalProperties": false,
+        "properties": {
+          "description": {
+            "default": "",
+            "maxLength": 2000,
+            "title": "Description",
+            "type": "string"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "name": {
+            "maxLength": 160,
+            "minLength": 1,
+            "title": "Name",
+            "type": "string"
+          },
+          "questions": {
+            "items": {
+              "$ref": "#/components/schemas/Question-Input"
+            },
+            "maxItems": 50,
+            "title": "Questions",
+            "type": "array"
+          },
+          "weight": {
+            "anyOf": [
+              {
+                "exclusiveMinimum": 0.0,
+                "maximum": 1.0,
+                "type": "number"
+              },
+              {
+                "pattern": "^(?!^[-+.]*$)[+-]?0*(?:\\d{0,1}|(?=[\\d.]{1,7}0*$)\\d{0,1}\\.\\d{0,5}0*$)",
+                "type": "string"
+              }
+            ],
+            "title": "Weight"
+          }
+        },
+        "required": [
+          "name",
+          "weight"
+        ],
+        "title": "Dimension",
+        "type": "object"
+      },
+      "Dimension-Output": {
+        "additionalProperties": false,
+        "properties": {
+          "description": {
+            "default": "",
+            "maxLength": 2000,
+            "title": "Description",
+            "type": "string"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "name": {
+            "maxLength": 160,
+            "minLength": 1,
+            "title": "Name",
+            "type": "string"
+          },
+          "questions": {
+            "items": {
+              "$ref": "#/components/schemas/Question-Output"
+            },
+            "maxItems": 50,
+            "title": "Questions",
+            "type": "array"
+          },
+          "weight": {
+            "pattern": "^(?!^[-+.]*$)[+-]?0*(?:\\d{0,1}|(?=[\\d.]{1,7}0*$)\\d{0,1}\\.\\d{0,5}0*$)",
+            "title": "Weight",
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "weight"
+        ],
+        "title": "Dimension",
+        "type": "object"
+      },
+      "DimensionScoreDetail": {
+        "additionalProperties": false,
+        "properties": {
+          "answered_count": {
+            "title": "Answered Count",
+            "type": "integer"
+          },
+          "coverage_percent": {
+            "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+            "title": "Coverage Percent",
+            "type": "string"
+          },
+          "dimension_id": {
+            "format": "uuid",
+            "title": "Dimension Id",
+            "type": "string"
+          },
+          "dimension_name": {
+            "title": "Dimension Name",
+            "type": "string"
+          },
+          "evidence_coverage_percent": {
+            "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+            "title": "Evidence Coverage Percent",
+            "type": "string"
+          },
+          "score": {
+            "anyOf": [
+              {
+                "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Score"
+          },
+          "total_required": {
+            "title": "Total Required",
+            "type": "integer"
+          },
+          "weight": {
+            "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+            "title": "Weight",
+            "type": "string"
+          }
+        },
+        "required": [
+          "dimension_id",
+          "dimension_name",
+          "score",
+          "weight",
+          "answered_count",
+          "total_required",
+          "coverage_percent",
+          "evidence_coverage_percent"
+        ],
+        "title": "DimensionScoreDetail",
         "type": "object"
       },
       "EffortCoverageInput": {
@@ -1893,6 +2783,123 @@
         "title": "ErrorResponse",
         "type": "object"
       },
+      "EventRecord": {
+        "properties": {
+          "actor_id": {
+            "format": "uuid",
+            "title": "Actor Id",
+            "type": "string"
+          },
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "details": {
+            "additionalProperties": true,
+            "title": "Details",
+            "type": "object"
+          },
+          "event": {
+            "title": "Event",
+            "type": "string"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "note": {
+            "title": "Note",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "actor_id",
+          "event",
+          "note",
+          "details",
+          "created_at"
+        ],
+        "title": "EventRecord",
+        "type": "object"
+      },
+      "EvidenceInput": {
+        "additionalProperties": false,
+        "properties": {
+          "content_base64": {
+            "maxLength": 700000,
+            "title": "Content Base64",
+            "type": "string"
+          },
+          "file_name": {
+            "maxLength": 160,
+            "minLength": 1,
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9 _.-]*[.]txt$",
+            "title": "File Name",
+            "type": "string"
+          },
+          "question_id": {
+            "format": "uuid",
+            "title": "Question Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "question_id",
+          "file_name",
+          "content_base64"
+        ],
+        "title": "EvidenceInput",
+        "type": "object"
+      },
+      "EvidenceRecord": {
+        "properties": {
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "file_name": {
+            "title": "File Name",
+            "type": "string"
+          },
+          "file_size": {
+            "title": "File Size",
+            "type": "integer"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "question_id": {
+            "format": "uuid",
+            "title": "Question Id",
+            "type": "string"
+          },
+          "released": {
+            "title": "Released",
+            "type": "boolean"
+          },
+          "sha256": {
+            "title": "Sha256",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "question_id",
+          "file_name",
+          "file_size",
+          "sha256",
+          "released",
+          "created_at"
+        ],
+        "title": "EvidenceRecord",
+        "type": "object"
+      },
       "ExpenditureInput-Input": {
         "additionalProperties": false,
         "properties": {
@@ -2038,6 +3045,41 @@
         "title": "ExpenditureInput",
         "type": "object"
       },
+      "Fact": {
+        "properties": {
+          "detail": {
+            "title": "Detail",
+            "type": "string"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "kind": {
+            "title": "Kind",
+            "type": "string"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "updated_at": {
+            "format": "date-time",
+            "title": "Updated At",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "kind",
+          "name",
+          "detail",
+          "updated_at"
+        ],
+        "title": "Fact",
+        "type": "object"
+      },
       "FoundationResponse": {
         "properties": {
           "environment": {
@@ -2060,8 +3102,8 @@
             "type": "string"
           },
           "schema_revision": {
-            "const": "0004_capacity",
-            "default": "0004_capacity",
+            "const": "0005_assessment",
+            "default": "0005_assessment",
             "title": "Schema Revision",
             "type": "string"
           }
@@ -2072,6 +3114,175 @@
           "environment"
         ],
         "title": "FoundationResponse",
+        "type": "object"
+      },
+      "FrameworkInput-Input": {
+        "additionalProperties": false,
+        "properties": {
+          "archived": {
+            "default": false,
+            "title": "Archived",
+            "type": "boolean"
+          },
+          "category": {
+            "default": "custom",
+            "enum": [
+              "pmo",
+              "agile",
+              "governance",
+              "delivery",
+              "custom"
+            ],
+            "title": "Category",
+            "type": "string"
+          },
+          "description": {
+            "default": "",
+            "maxLength": 4000,
+            "title": "Description",
+            "type": "string"
+          },
+          "dimensions": {
+            "items": {
+              "$ref": "#/components/schemas/Dimension-Input"
+            },
+            "maxItems": 20,
+            "title": "Dimensions",
+            "type": "array"
+          },
+          "name": {
+            "maxLength": 160,
+            "minLength": 1,
+            "title": "Name",
+            "type": "string"
+          }
+        },
+        "required": [
+          "name"
+        ],
+        "title": "FrameworkInput",
+        "type": "object"
+      },
+      "FrameworkInput-Output": {
+        "additionalProperties": false,
+        "properties": {
+          "archived": {
+            "default": false,
+            "title": "Archived",
+            "type": "boolean"
+          },
+          "category": {
+            "default": "custom",
+            "enum": [
+              "pmo",
+              "agile",
+              "governance",
+              "delivery",
+              "custom"
+            ],
+            "title": "Category",
+            "type": "string"
+          },
+          "description": {
+            "default": "",
+            "maxLength": 4000,
+            "title": "Description",
+            "type": "string"
+          },
+          "dimensions": {
+            "items": {
+              "$ref": "#/components/schemas/Dimension-Output"
+            },
+            "maxItems": 20,
+            "title": "Dimensions",
+            "type": "array"
+          },
+          "name": {
+            "maxLength": 160,
+            "minLength": 1,
+            "title": "Name",
+            "type": "string"
+          }
+        },
+        "required": [
+          "name"
+        ],
+        "title": "FrameworkInput",
+        "type": "object"
+      },
+      "FrameworkRecord": {
+        "additionalProperties": false,
+        "properties": {
+          "archived": {
+            "default": false,
+            "title": "Archived",
+            "type": "boolean"
+          },
+          "can_edit": {
+            "title": "Can Edit",
+            "type": "boolean"
+          },
+          "category": {
+            "default": "custom",
+            "enum": [
+              "pmo",
+              "agile",
+              "governance",
+              "delivery",
+              "custom"
+            ],
+            "title": "Category",
+            "type": "string"
+          },
+          "description": {
+            "default": "",
+            "maxLength": 4000,
+            "title": "Description",
+            "type": "string"
+          },
+          "dimensions": {
+            "items": {
+              "$ref": "#/components/schemas/Dimension-Output"
+            },
+            "maxItems": 20,
+            "title": "Dimensions",
+            "type": "array"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "name": {
+            "maxLength": 160,
+            "minLength": 1,
+            "title": "Name",
+            "type": "string"
+          },
+          "published_version": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Published Version"
+          },
+          "revision": {
+            "title": "Revision",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "name",
+          "id",
+          "revision",
+          "published_version",
+          "can_edit"
+        ],
+        "title": "FrameworkRecord",
         "type": "object"
       },
       "GoalInput": {
@@ -2293,6 +3504,35 @@
         "title": "InviteInput",
         "type": "object"
       },
+      "Level": {
+        "additionalProperties": false,
+        "properties": {
+          "description": {
+            "default": "",
+            "maxLength": 2000,
+            "title": "Description",
+            "type": "string"
+          },
+          "label": {
+            "maxLength": 160,
+            "minLength": 1,
+            "title": "Label",
+            "type": "string"
+          },
+          "level": {
+            "maximum": 1000.0,
+            "minimum": 0.0,
+            "title": "Level",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "level",
+          "label"
+        ],
+        "title": "Level",
+        "type": "object"
+      },
       "MemberInput": {
         "additionalProperties": false,
         "properties": {
@@ -2405,6 +3645,356 @@
           "message"
         ],
         "title": "Message",
+        "type": "object"
+      },
+      "Metric": {
+        "properties": {
+          "coverage_percent": {
+            "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+            "title": "Coverage Percent",
+            "type": "string"
+          },
+          "explanation": {
+            "title": "Explanation",
+            "type": "string"
+          },
+          "facts": {
+            "items": {
+              "$ref": "#/components/schemas/Fact"
+            },
+            "title": "Facts",
+            "type": "array"
+          },
+          "freshness": {
+            "enum": [
+              "fresh",
+              "stale",
+              "missing"
+            ],
+            "title": "Freshness",
+            "type": "string"
+          },
+          "key": {
+            "title": "Key",
+            "type": "string"
+          },
+          "label": {
+            "title": "Label",
+            "type": "string"
+          },
+          "period": {
+            "title": "Period",
+            "type": "string"
+          },
+          "source": {
+            "title": "Source",
+            "type": "string"
+          },
+          "source_updated_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Source Updated At"
+          },
+          "status": {
+            "enum": [
+              "available",
+              "partial",
+              "unknown"
+            ],
+            "title": "Status",
+            "type": "string"
+          },
+          "unit": {
+            "title": "Unit",
+            "type": "string"
+          },
+          "value": {
+            "anyOf": [
+              {
+                "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Value"
+          }
+        },
+        "required": [
+          "key",
+          "label",
+          "value",
+          "unit",
+          "period",
+          "source",
+          "source_updated_at",
+          "freshness",
+          "status",
+          "coverage_percent",
+          "explanation",
+          "facts"
+        ],
+        "title": "Metric",
+        "type": "object"
+      },
+      "MetricPlanInput-Input": {
+        "additionalProperties": false,
+        "properties": {
+          "archived": {
+            "default": false,
+            "title": "Archived",
+            "type": "boolean"
+          },
+          "baseline_id": {
+            "format": "uuid",
+            "title": "Baseline Id",
+            "type": "string"
+          },
+          "calendar_id": {
+            "format": "uuid",
+            "title": "Calendar Id",
+            "type": "string"
+          },
+          "description": {
+            "default": "",
+            "maxLength": 4000,
+            "title": "Description",
+            "type": "string"
+          },
+          "forecast_cost": {
+            "anyOf": [
+              {
+                "minimum": 0.0,
+                "type": "number"
+              },
+              {
+                "pattern": "^(?!^[-+.]*$)[+-]?0*(?:\\d{0,16}|(?=[\\d.]{1,19}0*$)\\d{0,16}\\.\\d{0,2}0*$)",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Forecast Cost"
+          },
+          "kind": {
+            "const": "metric_plans",
+            "default": "metric_plans",
+            "title": "Kind",
+            "type": "string"
+          },
+          "name": {
+            "maxLength": 160,
+            "minLength": 1,
+            "title": "Name",
+            "type": "string"
+          },
+          "project_id": {
+            "format": "uuid",
+            "title": "Project Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "project_id",
+          "baseline_id",
+          "calendar_id"
+        ],
+        "title": "MetricPlanInput",
+        "type": "object"
+      },
+      "MetricPlanInput-Output": {
+        "additionalProperties": false,
+        "properties": {
+          "archived": {
+            "default": false,
+            "title": "Archived",
+            "type": "boolean"
+          },
+          "baseline_id": {
+            "format": "uuid",
+            "title": "Baseline Id",
+            "type": "string"
+          },
+          "calendar_id": {
+            "format": "uuid",
+            "title": "Calendar Id",
+            "type": "string"
+          },
+          "description": {
+            "default": "",
+            "maxLength": 4000,
+            "title": "Description",
+            "type": "string"
+          },
+          "forecast_cost": {
+            "anyOf": [
+              {
+                "pattern": "^(?!^[-+.]*$)[+-]?0*(?:\\d{0,16}|(?=[\\d.]{1,19}0*$)\\d{0,16}\\.\\d{0,2}0*$)",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Forecast Cost"
+          },
+          "kind": {
+            "const": "metric_plans",
+            "default": "metric_plans",
+            "title": "Kind",
+            "type": "string"
+          },
+          "name": {
+            "maxLength": 160,
+            "minLength": 1,
+            "title": "Name",
+            "type": "string"
+          },
+          "project_id": {
+            "format": "uuid",
+            "title": "Project Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "project_id",
+          "baseline_id",
+          "calendar_id"
+        ],
+        "title": "MetricPlanInput",
+        "type": "object"
+      },
+      "MetricPolicyInput-Input": {
+        "additionalProperties": false,
+        "properties": {
+          "amber": {
+            "anyOf": [
+              {
+                "exclusiveMinimum": 0.0,
+                "maximum": 100.0,
+                "type": "number"
+              },
+              {
+                "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d{0,2}0*$",
+                "type": "string"
+              }
+            ],
+            "default": "30",
+            "title": "Amber"
+          },
+          "archived": {
+            "default": false,
+            "title": "Archived",
+            "type": "boolean"
+          },
+          "description": {
+            "default": "",
+            "maxLength": 4000,
+            "title": "Description",
+            "type": "string"
+          },
+          "kind": {
+            "const": "metric_policies",
+            "default": "metric_policies",
+            "title": "Kind",
+            "type": "string"
+          },
+          "name": {
+            "maxLength": 160,
+            "minLength": 1,
+            "title": "Name",
+            "type": "string"
+          },
+          "red": {
+            "anyOf": [
+              {
+                "exclusiveMinimum": 0.0,
+                "maximum": 100.0,
+                "type": "number"
+              },
+              {
+                "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d{0,2}0*$",
+                "type": "string"
+              }
+            ],
+            "default": "60",
+            "title": "Red"
+          },
+          "stale_days": {
+            "default": 7,
+            "maximum": 365.0,
+            "minimum": 1.0,
+            "title": "Stale Days",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "name"
+        ],
+        "title": "MetricPolicyInput",
+        "type": "object"
+      },
+      "MetricPolicyInput-Output": {
+        "additionalProperties": false,
+        "properties": {
+          "amber": {
+            "default": "30",
+            "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d{0,2}0*$",
+            "title": "Amber",
+            "type": "string"
+          },
+          "archived": {
+            "default": false,
+            "title": "Archived",
+            "type": "boolean"
+          },
+          "description": {
+            "default": "",
+            "maxLength": 4000,
+            "title": "Description",
+            "type": "string"
+          },
+          "kind": {
+            "const": "metric_policies",
+            "default": "metric_policies",
+            "title": "Kind",
+            "type": "string"
+          },
+          "name": {
+            "maxLength": 160,
+            "minLength": 1,
+            "title": "Name",
+            "type": "string"
+          },
+          "red": {
+            "default": "60",
+            "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d{0,2}0*$",
+            "title": "Red",
+            "type": "string"
+          },
+          "stale_days": {
+            "default": 7,
+            "maximum": 365.0,
+            "minimum": 1.0,
+            "title": "Stale Days",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "name"
+        ],
+        "title": "MetricPolicyInput",
         "type": "object"
       },
       "MilestoneInput": {
@@ -2927,6 +4517,182 @@
         "title": "ProjectInput",
         "type": "object"
       },
+      "ProjectMetrics": {
+        "properties": {
+          "can_edit": {
+            "title": "Can Edit",
+            "type": "boolean"
+          },
+          "computed_health": {
+            "title": "Computed Health",
+            "type": "string"
+          },
+          "discrepancy": {
+            "title": "Discrepancy",
+            "type": "boolean"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "metrics": {
+            "items": {
+              "$ref": "#/components/schemas/Metric"
+            },
+            "title": "Metrics",
+            "type": "array"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "portfolio_id": {
+            "format": "uuid",
+            "title": "Portfolio Id",
+            "type": "string"
+          },
+          "reported_health": {
+            "title": "Reported Health",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "portfolio_id",
+          "reported_health",
+          "computed_health",
+          "discrepancy",
+          "can_edit",
+          "metrics"
+        ],
+        "title": "ProjectMetrics",
+        "type": "object"
+      },
+      "Question-Input": {
+        "additionalProperties": false,
+        "properties": {
+          "answer_type": {
+            "default": "rubric",
+            "enum": [
+              "boolean",
+              "rubric",
+              "text"
+            ],
+            "title": "Answer Type",
+            "type": "string"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "name": {
+            "maxLength": 160,
+            "minLength": 1,
+            "title": "Name",
+            "type": "string"
+          },
+          "required": {
+            "default": true,
+            "title": "Required",
+            "type": "boolean"
+          },
+          "rubric_levels": {
+            "items": {
+              "$ref": "#/components/schemas/Level"
+            },
+            "maxItems": 30,
+            "title": "Rubric Levels",
+            "type": "array"
+          },
+          "text": {
+            "maxLength": 2000,
+            "minLength": 1,
+            "title": "Text",
+            "type": "string"
+          },
+          "weight": {
+            "anyOf": [
+              {
+                "exclusiveMinimum": 0.0,
+                "maximum": 1000.0,
+                "type": "number"
+              },
+              {
+                "pattern": "^(?!^[-+.]*$)[+-]?0*(?:\\d{0,5}|(?=[\\d.]{1,11}0*$)\\d{0,5}\\.\\d{0,5}0*$)",
+                "type": "string"
+              }
+            ],
+            "default": "1",
+            "title": "Weight"
+          }
+        },
+        "required": [
+          "name",
+          "text"
+        ],
+        "title": "Question",
+        "type": "object"
+      },
+      "Question-Output": {
+        "additionalProperties": false,
+        "properties": {
+          "answer_type": {
+            "default": "rubric",
+            "enum": [
+              "boolean",
+              "rubric",
+              "text"
+            ],
+            "title": "Answer Type",
+            "type": "string"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "name": {
+            "maxLength": 160,
+            "minLength": 1,
+            "title": "Name",
+            "type": "string"
+          },
+          "required": {
+            "default": true,
+            "title": "Required",
+            "type": "boolean"
+          },
+          "rubric_levels": {
+            "items": {
+              "$ref": "#/components/schemas/Level"
+            },
+            "maxItems": 30,
+            "title": "Rubric Levels",
+            "type": "array"
+          },
+          "text": {
+            "maxLength": 2000,
+            "minLength": 1,
+            "title": "Text",
+            "type": "string"
+          },
+          "weight": {
+            "default": "1",
+            "pattern": "^(?!^[-+.]*$)[+-]?0*(?:\\d{0,5}|(?=[\\d.]{1,11}0*$)\\d{0,5}\\.\\d{0,5}0*$)",
+            "title": "Weight",
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "text"
+        ],
+        "title": "Question",
+        "type": "object"
+      },
       "ReadyResponse": {
         "properties": {
           "dependencies": {
@@ -2966,6 +4732,7 @@
                 "allocations": "#/components/schemas/AllocationInput-Output",
                 "availability": "#/components/schemas/AvailabilityInput",
                 "baselines": "#/components/schemas/BaselineInput",
+                "benefits": "#/components/schemas/BenefitInput-Output",
                 "blockers": "#/components/schemas/BlockerInput",
                 "budget_lines": "#/components/schemas/BudgetInput-Output",
                 "calendars": "#/components/schemas/CalendarInput-Output",
@@ -2977,6 +4744,8 @@
                 "expenditures": "#/components/schemas/ExpenditureInput-Output",
                 "goals": "#/components/schemas/GoalInput",
                 "grants": "#/components/schemas/GrantInput",
+                "metric_plans": "#/components/schemas/MetricPlanInput-Output",
+                "metric_policies": "#/components/schemas/MetricPolicyInput-Output",
                 "milestones": "#/components/schemas/MilestoneInput",
                 "portfolios": "#/components/schemas/PortfolioInput",
                 "programs": "#/components/schemas/ProgramInput",
@@ -2985,6 +4754,8 @@
                 "resource_skills": "#/components/schemas/ResourceSkillInput",
                 "resource_teams": "#/components/schemas/ResourceTeamInput",
                 "resources": "#/components/schemas/ResourceInput",
+                "risks": "#/components/schemas/RiskInput",
+                "saved_views": "#/components/schemas/SavedViewInput",
                 "settings": "#/components/schemas/SettingsInput",
                 "sprints": "#/components/schemas/SprintInput",
                 "status_updates": "#/components/schemas/StatusInput",
@@ -2996,6 +4767,21 @@
               "propertyName": "kind"
             },
             "oneOf": [
+              {
+                "$ref": "#/components/schemas/RiskInput"
+              },
+              {
+                "$ref": "#/components/schemas/BenefitInput-Output"
+              },
+              {
+                "$ref": "#/components/schemas/MetricPlanInput-Output"
+              },
+              {
+                "$ref": "#/components/schemas/MetricPolicyInput-Output"
+              },
+              {
+                "$ref": "#/components/schemas/SavedViewInput"
+              },
               {
                 "$ref": "#/components/schemas/SettingsInput"
               },
@@ -3220,6 +5006,36 @@
         "title": "ResourceInput",
         "type": "object"
       },
+      "ResourceMetric": {
+        "properties": {
+          "freshness": {
+            "title": "Freshness",
+            "type": "string"
+          },
+          "source_updated_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Source Updated At"
+          },
+          "summary": {
+            "$ref": "#/components/schemas/CapacityView"
+          }
+        },
+        "required": [
+          "summary",
+          "source_updated_at",
+          "freshness"
+        ],
+        "title": "ResourceMetric",
+        "type": "object"
+      },
       "ResourceSkillInput": {
         "additionalProperties": false,
         "properties": {
@@ -3321,6 +5137,208 @@
           "team_id"
         ],
         "title": "ResourceTeamInput",
+        "type": "object"
+      },
+      "ReviewInput": {
+        "additionalProperties": false,
+        "properties": {
+          "action": {
+            "enum": [
+              "start",
+              "return",
+              "complete"
+            ],
+            "title": "Action",
+            "type": "string"
+          },
+          "adjustments": {
+            "items": {
+              "$ref": "#/components/schemas/Adjustment"
+            },
+            "maxItems": 500,
+            "title": "Adjustments",
+            "type": "array"
+          },
+          "note": {
+            "maxLength": 2000,
+            "minLength": 1,
+            "title": "Note",
+            "type": "string"
+          }
+        },
+        "required": [
+          "action",
+          "note"
+        ],
+        "title": "ReviewInput",
+        "type": "object"
+      },
+      "RiskInput": {
+        "additionalProperties": false,
+        "properties": {
+          "archived": {
+            "default": false,
+            "title": "Archived",
+            "type": "boolean"
+          },
+          "description": {
+            "default": "",
+            "maxLength": 4000,
+            "title": "Description",
+            "type": "string"
+          },
+          "kind": {
+            "const": "risks",
+            "default": "risks",
+            "title": "Kind",
+            "type": "string"
+          },
+          "likelihood": {
+            "maximum": 5.0,
+            "minimum": 1.0,
+            "title": "Likelihood",
+            "type": "integer"
+          },
+          "mitigation": {
+            "default": "",
+            "maxLength": 4000,
+            "title": "Mitigation",
+            "type": "string"
+          },
+          "name": {
+            "maxLength": 160,
+            "minLength": 1,
+            "title": "Name",
+            "type": "string"
+          },
+          "owner_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Owner Id"
+          },
+          "project_id": {
+            "format": "uuid",
+            "title": "Project Id",
+            "type": "string"
+          },
+          "resolution": {
+            "default": "",
+            "maxLength": 4000,
+            "title": "Resolution",
+            "type": "string"
+          },
+          "review_on": {
+            "format": "date",
+            "title": "Review On",
+            "type": "string"
+          },
+          "severity": {
+            "maximum": 5.0,
+            "minimum": 1.0,
+            "title": "Severity",
+            "type": "integer"
+          },
+          "status": {
+            "default": "open",
+            "enum": [
+              "open",
+              "mitigating",
+              "accepted",
+              "closed"
+            ],
+            "title": "Status",
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "project_id",
+          "severity",
+          "likelihood",
+          "review_on"
+        ],
+        "title": "RiskInput",
+        "type": "object"
+      },
+      "SavedViewInput": {
+        "additionalProperties": false,
+        "properties": {
+          "archived": {
+            "default": false,
+            "title": "Archived",
+            "type": "boolean"
+          },
+          "dashboard": {
+            "default": "Executive",
+            "enum": [
+              "Executive",
+              "Delivery",
+              "Risk",
+              "Resource"
+            ],
+            "title": "Dashboard",
+            "type": "string"
+          },
+          "description": {
+            "default": "",
+            "maxLength": 4000,
+            "title": "Description",
+            "type": "string"
+          },
+          "end_date": {
+            "format": "date",
+            "title": "End Date",
+            "type": "string"
+          },
+          "kind": {
+            "const": "saved_views",
+            "default": "saved_views",
+            "title": "Kind",
+            "type": "string"
+          },
+          "name": {
+            "maxLength": 160,
+            "minLength": 1,
+            "title": "Name",
+            "type": "string"
+          },
+          "portfolio_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Portfolio Id"
+          },
+          "start_date": {
+            "format": "date",
+            "title": "Start Date",
+            "type": "string"
+          },
+          "user_id": {
+            "format": "uuid",
+            "title": "User Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "user_id",
+          "start_date",
+          "end_date"
+        ],
+        "title": "SavedViewInput",
         "type": "object"
       },
       "SessionView": {
@@ -3895,6 +5913,23 @@
         "title": "TeamMemberInput",
         "type": "object"
       },
+      "TeamMetric": {
+        "properties": {
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "summary": {
+            "$ref": "#/components/schemas/TeamCapacityView"
+          }
+        },
+        "required": [
+          "name",
+          "summary"
+        ],
+        "title": "TeamMetric",
+        "type": "object"
+      },
       "TimeOffInput-Input": {
         "additionalProperties": false,
         "properties": {
@@ -4056,6 +6091,120 @@
           "type"
         ],
         "title": "ValidationError",
+        "type": "object"
+      },
+      "Velocity": {
+        "properties": {
+          "end_date": {
+            "format": "date",
+            "title": "End Date",
+            "type": "string"
+          },
+          "freshness": {
+            "title": "Freshness",
+            "type": "string"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "points": {
+            "anyOf": [
+              {
+                "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Points"
+          },
+          "policy": {
+            "default": "team-points-v1: completed work at closure; no cross-team ranking",
+            "title": "Policy",
+            "type": "string"
+          },
+          "project_id": {
+            "format": "uuid",
+            "title": "Project Id",
+            "type": "string"
+          },
+          "recorded_points": {
+            "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+            "title": "Recorded Points",
+            "type": "string"
+          },
+          "source_updated_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Source Updated At"
+          },
+          "sprint_id": {
+            "format": "uuid",
+            "title": "Sprint Id",
+            "type": "string"
+          },
+          "team_id": {
+            "format": "uuid",
+            "title": "Team Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "sprint_id",
+          "project_id",
+          "team_id",
+          "name",
+          "end_date",
+          "points",
+          "recorded_points",
+          "source_updated_at",
+          "freshness"
+        ],
+        "title": "Velocity",
+        "type": "object"
+      },
+      "VersionRecord": {
+        "properties": {
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "framework_id": {
+            "format": "uuid",
+            "title": "Framework Id",
+            "type": "string"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "snapshot": {
+            "$ref": "#/components/schemas/FrameworkInput-Output"
+          },
+          "version": {
+            "title": "Version",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "id",
+          "framework_id",
+          "version",
+          "snapshot",
+          "created_at"
+        ],
+        "title": "VersionRecord",
         "type": "object"
       },
       "WorkInput-Input": {
@@ -4300,6 +6449,1369 @@
   },
   "openapi": "3.1.0",
   "paths": {
+    "/api/v1/assessment/access": {
+      "post": {
+        "operationId": "set_access_api_v1_assessment_access_post",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "x-organization-id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Organization-Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AccessInput"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AccessInput"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Set Access",
+        "tags": [
+          "Assessment"
+        ]
+      }
+    },
+    "/api/v1/assessment/assessments": {
+      "get": {
+        "operationId": "list_assessments_api_v1_assessment_assessments_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "offset",
+            "required": false,
+            "schema": {
+              "default": 0,
+              "minimum": 0,
+              "title": "Offset",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 100,
+              "maximum": 100,
+              "minimum": 1,
+              "title": "Limit",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "framework_version_id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Framework Version Id"
+            }
+          },
+          {
+            "in": "header",
+            "name": "x-organization-id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Organization-Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/AssessmentRecord"
+                  },
+                  "title": "Response List Assessments Api V1 Assessment Assessments Get",
+                  "type": "array"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "List Assessments",
+        "tags": [
+          "Assessment"
+        ]
+      },
+      "post": {
+        "operationId": "assign_api_v1_assessment_assessments_post",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "x-organization-id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Organization-Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AssignmentInput"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AssessmentRecord"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Assign",
+        "tags": [
+          "Assessment"
+        ]
+      }
+    },
+    "/api/v1/assessment/assessments/{assessment_id}": {
+      "get": {
+        "operationId": "detail_api_v1_assessment_assessments__assessment_id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "assessment_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Assessment Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "header",
+            "name": "x-organization-id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Organization-Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AssessmentDetail"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Detail",
+        "tags": [
+          "Assessment"
+        ]
+      }
+    },
+    "/api/v1/assessment/assessments/{assessment_id}/answers": {
+      "put": {
+        "operationId": "save_answers_api_v1_assessment_assessments__assessment_id__answers_put",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "assessment_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Assessment Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "header",
+            "name": "x-organization-id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Organization-Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AnswerBatchInput"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AssessmentDetail"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Save Answers",
+        "tags": [
+          "Assessment"
+        ]
+      }
+    },
+    "/api/v1/assessment/assessments/{assessment_id}/events": {
+      "get": {
+        "operationId": "history_api_v1_assessment_assessments__assessment_id__events_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "assessment_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Assessment Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "header",
+            "name": "x-organization-id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Organization-Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/EventRecord"
+                  },
+                  "title": "Response History Api V1 Assessment Assessments  Assessment Id  Events Get",
+                  "type": "array"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "History",
+        "tags": [
+          "Assessment"
+        ]
+      }
+    },
+    "/api/v1/assessment/assessments/{assessment_id}/evidence": {
+      "get": {
+        "operationId": "evidence_list_api_v1_assessment_assessments__assessment_id__evidence_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "assessment_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Assessment Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "header",
+            "name": "x-organization-id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Organization-Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/EvidenceRecord"
+                  },
+                  "title": "Response Evidence List Api V1 Assessment Assessments  Assessment Id  Evidence Get",
+                  "type": "array"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Evidence List",
+        "tags": [
+          "Assessment"
+        ]
+      },
+      "post": {
+        "operationId": "upload_api_v1_assessment_assessments__assessment_id__evidence_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "assessment_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Assessment Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "header",
+            "name": "x-organization-id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Organization-Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EvidenceInput"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EvidenceRecord"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Upload",
+        "tags": [
+          "Assessment"
+        ]
+      }
+    },
+    "/api/v1/assessment/assessments/{assessment_id}/evidence/{evidence_id}": {
+      "delete": {
+        "operationId": "delete_evidence_api_v1_assessment_assessments__assessment_id__evidence__evidence_id__delete",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "assessment_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Assessment Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "evidence_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Evidence Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "header",
+            "name": "x-organization-id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Organization-Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ActionInput"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Delete Evidence",
+        "tags": [
+          "Assessment"
+        ]
+      },
+      "get": {
+        "operationId": "download_api_v1_assessment_assessments__assessment_id__evidence__evidence_id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "assessment_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Assessment Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "evidence_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Evidence Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "header",
+            "name": "x-organization-id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Organization-Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "Response Download Api V1 Assessment Assessments  Assessment Id  Evidence  Evidence Id  Get"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Download",
+        "tags": [
+          "Assessment"
+        ]
+      }
+    },
+    "/api/v1/assessment/assessments/{assessment_id}/evidence/{evidence_id}/preview": {
+      "get": {
+        "operationId": "preview_evidence_api_v1_assessment_assessments__assessment_id__evidence__evidence_id__preview_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "assessment_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Assessment Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "evidence_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Evidence Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "header",
+            "name": "x-organization-id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Organization-Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": {
+                    "type": "string"
+                  },
+                  "title": "Response Preview Evidence Api V1 Assessment Assessments  Assessment Id  Evidence  Evidence Id  Preview Get",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Preview Evidence",
+        "tags": [
+          "Assessment"
+        ]
+      }
+    },
+    "/api/v1/assessment/assessments/{assessment_id}/evidence/{evidence_id}/release": {
+      "post": {
+        "operationId": "release_evidence_api_v1_assessment_assessments__assessment_id__evidence__evidence_id__release_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "assessment_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Assessment Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "evidence_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Evidence Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "header",
+            "name": "x-organization-id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Organization-Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ActionInput"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EvidenceRecord"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Release Evidence",
+        "tags": [
+          "Assessment"
+        ]
+      }
+    },
+    "/api/v1/assessment/assessments/{assessment_id}/review": {
+      "post": {
+        "operationId": "review_api_v1_assessment_assessments__assessment_id__review_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "assessment_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Assessment Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "header",
+            "name": "x-organization-id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Organization-Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReviewInput"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AssessmentRecord"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Review",
+        "tags": [
+          "Assessment"
+        ]
+      }
+    },
+    "/api/v1/assessment/assessments/{assessment_id}/submit": {
+      "post": {
+        "operationId": "submit_api_v1_assessment_assessments__assessment_id__submit_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "assessment_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Assessment Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "header",
+            "name": "x-organization-id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Organization-Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ActionInput"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AssessmentRecord"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Submit",
+        "tags": [
+          "Assessment"
+        ]
+      }
+    },
+    "/api/v1/assessment/frameworks": {
+      "get": {
+        "operationId": "list_frameworks_api_v1_assessment_frameworks_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "offset",
+            "required": false,
+            "schema": {
+              "default": 0,
+              "minimum": 0,
+              "title": "Offset",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 100,
+              "maximum": 100,
+              "minimum": 1,
+              "title": "Limit",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "header",
+            "name": "x-organization-id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Organization-Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/FrameworkRecord"
+                  },
+                  "title": "Response List Frameworks Api V1 Assessment Frameworks Get",
+                  "type": "array"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "List Frameworks",
+        "tags": [
+          "Assessment"
+        ]
+      },
+      "post": {
+        "operationId": "create_framework_api_v1_assessment_frameworks_post",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "x-organization-id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Organization-Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FrameworkInput-Input"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FrameworkRecord"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Create Framework",
+        "tags": [
+          "Assessment"
+        ]
+      }
+    },
+    "/api/v1/assessment/frameworks/{framework_id}": {
+      "put": {
+        "operationId": "edit_framework_api_v1_assessment_frameworks__framework_id__put",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "framework_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Framework Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "header",
+            "name": "x-organization-id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Organization-Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FrameworkInput-Input"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FrameworkRecord"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Edit Framework",
+        "tags": [
+          "Assessment"
+        ]
+      }
+    },
+    "/api/v1/assessment/frameworks/{framework_id}/publish": {
+      "post": {
+        "operationId": "publish_framework_api_v1_assessment_frameworks__framework_id__publish_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "framework_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Framework Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "header",
+            "name": "x-organization-id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Organization-Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ActionInput"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VersionRecord"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Publish Framework",
+        "tags": [
+          "Assessment"
+        ]
+      }
+    },
+    "/api/v1/assessment/frameworks/{framework_id}/versions": {
+      "get": {
+        "operationId": "versions_api_v1_assessment_frameworks__framework_id__versions_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "framework_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Framework Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "header",
+            "name": "x-organization-id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Organization-Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/VersionRecord"
+                  },
+                  "title": "Response Versions Api V1 Assessment Frameworks  Framework Id  Versions Get",
+                  "type": "array"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Versions",
+        "tags": [
+          "Assessment"
+        ]
+      }
+    },
+    "/api/v1/assessment/seed-examples": {
+      "post": {
+        "operationId": "seed_examples_api_v1_assessment_seed_examples_post",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "x-organization-id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Organization-Id"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/FrameworkRecord"
+                  },
+                  "title": "Response Seed Examples Api V1 Assessment Seed Examples Post",
+                  "type": "array"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Seed Examples",
+        "tags": [
+          "Assessment"
+        ]
+      }
+    },
     "/api/v1/auth/complete": {
       "post": {
         "operationId": "complete_api_v1_auth_complete_post",
@@ -5032,6 +8544,93 @@
         ]
       }
     },
+    "/api/v1/command/snapshot": {
+      "get": {
+        "operationId": "snapshot_api_v1_command_snapshot_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "start",
+            "required": true,
+            "schema": {
+              "format": "date",
+              "title": "Start",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "end",
+            "required": true,
+            "schema": {
+              "format": "date",
+              "title": "End",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "portfolio_id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Portfolio Id"
+            }
+          },
+          {
+            "in": "header",
+            "name": "x-organization-id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Organization-Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommandSnapshot"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Snapshot",
+        "tags": [
+          "Command center"
+        ]
+      }
+    },
     "/api/v1/delivery/history/{kind}/{id_}": {
       "get": {
         "operationId": "history_api_v1_delivery_history__kind___id___get",
@@ -5042,6 +8641,11 @@
             "required": true,
             "schema": {
               "enum": [
+                "risks",
+                "benefits",
+                "metric_plans",
+                "metric_policies",
+                "saved_views",
                 "resources",
                 "calendars",
                 "availability",
@@ -5332,6 +8936,11 @@
             "required": true,
             "schema": {
               "enum": [
+                "risks",
+                "benefits",
+                "metric_plans",
+                "metric_policies",
+                "saved_views",
                 "resources",
                 "calendars",
                 "availability",
@@ -5557,6 +9166,11 @@
             "required": true,
             "schema": {
               "enum": [
+                "risks",
+                "benefits",
+                "metric_plans",
+                "metric_policies",
+                "saved_views",
                 "resources",
                 "calendars",
                 "availability",
@@ -5630,6 +9244,7 @@
                     "allocations": "#/components/schemas/AllocationInput-Input",
                     "availability": "#/components/schemas/AvailabilityInput",
                     "baselines": "#/components/schemas/BaselineInput",
+                    "benefits": "#/components/schemas/BenefitInput-Input",
                     "blockers": "#/components/schemas/BlockerInput",
                     "budget_lines": "#/components/schemas/BudgetInput-Input",
                     "calendars": "#/components/schemas/CalendarInput-Input",
@@ -5641,6 +9256,8 @@
                     "expenditures": "#/components/schemas/ExpenditureInput-Input",
                     "goals": "#/components/schemas/GoalInput",
                     "grants": "#/components/schemas/GrantInput",
+                    "metric_plans": "#/components/schemas/MetricPlanInput-Input",
+                    "metric_policies": "#/components/schemas/MetricPolicyInput-Input",
                     "milestones": "#/components/schemas/MilestoneInput",
                     "portfolios": "#/components/schemas/PortfolioInput",
                     "programs": "#/components/schemas/ProgramInput",
@@ -5649,6 +9266,8 @@
                     "resource_skills": "#/components/schemas/ResourceSkillInput",
                     "resource_teams": "#/components/schemas/ResourceTeamInput",
                     "resources": "#/components/schemas/ResourceInput",
+                    "risks": "#/components/schemas/RiskInput",
+                    "saved_views": "#/components/schemas/SavedViewInput",
                     "settings": "#/components/schemas/SettingsInput",
                     "sprints": "#/components/schemas/SprintInput",
                     "status_updates": "#/components/schemas/StatusInput",
@@ -5660,6 +9279,21 @@
                   "propertyName": "kind"
                 },
                 "oneOf": [
+                  {
+                    "$ref": "#/components/schemas/RiskInput"
+                  },
+                  {
+                    "$ref": "#/components/schemas/BenefitInput-Input"
+                  },
+                  {
+                    "$ref": "#/components/schemas/MetricPlanInput-Input"
+                  },
+                  {
+                    "$ref": "#/components/schemas/MetricPolicyInput-Input"
+                  },
+                  {
+                    "$ref": "#/components/schemas/SavedViewInput"
+                  },
                   {
                     "$ref": "#/components/schemas/SettingsInput"
                   },
@@ -5795,6 +9429,11 @@
             "required": true,
             "schema": {
               "enum": [
+                "risks",
+                "benefits",
+                "metric_plans",
+                "metric_policies",
+                "saved_views",
                 "resources",
                 "calendars",
                 "availability",
@@ -5894,6 +9533,11 @@
             "required": true,
             "schema": {
               "enum": [
+                "risks",
+                "benefits",
+                "metric_plans",
+                "metric_policies",
+                "saved_views",
                 "resources",
                 "calendars",
                 "availability",
@@ -5994,6 +9638,7 @@
                     "allocations": "#/components/schemas/AllocationInput-Input",
                     "availability": "#/components/schemas/AvailabilityInput",
                     "baselines": "#/components/schemas/BaselineInput",
+                    "benefits": "#/components/schemas/BenefitInput-Input",
                     "blockers": "#/components/schemas/BlockerInput",
                     "budget_lines": "#/components/schemas/BudgetInput-Input",
                     "calendars": "#/components/schemas/CalendarInput-Input",
@@ -6005,6 +9650,8 @@
                     "expenditures": "#/components/schemas/ExpenditureInput-Input",
                     "goals": "#/components/schemas/GoalInput",
                     "grants": "#/components/schemas/GrantInput",
+                    "metric_plans": "#/components/schemas/MetricPlanInput-Input",
+                    "metric_policies": "#/components/schemas/MetricPolicyInput-Input",
                     "milestones": "#/components/schemas/MilestoneInput",
                     "portfolios": "#/components/schemas/PortfolioInput",
                     "programs": "#/components/schemas/ProgramInput",
@@ -6013,6 +9660,8 @@
                     "resource_skills": "#/components/schemas/ResourceSkillInput",
                     "resource_teams": "#/components/schemas/ResourceTeamInput",
                     "resources": "#/components/schemas/ResourceInput",
+                    "risks": "#/components/schemas/RiskInput",
+                    "saved_views": "#/components/schemas/SavedViewInput",
                     "settings": "#/components/schemas/SettingsInput",
                     "sprints": "#/components/schemas/SprintInput",
                     "status_updates": "#/components/schemas/StatusInput",
@@ -6024,6 +9673,21 @@
                   "propertyName": "kind"
                 },
                 "oneOf": [
+                  {
+                    "$ref": "#/components/schemas/RiskInput"
+                  },
+                  {
+                    "$ref": "#/components/schemas/BenefitInput-Input"
+                  },
+                  {
+                    "$ref": "#/components/schemas/MetricPlanInput-Input"
+                  },
+                  {
+                    "$ref": "#/components/schemas/MetricPolicyInput-Input"
+                  },
+                  {
+                    "$ref": "#/components/schemas/SavedViewInput"
+                  },
                   {
                     "$ref": "#/components/schemas/SettingsInput"
                   },

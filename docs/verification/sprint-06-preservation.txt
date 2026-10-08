@@ -1,0 +1,5 @@
+PASS: normal database forward upgrade 0004_capacity -> 0005_assessment
+PASS: original installation identity and all five baseline entity counts preserved
+PASS: all eight assessment tables have RLS and app-role SELECT; immutable versions/events deny UPDATE and DELETE
+PASS: API readiness and /assessments HTTP 200 after restart
+{"revision": "0005_assessment", "instance": "44e56ee2-3bb9-4603-98e8-bf33e4dc8a5c", "projects": 0, "portfolios": 0, "resources": 0, "organizations": 1, "users": 1}

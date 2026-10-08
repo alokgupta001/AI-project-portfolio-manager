@@ -309,7 +309,7 @@ export function RecordEditor({
         body[f.key] =
           f.type === "checkbox"
             ? Boolean(values[f.key])
-            : values[f.key] === "" && f.key !== "holidays"
+            : values[f.key] === "" && f.key !== "holidays" && !f.emptyString
               ? null
               : values[f.key];
       if (row)
@@ -787,6 +787,9 @@ export function Delivery({
         "milestones",
         "sprints",
         "blockers",
+        "risks",
+        "benefits",
+        "metric_plans",
         "dependencies",
         "budget_lines",
         "expenditures",
@@ -798,6 +801,7 @@ export function Delivery({
     : top === "settings"
       ? [
           "settings",
+          "metric_policies",
           "departments",
           "teams",
           "team_members",

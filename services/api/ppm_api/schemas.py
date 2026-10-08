@@ -39,5 +39,5 @@ class ReadyResponse(BaseModel):
 class FoundationResponse(BaseModel):
     instance_id: UUID
     initialized_at: datetime
-    schema_revision: Literal["0004_capacity"] = "0004_capacity"
+    schema_revision: Literal["0005_assessment"] = "0005_assessment"
     environment: Literal["local", "test", "demo"]

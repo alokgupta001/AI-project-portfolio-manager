@@ -46,3 +46,11 @@ Evidence drawer, freshness/coverage indicators, saved views, command palette, de
 ## Sprint 04 implementation decisions
 
 [ADR 010](../architecture/adr/010-delivery-system-of-record.md) accepts the existing local baseline, normalized delivery schema, explicit grants, Admin-only cross-project dependency writes, append-only financial/history records, incomplete metric handling and isolated seeded demo. Advanced timeline interactions and later intelligence are not included.
+
+## Sprint 06 repair and acceptance
+
+The user explicitly authorized rechecking and fixing Sprint 06 after its initial handoff proved unsupported. [ADR 012](../architecture/adr/012-assessment-engine.md) records frozen framework definitions, explicit assignments, app-role RLS, immutable results and plain-text evidence quarantine. No normal/deployed 0005 data existed at repair start; only disposable prior attempts were replaced. Evidence intake is restricted to UTF-8 text with independent human release; broader formats, automated malware scanning and AI interpretation remain disabled. Local acceptance evidence is recorded in Sprint 06 checks. Sprint 07 remains separately authorized work.
+
+## Sprint 07 authorized implementation
+
+The user authorized Sprint 07 on 2026-10-07. [ADR 013](../architecture/adr/013-command-center.md) records current-state snapshots versus period facts, explicit baseline/calendar selection, immutable sprint closures, actor-owned saved views and existing capacity privacy. Starter rules are deterministic operational heuristics, not predictive probabilities. No historical closure backfill, new dependencies, external communications or Sprint 08 activation.

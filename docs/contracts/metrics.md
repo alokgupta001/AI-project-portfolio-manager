@@ -64,3 +64,11 @@ Proposed initial freshness threshold is one configured source sync interval plus
 Starter alert trigger: transition from below 60 to 60 or more, or increase of at least 15 risk points within 24 hours, same rule version and adequate coverage. One alert per project/rule/trigger window; proposed cooldown six hours. Recovery notification is optional and requires risk below 55 for two consecutive valid evaluations. Defaults are configurable policy proposals; outages and unknown values do not masquerade as recovery.
 
 Team workload warning: planned utilization >100% for two consecutive weeks, or recorded overtime above 10% of available capacity. Sentiment is a separate trend with source limitations. Suppress sensitive aggregates for groups under five resources and exclude individual ranking/medical labels. Source lawfulness, workforce policy and production thresholds remain review items.
+
+## Sprint 06 implemented maturity rules
+
+M11/M12 now use the versioned [assessment contract](assessment.md). Decimal scoring uses exact published rubric levels, positive weights and dimension weights summing exactly to 1. Draft scores remain provisional; required text answers count toward completeness but not numeric scores. Answer coverage is weighted, evidence coverage counts questions with notes or independently released attachments, and both remain within 0–100. Completed results and original framework versions are preserved. Worked 87.5 → reviewer-adjusted 75 versus Operations 0 fixture and unknown cases are in the contract and Sprint 06 tests.
+
+## Sprint 07 implemented dashboard metrics
+
+[Command center contract](command-center.md) now implements shared M01/M02/M04/M06/M07–M10/M13–M15 and `risk-rule-v1` current-state health. Missing inputs, period filters, currency grouping, source freshness, frozen closure points and baseline-calendar choices are explicit. Proposed predictive metrics remain unimplemented.

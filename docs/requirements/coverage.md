@@ -30,34 +30,34 @@ Source keys resolve to exact headings in [source index](../source/INDEX.md). Eac
 | F-012 | F | W3; W8 | Blockers and dependencies | 04 | 02,03 | Track blockers and reject prohibited schedule dependency cycles | Implemented locally | [Sprint 04 checks](../verification/SPRINT-04-CHECKS.md); [delivery contract](../contracts/delivery.md) |
 | F-013 | F | W3 | Resource allocation | 05 | 04 | Date-ranged allocations conserve resource capacity across projects | Implemented locally | [Sprint 05 checks](../verification/SPRINT-05-CHECKS.md); additive allocation hours, shared capacity and explicit excess |
 | F-014 | F | W3; S4.2 | Utilization efficiency | 05 | 04 | Capacity/effort formula handles part-time, leave and zero capacity | Implemented locally | [Sprint 05 checks](../verification/SPRINT-05-CHECKS.md); [capacity contract](../contracts/capacity.md) |
-| F-015 | F | WD; W3 | Risk register | 07 | 04 | Track owner, severity, likelihood, mitigation and lifecycle | Planned | — |
+| F-015 | F | WD; W3 | Risk register | 07 | 04 | Track owner, severity, likelihood, mitigation and lifecycle | Implemented locally | [Sprint 07 checks](../verification/SPRINT-07-CHECKS.md); [command center](../contracts/command-center.md) |
 
 ## Assessment and dashboards
 
 | ID | Type | Source | Requirement | Owner | Depends | Acceptance criterion | Status | Evidence |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| F-016 | F | W1/Features | Custom maturity framework builder | 06 | 04 | Publish immutable weighted rubric version with valid question types | Planned | — |
-| F-017 | F | W1/Features | Dynamic assessments | 06 | 04 | Assign, autosave, submit, return and review assessment | Planned | — |
-| F-018 | F | W1/Features | Department scoring | 06 | 04 | Compatible department scores reproduce fixture arithmetic | Planned | — |
-| F-019 | F | W1/Features | PMO capability analysis | 06 | 04 | PMO dimension results link to answers and rubric | Planned | — |
-| F-020 | F | W1/Features | Agile maturity analysis | 06 | 04 | Agile dimension results retain framework version and evidence | Planned | — |
-| F-021 | F | W1/Features | Governance evaluation | 06 | 04 | Governance dimension scores and gaps are reviewable | Planned | — |
-| F-022 | F | W1/Features | Delivery capability scoring | 06 | 04 | Delivery dimension score handles incomplete answers explicitly | Planned | — |
+| F-016 | F | W1/Features | Custom maturity framework builder | 06 | 04 | Publish immutable weighted rubric version with valid question types | Accepted locally | [Sprint 06 checks](../verification/SPRINT-06-CHECKS.md) |
+| F-017 | F | W1/Features | Dynamic assessments | 06 | 04 | Assign, autosave, submit, return and review assessment | Accepted locally | [Sprint 06 checks](../verification/SPRINT-06-CHECKS.md) |
+| F-018 | F | W1/Features | Department scoring | 06 | 04 | Compatible department scores reproduce fixture arithmetic | Accepted locally | [Sprint 06 checks](../verification/SPRINT-06-CHECKS.md) |
+| F-019 | F | W1/Features | PMO capability analysis | 06 | 04 | PMO dimension results link to answers and rubric | Accepted locally | [Sprint 06 checks](../verification/SPRINT-06-CHECKS.md) |
+| F-020 | F | W1/Features | Agile maturity analysis | 06 | 04 | Agile dimension results retain framework version and evidence | Accepted locally | [Sprint 06 checks](../verification/SPRINT-06-CHECKS.md) |
+| F-021 | F | W1/Features | Governance evaluation | 06 | 04 | Governance dimension scores and gaps are reviewable | Accepted locally | [Sprint 06 checks](../verification/SPRINT-06-CHECKS.md) |
+| F-022 | F | W1/Features | Delivery capability scoring | 06 | 04 | Delivery dimension score handles incomplete answers explicitly | Accepted locally | [Sprint 06 checks](../verification/SPRINT-06-CHECKS.md) |
 | F-023 | F | W1/AI Features | Semantic answer evaluation | 11 | 06,10 | AI interpretation cites answer/rubric and remains separate from approved score | Planned | — |
 | F-024 | F | W1/AI Features | Pattern and maturity gap detection | 11 | 06,10 | Fixture inconsistency produces supported gap without fabricated evidence | Planned | — |
 | F-025 | F | W1/AI Features | Improvement suggestions | 11 | 06,10 | Suggestions map to identified dimensions and human review | Planned | — |
-| F-026 | F | W3/Executive Dashboard | Portfolio health | 07 | 04,05,06 | Weighted health reconciles to covered projects with unknowns displayed | Planned | — |
-| F-027 | F | W3/Executive Dashboard | Business value | 07 | 04,05,06 | Target/realized benefits show explicit units and source records | Planned | — |
-| F-028 | F | W3/Executive Dashboard | Budget usage | 07 | 04,05,06 | Dashboard spend/budget agrees with ledger by currency | Planned | — |
-| F-029 | F | W3/Executive Dashboard | Alignment dashboard | 07 | 04,05,06 | Goal-weight metric and per-project contribution visible | Planned | — |
-| F-030 | F | W3/Delivery Dashboard | Sprint velocity | 07 | 04,05,06 | Count completed points using team-specific definitions and periods | Planned | — |
-| F-031 | F | W3/Delivery Dashboard; S4.2 | Delay and timeline variance | 07 | 04,05,06 | Baseline/actual/forecast variance units and dates are consistent | Planned | — |
-| F-032 | F | W3/Delivery Dashboard | Blocker and dependency visualization | 07 | 04,05,06 | Accessible graph/table drill-down respects project scope | Planned | — |
-| F-033 | F | W3/Risk Dashboard | Project risk score | 07 | 04,05,06 | Versioned deterministic score matches fixtures, no probability claim | Planned | — |
+| F-026 | F | W3/Executive Dashboard | Portfolio health | 07 | 04,05,06 | Weighted health reconciles to covered projects with unknowns displayed | Implemented locally | [Sprint 07 checks](../verification/SPRINT-07-CHECKS.md); [command center](../contracts/command-center.md) |
+| F-027 | F | W3/Executive Dashboard | Business value | 07 | 04,05,06 | Target/realized benefits show explicit units and source records | Implemented locally | [Sprint 07 checks](../verification/SPRINT-07-CHECKS.md); [command center](../contracts/command-center.md) |
+| F-028 | F | W3/Executive Dashboard | Budget usage | 07 | 04,05,06 | Dashboard spend/budget agrees with ledger by currency | Implemented locally | [Sprint 07 checks](../verification/SPRINT-07-CHECKS.md); [command center](../contracts/command-center.md) |
+| F-029 | F | W3/Executive Dashboard | Alignment dashboard | 07 | 04,05,06 | Goal-weight metric and per-project contribution visible | Implemented locally | [Sprint 07 checks](../verification/SPRINT-07-CHECKS.md); [command center](../contracts/command-center.md) |
+| F-030 | F | W3/Delivery Dashboard | Sprint velocity | 07 | 04,05,06 | Count completed points using team-specific definitions and periods | Implemented locally | [Sprint 07 checks](../verification/SPRINT-07-CHECKS.md); [command center](../contracts/command-center.md) |
+| F-031 | F | W3/Delivery Dashboard; S4.2 | Delay and timeline variance | 07 | 04,05,06 | Baseline/actual/forecast variance units and dates are consistent | Implemented locally | [Sprint 07 checks](../verification/SPRINT-07-CHECKS.md); [command center](../contracts/command-center.md) |
+| F-032 | F | W3/Delivery Dashboard | Blocker and dependency visualization | 07 | 04,05,06 | Accessible graph/table drill-down respects project scope | Implemented locally | [Sprint 07 checks](../verification/SPRINT-07-CHECKS.md); [command center](../contracts/command-center.md) |
+| F-033 | F | W3/Risk Dashboard | Project risk score | 07 | 04,05,06 | Versioned deterministic score matches fixtures, no probability claim | Implemented locally | [Sprint 07 checks](../verification/SPRINT-07-CHECKS.md); [command center](../contracts/command-center.md) |
 | F-034 | F | W3/Risk Dashboard | Escalation matrix | 15 | 07,08,11 | Risk severity/role policy routes to correct authorized approver | Planned | — |
 | F-035 | F | W3/Risk Dashboard | Predictive failure indicators | 13 | 12 | Eligible model output shows horizon, uncertainty and evidence | Planned | — |
-| F-036 | F | W3/Resource Dashboard | Allocation workload dashboard | 07 | 05,06 | Capacity and team workload values reconcile with source allocations | Planned | — |
-| F-037 | F | S1 | Reported versus evidence health | 07 | 04,05,06 | Reported-green troubled fixture displays evidence discrepancy | Planned | — |
+| F-036 | F | W3/Resource Dashboard | Allocation workload dashboard | 07 | 05,06 | Capacity and team workload values reconcile with source allocations | Implemented locally | [Sprint 07 checks](../verification/SPRINT-07-CHECKS.md); [command center](../contracts/command-center.md) |
+| F-037 | F | S1 | Reported versus evidence health | 07 | 04,05,06 | Reported-green troubled fixture displays evidence discrepancy | Implemented locally | [Sprint 07 checks](../verification/SPRINT-07-CHECKS.md); [command center](../contracts/command-center.md) |
 | F-038 | F | S4.2 | Live project visibility | 08 | 07 | Authorized event updates dashboard; reconnect resumes or requests snapshot | Planned | — |
 | F-039 | F | S4.2 | AI progress streaming | 10 | 08,09 | SSE exposes observable stages, not hidden reasoning or secret inputs | Planned | — |
 
@@ -168,9 +168,9 @@ Source keys resolve to exact headings in [source index](../source/INDEX.md). Eac
 | N-016 | N | Master prompt | Audit retention and revocation | 22 | 02,21 | Revocation covers download/stream/cache/jobs; retention configured | Planned | — |
 | N-017 | N | Master prompt | Backup restore and deployment recovery | 23 | 22 | Restore/rollback exercise records measured results and remaining risks | Planned | — |
 | N-018 | N | User request | Sprint report and follow-up document | 01 | 00 | Every sprint/sub-sprint updates report, handoff, coverage and evidence | Met through Sprint 02; ongoing | [Report](../sprints/SPRINT-02-REPORT.md), [handoff](../handoffs/SPRINT-02-HANDOFF.md) |
-| E-001 | E | Prompt pack enhancement | Evidence drawer | 07 | 04,05,06 | KPI drill-down shows authorized sources and gaps | Planned | — |
-| E-002 | E | Prompt pack enhancement | Freshness and data coverage | 07 | 04,05,06 | Stale/missing sources visible without fabricated zeros | Planned | — |
-| E-003 | E | Prompt pack enhancement | Saved dashboard views | 07 | 03,04 | Personal scoped filters persist without leaking access | Planned | — |
+| E-001 | E | Prompt pack enhancement | Evidence drawer | 07 | 04,05,06 | KPI drill-down shows authorized sources and gaps | Implemented locally | [Sprint 07 checks](../verification/SPRINT-07-CHECKS.md); [command center](../contracts/command-center.md) |
+| E-002 | E | Prompt pack enhancement | Freshness and data coverage | 07 | 04,05,06 | Stale/missing sources visible without fabricated zeros | Implemented locally | [Sprint 07 checks](../verification/SPRINT-07-CHECKS.md); [command center](../contracts/command-center.md) |
+| E-003 | E | Prompt pack enhancement | Saved dashboard views | 07 | 03,04 | Personal scoped filters persist without leaking access | Implemented locally | [Sprint 07 checks](../verification/SPRINT-07-CHECKS.md); [command center](../contracts/command-center.md) |
 | E-004 | E | Prompt pack enhancement | Command palette | 03 | 02 | Keyboard navigation exposes only available permitted destinations | Accepted for Sprint 03 shell | [Sprint 03 checks](../verification/SPRINT-03-CHECKS.md); [frontend contract](../contracts/frontend.md) |
 | E-005 | E | Prompt pack enhancement | Decision log | 16 | 14,15 | Approved alternatives/rationale and outcome review retained | Planned | — |
 | E-006 | E | Prompt pack enhancement | Scenario comparison | 17 | 13,15 | Baseline and scenario differences include assumptions | Planned | — |

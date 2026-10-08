@@ -1,0 +1,261 @@
+[
+  {
+    "name": "PMO Capability (Example)",
+    "description": "Product example \u2014 not a certified industry model. Measures project management office practices.",
+    "category": "pmo",
+    "dimensions": [
+      {
+        "name": "Governance",
+        "description": "Policy and oversight practices.",
+        "weight": "0.4",
+        "questions": [
+          {
+            "name": "Project charter",
+            "text": "Is a project charter required and reviewed for all projects?",
+            "answer_type": "rubric",
+            "weight": "1",
+            "levels": [
+              {
+                "level": 0,
+                "label": "None",
+                "description": "No charter process"
+              },
+              {
+                "level": 1,
+                "label": "Informal",
+                "description": "Ad hoc charters"
+              },
+              {
+                "level": 2,
+                "label": "Defined",
+                "description": "Standard template used"
+              },
+              {
+                "level": 3,
+                "label": "Enforced",
+                "description": "Mandatory, reviewed and approved"
+              }
+            ]
+          },
+          {
+            "name": "Portfolio alignment",
+            "text": "Are projects formally linked to strategic goals with documented weights?",
+            "answer_type": "boolean",
+            "weight": "1",
+            "levels": []
+          }
+        ]
+      },
+      {
+        "name": "Delivery",
+        "description": "Execution and delivery capability.",
+        "weight": "0.6",
+        "questions": [
+          {
+            "name": "Baseline tracking",
+            "text": "How consistently are project baselines tracked and updated?",
+            "answer_type": "rubric",
+            "weight": "1",
+            "levels": [
+              {
+                "level": 0,
+                "label": "None",
+                "description": "No baselines"
+              },
+              {
+                "level": 1,
+                "label": "Occasional",
+                "description": "Some projects"
+              },
+              {
+                "level": 2,
+                "label": "Most",
+                "description": "Most projects with baselines"
+              },
+              {
+                "level": 3,
+                "label": "All",
+                "description": "All projects, updated regularly"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Agile Maturity (Example)",
+    "description": "Product example \u2014 not a certified industry model. Measures Agile practice adoption.",
+    "category": "agile",
+    "dimensions": [
+      {
+        "name": "Practices",
+        "description": "Sprint ceremonies and delivery rhythm.",
+        "weight": "0.5",
+        "questions": [
+          {
+            "name": "Sprint ceremonies",
+            "text": "Are sprint planning, review and retrospective held consistently?",
+            "answer_type": "rubric",
+            "weight": "1",
+            "levels": [
+              {
+                "level": 0,
+                "label": "None",
+                "description": "No ceremonies"
+              },
+              {
+                "level": 1,
+                "label": "Partial",
+                "description": "Some ceremonies, inconsistent"
+              },
+              {
+                "level": 2,
+                "label": "Consistent",
+                "description": "All ceremonies, most sprints"
+              },
+              {
+                "level": 3,
+                "label": "Improved",
+                "description": "Consistent, outcomes acted on"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Outcomes",
+        "description": "Predictability and quality of delivery.",
+        "weight": "0.5",
+        "questions": [
+          {
+            "name": "Velocity stability",
+            "text": "Is sprint velocity tracked and stable across the last 4 sprints?",
+            "answer_type": "boolean",
+            "weight": "1",
+            "levels": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Governance & Compliance (Example)",
+    "description": "Product example \u2014 not a certified industry model. Evaluates governance policy adherence.",
+    "category": "governance",
+    "dimensions": [
+      {
+        "name": "Policy management",
+        "description": "Policy documentation and review.",
+        "weight": "1.0",
+        "questions": [
+          {
+            "name": "Policy review cadence",
+            "text": "Are governance policies reviewed and updated at least annually?",
+            "answer_type": "rubric",
+            "weight": "1",
+            "levels": [
+              {
+                "level": 0,
+                "label": "Never",
+                "description": "Policies not reviewed"
+              },
+              {
+                "level": 1,
+                "label": "Ad hoc",
+                "description": "Irregular reviews"
+              },
+              {
+                "level": 2,
+                "label": "Annual",
+                "description": "Annual reviews completed"
+              },
+              {
+                "level": 3,
+                "label": "Continuous",
+                "description": "Continuous improvement cycle"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Delivery Capability (Example)",
+    "description": "Product example \u2014 not a certified industry model. Measures team delivery capability and predictability.",
+    "category": "delivery",
+    "dimensions": [
+      {
+        "name": "Planning",
+        "description": "Estimation and scoping practices.",
+        "weight": "0.5",
+        "questions": [
+          {
+            "name": "Estimation accuracy",
+            "text": "Are estimates documented and tracked against actuals?",
+            "answer_type": "rubric",
+            "weight": "1",
+            "levels": [
+              {
+                "level": 0,
+                "label": "None",
+                "description": "No estimation process"
+              },
+              {
+                "level": 1,
+                "label": "Occasional",
+                "description": "Estimates sometimes tracked"
+              },
+              {
+                "level": 2,
+                "label": "Regular",
+                "description": "Estimates tracked consistently"
+              },
+              {
+                "level": 3,
+                "label": "Calibrated",
+                "description": "Estimates improved based on history"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Execution",
+        "description": "On-time delivery and quality.",
+        "weight": "0.5",
+        "questions": [
+          {
+            "name": "Milestone adherence",
+            "text": "What percentage of milestones are met on their baseline date?",
+            "answer_type": "rubric",
+            "weight": "1",
+            "levels": [
+              {
+                "level": 0,
+                "label": "<50%",
+                "description": "Fewer than half on time"
+              },
+              {
+                "level": 1,
+                "label": "50-70%",
+                "description": "About half on time"
+              },
+              {
+                "level": 2,
+                "label": "70-90%",
+                "description": "Most milestones on time"
+              },
+              {
+                "level": 3,
+                "label": ">90%",
+                "description": "Nearly all milestones on time"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]

@@ -34,3 +34,11 @@ DataTable accepts typed rows, stable keys, render/sort accessors and search text
 ## Limits
 
 Account detail still uses the proven sequential identity load, with no new query cache. A future server-state library must key and clear tenant caches correctly. Domain-scale table querying and saved views belong to their owning modules. Screen-reader names/roles and keyboard behavior are exercised in Chromium; no full assistive-technology or WCAG certification is claimed. Performance/FCP/60fps targets remain unmeasured.
+
+## Sprint 06 assessment UI
+
+`/assessments` and `components/assessments.tsx` reuse the shell, authenticated transport, shared Modal/Field/Button/ChartFrame and generated API DTOs. A nested form edits framework dimensions/questions/weights/rubrics, then publishes frozen versions and assigns respondents/reviewers. Answers autosave after 900 ms; failed saves retain unsaved state and block submission. Workflow controls follow server capabilities. Scoped evidence uses escaped previews and explicit independent release. Score and comparison tables scroll horizontally with keyboard focus on small screens; comparisons disclose their latest-100 loaded-record limit and require identical version IDs. Browser evidence covers desktop/tablet/mobile and automated serious/critical accessibility checks; this is not full WCAG certification.
+
+## Sprint 07 command center
+
+`/command-center` reuses the authenticated shell, typed `CommandSnapshot`, modal evidence drawer and record editor. Four views share date/portfolio filters. Explicit metric units/period/source/freshness, accessible chart table, keyboard drawer return, truthful empty/unknown/partial states and personal saved views are implemented. JSON DTO download rechecks current access. [Contract](command-center.md).

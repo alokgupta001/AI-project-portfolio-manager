@@ -1,0 +1,1 @@
+PASS: real Redis -> Linux Celery worker -> PostgreSQL checkpoint 44e56ee2-3bb9-4603-98e8-bf33e4dc8a5c

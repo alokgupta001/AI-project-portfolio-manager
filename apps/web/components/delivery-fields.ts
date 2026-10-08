@@ -11,6 +11,7 @@ export type FieldSpec = {
   reference?: Kind | "people";
   default?: string | boolean;
   step?: string;
+  emptyString?: boolean;
 };
 const owner: FieldSpec = {
   key: "owner_id",
@@ -54,6 +55,11 @@ const health: FieldSpec = {
   default: "Unknown",
 };
 export const labels: Record<Kind, string> = {
+  risks: "Risk register",
+  benefits: "Business benefits",
+  metric_plans: "Metric plans",
+  metric_policies: "Metric policy",
+  saved_views: "Saved dashboard views",
   resources: "Resource profiles",
   calendars: "Working calendars",
   availability: "Availability",
@@ -86,6 +92,128 @@ export const labels: Record<Kind, string> = {
   alignments: "Goal alignment",
 };
 export const fields: Record<Kind, FieldSpec[]> = {
+  risks: [
+    project,
+    owner,
+    {
+      key: "severity",
+      label: "Severity (1–5)",
+      type: "number",
+      required: true,
+      default: "3",
+    },
+    {
+      key: "likelihood",
+      label: "Likelihood (1–5)",
+      type: "number",
+      required: true,
+      default: "3",
+    },
+    {
+      key: "mitigation",
+      label: "Mitigation",
+      type: "textarea",
+      emptyString: true,
+    },
+    {
+      key: "status",
+      label: "Status",
+      options: ["open", "mitigating", "accepted", "closed"],
+      default: "open",
+    },
+    { key: "review_on", label: "Review date", type: "date", required: true },
+    {
+      key: "resolution",
+      label: "Resolution / acceptance reason",
+      type: "textarea",
+      emptyString: true,
+    },
+  ],
+  benefits: [
+    project,
+    { key: "unit", label: "Unit (e.g. INR or hours saved)", required: true },
+    {
+      key: "target",
+      label: "Target",
+      type: "number",
+      step: "0.01",
+      required: true,
+    },
+    {
+      key: "realized",
+      label: "Realized (blank = unknown)",
+      type: "number",
+      step: "0.01",
+    },
+    {
+      key: "period_start",
+      label: "Period start",
+      type: "date",
+      required: true,
+    },
+    {
+      key: "period_end",
+      label: "Period end (excluded)",
+      type: "date",
+      required: true,
+    },
+  ],
+  metric_plans: [
+    project,
+    {
+      key: "baseline_id",
+      label: "Frozen baseline",
+      reference: "baselines",
+      required: true,
+    },
+    {
+      key: "calendar_id",
+      label: "Working calendar",
+      reference: "calendars",
+      required: true,
+    },
+    {
+      key: "forecast_cost",
+      label: "Forecast final cost (project currency)",
+      type: "number",
+      step: "0.01",
+    },
+  ],
+  metric_policies: [
+    {
+      key: "amber",
+      label: "Amber risk threshold",
+      type: "number",
+      default: "30",
+      required: true,
+    },
+    {
+      key: "red",
+      label: "Red risk threshold",
+      type: "number",
+      default: "60",
+      required: true,
+    },
+    {
+      key: "stale_days",
+      label: "Source stale after days",
+      type: "number",
+      default: "7",
+      required: true,
+    },
+  ],
+  saved_views: [
+    person,
+    { ...portfolio, required: false },
+    { ...start, required: true },
+    { ...end, required: true },
+    {
+      key: "dashboard",
+      label: "Dashboard",
+      options: ["Executive", "Delivery", "Risk", "Resource"],
+      default: "Executive",
+    },
+  ],
   resources: [{ ...person, label: "Login member (optional)", required: false }],
   calendars: [
     {

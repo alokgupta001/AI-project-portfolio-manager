@@ -1,0 +1,188 @@
+ Container enterprise-ppm-redis-1 Running 
+ Container enterprise-ppm-postgres-1 Running 
+ Container enterprise-ppm-postgres-1 Waiting 
+ Container enterprise-ppm-redis-1 Waiting 
+ Container enterprise-ppm-postgres-1 Healthy 
+ Container enterprise-ppm-redis-1 Healthy 
+ Container enterprise-ppm-test-run-67f151dcb140 Creating 
+ Container enterprise-ppm-test-run-67f151dcb140 Created 
+Running: /app/.venv/bin/python -m alembic upgrade head
+Running: /app/.venv/bin/python -m alembic downgrade base
+Running: /app/.venv/bin/python -m alembic upgrade head
+Running: /app/.venv/bin/python -m alembic upgrade head
+Running: /app/.venv/bin/python -m alembic check
+No new upgrade operations detected.
+Running: /app/.venv/bin/python -m pytest -q
+......F..............................................                    [100%]
+=================================== FAILURES ===================================
+__________ test_two_departments_review_versions_evidence_and_retries ___________
+
+identity = (<httpx.AsyncClient object at 0x79f356c9f740>, <fastapi.applications.FastAPI object at 0x79f354e13710>, <sqlalchemy.ex... 'f356bcc1-1ff8-4a7f-837b-d51f3b524654@example.com', 'other': '7cf83174-3e56-41ca-ac67-5cd41642ea25@example.com', ...})
+
+    @pytest.mark.integration
+    @integration
+    async def test_two_departments_review_versions_evidence_and_retries(identity):
+        c, app, owner, ids, emails, fw, v, a = await fixture(identity)
+        assert (
+            await write(c, "POST", f"/assessments/{a['id']}/submit", {}, a["revision"])
+        ).status_code == 422
+        assert (await write(c, "POST", f"/frameworks/{fw['id']}/publish", {}, 1)).status_code == 412
+        filled = await save(c, a, v)
+        a = filled["assessment"]
+        assert Decimal(a["overall_score"]) == Decimal("87.5")
+        q = v["snapshot"]["dimensions"][0]["questions"][0]
+        attachment = await ok(
+            c,
+            "POST",
+            f"/assessments/{a['id']}/evidence",
+            dict(
+                question_id=q["id"],
+                file_name="minutes.txt",
+                content_base64=base64.b64encode(b"Approved process minutes").decode(),
+            ),
+            a["revision"],
+        )
+        download = await c.get(f"/api/v1/assessment/assessments/{a['id']}/evidence/{attachment['id']}")
+        assert download.status_code == 409
+        preview = await c.get(
+            f"/api/v1/assessment/assessments/{a['id']}/evidence/{attachment['id']}/preview"
+        )
+        assert preview.json()["note"] == "Approved process minutes"
+        a = (await c.get(f"/api/v1/assessment/assessments/{a['id']}")).json()["assessment"]
+        key = str(uuid4())
+        r = await write(c, "POST", f"/assessments/{a['id']}/submit", {}, a["revision"], key)
+        assert r.status_code == 200, r.text
+        replay = await write(c, "POST", f"/assessments/{a['id']}/submit", {}, a["revision"], key)
+        assert replay.json() == r.json()
+        assert (
+            await write(
+                c, "POST", f"/assessments/{a['id']}/submit", {"note": "different"}, a["revision"], key
+            )
+        ).status_code == 409
+        a = r.json()
+        assert (
+            await write(
+                c,
+                "POST",
+                f"/assessments/{a['id']}/review",
+                {"action": "complete", "note": "self"},
+                a["revision"],
+            )
+        ).status_code == 403
+        c.cookies.clear()
+        await login(c, emails, "pm")
+        started = await ok(
+            c,
+            "POST",
+            f"/assessments/{a['id']}/review",
+            {"action": "start", "note": "Review begun"},
+            a["revision"],
+        )
+        await ok(
+            c,
+            "POST",
+            f"/assessments/{a['id']}/evidence/{attachment['id']}/release",
+            {"note": "Reviewed text in quarantine"},
+            started["revision"],
+        )
+        started = (await c.get(f"/api/v1/assessment/assessments/{a['id']}")).json()["assessment"]
+        download = await c.get(f"/api/v1/assessment/assessments/{a['id']}/evidence/{attachment['id']}")
+        assert download.content == b"Approved process minutes"
+        complete = await ok(
+            c,
+            "POST",
+            f"/assessments/{a['id']}/review",
+            {
+                "action": "complete",
+                "note": "Evidence reviewed",
+                "adjustments": [
+                    {
+                        "answer_id": filled["answers"][0]["id"],
+                        "reviewer_score": "0",
+                        "reviewer_note": "Not demonstrated",
+                    }
+                ],
+            },
+            started["revision"],
+        )
+>       assert complete["status"] == "completed" and Decimal(complete["overall_score"]) == 75
+E       AssertionError: assert ('completed' == 'completed'
+E         
+E           completed and Decimal('12.5') == 75)
+E        +  where Decimal('12.5') = Decimal('12.5')
+
+tests/test_assessment.py:224: AssertionError
+----------------------------- Captured stderr call -----------------------------
+{"event": "http_request", "request_id": "33e3c2e8-83ef-4358-a639-d69d6399660a", "method": "GET", "route": "/api/v1/auth/csrf", "status": 200, "duration_ms": 37.46}
+{"event": "http_request", "request_id": "bec00c23-8d84-4dec-9865-455396104c30", "method": "POST", "route": "/api/v1/auth/login", "status": 200, "duration_ms": 294.24}
+{"event": "http_request", "request_id": "17b3f9a8-381a-4a81-babd-455ea781cc47", "method": "POST", "route": "/api/v1/auth/switch", "status": 200, "duration_ms": 11.24}
+{"event": "http_request", "request_id": "0e80672e-4d19-4800-a507-072c2628fe77", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 42.85}
+{"event": "http_request", "request_id": "8c83f1bd-e777-4260-86c4-de2608c30b5f", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 18.69}
+{"event": "http_request", "request_id": "d57bb307-49a2-4ca4-9ad8-eb5caa2b5f91", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 19.09}
+{"event": "http_request", "request_id": "f80954be-b3e9-4933-9d13-a90dc622cf8a", "method": "POST", "route": "/api/v1/assessment/frameworks", "status": 201, "duration_ms": 16.16}
+{"event": "http_request", "request_id": "aaa62e60-ec73-4dc8-a050-0baa7c2cc646", "method": "POST", "route": "/api/v1/assessment/frameworks/{framework_id}/publish", "status": 201, "duration_ms": 15.86}
+{"event": "http_request", "request_id": "ee8990b8-b9a0-4479-8b83-3ed8ce6be79b", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 13.4}
+{"event": "http_request", "request_id": "0e83026a-e9e5-41a7-aa42-0dc6cd553153", "method": "POST", "route": "/api/v1/assessment/assessments", "status": 201, "duration_ms": 34.38}
+{"event": "http_request", "request_id": "8ab4e02f-c13b-4649-b733-2c70b050e87d", "method": "POST", "route": "/api/v1/assessment/assessments/{assessment_id}/submit", "status": 422, "duration_ms": 14.35}
+{"event": "http_request", "request_id": "7115e041-e33c-4b07-9981-2af21957dc69", "method": "POST", "route": "/api/v1/assessment/frameworks/{framework_id}/publish", "status": 412, "duration_ms": 9.3}
+{"event": "http_request", "request_id": "192b68ca-7a19-4598-95a2-874e2c0e101f", "method": "PUT", "route": "/api/v1/assessment/assessments/{assessment_id}/answers", "status": 200, "duration_ms": 43.09}
+{"event": "http_request", "request_id": "9fc1898a-18c8-450f-9737-66cd7e06b19d", "method": "POST", "route": "/api/v1/assessment/assessments/{assessment_id}/evidence", "status": 201, "duration_ms": 28.12}
+{"event": "http_request", "request_id": "ee398acc-a975-4cd0-b23d-4a8ffb13b934", "method": "GET", "route": "/api/v1/assessment/assessments/{assessment_id}/evidence/{evidence_id}", "status": 409, "duration_ms": 12.6}
+{"event": "http_request", "request_id": "7bd320b4-501a-4405-927a-434f5f736775", "method": "GET", "route": "/api/v1/assessment/assessments/{assessment_id}/evidence/{evidence_id}/preview", "status": 200, "duration_ms": 8.47}
+{"event": "http_request", "request_id": "ba444a11-10ab-4a4a-a547-a6195b90dd37", "method": "GET", "route": "/api/v1/assessment/assessments/{assessment_id}", "status": 200, "duration_ms": 16.03}
+{"event": "http_request", "request_id": "c4066d4f-cf2b-4fbf-803d-21a85cb68814", "method": "POST", "route": "/api/v1/assessment/assessments/{assessment_id}/submit", "status": 200, "duration_ms": 15.02}
+{"event": "http_request", "request_id": "6b8af1a0-8d8a-442b-babf-cb46ffd57766", "method": "POST", "route": "/api/v1/assessment/assessments/{assessment_id}/submit", "status": 200, "duration_ms": 11.64}
+{"event": "http_request", "request_id": "22f9d27f-8516-41a1-be8a-b98eb764a6cb", "method": "POST", "route": "/api/v1/assessment/assessments/{assessment_id}/submit", "status": 409, "duration_ms": 9.02}
+{"event": "http_request", "request_id": "db99c3db-1a64-432b-974b-d0330b881477", "method": "POST", "route": "/api/v1/assessment/assessments/{assessment_id}/review", "status": 403, "duration_ms": 7.56}
+{"event": "http_request", "request_id": "7e8d0d59-b1a5-49bb-8e6d-ccf89ba02750", "method": "GET", "route": "/api/v1/auth/csrf", "status": 200, "duration_ms": 0.53}
+{"event": "http_request", "request_id": "633a5e34-cfc0-48e3-949c-b8c116c68e65", "method": "POST", "route": "/api/v1/auth/login", "status": 200, "duration_ms": 263.52}
+{"event": "http_request", "request_id": "e1089088-3190-45cb-bddb-9958effe493f", "method": "POST", "route": "/api/v1/assessment/assessments/{assessment_id}/review", "status": 200, "duration_ms": 15.57}
+{"event": "http_request", "request_id": "f6d4c406-39d6-43a7-84f5-876899aef18b", "method": "POST", "route": "/api/v1/assessment/assessments/{assessment_id}/evidence/{evidence_id}/release", "status": 200, "duration_ms": 15.08}
+{"event": "http_request", "request_id": "ec75f74a-c6f0-4785-b772-7a0f37c2c32c", "method": "GET", "route": "/api/v1/assessment/assessments/{assessment_id}", "status": 200, "duration_ms": 10.18}
+{"event": "http_request", "request_id": "f7fe278d-e9fd-40f5-8fef-5d08e5d3deaf", "method": "GET", "route": "/api/v1/assessment/assessments/{assessment_id}/evidence/{evidence_id}", "status": 200, "duration_ms": 5.75}
+{"event": "http_request", "request_id": "51e75942-bb3b-4c7f-b27d-b9c1d36d16c6", "method": "POST", "route": "/api/v1/assessment/assessments/{assessment_id}/review", "status": 200, "duration_ms": 30.03}
+------------------------------ Captured log call -------------------------------
+INFO     ppm.requests:main.py:125 {"event": "http_request", "request_id": "33e3c2e8-83ef-4358-a639-d69d6399660a", "method": "GET", "route": "/api/v1/auth/csrf", "status": 200, "duration_ms": 37.46}
+INFO     ppm.requests:main.py:125 {"event": "http_request", "request_id": "bec00c23-8d84-4dec-9865-455396104c30", "method": "POST", "route": "/api/v1/auth/login", "status": 200, "duration_ms": 294.24}
+INFO     ppm.requests:main.py:125 {"event": "http_request", "request_id": "17b3f9a8-381a-4a81-babd-455ea781cc47", "method": "POST", "route": "/api/v1/auth/switch", "status": 200, "duration_ms": 11.24}
+INFO     ppm.requests:main.py:125 {"event": "http_request", "request_id": "0e80672e-4d19-4800-a507-072c2628fe77", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 42.85}
+INFO     ppm.requests:main.py:125 {"event": "http_request", "request_id": "8c83f1bd-e777-4260-86c4-de2608c30b5f", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 18.69}
+INFO     ppm.requests:main.py:125 {"event": "http_request", "request_id": "d57bb307-49a2-4ca4-9ad8-eb5caa2b5f91", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 19.09}
+INFO     ppm.requests:main.py:125 {"event": "http_request", "request_id": "f80954be-b3e9-4933-9d13-a90dc622cf8a", "method": "POST", "route": "/api/v1/assessment/frameworks", "status": 201, "duration_ms": 16.16}
+INFO     ppm.requests:main.py:125 {"event": "http_request", "request_id": "aaa62e60-ec73-4dc8-a050-0baa7c2cc646", "method": "POST", "route": "/api/v1/assessment/frameworks/{framework_id}/publish", "status": 201, "duration_ms": 15.86}
+INFO     ppm.requests:main.py:125 {"event": "http_request", "request_id": "ee8990b8-b9a0-4479-8b83-3ed8ce6be79b", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 13.4}
+INFO     ppm.requests:main.py:125 {"event": "http_request", "request_id": "0e83026a-e9e5-41a7-aa42-0dc6cd553153", "method": "POST", "route": "/api/v1/assessment/assessments", "status": 201, "duration_ms": 34.38}
+INFO     ppm.requests:main.py:125 {"event": "http_request", "request_id": "8ab4e02f-c13b-4649-b733-2c70b050e87d", "method": "POST", "route": "/api/v1/assessment/assessments/{assessment_id}/submit", "status": 422, "duration_ms": 14.35}
+INFO     ppm.requests:main.py:125 {"event": "http_request", "request_id": "7115e041-e33c-4b07-9981-2af21957dc69", "method": "POST", "route": "/api/v1/assessment/frameworks/{framework_id}/publish", "status": 412, "duration_ms": 9.3}
+INFO     ppm.requests:main.py:125 {"event": "http_request", "request_id": "192b68ca-7a19-4598-95a2-874e2c0e101f", "method": "PUT", "route": "/api/v1/assessment/assessments/{assessment_id}/answers", "status": 200, "duration_ms": 43.09}
+INFO     ppm.requests:main.py:125 {"event": "http_request", "request_id": "9fc1898a-18c8-450f-9737-66cd7e06b19d", "method": "POST", "route": "/api/v1/assessment/assessments/{assessment_id}/evidence", "status": 201, "duration_ms": 28.12}
+INFO     ppm.requests:main.py:125 {"event": "http_request", "request_id": "ee398acc-a975-4cd0-b23d-4a8ffb13b934", "method": "GET", "route": "/api/v1/assessment/assessments/{assessment_id}/evidence/{evidence_id}", "status": 409, "duration_ms": 12.6}
+INFO     ppm.requests:main.py:125 {"event": "http_request", "request_id": "7bd320b4-501a-4405-927a-434f5f736775", "method": "GET", "route": "/api/v1/assessment/assessments/{assessment_id}/evidence/{evidence_id}/preview", "status": 200, "duration_ms": 8.47}
+INFO     ppm.requests:main.py:125 {"event": "http_request", "request_id": "ba444a11-10ab-4a4a-a547-a6195b90dd37", "method": "GET", "route": "/api/v1/assessment/assessments/{assessment_id}", "status": 200, "duration_ms": 16.03}
+INFO     ppm.requests:main.py:125 {"event": "http_request", "request_id": "c4066d4f-cf2b-4fbf-803d-21a85cb68814", "method": "POST", "route": "/api/v1/assessment/assessments/{assessment_id}/submit", "status": 200, "duration_ms": 15.02}
+INFO     ppm.requests:main.py:125 {"event": "http_request", "request_id": "6b8af1a0-8d8a-442b-babf-cb46ffd57766", "method": "POST", "route": "/api/v1/assessment/assessments/{assessment_id}/submit", "status": 200, "duration_ms": 11.64}
+INFO     ppm.requests:main.py:125 {"event": "http_request", "request_id": "22f9d27f-8516-41a1-be8a-b98eb764a6cb", "method": "POST", "route": "/api/v1/assessment/assessments/{assessment_id}/submit", "status": 409, "duration_ms": 9.02}
+INFO     ppm.requests:main.py:125 {"event": "http_request", "request_id": "db99c3db-1a64-432b-974b-d0330b881477", "method": "POST", "route": "/api/v1/assessment/assessments/{assessment_id}/review", "status": 403, "duration_ms": 7.56}
+INFO     ppm.requests:main.py:125 {"event": "http_request", "request_id": "7e8d0d59-b1a5-49bb-8e6d-ccf89ba02750", "method": "GET", "route": "/api/v1/auth/csrf", "status": 200, "duration_ms": 0.53}
+INFO     ppm.requests:main.py:125 {"event": "http_request", "request_id": "633a5e34-cfc0-48e3-949c-b8c116c68e65", "method": "POST", "route": "/api/v1/auth/login", "status": 200, "duration_ms": 263.52}
+INFO     ppm.requests:main.py:125 {"event": "http_request", "request_id": "e1089088-3190-45cb-bddb-9958effe493f", "method": "POST", "route": "/api/v1/assessment/assessments/{assessment_id}/review", "status": 200, "duration_ms": 15.57}
+INFO     ppm.requests:main.py:125 {"event": "http_request", "request_id": "f6d4c406-39d6-43a7-84f5-876899aef18b", "method": "POST", "route": "/api/v1/assessment/assessments/{assessment_id}/evidence/{evidence_id}/release", "status": 200, "duration_ms": 15.08}
+INFO     ppm.requests:main.py:125 {"event": "http_request", "request_id": "ec75f74a-c6f0-4785-b772-7a0f37c2c32c", "method": "GET", "route": "/api/v1/assessment/assessments/{assessment_id}", "status": 200, "duration_ms": 10.18}
+INFO     ppm.requests:main.py:125 {"event": "http_request", "request_id": "f7fe278d-e9fd-40f5-8fef-5d08e5d3deaf", "method": "GET", "route": "/api/v1/assessment/assessments/{assessment_id}/evidence/{evidence_id}", "status": 200, "duration_ms": 5.75}
+INFO     ppm.requests:main.py:125 {"event": "http_request", "request_id": "51e75942-bb3b-4c7f-b27d-b9c1d36d16c6", "method": "POST", "route": "/api/v1/assessment/assessments/{assessment_id}/review", "status": 200, "duration_ms": 30.03}
+=============================== warnings summary ===============================
+.venv/lib/python3.12/site-packages/fastapi/testclient.py:1
+  /app/.venv/lib/python3.12/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED tests/test_assessment.py::test_two_departments_review_versions_evidence_and_retries
+1 failed, 52 passed, 1 warning in 56.71s
+Traceback (most recent call last):
+  File "/app/scripts/test_backend.py", line 26, in <module>
+    subprocess.run(command, check=True, env=env)
+  File "/usr/local/lib/python3.12/subprocess.py", line 571, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['/app/.venv/bin/python', '-m', 'pytest', '-q']' returned non-zero exit status 1.
+

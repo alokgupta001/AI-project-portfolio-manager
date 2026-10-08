@@ -1,0 +1,4 @@
+PASS: backup exists; current normal checkpoint/counts and 0005 migration match recorded baseline.
+PASS: normal 0005 -> 0006 forward upgrade; checkpoint and all baseline entity counts preserved.
+PASS: all six new tables have RLS; ppm_app cannot UPDATE or DELETE sprint closures.
+PASS: post-restart API readiness and command-center page HTTP 200.

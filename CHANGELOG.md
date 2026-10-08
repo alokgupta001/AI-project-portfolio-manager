@@ -1,5 +1,19 @@
 # Changelog
 
+## 2026-10-08 Sprint 07
+
+- Added four command-center dashboards with shared typed metrics, saved filters, evidence drill-down and scoped JSON DTO download.
+- Added risk lifecycle, recorded business benefits, configurable deterministic thresholds, explicit baseline/calendar plans and immutable sprint closure velocity in additive migration 0006.
+- Preserved tenant/resource privacy, existing assessment results and normal checkpoint/data; repaired a nondeterministic assessment test without changing scoring.
+- Verified 53 backend tests, seven prior browser scenarios and the final command scenario, responsive/axe checks, source hashes, zero-vulnerability npm audit and local worker/restart/storage behavior. See Sprint 07 checks for run boundaries and baseline measurements.
+
+## 2026-10-06 Sprint 06
+
+- Added typed maturity framework builder, immutable publishing, four editable examples, independent review, deterministic scoring, comparisons and history.
+- Added scoped RLS/grants, revisions/replay protection and quarantined text evidence with reviewer release.
+- Added responsive `/assessments` UI, generated contracts and migration 0005; preserved existing local data.
+- Verified 49 backend tests, six existing browser checks plus final assessment case, static/security checks and runtime persistence. See Sprint 06 checks and handoff for evidence and limits.
+
 ## 2026-10-06 Sprint 05
 
 - Added independent resource profiles, skills, dated teams/availability, immutable calendars,

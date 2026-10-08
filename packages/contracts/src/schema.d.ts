@@ -1,5 +1,281 @@
 // Generated from backend OpenAPI. Do not edit.
 export interface paths {
+    "/api/v1/assessment/access": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Set Access */
+        post: operations["set_access_api_v1_assessment_access_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/assessment/assessments": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List Assessments */
+        get: operations["list_assessments_api_v1_assessment_assessments_get"];
+        put?: never;
+        /** Assign */
+        post: operations["assign_api_v1_assessment_assessments_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/assessment/assessments/{assessment_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Detail */
+        get: operations["detail_api_v1_assessment_assessments__assessment_id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/assessment/assessments/{assessment_id}/answers": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /** Save Answers */
+        put: operations["save_answers_api_v1_assessment_assessments__assessment_id__answers_put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/assessment/assessments/{assessment_id}/events": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** History */
+        get: operations["history_api_v1_assessment_assessments__assessment_id__events_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/assessment/assessments/{assessment_id}/evidence": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Evidence List */
+        get: operations["evidence_list_api_v1_assessment_assessments__assessment_id__evidence_get"];
+        put?: never;
+        /** Upload */
+        post: operations["upload_api_v1_assessment_assessments__assessment_id__evidence_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/assessment/assessments/{assessment_id}/evidence/{evidence_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Download */
+        get: operations["download_api_v1_assessment_assessments__assessment_id__evidence__evidence_id__get"];
+        put?: never;
+        post?: never;
+        /** Delete Evidence */
+        delete: operations["delete_evidence_api_v1_assessment_assessments__assessment_id__evidence__evidence_id__delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/assessment/assessments/{assessment_id}/evidence/{evidence_id}/preview": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Preview Evidence */
+        get: operations["preview_evidence_api_v1_assessment_assessments__assessment_id__evidence__evidence_id__preview_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/assessment/assessments/{assessment_id}/evidence/{evidence_id}/release": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Release Evidence */
+        post: operations["release_evidence_api_v1_assessment_assessments__assessment_id__evidence__evidence_id__release_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/assessment/assessments/{assessment_id}/review": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Review */
+        post: operations["review_api_v1_assessment_assessments__assessment_id__review_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/assessment/assessments/{assessment_id}/submit": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Submit */
+        post: operations["submit_api_v1_assessment_assessments__assessment_id__submit_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/assessment/frameworks": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List Frameworks */
+        get: operations["list_frameworks_api_v1_assessment_frameworks_get"];
+        put?: never;
+        /** Create Framework */
+        post: operations["create_framework_api_v1_assessment_frameworks_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/assessment/frameworks/{framework_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /** Edit Framework */
+        put: operations["edit_framework_api_v1_assessment_frameworks__framework_id__put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/assessment/frameworks/{framework_id}/publish": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Publish Framework */
+        post: operations["publish_framework_api_v1_assessment_frameworks__framework_id__publish_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/assessment/frameworks/{framework_id}/versions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Versions */
+        get: operations["versions_api_v1_assessment_frameworks__framework_id__versions_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/assessment/seed-examples": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Seed Examples */
+        post: operations["seed_examples_api_v1_assessment_seed_examples_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/auth/complete": {
         parameters: {
             query?: never;
@@ -238,6 +514,23 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/command/snapshot": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Snapshot */
+        get: operations["snapshot_api_v1_command_snapshot_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/delivery/history/{kind}/{id_}": {
         parameters: {
             query?: never;
@@ -465,6 +758,23 @@ export interface paths {
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
+        /** AccessInput */
+        AccessInput: {
+            /**
+             * Active
+             * @default true
+             */
+            active: boolean;
+            /** Assessment Id */
+            assessment_id?: string | null;
+            /** Framework Id */
+            framework_id?: string | null;
+            /**
+             * User Id
+             * Format: uuid
+             */
+            user_id: string;
+        };
         /** AccountView */
         AccountView: {
             /** Email */
@@ -488,6 +798,26 @@ export interface components {
              * @enum {string}
              */
             role: "Admin" | "Project Manager" | "Viewer";
+        };
+        /** ActionInput */
+        ActionInput: {
+            /**
+             * Note
+             * @default
+             */
+            note: string;
+        };
+        /** Adjustment */
+        Adjustment: {
+            /**
+             * Answer Id
+             * Format: uuid
+             */
+            answer_id: string;
+            /** Reviewer Note */
+            reviewer_note: string;
+            /** Reviewer Score */
+            reviewer_score: number | string;
         };
         /** AlignmentInput */
         "AlignmentInput-Input": {
@@ -639,6 +969,135 @@ export interface components {
              */
             start_date: string;
         };
+        /** AnswerBatchInput */
+        AnswerBatchInput: {
+            /** Items */
+            items: components["schemas"]["AnswerInput"][];
+        };
+        /** AnswerInput */
+        AnswerInput: {
+            /**
+             * Evidence Text
+             * @default
+             */
+            evidence_text: string;
+            /**
+             * Question Id
+             * Format: uuid
+             */
+            question_id: string;
+            /** Value */
+            value?: string | null;
+        };
+        /** AnswerRecord */
+        AnswerRecord: {
+            /**
+             * Evidence Text
+             * @default
+             */
+            evidence_text: string;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /**
+             * Question Id
+             * Format: uuid
+             */
+            question_id: string;
+            /** Reviewer Note */
+            reviewer_note: string | null;
+            /** Reviewer Score */
+            reviewer_score: string | null;
+            /** Value */
+            value?: string | null;
+        };
+        /** AssessmentDetail */
+        AssessmentDetail: {
+            /** Answers */
+            answers: components["schemas"]["AnswerRecord"][];
+            assessment: components["schemas"]["AssessmentRecord"];
+            /** Notes */
+            notes: string[];
+            snapshot: components["schemas"]["FrameworkInput-Output"];
+        };
+        /** AssessmentRecord */
+        AssessmentRecord: {
+            /**
+             * Assigned To
+             * Format: uuid
+             */
+            assigned_to: string;
+            /** Can Answer */
+            can_answer: boolean;
+            /** Can Read Evidence */
+            can_read_evidence: boolean;
+            /** Can Review */
+            can_review: boolean;
+            /** Department Id */
+            department_id?: string | null;
+            /** Dimension Scores */
+            dimension_scores: components["schemas"]["DimensionScoreDetail"][];
+            /** Framework Name */
+            framework_name: string;
+            /** Framework Version */
+            framework_version: number;
+            /**
+             * Framework Version Id
+             * Format: uuid
+             */
+            framework_version_id: string;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Name */
+            name: string;
+            /** Overall Score */
+            overall_score: string | null;
+            /** Provisional */
+            provisional: boolean;
+            /**
+             * Reviewer Id
+             * Format: uuid
+             */
+            reviewer_id: string;
+            /** Revision */
+            revision: number;
+            /**
+             * Status
+             * @enum {string}
+             */
+            status: "draft" | "submitted" | "in_review" | "returned" | "completed";
+            /** Team Id */
+            team_id?: string | null;
+        };
+        /** AssignmentInput */
+        AssignmentInput: {
+            /**
+             * Assigned To
+             * Format: uuid
+             */
+            assigned_to: string;
+            /** Department Id */
+            department_id?: string | null;
+            /**
+             * Framework Version Id
+             * Format: uuid
+             */
+            framework_version_id: string;
+            /** Name */
+            name: string;
+            /**
+             * Reviewer Id
+             * Format: uuid
+             */
+            reviewer_id: string;
+            /** Team Id */
+            team_id?: string | null;
+        };
         /** AuditView */
         AuditView: {
             /** Action */
@@ -763,6 +1222,88 @@ export interface components {
             };
             /** Version */
             version: number;
+        };
+        /** BenefitInput */
+        "BenefitInput-Input": {
+            /**
+             * Archived
+             * @default false
+             */
+            archived: boolean;
+            /**
+             * Description
+             * @default
+             */
+            description: string;
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            kind: "benefits";
+            /** Name */
+            name: string;
+            /**
+             * Period End
+             * Format: date
+             */
+            period_end: string;
+            /**
+             * Period Start
+             * Format: date
+             */
+            period_start: string;
+            /**
+             * Project Id
+             * Format: uuid
+             */
+            project_id: string;
+            /** Realized */
+            realized?: number | string | null;
+            /** Target */
+            target: number | string;
+            /** Unit */
+            unit: string;
+        };
+        /** BenefitInput */
+        "BenefitInput-Output": {
+            /**
+             * Archived
+             * @default false
+             */
+            archived: boolean;
+            /**
+             * Description
+             * @default
+             */
+            description: string;
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            kind: "benefits";
+            /** Name */
+            name: string;
+            /**
+             * Period End
+             * Format: date
+             */
+            period_end: string;
+            /**
+             * Period Start
+             * Format: date
+             */
+            period_start: string;
+            /**
+             * Project Id
+             * Format: uuid
+             */
+            project_id: string;
+            /** Realized */
+            realized?: string | null;
+            /** Target */
+            target: string;
+            /** Unit */
+            unit: string;
         };
         /** BlockerInput */
         BlockerInput: {
@@ -1091,6 +1632,69 @@ export interface components {
              */
             start_date: string;
         };
+        /** CommandSnapshot */
+        CommandSnapshot: {
+            /** Amber */
+            amber: string;
+            /** Compute Ms */
+            compute_ms: number;
+            /**
+             * Computed At
+             * Format: date-time
+             */
+            computed_at: string;
+            /**
+             * End
+             * Format: date
+             */
+            end: string;
+            /** Limitations */
+            limitations: string[];
+            /**
+             * Metric Version
+             * @default command-v1
+             * @constant
+             */
+            metric_version: "command-v1";
+            /** Policy Revision */
+            policy_revision: number;
+            /** Portfolio Id */
+            portfolio_id: string | null;
+            /** Projects */
+            projects: components["schemas"]["ProjectMetrics"][];
+            /** Records */
+            records: components["schemas"]["RecordView"][];
+            /** Red */
+            red: string;
+            /** Resources */
+            resources: components["schemas"]["ResourceMetric"][];
+            /**
+             * Risk Rule
+             * @default risk-rule-v1
+             * @constant
+             */
+            risk_rule: "risk-rule-v1";
+            /**
+             * Scope
+             * @default Current authorized projects only; hidden projects are not counted
+             */
+            scope: string;
+            /** Stale Days */
+            stale_days: number;
+            /**
+             * Start
+             * Format: date
+             */
+            start: string;
+            /** Teams */
+            teams: components["schemas"]["TeamMetric"][];
+            /** Timezone */
+            timezone: string;
+            /** Totals */
+            totals: components["schemas"]["Metric"][];
+            /** Velocity */
+            velocity: components["schemas"]["Velocity"][];
+        };
         /** CompleteChallenge */
         CompleteChallenge: {
             /** Name */
@@ -1187,6 +1791,66 @@ export interface components {
              * @enum {string}
              */
             status: "ready" | "unavailable";
+        };
+        /** Dimension */
+        "Dimension-Input": {
+            /**
+             * Description
+             * @default
+             */
+            description: string;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id?: string;
+            /** Name */
+            name: string;
+            /** Questions */
+            questions?: components["schemas"]["Question-Input"][];
+            /** Weight */
+            weight: number | string;
+        };
+        /** Dimension */
+        "Dimension-Output": {
+            /**
+             * Description
+             * @default
+             */
+            description: string;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id?: string;
+            /** Name */
+            name: string;
+            /** Questions */
+            questions?: components["schemas"]["Question-Output"][];
+            /** Weight */
+            weight: string;
+        };
+        /** DimensionScoreDetail */
+        DimensionScoreDetail: {
+            /** Answered Count */
+            answered_count: number;
+            /** Coverage Percent */
+            coverage_percent: string;
+            /**
+             * Dimension Id
+             * Format: uuid
+             */
+            dimension_id: string;
+            /** Dimension Name */
+            dimension_name: string;
+            /** Evidence Coverage Percent */
+            evidence_coverage_percent: string;
+            /** Score */
+            score: string | null;
+            /** Total Required */
+            total_required: number;
+            /** Weight */
+            weight: string;
         };
         /** EffortCoverageInput */
         EffortCoverageInput: {
@@ -1337,6 +2001,70 @@ export interface components {
         ErrorResponse: {
             error: components["schemas"]["ErrorBody"];
         };
+        /** EventRecord */
+        EventRecord: {
+            /**
+             * Actor Id
+             * Format: uuid
+             */
+            actor_id: string;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /** Details */
+            details: {
+                [key: string]: unknown;
+            };
+            /** Event */
+            event: string;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Note */
+            note: string;
+        };
+        /** EvidenceInput */
+        EvidenceInput: {
+            /** Content Base64 */
+            content_base64: string;
+            /** File Name */
+            file_name: string;
+            /**
+             * Question Id
+             * Format: uuid
+             */
+            question_id: string;
+        };
+        /** EvidenceRecord */
+        EvidenceRecord: {
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /** File Name */
+            file_name: string;
+            /** File Size */
+            file_size: number;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /**
+             * Question Id
+             * Format: uuid
+             */
+            question_id: string;
+            /** Released */
+            released: boolean;
+            /** Sha256 */
+            sha256: string;
+        };
         /** ExpenditureInput */
         "ExpenditureInput-Input": {
             /** Amount */
@@ -1409,6 +2137,25 @@ export interface components {
              */
             spent_on: string;
         };
+        /** Fact */
+        Fact: {
+            /** Detail */
+            detail: string;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Kind */
+            kind: string;
+            /** Name */
+            name: string;
+            /**
+             * Updated At
+             * Format: date-time
+             */
+            updated_at: string;
+        };
         /** FoundationResponse */
         FoundationResponse: {
             /**
@@ -1428,10 +2175,90 @@ export interface components {
             instance_id: string;
             /**
              * Schema Revision
-             * @default 0004_capacity
+             * @default 0005_assessment
              * @constant
              */
-            schema_revision: "0004_capacity";
+            schema_revision: "0005_assessment";
+        };
+        /** FrameworkInput */
+        "FrameworkInput-Input": {
+            /**
+             * Archived
+             * @default false
+             */
+            archived: boolean;
+            /**
+             * Category
+             * @default custom
+             * @enum {string}
+             */
+            category: "pmo" | "agile" | "governance" | "delivery" | "custom";
+            /**
+             * Description
+             * @default
+             */
+            description: string;
+            /** Dimensions */
+            dimensions?: components["schemas"]["Dimension-Input"][];
+            /** Name */
+            name: string;
+        };
+        /** FrameworkInput */
+        "FrameworkInput-Output": {
+            /**
+             * Archived
+             * @default false
+             */
+            archived: boolean;
+            /**
+             * Category
+             * @default custom
+             * @enum {string}
+             */
+            category: "pmo" | "agile" | "governance" | "delivery" | "custom";
+            /**
+             * Description
+             * @default
+             */
+            description: string;
+            /** Dimensions */
+            dimensions?: components["schemas"]["Dimension-Output"][];
+            /** Name */
+            name: string;
+        };
+        /** FrameworkRecord */
+        FrameworkRecord: {
+            /**
+             * Archived
+             * @default false
+             */
+            archived: boolean;
+            /** Can Edit */
+            can_edit: boolean;
+            /**
+             * Category
+             * @default custom
+             * @enum {string}
+             */
+            category: "pmo" | "agile" | "governance" | "delivery" | "custom";
+            /**
+             * Description
+             * @default
+             */
+            description: string;
+            /** Dimensions */
+            dimensions?: components["schemas"]["Dimension-Output"][];
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Name */
+            name: string;
+            /** Published Version */
+            published_version: number | null;
+            /** Revision */
+            revision: number;
         };
         /** GoalInput */
         GoalInput: {
@@ -1549,6 +2376,18 @@ export interface components {
              */
             role: "Admin" | "Project Manager" | "Viewer";
         };
+        /** Level */
+        Level: {
+            /**
+             * Description
+             * @default
+             */
+            description: string;
+            /** Label */
+            label: string;
+            /** Level */
+            level: number;
+        };
         /** MemberInput */
         MemberInput: {
             /** Active */
@@ -1596,6 +2435,183 @@ export interface components {
         Message: {
             /** Message */
             message: string;
+        };
+        /** Metric */
+        Metric: {
+            /** Coverage Percent */
+            coverage_percent: string;
+            /** Explanation */
+            explanation: string;
+            /** Facts */
+            facts: components["schemas"]["Fact"][];
+            /**
+             * Freshness
+             * @enum {string}
+             */
+            freshness: "fresh" | "stale" | "missing";
+            /** Key */
+            key: string;
+            /** Label */
+            label: string;
+            /** Period */
+            period: string;
+            /** Source */
+            source: string;
+            /** Source Updated At */
+            source_updated_at: string | null;
+            /**
+             * Status
+             * @enum {string}
+             */
+            status: "available" | "partial" | "unknown";
+            /** Unit */
+            unit: string;
+            /** Value */
+            value: string | null;
+        };
+        /** MetricPlanInput */
+        "MetricPlanInput-Input": {
+            /**
+             * Archived
+             * @default false
+             */
+            archived: boolean;
+            /**
+             * Baseline Id
+             * Format: uuid
+             */
+            baseline_id: string;
+            /**
+             * Calendar Id
+             * Format: uuid
+             */
+            calendar_id: string;
+            /**
+             * Description
+             * @default
+             */
+            description: string;
+            /** Forecast Cost */
+            forecast_cost?: number | string | null;
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            kind: "metric_plans";
+            /** Name */
+            name: string;
+            /**
+             * Project Id
+             * Format: uuid
+             */
+            project_id: string;
+        };
+        /** MetricPlanInput */
+        "MetricPlanInput-Output": {
+            /**
+             * Archived
+             * @default false
+             */
+            archived: boolean;
+            /**
+             * Baseline Id
+             * Format: uuid
+             */
+            baseline_id: string;
+            /**
+             * Calendar Id
+             * Format: uuid
+             */
+            calendar_id: string;
+            /**
+             * Description
+             * @default
+             */
+            description: string;
+            /** Forecast Cost */
+            forecast_cost?: string | null;
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            kind: "metric_plans";
+            /** Name */
+            name: string;
+            /**
+             * Project Id
+             * Format: uuid
+             */
+            project_id: string;
+        };
+        /** MetricPolicyInput */
+        "MetricPolicyInput-Input": {
+            /**
+             * Amber
+             * @default 30
+             */
+            amber: number | string;
+            /**
+             * Archived
+             * @default false
+             */
+            archived: boolean;
+            /**
+             * Description
+             * @default
+             */
+            description: string;
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            kind: "metric_policies";
+            /** Name */
+            name: string;
+            /**
+             * Red
+             * @default 60
+             */
+            red: number | string;
+            /**
+             * Stale Days
+             * @default 7
+             */
+            stale_days: number;
+        };
+        /** MetricPolicyInput */
+        "MetricPolicyInput-Output": {
+            /**
+             * Amber
+             * @default 30
+             */
+            amber: string;
+            /**
+             * Archived
+             * @default false
+             */
+            archived: boolean;
+            /**
+             * Description
+             * @default
+             */
+            description: string;
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            kind: "metric_policies";
+            /** Name */
+            name: string;
+            /**
+             * Red
+             * @default 60
+             */
+            red: string;
+            /**
+             * Stale Days
+             * @default 7
+             */
+            stale_days: number;
         };
         /** MilestoneInput */
         MilestoneInput: {
@@ -1823,6 +2839,91 @@ export interface components {
             /** Team Id */
             team_id?: string | null;
         };
+        /** ProjectMetrics */
+        ProjectMetrics: {
+            /** Can Edit */
+            can_edit: boolean;
+            /** Computed Health */
+            computed_health: string;
+            /** Discrepancy */
+            discrepancy: boolean;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Metrics */
+            metrics: components["schemas"]["Metric"][];
+            /** Name */
+            name: string;
+            /**
+             * Portfolio Id
+             * Format: uuid
+             */
+            portfolio_id: string;
+            /** Reported Health */
+            reported_health: string;
+        };
+        /** Question */
+        "Question-Input": {
+            /**
+             * Answer Type
+             * @default rubric
+             * @enum {string}
+             */
+            answer_type: "boolean" | "rubric" | "text";
+            /**
+             * Id
+             * Format: uuid
+             */
+            id?: string;
+            /** Name */
+            name: string;
+            /**
+             * Required
+             * @default true
+             */
+            required: boolean;
+            /** Rubric Levels */
+            rubric_levels?: components["schemas"]["Level"][];
+            /** Text */
+            text: string;
+            /**
+             * Weight
+             * @default 1
+             */
+            weight: number | string;
+        };
+        /** Question */
+        "Question-Output": {
+            /**
+             * Answer Type
+             * @default rubric
+             * @enum {string}
+             */
+            answer_type: "boolean" | "rubric" | "text";
+            /**
+             * Id
+             * Format: uuid
+             */
+            id?: string;
+            /** Name */
+            name: string;
+            /**
+             * Required
+             * @default true
+             */
+            required: boolean;
+            /** Rubric Levels */
+            rubric_levels?: components["schemas"]["Level"][];
+            /** Text */
+            text: string;
+            /**
+             * Weight
+             * @default 1
+             */
+            weight: string;
+        };
         /** ReadyResponse */
         ReadyResponse: {
             /** Dependencies */
@@ -1841,7 +2942,7 @@ export interface components {
              */
             created_at: string;
             /** Data */
-            data: components["schemas"]["SettingsInput"] | components["schemas"]["DepartmentInput"] | components["schemas"]["GoalInput"] | components["schemas"]["PortfolioInput"] | components["schemas"]["TeamInput"] | components["schemas"]["ProgramInput"] | components["schemas"]["ProjectInput"] | components["schemas"]["GrantInput"] | components["schemas"]["TeamMemberInput"] | components["schemas"]["SprintInput"] | components["schemas"]["WorkInput-Output"] | components["schemas"]["MilestoneInput"] | components["schemas"]["BlockerInput"] | components["schemas"]["DependencyInput"] | components["schemas"]["BudgetInput-Output"] | components["schemas"]["ExpenditureInput-Output"] | components["schemas"]["StatusInput"] | components["schemas"]["BaselineInput"] | components["schemas"]["AlignmentInput-Output"] | components["schemas"]["ResourceInput"] | components["schemas"]["CalendarInput-Output"] | components["schemas"]["AvailabilityInput"] | components["schemas"]["ResourceTeamInput"] | components["schemas"]["ResourceSkillInput"] | components["schemas"]["TimeOffInput-Output"] | components["schemas"]["AllocationInput-Output"] | components["schemas"]["ResourceAccessInput"] | components["schemas"]["EffortInput-Output"] | components["schemas"]["EffortCoverageInput"] | components["schemas"]["CapacitySnapshotInput"];
+            data: components["schemas"]["RiskInput"] | components["schemas"]["BenefitInput-Output"] | components["schemas"]["MetricPlanInput-Output"] | components["schemas"]["MetricPolicyInput-Output"] | components["schemas"]["SavedViewInput"] | components["schemas"]["SettingsInput"] | components["schemas"]["DepartmentInput"] | components["schemas"]["GoalInput"] | components["schemas"]["PortfolioInput"] | components["schemas"]["TeamInput"] | components["schemas"]["ProgramInput"] | components["schemas"]["ProjectInput"] | components["schemas"]["GrantInput"] | components["schemas"]["TeamMemberInput"] | components["schemas"]["SprintInput"] | components["schemas"]["WorkInput-Output"] | components["schemas"]["MilestoneInput"] | components["schemas"]["BlockerInput"] | components["schemas"]["DependencyInput"] | components["schemas"]["BudgetInput-Output"] | components["schemas"]["ExpenditureInput-Output"] | components["schemas"]["StatusInput"] | components["schemas"]["BaselineInput"] | components["schemas"]["AlignmentInput-Output"] | components["schemas"]["ResourceInput"] | components["schemas"]["CalendarInput-Output"] | components["schemas"]["AvailabilityInput"] | components["schemas"]["ResourceTeamInput"] | components["schemas"]["ResourceSkillInput"] | components["schemas"]["TimeOffInput-Output"] | components["schemas"]["AllocationInput-Output"] | components["schemas"]["ResourceAccessInput"] | components["schemas"]["EffortInput-Output"] | components["schemas"]["EffortCoverageInput"] | components["schemas"]["CapacitySnapshotInput"];
             /**
              * Id
              * Format: uuid
@@ -1922,6 +3023,14 @@ export interface components {
             /** User Id */
             user_id?: string | null;
         };
+        /** ResourceMetric */
+        ResourceMetric: {
+            /** Freshness */
+            freshness: string;
+            /** Source Updated At */
+            source_updated_at: string | null;
+            summary: components["schemas"]["CapacityView"];
+        };
         /** ResourceSkillInput */
         ResourceSkillInput: {
             /**
@@ -1988,6 +3097,113 @@ export interface components {
              * Format: uuid
              */
             team_id: string;
+        };
+        /** ReviewInput */
+        ReviewInput: {
+            /**
+             * Action
+             * @enum {string}
+             */
+            action: "start" | "return" | "complete";
+            /** Adjustments */
+            adjustments?: components["schemas"]["Adjustment"][];
+            /** Note */
+            note: string;
+        };
+        /** RiskInput */
+        RiskInput: {
+            /**
+             * Archived
+             * @default false
+             */
+            archived: boolean;
+            /**
+             * Description
+             * @default
+             */
+            description: string;
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            kind: "risks";
+            /** Likelihood */
+            likelihood: number;
+            /**
+             * Mitigation
+             * @default
+             */
+            mitigation: string;
+            /** Name */
+            name: string;
+            /** Owner Id */
+            owner_id?: string | null;
+            /**
+             * Project Id
+             * Format: uuid
+             */
+            project_id: string;
+            /**
+             * Resolution
+             * @default
+             */
+            resolution: string;
+            /**
+             * Review On
+             * Format: date
+             */
+            review_on: string;
+            /** Severity */
+            severity: number;
+            /**
+             * Status
+             * @default open
+             * @enum {string}
+             */
+            status: "open" | "mitigating" | "accepted" | "closed";
+        };
+        /** SavedViewInput */
+        SavedViewInput: {
+            /**
+             * Archived
+             * @default false
+             */
+            archived: boolean;
+            /**
+             * Dashboard
+             * @default Executive
+             * @enum {string}
+             */
+            dashboard: "Executive" | "Delivery" | "Risk" | "Resource";
+            /**
+             * Description
+             * @default
+             */
+            description: string;
+            /**
+             * End Date
+             * Format: date
+             */
+            end_date: string;
+            /**
+             * @description discriminator enum property added by openapi-typescript
+             * @enum {string}
+             */
+            kind: "saved_views";
+            /** Name */
+            name: string;
+            /** Portfolio Id */
+            portfolio_id?: string | null;
+            /**
+             * Start Date
+             * Format: date
+             */
+            start_date: string;
+            /**
+             * User Id
+             * Format: uuid
+             */
+            user_id: string;
         };
         /** SessionView */
         SessionView: {
@@ -2272,6 +3488,12 @@ export interface components {
              */
             user_id: string;
         };
+        /** TeamMetric */
+        TeamMetric: {
+            /** Name */
+            name: string;
+            summary: components["schemas"]["TeamCapacityView"];
+        };
         /** TimeOffInput */
         "TimeOffInput-Input": {
             /**
@@ -2360,6 +3582,65 @@ export interface components {
             msg: string;
             /** Error Type */
             type: string;
+        };
+        /** Velocity */
+        Velocity: {
+            /**
+             * End Date
+             * Format: date
+             */
+            end_date: string;
+            /** Freshness */
+            freshness: string;
+            /** Name */
+            name: string;
+            /** Points */
+            points: string | null;
+            /**
+             * Policy
+             * @default team-points-v1: completed work at closure; no cross-team ranking
+             */
+            policy: string;
+            /**
+             * Project Id
+             * Format: uuid
+             */
+            project_id: string;
+            /** Recorded Points */
+            recorded_points: string;
+            /** Source Updated At */
+            source_updated_at: string | null;
+            /**
+             * Sprint Id
+             * Format: uuid
+             */
+            sprint_id: string;
+            /**
+             * Team Id
+             * Format: uuid
+             */
+            team_id: string;
+        };
+        /** VersionRecord */
+        VersionRecord: {
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /**
+             * Framework Id
+             * Format: uuid
+             */
+            framework_id: string;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            snapshot: components["schemas"]["FrameworkInput-Output"];
+            /** Version */
+            version: number;
         };
         /** WorkInput */
         "WorkInput-Input": {
@@ -2462,6 +3743,707 @@ export interface components {
 }
 export type $defs = Record<string, never>;
 export interface operations {
+    set_access_api_v1_assessment_access_post: {
+        parameters: {
+            query?: never;
+            header?: {
+                "x-organization-id"?: string | null;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AccessInput"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AccessInput"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_assessments_api_v1_assessment_assessments_get: {
+        parameters: {
+            query?: {
+                offset?: number;
+                limit?: number;
+                framework_version_id?: string | null;
+            };
+            header?: {
+                "x-organization-id"?: string | null;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AssessmentRecord"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    assign_api_v1_assessment_assessments_post: {
+        parameters: {
+            query?: never;
+            header?: {
+                "x-organization-id"?: string | null;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AssignmentInput"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AssessmentRecord"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    detail_api_v1_assessment_assessments__assessment_id__get: {
+        parameters: {
+            query?: never;
+            header?: {
+                "x-organization-id"?: string | null;
+            };
+            path: {
+                assessment_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AssessmentDetail"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    save_answers_api_v1_assessment_assessments__assessment_id__answers_put: {
+        parameters: {
+            query?: never;
+            header?: {
+                "x-organization-id"?: string | null;
+            };
+            path: {
+                assessment_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AnswerBatchInput"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AssessmentDetail"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    history_api_v1_assessment_assessments__assessment_id__events_get: {
+        parameters: {
+            query?: never;
+            header?: {
+                "x-organization-id"?: string | null;
+            };
+            path: {
+                assessment_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EventRecord"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    evidence_list_api_v1_assessment_assessments__assessment_id__evidence_get: {
+        parameters: {
+            query?: never;
+            header?: {
+                "x-organization-id"?: string | null;
+            };
+            path: {
+                assessment_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EvidenceRecord"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    upload_api_v1_assessment_assessments__assessment_id__evidence_post: {
+        parameters: {
+            query?: never;
+            header?: {
+                "x-organization-id"?: string | null;
+            };
+            path: {
+                assessment_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["EvidenceInput"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EvidenceRecord"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    download_api_v1_assessment_assessments__assessment_id__evidence__evidence_id__get: {
+        parameters: {
+            query?: never;
+            header?: {
+                "x-organization-id"?: string | null;
+            };
+            path: {
+                assessment_id: string;
+                evidence_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    delete_evidence_api_v1_assessment_assessments__assessment_id__evidence__evidence_id__delete: {
+        parameters: {
+            query?: never;
+            header?: {
+                "x-organization-id"?: string | null;
+            };
+            path: {
+                assessment_id: string;
+                evidence_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ActionInput"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    preview_evidence_api_v1_assessment_assessments__assessment_id__evidence__evidence_id__preview_get: {
+        parameters: {
+            query?: never;
+            header?: {
+                "x-organization-id"?: string | null;
+            };
+            path: {
+                assessment_id: string;
+                evidence_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: string;
+                    };
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    release_evidence_api_v1_assessment_assessments__assessment_id__evidence__evidence_id__release_post: {
+        parameters: {
+            query?: never;
+            header?: {
+                "x-organization-id"?: string | null;
+            };
+            path: {
+                assessment_id: string;
+                evidence_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ActionInput"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EvidenceRecord"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    review_api_v1_assessment_assessments__assessment_id__review_post: {
+        parameters: {
+            query?: never;
+            header?: {
+                "x-organization-id"?: string | null;
+            };
+            path: {
+                assessment_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ReviewInput"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AssessmentRecord"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    submit_api_v1_assessment_assessments__assessment_id__submit_post: {
+        parameters: {
+            query?: never;
+            header?: {
+                "x-organization-id"?: string | null;
+            };
+            path: {
+                assessment_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ActionInput"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AssessmentRecord"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_frameworks_api_v1_assessment_frameworks_get: {
+        parameters: {
+            query?: {
+                offset?: number;
+                limit?: number;
+            };
+            header?: {
+                "x-organization-id"?: string | null;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["FrameworkRecord"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_framework_api_v1_assessment_frameworks_post: {
+        parameters: {
+            query?: never;
+            header?: {
+                "x-organization-id"?: string | null;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["FrameworkInput-Input"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["FrameworkRecord"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    edit_framework_api_v1_assessment_frameworks__framework_id__put: {
+        parameters: {
+            query?: never;
+            header?: {
+                "x-organization-id"?: string | null;
+            };
+            path: {
+                framework_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["FrameworkInput-Input"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["FrameworkRecord"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    publish_framework_api_v1_assessment_frameworks__framework_id__publish_post: {
+        parameters: {
+            query?: never;
+            header?: {
+                "x-organization-id"?: string | null;
+            };
+            path: {
+                framework_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ActionInput"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VersionRecord"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    versions_api_v1_assessment_frameworks__framework_id__versions_get: {
+        parameters: {
+            query?: never;
+            header?: {
+                "x-organization-id"?: string | null;
+            };
+            path: {
+                framework_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VersionRecord"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    seed_examples_api_v1_assessment_seed_examples_post: {
+        parameters: {
+            query?: never;
+            header?: {
+                "x-organization-id"?: string | null;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["FrameworkRecord"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     complete_api_v1_auth_complete_post: {
         parameters: {
             query?: never;
@@ -2903,6 +4885,41 @@ export interface operations {
             };
         };
     };
+    snapshot_api_v1_command_snapshot_get: {
+        parameters: {
+            query: {
+                start: string;
+                end: string;
+                portfolio_id?: string | null;
+            };
+            header?: {
+                "x-organization-id"?: string | null;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CommandSnapshot"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     history_api_v1_delivery_history__kind___id___get: {
         parameters: {
             query?: never;
@@ -2910,7 +4927,7 @@ export interface operations {
                 "x-organization-id"?: string | null;
             };
             path: {
-                kind: "resources" | "calendars" | "availability" | "resource_teams" | "resource_skills" | "time_off" | "allocations" | "resource_access" | "effort" | "effort_coverage" | "capacity_snapshots" | "settings" | "departments" | "teams" | "goals" | "portfolios" | "programs" | "projects" | "grants" | "team_members" | "sprints" | "work_items" | "milestones" | "blockers" | "dependencies" | "budget_lines" | "expenditures" | "status_updates" | "baselines" | "alignments";
+                kind: "risks" | "benefits" | "metric_plans" | "metric_policies" | "saved_views" | "resources" | "calendars" | "availability" | "resource_teams" | "resource_skills" | "time_off" | "allocations" | "resource_access" | "effort" | "effort_coverage" | "capacity_snapshots" | "settings" | "departments" | "teams" | "goals" | "portfolios" | "programs" | "projects" | "grants" | "team_members" | "sprints" | "work_items" | "milestones" | "blockers" | "dependencies" | "budget_lines" | "expenditures" | "status_updates" | "baselines" | "alignments";
                 id_: string;
             };
             cookie?: never;
@@ -3054,7 +5071,7 @@ export interface operations {
                 "x-organization-id"?: string | null;
             };
             path: {
-                kind: "resources" | "calendars" | "availability" | "resource_teams" | "resource_skills" | "time_off" | "allocations" | "resource_access" | "effort" | "effort_coverage" | "capacity_snapshots" | "settings" | "departments" | "teams" | "goals" | "portfolios" | "programs" | "projects" | "grants" | "team_members" | "sprints" | "work_items" | "milestones" | "blockers" | "dependencies" | "budget_lines" | "expenditures" | "status_updates" | "baselines" | "alignments";
+                kind: "risks" | "benefits" | "metric_plans" | "metric_policies" | "saved_views" | "resources" | "calendars" | "availability" | "resource_teams" | "resource_skills" | "time_off" | "allocations" | "resource_access" | "effort" | "effort_coverage" | "capacity_snapshots" | "settings" | "departments" | "teams" | "goals" | "portfolios" | "programs" | "projects" | "grants" | "team_members" | "sprints" | "work_items" | "milestones" | "blockers" | "dependencies" | "budget_lines" | "expenditures" | "status_updates" | "baselines" | "alignments";
             };
             cookie?: never;
         };
@@ -3088,13 +5105,13 @@ export interface operations {
                 "x-organization-id"?: string | null;
             };
             path: {
-                kind: "resources" | "calendars" | "availability" | "resource_teams" | "resource_skills" | "time_off" | "allocations" | "resource_access" | "effort" | "effort_coverage" | "capacity_snapshots" | "settings" | "departments" | "teams" | "goals" | "portfolios" | "programs" | "projects" | "grants" | "team_members" | "sprints" | "work_items" | "milestones" | "blockers" | "dependencies" | "budget_lines" | "expenditures" | "status_updates" | "baselines" | "alignments";
+                kind: "risks" | "benefits" | "metric_plans" | "metric_policies" | "saved_views" | "resources" | "calendars" | "availability" | "resource_teams" | "resource_skills" | "time_off" | "allocations" | "resource_access" | "effort" | "effort_coverage" | "capacity_snapshots" | "settings" | "departments" | "teams" | "goals" | "portfolios" | "programs" | "projects" | "grants" | "team_members" | "sprints" | "work_items" | "milestones" | "blockers" | "dependencies" | "budget_lines" | "expenditures" | "status_updates" | "baselines" | "alignments";
             };
             cookie?: never;
         };
         requestBody: {
             content: {
-                "application/json": components["schemas"]["SettingsInput"] | components["schemas"]["DepartmentInput"] | components["schemas"]["GoalInput"] | components["schemas"]["PortfolioInput"] | components["schemas"]["TeamInput"] | components["schemas"]["ProgramInput"] | components["schemas"]["ProjectInput"] | components["schemas"]["GrantInput"] | components["schemas"]["TeamMemberInput"] | components["schemas"]["SprintInput"] | components["schemas"]["WorkInput-Input"] | components["schemas"]["MilestoneInput"] | components["schemas"]["BlockerInput"] | components["schemas"]["DependencyInput"] | components["schemas"]["BudgetInput-Input"] | components["schemas"]["ExpenditureInput-Input"] | components["schemas"]["StatusInput"] | components["schemas"]["BaselineInput"] | components["schemas"]["AlignmentInput-Input"] | components["schemas"]["ResourceInput"] | components["schemas"]["CalendarInput-Input"] | components["schemas"]["AvailabilityInput"] | components["schemas"]["ResourceTeamInput"] | components["schemas"]["ResourceSkillInput"] | components["schemas"]["TimeOffInput-Input"] | components["schemas"]["AllocationInput-Input"] | components["schemas"]["ResourceAccessInput"] | components["schemas"]["EffortInput-Input"] | components["schemas"]["EffortCoverageInput"] | components["schemas"]["CapacitySnapshotInput"];
+                "application/json": components["schemas"]["RiskInput"] | components["schemas"]["BenefitInput-Input"] | components["schemas"]["MetricPlanInput-Input"] | components["schemas"]["MetricPolicyInput-Input"] | components["schemas"]["SavedViewInput"] | components["schemas"]["SettingsInput"] | components["schemas"]["DepartmentInput"] | components["schemas"]["GoalInput"] | components["schemas"]["PortfolioInput"] | components["schemas"]["TeamInput"] | components["schemas"]["ProgramInput"] | components["schemas"]["ProjectInput"] | components["schemas"]["GrantInput"] | components["schemas"]["TeamMemberInput"] | components["schemas"]["SprintInput"] | components["schemas"]["WorkInput-Input"] | components["schemas"]["MilestoneInput"] | components["schemas"]["BlockerInput"] | components["schemas"]["DependencyInput"] | components["schemas"]["BudgetInput-Input"] | components["schemas"]["ExpenditureInput-Input"] | components["schemas"]["StatusInput"] | components["schemas"]["BaselineInput"] | components["schemas"]["AlignmentInput-Input"] | components["schemas"]["ResourceInput"] | components["schemas"]["CalendarInput-Input"] | components["schemas"]["AvailabilityInput"] | components["schemas"]["ResourceTeamInput"] | components["schemas"]["ResourceSkillInput"] | components["schemas"]["TimeOffInput-Input"] | components["schemas"]["AllocationInput-Input"] | components["schemas"]["ResourceAccessInput"] | components["schemas"]["EffortInput-Input"] | components["schemas"]["EffortCoverageInput"] | components["schemas"]["CapacitySnapshotInput"];
             };
         };
         responses: {
@@ -3125,7 +5142,7 @@ export interface operations {
                 "x-organization-id"?: string | null;
             };
             path: {
-                kind: "resources" | "calendars" | "availability" | "resource_teams" | "resource_skills" | "time_off" | "allocations" | "resource_access" | "effort" | "effort_coverage" | "capacity_snapshots" | "settings" | "departments" | "teams" | "goals" | "portfolios" | "programs" | "projects" | "grants" | "team_members" | "sprints" | "work_items" | "milestones" | "blockers" | "dependencies" | "budget_lines" | "expenditures" | "status_updates" | "baselines" | "alignments";
+                kind: "risks" | "benefits" | "metric_plans" | "metric_policies" | "saved_views" | "resources" | "calendars" | "availability" | "resource_teams" | "resource_skills" | "time_off" | "allocations" | "resource_access" | "effort" | "effort_coverage" | "capacity_snapshots" | "settings" | "departments" | "teams" | "goals" | "portfolios" | "programs" | "projects" | "grants" | "team_members" | "sprints" | "work_items" | "milestones" | "blockers" | "dependencies" | "budget_lines" | "expenditures" | "status_updates" | "baselines" | "alignments";
                 id_: string;
             };
             cookie?: never;
@@ -3161,14 +5178,14 @@ export interface operations {
                 "x-organization-id"?: string | null;
             };
             path: {
-                kind: "resources" | "calendars" | "availability" | "resource_teams" | "resource_skills" | "time_off" | "allocations" | "resource_access" | "effort" | "effort_coverage" | "capacity_snapshots" | "settings" | "departments" | "teams" | "goals" | "portfolios" | "programs" | "projects" | "grants" | "team_members" | "sprints" | "work_items" | "milestones" | "blockers" | "dependencies" | "budget_lines" | "expenditures" | "status_updates" | "baselines" | "alignments";
+                kind: "risks" | "benefits" | "metric_plans" | "metric_policies" | "saved_views" | "resources" | "calendars" | "availability" | "resource_teams" | "resource_skills" | "time_off" | "allocations" | "resource_access" | "effort" | "effort_coverage" | "capacity_snapshots" | "settings" | "departments" | "teams" | "goals" | "portfolios" | "programs" | "projects" | "grants" | "team_members" | "sprints" | "work_items" | "milestones" | "blockers" | "dependencies" | "budget_lines" | "expenditures" | "status_updates" | "baselines" | "alignments";
                 id_: string;
             };
             cookie?: never;
         };
         requestBody: {
             content: {
-                "application/json": components["schemas"]["SettingsInput"] | components["schemas"]["DepartmentInput"] | components["schemas"]["GoalInput"] | components["schemas"]["PortfolioInput"] | components["schemas"]["TeamInput"] | components["schemas"]["ProgramInput"] | components["schemas"]["ProjectInput"] | components["schemas"]["GrantInput"] | components["schemas"]["TeamMemberInput"] | components["schemas"]["SprintInput"] | components["schemas"]["WorkInput-Input"] | components["schemas"]["MilestoneInput"] | components["schemas"]["BlockerInput"] | components["schemas"]["DependencyInput"] | components["schemas"]["BudgetInput-Input"] | components["schemas"]["ExpenditureInput-Input"] | components["schemas"]["StatusInput"] | components["schemas"]["BaselineInput"] | components["schemas"]["AlignmentInput-Input"] | components["schemas"]["ResourceInput"] | components["schemas"]["CalendarInput-Input"] | components["schemas"]["AvailabilityInput"] | components["schemas"]["ResourceTeamInput"] | components["schemas"]["ResourceSkillInput"] | components["schemas"]["TimeOffInput-Input"] | components["schemas"]["AllocationInput-Input"] | components["schemas"]["ResourceAccessInput"] | components["schemas"]["EffortInput-Input"] | components["schemas"]["EffortCoverageInput"] | components["schemas"]["CapacitySnapshotInput"];
+                "application/json": components["schemas"]["RiskInput"] | components["schemas"]["BenefitInput-Input"] | components["schemas"]["MetricPlanInput-Input"] | components["schemas"]["MetricPolicyInput-Input"] | components["schemas"]["SavedViewInput"] | components["schemas"]["SettingsInput"] | components["schemas"]["DepartmentInput"] | components["schemas"]["GoalInput"] | components["schemas"]["PortfolioInput"] | components["schemas"]["TeamInput"] | components["schemas"]["ProgramInput"] | components["schemas"]["ProjectInput"] | components["schemas"]["GrantInput"] | components["schemas"]["TeamMemberInput"] | components["schemas"]["SprintInput"] | components["schemas"]["WorkInput-Input"] | components["schemas"]["MilestoneInput"] | components["schemas"]["BlockerInput"] | components["schemas"]["DependencyInput"] | components["schemas"]["BudgetInput-Input"] | components["schemas"]["ExpenditureInput-Input"] | components["schemas"]["StatusInput"] | components["schemas"]["BaselineInput"] | components["schemas"]["AlignmentInput-Input"] | components["schemas"]["ResourceInput"] | components["schemas"]["CalendarInput-Input"] | components["schemas"]["AvailabilityInput"] | components["schemas"]["ResourceTeamInput"] | components["schemas"]["ResourceSkillInput"] | components["schemas"]["TimeOffInput-Input"] | components["schemas"]["AllocationInput-Input"] | components["schemas"]["ResourceAccessInput"] | components["schemas"]["EffortInput-Input"] | components["schemas"]["EffortCoverageInput"] | components["schemas"]["CapacitySnapshotInput"];
             };
         };
         responses: {

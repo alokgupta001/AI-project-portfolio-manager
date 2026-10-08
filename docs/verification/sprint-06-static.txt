@@ -1,0 +1,55 @@
+
+Running: npm.cmd run contracts:check
+
+> enterprise-ppm@0.1.0 contracts:check
+> node scripts/contracts.mjs --check
+
+OpenAPI and TypeScript contracts match.
+Exit: 0
+
+Running: npm.cmd run typecheck
+
+> enterprise-ppm@0.1.0 typecheck
+> npm run typecheck --workspace @ppm/web
+
+
+> @ppm/web@0.1.0 typecheck
+> tsc --noEmit
+
+Exit: 0
+
+Running: npm.cmd run lint
+
+> enterprise-ppm@0.1.0 lint
+> eslint apps/web packages/contracts/src tests/browser
+
+Exit: 0
+
+Running: npm.cmd run format:check
+
+> enterprise-ppm@0.1.0 format:check
+> prettier --check apps/web packages/contracts/src tests/browser package.json
+
+Checking formatting...
+All matched files use Prettier code style!
+Exit: 0
+
+Running: .venv/Scripts/ruff.exe check services scripts tests
+All checks passed!
+Exit: 0
+
+Running: .venv/Scripts/ruff.exe format --check services scripts tests
+44 files already formatted
+Exit: 0
+
+Running: .venv/Scripts/python.exe -m mypy services/api/ppm_api services/worker/ppm_worker
+Success: no issues found in 19 source files
+Exit: 0
+
+Running: .venv/Scripts/python.exe scripts/check_sources.py
+PASS: 7 preserved sources/prompts match SHA256 manifest
+Exit: 0
+
+Running: npm.cmd audit --audit-level=high
+found 0 vulnerabilities
+Exit: 0

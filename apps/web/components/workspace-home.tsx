@@ -120,9 +120,9 @@ export function WorkspaceHome({
           <p className="eyebrow">WHAT COMES NEXT</p>
           <h2>Your portfolio, in perspective.</h2>
           <p className="muted">
-            Portfolios and project delivery are available now. Resource
-            capacity, assessments and computed intelligence follow in later
-            modules.
+            Portfolios, project delivery, resource capacity and maturity
+            assessments are available now. Computed intelligence follows in
+            later modules.
           </p>
           <ol className="roadmap-list">
             {futureModules.slice(0, 4).map((m) => (

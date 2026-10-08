@@ -1,0 +1,10 @@
+ Container enterprise-ppm-redis-1 Running 
+ Container enterprise-ppm-postgres-1 Running 
+ Container enterprise-ppm-postgres-1 Waiting 
+ Container enterprise-ppm-redis-1 Waiting 
+ Container enterprise-ppm-postgres-1 Healthy 
+ Container enterprise-ppm-redis-1 Healthy 
+ Container enterprise-ppm-test-run-cbb9fa4af80a Creating 
+ Container enterprise-ppm-test-run-cbb9fa4af80a Created 
+....                                                                     [100%]
+4 passed in 12.83s

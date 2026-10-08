@@ -14,6 +14,7 @@ from sqlalchemy.exc import IntegrityError
 
 from ppm_api.identity import Auth, Principal, context, now
 from ppm_api.identity_tables import memberships, sessions, users
+from ppm_api.metric_math import alignment_score, budget_usage
 from ppm_api.ppm_schemas import (
     HistoryView,
     Input,
@@ -32,6 +33,7 @@ router = APIRouter(prefix="/api/v1/delivery", tags=["Delivery"])
 adapter: TypeAdapter = TypeAdapter(Input)
 IMMUTABLE = {"baselines", "expenditures", "status_updates"}
 ORG_ADMIN = {
+    "metric_policies",
     "settings",
     "departments",
     "teams",
@@ -163,6 +165,10 @@ async def authorize(p: Principal, kind: str, data: dict, old: Any = None) -> Non
     if kind in capacity.KINDS:
         await capacity.authorize(p, kind, data, old)
         return
+    if kind == "saved_views":
+        if data["user_id"] != p.user["id"] or old and old["user_id"] != p.user["id"]:
+            fail(403, "Saved views are personal")
+        return
     if kind in ORG_ADMIN:
         if p.role != "Admin":
             fail(403, "Organization administration requires Admin")
@@ -210,6 +216,7 @@ async def refs(p: Principal, kind: str, d: dict) -> None:
             if not valid:
                 fail(422, "Owner/member must be an active organization member")
     mapping = {
+        "baseline_id": "baselines",
         "resource_id": "resources",
         "calendar_id": "calendars",
         "portfolio_id": "portfolios",
@@ -233,7 +240,7 @@ async def refs(p: Principal, kind: str, d: dict) -> None:
         r = await get(p, target, d[field], True)
         if field == "program_id" and r["portfolio_id"] != d["portfolio_id"]:
             fail(422, "Program must belong to the selected portfolio")
-        if target in ("sprints", "work_items", "milestones", "expenditures"):
+        if target in ("sprints", "work_items", "milestones", "expenditures", "baselines"):
             expected = (
                 d.get("target_project_id") if field.startswith("target_") else d.get("project_id")
             )
@@ -439,9 +446,9 @@ async def portfolio_summary(id_: UUID, p: Auth) -> dict:
         group["ledger_complete"] &= item["ledger_complete"]
     for group in totals.values():
         if group["approved_budget"] and group["ledger_complete"]:
-            group["usage_percent"] = (
-                group["recorded_spend"] * 100 / group["approved_budget"]
-            ).quantize(Decimal(".01"))
+            group["usage_percent"] = budget_usage(
+                group["recorded_spend"], group["approved_budget"], group["ledger_complete"]
+            )
     return dict(
         portfolio=view("portfolios", portfolio),
         visible_projects=len(projects),
@@ -476,7 +483,7 @@ async def summary(id_: UUID, p: Auth) -> dict:
         ).mappings()
     )
     complete = bool(goals) and sum(g["weight"] for g in goals) == Decimal(1)
-    alignment = sum(g["weight"] * g["contribution"] for g in goals) * 100 if complete else None
+    alignment = alignment_score(goals)
     counts: dict[str, int] = dict(
         (
             await p.conn.execute(
@@ -502,11 +509,9 @@ async def summary(id_: UUID, p: Auth) -> dict:
                 currency=row["currency"],
                 approved_budget=amount,
                 recorded_spend=spent,
-                usage_percent=(Decimal(str(spent or 0)) * 100 / Decimal(str(amount))).quantize(
-                    Decimal(".01")
-                )
-                if amount and row["ledger_complete"]
-                else None,
+                usage_percent=budget_usage(
+                    Decimal(str(spent or 0)), Decimal(str(amount or 0)), row["ledger_complete"]
+                ),
                 ledger_complete=row["ledger_complete"],
             )
         ],
@@ -624,6 +629,23 @@ async def write(
         }
         if d["status"] not in transitions[old["status"]]:
             fail(409, "Invalid work status transition")
+    if kind == "risks" and old and old["status"] != d["status"]:
+        transitions = {
+            "open": {"mitigating", "accepted", "closed"},
+            "mitigating": {"open", "accepted", "closed"},
+            "accepted": {"open", "closed"},
+            "closed": {"open"},
+        }
+        if (
+            d["status"] not in transitions[old["status"]]
+            or old["status"] == "closed"
+            and not reason.strip()
+        ):
+            fail(409, "Invalid risk transition; reopening requires a change reason")
+    if kind == "sprints" and not old and d["status"] != "planned":
+        fail(422, "Create a planned sprint before progressing its lifecycle")
+    if kind == "sprints" and old and old["status"] == "closed":
+        fail(409, "Closed sprint definition is immutable")
     if kind == "alignments" and not d["archived"]:
         t = TABLES["alignments"]
         same = [~t.c.archived, t.c.id != (id_ or UUID(int=0)), t.c.goal_id == d["goal_id"]]
@@ -725,6 +747,37 @@ async def write(
         d.update(id=id_, organization_id=p.session["organization_id"], created_at=stamp)
         row = (await p.conn.execute(t.insert().values(**d).returning(t))).mappings().one()
     await audit_change(p, request, kind, row, old)
+    if kind == "sprints" and old and old["status"] != "closed" and d["status"] == "closed":
+        work = TABLES["work_items"]
+        items = list(
+            (
+                await p.conn.execute(
+                    sa.select(work).where(work.c.sprint_id == id_, ~work.c.archived)
+                )
+            ).mappings()
+        )
+        completed = [w for w in items if w["status"] == "done"]
+        await p.conn.execute(
+            TABLES["sprint_closures"]
+            .insert()
+            .values(
+                id=uuid4(),
+                organization_id=p.session["organization_id"],
+                project_id=d["project_id"],
+                name=d["name"],
+                description="Frozen at sprint closure; team-points-v1",
+                revision=1,
+                archived=False,
+                created_at=stamp,
+                updated_at=stamp,
+                sprint_id=id_,
+                team_id=d["team_id"],
+                end_date=d["end_date"],
+                points=sum((w["points"] or Decimal(0) for w in completed), Decimal(0)),
+                complete=all(w["points"] is not None for w in completed),
+                snapshot=encode(completed),
+            )
+        )
     if kind == "effort":
         coverage = TABLES["effort_coverage"]
         affected_dates = {d["worked_on"]}
@@ -842,7 +895,9 @@ async def create(
     if prior:
         if prior["resource"] != kind or prior["fingerprint"] != fp:
             fail(409, "Idempotency key already used for another command")
-        return view(kind, await get(p, kind, prior["target_id"]))
+        replay = await get(p, kind, prior["target_id"])
+        await authorize(p, kind, payload.model_dump(exclude={"kind"}), replay)
+        return view(kind, replay)
     try:
         result = await write(p, request, kind, payload, None, None, "")
         await p.conn.execute(

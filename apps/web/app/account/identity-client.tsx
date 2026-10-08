@@ -6,6 +6,8 @@ import type { components } from "@ppm/contracts/schema";
 
 import { AuthFrame, Shell } from "../../components/shell";
 import { WorkspaceHome } from "../../components/workspace-home";
+import { CommandCenter } from "../../components/command-center";
+import { Assessments } from "../../components/assessments";
 import { Capacity } from "../../components/capacity";
 import { Delivery } from "../../components/delivery";
 import { Gallery } from "../../components/gallery";
@@ -80,7 +82,9 @@ export default function IdentityClient({
     | "workspace"
     | "gallery"
     | "delivery"
-    | "capacity";
+    | "capacity"
+    | "assessment"
+    | "command";
 }) {
   const protectedMode = [
     "account",
@@ -88,6 +92,8 @@ export default function IdentityClient({
     "gallery",
     "delivery",
     "capacity",
+    "assessment",
+    "command",
   ].includes(mode);
   const [confirmation, setConfirmation] = useState<Confirmation | null>(null);
   const [memberFilter, setMemberFilter] = useState("");
@@ -135,7 +141,15 @@ export default function IdentityClient({
       window.history.replaceState(null, "", window.location.pathname);
     }
     if (
-      ["account", "workspace", "gallery", "delivery", "capacity"].includes(mode)
+      [
+        "account",
+        "workspace",
+        "gallery",
+        "delivery",
+        "capacity",
+        "assessment",
+        "command",
+      ].includes(mode)
     )
       load()
         .catch((e) => {
@@ -194,7 +208,9 @@ export default function IdentityClient({
       {mode !== "workspace" &&
         mode !== "gallery" &&
         mode !== "delivery" &&
-        mode !== "capacity" && (
+        mode !== "capacity" &&
+        mode !== "assessment" &&
+        mode !== "command" && (
           <section className="intro">
             <p className="eyebrow">YOUR ENTERPRISE WORKSPACE</p>
             <h1>
@@ -339,6 +355,20 @@ export default function IdentityClient({
         <WorkspaceHome account={account} sessionCount={sessions.length} />
       )}
       {account && mode === "gallery" && <Gallery />}
+      {account && mode === "command" && (
+        <CommandCenter
+          key={account.organization_id}
+          account={account}
+          transport={transport}
+        />
+      )}
+      {account && mode === "assessment" && (
+        <Assessments
+          key={account.organization_id}
+          account={account}
+          transport={transport}
+        />
+      )}
       {account && mode === "capacity" && (
         <Capacity
           key={account.organization_id}

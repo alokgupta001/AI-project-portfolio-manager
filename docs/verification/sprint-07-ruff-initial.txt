@@ -1,0 +1,753 @@
+E501 Line too long (101 > 100)
+  --> services\api\migrations\versions\0006_command_center.py:84:101
+   |
+82 | )
+83 | metric_plans = table(
+84 |     "metric_plans", *project(), col("baseline_id", sa.Uuid()), ref("baselines", "baseline_id", True),
+   |                                                                                                     ^
+85 |     col("calendar_id", sa.Uuid()), ref("calendars", "calendar_id"),
+86 |     col("forecast_cost", sa.Numeric(18, 2), True),
+   |
+
+E501 Line too long (116 > 100)
+   --> services\api\migrations\versions\0006_command_center.py:99:101
+    |
+ 97 | saved_views = table(
+ 98 |     "saved_views", col("user_id", sa.Uuid()),
+ 99 |     sa.ForeignKeyConstraint(["organization_id", "user_id"], ["memberships.organization_id", "memberships.user_id"]),
+    |                                                                                                     ^^^^^^^^^^^^^^^^
+100 |     col("portfolio_id", sa.Uuid(), True), ref("portfolios", "portfolio_id"),
+101 |     col("start_date", sa.Date()), col("end_date", sa.Date()), col("dashboard", sa.String(20)),
+    |
+
+E501 Line too long (170 > 100)
+   --> services\api\migrations\versions\0006_command_center.py:121:101
+    |
+120 | …
+121 | …ps", "ppm_projects", "ppm_calendars", "ppm_baselines", "ppm_portfolios", "ppm_sprints", "ppm_teams"])
+    |                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+122 | …DS])
+123 | …
+    |
+
+E501 Line too long (112 > 100)
+   --> services\api\migrations\versions\0006_command_center.py:125:101
+    |
+123 |     for kind in KINDS:
+124 |         name = "ppm_" + kind
+125 |         read = f"EXISTS (SELECT 1 FROM ppm_projects p WHERE p.id={name}.project_id AND p.organization_id={OID})"
+    |                                                                                                     ^^^^^^^^^^^^
+126 |         write = f"({ADMIN} OR ({PM} AND EXISTS (SELECT 1 FROM ppm_grants g WHERE g.organization_id={OID} AND g.user_id={UID} AND NOT …
+127 |         if kind == "metric_policies":
+    |
+
+E501 Line too long (216 > 100)
+   --> services\api\migrations\versions\0006_command_center.py:126:101
+    |
+124 | …
+125 | …anization_id={OID})"
+126 | …ion_id={OID} AND g.user_id={UID} AND NOT g.archived AND g.project_id={name}.project_id AND g.access IN ('edit','manage'))))"
+    |          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+127 | …
+128 | …
+    |
+
+E501 Line too long (123 > 100)
+   --> services\api\migrations\versions\0006_command_center.py:132:101
+    |
+130 |             read = write = f"user_id={UID}"
+131 |         op.execute(f"ALTER TABLE {name} ENABLE ROW LEVEL SECURITY")
+132 |         op.execute(f"CREATE POLICY tenant_read ON {name} FOR SELECT TO ppm_app USING (organization_id={OID} AND ({read}))")
+    |                                                                                                     ^^^^^^^^^^^^^^^^^^^^^^^
+133 |         op.execute(f"CREATE POLICY tenant_insert ON {name} FOR INSERT TO ppm_app WITH CHECK (organization_id={OID} AND ({write}))")
+134 |         op.execute(f"GRANT SELECT,INSERT ON {name} TO ppm_app")
+    |
+
+E501 Line too long (131 > 100)
+   --> services\api\migrations\versions\0006_command_center.py:133:101
+    |
+131 |         op.execute(f"ALTER TABLE {name} ENABLE ROW LEVEL SECURITY")
+132 |         op.execute(f"CREATE POLICY tenant_read ON {name} FOR SELECT TO ppm_app USING (organization_id={OID} AND ({read}))")
+133 |         op.execute(f"CREATE POLICY tenant_insert ON {name} FOR INSERT TO ppm_app WITH CHECK (organization_id={OID} AND ({write}))")
+    |                                                                                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+134 |         op.execute(f"GRANT SELECT,INSERT ON {name} TO ppm_app")
+135 |         if kind != "sprint_closures":
+    |
+
+E501 Line too long (179 > 100)
+   --> services\api\migrations\versions\0006_command_center.py:136:101
+    |
+134 | …
+135 | …
+136 | …TO ppm_app USING (organization_id={OID} AND ({write})) WITH CHECK (organization_id={OID} AND ({write}))")
+    |                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+137 | …
+    |
+
+E501 Line too long (112 > 100)
+  --> services\api\ppm_api\command.py:48:101
+   |
+47 | @router.get("/snapshot", response_model=CommandSnapshot)
+48 | async def snapshot(start: date, end: date, request: Request, p: Auth, portfolio_id: UUID | None = None) -> dict:
+   |                                                                                                     ^^^^^^^^^^^^
+49 |     began = perf_counter()
+50 |     capacity.bounded(start, end)
+   |
+
+E501 Line too long (137 > 100)
+  --> services\api\ppm_api\command.py:70:101
+   |
+68 | …e()
+69 | …
+70 | …licy[0]["red"], policy[0]["stale_days"]) if policy else (Decimal(30), Decimal(60), 7)
+   |                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+71 | …jects"].c.portfolio_id == portfolio_id] if portfolio_id else []))
+72 | …
+   |
+
+E501 Line too long (117 > 100)
+  --> services\api\ppm_api\command.py:71:101
+   |
+69 |     policy = await load("metric_policies")
+70 |     amber, red, stale_days = (policy[0]["amber"], policy[0]["red"], policy[0]["stale_days"]) if policy else (Decimal(30), Decimal(60),…
+71 |     projects = await load("projects", *([TABLES["projects"].c.portfolio_id == portfolio_id] if portfolio_id else []))
+   |                                                                                                     ^^^^^^^^^^^^^^^^^
+72 |     if len(projects) > 200:
+73 |         delivery.fail(422, "Snapshot exceeds 200 projects; select a smaller portfolio")
+   |
+
+E501 Line too long (200 > 100)
+  --> services\api\ppm_api\command.py:76:101
+   |
+74 | …
+75 | …
+76 | …nes", "blockers", "dependencies", "risks", "benefits", "metric_plans", "sprints", "sprint_closures", "allocations"):
+   |                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+77 | …
+78 | …
+   |
+
+E501 Line too long (117 > 100)
+  --> services\api\ppm_api\command.py:81:101
+   |
+80 |     def freshness(updated):
+81 |         return "missing" if updated is None else "stale" if stamp - updated > timedelta(days=stale_days) else "fresh"
+   |                                                                                                     ^^^^^^^^^^^^^^^^^
+82 |
+83 |     def fact(kind, row, detail):
+   |
+
+E501 Line too long (107 > 100)
+  --> services\api\ppm_api\command.py:84:101
+   |
+83 |     def fact(kind, row, detail):
+84 |         return dict(id=row["id"], kind=kind, name=row["name"], detail=detail, updated_at=row["updated_at"])
+   |                                                                                                     ^^^^^^^
+85 |
+86 |     def metric(key, label, value, unit, period, source, rows, explanation="", coverage=HUNDRED, partial=False):
+   |
+
+E501 Line too long (111 > 100)
+  --> services\api\ppm_api\command.py:86:101
+   |
+84 |         return dict(id=row["id"], kind=kind, name=row["name"], detail=detail, updated_at=row["updated_at"])
+85 |
+86 |     def metric(key, label, value, unit, period, source, rows, explanation="", coverage=HUNDRED, partial=False):
+   |                                                                                                     ^^^^^^^^^^^
+87 |         updated = min((r["updated_at"] for r in rows), default=None)
+88 |         return dict(key=key, label=label, value=value, unit=unit, period=period, source=source,
+   |
+
+E501 Line too long (154 > 100)
+  --> services\api\ppm_api\command.py:89:101
+   |
+87 | …t=None)
+88 | …nit, period=period, source=source,
+89 | …hness(updated), status="unknown" if value is None else "partial" if partial else "available",
+   |                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+90 | …planation, facts=rows)
+   |
+
+E501 Line too long (173 > 100)
+  --> services\api\ppm_api\command.py:94:101
+   |
+92 | …ion"
+93 | …
+94 | …ons"] if r["start_date"] < max(end, today + timedelta(days=28)) and r["end_date"] > min(start, today)})
+   |                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+95 | …
+96 | …arrow the portfolio filter")
+   |
+
+E501 Line too long (110 > 100)
+   --> services\api\ppm_api\command.py:104:101
+    |
+102 |         inputs = await capacity.sources_for(p, rid, False)
+103 |         updated = min((r["updated_at"] for rows in inputs.values() for r in rows), default=None)
+104 |         resource_results.append(dict(summary=result, source_updated_at=updated, freshness=freshness(updated)))
+    |                                                                                                     ^^^^^^^^^^
+105 |     output, records, velocities = [], [], []
+106 |     currency_totals: dict[str, dict] = {}
+    |
+
+E501 Line too long (105 > 100)
+   --> services\api\ppm_api\command.py:114:101
+    |
+112 | …     budget = sum((r["amount"] for r in src["budget_lines"] if r["approved"]), ZERO)
+113 | …     spent = sum((r["amount"] for r in src["expenditures"]), ZERO)
+114 | …     in_period = sum((r["amount"] for r in src["expenditures"] if start <= r["spent_on"] < end), ZERO)
+    |                                                                                                   ^^^^^
+115 | …     money_facts = [fact("budget_lines", r, f"Approved {r['amount']} {r['currency']}") for r in src["budget_lines"] if r["approved"]…
+116 | …     complete = project["ledger_complete"]
+    |
+
+E501 Line too long (251 > 100)
+   --> services\api\ppm_api\command.py:115:101
+    |
+113 | …
+114 | …nd), ZERO)
+115 | … in src["budget_lines"] if r["approved"]] + [fact("expenditures", r, f"{r['spent_on']}: {r['amount']} {r['currency']}") for r in src["expenditures"]] + [pf]
+    |       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+116 | …
+117 | …
+    |
+
+E501 Line too long (132 > 100)
+   --> services\api\ppm_api\command.py:118:101
+    |
+116 | …
+117 | … complete else None
+118 | …get", budget, project["currency"], current, "Approved budget lines", money_facts),
+    |                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+119 | …d", spent, project["currency"], current, "Expenditure including reversals", money_facts, "Ledger incomplete" if not complete else "L…
+120 | … recorded spend", in_period, project["currency"], period, "Expenditure spent_on", money_facts, partial=not complete),
+    |
+
+E501 Line too long (230 > 100)
+   --> services\api\ppm_api\command.py:119:101
+    |
+117 | …
+118 | …Approved budget lines", money_facts),
+119 | …enditure including reversals", money_facts, "Ledger incomplete" if not complete else "Ledger declared complete", partial=not complete),
+    |       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+120 | …y"], period, "Expenditure spent_on", money_facts, partial=not complete),
+121 | …ed budget", money_facts, "Unknown when ledger incomplete or budget zero")]
+    |
+
+E501 Line too long (167 > 100)
+   --> services\api\ppm_api\command.py:120:101
+    |
+118 | …ect["currency"], current, "Approved budget lines", money_facts),
+119 | …["currency"], current, "Expenditure including reversals", money_facts, "Ledger incomplete" if not complete else "Ledger declared com…
+120 | …in_period, project["currency"], period, "Expenditure spent_on", money_facts, partial=not complete),
+    |                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+121 | …t, "Recorded spend / approved budget", money_facts, "Unknown when ledger incomplete or budget zero")]
+122 | …dget=ZERO, spent=ZERO, period=ZERO, complete=True, facts=[]))
+    |
+
+E501 Line too long (169 > 100)
+   --> services\api\ppm_api\command.py:121:101
+    |
+119 | …"currency"], current, "Expenditure including reversals", money_facts, "Ledger incomplete" if not complete else "Ledger declared comp…
+120 | …n_period, project["currency"], period, "Expenditure spent_on", money_facts, partial=not complete),
+121 | …, "Recorded spend / approved budget", money_facts, "Unknown when ledger incomplete or budget zero")]
+    |                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+122 | …get=ZERO, spent=ZERO, period=ZERO, complete=True, facts=[]))
+123 | …
+    |
+
+E501 Line too long (129 > 100)
+   --> services\api\ppm_api\command.py:122:101
+    |
+120 | …                 metric("period_spend", "Period recorded spend", in_period, project["currency"], period, "Expenditure spent_on", mon…
+121 | …                 metric("usage", "Budget use", usage, "%", current, "Recorded spend / approved budget", money_facts, "Unknown when l…
+122 | …     ct = currency_totals.setdefault(project["currency"], dict(budget=ZERO, spent=ZERO, period=ZERO, complete=True, facts=[]))
+    |                                                                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+123 | …     ct["budget"] += budget
+124 | …     ct["spent"] += spent
+    |
+
+E501 Line too long (148 > 100)
+   --> services\api\ppm_api\command.py:129:101
+    |
+127 | …
+128 | …
+129 | …or r in aligns), ZERO) * 100 if aligns and sum(r["weight"] for r in aligns) == 1 else None
+    |                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+130 | …nment", alignment, "%", current, "Declared goal weights and contribution", [fact("alignments", r, f"Weight {r['weight']}; contributi…
+131 | …
+    |
+
+E501 Line too long (267 > 100)
+   --> services\api\ppm_api\command.py:130:101
+    |
+128 | …
+129 | …s and sum(r["weight"] for r in aligns) == 1 else None
+130 | …lared goal weights and contribution", [fact("alignments", r, f"Weight {r['weight']}; contribution {r['contribution']}") for r in aligns], "Unknown unless weights total 1"))
+    |       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+131 | …
+132 | …
+    |
+
+E501 Line too long (103 > 100)
+   --> services\api\ppm_api\command.py:133:101
+    |
+131 |         plans = src["metric_plans"]
+132 |         plan = plans[0] if plans else None
+133 |         baseline = next((r for r in src["baselines"] if plan and r["id"] == plan["baseline_id"]), None)
+    |                                                                                                     ^^^
+134 |         calendar = calendars.get(plan["calendar_id"]) if plan else None
+135 |         baseline_project = baseline["snapshot"].get("project", {}) if baseline else {}
+    |
+
+E501 Line too long (113 > 100)
+   --> services\api\ppm_api\command.py:138:101
+    |
+136 | …     target = baseline_project.get("target_end_date")
+137 | …     beginning = baseline_project.get("start_date")
+138 | …     finish = project["actual_end_date"] if project["status"] == "completed" else project["forecast_end_date"]
+    |                                                                                                   ^^^^^^^^^^^^^
+139 | …     variance = workdays(date.fromisoformat(target), finish, calendar) if target and finish and calendar else None
+140 | …     duration = workdays(date.fromisoformat(beginning), date.fromisoformat(target), calendar) if beginning and target and calendar e…
+    |
+
+E501 Line too long (117 > 100)
+   --> services\api\ppm_api\command.py:139:101
+    |
+137 | …     beginning = baseline_project.get("start_date")
+138 | …     finish = project["actual_end_date"] if project["status"] == "completed" else project["forecast_end_date"]
+139 | …     variance = workdays(date.fromisoformat(target), finish, calendar) if target and finish and calendar else None
+    |                                                                                                   ^^^^^^^^^^^^^^^^^
+140 | …     duration = workdays(date.fromisoformat(beginning), date.fromisoformat(target), calendar) if beginning and target and calendar e…
+141 | …     schedule = clamped(Decimal(max(0, variance)) / max(1, duration) * 100) if variance is not None and duration is not None else No…
+    |
+
+E501 Line too long (143 > 100)
+   --> services\api\ppm_api\command.py:140:101
+    |
+138 | …status"] == "completed" else project["forecast_end_date"]
+139 | …finish, calendar) if target and finish and calendar else None
+140 | …), date.fromisoformat(target), calendar) if beginning and target and calendar else None
+    |                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+141 | …ax(1, duration) * 100) if variance is not None and duration is not None else None
+142 | …get) / budget * 100) if plan and plan["forecast_cost"] is not None and budget > 0 else None
+    |
+
+E501 Line too long (137 > 100)
+   --> services\api\ppm_api\command.py:141:101
+    |
+139 | …), finish, calendar) if target and finish and calendar else None
+140 | …ing), date.fromisoformat(target), calendar) if beginning and target and calendar else None
+141 | …/ max(1, duration) * 100) if variance is not None and duration is not None else None
+    |                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+142 | …budget) / budget * 100) if plan and plan["forecast_cost"] is not None and budget > 0 else None
+143 | …locations"] if r["start_date"] < today + timedelta(days=28) and r["end_date"] > today}
+    |
+
+E501 Line too long (147 > 100)
+   --> services\api\ppm_api\command.py:142:101
+    |
+140 | … date.fromisoformat(target), calendar) if beginning and target and calendar else None
+141 | …(1, duration) * 100) if variance is not None and duration is not None else None
+142 | …t) / budget * 100) if plan and plan["forecast_cost"] is not None and budget > 0 else None
+    |                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+143 | …ions"] if r["start_date"] < today + timedelta(days=28) and r["end_date"] > today}
+144 | …d]
+    |
+
+E501 Line too long (139 > 100)
+   --> services\api\ppm_api\command.py:143:101
+    |
+141 | … max(1, duration) * 100) if variance is not None and duration is not None else None
+142 | …udget) / budget * 100) if plan and plan["forecast_cost"] is not None and budget > 0 else None
+143 | …ocations"] if r["start_date"] < today + timedelta(days=28) and r["end_date"] > today}
+    |                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+144 | …igned]
+145 | …e"] == "full_resource" and r["available_hours"] is not None and r["excess_hours"] is not None for r in futures)
+    |
+
+E501 Line too long (165 > 100)
+   --> services\api\ppm_api\command.py:145:101
+    |
+143 | … r["start_date"] < today + timedelta(days=28) and r["end_date"] > today}
+144 | …
+145 | …resource" and r["available_hours"] is not None and r["excess_hours"] is not None for r in futures)
+    |                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+146 | …RO) if capacity_known else None
+147 | …, ZERO) / available * 100) if available else None
+    |
+
+E501 Line too long (116 > 100)
+   --> services\api\ppm_api\command.py:147:101
+    |
+145 | …     capacity_known = bool(futures) and all(r["scope"] == "full_resource" and r["available_hours"] is not None and r["excess_hours"]…
+146 | …     available = sum((r["available_hours"] for r in futures), ZERO) if capacity_known else None
+147 | …     staffing = clamped(sum((r["excess_hours"] for r in futures), ZERO) / available * 100) if available else None
+    |                                                                                                   ^^^^^^^^^^^^^^^^
+148 | …     risk = combined(schedule, financial, staffing)
+149 | …     health = "Unknown" if risk is None else "Red" if risk >= red else "Amber" if risk >= amber else "Green"
+    |
+
+E501 Line too long (111 > 100)
+   --> services\api\ppm_api\command.py:149:101
+    |
+147 | …     staffing = clamped(sum((r["excess_hours"] for r in futures), ZERO) / available * 100) if available else None
+148 | …     risk = combined(schedule, financial, staffing)
+149 | …     health = "Unknown" if risk is None else "Red" if risk >= red else "Amber" if risk >= amber else "Green"
+    |                                                                                                   ^^^^^^^^^^^
+150 | …     evidence = [pf] + ([fact("metric_plans", plan, f"Forecast cost {plan['forecast_cost']}; calendar {plan['calendar_id']}")] if pl…
+151 | …     overdue = [r for r in src["milestones"] if r["critical"] and not r["actual_date"] and r["due_date"] < today]
+    |
+
+E501 Line too long (236 > 100)
+   --> services\api\ppm_api\command.py:150:101
+    |
+148 | …
+149 | …ber else "Green"
+150 | … calendar {plan['calendar_id']}")] if plan else []) + ([fact("baselines", baseline, f"Frozen baseline finish {target}")] if baseline else [])
+    |       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+151 | …["due_date"] < today]
+152 | … for r in overdue]
+    |
+
+E501 Line too long (116 > 100)
+   --> services\api\ppm_api\command.py:151:101
+    |
+149 | …     health = "Unknown" if risk is None else "Red" if risk >= red else "Amber" if risk >= amber else "Green"
+150 | …     evidence = [pf] + ([fact("metric_plans", plan, f"Forecast cost {plan['forecast_cost']}; calendar {plan['calendar_id']}")] if pl…
+151 | …     overdue = [r for r in src["milestones"] if r["critical"] and not r["actual_date"] and r["due_date"] < today]
+    |                                                                                                   ^^^^^^^^^^^^^^^^
+152 | …     evidence += [fact("milestones", r, f"Critical milestone overdue since {r['due_date']}") for r in overdue]
+153 | …     evidence += [fact("allocations", r, f"{r['hours_per_day']} hours per scheduled day; resource {r['resource_id']}") for r in src[…
+    |
+
+E501 Line too long (113 > 100)
+   --> services\api\ppm_api\command.py:152:101
+    |
+150 | …     evidence = [pf] + ([fact("metric_plans", plan, f"Forecast cost {plan['forecast_cost']}; calendar {plan['calendar_id']}")] if pl…
+151 | …     overdue = [r for r in src["milestones"] if r["critical"] and not r["actual_date"] and r["due_date"] < today]
+152 | …     evidence += [fact("milestones", r, f"Critical milestone overdue since {r['due_date']}") for r in overdue]
+    |                                                                                                   ^^^^^^^^^^^^^
+153 | …     evidence += [fact("allocations", r, f"{r['hours_per_day']} hours per scheduled day; resource {r['resource_id']}") for r in src[…
+154 | …     coverage = Decimal(sum(v is not None for v in (schedule, financial, staffing))) / 3 * 100
+    |
+
+E501 Line too long (182 > 100)
+   --> services\api\ppm_api\command.py:153:101
+    |
+151 | …"actual_date"] and r["due_date"] < today]
+152 | …ce {r['due_date']}") for r in overdue]
+153 | …r scheduled day; resource {r['resource_id']}") for r in src["allocations"] if r["resource_id"] in assigned]
+    |                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+154 | … staffing))) / 3 * 100
+155 | …
+    |
+
+E501 Line too long (149 > 100)
+   --> services\api\ppm_api\command.py:156:101
+    |
+154 | …dule, financial, staffing))) / 3 * 100
+155 | …
+156 | …ing days", "Actual/forecast minus frozen baseline, immutable calendar; positive is late"),
+    |                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+157 | …e, "risk points", "Positive delay / baseline working duration, capped 100"),
+158 | …cial, "risk points", "Positive forecast overrun / approved budget, capped 100"),
+    |
+
+E501 Line too long (135 > 100)
+   --> services\api\ppm_api\command.py:157:101
+    |
+155 | …(
+156 | …, "working days", "Actual/forecast minus frozen baseline, immutable calendar; positive is late"),
+157 | …schedule, "risk points", "Positive delay / baseline working duration, capped 100"),
+    |                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+158 | …, financial, "risk points", "Positive forecast overrun / approved budget, capped 100"),
+159 | …staffing, "risk points", f"Full assigned-resource excess / capacity, {today} to {today + timedelta(days=28)}; unknown with insuffici…
+    |
+
+E501 Line too long (139 > 100)
+   --> services\api\ppm_api\command.py:158:101
+    |
+156 | …"working days", "Actual/forecast minus frozen baseline, immutable calendar; positive is late"),
+157 | …hedule, "risk points", "Positive delay / baseline working duration, capped 100"),
+158 | …financial, "risk points", "Positive forecast overrun / approved budget, capped 100"),
+    |                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+159 | …affing, "risk points", f"Full assigned-resource excess / capacity, {today} to {today + timedelta(days=28)}; unknown with insufficien…
+160 | … points", "risk-rule-v1: 40% schedule + 35% financial + 25% capacity; not a probability"),
+    |
+
+E501 Line too long (196 > 100)
+   --> services\api\ppm_api\command.py:159:101
+    |
+157 | …tive delay / baseline working duration, capped 100"),
+158 | …ositive forecast overrun / approved budget, capped 100"),
+159 | …l assigned-resource excess / capacity, {today} to {today + timedelta(days=28)}; unknown with insufficient scope"),
+    |                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+160 | … schedule + 35% financial + 25% capacity; not a probability"),
+161 | …None, "health points", "100 minus risk; higher is healthier; all three inputs required"),
+    |
+
+E501 Line too long (144 > 100)
+   --> services\api\ppm_api\command.py:160:101
+    |
+158 | …nancial, "risk points", "Positive forecast overrun / approved budget, capped 100"),
+159 | …fing, "risk points", f"Full assigned-resource excess / capacity, {today} to {today + timedelta(days=28)}; unknown with insufficient …
+160 | …oints", "risk-rule-v1: 40% schedule + 35% financial + 25% capacity; not a probability"),
+    |                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+161 | … if risk is not None else None, "health points", "100 minus risk; higher is healthier; all three inputs required"),
+162 | …Decimal(len(overdue)), "milestones", "Open critical milestones with due date before today"),
+    |
+
+E501 Line too long (171 > 100)
+   --> services\api\ppm_api\command.py:161:101
+    |
+159 | …ints", f"Full assigned-resource excess / capacity, {today} to {today + timedelta(days=28)}; unknown with insufficient scope"),
+160 | …rule-v1: 40% schedule + 35% financial + 25% capacity; not a probability"),
+161 | …t None else None, "health points", "100 minus risk; higher is healthier; all three inputs required"),
+    |                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+162 | …erdue)), "milestones", "Open critical milestones with due date before today"),
+163 | …
+    |
+
+E501 Line too long (148 > 100)
+   --> services\api\ppm_api\command.py:162:101
+    |
+160 | …nts", "risk-rule-v1: 40% schedule + 35% financial + 25% capacity; not a probability"),
+161 | …f risk is not None else None, "health points", "100 minus risk; higher is healthier; all three inputs required"),
+162 | …cimal(len(overdue)), "milestones", "Open critical milestones with due date before today"),
+    |                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+163 | …
+164 | … current, "Versioned plan, delivery and capacity-v1", evidence, explanation, coverage if key in ("risk", "health") else HUNDRED if v…
+    |
+
+E501 Line too long (218 > 100)
+   --> services\api\ppm_api\command.py:164:101
+    |
+162 | …"Open critical milestones with due date before today"),
+163 | …
+164 | … and capacity-v1", evidence, explanation, coverage if key in ("risk", "health") else HUNDRED if value is not None else ZERO))
+    |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+165 | …
+166 | …ect["reported_health"]] or project["reported_health"] == "Green" and bool(overdue))
+    |
+
+E501 Line too long (176 > 100)
+   --> services\api\ppm_api\command.py:166:101
+    |
+164 | …sioned plan, delivery and capacity-v1", evidence, explanation, coverage if key in ("risk", "health") else HUNDRED if value is not No…
+165 | …
+166 | …[health] > order[project["reported_health"]] or project["reported_health"] == "Green" and bool(overdue))
+    |                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+167 | …oject["portfolio_id"], reported_health=project["reported_health"], computed_health=health, discrepancy=discrepancy, metrics=metrics,…
+168 | …ilestones"):
+    |
+
+E501 Line too long (247 > 100)
+   --> services\api\ppm_api\command.py:167:101
+    |
+165 | …
+166 | …t["reported_health"]] or project["reported_health"] == "Green" and bool(overdue))
+167 | …reported_health=project["reported_health"], computed_health=health, discrepancy=discrepancy, metrics=metrics, can_edit=await delivery.can_edit(p, pid)))
+    |       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+168 | …
+169 | …
+    |
+
+E501 Line too long (107 > 100)
+   --> services\api\ppm_api\command.py:175:101
+    |
+173 |         for sprint in src["sprints"]:
+174 |             if sprint["status"] == "closed" and start <= sprint["end_date"] < end:
+175 |                 closure = next((r for r in src["sprint_closures"] if r["sprint_id"] == sprint["id"]), None)
+    |                                                                                                     ^^^^^^^
+176 |                 velocities.append(dict(sprint_id=sprint["id"], project_id=pid, team_id=sprint["team_id"], name=sprint["name"], end_da…
+177 |     totals = []
+    |
+
+E501 Line too long (391 > 100)
+   --> services\api\ppm_api\command.py:176:101
+    |
+174 | …
+175 | …id"]), None)
+176 | …team_id"], name=sprint["name"], end_date=sprint["…eshness="frozen" if closure else "missing"))
+    |       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^…^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+177 | …
+178 | …
+    |
+
+E501 Line too long (323 > 100)
+   --> services\api\ppm_api\command.py:179:101
+    |
+177 | …
+178 | …
+179 | …("spend", "Recorded spend", ct["spent"], currency), ("period_spend", "Period recorded spend", ct["period"], currency), ("usage", "Budget use", ct["spent"] / ct["budget"] * 100 if ct["budget"] and ct["complete"] else None, "%")):
+    |       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+180 | …d if key == "period_spend" else current, "Authorized project ledger totals", ct["facts"], "No FX conversion; current authorized scope", partial=not ct["complete"]))
+181 | …gic alignment")):
+    |
+
+E501 Line too long (259 > 100)
+   --> services\api\ppm_api\command.py:180:101
+    |
+178 | …
+179 | …("spend", "Recorded spend", ct["spent"], currency), ("period_spend", "Period recorded spend", ct["period"], currency), ("usage", "Budget use", ct["spent"] / ct["budget"]…
+180 | …d if key == "period_spend" else current, "Authorized project ledger totals", ct["facts"], "No FX conversion; current authorized scope", partial=not ct["complete"]))
+    |       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+181 | …gic alignment")):
+182 | …
+    |
+
+E501 Line too long (112 > 100)
+   --> services\api\ppm_api\command.py:181:101
+    |
+179 |         for key, label, value, unit in (("budget", "Approved budget", ct["budget"], currency), ("spend", "Recorded spend", ct["spent"…
+180 |             totals.append(metric(f"{currency}_{key}", f"{currency} {label}", value, unit, period if key == "period_spend" else curren…
+181 |     for key, label in (("health", "Portfolio evidence health"), ("alignment", "Portfolio strategic alignment")):
+    |                                                                                                     ^^^^^^^^^^^^
+182 |         active_ids = {r["id"] for r in projects if r["status"] in ("active", "on_hold")}
+183 |         eligible = [r for r in output if key != "health" or r["id"] in active_ids]
+    |
+
+E501 Line too long (102 > 100)
+   --> services\api\ppm_api\command.py:184:101
+    |
+182 |         active_ids = {r["id"] for r in projects if r["status"] in ("active", "on_hold")}
+183 |         eligible = [r for r in output if key != "health" or r["id"] in active_ids]
+184 |         ms = [m for r in eligible for m in r["metrics"] if m["key"] == key and m["value"] is not None]
+    |                                                                                                     ^^
+185 |         totals.append(metric(key, label, sum((m["value"] for m in ms), ZERO) / len(ms) if ms else None, "health points" if key == "he…
+186 |     team_ids = {r["team_id"] for r in projects if r["team_id"]}
+    |
+
+E501 Line too long (379 > 100)
+   --> services\api\ppm_api\command.py:185:101
+    |
+183 | …
+184 | …t None]
+185 | …se None, "health points" if key == "health" else …ligible else ZERO, len(ms) < len(eligible)))
+    |       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^…^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+186 | …
+187 | …
+    |
+
+E501 Line too long (102 > 100)
+   --> services\api\ppm_api\command.py:190:101
+    |
+188 |     for tid in sorted(team_ids):
+189 |         team = await delivery.get(p, "teams", tid)
+190 |         teams.append(dict(name=team["name"], summary=await capacity.team_summary(tid, start, end, p)))
+    |                                                                                                     ^^
+191 |     return dict(computed_at=stamp, start=start, end=end, timezone=timezone, portfolio_id=portfolio_id,
+192 |                 policy_revision=policy[0]["revision"] if policy else 0, amber=amber, red=red, stale_days=stale_days,
+    |
+
+E501 Line too long (102 > 100)
+   --> services\api\ppm_api\command.py:191:101
+    |
+189 |         team = await delivery.get(p, "teams", tid)
+190 |         teams.append(dict(name=team["name"], summary=await capacity.team_summary(tid, start, end, p)))
+191 |     return dict(computed_at=stamp, start=start, end=end, timezone=timezone, portfolio_id=portfolio_id,
+    |                                                                                                     ^^
+192 |                 policy_revision=policy[0]["revision"] if policy else 0, amber=amber, red=red, stale_days=stale_days,
+193 |                 projects=output, totals=totals, records=records, velocity=velocities, resources=resource_results, teams=teams,
+    |
+
+E501 Line too long (116 > 100)
+   --> services\api\ppm_api\command.py:192:101
+    |
+190 |         teams.append(dict(name=team["name"], summary=await capacity.team_summary(tid, start, end, p)))
+191 |     return dict(computed_at=stamp, start=start, end=end, timezone=timezone, portfolio_id=portfolio_id,
+192 |                 policy_revision=policy[0]["revision"] if policy else 0, amber=amber, red=red, stale_days=stale_days,
+    |                                                                                                     ^^^^^^^^^^^^^^^^
+193 |                 projects=output, totals=totals, records=records, velocity=velocities, resources=resource_results, teams=teams,
+194 |                 limitations=["Current facts with selected-period spend, benefits, closed sprints and capacity; no historical reconstr…
+    |
+
+E501 Line too long (126 > 100)
+   --> services\api\ppm_api\command.py:193:101
+    |
+191 |     return dict(computed_at=stamp, start=start, end=end, timezone=timezone, portfolio_id=portfolio_id,
+192 |                 policy_revision=policy[0]["revision"] if policy else 0, amber=amber, red=red, stale_days=stale_days,
+193 |                 projects=output, totals=totals, records=records, velocity=velocities, resources=resource_results, teams=teams,
+    |                                                                                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^
+194 |                 limitations=["Current facts with selected-period spend, benefits, closed sprints and capacity; no historical reconstr…
+195 |                 compute_ms=round((perf_counter() - began) * 1000, 2))
+    |
+
+E501 Line too long (611 > 100)
+   --> services\api\ppm_api\command.py:194:101
+    |
+192 | …tale_days=stale_days,
+193 | …=resource_results, teams=teams,
+194 | …s and capacity; no historical reconstruction.", "…o AI predictions or automated escalation."],
+    |       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^…^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+195 | …
+    |
+
+E501 Line too long (101 > 100)
+  --> services\api\ppm_api\command_tables.py:23:101
+   |
+21 | )
+22 | metric_plans = table(
+23 |     "metric_plans", *project(), col("baseline_id", sa.Uuid()), ref("baselines", "baseline_id", True),
+   |                                                                                                     ^
+24 |     col("calendar_id", sa.Uuid()), ref("calendars", "calendar_id"),
+25 |     col("forecast_cost", sa.Numeric(18, 2), True),
+   |
+
+E501 Line too long (116 > 100)
+  --> services\api\ppm_api\command_tables.py:38:101
+   |
+36 | saved_views = table(
+37 |     "saved_views", col("user_id", sa.Uuid()),
+38 |     sa.ForeignKeyConstraint(["organization_id", "user_id"], ["memberships.organization_id", "memberships.user_id"]),
+   |                                                                                                     ^^^^^^^^^^^^^^^^
+39 |     col("portfolio_id", sa.Uuid(), True), ref("portfolios", "portfolio_id"),
+40 |     col("start_date", sa.Date()), col("end_date", sa.Date()), col("dashboard", sa.String(20)),
+   |
+
+E501 Line too long (166 > 100)
+   --> services\api\ppm_api\delivery.py:634:101
+    |
+632 | …
+633 | …
+634 | …, "mitigating": {"open", "accepted", "closed"}, "accepted": {"open", "closed"}, "closed": {"open"}}
+    |                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+635 | …atus"] == "closed" and not reason.strip():
+636 | …a change reason")
+    |
+
+E501 Line too long (109 > 100)
+   --> services\api\ppm_api\delivery.py:635:101
+    |
+633 |     if kind == "risks" and old and old["status"] != d["status"]:
+634 |         transitions = {"open": {"mitigating", "accepted", "closed"}, "mitigating": {"open", "accepted", "closed"}, "accepted": {"open…
+635 |         if d["status"] not in transitions[old["status"]] or old["status"] == "closed" and not reason.strip():
+    |                                                                                                     ^^^^^^^^^
+636 |             fail(409, "Invalid risk transition; reopening requires a change reason")
+637 |     if kind == "sprints" and not old and d["status"] != "planned":
+    |
+
+E501 Line too long (121 > 100)
+   --> services\api\ppm_api\delivery.py:744:101
+    |
+742 |     if kind == "sprints" and old and old["status"] != "closed" and d["status"] == "closed":
+743 |         work = TABLES["work_items"]
+744 |         items = list((await p.conn.execute(sa.select(work).where(work.c.sprint_id == id_, ~work.c.archived))).mappings())
+    |                                                                                                     ^^^^^^^^^^^^^^^^^^^^^
+745 |         completed = [w for w in items if w["status"] == "done"]
+746 |         await p.conn.execute(TABLES["sprint_closures"].insert().values(
+    |
+
+E501 Line too long (107 > 100)
+   --> services\api\ppm_api\delivery.py:750:101
+    |
+748 |             name=d["name"], description="Frozen at sprint closure; team-points-v1", revision=1,
+749 |             archived=False, created_at=stamp, updated_at=stamp, sprint_id=id_, team_id=d["team_id"],
+750 |             end_date=d["end_date"], points=sum((w["points"] or Decimal(0) for w in completed), Decimal(0)),
+    |                                                                                                     ^^^^^^^
+751 |             complete=all(w["points"] is not None for w in completed), snapshot=encode(completed),
+752 |         ))
+    |
+
+Found 72 errors (3 fixed, 69 remaining).

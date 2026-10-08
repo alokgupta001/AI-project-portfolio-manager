@@ -74,3 +74,11 @@ Database: RLS transaction context plus application policies; composite foreign k
 ## Mandatory negative fixtures
 
 Two tenants with overlapping project/resource names; one user in both with different roles; Viewer attempting writes; PM editing another project; forged tenant selector; revoked membership during SSE/download/queued send; copied foreign document/vector/graph identifiers; application-role database connection reused across tenants. Each new surface adds equivalent fixtures to its sprint evidence.
+
+## Sprint 06 implemented assessment scope
+
+Named respondent/reviewer assignments are explicit assessment scope and require an active Admin or Project Manager role. Admins cannot answer or approve merely by virtue of their role; the actual actor must match the assignment and reviewers cannot approve their own submission. Admins can delegate editing of a particular framework draft to a PM (publication remains Admin-only) and grant reads of completed results. Result-only grants never expose private answers, events or evidence. Evidence release requires the independent reviewer and a reason. All new tables use the existing `ppm.*` transaction context and real non-bypass application role. See [assessment contract](assessment.md), ADR 012 and Sprint 06 checks.
+
+## Sprint 07 command-center scope
+
+Dashboard/JSON DTO reads use live delivery project RLS; risk/benefit/plan writes require Admin or project edit grants. Policy writes are Admin-only. Personal saved views are actor-owned even for Admin and Viewer; they confer no access. Resource privacy/grants remain unchanged. [Contract](command-center.md).
