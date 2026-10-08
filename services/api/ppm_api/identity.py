@@ -285,7 +285,8 @@ async def principal(
         yield Principal(conn, user, session, member["role"])
 
 
-Auth = Annotated[Principal, Depends(principal)]
+# Commit (or fail) the transaction before the response can trigger a follow-up read.
+Auth = Annotated[Principal, Depends(principal, scope="function")]
 
 
 async def admin(p: Principal) -> None:
