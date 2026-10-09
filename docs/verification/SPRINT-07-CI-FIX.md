@@ -24,5 +24,7 @@ Local command logs: ignored `artifacts/local/ci-fix-backend.log` and
 `artifacts/local/ci-fix-browser.log`. Downloaded CI traces remain ignored because they
 contain test-session data. No production data or migrations changed.
 
-The correction will trigger a fresh hosted run on push. Its result must be checked;
-local acceptance alone does not establish hosted success.
+Hosted verification confirmed 2026-10-09: fix commit `14f1eea` passed
+[Foundation checks run 37754868462](https://github.com/alokgupta001/AI-project-portfolio-manager/actions/runs/37754868462).
+Every stage succeeded, including static/contract checks, backend stack checks,
+browser and persistence acceptance. No rerun or further code correction is needed.

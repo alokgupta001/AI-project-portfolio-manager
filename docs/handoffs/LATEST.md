@@ -8,4 +8,5 @@ Next: Sprint 08, only after separate user authorization. No AI, cloud deployment
 
 CI follow-up: savepoint push succeeded; its hosted assessment browser scenario exposed
 a response-before-commit race. See [CI correction and acceptance](../verification/SPRINT-07-CI-FIX.md).
-The fix passes 55 backend tests and the focused browser flow; verify its new hosted run after push.
+Fix `14f1eea` passes 55 local backend tests and hosted Foundation checks run
+`37754868462` (all stages successful, confirmed 2026-10-09). CI repair is complete.
