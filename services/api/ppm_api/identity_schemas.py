@@ -2,7 +2,7 @@ from datetime import datetime
 from typing import Literal
 from uuid import UUID
 
-from pydantic import BaseModel, ConfigDict, EmailStr, Field, field_validator
+from pydantic import BaseModel, ConfigDict, EmailStr, Field, HttpUrl, field_validator
 
 Role = Literal["Admin", "Project Manager", "Viewer"]
 
@@ -18,6 +18,25 @@ class Credentials(Input):
 
 class EmailInput(Input):
     email: EmailStr
+
+
+def nonblank(value: str) -> str:
+    if not value.strip():
+        raise ValueError("Use a nonempty name")
+    return value.strip()
+
+
+class RegistrationInput(EmailInput):
+    organization_name: str = Field(min_length=1, max_length=120)
+    normalize_name = field_validator("organization_name")(nonblank)
+
+
+class OrganizationProfileInput(Input):
+    name: str | None = Field(default=None, min_length=1, max_length=120)
+    description: str | None = Field(default=None, max_length=1000)
+    industry: str | None = Field(default=None, max_length=120)
+    website: HttpUrl | None = Field(default=None, max_length=500)
+    normalize_name = field_validator("name")(nonblank)
 
 
 class CompleteChallenge(Input):
@@ -68,8 +87,8 @@ class AccountView(BaseModel):
     id: UUID
     email: str
     name: str
-    organization_id: UUID
-    role: Role
+    organization_id: UUID | None
+    role: Role | None
     organizations: list[OrganizationView]
 
 

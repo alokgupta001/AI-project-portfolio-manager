@@ -1,0 +1,54 @@
+ Container enterprise-ppm-redis-1 Running 
+ Container enterprise-ppm-postgres-1 Running 
+ Container enterprise-ppm-redis-1 Waiting 
+ Container enterprise-ppm-postgres-1 Waiting 
+ Container enterprise-ppm-redis-1 Healthy 
+ Container enterprise-ppm-postgres-1 Healthy 
+ Container enterprise-ppm-test-run-49d28dabcc8e Creating 
+ Container enterprise-ppm-test-run-49d28dabcc8e Created 
+...F.........                                                            [100%]
+=================================== FAILURES ===================================
+_______ test_search_125_records_roles_metadata_notifications_revocation ________
+
+identity = (<httpx.AsyncClient object at 0x7305668b3a10>, <fastapi.applications.FastAPI object at 0x7305672374a0>, <sqlalchemy.ex... 'e8c159ea-0304-4dea-a56b-54a5aa8274d3@example.com', 'other': 'f95a207f-1937-406a-84a1-438ab71896e3@example.com', ...})
+
+    async def test_search_125_records_roles_metadata_notifications_revocation(identity):
+        c, app, owner, ids, emails = identity
+        await login(c, emails, org=ids["a"])
+>       portfolio = await create(c, "portfolios")
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_pilot.py:86: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+c = <httpx.AsyncClient object at 0x7305668b3a10>, kind = 'portfolios'
+values = {}
+
+    async def create(c, kind, **values):
+        result = await send(
+            c,
+            "POST",
+            "/delivery/" + kind,
+            headers={"idempotency-key": str(uuid4())},
+            json={"kind": kind, "name": kind + " fixture", **values},
+        )
+>       assert result.status_code == 201, result.text
+E       AssertionError: {"error":{"code":"HTTP_ERROR","message":"Configure organization timezone and currency first","request_id":"5654877e-6270-4099-a435-6b8109702ec4","details":[]}}
+E       assert 409 == 201
+E        +  where 409 = <Response [409 Conflict]>.status_code
+
+tests/test_delivery.py:25: AssertionError
+----------------------------- Captured stderr call -----------------------------
+{"event": "http_request", "request_id": "f2fee952-7b65-412a-bc3a-1200c63fc927", "method": "GET", "route": "/api/v1/auth/csrf", "status": 200, "duration_ms": 73.87}
+{"event": "http_request", "request_id": "8d501b4c-fb1e-4e1f-b81e-001ea235248d", "method": "POST", "route": "/api/v1/auth/login", "status": 200, "duration_ms": 363.64}
+{"event": "http_request", "request_id": "5d6a0381-3c6b-4813-99d9-1ecb3da5ddde", "method": "POST", "route": "/api/v1/auth/switch", "status": 200, "duration_ms": 18.55}
+{"event": "http_request", "request_id": "5654877e-6270-4099-a435-6b8109702ec4", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 409, "duration_ms": 34.78}
+------------------------------ Captured log call -------------------------------
+INFO     ppm.requests:main.py:136 {"event": "http_request", "request_id": "f2fee952-7b65-412a-bc3a-1200c63fc927", "method": "GET", "route": "/api/v1/auth/csrf", "status": 200, "duration_ms": 73.87}
+INFO     ppm.requests:main.py:136 {"event": "http_request", "request_id": "8d501b4c-fb1e-4e1f-b81e-001ea235248d", "method": "POST", "route": "/api/v1/auth/login", "status": 200, "duration_ms": 363.64}
+INFO     ppm.requests:main.py:136 {"event": "http_request", "request_id": "5d6a0381-3c6b-4813-99d9-1ecb3da5ddde", "method": "POST", "route": "/api/v1/auth/switch", "status": 200, "duration_ms": 18.55}
+INFO     ppm.requests:main.py:136 {"event": "http_request", "request_id": "5654877e-6270-4099-a435-6b8109702ec4", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 409, "duration_ms": 34.78}
+=========================== short test summary info ============================
+FAILED tests/test_pilot.py::test_search_125_records_roles_metadata_notifications_revocation
+1 failed, 12 passed in 19.32s
+

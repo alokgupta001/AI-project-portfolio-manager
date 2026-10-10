@@ -7,11 +7,12 @@ from typing import Annotated, Any, Literal, NoReturn
 from uuid import UUID, uuid4
 
 import sqlalchemy as sa
-from fastapi import APIRouter, Header, HTTPException, Query, Request
+from fastapi import APIRouter, Header, Query, Request
 from fastapi.encoders import jsonable_encoder
 from pydantic import TypeAdapter
 from sqlalchemy.exc import IntegrityError
 
+from ppm_api.errors import DomainError
 from ppm_api.identity import Auth, Principal, context, now
 from ppm_api.identity_tables import memberships, sessions, users
 from ppm_api.metric_math import alignment_score, budget_usage
@@ -47,10 +48,6 @@ ORG_ADMIN = {
 
 def encode(value: Any) -> Any:
     return jsonable_encoder(value, custom_encoder={Decimal: str})
-
-
-class DomainError(HTTPException):
-    """Only fixed, credential-free domain messages reach the UI."""
 
 
 def fail(status: int, detail: str) -> NoReturn:
@@ -137,10 +134,14 @@ async def lock(p: Principal, request: Request) -> None:
         sa.text("SELECT pg_advisory_xact_lock(hashtextextended(:org, 2))"), {"org": str(oid)}
     )
     role = await p.conn.scalar(
-        sa.select(memberships.c.role).where(
+        sa.select(memberships.c.role)
+        .join(users, users.c.id == memberships.c.user_id)
+        .where(
             memberships.c.organization_id == oid,
             memberships.c.user_id == p.user["id"],
             memberships.c.active,
+            users.c.active,
+            users.c.verified,
         )
     )
     session = (
@@ -341,6 +342,22 @@ async def audit_change(
         )
     )
 
+    if (
+        kind in {"work_items", "risks"}
+        and row.get("owner_id")
+        and (not old or old.get("owner_id") != row["owner_id"])
+    ):
+        from ppm_api.pilot import notify
+
+        await notify(
+            p.conn,
+            p.session["organization_id"],
+            row["owner_id"],
+            kind,
+            row["id"],
+            f"{kind}:{row['id']}:{row['revision']}:assigned",
+        )
+
 
 async def snapshot(p: Principal, pid: UUID) -> dict:
     project_row = await get(p, "projects", pid)
@@ -387,7 +404,12 @@ async def archive_guard(p: Principal, kind: str, id_: UUID) -> None:
 
 
 @router.get("/people", response_model=list[PersonView])
-async def people(p: Auth, q: str = Query(default="", max_length=160)) -> list[dict]:
+async def people(
+    p: Auth,
+    q: str = Query(default="", max_length=160),
+    offset: int = Query(0, ge=0),
+    limit: int = Query(100, ge=1, le=100),
+) -> list[dict]:
     rows = (
         await p.conn.execute(
             sa.select(users.c.id, users.c.name)
@@ -395,10 +417,14 @@ async def people(p: Auth, q: str = Query(default="", max_length=160)) -> list[di
             .where(
                 memberships.c.organization_id == p.session["organization_id"],
                 memberships.c.active,
-                users.c.name.ilike("%" + q + "%"),
+                users.c.name.ilike(
+                    "%" + q.replace("\\", "\\\\").replace("%", "\\%").replace("_", "\\_") + "%",
+                    escape="\\",
+                ),
             )
             .order_by(users.c.name, users.c.id)
-            .limit(100)
+            .offset(offset)
+            .limit(limit)
         )
     ).mappings()
     return [dict(r) for r in rows]
@@ -544,12 +570,17 @@ async def listing(
     skill: str = Query(default="", max_length=80),
     archived: bool = False,
     status: str | None = None,
+    industry: str | None = Query(None, max_length=30),
     sort: LiteralSort = "name",
     offset: int = Query(default=0, ge=0),
     limit: int = Query(default=50, ge=1, le=100),
 ) -> dict:
     t = TABLES[kind]
     where = [t.c.organization_id == p.session["organization_id"], t.c.archived == archived]
+    if industry is not None:
+        if kind != "projects":
+            fail(422, "Industry filter requires projects")
+        where.append(t.c.industry.is_(None) if industry == "unknown" else t.c.industry == industry)
     if skill:
         if kind != "resources":
             fail(422, "Skill filter requires resources")
@@ -605,6 +636,8 @@ async def write(
     id_: UUID | None,
     version: int | None,
     reason: str,
+    *,
+    source_history_complete: bool = True,
 ) -> dict:
     from ppm_api import capacity
 
@@ -665,6 +698,24 @@ async def write(
     if d["archived"] and not old:
         fail(422, "New records cannot start archived")
     await refs(p, kind, d | {"_id": id_})
+    if kind == "grants":
+        g = TABLES["grants"]
+        scope = "project_id" if d.get("project_id") else "portfolio_id"
+        if await p.conn.scalar(
+            sa.select(g.c.id)
+            .where(
+                g.c.organization_id == p.session["organization_id"],
+                g.c.user_id == d["user_id"],
+                g.c[scope] == d[scope],
+                g.c.id != id_,
+            )
+            .limit(1)
+        ):
+            fail(
+                409,
+                "This member already has a grant for this scope. "
+                "Edit or restore the existing grant.",
+            )
     if kind in capacity.KINDS:
         await capacity.validate(p, kind, d, id_)
     if kind == "capacity_snapshots":
@@ -774,7 +825,8 @@ async def write(
                 team_id=d["team_id"],
                 end_date=d["end_date"],
                 points=sum((w["points"] or Decimal(0) for w in completed), Decimal(0)),
-                complete=all(w["points"] is not None for w in completed),
+                complete=source_history_complete
+                and all(w["points"] is not None for w in completed),
                 snapshot=encode(completed),
             )
         )
@@ -912,7 +964,7 @@ async def create(
         )
         return result
     except IntegrityError as e:
-        raise HTTPException(409, "Conflicting record or invalid scoped reference") from e
+        raise DomainError(409, "Conflicting record or invalid scoped reference") from e
 
 
 @router.patch("/{kind}/{id_}", response_model=RecordView)
@@ -928,4 +980,4 @@ async def update(
     try:
         return await write(p, request, kind, payload, id_, if_match, x_change_reason)
     except IntegrityError as e:
-        raise HTTPException(409, "Conflicting record or invalid scoped reference") from e
+        raise DomainError(409, "Conflicting record or invalid scoped reference") from e

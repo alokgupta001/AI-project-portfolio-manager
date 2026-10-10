@@ -44,7 +44,7 @@ export default async function Home() {
         <span className="environment">LOCAL FOUNDATION</span>
       </header>
       <section className="intro">
-        <p className="eyebrow">SPRINT 01 / DEVELOPMENT WORKSPACE</p>
+        <p className="eyebrow">OPERATIONAL PILOT / DEVELOPMENT WORKSPACE</p>
         <h1>
           A connected foundation.
           <br />
@@ -114,8 +114,9 @@ export default async function Home() {
         <div>
           <h2>Identity and organization access</h2>
           <p>
-            Sign in to manage your account and organization membership. Product
-            dashboards and AI features are not enabled yet.
+            Sign in to manage delivery, resources, assessments and deterministic
+            dashboards. AI features and live-provider acceptance remain
+            unavailable or unverified.
           </p>
           <a
             className="refresh"
@@ -126,8 +127,8 @@ export default async function Home() {
         </div>
       </section>
       <footer>
-        Development environment · No enterprise data · Service status is read
-        from the API on every refresh
+        Development environment · Existing organization data is preserved ·
+        Service status is read from the API on every refresh
       </footer>
     </main>
   );

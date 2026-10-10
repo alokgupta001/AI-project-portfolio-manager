@@ -109,3 +109,12 @@ filters, saved view reload, risk creation, dashboard tabs, DTO download, tenant
 switch, responsive layout and axe checks. Actual outcomes are in Sprint 07 checks.
 Query and rendering measurements use tiny local fixtures and do not certify
 production performance. No new dependencies, AI, cloud or external notifications.
+
+
+## Sprint 08 live sync consumers
+
+The command center discovers authorized ingestion activity and refreshes the same
+`command-v1` snapshot after persisted `completed`/`degraded` stages. SSE resumes by
+sequence; missed/expired progress falls back to current snapshots. This adds no
+metric formula or historical reconstruction. Imported historical sprint closures
+have unknown coverage; original frozen closures remain untouched. [jobs-v1](jobs-integrations.md).

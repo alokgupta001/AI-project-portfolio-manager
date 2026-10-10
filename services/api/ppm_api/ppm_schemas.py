@@ -117,6 +117,11 @@ class ProgramInput(Owned):
 
 class ProjectInput(Owned):
     kind: Literal["projects"] = "projects"
+    priority: Literal["low", "normal", "high", "urgent"] | None = None
+    industry: Literal["fintech", "technology", "healthcare", "public_sector", "other"] | None = None
+    category: Literal["delivery", "transformation", "compliance", "research", "other"] | None = None
+    methodology: Literal["agile", "waterfall", "hybrid", "other"] | None = None
+    size_band: Literal["small", "medium", "large"] | None = None
     portfolio_id: UUID
     program_id: UUID | None = None
     department_id: UUID | None = None
@@ -197,6 +202,8 @@ class SprintInput(ProjectChild):
 
 class WorkInput(ProjectChild):
     kind: Literal["work_items"] = "work_items"
+    priority: Literal["low", "normal", "high", "urgent"] | None = None
+    work_type: Literal["task", "bug", "story", "feature", "other"] | None = None
     owner_id: UUID | None = None
     sprint_id: UUID | None = None
     status: Literal["backlog", "ready", "in_progress", "done"] = "backlog"

@@ -1,0 +1,81 @@
+{
+  "renderedMs": 2505,
+  "computeMs": 156.73,
+  "projects": 1,
+  "profile": "Local Docker production Next build; Playwright Chromium; tiny isolated fixture; no performance compliance claim",
+  "navigation": [
+    {
+      "name": "http://localhost:3001/command-center",
+      "entryType": "navigation",
+      "startTime": 0,
+      "duration": 75.30000000074506,
+      "navigationId": 9261,
+      "initiatorType": "navigation",
+      "deliveryType": "cache",
+      "nextHopProtocol": "",
+      "renderBlockingStatus": "non-blocking",
+      "contentType": "text/html",
+      "contentEncoding": "gzip",
+      "workerStart": 0,
+      "workerRouterEvaluationStart": 0,
+      "workerCacheLookupStart": 0,
+      "workerMatchedSourceType": "",
+      "workerFinalSourceType": "",
+      "redirectStart": 0,
+      "redirectEnd": 0,
+      "fetchStart": 0.30000000074505806,
+      "domainLookupStart": 0.30000000074505806,
+      "domainLookupEnd": 0.30000000074505806,
+      "connectStart": 0.30000000074505806,
+      "secureConnectionStart": 0,
+      "connectEnd": 0.30000000074505806,
+      "requestStart": 6.199999999254942,
+      "responseStart": 19.199999999254942,
+      "firstInterimResponseStart": 0,
+      "finalResponseHeadersStart": 19.199999999254942,
+      "responseEnd": 20.199999999254942,
+      "transferSize": 300,
+      "encodedBodySize": 2548,
+      "decodedBodySize": 8093,
+      "responseStatus": 200,
+      "serverTiming": [],
+      "unloadEventStart": 28.699999999254942,
+      "unloadEventEnd": 28.699999999254942,
+      "domInteractive": 50.69999999925494,
+      "domContentLoadedEventStart": 50.69999999925494,
+      "domContentLoadedEventEnd": 50.69999999925494,
+      "domComplete": 75.30000000074506,
+      "loadEventStart": 75.30000000074506,
+      "loadEventEnd": 75.30000000074506,
+      "type": "reload",
+      "redirectCount": 0,
+      "activationStart": 0,
+      "criticalCHRestart": 0,
+      "notRestoredReasons": null,
+      "confidence": {
+        "randomizedTriggerRate": 0.4994798,
+        "value": "high"
+      }
+    }
+  ],
+  "paint": [
+    {
+      "name": "first-paint",
+      "entryType": "paint",
+      "startTime": 100,
+      "duration": 0,
+      "navigationId": 9261,
+      "paintTime": 67.40000000037253,
+      "presentationTime": 100
+    },
+    {
+      "name": "first-contentful-paint",
+      "entryType": "paint",
+      "startTime": 100,
+      "duration": 0,
+      "navigationId": 9261,
+      "paintTime": 67.40000000037253,
+      "presentationTime": 100
+    }
+  ]
+}

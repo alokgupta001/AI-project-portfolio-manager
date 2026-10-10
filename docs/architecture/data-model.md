@@ -1,5 +1,8 @@
 # Conceptual data model
 
+**Historical/proposed reference:** Current availability is [CURRENT_STATUS](../00-overview/CURRENT_STATUS.md); current architecture is [SYSTEM_ARCHITECTURE](../01-architecture/SYSTEM_ARCHITECTURE.md); future execution order is [the revised roadmap](../09-planning/FUTURE_SPRINT_ROADMAP.md). Preserve dated decisions/scope below; proposed components are not implementation claims.
+
+
 Sprint 04 implemented schema: [delivery contract](../contracts/delivery.md) maps all 19 resources and invariants. Current metadata is `ppm_tables.py`, frozen migration `0003_delivery`; organization/project composite references, explicit grants, immutable baseline/ledger/status history and audited revisions extend the identity schema. Resources/capacity remain Sprint 05.
 
 Sprint 02 physical subset: migration `0002_identity` adds `identity_users`, `organizations`, `memberships`, `identity_sessions`, `identity_refresh_tokens`, `identity_challenges` and `identity_audit`. The immutable Sprint 01 installation checkpoint remains. See [ADR 008](adr/008-identity-implementation.md) for global credential versus tenant-owned table boundaries, composite keys and RLS. No other entities in the conceptual model are implemented yet.
@@ -143,4 +146,3 @@ resource capability grants, restricted daily effort and coverage, and immutable
 allocation snapshots. Existing login membership is not a resource profile. Composite
 tenant references, revisions and audit preserve identity and history boundaries.
 See [capacity contract](../contracts/capacity.md) and [ADR 011](adr/011-resource-capacity.md).
-

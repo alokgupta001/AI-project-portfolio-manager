@@ -13,6 +13,7 @@ users = sa.Table(
     sa.Column("name", sa.String(120), nullable=False),
     sa.Column("password_hash", sa.String(128)),
     sa.Column("verified", sa.Boolean, nullable=False),
+    sa.Column("active", sa.Boolean, nullable=False, server_default=sa.true()),
     sa.Column("created_at", sa.DateTime(timezone=True), nullable=False),
 )
 organizations = sa.Table(
@@ -21,6 +22,10 @@ organizations = sa.Table(
     sa.Column("id", sa.Uuid, primary_key=True),
     sa.Column("name", sa.String(120), nullable=False),
     sa.Column("created_at", sa.DateTime(timezone=True), nullable=False),
+    sa.Column("revision", sa.Integer, nullable=False, server_default="1"),
+    sa.Column("description", sa.String(1000)),
+    sa.Column("industry", sa.String(120)),
+    sa.Column("website", sa.String(500)),
 )
 memberships = sa.Table(
     "memberships",
@@ -37,7 +42,7 @@ sessions = sa.Table(
     metadata,
     sa.Column("id", sa.Uuid, primary_key=True),
     sa.Column("user_id", sa.Uuid, sa.ForeignKey("identity_users.id"), nullable=False, index=True),
-    sa.Column("organization_id", sa.Uuid, nullable=False),
+    sa.Column("organization_id", sa.Uuid, nullable=True),
     sa.Column("csrf_hash", sa.String(64), nullable=False),
     sa.Column("expires_at", sa.DateTime(timezone=True), nullable=False),
     sa.Column("created_at", sa.DateTime(timezone=True), nullable=False),
@@ -64,10 +69,14 @@ challenges = sa.Table(
     sa.Column("role", sa.String(20)),
     sa.Column("expires_at", sa.DateTime(timezone=True), nullable=False),
     sa.Column("used", sa.Boolean, nullable=False),
+    sa.Column("invitation_id", sa.Uuid, unique=True),
+    sa.Column("organization_name", sa.String(120)),
     sa.ForeignKeyConstraint(
         ["organization_id", "inviter_id"], ["memberships.organization_id", "memberships.user_id"]
     ),
-    sa.CheckConstraint("kind IN ('activate','reset','invite')", name="ck_challenge_kind"),
+    sa.CheckConstraint(
+        "kind IN ('activate','reset','invite','register')", name="ck_challenge_kind"
+    ),
 )
 audit = sa.Table(
     "identity_audit",

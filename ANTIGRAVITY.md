@@ -58,7 +58,7 @@ cross-tenant/RLS, CSRF, revision/idempotency, migration, contract and browser ch
 ## Economical execution
 
 - State the scope in a few sentences, then implement. No duplicate architecture plan.
-- Keep a small checklist in `docs/sprints/SPRINT-06-REPORT.md` while working: done,
+- Keep a small checklist in `docs/03-sprints/completed/sprint-06/SPRINT_REPORT.md` while working: done,
   next, blockers, decisions and evidence. Do not mark acceptance before checks pass.
 - Search narrowly, exclude dependencies/build outputs, and bound command output.
   Save long non-sensitive test output under `docs/verification/`; inspect summaries

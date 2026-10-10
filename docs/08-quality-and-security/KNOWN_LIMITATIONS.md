@@ -1,0 +1,3 @@
+# Quality, security and operational limitations
+
+[Current limitations](../00-overview/CURRENT_STATUS.md) identifies snapshot bounds, evidence/file transaction limits, notification presentation retention, SSE polling cost and open external/release gates. [Security walkthrough](../02-learning/05-security/AUTHENTICATION_AND_AUTHORIZATION.md) explains live membership, RLS, roles/grants/ownership and private effort. [Test strategy](../04-testing/TESTING_STRATEGY.md) maps negative cases; [Release criteria](../00-overview/FINAL_PRODUCT_SCOPE_AND_RELEASE_CRITERIA.md) retains performance/recovery/accessibility obligations. Existing local checks do not imply independent security certification, production throughput or full recovery acceptance.

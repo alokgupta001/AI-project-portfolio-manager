@@ -590,6 +590,22 @@ kbd {
   display: grid;
   gap: 18px;
 }
+
+.password-control {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+.password-control input {
+  flex: 1;
+  min-width: 0;
+}
+.password-control button {
+  display: flex;
+  gap: 0.3rem;
+  align-items: center;
+  flex-shrink: 0;
+}
 .identity-page .badge {
   margin: 0 0 14px;
 }

@@ -1,6 +1,8 @@
 # API event and AI contracts
 
-Current implemented checkpoint: Sprint 04, migration `0003_delivery`. [Delivery endpoints/DTOs](delivery.md) extend the identity API; generated OpenAPI/TypeScript is authoritative. Future job/event/AI envelopes below remain planning contracts.
+Current implemented checkpoint: Sprint 08, migration `0007_durable_jobs`. [Implemented jobs, outbox, ingestion and SSE](jobs-integrations.md) replace the job/event planning proposals below for this slice. Shared AI result envelopes remain planning contracts.
+
+Historical Sprint 04 checkpoint: migration `0003_delivery`. [Delivery endpoints/DTOs](delivery.md) extend the identity API; generated OpenAPI/TypeScript is authoritative. Future job/event/AI envelopes below remain planning contracts.
 
 Historical Sprint 02 checkpoint: migration `0002_identity`. Planning conventions below continue to govern future modules; executable OpenAPI and generated client types remain authoritative.
 
@@ -107,3 +109,10 @@ Version 0.1 defines the initial proposal. Sprint 01 implements resource-neutral 
 GET `/api/v1/health/live` reports process liveness (200); GET `/api/v1/health/ready` checks database revision/checkpoint, Redis and storage (200/503); GET `/api/v1/foundation` returns the persisted installation UUID, UTC initialization time, environment and schema revision (200 or sanitized 503). All are local-only and have no domain mutation behavior. Request UUIDs are echoed in `X-Request-ID`, errors use the shared envelope and responses use `Cache-Control: no-store`.
 
 `packages/contracts/openapi.json` is exported deterministically from FastAPI; `src/schema.d.ts` is generated and `src/client.ts` is the shared web transport. `npm run contracts:check` rejects drift. These foundation endpoints do not establish tenant authorization. Sprint 02 identity endpoints use the session, live membership and RLS boundary described above; future enterprise data routes must extend that boundary. No product event producer or durable outbox is implemented yet. New migrations must update the explicit readiness revision check and foundation schema metadata together.
+
+
+## Implemented error handling after account repair
+
+[`DomainError`](../../services/api/ppm_api/errors.py) preserves fixed, trusted business-rule messages. The HTTP handler in `main.py` keeps that message and the request ID/code/status; generic exceptions return a sanitized error. Validation details contain field paths and Pydantic's bounded explanation, excluding rejected input values. Authentication stays non-enumerating and hidden records stay 404. Constraint errors use a safe 409 rather than database text.
+
+The shared [`apiError`](../../apps/web/components/api-error.ts) parser joins the message with field/reason details for identity, delivery, resources, assessments, command center, integrations and pilot controls. Forms keep unsaved values on failure. Missing revision is 428, stale revision 412, invalid field 422, insufficient scope 403, incompatible business state or duplicate conflict 409. The password control is independent of submission, so toggling it preserves values and validation.

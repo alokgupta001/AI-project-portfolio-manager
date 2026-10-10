@@ -1,0 +1,28 @@
+FF.                                                                      [100%]
+================================== FAILURES ===================================
+_________ test_mapping_rejects_scalar_parent_of_another_field[paths0] _________
+
+paths = ('id', 'id.title')
+
+    @pytest.mark.parametrize("paths", [("id", "id.title"), ("id.title", "id")])
+    def test_mapping_rejects_scalar_parent_of_another_field(paths):
+>       with pytest.raises(ValueError, match="overlap"):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests\test_ingestion_mapping.py:11: Failed
+_________ test_mapping_rejects_scalar_parent_of_another_field[paths1] _________
+
+paths = ('id.title', 'id')
+
+    @pytest.mark.parametrize("paths", [("id", "id.title"), ("id.title", "id")])
+    def test_mapping_rejects_scalar_parent_of_another_field(paths):
+>       with pytest.raises(ValueError, match="overlap"):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests\test_ingestion_mapping.py:11: Failed
+=========================== short test summary info ===========================
+FAILED tests/test_ingestion_mapping.py::test_mapping_rejects_scalar_parent_of_another_field[paths0]
+FAILED tests/test_ingestion_mapping.py::test_mapping_rejects_scalar_parent_of_another_field[paths1]
+2 failed, 1 passed in 1.55s

@@ -127,7 +127,7 @@ export function Modal({
   return (
     <dialog
       ref={ref}
-      aria-labelledby={id}
+      aria-label={title}
       className={drawer ? "modal drawer" : "modal"}
       onCancel={(e) => {
         e.preventDefault();

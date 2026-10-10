@@ -1,0 +1,81 @@
+{
+  "renderedMs": 3402,
+  "computeMs": 926.94,
+  "projects": 1,
+  "profile": "Local Docker production Next build; Playwright Chromium; tiny isolated fixture; no performance compliance claim",
+  "navigation": [
+    {
+      "name": "http://localhost:3001/command-center",
+      "entryType": "navigation",
+      "startTime": 0,
+      "duration": 66,
+      "navigationId": 9520,
+      "initiatorType": "navigation",
+      "deliveryType": "cache",
+      "nextHopProtocol": "",
+      "renderBlockingStatus": "non-blocking",
+      "contentType": "text/html",
+      "contentEncoding": "gzip",
+      "workerStart": 0,
+      "workerRouterEvaluationStart": 0,
+      "workerCacheLookupStart": 0,
+      "workerMatchedSourceType": "",
+      "workerFinalSourceType": "",
+      "redirectStart": 0,
+      "redirectEnd": 0,
+      "fetchStart": 0.39999999944120646,
+      "domainLookupStart": 0.39999999944120646,
+      "domainLookupEnd": 0.39999999944120646,
+      "connectStart": 0.39999999944120646,
+      "secureConnectionStart": 0,
+      "connectEnd": 0.39999999944120646,
+      "requestStart": 2,
+      "responseStart": 9.299999999813735,
+      "firstInterimResponseStart": 0,
+      "finalResponseHeadersStart": 9.299999999813735,
+      "responseEnd": 10.599999999627471,
+      "transferSize": 300,
+      "encodedBodySize": 2548,
+      "decodedBodySize": 8093,
+      "responseStatus": 200,
+      "serverTiming": [],
+      "unloadEventStart": 17.299999999813735,
+      "unloadEventEnd": 17.299999999813735,
+      "domInteractive": 32.299999999813735,
+      "domContentLoadedEventStart": 32.299999999813735,
+      "domContentLoadedEventEnd": 32.39999999944121,
+      "domComplete": 66,
+      "loadEventStart": 66,
+      "loadEventEnd": 66,
+      "type": "reload",
+      "redirectCount": 0,
+      "activationStart": 0,
+      "criticalCHRestart": 0,
+      "notRestoredReasons": null,
+      "confidence": {
+        "randomizedTriggerRate": 0.4994798,
+        "value": "high"
+      }
+    }
+  ],
+  "paint": [
+    {
+      "name": "first-paint",
+      "entryType": "paint",
+      "startTime": 92,
+      "duration": 0,
+      "navigationId": 9520,
+      "paintTime": 59.19999999925494,
+      "presentationTime": 92
+    },
+    {
+      "name": "first-contentful-paint",
+      "entryType": "paint",
+      "startTime": 92,
+      "duration": 0,
+      "navigationId": 9520,
+      "paintTime": 59.19999999925494,
+      "presentationTime": 92
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+Command: npm.cmd run contracts:check
+
+> enterprise-ppm@0.1.0 contracts:check
+> node scripts/contracts.mjs --check
+
+OpenAPI and TypeScript contracts match.
+
+Exit: 0

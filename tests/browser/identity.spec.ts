@@ -78,9 +78,14 @@ test("identity lifecycle uses real cookies, memberships, invitations and recover
   const invited = `invited-${Date.now()}@example.com`;
   await page.getByLabel("Email address", { exact: true }).fill(invited);
   await page.getByRole("button", { name: "Create invitation" }).click();
-  await expect(page.getByRole("status")).toHaveText(
-    "Invitation created in the local mailbox.",
+  await expect(page.getByRole("status")).toContainText(
+    "no inbox email will be sent",
   );
+  await expect(
+    page.getByText("Local test message — no inbox email sent", {
+      exact: false,
+    }),
+  ).toBeVisible();
   const mailbox = (email: string) => {
     const output = execFileSync(
       process.env.PPM_DOCKER || "docker",
@@ -148,14 +153,23 @@ test("identity lifecycle uses real cookies, memberships, invitations and recover
     { encoding: "utf8" },
   );
   await page.goto(JSON.parse(output).link);
+  await expect(
+    page.getByRole("heading", { name: "Reset your password." }),
+  ).toBeVisible();
+  await expect(page.getByLabel("One-time token")).toHaveAttribute(
+    "type",
+    "password",
+  );
   await page
     .getByLabel("Display name", { exact: true })
     .fill("Recovered viewer");
   await page
     .getByLabel("Password (12–72 bytes)")
     .fill(fixture.password + "new");
-  await page.getByRole("button", { name: "Verify and continue" }).click();
-  await expect(page.getByRole("status")).toContainText("Account verified");
+  await page
+    .getByRole("button", { name: "Reset password", exact: true })
+    .click();
+  await expect(page.getByRole("status")).toContainText("Password reset");
   expect((await page.request.get("/api/v1/auth/me")).status()).toBe(401);
   await page.goto("/login");
   await page.getByLabel("Email address", { exact: true }).fill(invited);

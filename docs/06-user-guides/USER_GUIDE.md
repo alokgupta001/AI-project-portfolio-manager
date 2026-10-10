@@ -1,0 +1,36 @@
+# Current user guide
+
+Availability: **IMPLEMENTED AND VERIFIED** within retained local checks. Production acceptance remains open. Use [current status](../00-overview/CURRENT_STATUS.md) and [the catalogue](../00-overview/FEATURE_CATALOGUE.md) for exact scope. For complete Sprint 8.1 steps and recovery limits, use [the pilot tester guide](../03-sprints/active/sprint-8.1/SPRINT_8_1_USER_GUIDE.md).
+
+For a self-contained organization, member, project and assessment exercise, use the [detailed website manual](WEBSITE_WALKTHROUGH.md). Development Gmail SMTP signup, existing-account invitation acceptance and recovery are verified. Personal signup arrived in Spam; test-Admin signup arrived in Inbox. The accepted invitation created the correct Viewer membership without changing the account's Admin role in its original organization. Check Inbox and Spam; provider acceptance alone does not prove inbox arrival. See [email verification](../04-testing/ACCOUNT_EMAIL_VERIFICATION.md).
+
+To add a Project Manager, sign in as the intended organization's Admin, open Account & access → Invite a member, enter their accessible email, select **Project Manager** and create the invitation. They accept the email privately and then sign in. To promote an existing Viewer instead, change their role in Organization members, keep Active checked, save and confirm. Give the PM the relevant work grants afterward: portfolio manage for project creation, project edit/manage for delivery, Resource access for staffing, and framework/assessment permissions for assessment work. Follow the [detailed role and access guide](MEMBERS_ROLES_AND_ACCESS.md) for every website step, access tests and revocation.
+
+Ordinary members need no terminal or Docker. The person running the application uses the separate [Gmail SMTP setup document](../07-setup-and-deployment/GMAIL-SMTP-SETUP.md).
+
+| User / purpose | What to do | Needed information | Expected result and limitation |
+| --- | --- | --- | --- |
+| New user: join/create organization | Open `/signup`, request verification, open the email privately, choose name/password, sign in | Accessible email and organization name; check Inbox and Spam | Organization created only after verification; Gmail delivery is verified on this development instance |
+| Admin: configure access | Open `/account`, edit organization profile; invite/manage members; use project Grants/resource access/framework or completed-result Access | Correct organization and grant scope | Saved membership/grants; ownership alone never grants access; private effort remains separately scoped |
+| PM: plan delivery | Admin creates portfolio and grants portfolio manage; PM creates a project at `/projects`, then opens its name and tabs | Name, portfolio, valid dates/currency, optional metadata; project grants for existing projects | Stored project/work/milestones/risks; archive checks active dependents; stale revision must be reloaded |
+| PM: manage staffing | Admin creates resource/calendar/access; PM opens `/resources` to manage permitted availability/allocations and explicitly granted effort | Resource profile, working dates/hours and project permission | Deterministic capacity or Unknown for missing schedule/scope; login account and workforce profile differ |
+| Assessor/reviewer: evaluate maturity | Admin creates/publishes framework and assigns different active Admin/PM members; named respondent saves/submits; named reviewer reviews/completes | Published version, assignment, required answers/evidence | Preserved results/history; adjustments require reasons; Viewer cannot submit evidence or assess; no AI scoring |
+| Executive/Viewer: inspect portfolio | Open `/command-center`, choose permitted scope/period/view and inspect source drawer | Authorized records and compatible currency/period | Explainable deterministic measures with coverage/Unknown; not a predictive probability or complete historical reconstruction |
+| All permitted users: find work | Ctrl K / search button → Find a record → type/query → page → open | Active organization, record query/type | Older permitted records discoverable; owning page rechecks access |
+| Assigned user: follow up | Workspace My work; Notifications → mark read/preferences | Assignment and permitted target | Persistent in-app receipts shown for 30 days; scheduled/external notifications PLANNED |
+| Import operator: load supported data | Open `/integrations`; choose configured fixture/CSV destination and mapping, preview/run/check job | Authorized project, supported columns, file and adapter mode | Durable job outcomes/rejected rows; real Jira/GitHub credentials are BLOCKED external acceptance |
+
+## Recovery and unavailable experiences
+
+Account email: after a verified real-email setup, check Inbox and Spam; verification/invitations expire in 24 hours and recovery in 30 minutes. Admin uses Pending invitations → Refresh invitations to see queued, provider-accepted, failed or local-preview status. Resend invalidates the old invitation; Cancel blocks acceptance; expired invitations can be resent. An invalid completion link offers signup/recovery replacement links and instructions to ask Admin for a new invitation. In local mode users still require private operator assistance. Operator configuration is in [Email delivery](../07-setup-and-deployment/EMAIL-DELIVERY.md).
+
+Wrong organization or absent grant can hide a row; recheck Account and access rather than changing IDs. Keep separate browser profiles for different users. On 401 sign in/refresh; on stale revision reload before editing. Unknown metrics need source/calendar/coverage corrections, not invented zeros. Failed imports expose bounded diagnostics through their job surface. Local challenge links are private, expire and cannot be replayed.
+
+**PLANNED:** reusable documents/retrieval (09), AI/agents (10–11), predictive models (12–13), project/multi-project copilot (14), approvals/reminders (15), transformation/scenarios/graph/benchmarks/meetings (16–20), reports/exports/alerts/audio (21), passkeys/lifecycle (22), production recovery/deployment (23). There is no executable AI assistant or report-export demo at this checkpoint. Follow [approved future scope](../09-planning/FUTURE_SPRINT_ROADMAP.md); optional additions are not guaranteed.
+
+
+## Account and setup repair — 10 October 2026
+
+The organization profile now shows read-only name, saved description/industry/website, live administrators, member counts and operating settings. Use **Edit name** to enter Save/Cancel mode. Resource planning exposes **Working calendars** directly; create immutable schedule versions and reference them from dated availability. Field and business-rule errors retain their specific explanations.
+
+Membership removal denies only that organization and preserves the global account; no-membership accounts can sign in and manage their own profile/sessions. Existing-project sprint writes need explicit project edit/manage access. See [the full walkthrough](WEBSITE_WALKTHROUGH.md), [training provisioning](../05-demos/WALKTHROUGH_DATA.md), and [current verification](../04-testing/ACCOUNT_WORKFLOW_REPAIR_REPORT.md).

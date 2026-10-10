@@ -85,6 +85,20 @@ programs = table(
 )
 projects = table(
     "projects",
+    *[
+        col(key, sa.String(30), True)
+        for key in ["priority", "industry", "category", "methodology", "size_band"]
+    ],
+    *[
+        sa.CheckConstraint(f"{key} IS NULL OR {key} IN ({options})", name=f"ck_ppm_projects_{key}")
+        for key, options in {
+            "priority": "'low','normal','high','urgent'",
+            "industry": "'fintech','technology','healthcare','public_sector','other'",
+            "category": "'delivery','transformation','compliance','research','other'",
+            "methodology": "'agile','waterfall','hybrid','other'",
+            "size_band": "'small','medium','large'",
+        }.items()
+    ],
     col("portfolio_id", sa.Uuid()),
     ref("portfolios", "portfolio_id"),
     col("program_id", sa.Uuid(), True),
@@ -157,6 +171,16 @@ sprints = table(
 )
 work_items = table(
     "work_items",
+    col("priority", sa.String(30), True),
+    col("work_type", sa.String(30), True),
+    sa.CheckConstraint(
+        "priority IS NULL OR priority IN ('low','normal','high','urgent')",
+        name="ck_ppm_work_items_priority",
+    ),
+    sa.CheckConstraint(
+        "work_type IS NULL OR work_type IN ('task','bug','story','feature','other')",
+        name="ck_ppm_work_items_work_type",
+    ),
     *project(),
     col("sprint_id", sa.Uuid(), True),
     ref("sprints", "sprint_id", True),

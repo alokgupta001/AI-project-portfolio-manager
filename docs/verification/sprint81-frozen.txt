@@ -1,0 +1,1 @@
+PASS: 18 baseline source, frozen prompt and applied migration files unchanged. New applied head 0008 must now remain frozen.

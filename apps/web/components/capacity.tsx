@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
+import { apiError } from "./api-error";
 import type { components } from "@ppm/contracts/schema";
 import { createApiClient } from "@ppm/contracts";
 import { ChangeDetails, RecordEditor, RelatedName } from "./delivery";
@@ -24,11 +25,7 @@ type Client = ReturnType<typeof createApiClient>;
 type Summary = components["schemas"]["CapacityView"];
 function check<T>(r: { data?: T; response: Response; error?: unknown }): T {
   if (!r.response.ok) {
-    const e = r.error as { error?: { message?: string } };
-    throw new Error(
-      e?.error?.message ||
-        `Request failed (${r.response.status}). Reload and try again.`,
-    );
+    throw new Error(apiError(r.error, r.response.status));
   }
   return r.data as T;
 }
@@ -94,15 +91,18 @@ function SavedPlan({ data }: { data: Record<string, unknown> }) {
   );
 }
 
+import { RecordSelect } from "./record-select";
 export function Capacity({
   account,
   client,
+  transport,
 }: {
+  transport: typeof fetch;
   account: components["schemas"]["AccountView"];
   client: Client;
 }) {
   const [kind, setKind] = useState<Kind>("resources");
-  const [resources, setResources] = useState<DeliveryRecord[]>([]);
+  const [, setResources] = useState<DeliveryRecord[]>([]);
   const [resourceId, setResourceId] = useState("");
   const [skill, setSkill] = useState("");
   const [q, setQ] = useState("");
@@ -116,8 +116,8 @@ export function Capacity({
   const [archived, setArchived] = useState(false);
   const [summary, setSummary] = useState<Summary | null>(null);
   const [project, setProject] = useState("");
-  const [projects, setProjects] = useState<DeliveryRecord[]>([]);
-  const [teams, setTeams] = useState<DeliveryRecord[]>([]);
+  const [, setProjects] = useState<DeliveryRecord[]>([]);
+  const [, setTeams] = useState<DeliveryRecord[]>([]);
   const [teamId, setTeamId] = useState("");
   const [team, setTeam] = useState<
     components["schemas"]["TeamCapacityView"] | null
@@ -154,8 +154,6 @@ export function Capacity({
         setResources(r.items);
         setProjects(p.items);
         setTeams(t.items);
-        if (resourceId && !r.items.some((x) => x.id === resourceId))
-          setResourceId("");
       })
       .catch((e) => {
         if (valid) setError(String(e.message));
@@ -276,6 +274,25 @@ export function Capacity({
           </p>
         </div>
       </header>
+      <nav className="actions" aria-label="Resource planning setup">
+        {[
+          "calendars",
+          "resources",
+          "availability",
+          ...(admin ? ["resource_access"] : []),
+        ].map((k) => (
+          <Button
+            key={k}
+            variant={kind === k ? "primary" : "secondary"}
+            onClick={() => {
+              setKind(k as Kind);
+              setOffset(0);
+            }}
+          >
+            {labels[k as Kind]}
+          </Button>
+        ))}
+      </nav>
       {notice && (
         <p role="status" className="notice">
           {notice}
@@ -312,22 +329,17 @@ export function Capacity({
               }}
             />
           </Field>
-          <Field label="Resource profile">
-            <select
-              value={resourceId}
-              onChange={(e) => {
-                setResourceId(e.target.value);
-                setOffset(0);
-              }}
-            >
-              <option value="">Choose a resource</option>
-              {resources.map((r) => (
-                <option key={r.id} value={r.id}>
-                  {r.data.name}
-                </option>
-              ))}
-            </select>
-          </Field>
+          <RecordSelect
+            refreshKey={refresh}
+            transport={transport}
+            kind="resources"
+            label="Resource profile"
+            value={resourceId}
+            onChange={(v) => {
+              setResourceId(v);
+              setOffset(0);
+            }}
+          />
           <Field label="From date">
             <input
               type="date"
@@ -344,29 +356,28 @@ export function Capacity({
               onChange={(e) => setEnd(e.target.value)}
             />
           </Field>
-          <Field label="Project utilization slice">
-            <select
-              value={project}
-              onChange={(e) => setProject(e.target.value)}
-            >
-              <option value="">All authorized projects</option>
-              {projects.map((r) => (
-                <option key={r.id} value={r.id}>
-                  {r.data.name}
-                </option>
-              ))}
-            </select>
-          </Field>
-          <Field label="Team utilization">
-            <select value={teamId} onChange={(e) => setTeamId(e.target.value)}>
-              <option value="">Choose a team</option>
-              {teams.map((r) => (
-                <option key={r.id} value={r.id}>
-                  {r.data.name}
-                </option>
-              ))}
-            </select>
-          </Field>
+          <RecordSelect
+            refreshKey={refresh}
+            transport={transport}
+            kind="projects"
+            label="Project utilization slice"
+            value={project}
+            onChange={(v) => {
+              setProject(v);
+              setOffset(0);
+            }}
+          />
+          <RecordSelect
+            refreshKey={refresh}
+            transport={transport}
+            kind="teams"
+            label="Team utilization"
+            value={teamId}
+            onChange={(v) => {
+              setTeamId(v);
+              setOffset(0);
+            }}
+          />
         </div>
         <p className="muted">
           Selectors show up to 100 authorized matches. Hours follow each

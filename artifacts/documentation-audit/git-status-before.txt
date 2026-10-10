@@ -1,0 +1,315 @@
+ M .env.example
+ M CHANGELOG.md
+ M README.md
+ M apps/web/app/account/identity-client.tsx
+ M apps/web/app/api/v1/[...path]/route.ts
+ M apps/web/app/system/page.tsx
+ M apps/web/components/assessments.tsx
+ M apps/web/components/capacity.tsx
+ M apps/web/components/command-center.tsx
+ M apps/web/components/delivery-fields.ts
+ M apps/web/components/delivery.tsx
+ M apps/web/components/shell.tsx
+ M apps/web/components/ui.tsx
+ M compose.identity-test.yaml
+ M compose.yaml
+ M docs/IDENTITY-DEVELOPMENT.md
+ M docs/LOCAL-DEVELOPMENT.md
+ M docs/contracts/api-events.md
+ M docs/contracts/command-center.md
+ M docs/contracts/permissions.md
+ M docs/handoffs/LATEST.md
+ M docs/prompts/MASTER.md
+ M docs/requirements/coverage.md
+ M docs/requirements/decisions-and-assumptions.md
+ M docs/requirements/roadmap.md
+ M docs/sprints/SPRINT-00-REPORT.md
+ M docs/sprints/SPRINT-01-REPORT.md
+ M docs/sprints/SPRINT-02-REPORT.md
+ M docs/sprints/SPRINT-03-REPORT.md
+ M docs/sprints/SPRINT-04-REPORT.md
+ M docs/sprints/SPRINT-05-REPORT.md
+ M docs/sprints/SPRINT-06-REPORT.md
+ M docs/sprints/SPRINT-07-REPORT.md
+ M packages/contracts/openapi.json
+ M packages/contracts/src/schema.d.ts
+ M scripts/browser_identity_fixture.py
+ M scripts/check-persistence.mjs
+ M scripts/local_mailbox.py
+ M scripts/test_backend.py
+ M services/api/migrations/env.py
+ M services/api/ppm_api/assessment.py
+ M services/api/ppm_api/config.py
+ M services/api/ppm_api/delivery.py
+ M services/api/ppm_api/identity.py
+ M services/api/ppm_api/identity_schemas.py
+ M services/api/ppm_api/identity_tables.py
+ M services/api/ppm_api/main.py
+ M services/api/ppm_api/ppm_schemas.py
+ M services/api/ppm_api/ppm_tables.py
+ M services/api/ppm_api/schemas.py
+ M services/worker/ppm_worker/app.py
+ M tests/browser/command.spec.ts
+ M tests/browser/identity.spec.ts
+?? apps/web/app/integrations/
+?? apps/web/app/signup/
+?? apps/web/components/integrations.tsx
+?? apps/web/components/live-jobs.ts
+?? apps/web/components/live-workspace.ts
+?? apps/web/components/pilot-api.ts
+?? apps/web/components/pilot.tsx
+?? apps/web/components/record-select.tsx
+?? artifacts/
+?? docs/00-project-overview.md
+?? docs/00-start-here.md
+?? docs/01-current-state.md
+?? docs/01-project-overview.md
+?? docs/02-how-the-application-works.md
+?? docs/02-sprint-history.md
+?? docs/03-frontend-explained.md
+?? docs/03-system-architecture.md
+?? docs/04-backend-explained.md
+?? docs/04-request-lifecycle.md
+?? docs/05-database-explained.md
+?? docs/05-frontend.md
+?? docs/06-fastapi-backend.md
+?? docs/06-login-and-permissions.md
+?? docs/07-database.md
+?? docs/07-main-features-explained.md
+?? docs/08-assessments-and-dashboards.md
+?? docs/08-sqlalchemy.md
+?? docs/09-ai-features-explained.md
+?? docs/09-alembic-migrations.md
+?? docs/10-authentication.md
+?? docs/10-sprint-history.md
+?? docs/11-authorization-multitenancy.md
+?? docs/11-how-to-read-and-change-the-code.md
+?? docs/12-interview-preparation.md
+?? docs/12-security.md
+?? docs/13-current-status-and-limitations.md
+?? docs/13-delivery-module.md
+?? docs/14-resource-capacity.md
+?? docs/15-assessment-engine.md
+?? docs/16-command-center.md
+?? docs/17-background-workers.md
+?? docs/18-api-contracts.md
+?? docs/19-transactions-concurrency.md
+?? docs/20-auditability.md
+?? docs/21-ai-architecture.md
+?? docs/22-testing.md
+?? docs/23-docker-infrastructure.md
+?? docs/24-ci-cd.md
+?? docs/25-technology-decisions.md
+?? docs/26-feature-status.md
+?? docs/27-code-walkthroughs.md
+?? docs/28-how-to-modify-project.md
+?? docs/29-interview-preparation.md
+?? docs/30-system-design.md
+?? docs/AI-PPM-MASTER-LEARNING-GUIDE.md
+?? docs/AI_PPM_FUTURE_PRODUCT_VISION_AND_USER_GUIDE.md
+?? docs/CODE-AND-TEST-INDEX.md
+?? docs/DATABASE-DICTIONARY.md
+?? docs/FEATURE_GAP_TRACEABILITY.md
+?? docs/FINAL_PRODUCT_SCOPE_AND_RELEASE_CRITERIA.md
+?? docs/FUTURE_SPRINT_ROADMAP.md
+?? docs/LEARNING-DOCUMENTATION-VERIFICATION.md
+?? docs/SPRINT_8_1_GAP_AUDIT.md
+?? docs/SPRINT_8_1_PLAN.md
+?? docs/SPRINT_8_1_USER_GUIDE.md
+?? docs/SPRINT_VERIFICATION_REPORT.md
+?? docs/architecture/adr/014-durable-ingestion.md
+?? docs/contracts/jobs-integrations.md
+?? docs/contracts/pilot.md
+?? docs/handoffs/SPRINT-08-HANDOFF.md
+?? docs/handoffs/SPRINT-8.1-HANDOFF.md
+?? docs/learning/
+?? docs/planning/SPRINT-PLAN-GAP-REVIEW.md
+?? docs/sprints/SPRINT-08-REPORT.md
+?? docs/sprints/SPRINT-8.1-REPORT.md
+?? docs/verification/PPM-81-001.md
+?? docs/verification/PPM-81-002.md
+?? docs/verification/PPM-81-003.md
+?? docs/verification/PPM-81-004.md
+?? docs/verification/PPM-81-005.md
+?? docs/verification/PPM-81-006.md
+?? docs/verification/PPM-81-007.md
+?? docs/verification/PPM-81-008.md
+?? docs/verification/PPM-81-009.md
+?? docs/verification/PPM-81-010.md
+?? docs/verification/SPRINT-08-CHECKS.md
+?? docs/verification/current-audit.txt
+?? docs/verification/current-backend-after.txt
+?? docs/verification/current-backend-build.txt
+?? docs/verification/current-backend-fix-build.txt
+?? docs/verification/current-backend.txt
+?? docs/verification/current-browser-db-start.txt
+?? docs/verification/current-browser-db-stop.txt
+?? docs/verification/current-browser-db.sql
+?? docs/verification/current-browser-db.txt
+?? docs/verification/current-browser-fix-retry.txt
+?? docs/verification/current-browser-fix.txt
+?? docs/verification/current-browser.txt
+?? docs/verification/current-build-retry.txt
+?? docs/verification/current-build.txt
+?? docs/verification/current-command-1440.png
+?? docs/verification/current-command-360.png
+?? docs/verification/current-command-768.png
+?? docs/verification/current-command-rendering.json
+?? docs/verification/current-contracts-check.txt
+?? docs/verification/current-contracts-final.txt
+?? docs/verification/current-existing-mappings.txt
+?? docs/verification/current-fix-sprint-08-1440.png
+?? docs/verification/current-fix-sprint-08-360.png
+?? docs/verification/current-fix-sprint-08-768.png
+?? docs/verification/current-fixed-sprint-08-1440.png
+?? docs/verification/current-fixed-sprint-08-360.png
+?? docs/verification/current-fixed-sprint-08-768.png
+?? docs/verification/current-format-check.txt
+?? docs/verification/current-format-final.txt
+?? docs/verification/current-lint-final.txt
+?? docs/verification/current-lint.txt
+?? docs/verification/current-mapping-after.txt
+?? docs/verification/current-mapping-api.txt
+?? docs/verification/current-mapping-before.txt
+?? docs/verification/current-mypy-final.txt
+?? docs/verification/current-mypy.txt
+?? docs/verification/current-preservation-after.txt
+?? docs/verification/current-preservation-before.txt
+?? docs/verification/current-python-format-final.txt
+?? docs/verification/current-python-format.txt
+?? docs/verification/current-ruff-final.txt
+?? docs/verification/current-ruff.txt
+?? docs/verification/current-runtime.txt
+?? docs/verification/current-sources.txt
+?? docs/verification/current-sprint-06-1440.png
+?? docs/verification/current-sprint-06-360.png
+?? docs/verification/current-sprint-06-768.png
+?? docs/verification/current-sprint-08-1440.png
+?? docs/verification/current-sprint-08-360.png
+?? docs/verification/current-sprint-08-768.png
+?? docs/verification/current-startup.txt
+?? docs/verification/current-typecheck.txt
+?? docs/verification/current-types-final.txt
+?? docs/verification/current-worker.txt
+?? docs/verification/sprint-08-1440.png
+?? docs/verification/sprint-08-360.png
+?? docs/verification/sprint-08-768.png
+?? docs/verification/sprint-08-audit.txt
+?? docs/verification/sprint-08-backend-accepted.txt
+?? docs/verification/sprint-08-backend-closure.txt
+?? docs/verification/sprint-08-backend-extended.txt
+?? docs/verification/sprint-08-backend-final.txt
+?? docs/verification/sprint-08-backend-initial.txt
+?? docs/verification/sprint-08-backend-repair.txt
+?? docs/verification/sprint-08-backend-repair2.txt
+?? docs/verification/sprint-08-backend-security-final.txt
+?? docs/verification/sprint-08-browser-acceptance.txt
+?? docs/verification/sprint-08-browser-final.txt
+?? docs/verification/sprint-08-browser-repair.txt
+?? docs/verification/sprint-08-browser-reset.txt
+?? docs/verification/sprint-08-browser-workflow.txt
+?? docs/verification/sprint-08-browser.txt
+?? docs/verification/sprint-08-build-security-test.txt
+?? docs/verification/sprint-08-build-test.txt
+?? docs/verification/sprint-08-command-final-1440.png
+?? docs/verification/sprint-08-command-final-360.png
+?? docs/verification/sprint-08-command-final-768.png
+?? docs/verification/sprint-08-command-final-rendering.json
+?? docs/verification/sprint-08-command-regression-1440.png
+?? docs/verification/sprint-08-command-regression-360.png
+?? docs/verification/sprint-08-command-regression-768.png
+?? docs/verification/sprint-08-command-regression-rendering.json
+?? docs/verification/sprint-08-contracts.txt
+?? docs/verification/sprint-08-final-runtime.txt
+?? docs/verification/sprint-08-format.txt
+?? docs/verification/sprint-08-jobs-accepted.txt
+?? docs/verification/sprint-08-jobs-final.txt
+?? docs/verification/sprint-08-lint.txt
+?? docs/verification/sprint-08-mypy.txt
+?? docs/verification/sprint-08-persistence.txt
+?? docs/verification/sprint-08-preservation-after.txt
+?? docs/verification/sprint-08-preservation-before.txt
+?? docs/verification/sprint-08-preservation-final.txt
+?? docs/verification/sprint-08-python-format.txt
+?? docs/verification/sprint-08-ruff.txt
+?? docs/verification/sprint-08-runtime.txt
+?? docs/verification/sprint-08-sources.txt
+?? docs/verification/sprint-08-static-results.json
+?? docs/verification/sprint-08-types.txt
+?? docs/verification/sprint-08-unit.txt
+?? docs/verification/sprint-08-worker.txt
+?? docs/verification/sprint81-1440.png
+?? docs/verification/sprint81-360.png
+?? docs/verification/sprint81-768.png
+?? docs/verification/sprint81-assessment-access.png
+?? docs/verification/sprint81-backend-build-final.txt
+?? docs/verification/sprint81-backend-build.txt
+?? docs/verification/sprint81-backend-complete.txt
+?? docs/verification/sprint81-backend-final.txt
+?? docs/verification/sprint81-backend-first.txt
+?? docs/verification/sprint81-backend-full.txt
+?? docs/verification/sprint81-browser-closure.txt
+?? docs/verification/sprint81-browser-complete.txt
+?? docs/verification/sprint81-browser-final.txt
+?? docs/verification/sprint81-browser-first.txt
+?? docs/verification/sprint81-browser-fourth.txt
+?? docs/verification/sprint81-browser-second.txt
+?? docs/verification/sprint81-browser-third.txt
+?? docs/verification/sprint81-build3.txt
+?? docs/verification/sprint81-checkpoint.json
+?? docs/verification/sprint81-contract-generate.txt
+?? docs/verification/sprint81-contracts.txt
+?? docs/verification/sprint81-diff-check.txt
+?? docs/verification/sprint81-final-negative.txt
+?? docs/verification/sprint81-final-negatives.txt
+?? docs/verification/sprint81-focused-first.txt
+?? docs/verification/sprint81-focused2.txt
+?? docs/verification/sprint81-format.txt
+?? docs/verification/sprint81-frozen.txt
+?? docs/verification/sprint81-guide-render.txt
+?? docs/verification/sprint81-legacy-final.txt
+?? docs/verification/sprint81-legacy.txt
+?? docs/verification/sprint81-lint-first.txt
+?? docs/verification/sprint81-lint.txt
+?? docs/verification/sprint81-mypy.txt
+?? docs/verification/sprint81-normal-final-start.txt
+?? docs/verification/sprint81-normal-ready.txt
+?? docs/verification/sprint81-normal-start.txt
+?? docs/verification/sprint81-notification-debug.txt
+?? docs/verification/sprint81-notification-debug2.txt
+?? docs/verification/sprint81-notify-rebuild.txt
+?? docs/verification/sprint81-object-preservation.txt
+?? docs/verification/sprint81-preservation.txt
+?? docs/verification/sprint81-python-format.txt
+?? docs/verification/sprint81-rendering.json
+?? docs/verification/sprint81-restore.txt
+?? docs/verification/sprint81-ruff.txt
+?? docs/verification/sprint81-setup-1440.png
+?? docs/verification/sprint81-setup-360.png
+?? docs/verification/sprint81-setup-768.png
+?? docs/verification/sprint81-sources.txt
+?? docs/verification/sprint81-static-results.json
+?? docs/verification/sprint81-stream.txt
+?? docs/verification/sprint81-test-build2.txt
+?? docs/verification/sprint81-types.txt
+?? scripts/browser_pilot_fixture.py
+?? scripts/pilot_browser_mail.py
+?? scripts/sprint08_preserve.py
+?? scripts/sprint81_preserve.py
+?? scripts/sprint81_restore.py
+?? scripts/verify_sprint08_static.py
+?? scripts/verify_sprint81_static.py
+?? services/api/migrations/versions/0007_durable_jobs.py
+?? services/api/migrations/versions/0008_pilot_completion.py
+?? services/api/ppm_api/account_mail.py
+?? services/api/ppm_api/ingestion.py
+?? services/api/ppm_api/job_limits.py
+?? services/api/ppm_api/job_tables.py
+?? services/api/ppm_api/jobs.py
+?? services/api/ppm_api/pilot.py
+?? services/api/ppm_api/pilot_tables.py
+?? tests/browser/integrations.spec.ts
+?? tests/browser/pilot.spec.ts
+?? tests/test_ingestion_mapping.py
+?? tests/test_jobs.py
+?? tests/test_pilot.py

@@ -1,5 +1,19 @@
 # Changelog
 
+## 2026-10-09 Sprint 8.1 local implementation
+
+- Added verified signup, first organization/Admin, revisioned organization profile and invitation resend/cancel with durable account delivery adapter. Real SMTP inbox acceptance remains BLOCKED.
+- Added scoped record search, server-paged selectors, full-period departmental comparison, assessment access controls, My work, persistent private receipts/preferences and nullable delivery metadata.
+- Added revision-based manual-change SSE and dashboard freshness, additive migration 0008, isolated 125-record browser fixtures, negative/revocation tests and private scratch restore. Established 59 table hashes/counts preserved.
+- Corrected guide and system wording; regenerated Word content has unverified layout because the bundled renderer is unavailable. Hosted CI remains UNVERIFIED; parent 8.1 acceptance OPEN. See docs/sprints/SPRINT-8.1-REPORT.md.
+
+## 2026-10-09 Sprint 08
+
+- Added durable scoped jobs, transactional outbox, fenced worker recovery, retry/dead letters/cancellation, and resumable authenticated SSE in additive migration 0007.
+- Added integration settings, preview/import, sync history, row quality errors/provenance and command-center sync refresh; bounded CSV, Jira issue/sprint and GitHub issue/PR adapters with signed GitHub replay protection.
+- Preserved 54 established table hashes/counts, checkpoint/storage, applied migrations and pre-existing work.
+- Verified 63 backend tests, 8 final focused job tests, 9 browser tests, static/source gates and zero-vulnerability npm audit. Real provider credentials/sync remain unverified; Sprint 09 not started. See Sprint 08 report/checks/handoff.
+
 ## 2026-10-08 Sprint 07
 
 - Added four command-center dashboards with shared typed metrics, saved filters, evidence drill-down and scoped JSON DTO download.

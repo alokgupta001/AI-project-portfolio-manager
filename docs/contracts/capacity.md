@@ -113,3 +113,8 @@ notification, paid dependency or production-readiness claim is introduced.
 Apply 0004 forward with the existing migration owner; no backfill is required and
 0001–0003 are unchanged. Recovery with user data means backup restore or forward
 repair. Downgrade deletes Sprint 05 data and is tested only in disposable `ppm_test`.
+
+
+## Website calendar navigation repair
+
+`capacity.tsx` now exposes Working calendars, Resource profiles and Availability as direct buttons; Admin also sees Resource access. Planning records retains all existing categories. An empty calendar list remains empty until authorized creation; no hidden default schedule is fabricated. Versions remain immutable: create a new schedule and assign dated availability. Existing validation, timezone/date arithmetic, RLS and separate effort grants are unchanged. [Repair checks](../04-testing/ACCOUNT_WORKFLOW_REPAIR_REPORT.md) cover save/reload and calculations.

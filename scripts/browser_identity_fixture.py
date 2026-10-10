@@ -26,19 +26,25 @@ async def run() -> None:
     assessment_org, assessment_user, assessment_reviewer = uuid4(), uuid4(), uuid4()
     assessment_email = f"assessment-{assessment_user}@example.com"
     reviewer_email = f"reviewer-{assessment_reviewer}@example.com"
+    integration_org, integration_user = uuid4(), uuid4()
+    integration_email = f"integration-{integration_user}@example.com"
     command_org, command_user = uuid4(), uuid4()
     command_email = f"command-{command_user}@example.com"
     hashed = await password_hash(password)
+    no_org_user = uuid4()
+    no_org_email = f"account-only-{no_org_user}@example.com"
     engine = create_async_engine(url)
     try:
         async with engine.begin() as conn:
-            for oid in (a, b, capacity_org, assessment_org, command_org):
+            for oid in (a, b, capacity_org, assessment_org, command_org, integration_org):
                 await conn.execute(
                     organizations.insert().values(
                         id=oid, name="Acceptance organization", created_at=now()
                     )
                 )
             for user, address in [
+                (no_org_user, no_org_email),
+                (integration_user, integration_email),
                 (command_user, command_email),
                 (uid, email),
                 (other, f"{other}@example.com"),
@@ -57,6 +63,8 @@ async def run() -> None:
                     )
                 )
             for oid, user, role in [
+                (integration_org, integration_user, "Admin"),
+                (b, integration_user, "Viewer"),
                 (command_org, command_user, "Admin"),
                 (b, command_user, "Viewer"),
                 (a, uid, "Admin"),
@@ -72,13 +80,20 @@ async def run() -> None:
                         organization_id=oid, user_id=user, role=role, active=True, revision=1
                     )
                 )
+        from browser_pilot_fixture import run as pilot_fixture
+
+        pilot = await pilot_fixture(password)
         print(
             json.dumps(
                 {
+                    **pilot,
+                    "integration_org": str(integration_org),
+                    "integration_email": integration_email,
                     "command_org": str(command_org),
                     "command_user": str(command_user),
                     "command_email": command_email,
                     "email": email,
+                    "no_org_email": no_org_email,
                     "password": password,
                     "admin_org": str(a),
                     "viewer_org": str(b),

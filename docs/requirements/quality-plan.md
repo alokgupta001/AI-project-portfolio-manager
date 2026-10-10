@@ -1,6 +1,6 @@
 # Acceptance evidence and quality plan
 
-This plan specifies future verification; no application performance or security result is claimed in Sprint 00. Each requirement's coverage row is closed only by evidence of actual implementation behavior. The Sprint 00 documentation checks are recorded separately in [verification](../verification/SPRINT-00-CHECKS.md).
+This plan specifies future verification; no application performance or security result is claimed in Sprint 00. Each requirement's coverage row is closed only by evidence of actual implementation behavior. The Sprint 00 documentation checks are recorded separately in [verification](../04-testing/sprint-based/sprint-00/TESTING_REPORT.md).
 
 ## Core verification layers
 

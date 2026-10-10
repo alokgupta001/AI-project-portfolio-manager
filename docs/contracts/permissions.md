@@ -7,7 +7,7 @@ Admin publishes full-resource totals or archives resources. Scoped views are par
 
 Sprint 04 adds project/portfolio grants and delivery RLS: [implemented authorization](delivery.md). Owners do not imply access. Cross-project dependency mutations require Admin; PM intra-project writes need explicit edit/manage scope. Existing session, CSRF and organization controls are retained.
 
-Sprint 02 implementation checkpoint: local account/session controls and organization membership authorization are implemented. The broader matrix below still defines later domain behavior. See [ADR 008](../architecture/adr/008-identity-implementation.md) and [Sprint 02 checks](../verification/SPRINT-02-CHECKS.md).
+Sprint 02 implementation checkpoint: local account/session controls and organization membership authorization are implemented. The broader matrix below still defines later domain behavior. See [ADR 008](../architecture/adr/008-identity-implementation.md) and [Sprint 02 checks](../04-testing/sprint-based/sprint-02/TESTING_REPORT.md).
 
 | Implemented operation | Admin | Project Manager | Viewer |
 | --- | --- | --- | --- |
@@ -17,13 +17,13 @@ Sprint 02 implementation checkpoint: local account/session controls and organiza
 | Read organization identity audit | Yes, selected organization only | Denied | Denied |
 | Remove/demote final active Admin | Denied | Denied | Denied |
 
-Every authenticated operation rechecks the server session and live active membership. `X-Organization-ID` on unsafe organization routes is a required matching precondition against stale tabs, not authority; a mismatch returns 409. Member edits also require the returned revision in `If-Match`. Organization locking serializes final-admin checks. PM/Viewer account access does not imply project access; future projects need explicit scope.
+Every authenticated operation rechecks the server session and verified, globally active identity. Personal account operations allow no organization membership; every organization operation additionally requires a live active membership. `X-Organization-ID` on unsafe organization routes is a required matching precondition against stale tabs, not authority; a mismatch returns 409. Member edits also require the returned revision in `If-Match`. Organization locking serializes final-admin checks. PM/Viewer account access does not imply project access; future projects need explicit scope.
 
-Access JWTs last ten minutes; rotated refresh sessions have a fixed seven-day expiry. Replayed refresh tokens revoke the session, including concurrent reuse. Browser cookies are Secure/HttpOnly/SameSite=Strict on the configured localhost origin. Unsafe requests require exact Origin plus a CSRF header/cookie and, when authenticated, session-bound CSRF hash. Removed memberships fail immediately and revoke matching sessions; role changes are live without trusting JWT role claims.
+Access JWTs last ten minutes; rotated refresh sessions have a fixed seven-day expiry. Replayed refresh tokens revoke the session, including concurrent reuse. Browser cookies are Secure/HttpOnly/SameSite=Strict on the configured localhost origin. Unsafe requests require exact Origin plus a CSRF header/cookie and, when authenticated, session-bound CSRF hash. Removed memberships immediately fail organization operations with 403 while personal account/session controls remain available. Refresh clears a revoked organization context. Role changes are live without trusting JWT role claims.
 
 Activation/invitation lasts 24 hours, recovery 30 minutes, all single-use. Reset revokes all sessions. Global identity credential tables are deliberately outside tenant RLS; tenant organization/membership/audit tables use transaction-local policies with the restricted application role. Composite references bind organization/member relationships. Actual negative checks cover two same-name organizations, all roles, forged/hidden IDs, stale revisions, RLS read/write/pool cleanup, replay/expiry, CSRF, reset and concurrent final-admin changes. SSE/download/vector/graph/queued notification surfaces are not implemented and retain their future tests below.
 
-Version 0.1, proposed baseline for Sprint 02. Deny by default. All roles require an active organization membership; no organization role grants access to another organization. Admin can administer all project scopes in its organization. PM and Viewer require explicit project or portfolio read grants; portfolio read grants include its projects but do not grant project writes. A PM's project edit grant does not grant organization settings or staffing allocation authority across unrelated projects.
+Version 0.1, proposed baseline for Sprint 02. Deny by default. All organization roles require an active organization membership; no organization role grants access to another organization. Admin can administer all project scopes in its organization. PM and Viewer require explicit project or portfolio read grants; portfolio read grants include its projects but do not grant project writes. A PM's project edit grant does not grant organization settings or staffing allocation authority across unrelated projects.
 
 ## Role matrix
 
@@ -82,3 +82,30 @@ Named respondent/reviewer assignments are explicit assessment scope and require 
 ## Sprint 07 command-center scope
 
 Dashboard/JSON DTO reads use live delivery project RLS; risk/benefit/plan writes require Admin or project edit grants. Policy writes are Admin-only. Personal saved views are actor-owned even for Admin and Viewer; they confer no access. Resource privacy/grants remain unchanged. [Contract](command-center.md).
+
+
+## Sprint 08 asynchronous authority
+
+[jobs-v1](jobs-integrations.md) adds Admin-only connection/sync/preview/cancellation,
+project-scoped run reads and source references, live initiating-session rechecks for
+worker effects/retries and every SSE poll, and tenant/provider-bound secret references.
+Native GitHub signature intake is the one narrowly identified CSRF exception; it
+still requires a current delegated Admin session, configured repository and retained
+delivery identity. Prior resource effort grants and team suppression are unchanged.
+
+
+## 10 October 2026 account repair
+
+Migration `0009_account_repair` adds a separate global `identity_users.active` flag and permits organization-free sessions. `/auth/me`, personal profile, own sessions, logout and validated organization switching use `AccountAuth`; tenant routes retain `Auth`. A null organization conveys no tenant authority. Switching checks live membership, rotates cookies and resets the rendered organization workspace. Different organization roles remain separate membership rows.
+
+Organization profile reads require membership; writes require Admin, CSRF, matching organization and revision. Initial Admin is derived from the transactional signup membership, and displayed administrators are active Admin members with active global identities. Owners are not a second source of authority.
+
+| Additional current action | Admin | Project Manager | Viewer | Active account without organization |
+| --- | --- | --- | --- | --- |
+| Personal profile, own sessions/logout | Yes | Yes | Yes | Yes |
+| Read selected organization profile | Yes | Yes | Yes | Denied |
+| Edit organization name/description/industry/website | Yes | Denied | Denied | Denied |
+| Create sprint | Yes | Explicit project edit/manage | Denied | Denied |
+| Disable global identity | Operator only | Operator only | Operator only | Operator only |
+
+Global disable is an explicit development operator command, `scripts/account_status.py`, requiring the migration-owner connection. Organization Admin alone cannot disable another person's global identity. It preserves memberships/ownership, revokes sessions, refuses the last active verified Admin, and enabling requires a new login. Production identity administration remains PLANNED; the app rejects production configuration. Workers and queued invitation delivery also recheck global active status. See [repair verification](../04-testing/ACCOUNT_WORKFLOW_REPAIR_REPORT.md).

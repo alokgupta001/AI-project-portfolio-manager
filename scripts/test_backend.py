@@ -15,6 +15,8 @@ env["PYTHONPATH"] = os.pathsep.join(["services/api", "services/worker", "."])
 
 commands = [
     [sys.executable, "-m", "alembic", "upgrade", "head"],
+    [sys.executable, "-m", "alembic", "downgrade", "0006_command_center"],
+    [sys.executable, "-m", "alembic", "upgrade", "head"],
     [sys.executable, "-m", "alembic", "downgrade", "base"],
     [sys.executable, "-m", "alembic", "upgrade", "head"],
     [sys.executable, "-m", "alembic", "upgrade", "head"],

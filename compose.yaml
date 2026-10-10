@@ -4,11 +4,20 @@ x-backend: &backend
   build:
     context: .
     dockerfile: infra/api.Dockerfile
+  env_file:
+    - path: ./artifacts/local/connector-secrets.env
+      required: false
   environment: &backend-env
     PPM_APP_ENV: local
     PPM_JWT_SECRET: ${PPM_JWT_SECRET:?Run bootstrap first}
     PPM_WEB_ORIGIN: ${PPM_WEB_ORIGIN:-http://localhost:3000}
     PPM_COOKIE_SECURE: "true"
+    PPM_MAIL_MODE: ${PPM_MAIL_MODE:-local}
+    PPM_SMTP_HOST: ${PPM_SMTP_HOST:-}
+    PPM_SMTP_PORT: ${PPM_SMTP_PORT:-587}
+    PPM_SMTP_USER: ${PPM_SMTP_USER:-}
+    PPM_SMTP_PASSWORD: ${PPM_SMTP_PASSWORD:-}
+    PPM_MAIL_SENDER: ${PPM_MAIL_SENDER:-}
     PPM_DATABASE_URL: postgresql+asyncpg://ppm_app:${PPM_APP_PASSWORD:?Run bootstrap first}@postgres:5432/ppm_local
     PPM_REDIS_URL: redis://redis:6379/0
     PPM_STORAGE_ROOT: /var/ppm/objects
@@ -71,6 +80,11 @@ services:
     command: [celery, -A, ppm_worker.app:celery_app, worker, --loglevel=WARNING, --concurrency=2, --hostname=foundation@%h]
     depends_on:
       api: {condition: service_healthy}
+  dispatcher:
+    <<: *backend
+    command: [celery, -A, ppm_worker.app:celery_app, beat, --loglevel=WARNING, --schedule=/tmp/ppm-celerybeat]
+    depends_on:
+      api: {condition: service_healthy}
   web:
     build:
       context: .
@@ -95,6 +109,11 @@ services:
     environment:
       <<: *backend-env
       PPM_APP_ENV: test
+      PPM_MAIL_MODE: local
+      PPM_SMTP_HOST: ""
+      PPM_SMTP_USER: ""
+      PPM_SMTP_PASSWORD: ""
+      PPM_MAIL_SENDER: ""
       PPM_DATABASE_URL: postgresql+asyncpg://ppm_app:${PPM_APP_PASSWORD:?Run bootstrap first}@postgres:5432/ppm_test
       PPM_MIGRATION_DATABASE_URL: postgresql+asyncpg://ppm_owner:${PPM_OWNER_PASSWORD:?Run bootstrap first}@postgres:5432/ppm_test
       PPM_REDIS_URL: redis://redis:6379/1

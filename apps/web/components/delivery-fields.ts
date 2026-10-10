@@ -434,6 +434,43 @@ export const fields: Record<Kind, FieldSpec[]> = {
   ],
   programs: [portfolio, owner],
   projects: [
+    {
+      key: "priority",
+      label: "Project priority (optional)",
+      options: ["low", "normal", "high", "urgent"],
+    },
+    {
+      key: "industry",
+      label: "Industry (optional)",
+      options: [
+        "fintech",
+        "technology",
+        "healthcare",
+        "public_sector",
+        "other",
+      ],
+    },
+    {
+      key: "category",
+      label: "Category (optional)",
+      options: [
+        "delivery",
+        "transformation",
+        "compliance",
+        "research",
+        "other",
+      ],
+    },
+    {
+      key: "methodology",
+      label: "Methodology (optional)",
+      options: ["agile", "waterfall", "hybrid", "other"],
+    },
+    {
+      key: "size_band",
+      label: "Size band (optional)",
+      options: ["small", "medium", "large"],
+    },
     portfolio,
     { key: "program_id", label: "Program (optional)", reference: "programs" },
     { key: "department_id", label: "Department", reference: "departments" },
@@ -489,6 +526,16 @@ export const fields: Record<Kind, FieldSpec[]> = {
     },
   ],
   work_items: [
+    {
+      key: "priority",
+      label: "Work priority (optional)",
+      options: ["low", "normal", "high", "urgent"],
+    },
+    {
+      key: "work_type",
+      label: "Work type (optional)",
+      options: ["task", "bug", "story", "feature", "other"],
+    },
     project,
     owner,
     { key: "sprint_id", label: "Sprint", reference: "sprints" },

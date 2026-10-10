@@ -1,0 +1,46 @@
+
+> enterprise-ppm@0.1.0 build
+> npm run build --workspace @ppm/web
+
+
+> @ppm/web@0.1.0 build
+> next build
+
+▲ Next.js 16.3.8 (Turbopack)
+✓ Running next.config.ts took 34ms
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 7.0s
+  Running TypeScript ...
+  Finished TypeScript in 6.1s ...
+  Collecting page data using 7 workers ...
+  Generating static pages using 7 workers (0/15) ...
+  Generating static pages using 7 workers (3/15) 
+  Generating static pages using 7 workers (7/15) 
+  Generating static pages using 7 workers (11/15) 
+✓ Generating static pages using 7 workers (15/15) in 569ms
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ○ /account
+├ ○ /account/complete
+├ ○ /account/reset
+├ ƒ /api/v1/[...path]
+├ ○ /assessments
+├ ○ /command-center
+├ ○ /design-system
+├ ○ /integrations
+├ ○ /login
+├ ○ /organization
+├ ○ /portfolios
+├ ○ /projects
+├ ƒ /projects/[id]
+├ ○ /resources
+└ ƒ /system
+
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+

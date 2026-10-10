@@ -1,8 +1,11 @@
 "use client";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { apiError } from "./api-error";
 import { createApiClient } from "@ppm/contracts";
 import type { components } from "@ppm/contracts/schema";
 import { Button, Field, Modal, ChartFrame } from "./ui";
+import { useLiveWorkspace } from "./live-workspace";
+import { useLiveJobs } from "./live-jobs";
 import { RecordEditor } from "./delivery";
 import type { Kind } from "./delivery-fields";
 
@@ -70,10 +73,7 @@ export function CommandCenter({
       );
       if (!r.ok) {
         const e = await r.json().catch(() => null);
-        throw new Error(
-          e?.error?.message ||
-            `Request failed (${r.status}). Refresh or sign in again.`,
-        );
+        throw new Error(apiError(e, r.status));
       }
       return r.json();
     },
@@ -107,6 +107,12 @@ export function CommandCenter({
       if (id === requestId.current) setBusy(false);
     }
   }, [api, start, end, portfolio]);
+  const manualFreshness = useLiveWorkspace(
+    transport,
+    account.organization_id || "",
+    refresh,
+  );
+  const liveSyncStatus = useLiveJobs(refresh, transport);
   useEffect(() => {
     void refresh();
     return () => {
@@ -233,10 +239,14 @@ export function CommandCenter({
     ) || [];
   return (
     <div className="command-workspace">
+      <p role="status">{manualFreshness}</p>
       <section className="page-heading">
         <div>
           <p className="eyebrow">PORTFOLIO INTELLIGENCE</p>
           <h1>Command center</h1>
+          <p className="muted" role="status">
+            {liveSyncStatus}
+          </p>
           <p className="lead">
             Reported progress, supporting facts and the gaps that need
             attention.

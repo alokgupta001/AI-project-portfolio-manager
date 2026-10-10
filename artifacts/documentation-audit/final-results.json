@@ -1,0 +1,20 @@
+{
+  "existing_markdown_screened": 143,
+  "existing_documents_updated": 109,
+  "root_readme_updated": true,
+  "moved": 70,
+  "new_markdown": 89,
+  "superseded_redirects": 31,
+  "relative_links_checked": 3833,
+  "broken_links": 0,
+  "frozen_reference_link_errors": 0,
+  "current_api_operations": 77,
+  "metadata_tables": 62,
+  "feature_requirements": 156,
+  "gap_findings": 36,
+  "application_files_changed": 0,
+  "lost_baseline_files": 0,
+  "focused_unit_result": "12 passed in 0.19s",
+  "source_preservation": "PASS: 7 preserved sources/prompts match SHA256 manifest",
+  "git_diff_check": "PASS"
+}

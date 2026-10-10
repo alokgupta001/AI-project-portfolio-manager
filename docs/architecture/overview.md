@@ -1,5 +1,8 @@
 # Proposed system architecture
 
+**Historical/proposed reference:** Current availability is [CURRENT_STATUS](../00-overview/CURRENT_STATUS.md); current architecture is [SYSTEM_ARCHITECTURE](../01-architecture/SYSTEM_ARCHITECTURE.md); future execution order is [the revised roadmap](../09-planning/FUTURE_SPRINT_ROADMAP.md). Preserve dated decisions/scope below; proposed components are not implementation claims.
+
+
 Sprint 04 implements the local portfolio/delivery system of record; see [ADR 010](adr/010-delivery-system-of-record.md) and [delivery contract](../contracts/delivery.md). Later intelligence, capacity, assessments and cloud components remain planned. Historical checkpoint descriptions below retain their original scope.
 
 Sprint 03: local enterprise shell implemented; [ADR 009](adr/009-enterprise-shell.md) and [frontend contract](../contracts/frontend.md) define components, themes and scope. No backend/schema changes.
@@ -8,7 +11,7 @@ Sprint 02 update: the local identity/session API, same-origin web transport, org
 
 Version 0.1, Sprint 00, 2026-10-05. This is a design baseline, not deployed infrastructure. Read the [decision register](../requirements/decisions-and-assumptions.md) and [ADRs](adr/README.md) for alternatives and unresolved organizational choices.
 
-Sprint 01 implements the local web/API/worker, PostgreSQL/Redis and filesystem-storage subset. [ADR 007](adr/007-sprint-01-runtime.md) and the [Sprint 01 report](../sprints/SPRINT-01-REPORT.md) identify the verified runtime. The diagrams below remain the broader target architecture; identity is implemented, while domain, AI and cloud components remain planned.
+Sprint 01 implements the local web/API/worker, PostgreSQL/Redis and filesystem-storage subset. [ADR 007](adr/007-sprint-01-runtime.md) and the [Sprint 01 report](../03-sprints/completed/sprint-01/SPRINT_REPORT.md) identify the verified runtime. The diagrams below remain the broader target architecture; identity is implemented, while domain, AI and cloud components remain planned.
 
 ## Components and flow
 

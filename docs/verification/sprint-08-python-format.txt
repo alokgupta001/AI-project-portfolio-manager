@@ -1,0 +1,4 @@
+Command: C:\Users\alokg\OneDrive\Documents\Codex\enterprise-ppm\.venv\Scripts\python.exe -m ruff format --check services scripts tests
+59 files already formatted
+
+Exit: 0

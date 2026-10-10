@@ -1,0 +1,21 @@
+
+> enterprise-ppm@0.1.0 lint
+> eslint apps/web packages/contracts/src tests/browser
+
+
+C:\Users\alokg\OneDrive\Documents\Codex\enterprise-ppm\apps\web\components\assessments.tsx
+  53:10  error  'people' is assigned a value but never used               @typescript-eslint/no-unused-vars
+  55:10  error  'teams' is assigned a value but never used                @typescript-eslint/no-unused-vars
+  63:28  error  'setAssessmentOffset' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  64:27  error  'setAssessmentQuery' is assigned a value but never used   @typescript-eslint/no-unused-vars
+
+C:\Users\alokg\OneDrive\Documents\Codex\enterprise-ppm\apps\web\components\capacity.tsx
+  108:10  error  'resources' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  122:10  error  'projects' is assigned a value but never used   @typescript-eslint/no-unused-vars
+  123:10  error  'teams' is assigned a value but never used      @typescript-eslint/no-unused-vars
+
+C:\Users\alokg\OneDrive\Documents\Codex\enterprise-ppm\apps\web\components\delivery.tsx
+  683:20  error  'setIndustry' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+✖ 8 problems (8 errors, 0 warnings)
+

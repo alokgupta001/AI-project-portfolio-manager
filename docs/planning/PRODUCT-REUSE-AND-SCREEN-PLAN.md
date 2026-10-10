@@ -1,5 +1,8 @@
 # Product reuse and screen plan
 
+**Historical/proposed reference:** Current availability is [CURRENT_STATUS](../00-overview/CURRENT_STATUS.md); current architecture is [SYSTEM_ARCHITECTURE](../01-architecture/SYSTEM_ARCHITECTURE.md); future execution order is [the revised roadmap](../09-planning/FUTURE_SPRINT_ROADMAP.md). Preserve dated decisions/scope below; proposed components are not implementation claims.
+
+
 Prepared 2026-10-05 after the user compared the Sprint 02 application with their earlier project. This is a planning supplement, not implementation of Sprint 03 or a replacement for the original specifications. The user approved preparing this plan. Proposed design and reuse choices remain subject to implementation evidence.
 
 ## Product and present state

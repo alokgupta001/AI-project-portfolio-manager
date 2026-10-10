@@ -1,0 +1,1 @@
+PASS: 7 preserved sources/prompts match SHA256 manifest

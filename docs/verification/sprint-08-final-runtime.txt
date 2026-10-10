@@ -1,0 +1,14 @@
+NAME                          IMAGE                                                                                 COMMAND                  SERVICE      CREATED          STATUS                   PORTS
+enterprise-ppm-api-1          enterprise-ppm-api                                                                    "uvicorn ppm_api.mai…"   api          10 minutes ago   Up 7 minutes (healthy)   127.0.0.1:8000->8000/tcp
+enterprise-ppm-dispatcher-1   enterprise-ppm-dispatcher                                                             "celery -A ppm_worke…"   dispatcher   10 minutes ago   Up 7 minutes             
+enterprise-ppm-postgres-1     postgres:18@sha256:5a5a84b19854a9ffaa54082c166ff4ec27473a361e496e5ea167f298f2da9722   "docker-entrypoint.s…"   postgres     3 days ago       Up 7 minutes (healthy)   127.0.0.1:15432->5432/tcp
+enterprise-ppm-redis-1        redis:8@sha256:6f81e8915c60b065a524e6967e0ad1c639ba6efa84d669f823683ea04d9150ee       "docker-entrypoint.s…"   redis        3 days ago       Up 7 minutes (healthy)   127.0.0.1:16379->6379/tcp
+enterprise-ppm-web-1          enterprise-ppm-web                                                                    "docker-entrypoint.s…"   web          10 minutes ago   Up 7 minutes (healthy)   127.0.0.1:3000->3000/tcp
+enterprise-ppm-worker-1       enterprise-ppm-worker                                                                 "celery -A ppm_worke…"   worker       10 minutes ago   Up 7 minutes             
+
+StatusCode : 200
+Content    : {"status":"ready","dependencies":[{"name":"database","status":"ready"},{"name":"redis","status":"ready"},{"name":"storage","status":"ready"}]}
+
+
+StatusCode : 200
+

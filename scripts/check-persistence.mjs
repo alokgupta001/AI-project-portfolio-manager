@@ -9,7 +9,7 @@ const read = async () => {
 const before = await read();
 const objectWrite = spawnSync(docker, ["compose", "exec", "-T", "api", "python", "scripts/storage_probe.py", "write"], { stdio: "inherit" });
 if (objectWrite.status !== 0) process.exit(objectWrite.status || 1);
-const result = spawnSync(docker, ["compose", "restart", "postgres", "redis", "api", "worker", "web"], { stdio: "inherit" });
+const result = spawnSync(docker, ["compose", "restart", "postgres", "redis", "api", "worker", "dispatcher", "web"], { stdio: "inherit" });
 if (result.status !== 0) process.exit(result.status || 1);
 let restored = false;
 for (let attempt = 0; attempt < 30; attempt++) {
@@ -22,4 +22,4 @@ for (let attempt = 0; attempt < 30; attempt++) {
 if (!restored || (await read()) !== before) throw new Error("Persisted checkpoint did not survive restart");
 const objectRead = spawnSync(docker, ["compose", "exec", "-T", "api", "python", "scripts/storage_probe.py", "verify"], { stdio: "inherit" });
 if (objectRead.status !== 0) process.exit(objectRead.status || 1);
-console.log("PASS: database checkpoint survived PostgreSQL/Redis/API/worker/web restart:", before);
+console.log("PASS: database checkpoint survived PostgreSQL/Redis/API/worker/dispatcher/web restart:", before);

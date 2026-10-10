@@ -7,7 +7,7 @@ from ppm_api.config import load_settings
 
 parser = argparse.ArgumentParser(description=__doc__)
 parser.add_argument("--email", required=True)
-parser.add_argument("--kind", choices=["activate", "invite", "reset"])
+parser.add_argument("--kind", choices=["register", "activate", "invite", "reset"])
 args = parser.parse_args()
 folder = load_settings().storage_root / "__identity_mailbox__"
 for path in sorted(folder.glob("*.json"), key=lambda p: p.stat().st_mtime):

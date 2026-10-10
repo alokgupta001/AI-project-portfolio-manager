@@ -92,7 +92,10 @@ async def send(client, method, path, **kwargs):
     headers.update(kwargs.pop("headers", {}))
     result = await client.request(method, "/api/v1" + path, headers=headers, **kwargs)
     if path in {"/auth/login", "/auth/switch"} and result.status_code == 200:
-        client.headers["x-organization-id"] = result.json()["organization_id"]
+        if result.json()["organization_id"]:
+            client.headers["x-organization-id"] = result.json()["organization_id"]
+        else:
+            client.headers.pop("x-organization-id", None)
     return result
 
 
@@ -300,7 +303,9 @@ async def test_final_admin_stale_revision_live_role_and_removal(identity):
             .where(memberships.c.organization_id == ids["a"], memberships.c.user_id == ids["admin"])
             .values(active=False)
         )
-    assert (await client.get("/api/v1/auth/me")).status_code == 401
+    account = await client.get("/api/v1/auth/me")
+    assert account.status_code == 200 and account.json()["organization_id"] is None
+    assert (await client.get("/api/v1/organization/members")).status_code == 403
 
 
 async def test_activation_invitation_scope_and_single_use(identity):

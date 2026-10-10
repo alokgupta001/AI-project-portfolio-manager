@@ -1,0 +1,26 @@
+{
+  "checked": 3826,
+  "errors": [
+    {
+      "document": "docs/README.md",
+      "link": "10-reference/DOCUMENTATION_AUDIT_RESULTS.md",
+      "reason": "missing target"
+    },
+    {
+      "document": "docs/09-planning/DOCUMENTATION_UPDATE_TRACKER.md",
+      "link": "../10-reference/DOCUMENTATION_AUDIT_RESULTS.md",
+      "reason": "missing target"
+    },
+    {
+      "document": "docs/10-reference/README.md",
+      "link": "DOCUMENTATION_CHANGELOG.md",
+      "reason": "missing target"
+    },
+    {
+      "document": "docs/10-reference/README.md",
+      "link": "DOCUMENTATION_AUDIT_RESULTS.md",
+      "reason": "missing target"
+    }
+  ],
+  "frozen_reference_errors": []
+}

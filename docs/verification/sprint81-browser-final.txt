@@ -1,0 +1,627 @@
+ Image enterprise-ppm-identity-test-worker Building 
+ Image enterprise-ppm-identity-test-dispatcher Building 
+ Image enterprise-ppm-identity-test-api Building 
+ Image enterprise-ppm-identity-test-web Building 
+ Image enterprise-ppm-identity-test-migrate Building 
+#1 [internal] load local bake definitions
+#1 reading from stdin 2.78kB done
+#1 DONE 0.0s
+
+#2 [web internal] load build definition from web.Dockerfile
+#2 transferring dockerfile: 607B 0.0s done
+#2 DONE 0.1s
+
+#3 [worker internal] load build definition from api.Dockerfile
+#3 transferring dockerfile: 774B 0.0s done
+#3 DONE 0.1s
+
+#4 [web internal] load metadata for docker.io/library/node:24-bookworm-slim@sha256:0e0ff40c39bc087845bfb27465a0df4ea419520094bc35842ff83dd8cbe6f9b6
+#4 DONE 0.1s
+
+#5 [api internal] load metadata for docker.io/library/python:3.12-slim-bookworm@sha256:54c85f3c47607a77f32adec749d3c81d1348bf25833671f512b26a9b6d778cb3
+#5 DONE 0.1s
+
+#6 [migrate internal] load .dockerignore
+#6 transferring context: 205B done
+#6 DONE 0.0s
+
+#7 [dispatcher internal] load build context
+#7 DONE 0.0s
+
+#8 [web internal] load build context
+#8 DONE 0.0s
+
+#9 [dispatcher  1/10] FROM docker.io/library/python:3.12-slim-bookworm@sha256:54c85f3c47607a77f32adec749d3c81d1348bf25833671f512b26a9b6d778cb3
+#9 resolve docker.io/library/python:3.12-slim-bookworm@sha256:54c85f3c47607a77f32adec749d3c81d1348bf25833671f512b26a9b6d778cb3
+#9 resolve docker.io/library/python:3.12-slim-bookworm@sha256:54c85f3c47607a77f32adec749d3c81d1348bf25833671f512b26a9b6d778cb3 0.1s done
+#9 DONE 0.1s
+
+#10 [web 1/9] FROM docker.io/library/node:24-bookworm-slim@sha256:0e0ff40c39bc087845bfb27465a0df4ea419520094bc35842ff83dd8cbe6f9b6
+#10 resolve docker.io/library/node:24-bookworm-slim@sha256:0e0ff40c39bc087845bfb27465a0df4ea419520094bc35842ff83dd8cbe6f9b6 0.1s done
+#10 DONE 0.1s
+
+#7 [dispatcher internal] load build context
+#7 transferring context: 35.08kB 0.0s done
+#7 DONE 0.1s
+
+#11 [api  2/10] WORKDIR /app
+#11 CACHED
+
+#12 [api  4/10] COPY pyproject.toml uv.lock ./
+#12 CACHED
+
+#13 [api  5/10] RUN uv sync --frozen --no-managed-python
+#13 CACHED
+
+#14 [api  3/10] RUN pip install --no-cache-dir uv==0.11.15
+#14 CACHED
+
+#15 [api  6/10] COPY services ./services
+#15 CACHED
+
+#12 [dispatcher  4/10] COPY pyproject.toml uv.lock ./
+#12 CACHED
+
+#13 [dispatcher  5/10] RUN uv sync --frozen --no-managed-python
+#13 CACHED
+
+#14 [dispatcher  3/10] RUN pip install --no-cache-dir uv==0.11.15
+#14 CACHED
+
+#11 [dispatcher  2/10] WORKDIR /app
+#11 CACHED
+
+#8 [web internal] load build context
+#8 transferring context: 968.02kB 0.1s done
+#8 DONE 0.2s
+
+#16 [dispatcher  7/10] COPY scripts ./scripts
+#16 DONE 0.1s
+
+#17 [web 4/9] COPY apps/web/package.json apps/web/package.json
+#17 CACHED
+
+#18 [web 3/9] COPY package.json package-lock.json ./
+#18 CACHED
+
+#19 [web 6/9] RUN npm ci --no-audit --no-fund
+#19 CACHED
+
+#20 [web 7/9] COPY apps/web ./apps/web
+#20 CACHED
+
+#21 [web 8/9] COPY packages/contracts ./packages/contracts
+#21 CACHED
+
+#22 [web 5/9] COPY packages/contracts/package.json packages/contracts/package.json
+#22 CACHED
+
+#23 [web 2/9] WORKDIR /app
+#23 CACHED
+
+#24 [web 9/9] RUN npm run build && chown -R node:node /app/apps/web/.next
+#24 CACHED
+
+#25 [web] exporting to image
+#25 exporting layers 0.0s done
+#25 exporting manifest sha256:d9f160ba73a19e754f6b38658f7b8b81e3f0450685c9c58c40a4e41f787d6649 0.0s done
+#25 exporting config sha256:bdf7e85416008ba244077197aa522a5f6e549b681bec697b28dc9afad093535f 0.0s done
+#25 exporting attestation manifest sha256:193d0d91b3d01acdd7f46cedfd5fed16e02bd36596ccaad6b689637834791320
+#25 exporting attestation manifest sha256:193d0d91b3d01acdd7f46cedfd5fed16e02bd36596ccaad6b689637834791320 0.1s done
+#25 exporting manifest list sha256:a040c283e7ff5ee07099ff7f0c17e280419c6fb08118003c4bd849ff0514076f
+#25 ...
+
+#26 [api  8/10] COPY tests ./tests
+#26 DONE 0.3s
+
+#25 [web] exporting to image
+#25 exporting manifest list sha256:a040c283e7ff5ee07099ff7f0c17e280419c6fb08118003c4bd849ff0514076f 0.1s done
+#25 naming to docker.io/library/enterprise-ppm-identity-test-web:latest 0.0s done
+#25 unpacking to docker.io/library/enterprise-ppm-identity-test-web:latest
+#25 unpacking to docker.io/library/enterprise-ppm-identity-test-web:latest 0.0s done
+#25 DONE 0.5s
+
+#27 [worker  9/10] COPY alembic.ini ./
+#27 DONE 0.2s
+
+#28 [migrate 10/10] RUN useradd --uid 10001 --create-home ppm && mkdir -p /var/ppm/objects && chown -R ppm:ppm /var/ppm && chown ppm:ppm /app
+#28 ...
+
+#29 [web] resolving provenance for metadata file
+#29 DONE 0.0s
+
+#28 [api 10/10] RUN useradd --uid 10001 --create-home ppm && mkdir -p /var/ppm/objects && chown -R ppm:ppm /var/ppm && chown ppm:ppm /app
+#28 DONE 0.8s
+
+#30 [worker] exporting to image
+#30 exporting layers 0.8s done
+#30 exporting manifest sha256:468adb40509b5a4f9b3938379111561eabb247b92ab05b3c4c4beacae2db8ec6
+#30 exporting manifest sha256:468adb40509b5a4f9b3938379111561eabb247b92ab05b3c4c4beacae2db8ec6 0.2s done
+#30 exporting config sha256:6ebd042462e70c93cbd4deac7a834844a03ff390a93f2f7a196289c1264a476c
+#30 exporting config sha256:6ebd042462e70c93cbd4deac7a834844a03ff390a93f2f7a196289c1264a476c 0.2s done
+#30 exporting attestation manifest sha256:cfd459b39ffbeda45c35a756a9c5107c83b518d6ab5dacfb76bfa1c64d3a7d0f
+#30 exporting attestation manifest sha256:cfd459b39ffbeda45c35a756a9c5107c83b518d6ab5dacfb76bfa1c64d3a7d0f 0.2s done
+#30 exporting manifest list sha256:989e6c397f9c081270b8235936a77d779fca75da93dbf79d9e8bf8f0213f0b0e
+#30 exporting manifest list sha256:989e6c397f9c081270b8235936a77d779fca75da93dbf79d9e8bf8f0213f0b0e 0.2s done
+#30 naming to docker.io/library/enterprise-ppm-identity-test-worker:latest 0.0s done
+#30 unpacking to docker.io/library/enterprise-ppm-identity-test-worker:latest
+#30 unpacking to docker.io/library/enterprise-ppm-identity-test-worker:latest 0.5s done
+#30 DONE 2.3s
+
+#31 [api] exporting to image
+#31 exporting layers 0.8s done
+#31 exporting manifest sha256:7be1c711724141e79505a5e834d96aa6eff9f339040b5e06049fd9a1b280fd15 0.2s done
+#31 exporting config sha256:287cf2ca56728ebaf6b7ec1035be0c66f2b1005d531cd7df59874bb300e9f72a 0.1s done
+#31 exporting attestation manifest sha256:22302fae133c5740b1b2ced91b6fb0d43ba688c24b8e8115a831de4bd43cacbb 0.2s done
+#31 exporting manifest list sha256:8c97db300a5338be77e8d905260f2e91f98186ff01b404f993c210f7ec518a9e 0.1s done
+#31 naming to docker.io/library/enterprise-ppm-identity-test-api:latest 0.1s done
+#31 unpacking to docker.io/library/enterprise-ppm-identity-test-api:latest 0.5s done
+#31 DONE 2.2s
+
+#32 [migrate] exporting to image
+#32 exporting layers 0.8s done
+#32 exporting manifest sha256:aaf7e64336db800161a5fe376b2e4a7d4642ed1dc30b7ec587c22669f3445e46 0.1s done
+#32 exporting config sha256:e41456ef6104b2c8f9880ead2b18ebbed8b9544228044a7105389178d88a67dd 0.2s done
+#32 exporting attestation manifest sha256:39ae1a8065771c0afc037a7addebb0f41fe719a3ba9c4472b7aba60b9a211302 0.2s done
+#32 exporting manifest list sha256:c3ee4748bba04c67af6ab777d1d53302aa8b89494aadaaedd98a5f42ae63b02c 0.1s done
+#32 naming to docker.io/library/enterprise-ppm-identity-test-migrate:latest 0.0s done
+#32 unpacking to docker.io/library/enterprise-ppm-identity-test-migrate:latest 0.5s done
+#32 DONE 2.2s
+
+#33 [dispatcher] exporting to image
+#33 exporting layers 0.8s done
+#33 exporting manifest sha256:52bf496c32e3097fcfa64545b6ff0d144dd41e41bbde8763b7b149f42189c30f 0.1s done
+#33 exporting config sha256:5fcd21afee79ea0602d9d960bea2f1f12e0a3aa8e37a5164a9c3194f41cc873c 0.2s done
+#33 exporting attestation manifest sha256:68019ea242c3daecb711abe627cf7152d12074f2ff6374b548e429758ec0d08d 0.2s done
+#33 exporting manifest list sha256:e209baa1c183866c8543ad4508810b8b4bb63404f24b4caec8c7949761b0dba5 0.2s done
+#33 naming to docker.io/library/enterprise-ppm-identity-test-dispatcher:latest 0.0s done
+#33 unpacking to docker.io/library/enterprise-ppm-identity-test-dispatcher:latest 0.5s done
+#33 DONE 2.2s
+
+#34 [migrate] resolving provenance for metadata file
+#34 ...
+
+#35 [api] resolving provenance for metadata file
+#35 DONE 0.1s
+
+#36 [worker] resolving provenance for metadata file
+#36 DONE 0.4s
+
+#34 [migrate] resolving provenance for metadata file
+#34 DONE 0.6s
+
+#37 [dispatcher] resolving provenance for metadata file
+#37 DONE 0.0s
+ Image enterprise-ppm-identity-test-migrate Built 
+ Image enterprise-ppm-identity-test-api Built 
+ Image enterprise-ppm-identity-test-web Built 
+ Image enterprise-ppm-identity-test-worker Built 
+ Image enterprise-ppm-identity-test-dispatcher Built 
+ Network enterprise-ppm-identity-test_default Creating 
+ Network enterprise-ppm-identity-test_default Creating 
+ Network enterprise-ppm-identity-test_default Created 
+ Network enterprise-ppm-identity-test_default Created 
+ Container enterprise-ppm-identity-test-postgres-1 Creating 
+ Container enterprise-ppm-identity-test-redis-1 Creating 
+ Container enterprise-ppm-identity-test-postgres-1 Created 
+ Container enterprise-ppm-identity-test-migrate-1 Creating 
+ Container enterprise-ppm-identity-test-redis-1 Created 
+ Container enterprise-ppm-identity-test-migrate-1 Created 
+ Container enterprise-ppm-identity-test-api-1 Creating 
+ Container enterprise-ppm-identity-test-api-1 Created 
+ Container enterprise-ppm-identity-test-worker-1 Creating 
+ Container enterprise-ppm-identity-test-dispatcher-1 Creating 
+ Container enterprise-ppm-identity-test-web-1 Creating 
+ Container enterprise-ppm-identity-test-web-1 Created 
+ Container enterprise-ppm-identity-test-worker-1 Created 
+ Container enterprise-ppm-identity-test-dispatcher-1 Created 
+ Container enterprise-ppm-identity-test-redis-1 Starting 
+ Container enterprise-ppm-identity-test-postgres-1 Starting 
+ Container enterprise-ppm-identity-test-redis-1 Started 
+ Container enterprise-ppm-identity-test-postgres-1 Started 
+ Container enterprise-ppm-identity-test-postgres-1 Waiting 
+ Container enterprise-ppm-identity-test-postgres-1 Healthy 
+ Container enterprise-ppm-identity-test-migrate-1 Starting 
+ Container enterprise-ppm-identity-test-migrate-1 Started 
+ Container enterprise-ppm-identity-test-migrate-1 Waiting 
+ Container enterprise-ppm-identity-test-redis-1 Waiting 
+ Container enterprise-ppm-identity-test-redis-1 Healthy 
+ Container enterprise-ppm-identity-test-migrate-1 Exited 
+ Container enterprise-ppm-identity-test-api-1 Starting 
+ Container enterprise-ppm-identity-test-api-1 Started 
+ Container enterprise-ppm-identity-test-api-1 Waiting 
+ Container enterprise-ppm-identity-test-api-1 Waiting 
+ Container enterprise-ppm-identity-test-api-1 Waiting 
+ Container enterprise-ppm-identity-test-api-1 Healthy 
+ Container enterprise-ppm-identity-test-api-1 Healthy 
+ Container enterprise-ppm-identity-test-web-1 Starting 
+ Container enterprise-ppm-identity-test-dispatcher-1 Starting 
+ Container enterprise-ppm-identity-test-api-1 Healthy 
+ Container enterprise-ppm-identity-test-worker-1 Starting 
+ Container enterprise-ppm-identity-test-worker-1 Started 
+ Container enterprise-ppm-identity-test-dispatcher-1 Started 
+ Container enterprise-ppm-identity-test-web-1 Started 
+ Container enterprise-ppm-identity-test-worker-1 Waiting 
+ Container enterprise-ppm-identity-test-dispatcher-1 Waiting 
+ Container enterprise-ppm-identity-test-api-1 Waiting 
+ Container enterprise-ppm-identity-test-web-1 Waiting 
+ Container enterprise-ppm-identity-test-postgres-1 Waiting 
+ Container enterprise-ppm-identity-test-redis-1 Waiting 
+ Container enterprise-ppm-identity-test-migrate-1 Waiting 
+ Container enterprise-ppm-identity-test-redis-1 Healthy 
+ Container enterprise-ppm-identity-test-postgres-1 Healthy 
+ Container enterprise-ppm-identity-test-worker-1 Healthy 
+ Container enterprise-ppm-identity-test-migrate-1 Exited 
+ Container enterprise-ppm-identity-test-dispatcher-1 Healthy 
+ Container enterprise-ppm-identity-test-api-1 Healthy 
+ Container enterprise-ppm-identity-test-web-1 Healthy 
+ Image enterprise-ppm-identity-test-test Building 
+#1 [internal] load local bake definitions
+#1 reading from stdin 618B done
+#1 DONE 0.0s
+
+#2 [internal] load build definition from api.Dockerfile
+#2 transferring dockerfile: 774B done
+#2 DONE 0.0s
+
+#3 [internal] load metadata for docker.io/library/python:3.12-slim-bookworm@sha256:54c85f3c47607a77f32adec749d3c81d1348bf25833671f512b26a9b6d778cb3
+#3 DONE 0.0s
+
+#4 [internal] load .dockerignore
+#4 transferring context: 205B done
+#4 DONE 0.0s
+
+#5 [ 1/10] FROM docker.io/library/python:3.12-slim-bookworm@sha256:54c85f3c47607a77f32adec749d3c81d1348bf25833671f512b26a9b6d778cb3
+#5 resolve docker.io/library/python:3.12-slim-bookworm@sha256:54c85f3c47607a77f32adec749d3c81d1348bf25833671f512b26a9b6d778cb3 0.1s done
+#5 DONE 0.1s
+
+#6 [internal] load build context
+#6 transferring context: 4.90kB done
+#6 DONE 0.0s
+
+#7 [ 5/10] RUN uv sync --frozen --no-managed-python
+#7 CACHED
+
+#8 [ 8/10] COPY tests ./tests
+#8 CACHED
+
+#9 [ 2/10] WORKDIR /app
+#9 CACHED
+
+#10 [ 3/10] RUN pip install --no-cache-dir uv==0.11.15
+#10 CACHED
+
+#11 [ 6/10] COPY services ./services
+#11 CACHED
+
+#12 [ 7/10] COPY scripts ./scripts
+#12 CACHED
+
+#13 [ 9/10] COPY alembic.ini ./
+#13 CACHED
+
+#14 [ 4/10] COPY pyproject.toml uv.lock ./
+#14 CACHED
+
+#15 [10/10] RUN useradd --uid 10001 --create-home ppm && mkdir -p /var/ppm/objects && chown -R ppm:ppm /var/ppm && chown ppm:ppm /app
+#15 CACHED
+
+#16 exporting to image
+#16 exporting layers 0.0s done
+#16 exporting manifest sha256:51c9f5df8cc2abe91a3522430dbcbf788879d7aa22f9b88e6b98cf59d751fd80 0.1s done
+#16 exporting config sha256:a006f2ea21271dfbb666bf77e5d7552473beba33be81e81de16c74932e155874
+#16 exporting config sha256:a006f2ea21271dfbb666bf77e5d7552473beba33be81e81de16c74932e155874 0.0s done
+#16 exporting attestation manifest sha256:195711500bacbb03f988a364b40777d02e7e5e6ae2e68a68afe043b323df2466 0.1s done
+#16 exporting manifest list sha256:f258f512ea204f165c0a84b71c0b25ad6fdd1ff9a71dfe2069f9a6b3411f7c15
+#16 exporting manifest list sha256:f258f512ea204f165c0a84b71c0b25ad6fdd1ff9a71dfe2069f9a6b3411f7c15 0.0s done
+#16 naming to docker.io/library/enterprise-ppm-identity-test-test:latest done
+#16 unpacking to docker.io/library/enterprise-ppm-identity-test-test:latest 0.0s done
+#16 DONE 0.4s
+
+#17 resolving provenance for metadata file
+#17 DONE 0.0s
+ Image enterprise-ppm-identity-test-test Built 
+
+Running 12 tests using 4 workers
+
+(node:6608) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:20120) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:13644) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:16052) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x   4 [chromium] › tests\browser\assessment.spec.ts:5:5 › assessment builder, autosave, private evidence and independent review (18.4s)
+  ok  2 [chromium] › tests\browser\delivery.spec.ts:4:5 › delivery workflow persists hierarchy, work, budgets, baselines and archive (19.4s)
+  ok  1 [chromium] › tests\browser\command.spec.ts:5:5 › command center reconciles facts, filters, saved views and evidence access (19.4s)
+(node:7256) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  7 [chromium] › tests\browser\foundation.spec.ts:3:5 › web renders the real API database checkpoint and reloads it (1.3s)
+  ok  8 [chromium] › tests\browser\foundation.spec.ts:38:5 › mobile foundation remains readable without horizontal overflow (581ms)
+  x   5 [chromium] › tests\browser\identity.spec.ts:5:5 › identity lifecycle uses real cookies, memberships, invitations and recovery (9.4s)
+(node:3484) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  9 [chromium] › tests\browser\pilot.spec.ts:51:5 › verified signup, setup, profile and cancelled invitations (9.6s)
+  x  11 [chromium] › tests\browser\pilot.spec.ts:139:5 › older records, selectors, full cohorts and browser result grants (8.7s)
+(node:2936) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 10 [chromium] › tests\browser\shell.spec.ts:16:5 › enterprise shell: themes, keyboard, responsive, gallery and permissions (13.4s)
+  ok 12 [chromium] › tests\browser\pilot.spec.ts:266:5 › My Work, persistent notifications and manual changes refresh a second session (6.4s)
+  x   6 [chromium] › tests\browser\integrations.spec.ts:5:5 › CSV preview, durable sync, live progress, repeat effects and revoked scope (33.1s)
+  x   3 [chromium] › tests\browser\capacity.spec.ts:5:5 › resource planning preserves split capacity, snapshots, privacy and responsive access (2.0m)
+
+
+  1) [chromium] › tests\browser\assessment.spec.ts:5:5 › assessment builder, autosave, private evidence and independent review 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  1
+    + Received  + 52
+
+    - Array []
+    + Array [
+    +   Object {
+    +     "description": "Ensure elements that have scrollable content are accessible by keyboard in Safari",
+    +     "help": "Scrollable region must have keyboard access",
+    +     "helpUrl": "https://dequeuniversity.com/rules/axe/4.13/scrollable-region-focusable?application=playwright",
+    +     "id": "scrollable-region-focusable",
+    +     "impact": "serious",
+    +     "nodes": Array [
+    +       Object {
+    +         "all": Array [],
+    +         "any": Array [
+    +           Object {
+    +             "data": null,
+    +             "id": "focusable-content",
+    +             "impact": "serious",
+    +             "message": "Element should have focusable content",
+    +             "relatedNodes": Array [],
+    +           },
+    +           Object {
+    +             "data": null,
+    +             "id": "focusable-element",
+    +             "impact": "serious",
+    +             "message": "Element should be focusable",
+    +             "relatedNodes": Array [],
+    +           },
+    +         ],
+    +         "failureSummary": "Fix any of the following:
+    +   Element should have focusable content
+    +   Element should be focusable",
+    +         "html": "<div class=\"table-scroll\"><table><caption>Compatible departmental scores</caption><thead><tr><th>Department</th><th>Mean score / 100</th><th>Count</th><th>Scored count</th></tr></thead><tbody></tbody></table></div>",
+    +         "impact": "serious",
+    +         "none": Array [],
+    +         "target": Array [
+    +           "section:nth-child(7) > .table-scroll",
+    +         ],
+    +       },
+    +     ],
+    +     "tags": Array [
+    +       "cat.keyboard",
+    +       "wcag2a",
+    +       "wcag211",
+    +       "wcag213",
+    +       "TTv5",
+    +       "TT4.a",
+    +       "EN-301-549",
+    +       "EN-9.2.1.1",
+    +       "EN-9.2.1.3",
+    +       "RGAAv4",
+    +       "RGAA-7.3.2",
+    +     ],
+    +   },
+    + ]
+
+      138 |       ["critical", "serious"].includes(v.impact || ""),
+      139 |     ),
+    > 140 |   ).toEqual([]);
+          |     ^
+      141 | });
+      142 |
+        at C:\Users\alokg\OneDrive\Documents\Codex\enterprise-ppm\tests\browser\assessment.spec.ts:140:5
+
+    Error Context: test-results\assessment-assessment-buil-ea112-ence-and-independent-review-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\assessment-assessment-buil-ea112-ence-and-independent-review-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\assessment-assessment-buil-ea112-ence-and-independent-review-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [chromium] › tests\browser\capacity.spec.ts:5:5 › resource planning preserves split capacity, snapshots, privacy and responsive access 
+
+    Test timeout of 120000ms exceeded.
+
+    Error: locator.selectOption: Test timeout of 120000ms exceeded.
+    Call log:
+      - waiting for getByRole('combobox', { name: 'Resource profile', exact: true })
+        - locator resolved to <select>…</select>
+      - attempting select option action
+        2 × waiting for element to be visible and enabled
+          - did not find some options
+        - retrying select option action
+        - waiting 20ms
+        2 × waiting for element to be visible and enabled
+          - did not find some options
+        - retrying select option action
+          - waiting 100ms
+        221 × waiting for element to be visible and enabled
+            - did not find some options
+          - retrying select option action
+            - waiting 500ms
+
+
+      88 |   await page
+      89 |     .getByRole("combobox", { name: "Resource profile", exact: true })
+    > 90 |     .selectOption({ label: "Alex — capacity fixture" });
+         |      ^
+      91 |   await page.getByLabel("From date", { exact: true }).fill("2026-03-09");
+      92 |   await page
+      93 |     .getByLabel("Until date (excluded)", { exact: true })
+        at C:\Users\alokg\OneDrive\Documents\Codex\enterprise-ppm\tests\browser\capacity.spec.ts:90:6
+
+    Error Context: test-results\capacity-resource-planning-40c35-ivacy-and-responsive-access-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\capacity-resource-planning-40c35-ivacy-and-responsive-access-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\capacity-resource-planning-40c35-ivacy-and-responsive-access-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) [chromium] › tests\browser\identity.spec.ts:5:5 › identity lifecycle uses real cookies, memberships, invitations and recovery 
+
+    Error: expect(locator).toHaveText(expected) failed
+
+    Locator:  getByRole('status')
+    Expected: "Invitation created in the local mailbox."
+    Received: "Invitation queued. Local mode uses the private operator mailbox."
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveText" getByRole('status') with timeout 5000ms
+      - waiting for getByRole('status')
+        12 × locator resolved to <p role="status" class="notice">Invitation queued. Local mode uses the private op…</p>
+           - unexpected value "Invitation queued. Local mode uses the private operator mailbox."
+
+
+      79 |   await page.getByLabel("Email address", { exact: true }).fill(invited);
+      80 |   await page.getByRole("button", { name: "Create invitation" }).click();
+    > 81 |   await expect(page.getByRole("status")).toHaveText(
+         |                                          ^
+      82 |     "Invitation created in the local mailbox.",
+      83 |   );
+      84 |   const mailbox = (email: string) => {
+        at C:\Users\alokg\OneDrive\Documents\Codex\enterprise-ppm\tests\browser\identity.spec.ts:81:42
+
+    Error Context: test-results\identity-identity-lifecycl-6730e-ps-invitations-and-recovery-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\identity-identity-lifecycl-6730e-ps-invitations-and-recovery-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\identity-identity-lifecycl-6730e-ps-invitations-and-recovery-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4) [chromium] › tests\browser\integrations.spec.ts:5:5 › CSV preview, durable sync, live progress, repeat effects and revoked scope 
+
+    Error: expect(locator).toBeFocused() failed
+
+    Locator:  getByRole('combobox', { name: 'Project', exact: true })
+    Expected: focused
+    Received: inactive
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toBeFocused" getByRole('combobox', { name: 'Project', exact: true }) with timeout 5000ms
+      - waiting for getByRole('combobox', { name: 'Project', exact: true })
+        14 × locator resolved to <select required="" name="project">…</select>
+           - unexpected value "inactive"
+
+
+      201 |   await expect(
+      202 |     page.getByRole("combobox", { name: "Project", exact: true }),
+    > 203 |   ).toBeFocused();
+          |     ^
+      204 |   await page
+      205 |     .getByRole("combobox", { name: "Organization", exact: true })
+      206 |     .selectOption(fixture.viewer_org);
+        at C:\Users\alokg\OneDrive\Documents\Codex\enterprise-ppm\tests\browser\integrations.spec.ts:203:5
+
+    Error Context: test-results\integrations-CSV-preview-d-9b85b-t-effects-and-revoked-scope-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\integrations-CSV-preview-d-9b85b-t-effects-and-revoked-scope-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\integrations-CSV-preview-d-9b85b-t-effects-and-revoked-scope-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  5) [chromium] › tests\browser\pilot.spec.ts:139:5 › older records, selectors, full cohorts and browser result grants 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByRole('link', { name: 'Pilot project 124', exact: true })
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByRole('link', { name: 'Pilot project 124', exact: true }) with timeout 5000ms
+      - waiting for getByRole('link', { name: 'Pilot project 124', exact: true })
+
+
+      183 |   await expect(
+      184 |     page.getByRole("link", { name: "Pilot project 124", exact: true }),
+    > 185 |   ).toBeVisible();
+          |     ^
+      186 |   await page.goto("/resources");
+      187 |   await page
+      188 |     .getByLabel("Find resource profile", { exact: true })
+        at C:\Users\alokg\OneDrive\Documents\Codex\enterprise-ppm\tests\browser\pilot.spec.ts:185:5
+
+    Error Context: test-results\pilot-older-records-select-a1b09-s-and-browser-result-grants-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\pilot-older-records-select-a1b09-s-and-browser-result-grants-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\pilot-older-records-select-a1b09-s-and-browser-result-grants-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  5 failed
+    [chromium] › tests\browser\assessment.spec.ts:5:5 › assessment builder, autosave, private evidence and independent review 
+    [chromium] › tests\browser\capacity.spec.ts:5:5 › resource planning preserves split capacity, snapshots, privacy and responsive access 
+    [chromium] › tests\browser\identity.spec.ts:5:5 › identity lifecycle uses real cookies, memberships, invitations and recovery 
+    [chromium] › tests\browser\integrations.spec.ts:5:5 › CSV preview, durable sync, live progress, repeat effects and revoked scope 
+    [chromium] › tests\browser\pilot.spec.ts:139:5 › older records, selectors, full cohorts and browser result grants 
+  7 passed (2.0m)
+ Container enterprise-ppm-identity-test-worker-1 Stopping 
+ Container enterprise-ppm-identity-test-web-1 Stopping 
+ Container enterprise-ppm-identity-test-dispatcher-1 Stopping 
+ Container enterprise-ppm-identity-test-web-1 Stopped 
+ Container enterprise-ppm-identity-test-web-1 Removing 
+ Container enterprise-ppm-identity-test-web-1 Removed 
+ Container enterprise-ppm-identity-test-dispatcher-1 Stopped 
+ Container enterprise-ppm-identity-test-dispatcher-1 Removing 
+ Container enterprise-ppm-identity-test-dispatcher-1 Removed 
+ Container enterprise-ppm-identity-test-worker-1 Stopped 
+ Container enterprise-ppm-identity-test-worker-1 Removing 
+ Container enterprise-ppm-identity-test-worker-1 Removed 
+ Container enterprise-ppm-identity-test-api-1 Stopping 
+ Container enterprise-ppm-identity-test-api-1 Stopped 
+ Container enterprise-ppm-identity-test-api-1 Removing 
+ Container enterprise-ppm-identity-test-api-1 Removed 
+ Container enterprise-ppm-identity-test-migrate-1 Stopping 
+ Container enterprise-ppm-identity-test-redis-1 Stopping 
+ Container enterprise-ppm-identity-test-migrate-1 Stopped 
+ Container enterprise-ppm-identity-test-migrate-1 Removing 
+ Container enterprise-ppm-identity-test-migrate-1 Removed 
+ Container enterprise-ppm-identity-test-postgres-1 Stopping 
+ Container enterprise-ppm-identity-test-redis-1 Stopped 
+ Container enterprise-ppm-identity-test-redis-1 Removing 
+ Container enterprise-ppm-identity-test-redis-1 Removed 
+ Container enterprise-ppm-identity-test-postgres-1 Stopped 
+ Container enterprise-ppm-identity-test-postgres-1 Removing 
+ Container enterprise-ppm-identity-test-postgres-1 Removed 
+ Network enterprise-ppm-identity-test_default Removing 
+ Network enterprise-ppm-identity-test_default Removed 
+file:///C:/Users/alokg/OneDrive/Documents/Codex/enterprise-ppm/scripts/check-identity-browser.mjs:12
+  if(result.status!==0) throw new Error(`Acceptance command failed: ${command} (exit ${result.status})`);
+                              ^
+
+Error: Acceptance command failed: C:\Program Files\nodejs\node.exe (exit 1)
+    at run (file:///C:/Users/alokg/OneDrive/Documents/Codex/enterprise-ppm/scripts/check-identity-browser.mjs:12:31)
+    at file:///C:/Users/alokg/OneDrive/Documents/Codex/enterprise-ppm/scripts/check-identity-browser.mjs:22:3
+    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+    at async node:internal/modules/esm/loader:647:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+Node.js v24.20.0

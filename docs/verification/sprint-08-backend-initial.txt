@@ -1,0 +1,270 @@
+ Container enterprise-ppm-redis-1 Running 
+ Container enterprise-ppm-postgres-1 Running 
+ Container enterprise-ppm-postgres-1 Waiting 
+ Container enterprise-ppm-redis-1 Waiting 
+ Container enterprise-ppm-postgres-1 Healthy 
+ Container enterprise-ppm-redis-1 Healthy 
+ Container enterprise-ppm-test-run-f3301394ea16 Creating 
+ Container enterprise-ppm-test-run-f3301394ea16 Created 
+Running: /app/.venv/bin/python -m alembic upgrade head
+Running: /app/.venv/bin/python -m alembic downgrade base
+Running: /app/.venv/bin/python -m alembic upgrade head
+Running: /app/.venv/bin/python -m alembic upgrade head
+Running: /app/.venv/bin/python -m alembic check
+No new upgrade operations detected.
+Running: /app/.venv/bin/python -m pytest -q
+......................................................FFF..              [100%]
+=================================== FAILURES ===================================
+_____ test_import_atomic_replay_partial_recovery_revision_conflict_and_sse _____
+
+identity = (<httpx.AsyncClient object at 0x7260e31f0470>, <fastapi.applications.FastAPI object at 0x7260e3191a90>, <sqlalchemy.ex... '26307489-2276-4023-9eb8-42b46fad4e59@example.com', 'other': '7b895704-183a-4b1b-b25d-166024127f61@example.com', ...})
+
+    @pytest.mark.integration
+    async def test_import_atomic_replay_partial_recovery_revision_conflict_and_sse(identity):
+        c, app, owner, ids, emails, portfolio, project = await setup(identity)
+        integration = await connection(c, project)
+        preview = await send(
+            c, "POST", f"/integrations/{integration['id']}/preview", json={"csv_text": CSV}
+        )
+        assert preview.status_code == 200 and preview.json()["valid"] == 2
+        key = str(uuid4())
+        first = await submit(c, integration, CSV, key)
+        same = await submit(c, integration, CSV, key)
+        assert first.json()["id"] == same.json()["id"]
+        assert (
+            await submit(c, integration, CSV + "\n3,Other,2026-10-09T00:00:00Z,backlog", key)
+        ).status_code == 409
+        async with owner.connect() as conn:
+            assert (
+                await conn.scalar(
+                    sa.select(sa.func.count())
+                    .select_from(outbox)
+                    .where(outbox.c.job_id == UUID(first.json()["id"]))
+                )
+                == 1
+            )
+        await execute(app, first, ids, stop_after=1)
+        async with owner.begin() as conn:
+            row = (
+                (await conn.execute(sa.select(jobs).where(jobs.c.id == UUID(first.json()["id"]))))
+                .mappings()
+                .one()
+            )
+>           assert row["position"] == 1 and row["status"] == "running"
+E           assert (0 == 1)
+
+tests/test_jobs.py:116: AssertionError
+----------------------------- Captured stderr call -----------------------------
+{"event": "http_request", "request_id": "b9874a58-759a-4e1f-9c3b-c4faa5c54c1e", "method": "GET", "route": "/api/v1/auth/csrf", "status": 200, "duration_ms": 47.81}
+{"event": "http_request", "request_id": "97a784fa-e7e2-43d7-9a23-0f20dd60f472", "method": "POST", "route": "/api/v1/auth/login", "status": 200, "duration_ms": 288.05}
+{"event": "http_request", "request_id": "bf8ae30f-db94-4d62-a8af-46c9b0db3823", "method": "POST", "route": "/api/v1/auth/switch", "status": 200, "duration_ms": 17.97}
+{"event": "http_request", "request_id": "3e942250-9245-43bb-a9ca-dd97add7c44d", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 37.98}
+{"event": "http_request", "request_id": "cdd347b6-88a2-4807-baf2-f72272c2f78d", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 103.44}
+{"event": "http_request", "request_id": "39cfdb07-7d32-45f0-ad07-d65594c2f4cc", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 23.68}
+{"event": "http_request", "request_id": "25477baf-dc73-43cd-ba77-39c80016066e", "method": "POST", "route": "/api/v1/integrations", "status": 201, "duration_ms": 16.66}
+{"event": "http_request", "request_id": "71a26132-f386-4c4c-b8a6-6d24611eda14", "method": "POST", "route": "/api/v1/integrations/{id_}/preview", "status": 200, "duration_ms": 8.37}
+{"event": "http_request", "request_id": "7ae22c6e-5ebf-4928-947a-4358af7a0438", "method": "POST", "route": "/api/v1/integrations/{id_}/sync", "status": 202, "duration_ms": 23.0}
+{"event": "http_request", "request_id": "4e63478a-5ba8-4521-90e7-25467e8fdc9c", "method": "POST", "route": "/api/v1/integrations/{id_}/sync", "status": 202, "duration_ms": 8.79}
+{"event": "http_request", "request_id": "6a431a47-1f7d-45d0-b21e-ff2b6dba8144", "method": "POST", "route": "/api/v1/integrations/{id_}/sync", "status": 409, "duration_ms": 10.71}
+------------------------------ Captured log call -------------------------------
+INFO     ppm.requests:main.py:128 {"event": "http_request", "request_id": "b9874a58-759a-4e1f-9c3b-c4faa5c54c1e", "method": "GET", "route": "/api/v1/auth/csrf", "status": 200, "duration_ms": 47.81}
+INFO     ppm.requests:main.py:128 {"event": "http_request", "request_id": "97a784fa-e7e2-43d7-9a23-0f20dd60f472", "method": "POST", "route": "/api/v1/auth/login", "status": 200, "duration_ms": 288.05}
+INFO     ppm.requests:main.py:128 {"event": "http_request", "request_id": "bf8ae30f-db94-4d62-a8af-46c9b0db3823", "method": "POST", "route": "/api/v1/auth/switch", "status": 200, "duration_ms": 17.97}
+INFO     ppm.requests:main.py:128 {"event": "http_request", "request_id": "3e942250-9245-43bb-a9ca-dd97add7c44d", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 37.98}
+INFO     ppm.requests:main.py:128 {"event": "http_request", "request_id": "cdd347b6-88a2-4807-baf2-f72272c2f78d", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 103.44}
+INFO     ppm.requests:main.py:128 {"event": "http_request", "request_id": "39cfdb07-7d32-45f0-ad07-d65594c2f4cc", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 23.68}
+INFO     ppm.requests:main.py:128 {"event": "http_request", "request_id": "25477baf-dc73-43cd-ba77-39c80016066e", "method": "POST", "route": "/api/v1/integrations", "status": 201, "duration_ms": 16.66}
+INFO     ppm.requests:main.py:128 {"event": "http_request", "request_id": "71a26132-f386-4c4c-b8a6-6d24611eda14", "method": "POST", "route": "/api/v1/integrations/{id_}/preview", "status": 200, "duration_ms": 8.37}
+INFO     ppm.requests:main.py:128 {"event": "http_request", "request_id": "7ae22c6e-5ebf-4928-947a-4358af7a0438", "method": "POST", "route": "/api/v1/integrations/{id_}/sync", "status": 202, "duration_ms": 23.0}
+INFO     ppm.requests:main.py:128 {"event": "http_request", "request_id": "4e63478a-5ba8-4521-90e7-25467e8fdc9c", "method": "POST", "route": "/api/v1/integrations/{id_}/sync", "status": 202, "duration_ms": 8.79}
+INFO     ppm.requests:main.py:128 {"event": "http_request", "request_id": "6a431a47-1f7d-45d0-b21e-ff2b6dba8144", "method": "POST", "route": "/api/v1/integrations/{id_}/sync", "status": 409, "duration_ms": 10.71}
+____________ test_signed_webhook_replay_cancellation_and_tenant_rls ____________
+
+identity = (<httpx.AsyncClient object at 0x7260e314e420>, <fastapi.applications.FastAPI object at 0x7260e31acef0>, <sqlalchemy.ex... '12a5047e-0a30-4808-a440-c9878ab72ab6@example.com', 'other': 'e22258f3-96bf-4223-814f-934ec6cdf252@example.com', ...})
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7260e3192810>
+
+    @pytest.mark.integration
+    async def test_signed_webhook_replay_cancellation_and_tenant_rls(identity, monkeypatch):
+        c, app, owner, ids, emails, portfolio, project = await setup(identity)
+        monkeypatch.setenv("PPM_CONNECTOR_TEST_WEBHOOK", "test-secret-only")
+        integration = await connection(c, project, webhook_secret_ref="PPM_CONNECTOR_TEST_WEBHOOK")
+        payload = json.dumps({"csv_text": CSV}).encode()
+        headers = {
+            "content-type": "application/json",
+            "x-github-delivery": "delivery-1",
+            "x-hub-signature-256": "sha256="
+            + hmac.new(b"test-secret-only", payload, hashlib.sha256).hexdigest(),
+        }
+        url = f"/integrations/{integration['id']}/webhook"
+        bad = await send(
+            c, "POST", url, content=payload, headers=headers | {"x-hub-signature-256": "bad"}
+        )
+        assert bad.status_code == 403
+        first = await send(c, "POST", url, content=payload, headers=headers)
+        repeat = await send(c, "POST", url, content=payload, headers=headers)
+        assert first.status_code == 202 and repeat.json()["id"] == first.json()["id"]
+        cancelled = await send(c, "POST", f"/integrations/activity/jobs/{first.json()['id']}/cancel")
+        assert cancelled.status_code == 200
+        await execute(app, first, ids)
+>       assert (await c.get(f"/api/v1/integrations/activity/jobs/{first.json()['id']}")).json()[
+            "status"
+        ] == "cancelled"
+E       AssertionError: assert 'queued' == 'cancelled'
+E         
+E         - cancelled
+E         + queued
+
+tests/test_jobs.py:207: AssertionError
+----------------------------- Captured stderr call -----------------------------
+{"event": "http_request", "request_id": "72fec020-7112-4eb8-b521-b270b920089d", "method": "GET", "route": "/api/v1/auth/csrf", "status": 200, "duration_ms": 50.62}
+{"event": "http_request", "request_id": "8b0efbb5-c139-4498-844f-f06be72c4dff", "method": "POST", "route": "/api/v1/auth/login", "status": 200, "duration_ms": 284.82}
+{"event": "http_request", "request_id": "81d17d5c-ce23-4484-9dd1-57673f1ef7c3", "method": "POST", "route": "/api/v1/auth/switch", "status": 200, "duration_ms": 16.43}
+{"event": "http_request", "request_id": "ce524c2b-7941-4c3e-a3e5-b9d2522ff244", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 46.55}
+{"event": "http_request", "request_id": "c0c71d41-cd72-461f-802a-fed7d99684d8", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 22.82}
+{"event": "http_request", "request_id": "ff2cf9e1-dc77-4050-967a-41dd87b71877", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 22.97}
+{"event": "http_request", "request_id": "0e32dc7d-6621-4fe6-825c-1ac99985e939", "method": "POST", "route": "/api/v1/integrations", "status": 201, "duration_ms": 15.81}
+{"event": "http_request", "request_id": "64f0f223-7792-45b5-93e6-56686cef63d5", "method": "POST", "route": "/api/v1/integrations/{id_}/webhook", "status": 403, "duration_ms": 9.94}
+{"event": "http_request", "request_id": "69374048-e821-4330-86f2-14a67a21cb36", "method": "POST", "route": "/api/v1/integrations/{id_}/webhook", "status": 202, "duration_ms": 20.2}
+{"event": "http_request", "request_id": "7bc583b8-8c1e-4dc6-8360-fd3291705d5a", "method": "POST", "route": "/api/v1/integrations/{id_}/webhook", "status": 202, "duration_ms": 10.44}
+{"event": "http_request", "request_id": "4530a471-6e65-419b-b1a5-65c183ace6ce", "method": "POST", "route": "/api/v1/integrations/activity/jobs/{id_}/cancel", "status": 200, "duration_ms": 15.26}
+{"event": "http_request", "request_id": "d1b18e8e-33ca-4faa-80c5-941801538cdf", "method": "GET", "route": "/api/v1/integrations/activity/jobs/{id_}", "status": 200, "duration_ms": 11.2}
+------------------------------ Captured log call -------------------------------
+INFO     ppm.requests:main.py:128 {"event": "http_request", "request_id": "72fec020-7112-4eb8-b521-b270b920089d", "method": "GET", "route": "/api/v1/auth/csrf", "status": 200, "duration_ms": 50.62}
+INFO     ppm.requests:main.py:128 {"event": "http_request", "request_id": "8b0efbb5-c139-4498-844f-f06be72c4dff", "method": "POST", "route": "/api/v1/auth/login", "status": 200, "duration_ms": 284.82}
+INFO     ppm.requests:main.py:128 {"event": "http_request", "request_id": "81d17d5c-ce23-4484-9dd1-57673f1ef7c3", "method": "POST", "route": "/api/v1/auth/switch", "status": 200, "duration_ms": 16.43}
+INFO     ppm.requests:main.py:128 {"event": "http_request", "request_id": "ce524c2b-7941-4c3e-a3e5-b9d2522ff244", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 46.55}
+INFO     ppm.requests:main.py:128 {"event": "http_request", "request_id": "c0c71d41-cd72-461f-802a-fed7d99684d8", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 22.82}
+INFO     ppm.requests:main.py:128 {"event": "http_request", "request_id": "ff2cf9e1-dc77-4050-967a-41dd87b71877", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 22.97}
+INFO     ppm.requests:main.py:128 {"event": "http_request", "request_id": "0e32dc7d-6621-4fe6-825c-1ac99985e939", "method": "POST", "route": "/api/v1/integrations", "status": 201, "duration_ms": 15.81}
+INFO     ppm.requests:main.py:128 {"event": "http_request", "request_id": "64f0f223-7792-45b5-93e6-56686cef63d5", "method": "POST", "route": "/api/v1/integrations/{id_}/webhook", "status": 403, "duration_ms": 9.94}
+INFO     ppm.requests:main.py:128 {"event": "http_request", "request_id": "69374048-e821-4330-86f2-14a67a21cb36", "method": "POST", "route": "/api/v1/integrations/{id_}/webhook", "status": 202, "duration_ms": 20.2}
+INFO     ppm.requests:main.py:128 {"event": "http_request", "request_id": "7bc583b8-8c1e-4dc6-8360-fd3291705d5a", "method": "POST", "route": "/api/v1/integrations/{id_}/webhook", "status": 202, "duration_ms": 10.44}
+INFO     ppm.requests:main.py:128 {"event": "http_request", "request_id": "4530a471-6e65-419b-b1a5-65c183ace6ce", "method": "POST", "route": "/api/v1/integrations/activity/jobs/{id_}/cancel", "status": 200, "duration_ms": 15.26}
+INFO     ppm.requests:main.py:128 {"event": "http_request", "request_id": "d1b18e8e-33ca-4faa-80c5-941801538cdf", "method": "GET", "route": "/api/v1/integrations/activity/jobs/{id_}", "status": 200, "duration_ms": 11.2}
+___________ test_github_jira_contract_fixtures_and_sprint_ingestion ____________
+
+identity = (<httpx.AsyncClient object at 0x7260e8145460>, <fastapi.applications.FastAPI object at 0x7260e3235e20>, <sqlalchemy.ex... '928cff6c-2e76-4fe5-96c4-fb3adaec83b8@example.com', 'other': '56851899-195f-485e-aaf3-0642993c168c@example.com', ...})
+
+    @pytest.mark.integration
+    async def test_github_jira_contract_fixtures_and_sprint_ingestion(identity):
+        c, app, owner, ids, emails, portfolio, project = await setup(identity)
+        for provider, resource, entity, mapping, record in [
+            (
+                "github",
+                "example/repository",
+                "issues",
+                {
+                    "external_id": "number",
+                    "name": "title",
+                    "status": "state",
+                    "source_updated_at": "updated_at",
+                },
+                {
+                    "number": 4,
+                    "title": "GitHub issue",
+                    "state": "open",
+                    "updated_at": "2026-10-09T00:00:00Z",
+                },
+            ),
+            (
+                "github",
+                "example/repository",
+                "pulls",
+                {
+                    "external_id": "number",
+                    "name": "title",
+                    "status": "state",
+                    "source_updated_at": "updated_at",
+                },
+                {
+                    "number": 5,
+                    "title": "GitHub PR",
+                    "state": "closed",
+                    "updated_at": "2026-10-09T00:00:00Z",
+                },
+            ),
+            (
+                "jira",
+                "example.atlassian.net",
+                "issues",
+                {
+                    "external_id": "id",
+                    "name": "fields.summary",
+                    "status": "fields.status.name",
+                    "source_updated_at": "fields.updated",
+                },
+                {
+                    "id": "100",
+                    "fields": {
+                        "summary": "Jira issue",
+                        "status": {"name": "To Do"},
+                        "updated": "2026-10-09T00:00:00Z",
+                    },
+                },
+            ),
+        ]:
+            result = await send(
+                c,
+                "POST",
+                "/integrations",
+                headers={"idempotency-key": str(uuid4())},
+                json=dict(
+                    name="Provider contract fixture",
+                    provider=provider,
+                    resource=resource,
+                    project_id=project["id"],
+                    entity=entity,
+                    mapping=mapping,
+                    status_map={"open": "backlog", "closed": "done", "To Do": "backlog"},
+                ),
+            )
+            assert result.status_code == 201, result.text
+            sync = await submit(c, result.json(), records=[record])
+            await execute(app, sync, ids)
+>           assert (await c.get(f"/api/v1/integrations/activity/jobs/{sync.json()['id']}")).json()[
+                "status"
+            ] == "succeeded"
+E           AssertionError: assert 'queued' == 'succeeded'
+E             
+E             - succeeded
+E             + queued
+
+tests/test_jobs.py:306: AssertionError
+----------------------------- Captured stderr call -----------------------------
+{"event": "http_request", "request_id": "0b2724f7-72ec-47cb-a0cd-f1381dad7eda", "method": "GET", "route": "/api/v1/auth/csrf", "status": 200, "duration_ms": 81.38}
+{"event": "http_request", "request_id": "7b75b9d6-55b0-4521-bc59-4a56982aec35", "method": "POST", "route": "/api/v1/auth/login", "status": 200, "duration_ms": 356.4}
+{"event": "http_request", "request_id": "b3551375-aa89-4b2a-b80e-22a49af55acc", "method": "POST", "route": "/api/v1/auth/switch", "status": 200, "duration_ms": 14.21}
+{"event": "http_request", "request_id": "464aaaf5-c21f-411a-ba81-50b0e7cecf66", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 40.52}
+{"event": "http_request", "request_id": "3a2d76e2-c61c-4644-97c7-ee3ed73a7ee3", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 19.74}
+{"event": "http_request", "request_id": "8f1d21e0-19ca-4227-b002-f133f466b7dd", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 20.52}
+{"event": "http_request", "request_id": "0e7bb4d5-2f3d-40c3-8ddf-5e0a9ec96651", "method": "POST", "route": "/api/v1/integrations", "status": 201, "duration_ms": 23.43}
+{"event": "http_request", "request_id": "0f18a224-07a1-4f07-a8c7-6c06448d5802", "method": "POST", "route": "/api/v1/integrations/{id_}/sync", "status": 202, "duration_ms": 28.9}
+{"event": "http_request", "request_id": "3218f0c9-150c-47d6-bb63-d7e57a60a268", "method": "GET", "route": "/api/v1/integrations/activity/jobs/{id_}", "status": 200, "duration_ms": 11.08}
+------------------------------ Captured log call -------------------------------
+INFO     ppm.requests:main.py:128 {"event": "http_request", "request_id": "0b2724f7-72ec-47cb-a0cd-f1381dad7eda", "method": "GET", "route": "/api/v1/auth/csrf", "status": 200, "duration_ms": 81.38}
+INFO     ppm.requests:main.py:128 {"event": "http_request", "request_id": "7b75b9d6-55b0-4521-bc59-4a56982aec35", "method": "POST", "route": "/api/v1/auth/login", "status": 200, "duration_ms": 356.4}
+INFO     ppm.requests:main.py:128 {"event": "http_request", "request_id": "b3551375-aa89-4b2a-b80e-22a49af55acc", "method": "POST", "route": "/api/v1/auth/switch", "status": 200, "duration_ms": 14.21}
+INFO     ppm.requests:main.py:128 {"event": "http_request", "request_id": "464aaaf5-c21f-411a-ba81-50b0e7cecf66", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 40.52}
+INFO     ppm.requests:main.py:128 {"event": "http_request", "request_id": "3a2d76e2-c61c-4644-97c7-ee3ed73a7ee3", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 19.74}
+INFO     ppm.requests:main.py:128 {"event": "http_request", "request_id": "8f1d21e0-19ca-4227-b002-f133f466b7dd", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 20.52}
+INFO     ppm.requests:main.py:128 {"event": "http_request", "request_id": "0e7bb4d5-2f3d-40c3-8ddf-5e0a9ec96651", "method": "POST", "route": "/api/v1/integrations", "status": 201, "duration_ms": 23.43}
+INFO     ppm.requests:main.py:128 {"event": "http_request", "request_id": "0f18a224-07a1-4f07-a8c7-6c06448d5802", "method": "POST", "route": "/api/v1/integrations/{id_}/sync", "status": 202, "duration_ms": 28.9}
+INFO     ppm.requests:main.py:128 {"event": "http_request", "request_id": "3218f0c9-150c-47d6-bb63-d7e57a60a268", "method": "GET", "route": "/api/v1/integrations/activity/jobs/{id_}", "status": 200, "duration_ms": 11.08}
+=============================== warnings summary ===============================
+.venv/lib/python3.12/site-packages/fastapi/testclient.py:1
+  /app/.venv/lib/python3.12/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED tests/test_jobs.py::test_import_atomic_replay_partial_recovery_revision_conflict_and_sse
+FAILED tests/test_jobs.py::test_signed_webhook_replay_cancellation_and_tenant_rls
+FAILED tests/test_jobs.py::test_github_jira_contract_fixtures_and_sprint_ingestion
+3 failed, 56 passed, 1 warning in 56.68s
+Traceback (most recent call last):
+  File "/app/scripts/test_backend.py", line 26, in <module>
+    subprocess.run(command, check=True, env=env)
+  File "/usr/local/lib/python3.12/subprocess.py", line 571, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['/app/.venv/bin/python', '-m', 'pytest', '-q']' returned non-zero exit status 1.
+

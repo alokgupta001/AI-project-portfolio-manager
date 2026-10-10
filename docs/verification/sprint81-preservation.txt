@@ -1,0 +1,1 @@
+PASS after: revision=0008_pilot_completion; 59 established table hashes/counts captured and unchanged

@@ -2,14 +2,13 @@
 
 import asyncio
 import hashlib
-import json
-import os
 import secrets
 from collections.abc import AsyncIterator
+from contextlib import asynccontextmanager
 from dataclasses import dataclass
 from datetime import UTC, datetime, timedelta
 from typing import Annotated, Any, NoReturn
-from uuid import UUID, uuid4
+from uuid import NAMESPACE_URL, UUID, uuid4, uuid5
 
 import bcrypt
 import jwt
@@ -17,6 +16,7 @@ import sqlalchemy as sa
 from fastapi import APIRouter, Depends, Header, HTTPException, Request, Response
 from sqlalchemy.ext.asyncio import AsyncConnection
 
+from ppm_api.errors import DomainError
 from ppm_api.identity_schemas import (
     AccountView,
     AuditsView,
@@ -29,7 +29,9 @@ from ppm_api.identity_schemas import (
     MembersView,
     MemberView,
     Message,
+    OrganizationProfileInput,
     ProfileInput,
+    RegistrationInput,
     SessionsView,
     SwitchInput,
 )
@@ -60,7 +62,26 @@ def digest(value: str) -> str:
     return hashlib.sha256(value.encode()).hexdigest()
 
 
-def deny(status: int = 401) -> NoReturn:
+def delivery_instructions(settings: Any, *, reset: bool = False) -> str:
+    if settings.mail_mode == "local":
+        return (
+            "Email delivery is in local test mode; no inbox email will be sent. "
+            "Ask the application operator for your private verification link."
+        )
+    return (
+        "Check your inbox and spam folder. "
+        + (
+            "The recovery link expires in 30 minutes. "
+            if reset
+            else "The link expires in 24 hours. "
+        )
+        + "Email delivery may take a few minutes."
+    )
+
+
+def deny(status: int = 401, message: str | None = None) -> NoReturn:
+    if message:
+        raise DomainError(status, message)
     raise HTTPException(status_code=status)
 
 
@@ -133,7 +154,7 @@ def access_cookie(request: Request, response: Response, session: Any) -> None:
         {
             "sub": str(session["user_id"]),
             "sid": str(session["id"]),
-            "org": str(session["organization_id"]),
+            "org": str(session["organization_id"]) if session["organization_id"] else None,
             "iat": issued,
             "exp": issued + timedelta(seconds=ACCESS_SECONDS),
             "iss": "enterprise-ppm",
@@ -150,10 +171,12 @@ async def record(
     conn: AsyncConnection,
     request: Request,
     user: UUID,
-    org: UUID,
+    org: UUID | None,
     action: str,
     target: UUID | None = None,
 ) -> None:
+    if org is None:
+        return  # Tenant audit records require a membership; never invent an organization.
     await conn.execute(
         audit.insert().values(
             id=uuid4(),
@@ -175,6 +198,7 @@ async def issue_challenge(
     org: UUID | None = None,
     inviter: UUID | None = None,
     role: str | None = None,
+    organization_name: str | None = None,
 ) -> None:
     token = secrets.token_urlsafe(32)
     expires = now() + timedelta(minutes=30 if kind == "reset" else 1440)
@@ -188,28 +212,31 @@ async def issue_challenge(
             role=role,
             expires_at=expires,
             used=False,
+            invitation_id=uuid4() if kind == "invite" else None,
+            organization_name=organization_name,
         )
     )
-    # Local-only spool, no unauthenticated HTTP mailbox and no external delivery.
-    folder = settings.storage_root / "__identity_mailbox__"
-    await asyncio.to_thread(folder.mkdir, parents=True, exist_ok=True)
-    path = folder / (str(uuid4()) + ".json")
-    content = json.dumps(
+    from ppm_api.account_mail import enqueue
+
+    if org:
+        organization_name = await conn.scalar(
+            sa.select(organizations.c.name).where(organizations.c.id == org)
+        )
+
+    await enqueue(
+        conn,
+        settings,
+        digest(token),
         {
             "to": email,
             "kind": kind,
             "expires_at": expires.isoformat(),
-            "link": settings.web_origin + "/account/complete#token=" + token,
+            "link": settings.web_origin + "/account/complete?action=" + kind + "#token=" + token,
             "organization_id": str(org) if org else None,
-        }
+            "organization_name": organization_name,
+            "role": role,
+        },
     )
-
-    def write_private() -> None:
-        folder.chmod(0o700)
-        with os.fdopen(os.open(path, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600), "w") as output:
-            output.write(content)
-
-    await asyncio.to_thread(write_private)
 
 
 @dataclass
@@ -220,9 +247,11 @@ class Principal:
     role: str
 
 
-async def principal(
+@asynccontextmanager
+async def authenticated(
     request: Request,
-    x_organization_id: Annotated[UUID | None, Header()] = None,
+    x_organization_id: UUID | None = None,
+    require_organization: bool = True,
 ) -> AsyncIterator[Principal]:
     try:
         claims = jwt.decode(
@@ -231,9 +260,10 @@ async def principal(
             algorithms=["HS256"],
             issuer="enterprise-ppm",
             audience="ppm-web",
-            options={"require": ["exp", "iat", "sub", "sid", "org", "jti"]},
+            options={"require": ["exp", "iat", "sub", "sid", "jti"]},
         )
-        uid, sid, oid = UUID(claims["sub"]), UUID(claims["sid"]), UUID(claims["org"])
+        uid, sid = UUID(claims["sub"]), UUID(claims["sid"])
+        oid = UUID(claims["org"]) if claims["org"] else None
     except (jwt.InvalidTokenError, ValueError, KeyError, TypeError):
         deny()
         return
@@ -268,11 +298,15 @@ async def principal(
             .mappings()
             .first()
         )
-        if not member:
-            deny()
         user = (await conn.execute(sa.select(users).where(users.c.id == uid))).mappings().one()
-        if not user["verified"]:
+        if not user["verified"] or not user["active"]:
             deny()
+        if not member and require_organization:
+            deny(
+                403,
+                "No active membership in this organization. Open Account and access to "
+                "select another organization or ask an administrator for access.",
+            )
         if request.method not in {"GET", "HEAD", "OPTIONS"}:
             if request.url.path.startswith("/api/v1/organization/") and x_organization_id != oid:
                 # A precondition only, never tenant authority; rejects stale tabs after a switch.
@@ -281,12 +315,28 @@ async def principal(
                 session["csrf_hash"], digest(request.headers.get("x-csrf-token", ""))
             ):
                 deny(403)
-        await context(conn, uid, oid, member["role"])
-        yield Principal(conn, user, session, member["role"])
+        role = member["role"] if member else ""
+        effective = dict(session) if member else {**session, "organization_id": None}
+        await context(conn, uid, effective["organization_id"], role)
+        yield Principal(conn, user, effective, role)
+
+
+async def principal(
+    request: Request,
+    x_organization_id: Annotated[UUID | None, Header()] = None,
+) -> AsyncIterator[Principal]:
+    async with authenticated(request, x_organization_id) as p:
+        yield p
+
+
+async def account_principal(request: Request) -> AsyncIterator[Principal]:
+    async with authenticated(request, require_organization=False) as p:
+        yield p
 
 
 # Commit (or fail) the transaction before the response can trigger a follow-up read.
 Auth = Annotated[Principal, Depends(principal, scope="function")]
+AccountAuth = Annotated[Principal, Depends(account_principal, scope="function")]
 
 
 async def admin(p: Principal) -> None:
@@ -296,10 +346,14 @@ async def admin(p: Principal) -> None:
         sa.text("SELECT pg_advisory_xact_lock(hashtextextended(:org, 2))"), {"org": str(oid)}
     )
     role = await p.conn.scalar(
-        sa.select(memberships.c.role).where(
+        sa.select(memberships.c.role)
+        .join(users, users.c.id == memberships.c.user_id)
+        .where(
             memberships.c.organization_id == oid,
             memberships.c.user_id == p.user["id"],
             memberships.c.active,
+            users.c.active,
+            users.c.verified,
         )
     )
     if role != "Admin":
@@ -319,7 +373,7 @@ async def account(conn: AsyncConnection, user: Any, session: Any) -> dict[str, A
         .mappings()
         .all()
     )
-    role = next(r["role"] for r in rows if r["id"] == session["organization_id"])
+    role = next((r["role"] for r in rows if r["id"] == session["organization_id"]), None)
     return {
         "id": user["id"],
         "email": user["email"],
@@ -349,7 +403,7 @@ async def login(body: Credentials, request: Request, response: Response) -> dict
             .first()
         )
         valid = await password_matches(body.password, user["password_hash"] if user else None)
-        if not user or not valid or not user["verified"]:
+        if not user or not valid or not user["verified"] or not user["active"]:
             deny()
         await context(conn, user["id"])
         org = await conn.scalar(
@@ -358,8 +412,6 @@ async def login(body: Credentials, request: Request, response: Response) -> dict
             .order_by(memberships.c.organization_id)
             .limit(1)
         )
-        if not org:
-            deny()
         await context(conn, user["id"], org)
         session = dict(
             id=uuid4(),
@@ -412,8 +464,18 @@ async def refresh(request: Request, response: Response) -> dict[str, str]:
                 memberships.c.user_id == session["user_id"],
             )
         )
-        if not member:
+        user = (
+            (await conn.execute(sa.select(users).where(users.c.id == session["user_id"])))
+            .mappings()
+            .one()
+        )
+        if not user["verified"] or not user["active"]:
             deny()
+        if not member:
+            await conn.execute(
+                sessions.update().where(sessions.c.id == sid).values(organization_id=None)
+            )
+            session = {**session, "organization_id": None}
         used = await conn.scalar(
             sa.select(refresh_tokens.c.used).where(refresh_tokens.c.token_hash == token_hash)
         )
@@ -455,12 +517,12 @@ async def refresh(request: Request, response: Response) -> dict[str, str]:
 
 
 @router.get("/auth/me", response_model=AccountView)
-async def me(p: Auth) -> dict[str, Any]:
+async def me(p: AccountAuth) -> dict[str, Any]:
     return await account(p.conn, p.user, p.session)
 
 
 @router.patch("/auth/profile", response_model=Message)
-async def profile(body: ProfileInput, request: Request, p: Auth) -> dict[str, str]:
+async def profile(body: ProfileInput, request: Request, p: AccountAuth) -> dict[str, str]:
     await p.conn.execute(users.update().where(users.c.id == p.user["id"]).values(name=body.name))
     await record(p.conn, request, p.user["id"], p.session["organization_id"], "profile.updated")
     return {"message": "Profile updated."}
@@ -468,7 +530,7 @@ async def profile(body: ProfileInput, request: Request, p: Auth) -> dict[str, st
 
 @router.post("/auth/switch", response_model=AccountView)
 async def switch(
-    body: SwitchInput, request: Request, response: Response, p: Auth
+    body: SwitchInput, request: Request, response: Response, p: AccountAuth
 ) -> dict[str, Any]:
     membership = (
         (
@@ -498,7 +560,7 @@ async def switch(
 
 
 @router.post("/auth/logout", response_model=Message)
-async def logout(request: Request, response: Response, p: Auth) -> dict[str, str]:
+async def logout(request: Request, response: Response, p: AccountAuth) -> dict[str, str]:
     await p.conn.execute(
         sessions.update().where(sessions.c.id == p.session["id"]).values(revoked=True)
     )
@@ -509,7 +571,7 @@ async def logout(request: Request, response: Response, p: Auth) -> dict[str, str
 
 
 @router.get("/auth/sessions", response_model=SessionsView)
-async def list_sessions(p: Auth) -> dict[str, Any]:
+async def list_sessions(p: AccountAuth) -> dict[str, Any]:
     rows = (
         await p.conn.execute(
             sa.select(sessions)
@@ -536,7 +598,7 @@ async def list_sessions(p: Auth) -> dict[str, Any]:
 
 
 @router.delete("/auth/sessions/{session_id}", response_model=Message)
-async def revoke(session_id: UUID, request: Request, p: Auth) -> dict[str, str]:
+async def revoke(session_id: UUID, request: Request, p: AccountAuth) -> dict[str, str]:
     found = await p.conn.scalar(
         sessions.update()
         .where(sessions.c.id == session_id, sessions.c.user_id == p.user["id"])
@@ -563,7 +625,10 @@ async def reset_request(body: EmailInput, request: Request) -> dict[str, str]:
         if uid:
             await issue_challenge(conn, request.app.state.settings, email, "reset")
     return {
-        "message": "If the account is eligible, recovery instructions are in the local mailbox."
+        "message": (
+            "If the account is eligible, recovery instructions have been requested. "
+            + delivery_instructions(request.app.state.settings, reset=True)
+        )
     }
 
 
@@ -597,8 +662,41 @@ async def complete(body: CompleteChallenge, request: Request) -> dict[str, str]:
             .first()
         )
         uid = user["id"] if user else uuid4()
+        if user and not user["active"]:
+            deny(400)
         oid = challenge["organization_id"]
-        if challenge["kind"] == "invite":
+        if challenge["kind"] == "register":
+            if user:
+                deny(400)
+            oid = uuid4()
+            await conn.execute(
+                users.insert().values(
+                    id=uid,
+                    email=email,
+                    name=body.name,
+                    password_hash=await password_hash(body.password),
+                    verified=True,
+                    created_at=now(),
+                )
+            )
+            await context(conn, uid, oid, "Admin")
+            await conn.execute(
+                organizations.insert().values(
+                    id=oid, name=challenge["organization_name"], created_at=now()
+                )
+            )
+            await conn.execute(
+                memberships.insert().values(
+                    organization_id=oid, user_id=uid, role="Admin", active=True, revision=1
+                )
+            )
+            await record(conn, request, uid, oid, "registration.verified")
+            await conn.execute(
+                challenges.update()
+                .where(challenges.c.email == email, challenges.c.kind == "register")
+                .values(used=True)
+            )
+        elif challenge["kind"] == "invite":
             await context(conn, challenge["inviter_id"], oid, "Admin")
             await conn.execute(
                 sa.text("SELECT pg_advisory_xact_lock(hashtextextended(:org, 2))"),
@@ -606,11 +704,14 @@ async def complete(body: CompleteChallenge, request: Request) -> dict[str, str]:
             )
             inviter = (
                 await conn.execute(
-                    sa.select(memberships).where(
+                    sa.select(memberships)
+                    .join(users)
+                    .where(
                         memberships.c.organization_id == oid,
                         memberships.c.user_id == challenge["inviter_id"],
                         memberships.c.active,
                         memberships.c.role == "Admin",
+                        users.c.active,
                     )
                 )
             ).first()
@@ -647,7 +748,11 @@ async def complete(body: CompleteChallenge, request: Request) -> dict[str, str]:
             ).first()
             if existing:
                 # Invitations cannot silently restore removed users or overwrite current roles.
-                deny(409)
+                deny(
+                    409,
+                    "This account already has a membership. An administrator must update its "
+                    "role or active state instead of accepting another invitation.",
+                )
             await conn.execute(
                 memberships.insert().values(
                     organization_id=oid,
@@ -695,7 +800,11 @@ async def complete(body: CompleteChallenge, request: Request) -> dict[str, str]:
             .where(challenges.c.token_hash == digest(body.token))
             .values(used=True)
         )
-    return {"message": "Account verified. You can sign in now."}
+    return {
+        "message": "Password reset. You can sign in with your new password."
+        if challenge["kind"] == "reset"
+        else "Account verified. You can sign in now."
+    }
 
 
 @router.get("/organization/members", response_model=MembersView)
@@ -720,6 +829,15 @@ async def member_list(p: Auth, after: UUID | None = None) -> dict[str, Any]:
 async def invite(body: InviteInput, request: Request, p: Auth) -> dict[str, str]:
     await admin(p)
     await limited(request, "invite", str(p.user["id"]), 20)
+    await p.conn.execute(
+        challenges.update()
+        .where(
+            challenges.c.email == str(body.email).lower(),
+            challenges.c.kind == "invite",
+            challenges.c.organization_id == p.session["organization_id"],
+        )
+        .values(used=True)
+    )
     await issue_challenge(
         p.conn,
         request.app.state.settings,
@@ -730,7 +848,7 @@ async def invite(body: InviteInput, request: Request, p: Auth) -> dict[str, str]
         body.role,
     )
     await record(p.conn, request, p.user["id"], p.session["organization_id"], "invitation.created")
-    return {"message": "Invitation created in the local mailbox."}
+    return {"message": "Invitation requested. " + delivery_instructions(request.app.state.settings)}
 
 
 @router.patch("/organization/members/{user_id}", response_model=MemberView)
@@ -763,27 +881,28 @@ async def change_member(
     if member["active"] and member["role"] == "Admin" and (body.role != "Admin" or not body.active):
         count = await p.conn.scalar(
             sa.select(sa.func.count())
-            .select_from(memberships)
+            .select_from(memberships.join(users, users.c.id == memberships.c.user_id))
             .where(
                 memberships.c.organization_id == oid,
                 memberships.c.active,
                 memberships.c.role == "Admin",
+                users.c.active,
+                users.c.verified,
             )
         )
-        if count == 1:
-            deny(409)
+        if (count or 0) <= 1:
+            deny(
+                409,
+                "The final active administrator cannot be removed or demoted. "
+                "Assign another administrator first.",
+            )
     await p.conn.execute(
         memberships.update()
         .where(memberships.c.organization_id == oid, memberships.c.user_id == user_id)
         .values(role=body.role, active=body.active, revision=member["revision"] + 1)
     )
-    # Live policy is re-read on every request. Removed memberships invalidate their sessions.
-    if not body.active:
-        await p.conn.execute(
-            sessions.update()
-            .where(sessions.c.user_id == user_id, sessions.c.organization_id == oid)
-            .values(revoked=True)
-        )
+    # Live policy denies organization operations immediately. Preserve account sessions
+    # so revoked members can manage their account and switch to another membership.
     await record(p.conn, request, p.user["id"], oid, "membership.updated", user_id)
     user = (await p.conn.execute(sa.select(users).where(users.c.id == user_id))).mappings().one()
     return {
@@ -807,4 +926,238 @@ async def audit_list(p: Auth, after: UUID | None = None) -> dict[str, Any]:
         "items": [dict(r) for r in rows[:100]],
         "as_of": now(),
         "next_cursor": str(rows[99]["id"]) if len(rows) > 100 else None,
+    }
+
+
+@router.post("/auth/register", response_model=Message)
+async def register(body: RegistrationInput, request: Request) -> dict[str, str]:
+    email = str(body.email).lower()
+    await limited(request, "register", email, 3)
+    await limited(
+        request, "register-peer", request.client.host if request.client else "unknown", 30
+    )
+    async with request.app.state.engine.begin() as conn:
+        await conn.execute(
+            sa.text("SELECT pg_advisory_xact_lock(hashtextextended(:email,0))"), {"email": email}
+        )
+        if not await conn.scalar(sa.select(users.c.id).where(users.c.email == email)):
+            await conn.execute(
+                challenges.update()
+                .where(challenges.c.email == email, challenges.c.kind == "register")
+                .values(used=True)
+            )
+            await issue_challenge(
+                conn,
+                request.app.state.settings,
+                email,
+                "register",
+                organization_name=body.organization_name.strip(),
+            )
+    return {
+        "message": (
+            "If eligible, verification instructions have been requested. "
+            "Existing accounts should sign in. " + delivery_instructions(request.app.state.settings)
+        )
+    }
+
+
+@router.get("/organization/profile", response_model=dict)
+async def organization_profile(p: Auth) -> dict:
+    row = (
+        (
+            await p.conn.execute(
+                sa.select(organizations).where(organizations.c.id == p.session["organization_id"])
+            )
+        )
+        .mappings()
+        .one()
+    )
+    admins = (
+        (
+            await p.conn.execute(
+                sa.select(users.c.id, users.c.name)
+                .join(memberships)
+                .where(
+                    memberships.c.organization_id == row["id"],
+                    memberships.c.active,
+                    memberships.c.role == "Admin",
+                    users.c.active,
+                )
+                .order_by(users.c.name, users.c.id)
+            )
+        )
+        .mappings()
+        .all()
+    )
+    counts = (
+        (
+            await p.conn.execute(
+                sa.select(
+                    sa.func.count().label("members"),
+                    sa.func.count().filter(memberships.c.active).label("active_members"),
+                ).where(memberships.c.organization_id == row["id"])
+            )
+        )
+        .mappings()
+        .one()
+    )
+    from ppm_api.ppm_tables import TABLES
+
+    settings = (
+        (
+            await p.conn.execute(
+                sa.select(TABLES["settings"]).where(
+                    TABLES["settings"].c.organization_id == row["id"]
+                )
+            )
+        )
+        .mappings()
+        .first()
+    )
+    return {
+        **{
+            k: row[k]
+            for k in ["name", "revision", "description", "industry", "website", "created_at"]
+        },
+        "administrators": [dict(a) for a in admins],
+        **dict(counts),
+        "timezone": settings["timezone"] if settings else None,
+        "currency": settings["currency"] if settings else None,
+        "setup_complete": bool(settings),
+    }
+
+
+@router.patch("/organization/profile", response_model=Message)
+async def edit_organization(
+    body: OrganizationProfileInput,
+    request: Request,
+    p: Auth,
+    if_match: Annotated[int | None, Header()] = None,
+) -> dict:
+    await admin(p)
+    row = await organization_profile(p)
+    if if_match is None:
+        deny(428)
+    if if_match != row["revision"]:
+        deny(412)
+    values = body.model_dump(exclude_unset=True)
+    if "name" in values and values["name"] is None:
+        deny(422)
+    values = {k: str(v).strip() or None if v is not None else None for k, v in values.items()}
+    if all(row[k] == v for k, v in values.items()):
+        return {"message": "Organization already up to date."}
+    await p.conn.execute(
+        organizations.update()
+        .where(organizations.c.id == p.session["organization_id"])
+        .values(**values, revision=if_match + 1)
+    )
+    await record(
+        p.conn, request, p.user["id"], p.session["organization_id"], "organization.profile_updated"
+    )
+    return {"message": "Organization updated."}
+
+
+def invitation_reference(row: Any) -> UUID:
+    # Legacy invitations keep their original challenge/data; expose only an opaque reference.
+    return row["invitation_id"] or uuid5(NAMESPACE_URL, "ppm:invitation:" + row["token_hash"])
+
+
+@router.get("/organization/invitations", response_model=list[dict])
+async def invitation_list(p: Auth) -> list[dict]:
+    await admin(p)
+    from ppm_api.pilot_tables import mail
+
+    rows = (
+        await p.conn.execute(
+            sa.select(
+                challenges.c.invitation_id,
+                challenges.c.token_hash,
+                challenges.c.email,
+                challenges.c.role,
+                challenges.c.expires_at,
+                sa.func.coalesce(mail.c.status, "legacy_delivery_unverified").label(
+                    "delivery_status"
+                ),
+            )
+            .outerjoin(mail, mail.c.token_hash == challenges.c.token_hash)
+            .where(
+                challenges.c.organization_id == p.session["organization_id"],
+                challenges.c.kind == "invite",
+                ~challenges.c.used,
+            )
+            .order_by(challenges.c.expires_at, challenges.c.token_hash)
+            .limit(100)
+        )
+    ).mappings()
+    return [
+        {k: v for k, v in dict(r).items() if k != "token_hash"}
+        | {
+            "invitation_id": invitation_reference(r),
+            "delivery_status": (
+                "acceptance_unverified"
+                if r["delivery_status"] == "delivered"
+                else r["delivery_status"]
+            ),
+        }
+        for r in rows
+    ]
+
+
+@router.post("/organization/invitations/{invitation_id}/{operation}", response_model=Message)
+async def invitation_action(invitation_id: UUID, operation: str, request: Request, p: Auth) -> dict:
+    await admin(p)
+    if operation not in {"resend", "cancel"}:
+        deny(422)
+    query = sa.select(challenges).where(
+        challenges.c.organization_id == p.session["organization_id"],
+        challenges.c.kind == "invite",
+        ~challenges.c.used,
+    )
+    row = (
+        (
+            await p.conn.execute(
+                query.where(challenges.c.invitation_id == invitation_id).with_for_update()
+            )
+        )
+        .mappings()
+        .first()
+    )
+    if row is None:
+        candidates = (
+            (
+                await p.conn.execute(
+                    query.where(challenges.c.invitation_id.is_(None))
+                    .order_by(challenges.c.expires_at, challenges.c.token_hash)
+                    .limit(100)
+                    .with_for_update()
+                )
+            )
+            .mappings()
+            .all()
+        )
+        row = next((r for r in candidates if invitation_reference(r) == invitation_id), None)
+    if not row:
+        deny(404)
+    await p.conn.execute(
+        challenges.update().where(challenges.c.token_hash == row["token_hash"]).values(used=True)
+    )
+    if operation == "resend":
+        await limited(request, "invite", str(p.user["id"]), 20)
+        await issue_challenge(
+            p.conn,
+            request.app.state.settings,
+            row["email"],
+            "invite",
+            p.session["organization_id"],
+            p.user["id"],
+            row["role"],
+        )
+    await record(
+        p.conn, request, p.user["id"], p.session["organization_id"], "invitation." + operation
+    )
+    return {
+        "message": "Invitation "
+        + operation
+        + " completed."
+        + (" " + delivery_instructions(request.app.state.settings) if operation == "resend" else "")
     }

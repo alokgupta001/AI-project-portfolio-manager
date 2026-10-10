@@ -1,0 +1,69 @@
+ Image enterprise-ppm-test Building 
+#1 [internal] load local bake definitions
+#1 reading from stdin 590B done
+#1 DONE 0.0s
+
+#2 [internal] load build definition from api.Dockerfile
+#2 transferring dockerfile: 774B done
+#2 DONE 0.0s
+
+#3 [internal] load metadata for docker.io/library/python:3.12-slim-bookworm@sha256:54c85f3c47607a77f32adec749d3c81d1348bf25833671f512b26a9b6d778cb3
+#3 DONE 0.1s
+
+#4 [internal] load .dockerignore
+#4 transferring context: 205B done
+#4 DONE 0.0s
+
+#5 [internal] load build context
+#5 DONE 0.0s
+
+#6 [ 1/10] FROM docker.io/library/python:3.12-slim-bookworm@sha256:54c85f3c47607a77f32adec749d3c81d1348bf25833671f512b26a9b6d778cb3
+#6 resolve docker.io/library/python:3.12-slim-bookworm@sha256:54c85f3c47607a77f32adec749d3c81d1348bf25833671f512b26a9b6d778cb3 0.1s done
+#6 DONE 0.1s
+
+#5 [internal] load build context
+#5 transferring context: 31.97kB 0.0s done
+#5 DONE 0.1s
+
+#7 [ 3/10] RUN pip install --no-cache-dir uv==0.11.15
+#7 CACHED
+
+#8 [ 4/10] COPY pyproject.toml uv.lock ./
+#8 CACHED
+
+#9 [ 5/10] RUN uv sync --frozen --no-managed-python
+#9 CACHED
+
+#10 [ 6/10] COPY services ./services
+#10 CACHED
+
+#11 [ 2/10] WORKDIR /app
+#11 CACHED
+
+#12 [ 7/10] COPY scripts ./scripts
+#12 CACHED
+
+#13 [ 8/10] COPY tests ./tests
+#13 DONE 0.1s
+
+#14 [ 9/10] COPY alembic.ini ./
+#14 DONE 0.1s
+
+#15 [10/10] RUN useradd --uid 10001 --create-home ppm && mkdir -p /var/ppm/objects && chown -R ppm:ppm /var/ppm && chown ppm:ppm /app
+#15 DONE 0.5s
+
+#16 exporting to image
+#16 exporting layers
+#16 exporting layers 0.6s done
+#16 exporting manifest sha256:3dd671f5df364a9780f2f9c57c708778708f04fec7fbb57f186ea98f4d17a578 0.0s done
+#16 exporting config sha256:a3b7144fd4ef63e5c87b78780492d6ce016b9dfd773e694c4c5c43afeb004b9f 0.0s done
+#16 exporting attestation manifest sha256:8e989d64a3542ce4823937a90033e95730411260fb1b520f51c8cc16ea42b1ff
+#16 exporting attestation manifest sha256:8e989d64a3542ce4823937a90033e95730411260fb1b520f51c8cc16ea42b1ff 0.0s done
+#16 exporting manifest list sha256:5ee82c6eb9de9780a44e85a7a36067500a00e4474bd07b28bfc6035983bb42cb 0.0s done
+#16 naming to docker.io/library/enterprise-ppm-test:latest done
+#16 unpacking to docker.io/library/enterprise-ppm-test:latest 0.1s done
+#16 DONE 1.0s
+
+#17 resolving provenance for metadata file
+#17 DONE 0.0s
+ Image enterprise-ppm-test Built 

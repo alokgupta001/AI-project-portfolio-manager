@@ -1,0 +1,4 @@
+Command: C:\Users\alokg\OneDrive\Documents\Codex\enterprise-ppm\.venv\Scripts\python.exe -m ruff check services scripts tests
+All checks passed!
+
+Exit: 0

@@ -2,7 +2,14 @@ import asyncio
 import os
 
 from alembic import context
-from ppm_api import assessment_tables, command_tables, identity_tables, ppm_tables  # noqa: F401
+from ppm_api import (  # noqa: F401
+    assessment_tables,
+    command_tables,
+    identity_tables,
+    job_tables,
+    pilot_tables,
+    ppm_tables,
+)
 from ppm_api.database import Base
 from sqlalchemy import pool
 from sqlalchemy.ext.asyncio import create_async_engine

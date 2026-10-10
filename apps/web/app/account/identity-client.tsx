@@ -5,7 +5,15 @@ import { createApiClient } from "@ppm/contracts";
 import type { components } from "@ppm/contracts/schema";
 
 import { AuthFrame, Shell } from "../../components/shell";
+import { PasswordField } from "../../components/password-field";
+import { apiError } from "../../components/api-error";
+import {
+  PilotAccount,
+  SetupChecklist,
+  PersonalFeed,
+} from "../../components/pilot";
 import { WorkspaceHome } from "../../components/workspace-home";
+import { Integrations } from "../../components/integrations";
 import { CommandCenter } from "../../components/command-center";
 import { Assessments } from "../../components/assessments";
 import { Capacity } from "../../components/capacity";
@@ -62,12 +70,13 @@ const messages: Record<number, string> = {
   422: "Check your fields. New passwords need at least 12 characters and at most 72 UTF-8 bytes.",
   429: "Too many attempts. Wait ten minutes before trying again.",
 };
-function checked<T>(result: { data?: T; response: Response }): T {
+function checked<T>(result: {
+  data?: T;
+  error?: unknown;
+  response: Response;
+}): T {
   if (!result.response.ok)
-    throw new Error(
-      messages[result.response.status] ||
-        "The service is unavailable. Try again.",
-    );
+    throw new Error(apiError(result.error, result.response.status));
   return result.data as T;
 }
 
@@ -75,6 +84,7 @@ export default function IdentityClient({
   mode,
 }: {
   mode:
+    | "signup"
     | "login"
     | "reset"
     | "complete"
@@ -84,7 +94,8 @@ export default function IdentityClient({
     | "delivery"
     | "capacity"
     | "assessment"
-    | "command";
+    | "command"
+    | "integrations";
 }) {
   const protectedMode = [
     "account",
@@ -94,6 +105,7 @@ export default function IdentityClient({
     "capacity",
     "assessment",
     "command",
+    "integrations",
   ].includes(mode);
   const [confirmation, setConfirmation] = useState<Confirmation | null>(null);
   const [memberFilter, setMemberFilter] = useState("");
@@ -108,6 +120,7 @@ export default function IdentityClient({
   const [busy, setBusy] = useState(false);
   const [loading, setLoading] = useState(protectedMode);
   const [challenge, setChallenge] = useState("");
+  const [completionAction, setCompletionAction] = useState("");
   async function load() {
     const user = checked(await api().GET("/api/v1/auth/me"));
     const nextSessions = checked(
@@ -125,7 +138,7 @@ export default function IdentityClient({
       nextEvents = history.items;
       nextAuditCursor = history.next_cursor ?? null;
     }
-    activeOrganization = user.organization_id;
+    activeOrganization = user.organization_id || "";
     setSessions(nextSessions);
     setMembers(nextMembers);
     setEvents(nextEvents);
@@ -135,6 +148,10 @@ export default function IdentityClient({
   }
   useEffect(() => {
     if (mode === "complete") {
+      // Presentation hint only; the server validates the actual challenge kind.
+      setCompletionAction(
+        new URLSearchParams(window.location.search).get("action") || "",
+      );
       setChallenge(
         new URLSearchParams(window.location.hash.slice(1)).get("token") || "",
       );
@@ -149,6 +166,7 @@ export default function IdentityClient({
         "capacity",
         "assessment",
         "command",
+        "integrations",
       ].includes(mode)
     )
       load()
@@ -180,7 +198,7 @@ export default function IdentityClient({
     <label>
       Organization
       <select
-        value={account.organization_id}
+        value={account.organization_id || ""}
         disabled={busy}
         onChange={(e) => {
           const id = e.target.value;
@@ -195,6 +213,9 @@ export default function IdentityClient({
           });
         }}
       >
+        {!account.organization_id && (
+          <option value="">Choose an accessible organization</option>
+        )}
         {account.organizations.map((o) => (
           <option key={o.id} value={o.id}>
             {o.name} · {o.role} · {o.id.slice(0, 8)}
@@ -210,21 +231,32 @@ export default function IdentityClient({
         mode !== "delivery" &&
         mode !== "capacity" &&
         mode !== "assessment" &&
-        mode !== "command" && (
+        mode !== "command" &&
+        mode !== "integrations" && (
           <section className="intro">
             <p className="eyebrow">YOUR ENTERPRISE WORKSPACE</p>
             <h1>
-              {mode === "login"
-                ? "Welcome back."
-                : mode === "reset"
-                  ? "Recover your account."
-                  : mode === "complete"
-                    ? "Verify your account."
-                    : "Your account. Your access."}
+              {mode === "signup"
+                ? "Create your organization."
+                : mode === "login"
+                  ? "Welcome back."
+                  : mode === "reset"
+                    ? "Recover your account."
+                    : mode === "complete"
+                      ? completionAction === "reset"
+                        ? "Reset your password."
+                        : completionAction === "invite"
+                          ? "Accept your invitation."
+                          : "Complete your account request."
+                      : "Your account. Your access."}
             </h1>
             <p className="lead">
               {mode === "complete"
-                ? "Use your invitation or activation link. Existing members enter their current password to join another organization."
+                ? completionAction === "reset"
+                  ? "Enter your display name and choose a new password. Resetting your password signs out existing sessions. Then sign in with your new password."
+                  : completionAction === "invite"
+                    ? "New members choose a display name and password. Existing verified members enter their current password to join the organization."
+                    : "For signup or activation, choose a display name and password. For password recovery, choose a new password. For an invitation to an existing account, enter your current password."
                 : "Secure access to the organizations you belong to. Your permissions follow your active membership."}
             </p>
           </section>
@@ -232,6 +264,14 @@ export default function IdentityClient({
       {error && (
         <p role="alert" className="notice error">
           {error}
+        </p>
+      )}
+      {mode === "complete" && error === messages[400] && (
+        <p className="notice">
+          For signup, <a href="/signup">request verification again</a>. For
+          recovery, <a href="/account/reset">request a password reset</a>. For
+          an invitation, ask the organization Admin to resend it, then open the
+          latest message.
         </p>
       )}
       {notice && (
@@ -246,7 +286,27 @@ export default function IdentityClient({
           onSubmit={(event) => {
             const data = form(event);
             void action(async () => {
-              if (mode === "login") {
+              if (mode === "signup") {
+                const r = await transport(
+                  new Request(
+                    window.location.origin + "/api/v1/auth/register",
+                    {
+                      method: "POST",
+                      headers: { "content-type": "application/json" },
+                      body: JSON.stringify({
+                        email: text(data, "email"),
+                        organization_name: text(data, "organization_name"),
+                      }),
+                    },
+                  ),
+                );
+                if (!r.ok)
+                  throw new Error(
+                    messages[r.status] ||
+                      "Registration unavailable. Try again.",
+                  );
+                setNotice((await r.json()).message);
+              } else if (mode === "login") {
                 checked(
                   await api().POST("/api/v1/auth/login", {
                     body: {
@@ -298,6 +358,7 @@ export default function IdentityClient({
               <label>
                 One-time token
                 <input
+                  type="password"
                   value={challenge}
                   onChange={(e) => setChallenge(e.target.value)}
                   required
@@ -316,31 +377,38 @@ export default function IdentityClient({
               </label>
             </>
           )}
-          {mode !== "reset" && (
+          {mode === "signup" && (
             <label>
-              {mode === "complete" ? "Password (12–72 bytes)" : "Password"}
-              <input
-                name="password"
-                type="password"
-                required
-                autoComplete={
-                  mode === "login" ? "current-password" : "new-password"
-                }
-                minLength={mode === "complete" ? 12 : 1}
-                maxLength={72}
-              />
+              Organization name
+              <input name="organization_name" required maxLength={120} />
             </label>
+          )}
+          {mode !== "reset" && mode !== "signup" && (
+            <PasswordField
+              label={
+                mode === "complete" ? "Password (12–72 bytes)" : "Password"
+              }
+              autoComplete={
+                mode === "login" ? "current-password" : "new-password"
+              }
+              minLength={mode === "complete" ? 12 : 1}
+            />
           )}
           <button disabled={busy}>
             {busy
               ? "Working…"
-              : mode === "login"
-                ? "Sign in"
-                : mode === "reset"
-                  ? "Send recovery instructions"
-                  : "Verify and continue"}
+              : mode === "signup"
+                ? "Send verification instructions"
+                : mode === "login"
+                  ? "Sign in"
+                  : mode === "reset"
+                    ? "Send recovery instructions"
+                    : completionAction === "reset"
+                      ? "Reset password"
+                      : "Verify and continue"}
           </button>
           <nav aria-label="Account help">
+            <a href="/signup">Create an account</a>
             <a href="/login">Sign in</a>
             <a href="/account/reset">Forgot password?</a>
           </nav>
@@ -351,36 +419,66 @@ export default function IdentityClient({
           Go to sign in
         </a>
       )}
-      {account && mode === "workspace" && (
-        <WorkspaceHome account={account} sessionCount={sessions.length} />
+      {account && !account.organization_id && (
+        <section className="panel">
+          <h2>Your account is active</h2>
+          <p>
+            {account.organizations.length
+              ? "Select an organization above to continue."
+              : "You have no active organization memberships. Ask an administrator to invite you or restore your membership. You can still manage your personal profile and sessions."}
+          </p>
+          <a href="/account">Account and access</a>
+        </section>
+      )}
+      {account?.organization_id && mode === "workspace" && (
+        <>
+          <SetupChecklist transport={transport} />
+          <WorkspaceHome account={account} sessionCount={sessions.length} />
+          <PersonalFeed transport={transport} />
+        </>
       )}
       {account && mode === "gallery" && <Gallery />}
-      {account && mode === "command" && (
+      {account?.organization_id && mode === "integrations" && (
+        <Integrations
+          key={account.organization_id}
+          account={account}
+          transport={transport}
+        />
+      )}
+      {account?.organization_id && mode === "command" && (
         <CommandCenter
           key={account.organization_id}
           account={account}
           transport={transport}
         />
       )}
-      {account && mode === "assessment" && (
+      {account?.organization_id && mode === "assessment" && (
         <Assessments
           key={account.organization_id}
           account={account}
           transport={transport}
         />
       )}
-      {account && mode === "capacity" && (
+      {account?.organization_id && mode === "capacity" && (
         <Capacity
+          transport={transport}
           key={account.organization_id}
           account={account}
           client={api()}
         />
       )}
-      {account && mode === "delivery" && (
+      {account?.organization_id && mode === "delivery" && (
         <Delivery
           key={account.organization_id}
           account={account}
           client={api()}
+        />
+      )}
+      {account?.organization_id && mode === "account" && (
+        <PilotAccount
+          key={account.organization_id}
+          account={account}
+          transport={transport}
         />
       )}
       {account && mode === "account" && (
@@ -483,8 +581,9 @@ export default function IdentityClient({
               <section className="panel wide">
                 <h2>Invite a member</h2>
                 <p className="muted">
-                  Development invitations are delivered to the operator-only
-                  local mailbox.
+                  Invite a colleague to this organization with the role they
+                  need. Ask them to check their inbox and spam folder; sending
+                  progress appears under Pending invitations.
                 </p>
                 <form
                   className="identity-form inline-form"
@@ -501,6 +600,7 @@ export default function IdentityClient({
                           }),
                         ).message,
                       );
+                      await load();
                     });
                   }}
                 >
@@ -700,8 +800,10 @@ export default function IdentityClient({
   if (account && protectedMode)
     return (
       <Shell
+        key={account.organization_id}
+        transport={transport}
         name={account.name}
-        role={account.role}
+        role={account.role || "Account"}
         organizationControl={organizationControl}
       >
         {content}

@@ -1,6 +1,7 @@
 import asyncio
 import json
 import logging
+import re
 import secrets
 from collections.abc import AsyncIterator, Awaitable, Callable
 from contextlib import asynccontextmanager
@@ -17,6 +18,7 @@ from starlette.exceptions import HTTPException
 
 import ppm_api.assessment_tables  # noqa: F401 — registers assessment tables into TABLES
 import ppm_api.command_tables  # noqa: F401
+import ppm_api.job_tables  # noqa: F401
 from ppm_api.assessment import router as assessment_router
 from ppm_api.capacity import router as capacity_router
 from ppm_api.command import router as command_router
@@ -25,6 +27,9 @@ from ppm_api.database import FoundationState, make_engine
 from ppm_api.delivery import DomainError
 from ppm_api.delivery import router as delivery_router
 from ppm_api.identity import router as identity_router
+from ppm_api.job_limits import IntegrationBodyLimit
+from ppm_api.jobs import router as jobs_router
+from ppm_api.pilot import router as pilot_router
 from ppm_api.schemas import (
     DependencyStatus,
     ErrorBody,
@@ -74,9 +79,12 @@ def create_app(settings: Settings | None = None) -> FastAPI:
             await app.state.engine.dispose()
 
     app = FastAPI(title="Enterprise PPM foundation", version="0.1.0", lifespan=lifespan)
+    app.add_middleware(IntegrationBodyLimit)
+    app.include_router(jobs_router)
     app.include_router(command_router)
     app.include_router(capacity_router)
     app.include_router(assessment_router)
+    app.include_router(pilot_router)
 
     @app.middleware("http")
     async def request_context(request: Request, call_next: Callable[..., Awaitable[Any]]) -> Any:
@@ -86,7 +94,10 @@ def create_app(settings: Settings | None = None) -> FastAPI:
         except ValueError:
             request_id = str(uuid4())
         request.state.request_id = request_id
-        if request.method not in {"GET", "HEAD", "OPTIONS"}:
+        signed_hook = request.method == "POST" and re.fullmatch(
+            r"/api/v1/integrations/hooks/github/[0-9a-fA-F-]{36}", request.url.path
+        )
+        if request.method not in {"GET", "HEAD", "OPTIONS"} and not signed_hook:
             config = request.app.state.settings
             csrf_cookie = request.cookies.get("ppm_csrf", "")
             csrf_header = request.headers.get("x-csrf-token", "")
@@ -141,8 +152,31 @@ def create_app(settings: Settings | None = None) -> FastAPI:
         response = error_response(
             request,
             exc.status_code,
-            "HTTP_ERROR",
-            str(exc.detail) if isinstance(exc, DomainError) else "Request could not be completed.",
+            {
+                400: "INVALID_REQUEST",
+                401: "UNAUTHENTICATED",
+                403: "FORBIDDEN",
+                404: "NOT_FOUND",
+                409: "CONFLICT",
+                412: "STALE_RECORD",
+                422: "VALIDATION_ERROR",
+                428: "REVISION_REQUIRED",
+                429: "RATE_LIMITED",
+            }.get(exc.status_code, "HTTP_ERROR"),
+            str(exc.detail)
+            if isinstance(exc, DomainError)
+            else {
+                400: "This link is invalid, expired or already used. Request a new one.",
+                401: "Sign-in failed or your session expired. "
+                "Check your credentials and sign in again.",
+                403: "You do not have permission for this action in the selected organization.",
+                404: "The requested record is not available.",
+                409: "This operation conflicts with the current state. "
+                "Reload and check the organization and membership.",
+                412: "This record changed. Reload before saving your changes.",
+                428: "Reload the record to obtain its current revision before saving.",
+                429: "Too many attempts. Wait before trying again.",
+            }.get(exc.status_code, "Request could not be completed."),
         )
         if exc.headers:
             response.headers.update(exc.headers)
@@ -156,7 +190,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
             "VALIDATION_ERROR",
             "Request validation failed.",
             [
-                ErrorDetail(field=".".join(str(p) for p in e["loc"]), reason=e["type"])
+                ErrorDetail(field=".".join(str(p) for p in e["loc"]), reason=e["msg"])
                 for e in exc.errors()
             ],
         )
@@ -178,7 +212,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
                 if result.scalar_one_or_none() is None:
                     raise RuntimeError("Missing migration checkpoint")
                 revision = await conn.scalar(text("SELECT version_num FROM alembic_version"))
-                if revision != "0006_command_center":
+                if revision != "0010_account_authority":
                     raise RuntimeError("Schema revision mismatch")
 
         async def redis_probe() -> None:

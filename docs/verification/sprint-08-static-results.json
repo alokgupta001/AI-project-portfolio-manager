@@ -1,0 +1,76 @@
+{
+  "ruff": {
+    "command": [
+      "C:\\Users\\alokg\\OneDrive\\Documents\\Codex\\enterprise-ppm\\.venv\\Scripts\\python.exe",
+      "-m",
+      "ruff",
+      "check",
+      "services",
+      "scripts",
+      "tests"
+    ],
+    "exit_code": 0
+  },
+  "python-format": {
+    "command": [
+      "C:\\Users\\alokg\\OneDrive\\Documents\\Codex\\enterprise-ppm\\.venv\\Scripts\\python.exe",
+      "-m",
+      "ruff",
+      "format",
+      "--check",
+      "services",
+      "scripts",
+      "tests"
+    ],
+    "exit_code": 0
+  },
+  "mypy": {
+    "command": [
+      "C:\\Users\\alokg\\OneDrive\\Documents\\Codex\\enterprise-ppm\\.venv\\Scripts\\python.exe",
+      "-m",
+      "mypy",
+      "services/api/ppm_api",
+      "services/worker/ppm_worker"
+    ],
+    "exit_code": 0
+  },
+  "contracts": {
+    "command": [
+      "npm.cmd",
+      "run",
+      "contracts:check"
+    ],
+    "exit_code": 0
+  },
+  "types": {
+    "command": [
+      "npm.cmd",
+      "run",
+      "typecheck"
+    ],
+    "exit_code": 0
+  },
+  "lint": {
+    "command": [
+      "npm.cmd",
+      "run",
+      "lint"
+    ],
+    "exit_code": 0
+  },
+  "format": {
+    "command": [
+      "npm.cmd",
+      "run",
+      "format:check"
+    ],
+    "exit_code": 0
+  },
+  "sources": {
+    "command": [
+      "C:\\Users\\alokg\\OneDrive\\Documents\\Codex\\enterprise-ppm\\.venv\\Scripts\\python.exe",
+      "scripts/check_sources.py"
+    ],
+    "exit_code": 0
+  }
+}

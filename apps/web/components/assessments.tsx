@@ -1,5 +1,6 @@
 "use client";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { apiError } from "./api-error";
 import type { components } from "@ppm/contracts/schema";
 import { Button, Field, Modal, ChartFrame } from "./ui";
 
@@ -12,6 +13,8 @@ type Assessment = S["AssessmentRecord"];
 type Detail = S["AssessmentDetail"];
 type Answer = S["AnswerInput"];
 type Version = S["VersionRecord"];
+import { AssessmentAccess, DepartmentComparison } from "./pilot";
+import { RecordSelect } from "./record-select";
 const base = "/api/v1/assessment";
 const number = (n: string | number | null) =>
   n == null ? "Unknown" : Number(n).toFixed(2);
@@ -48,9 +51,9 @@ export function Assessments({
 }) {
   const [frameworks, setFrameworks] = useState<Framework[]>([]);
   const [assessments, setAssessments] = useState<Assessment[]>([]);
-  const [people, setPeople] = useState<S["PersonView"][]>([]);
+  const [, setPeople] = useState<S["PersonView"][]>([]);
   const [departments, setDepartments] = useState<S["RecordView"][]>([]);
-  const [teams, setTeams] = useState<S["RecordView"][]>([]);
+  const [, setTeams] = useState<S["RecordView"][]>([]);
   const [error, setError] = useState("");
   const [notice, setNotice] = useState("");
   const [busy, setBusy] = useState(false);
@@ -58,6 +61,10 @@ export function Assessments({
   const [editor, setEditor] = useState<Definition | null>(null);
   const [editing, setEditing] = useState<Framework | null>(null);
   const [versions, setVersions] = useState<Version[]>([]);
+  const listRequest = useRef(0);
+  const [assessmentOffset, setAssessmentOffset] = useState(0);
+  const [assessmentQuery, setAssessmentQuery] = useState("");
+  const [frameworkOffset, setFrameworkOffset] = useState(0);
   const [assignVersion, setAssignVersion] = useState("");
   const [detail, setDetail] = useState<Detail | null>(null);
   const [answers, setAnswers] = useState<Answer[]>([]);
@@ -94,11 +101,7 @@ export function Assessments({
       );
       if (!r.ok) {
         const e = await r.json().catch(() => null);
-        throw new Error(
-          e?.error?.message ||
-            e?.detail ||
-            `Request failed (${r.status}). Reload and try again.`,
-        );
+        throw new Error(apiError(e, r.status));
       }
       return r.json();
     },
@@ -106,22 +109,36 @@ export function Assessments({
   );
 
   const load = useCallback(async () => {
+    const request = ++listRequest.current;
     const [f, a, p, d, t] = await Promise.all([
-      api<Framework[]>(base + "/frameworks"),
-      api<Assessment[]>(base + "/assessments"),
+      api<Framework[]>(base + `/frameworks?offset=${frameworkOffset}`),
+      api<Assessment[]>(
+        base +
+          `/assessments?limit=25&offset=${assessmentOffset}&q=${encodeURIComponent(assessmentQuery)}`,
+      ),
       api<S["PersonView"][]>("/api/v1/delivery/people"),
       api<S["PageView"]>("/api/v1/delivery/departments"),
       api<S["PageView"]>("/api/v1/delivery/teams"),
     ]);
+    if (request !== listRequest.current) return;
     setFrameworks(f);
     setAssessments(a);
     setPeople(p);
     setDepartments(d.items);
     setTeams(t.items);
-  }, [api]);
+  }, [api, assessmentOffset, assessmentQuery, frameworkOffset]);
   useEffect(() => {
     let active = true;
     load()
+      .then(async () => {
+        const id = new URLSearchParams(window.location.search).get(
+          "assessment",
+        );
+        if (id) {
+          const a = await api<Detail>(`${base}/assessments/${id}`);
+          if (active) await open(a.assessment);
+        }
+      })
       .catch((e) => {
         if (active) setError(String(e.message));
       })
@@ -286,14 +303,6 @@ export function Assessments({
     setNotice(`Assessment ${updated.status.replaceAll("_", " ")}.`);
   }
   const current = detail?.assessment;
-  const cohort = current
-    ? assessments.filter(
-        (a) =>
-          a.status === "completed" &&
-          a.framework_version_id === current.framework_version_id &&
-          a.department_id,
-      )
-    : [];
   const deptName = (id: string | null | undefined) =>
     departments.find((d) => d.id === id)?.data.name ||
     (id ? "Department" : "Organization");
@@ -330,9 +339,21 @@ export function Assessments({
       <div className="assessment-columns">
         <section className="panel">
           <h2>Framework library</h2>
+          <button
+            disabled={!frameworkOffset}
+            onClick={() => setFrameworkOffset(frameworkOffset - 100)}
+          >
+            Previous frameworks
+          </button>
+          <button
+            disabled={frameworks.length < 100}
+            onClick={() => setFrameworkOffset(frameworkOffset + 100)}
+          >
+            Next frameworks
+          </button>
           <p>
-            Showing up to 100 frameworks. Examples are editable product
-            guidance, not certified models.
+            Current page of frameworks. Examples are editable product guidance,
+            not certified models.
           </p>
           {admin && (
             <div className="button-row">
@@ -435,15 +456,44 @@ export function Assessments({
                   </Button>
                 )}
               </div>
+              <AssessmentAccess
+                transport={transport}
+                account={account}
+                frameworkId={f.id}
+              />
             </article>
           ))}
         </section>
         <section className="panel">
           <h2>Assessments</h2>
           <p>
-            Latest 100 records you may access. Completed results use their
+            Current page of permitted records. Completed results use their
             original published version.
           </p>
+          <label>
+            Find assessments
+            <input
+              type="search"
+              maxLength={160}
+              value={assessmentQuery}
+              onChange={(e) => {
+                setAssessmentQuery(e.target.value);
+                setAssessmentOffset(0);
+              }}
+            />
+          </label>
+          <button
+            disabled={!assessmentOffset}
+            onClick={() => setAssessmentOffset(assessmentOffset - 25)}
+          >
+            Previous assessments
+          </button>
+          <button
+            disabled={assessments.length < 25}
+            onClick={() => setAssessmentOffset(assessmentOffset + 25)}
+          >
+            Next assessments
+          </button>
           {!loading && !assessments.length && (
             <p>No assigned assessments yet.</p>
           )}
@@ -800,41 +850,17 @@ export function Assessments({
               </div>
             </>
           )}
-          <h3>Department comparison</h3>
-          <p>
-            Completed departmental assessments from the latest 100 loaded
-            records, using exactly this published version. Different versions
-            are excluded.
-          </p>
-          <div
-            className="table-scroll"
-            tabIndex={0}
-            role="region"
-            aria-label="Scrollable department comparison"
-          >
-            <table>
-              <caption>Compatible departmental scores</caption>
-              <thead>
-                <tr>
-                  <th>Department</th>
-                  <th>Assessment</th>
-                  <th>Score / 100</th>
-                </tr>
-              </thead>
-              <tbody>
-                {cohort.map((a) => (
-                  <tr key={a.id}>
-                    <th>{deptName(a.department_id)}</th>
-                    <td>{a.name}</td>
-                    <td>{number(a.overall_score)}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-          {!cohort.length && (
-            <p>No completed compatible departmental results yet.</p>
+          {current.status === "completed" && (
+            <AssessmentAccess
+              transport={transport}
+              account={account}
+              assessmentId={current.id}
+            />
           )}
+          <DepartmentComparison
+            transport={transport}
+            version={current.framework_version_id}
+          />
           {current.can_read_evidence && (
             <>
               <h3>History</h3>
@@ -1200,44 +1226,33 @@ export function Assessments({
                 ))}
               </select>
             </Field>
-            <Field label="Department">
-              <select name="department">
-                <option value="">Organization-wide</option>
-                {departments.map((d) => (
-                  <option key={d.id} value={d.id}>
-                    {d.data.name}
-                  </option>
-                ))}
-              </select>
-            </Field>
-            <Field label="Team">
-              <select name="team">
-                <option value="">No specific team</option>
-                {teams.map((t) => (
-                  <option key={t.id} value={t.id}>
-                    {t.data.name}
-                  </option>
-                ))}
-              </select>
-            </Field>
-            {["respondent", "reviewer"].map((kind) => (
-              <Field
-                key={kind}
-                label={
-                  kind === "respondent" ? "Respondent" : "Independent reviewer"
-                }
-                hint="Choose different active Admin or Project Manager members."
-              >
-                <select name={kind} required>
-                  <option value="">Choose a member</option>
-                  {people.map((p) => (
-                    <option key={p.id} value={p.id}>
-                      {p.name} ({p.id.slice(0, 8)})
-                    </option>
-                  ))}
-                </select>
-              </Field>
-            ))}
+            <RecordSelect
+              transport={transport}
+              kind="departments"
+              label="Department"
+              name="department"
+            />
+            <RecordSelect
+              transport={transport}
+              kind="teams"
+              label="Team"
+              name="team"
+            />
+            <p>Choose different active Admin or Project Manager members.</p>
+            <RecordSelect
+              transport={transport}
+              kind="people"
+              label="Respondent"
+              name="respondent"
+              required
+            />
+            <RecordSelect
+              transport={transport}
+              kind="people"
+              label="Independent reviewer"
+              name="reviewer"
+              required
+            />
             <Button type="submit">Create assignment</Button>
           </fieldset>
         </form>

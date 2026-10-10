@@ -1,0 +1,4 @@
+Command: C:\Users\alokg\OneDrive\Documents\Codex\enterprise-ppm\.venv\Scripts\python.exe -m mypy services/api/ppm_api services/worker/ppm_worker
+Success: no issues found in 30 source files
+
+Exit: 0

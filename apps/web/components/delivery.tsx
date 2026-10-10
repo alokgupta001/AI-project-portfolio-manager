@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
+import { apiError } from "./api-error";
 import { createApiClient } from "@ppm/contracts";
 import type { components } from "@ppm/contracts/schema";
 import {
@@ -30,11 +31,7 @@ type Account = components["schemas"]["AccountView"];
 type Summary = components["schemas"]["SummaryView"];
 function check<T>(r: { data?: T; error?: unknown; response: Response }): T {
   if (!r.response.ok) {
-    const error = r.error as { error?: { message?: string } };
-    throw new Error(
-      error?.error?.message ||
-        `Request failed (${r.response.status}). Reload and try again.`,
-    );
+    throw new Error(apiError(r.error, r.response.status));
   }
   return r.data as T;
 }
@@ -156,6 +153,8 @@ function Reference({
   projectId?: string;
 }) {
   const [query, setQuery] = useState("");
+  const [choiceOffset, setChoiceOffset] = useState(0);
+  const [choiceNext, setChoiceNext] = useState(false);
   const [options, setOptions] = useState<{ id: string; name: string }[]>([]);
   const [error, setError] = useState("");
   useEffect(() => {
@@ -167,7 +166,9 @@ function Reference({
           if (spec.reference === "people")
             rows = check(
               await client.GET("/api/v1/delivery/people", {
-                params: { query: { q: query } },
+                params: {
+                  query: { q: query, offset: choiceOffset, limit: 25 },
+                },
               }),
             );
           else {
@@ -183,10 +184,16 @@ function Reference({
               await client.GET("/api/v1/delivery/{kind}", {
                 params: {
                   path: { kind: spec.reference as Kind },
-                  query: { q: query, project_id: scope, limit: 100 },
+                  query: {
+                    q: query,
+                    project_id: scope,
+                    limit: 25,
+                    offset: choiceOffset,
+                  },
                 },
               }),
             );
+            setChoiceNext(choiceOffset + 25 < r.total);
             rows = r.items.map((x) => ({ id: x.id, name: x.data.name }));
             if (value && !rows.some((x) => x.id === value)) {
               const selected = await client.GET(
@@ -202,6 +209,7 @@ function Reference({
             }
           }
           if (valid) {
+            if (spec.reference === "people") setChoiceNext(rows.length === 25);
             setOptions(rows);
             setError("");
           }
@@ -215,14 +223,31 @@ function Reference({
       valid = false;
       clearTimeout(timer);
     };
-  }, [spec.reference, value, query, projectId, client]);
+  }, [spec.reference, value, query, projectId, client, choiceOffset]);
   return (
     <div className="reference-field">
+      <button
+        type="button"
+        disabled={!choiceOffset}
+        onClick={() => setChoiceOffset(choiceOffset - 25)}
+      >
+        Previous choices
+      </button>
+      <button
+        type="button"
+        disabled={!choiceNext}
+        onClick={() => setChoiceOffset(choiceOffset + 25)}
+      >
+        Next choices
+      </button>
       <Field label={`Find ${spec.label.toLowerCase()}`}>
         <input
           type="search"
           value={query}
-          onChange={(e) => setQuery(e.target.value)}
+          onChange={(e) => {
+            setQuery(e.target.value);
+            setChoiceOffset(0);
+          }}
           placeholder="Search available choices"
         />
       </Field>
@@ -410,11 +435,14 @@ export function RecordEditor({
                   <Field label={f.label}>
                     {f.options ? (
                       <select
-                        value={String(values[f.key])}
+                        value={String(values[f.key] ?? "")}
                         onChange={(e) =>
                           setValues({ ...values, [f.key]: e.target.value })
                         }
                       >
+                        {f.label.includes("(optional)") && (
+                          <option value="">Unknown</option>
+                        )}
                         {f.options.map((v) => (
                           <option key={v}>{v}</option>
                         ))}
@@ -661,6 +689,11 @@ export function Delivery({
       ? "settings"
       : "projects";
   const [kind, setKind] = useState<Kind>(projectId ? "work_items" : top);
+  useEffect(() => {
+    const target = new URLSearchParams(window.location.search).get("kind");
+    if (projectId && ["work_items", "risks"].includes(target || ""))
+      setKind(target as Kind);
+  }, [projectId]);
   const [rows, setRows] = useState<DeliveryRecord[]>([]);
   const [summary, setSummary] = useState<Summary | null>(null);
   const [portfolio, setPortfolio] = useState<
@@ -668,7 +701,32 @@ export function Delivery({
   >(null);
   const [settings, setSettings] = useState<DeliveryRecord | null>(null);
   const [q, setQ] = useState("");
+  useEffect(() => {
+    const target = new URLSearchParams(window.location.search).get("record");
+    if (!projectId || !target) return;
+    let live = true;
+    void client
+      .GET("/api/v1/delivery/{kind}/{id_}", {
+        params: { path: { kind, id_: target } },
+      })
+      .then((response) => {
+        const record = check(response);
+        if (
+          live &&
+          "project_id" in record.data &&
+          record.data.project_id === projectId
+        )
+          setQ(record.data.name);
+      })
+      .catch(() => {
+        if (live) setError("This record is unavailable in your current scope.");
+      });
+    return () => {
+      live = false;
+    };
+  }, [client, kind, projectId]);
   const [status, setStatus] = useState("");
+  const [industry, setIndustry] = useState("");
   const [sort, setSort] = useState<"name" | "updated">("name");
   const [archived, setArchived] = useState(false);
   const [offset, setOffset] = useState(0);
@@ -710,6 +768,7 @@ export function Delivery({
                 query: {
                   q,
                   sort,
+                  ...(kind === "projects" && industry ? { industry } : {}),
                   status: status || undefined,
                   archived,
                   offset,
@@ -835,6 +894,17 @@ export function Delivery({
   }
   return (
     <>
+      {kind === "grants" && (
+        <section className="panel">
+          <h2>Project access</h2>
+          <p>
+            Admin can grant read, edit or manage access here. Owners need an
+            explicit grant. Portfolio read includes projects but does not allow
+            project edits. To revoke, edit the grant and archive it; open tabs
+            and searches recheck access.
+          </p>
+        </section>
+      )}
       <section className="page-heading">
         <div>
           <p className="eyebrow">PORTFOLIO & DELIVERY</p>
@@ -991,6 +1061,31 @@ export function Delivery({
               }}
             />
           </Field>
+          {kind === "projects" && (
+            <Field label="Industry filter">
+              <select
+                value={industry}
+                onChange={(e) => {
+                  setIndustry(e.target.value);
+                  setOffset(0);
+                }}
+              >
+                <option value="">All industries</option>
+                {[
+                  "unknown",
+                  "fintech",
+                  "technology",
+                  "healthcare",
+                  "public_sector",
+                  "other",
+                ].map((i) => (
+                  <option key={i} value={i}>
+                    {i === "unknown" ? "Unknown" : i.replaceAll("_", " ")}
+                  </option>
+                ))}
+              </select>
+            </Field>
+          )}
           <Field label="Sort records">
             <select
               value={sort}

@@ -3,7 +3,15 @@
 from pathlib import Path
 from typing import Literal
 
-from pydantic import Field, SecretStr, ValidationError, field_validator
+from pydantic import (
+    EmailStr,
+    Field,
+    SecretStr,
+    TypeAdapter,
+    ValidationError,
+    field_validator,
+    model_validator,
+)
 from pydantic_settings import BaseSettings, SettingsConfigDict
 from sqlalchemy.engine import make_url
 
@@ -18,6 +26,34 @@ class Settings(BaseSettings):
     jwt_secret: SecretStr
     web_origin: str = "http://localhost:3000"
     cookie_secure: bool = True
+    mail_mode: Literal["local", "smtp"] = "local"
+    smtp_host: str = ""
+    smtp_port: int = Field(default=587, ge=1, le=65535)
+    smtp_user: str = ""
+    smtp_password: SecretStr = SecretStr("")
+    mail_sender: str = ""
+
+    @model_validator(mode="after")
+    def validate_mail(self) -> "Settings":
+        if self.mail_mode != "smtp":
+            return self
+        from email.utils import parseaddr
+
+        if not self.smtp_host.strip() or any(c.isspace() for c in self.smtp_host):
+            raise ValueError("SMTP requires PPM_SMTP_HOST")
+        if self.smtp_port == 465:
+            raise ValueError("Use a STARTTLS SMTP port (usually 587), not implicit TLS port 465")
+        if "\r" in self.mail_sender or "\n" in self.mail_sender:
+            raise ValueError("PPM_MAIL_SENDER must be a valid sender address")
+        try:
+            TypeAdapter(EmailStr).validate_python(parseaddr(self.mail_sender)[1])
+        except ValidationError:
+            raise ValueError("PPM_MAIL_SENDER must be a valid sender address") from None
+        if bool(self.smtp_user) != bool(self.smtp_password.get_secret_value()):
+            raise ValueError(
+                "Configure both PPM_SMTP_USER and PPM_SMTP_PASSWORD, or neither for a relay"
+            )
+        return self
 
     @field_validator("jwt_secret")
     @classmethod
@@ -66,5 +102,10 @@ def load_settings() -> Settings:
     try:
         return Settings()  # type: ignore[call-arg]
     except ValidationError as exc:
-        fields = sorted({"PPM_" + str(e["loc"][0]).upper() for e in exc.errors()})
+        fields = sorted(
+            {
+                "PPM_" + str(e["loc"][0]).upper() if e["loc"] else "PPM_MAIL_CONFIGURATION"
+                for e in exc.errors()
+            }
+        )
         raise RuntimeError("Missing or invalid configuration: " + ", ".join(fields)) from None

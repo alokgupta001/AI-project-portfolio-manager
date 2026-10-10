@@ -1,0 +1,8 @@
+# How the data is stored
+
+This topic is now taught in [How the data is stored](02-learning/04-database/DATABASE_GUIDE.md). Start with the [learning roadmap](02-learning/00-getting-started/README.md) and follow the project request before the component details.
+
+This older URL remains available so existing links continue to work. The rewritten chapter explains current source and distinguishes implementation, recorded checks and future plans.
+
+
+**SUPERSEDED compatibility link.** Current availability is in [current status](00-overview/CURRENT_STATUS.md).

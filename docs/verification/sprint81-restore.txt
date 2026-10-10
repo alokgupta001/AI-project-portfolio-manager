@@ -1,0 +1,1 @@
+PASS scratch restore: 59 table hashes/counts and 1 object hashes match; normal DB unchanged

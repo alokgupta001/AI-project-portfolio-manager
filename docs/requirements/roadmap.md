@@ -1,6 +1,9 @@
 # Implementation roadmap
 
-Execute one numbered sprint at a time using [ordered prompts](../prompts/02-ORDERED-SPRINT-PROMPTS.md). This is a dependency order, not a delivery-date promise. Only Sprint 00 is authorized and completed in the current request. Split large sprints into sub-sprints with separate reports/handoffs; do not close a parent until all acceptance criteria pass.
+**Historical/proposed reference:** Current availability is [CURRENT_STATUS](../00-overview/CURRENT_STATUS.md); current architecture is [SYSTEM_ARCHITECTURE](../01-architecture/SYSTEM_ARCHITECTURE.md); future execution order is [the revised roadmap](../09-planning/FUTURE_SPRINT_ROADMAP.md). Preserve dated decisions/scope below; proposed components are not implementation claims.
+
+
+**Current planning baseline (2026-10-09): Sprint 08 is complete locally; Sprint 8.1 is implemented locally with external/visual acceptance gates open; see its report.** The authoritative future execution plan is [Sprint 8.1](../09-planning/SPRINT_8_1_PLAN.md) followed by the [complete future roadmap](../09-planning/FUTURE_SPRINT_ROADMAP.md), with [traceability](../09-planning/FEATURE_GAP_TRACEABILITY.md) and [release criteria](../00-overview/FINAL_PRODUCT_SCOPE_AND_RELEASE_CRITERIA.md). The table below preserves the original numbered baseline; the original [ordered prompts](../prompts/02-ORDERED-SPRINT-PROMPTS.md) remain frozen scope evidence. This is a dependency order, not a delivery-date promise. Split large sprints into reported sub-slices; parent acceptance must still pass. The Sprint 8.1 execution request authorized implementation; later sprints still require separate authorization.
 
 | Sprint | Deliverable | Principal prerequisites | Exit demonstration |
 | --- | --- | --- | --- |

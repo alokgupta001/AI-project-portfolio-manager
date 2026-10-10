@@ -1,0 +1,4 @@
+Command: C:\Users\alokg\OneDrive\Documents\Codex\enterprise-ppm\.venv\Scripts\python.exe scripts/check_sources.py
+PASS: 7 preserved sources/prompts match SHA256 manifest
+
+Exit: 0

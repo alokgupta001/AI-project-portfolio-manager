@@ -190,12 +190,12 @@ test("command center reconciles facts, filters, saved views and evidence access"
       ),
     ).toEqual([]);
     await page.screenshot({
-      path: `docs/verification/sprint-07-${width}.png`,
+      path: `docs/verification/${process.env.PPM_VERIFICATION_PREFIX || "sprint-07"}-${width}.png`,
       fullPage: true,
     });
   }
   writeFileSync(
-    "docs/verification/sprint-07-rendering.json",
+    `docs/verification/${process.env.PPM_VERIFICATION_PREFIX || "sprint-07"}-rendering.json`,
     JSON.stringify(measurements, null, 2),
   );
   await page

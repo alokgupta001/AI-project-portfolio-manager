@@ -1,0 +1,1 @@
+PASS: 1 established normal object hashes unchanged after final application start; read-only volume inspection.

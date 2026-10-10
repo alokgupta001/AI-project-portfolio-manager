@@ -18,8 +18,8 @@ celery_app.conf.update(
     task_default_queue="foundation",
     task_track_started=True,
     result_expires=300,
-    task_time_limit=30,
-    task_soft_time_limit=20,
+    task_time_limit=300,
+    task_soft_time_limit=280,
     worker_prefetch_multiplier=1,
     broker_connection_retry_on_startup=True,
     timezone="UTC",
@@ -42,3 +42,50 @@ def database_checkpoint() -> dict[str, str]:
             await engine.dispose()
 
     return asyncio.run(run())
+
+
+@celery_app.task(name="pipeline.dispatch")  # type: ignore[untyped-decorator]
+def dispatch() -> int:
+    async def run() -> int:
+        import sqlalchemy as sa
+
+        engine = make_engine(settings)
+        try:
+            from ppm_api.account_mail import deliver_due
+
+            await deliver_due(engine, settings)
+            async with engine.connect() as conn:
+                due = list(
+                    (await conn.execute(sa.text("SELECT * FROM public.ppm_due_jobs()"))).mappings()
+                )
+            for row in due:
+                celery_app.send_task(
+                    "pipeline.run",
+                    args=[str(row["job_id"]), str(row["organization_id"]), str(row["actor_id"])],
+                )
+            return len(due)
+        finally:
+            await engine.dispose()
+
+    return asyncio.run(run())
+
+
+@celery_app.task(name="pipeline.run", acks_late=True, reject_on_worker_lost=True)  # type: ignore[untyped-decorator]
+def pipeline_run(job_id: str, organization_id: str, actor_id: str) -> None:
+    from uuid import UUID
+
+    from ppm_api.jobs import run_job
+
+    async def run() -> None:
+        engine = make_engine(settings)
+        try:
+            await run_job(engine, UUID(job_id), UUID(organization_id), UUID(actor_id))
+        finally:
+            await engine.dispose()
+
+    asyncio.run(run())
+
+
+celery_app.conf.beat_schedule = {
+    "reconcile-durable-jobs": {"task": "pipeline.dispatch", "schedule": 10.0}
+}

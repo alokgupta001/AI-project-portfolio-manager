@@ -11,7 +11,7 @@ Sprint 02 update (2026-10-05): user authorization covers local identity and orga
 
 Status as of 2026-10-05: proposed engineering baseline prepared under the user's authorization to execute Sprint 00. No claim of owner sign-off. Reasonable reversible defaults may guide Sprint 01; choices requiring actual credentials, cost limits or organizational policy remain explicit later prerequisites.
 
-Sprint 01 update: the user subsequently authorized this proposed architecture as the local development baseline. The web/API/worker foundation is implemented and verified as recorded in [ADR 007](../architecture/adr/007-sprint-01-runtime.md) and the [report](../sprints/SPRINT-01-REPORT.md). This does not settle later production/provider/policy decisions or authorize Sprint 02.
+Sprint 01 update: the user subsequently authorized this proposed architecture as the local development baseline. The web/API/worker foundation is implemented and verified as recorded in [ADR 007](../architecture/adr/007-sprint-01-runtime.md) and the [report](../03-sprints/completed/sprint-01/SPRINT_REPORT.md). This does not settle later production/provider/policy decisions or authorize Sprint 02.
 
 | ID | Source tension or missing detail | Proposed resolution | Review point |
 | --- | --- | --- | --- |
@@ -54,3 +54,13 @@ The user explicitly authorized rechecking and fixing Sprint 06 after its initial
 ## Sprint 07 authorized implementation
 
 The user authorized Sprint 07 on 2026-10-07. [ADR 013](../architecture/adr/013-command-center.md) records current-state snapshots versus period facts, explicit baseline/calendar selection, immutable sprint closures, actor-owned saved views and existing capacity privacy. Starter rules are deterministic operational heuristics, not predictive probabilities. No historical closure backfill, new dependencies, external communications or Sprint 08 activation.
+
+
+## Sprint 08 authorized implementation
+
+The user authorized Sprint 08 only on 2026-10-09. [ADR 014](../architecture/adr/014-durable-ingestion.md)
+accepts PostgreSQL job/outbox truth, Celery dispatch, live delegated authority,
+bounded source import and observable SSE. Provider fixtures are separated from live
+credentials. Jira sprint modification time and historical point coverage remain
+unknown. No Sprint 09 document/AI work, cloud provisioning or external notification
+is activated. Production retention and unattended connector identity remain open.

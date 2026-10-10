@@ -1,0 +1,5 @@
+Read-only command:
+docker compose exec -T postgres psql -U postgres -d ppm_local -At -v ON_ERROR_STOP=1 -c "SELECT count(*) FROM job_integrations i WHERE EXISTS (SELECT 1 FROM jsonb_each_text(i.config->'mapping') a CROSS JOIN jsonb_each_text(i.config->'mapping') b WHERE left(b.value,length(a.value)+1)=a.value||'.');"
+
+Observed result: 0
+Exit: 0

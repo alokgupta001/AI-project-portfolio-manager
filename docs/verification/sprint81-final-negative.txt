@@ -1,0 +1,83 @@
+ Image enterprise-ppm-test Building 
+#1 [internal] load local bake definitions
+#1 reading from stdin 590B done
+#1 DONE 0.0s
+
+#2 [internal] load build definition from api.Dockerfile
+#2 transferring dockerfile: 774B done
+#2 DONE 0.0s
+
+#3 [internal] load metadata for docker.io/library/python:3.12-slim-bookworm@sha256:54c85f3c47607a77f32adec749d3c81d1348bf25833671f512b26a9b6d778cb3
+#3 DONE 0.1s
+
+#4 [internal] load .dockerignore
+#4 transferring context: 205B done
+#4 DONE 0.0s
+
+#5 [internal] load build context
+#5 DONE 0.0s
+
+#6 [ 1/10] FROM docker.io/library/python:3.12-slim-bookworm@sha256:54c85f3c47607a77f32adec749d3c81d1348bf25833671f512b26a9b6d778cb3
+#6 resolve docker.io/library/python:3.12-slim-bookworm@sha256:54c85f3c47607a77f32adec749d3c81d1348bf25833671f512b26a9b6d778cb3 0.1s done
+#6 DONE 0.1s
+
+#5 [internal] load build context
+#5 transferring context: 25.38kB 0.0s done
+#5 DONE 0.0s
+
+#7 [ 5/10] RUN uv sync --frozen --no-managed-python
+#7 CACHED
+
+#8 [ 6/10] COPY services ./services
+#8 CACHED
+
+#9 [ 2/10] WORKDIR /app
+#9 CACHED
+
+#10 [ 3/10] RUN pip install --no-cache-dir uv==0.11.15
+#10 CACHED
+
+#11 [ 4/10] COPY pyproject.toml uv.lock ./
+#11 CACHED
+
+#12 [ 7/10] COPY scripts ./scripts
+#12 CACHED
+
+#13 [ 8/10] COPY tests ./tests
+#13 DONE 0.1s
+
+#14 [ 9/10] COPY alembic.ini ./
+#14 DONE 0.1s
+
+#15 [10/10] RUN useradd --uid 10001 --create-home ppm && mkdir -p /var/ppm/objects && chown -R ppm:ppm /var/ppm && chown ppm:ppm /app
+#15 DONE 0.5s
+
+#16 exporting to image
+#16 exporting layers
+#16 exporting layers 0.4s done
+#16 exporting manifest sha256:04479d9116f4e0054f033a6da676c286b360c3b4df3f29f8ca84830223c190b9 0.0s done
+#16 exporting config sha256:62476f4cbb8a44898980a8b2fdcaeef97a685c41b0f883b4ba1f7fff2c11cbe8 0.0s done
+#16 exporting attestation manifest sha256:d82f4e62f65db72151d7692090fec9185b319a0b927d394dc6f2722db2d469a4
+#16 exporting attestation manifest sha256:d82f4e62f65db72151d7692090fec9185b319a0b927d394dc6f2722db2d469a4 0.0s done
+#16 exporting manifest list sha256:f63f060e504bfe98ed3566daea5aa6bf7dc37964f058725f2bceffc75a02f830 0.0s done
+#16 naming to docker.io/library/enterprise-ppm-test:latest done
+#16 unpacking to docker.io/library/enterprise-ppm-test:latest 0.1s done
+#16 DONE 0.8s
+
+#17 resolving provenance for metadata file
+#17 DONE 0.0s
+ Image enterprise-ppm-test Built 
+ Container enterprise-ppm-postgres-1 Running 
+ Container enterprise-ppm-redis-1 Running 
+ Container enterprise-ppm-redis-1 Waiting 
+ Container enterprise-ppm-postgres-1 Waiting 
+ Container enterprise-ppm-redis-1 Healthy 
+ Container enterprise-ppm-postgres-1 Healthy 
+ Container enterprise-ppm-test-run-2858c350f9fe Creating 
+ Container enterprise-ppm-test-run-2858c350f9fe Created 
+
+no tests ran in 1.03s
+ERROR: not found: /app/tests/test_pilot.py::test_assessment_125_search_complete_cohort_and_result_grants
+(no match in any of [<Module test_pilot.py>])
+
+

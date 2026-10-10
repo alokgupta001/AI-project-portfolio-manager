@@ -1,0 +1,1 @@
+Captured read-only normal baseline: 60 tables

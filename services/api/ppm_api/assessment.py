@@ -38,7 +38,7 @@ from ppm_api.assessment_schemas import (
 )
 from ppm_api.delivery import fail, lock
 from ppm_api.identity import Auth, Principal, now, record
-from ppm_api.identity_tables import memberships
+from ppm_api.identity_tables import memberships, users
 from ppm_api.ppm_tables import TABLES
 from ppm_api.storage import LocalObjectStore
 
@@ -654,6 +654,10 @@ async def assign(payload: AssignmentInput, request: Request, p: Auth) -> Any:
         .one()
     )
     await event(p, row["id"], "assigned", details=payload.model_dump())
+    from ppm_api.pilot import notify
+
+    for user in [row["assigned_to"], row["reviewer_id"]]:
+        await notify(p.conn, oid(p), user, "assessments", row["id"], f"{row['id']}:assigned")
     return await a_view(p, row)
 
 
@@ -663,8 +667,11 @@ async def list_assessments(
     offset: int = Query(0, ge=0),
     limit: int = Query(100, ge=1, le=100),
     framework_version_id: UUID | None = None,
+    q: str = Query("", max_length=160),
 ) -> Any:
-    query = sa.select(T.assessments)
+    from ppm_api.pilot import term
+
+    query = sa.select(T.assessments).where(T.assessments.c.name.ilike(term(q), escape="\\"))
     if framework_version_id:
         query = query.where(T.assessments.c.framework_version_id == framework_version_id)
     rows = (
@@ -784,6 +791,16 @@ async def submit(assessment_id: UUID, payload: ActionInput, request: Request, p:
         .one()
     )
     await event(p, assessment_id, "submitted", payload.note, data)
+    from ppm_api.pilot import notify
+
+    await notify(
+        p.conn,
+        oid(p),
+        a["reviewer_id"],
+        "assessments",
+        assessment_id,
+        f"{assessment_id}:{a['revision']}:review",
+    )
     return await a_view(p, row)
 
 
@@ -1042,3 +1059,28 @@ async def release_evidence(
         {"id": evidence_id, "sha256": row["sha256"]},
     )
     return dict(updated)
+
+
+@router.get("/access", response_model=list[dict])
+async def access_list(
+    p: Auth, framework_id: UUID | None = None, assessment_id: UUID | None = None
+) -> Any:
+    if p.role != "Admin":
+        fail(403, "Only Admin manages grants")
+    if (framework_id is None) == (assessment_id is None):
+        fail(422, "Choose one target")
+    await get(p, T.frameworks if framework_id else T.assessments, framework_id or assessment_id)
+    rows = (
+        await p.conn.execute(
+            sa.select(T.assessment_access, users.c.name)
+            .join(users, users.c.id == T.assessment_access.c.user_id)
+            .where(
+                T.assessment_access.c.framework_id == framework_id
+                if framework_id
+                else T.assessment_access.c.assessment_id == assessment_id,
+                T.assessment_access.c.active,
+            )
+            .order_by(T.assessment_access.c.id)
+        )
+    ).mappings()
+    return [dict(r) for r in rows]

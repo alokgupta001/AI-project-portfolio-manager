@@ -1,0 +1,69 @@
+ Image enterprise-ppm-test Building 
+#1 [internal] load local bake definitions
+#1 reading from stdin 590B done
+#1 DONE 0.0s
+
+#2 [internal] load build definition from api.Dockerfile
+#2 transferring dockerfile: 774B 0.0s done
+#2 DONE 0.0s
+
+#3 [internal] load metadata for docker.io/library/python:3.12-slim-bookworm@sha256:54c85f3c47607a77f32adec749d3c81d1348bf25833671f512b26a9b6d778cb3
+#3 DONE 0.1s
+
+#4 [internal] load .dockerignore
+#4 transferring context: 205B 0.0s done
+#4 DONE 0.0s
+
+#5 [internal] load build context
+#5 DONE 0.0s
+
+#6 [ 1/10] FROM docker.io/library/python:3.12-slim-bookworm@sha256:54c85f3c47607a77f32adec749d3c81d1348bf25833671f512b26a9b6d778cb3
+#6 resolve docker.io/library/python:3.12-slim-bookworm@sha256:54c85f3c47607a77f32adec749d3c81d1348bf25833671f512b26a9b6d778cb3
+#6 resolve docker.io/library/python:3.12-slim-bookworm@sha256:54c85f3c47607a77f32adec749d3c81d1348bf25833671f512b26a9b6d778cb3 0.1s done
+#6 DONE 0.1s
+
+#5 [internal] load build context
+#5 transferring context: 4.22kB 0.0s done
+#5 DONE 0.0s
+
+#7 [ 3/10] RUN pip install --no-cache-dir uv==0.11.15
+#7 CACHED
+
+#8 [ 2/10] WORKDIR /app
+#8 CACHED
+
+#9 [ 4/10] COPY pyproject.toml uv.lock ./
+#9 CACHED
+
+#10 [ 5/10] RUN uv sync --frozen --no-managed-python
+#10 CACHED
+
+#11 [ 8/10] COPY tests ./tests
+#11 CACHED
+
+#12 [ 6/10] COPY services ./services
+#12 CACHED
+
+#13 [ 7/10] COPY scripts ./scripts
+#13 CACHED
+
+#14 [ 9/10] COPY alembic.ini ./
+#14 CACHED
+
+#15 [10/10] RUN useradd --uid 10001 --create-home ppm && mkdir -p /var/ppm/objects && chown -R ppm:ppm /var/ppm && chown ppm:ppm /app
+#15 CACHED
+
+#16 exporting to image
+#16 exporting layers 0.0s done
+#16 exporting manifest sha256:61d6e3803eb2433e7d4df16ffda140f2e88f29f7a9f2a5fa18c7b1beb446613c 0.1s done
+#16 exporting config sha256:b1e77b40f65e52b21121b2a613e6288171ece1a07734c1d089028d1dbd30ea41 0.1s done
+#16 exporting attestation manifest sha256:1999048ad59268229f04a38506c05d782434f724556634cd7e53a1aec95988a6 0.1s done
+#16 exporting manifest list sha256:ef9edc5689257ab2944072fe0703ded59e94f76a5f6f0cd30eba864cdb11830b
+#16 exporting manifest list sha256:ef9edc5689257ab2944072fe0703ded59e94f76a5f6f0cd30eba864cdb11830b 0.1s done
+#16 naming to docker.io/library/enterprise-ppm-test:latest done
+#16 unpacking to docker.io/library/enterprise-ppm-test:latest 0.0s done
+#16 DONE 0.5s
+
+#17 resolving provenance for metadata file
+#17 DONE 0.0s
+ Image enterprise-ppm-test Built 

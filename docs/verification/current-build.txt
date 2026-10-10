@@ -1,0 +1,23 @@
+
+> enterprise-ppm@0.1.0 build
+> npm run build --workspace @ppm/web
+
+
+> @ppm/web@0.1.0 build
+> next build
+
+▲ Next.js 16.3.8 (Turbopack)
+✓ Running next.config.ts took 6.4s
+
+  Creating an optimized production build ...
+
+> Build error occurred
+Error: failed to canonicalize path `C:\Users\alokg\OneDrive\Documents\Codex\enterprise-ppm`: Access is denied. (os error 5)
+    at ignore-listed frames
+npm error Lifecycle script `build` failed with error:
+npm error code 1
+npm error path C:\Users\alokg\OneDrive\Documents\Codex\enterprise-ppm\apps\web
+npm error workspace @ppm/web@0.1.0
+npm error location C:\Users\alokg\OneDrive\Documents\Codex\enterprise-ppm\apps\web
+npm error command failed
+npm error command C:\WINDOWS\system32\cmd.exe /d /s /c next build

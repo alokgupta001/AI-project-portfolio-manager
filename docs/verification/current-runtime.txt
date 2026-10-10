@@ -1,0 +1,16 @@
+Normal migration: 0007_durable_jobs
+Role flags (superuser / bypass RLS): ppm_app:false:false
+ppm_owner:false:false
+RLS enabled/forced tables: 54/0
+/api/v1/health/live 200
+Dependencies: database:ready, redis:ready, storage:ready
+/api/v1/health/ready 200
+/integrations 200
+Dependencies: database:ready, redis:ready, storage:ready
+/api/v1/health/ready 200
+/api/v1/integrations 401
+/api/v1/command/snapshot 401
+api: 0 error markers in last five minutes (raw logs withheld)
+web: 0 error markers in last five minutes (raw logs withheld)
+worker: 0 error markers in last five minutes (raw logs withheld)
+dispatcher: 0 error markers in last five minutes (raw logs withheld)

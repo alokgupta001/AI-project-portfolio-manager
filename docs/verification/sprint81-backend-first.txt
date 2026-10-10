@@ -1,0 +1,363 @@
+ Container enterprise-ppm-postgres-1 Running 
+ Container enterprise-ppm-redis-1 Running 
+ Container enterprise-ppm-postgres-1 Waiting 
+ Container enterprise-ppm-redis-1 Waiting 
+ Container enterprise-ppm-postgres-1 Healthy 
+ Container enterprise-ppm-redis-1 Healthy 
+ Container enterprise-ppm-test-run-ad78018a8139 Creating 
+ Container enterprise-ppm-test-run-ad78018a8139 Created 
+Running: /app/.venv/bin/python -m alembic upgrade head
+Running: /app/.venv/bin/python -m alembic downgrade 0006_command_center
+Running: /app/.venv/bin/python -m alembic upgrade head
+Running: /app/.venv/bin/python -m alembic downgrade base
+Running: /app/.venv/bin/python -m alembic upgrade head
+Running: /app/.venv/bin/python -m alembic upgrade head
+Running: /app/.venv/bin/python -m alembic check
+No new upgrade operations detected.
+Running: /app/.venv/bin/python -m pytest -q
+......FFF........F.................................................      [100%]
+=================================== FAILURES ===================================
+__________ test_two_departments_review_versions_evidence_and_retries ___________
+
+identity = (<httpx.AsyncClient object at 0x7f5f03631e80>, <fastapi.applications.FastAPI object at 0x7f5f093f1e20>, <sqlalchemy.ex... '1e2af78d-111d-43ca-bbd9-c1d8f63b7045@example.com', 'other': '01237242-e7f7-46fa-bec2-d7e9794347f5@example.com', ...})
+
+    @pytest.mark.integration
+    @integration
+    async def test_two_departments_review_versions_evidence_and_retries(identity):
+>       c, app, owner, ids, emails, fw, v, a = await fixture(identity)
+                                               ^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_assessment.py:141: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_assessment.py:102: in fixture
+    a = await ok(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+c = <httpx.AsyncClient object at 0x7f5f03631e80>, method = 'POST'
+path = '/assessments'
+data = {'name': 'Engineering assessment', 'framework_version_id': 'c65a0f69-2472-425a-b239-3e3db060d285', 'department_id': '6236fd9a-fc7c-42a0-82d5-c5246ce5ffe5', 'assigned_to': 'c8a6a6f4-daa2-4cb9-a2de-65e097da5b44', ...}
+rev = None
+
+    async def ok(c, method, path, data=None, rev=None):
+        r = await write(c, method, path, data, rev)
+>       assert r.status_code in (200, 201), r.text
+E       AssertionError: {"error":{"code":"INTERNAL_ERROR","message":"An internal error occurred.","request_id":"bf0aeaf3-0c4a-4adb-8b4b-86f9758edd59","details":[]}}
+E       assert 500 in (200, 201)
+E        +  where 500 = <Response [500 Internal Server Error]>.status_code
+
+tests/test_assessment.py:93: AssertionError
+----------------------------- Captured stderr call -----------------------------
+{"event": "http_request", "request_id": "7d189d08-a0be-4e17-9bde-cd3a9707fa80", "method": "GET", "route": "/api/v1/auth/csrf", "status": 200, "duration_ms": 62.61}
+{"event": "http_request", "request_id": "4cb8b6ad-4a35-427c-a606-88e5c86116c1", "method": "POST", "route": "/api/v1/auth/login", "status": 200, "duration_ms": 333.21}
+{"event": "http_request", "request_id": "a51eec27-e797-412f-968b-32423bf58155", "method": "POST", "route": "/api/v1/auth/switch", "status": 200, "duration_ms": 17.39}
+{"event": "http_request", "request_id": "e849b10a-4fd1-42af-9cad-2f7657ed62cc", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 46.57}
+{"event": "http_request", "request_id": "fac44ba4-508c-4595-9148-8a3f822602e1", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 20.33}
+{"event": "http_request", "request_id": "305f4dbe-c263-4d81-bf27-821d36b419dc", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 23.21}
+{"event": "http_request", "request_id": "e6ffe4f0-0164-4221-be98-1600a71057f8", "method": "POST", "route": "/api/v1/assessment/frameworks", "status": 201, "duration_ms": 17.82}
+{"event": "http_request", "request_id": "ce2943b2-c5dd-4e69-8179-8d6b54d1cd8c", "method": "POST", "route": "/api/v1/assessment/frameworks/{framework_id}/publish", "status": 201, "duration_ms": 17.05}
+{"event": "http_request", "request_id": "69c71653-e9ab-44fe-9f60-73ca0b3b2c8d", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 15.28}
+{"event": "http_request", "request_id": "bf0aeaf3-0c4a-4adb-8b4b-86f9758edd59", "method": "POST", "route": "/api/v1/assessment/assessments", "status": 500, "duration_ms": 20.76}
+------------------------------ Captured log call -------------------------------
+INFO     ppm.requests:main.py:136 {"event": "http_request", "request_id": "7d189d08-a0be-4e17-9bde-cd3a9707fa80", "method": "GET", "route": "/api/v1/auth/csrf", "status": 200, "duration_ms": 62.61}
+INFO     ppm.requests:main.py:136 {"event": "http_request", "request_id": "4cb8b6ad-4a35-427c-a606-88e5c86116c1", "method": "POST", "route": "/api/v1/auth/login", "status": 200, "duration_ms": 333.21}
+INFO     ppm.requests:main.py:136 {"event": "http_request", "request_id": "a51eec27-e797-412f-968b-32423bf58155", "method": "POST", "route": "/api/v1/auth/switch", "status": 200, "duration_ms": 17.39}
+INFO     ppm.requests:main.py:136 {"event": "http_request", "request_id": "e849b10a-4fd1-42af-9cad-2f7657ed62cc", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 46.57}
+INFO     ppm.requests:main.py:136 {"event": "http_request", "request_id": "fac44ba4-508c-4595-9148-8a3f822602e1", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 20.33}
+INFO     ppm.requests:main.py:136 {"event": "http_request", "request_id": "305f4dbe-c263-4d81-bf27-821d36b419dc", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 23.21}
+INFO     ppm.requests:main.py:136 {"event": "http_request", "request_id": "e6ffe4f0-0164-4221-be98-1600a71057f8", "method": "POST", "route": "/api/v1/assessment/frameworks", "status": 201, "duration_ms": 17.82}
+INFO     ppm.requests:main.py:136 {"event": "http_request", "request_id": "ce2943b2-c5dd-4e69-8179-8d6b54d1cd8c", "method": "POST", "route": "/api/v1/assessment/frameworks/{framework_id}/publish", "status": 201, "duration_ms": 17.05}
+INFO     ppm.requests:main.py:136 {"event": "http_request", "request_id": "69c71653-e9ab-44fe-9f60-73ca0b3b2c8d", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 15.28}
+INFO     ppm.requests:main.py:136 {"event": "http_request", "request_id": "bf0aeaf3-0c4a-4adb-8b4b-86f9758edd59", "method": "POST", "route": "/api/v1/assessment/assessments", "status": 500, "duration_ms": 20.76}
+_________________ test_tenants_rls_immutable_and_invalid_input _________________
+
+identity = (<httpx.AsyncClient object at 0x7f5f0813f200>, <fastapi.applications.FastAPI object at 0x7f5f03632240>, <sqlalchemy.ex... '933dc543-dd0b-4cf2-b074-22e225142442@example.com', 'other': '300973e0-ba36-4bfe-8c0b-44a29f043c27@example.com', ...})
+
+    @pytest.mark.integration
+    @integration
+    async def test_tenants_rls_immutable_and_invalid_input(identity):
+>       c, app, owner, ids, emails, fw, v, a = await fixture(identity)
+                                               ^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_assessment.py:331: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_assessment.py:102: in fixture
+    a = await ok(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+c = <httpx.AsyncClient object at 0x7f5f0813f200>, method = 'POST'
+path = '/assessments'
+data = {'name': 'Engineering assessment', 'framework_version_id': '81b2c985-b7f3-4b5c-8ab8-f76c3569e60b', 'department_id': 'b1a4f2d0-b237-473b-8753-0cdb1257f764', 'assigned_to': 'a5b7eaa2-c9a9-4f0f-9fd6-3915e67ce7a8', ...}
+rev = None
+
+    async def ok(c, method, path, data=None, rev=None):
+        r = await write(c, method, path, data, rev)
+>       assert r.status_code in (200, 201), r.text
+E       AssertionError: {"error":{"code":"INTERNAL_ERROR","message":"An internal error occurred.","request_id":"75501ae4-8e4b-432e-a7d2-6894c3adb4e4","details":[]}}
+E       assert 500 in (200, 201)
+E        +  where 500 = <Response [500 Internal Server Error]>.status_code
+
+tests/test_assessment.py:93: AssertionError
+----------------------------- Captured stderr call -----------------------------
+{"event": "http_request", "request_id": "699e1699-ec8d-4458-95b2-207987c45d60", "method": "GET", "route": "/api/v1/auth/csrf", "status": 200, "duration_ms": 66.75}
+{"event": "http_request", "request_id": "9c446fff-9505-4230-b83f-85a5a30ba69b", "method": "POST", "route": "/api/v1/auth/login", "status": 200, "duration_ms": 285.12}
+{"event": "http_request", "request_id": "80c7c139-6f80-4426-b021-a835162d8dee", "method": "POST", "route": "/api/v1/auth/switch", "status": 200, "duration_ms": 13.65}
+{"event": "http_request", "request_id": "dd2a2616-ffaf-4198-847e-b388529074a0", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 38.48}
+{"event": "http_request", "request_id": "7f1c2876-11e4-4a7c-af5c-bb5c08c8ad50", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 20.24}
+{"event": "http_request", "request_id": "f8999ecf-9436-4146-85f4-fe5233435c6a", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 27.07}
+{"event": "http_request", "request_id": "69ba4575-383f-4aa6-815a-54fd0b16277b", "method": "POST", "route": "/api/v1/assessment/frameworks", "status": 201, "duration_ms": 19.97}
+{"event": "http_request", "request_id": "a03dd69f-6b8b-44c7-bc26-4efaf0484e8a", "method": "POST", "route": "/api/v1/assessment/frameworks/{framework_id}/publish", "status": 201, "duration_ms": 18.91}
+{"event": "http_request", "request_id": "0cad4995-45b3-46fa-a012-69b27e1b2c26", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 16.13}
+{"event": "http_request", "request_id": "75501ae4-8e4b-432e-a7d2-6894c3adb4e4", "method": "POST", "route": "/api/v1/assessment/assessments", "status": 500, "duration_ms": 17.18}
+------------------------------ Captured log call -------------------------------
+INFO     ppm.requests:main.py:136 {"event": "http_request", "request_id": "699e1699-ec8d-4458-95b2-207987c45d60", "method": "GET", "route": "/api/v1/auth/csrf", "status": 200, "duration_ms": 66.75}
+INFO     ppm.requests:main.py:136 {"event": "http_request", "request_id": "9c446fff-9505-4230-b83f-85a5a30ba69b", "method": "POST", "route": "/api/v1/auth/login", "status": 200, "duration_ms": 285.12}
+INFO     ppm.requests:main.py:136 {"event": "http_request", "request_id": "80c7c139-6f80-4426-b021-a835162d8dee", "method": "POST", "route": "/api/v1/auth/switch", "status": 200, "duration_ms": 13.65}
+INFO     ppm.requests:main.py:136 {"event": "http_request", "request_id": "dd2a2616-ffaf-4198-847e-b388529074a0", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 38.48}
+INFO     ppm.requests:main.py:136 {"event": "http_request", "request_id": "7f1c2876-11e4-4a7c-af5c-bb5c08c8ad50", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 20.24}
+INFO     ppm.requests:main.py:136 {"event": "http_request", "request_id": "f8999ecf-9436-4146-85f4-fe5233435c6a", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 27.07}
+INFO     ppm.requests:main.py:136 {"event": "http_request", "request_id": "69ba4575-383f-4aa6-815a-54fd0b16277b", "method": "POST", "route": "/api/v1/assessment/frameworks", "status": 201, "duration_ms": 19.97}
+INFO     ppm.requests:main.py:136 {"event": "http_request", "request_id": "a03dd69f-6b8b-44c7-bc26-4efaf0484e8a", "method": "POST", "route": "/api/v1/assessment/frameworks/{framework_id}/publish", "status": 201, "duration_ms": 18.91}
+INFO     ppm.requests:main.py:136 {"event": "http_request", "request_id": "0cad4995-45b3-46fa-a012-69b27e1b2c26", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 16.13}
+INFO     ppm.requests:main.py:136 {"event": "http_request", "request_id": "75501ae4-8e4b-432e-a7d2-6894c3adb4e4", "method": "POST", "route": "/api/v1/assessment/assessments", "status": 500, "duration_ms": 17.18}
+_________________ test_examples_publish_and_text_completeness __________________
+
+identity = (<httpx.AsyncClient object at 0x7f5f0933e2a0>, <fastapi.applications.FastAPI object at 0x7f5f03719bb0>, <sqlalchemy.ex... '4a65c285-d8df-403e-ad5e-7f6481b496f7@example.com', 'other': '37101eb1-b58c-451b-bf1b-6943167496aa@example.com', ...})
+
+    @pytest.mark.integration
+    @integration
+    async def test_examples_publish_and_text_completeness(identity):
+        c, app, owner, ids, emails, _, _ = await setup(identity)
+        examples = await ok(c, "POST", "/seed-examples", {})
+        repeated = await ok(c, "POST", "/seed-examples", {})
+        assert len(examples) == 4 and {x["id"] for x in examples} == {x["id"] for x in repeated}
+        for fw in examples:
+            assert "Example" in fw["name"]
+            v = await ok(c, "POST", f"/frameworks/{fw['id']}/publish", {}, fw["revision"])
+            assert v["version"] == 1
+        data = definition()
+        data["dimensions"][0]["questions"].append(
+            {
+                "id": str(uuid4()),
+                "name": "Required context",
+                "text": "Explain the practice",
+                "answer_type": "text",
+                "weight": "1",
+                "required": True,
+                "rubric_levels": [],
+            }
+        )
+        fw = await ok(c, "POST", "/frameworks", data)
+        v = await ok(c, "POST", f"/frameworks/{fw['id']}/publish", {}, fw["revision"])
+>       a = await ok(
+            c,
+            "POST",
+            "/assessments",
+            dict(
+                name="Text acceptance",
+                framework_version_id=v["id"],
+                assigned_to=str(ids["admin"]),
+                reviewer_id=str(ids["pm"]),
+            ),
+        )
+
+tests/test_assessment.py:431: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+c = <httpx.AsyncClient object at 0x7f5f0933e2a0>, method = 'POST'
+path = '/assessments'
+data = {'name': 'Text acceptance', 'framework_version_id': 'f922e669-39b2-4e4d-a4c0-5eb950c48238', 'assigned_to': '85b02d5e-3874-45f4-bce9-5dd12441f77b', 'reviewer_id': '817890be-1213-4c07-a125-f5867c02aa54'}
+rev = None
+
+    async def ok(c, method, path, data=None, rev=None):
+        r = await write(c, method, path, data, rev)
+>       assert r.status_code in (200, 201), r.text
+E       AssertionError: {"error":{"code":"INTERNAL_ERROR","message":"An internal error occurred.","request_id":"c8b29ba0-b64b-4cfe-b469-65797817b90f","details":[]}}
+E       assert 500 in (200, 201)
+E        +  where 500 = <Response [500 Internal Server Error]>.status_code
+
+tests/test_assessment.py:93: AssertionError
+----------------------------- Captured stderr call -----------------------------
+{"event": "http_request", "request_id": "278b469a-8eb9-4b21-a894-92ec3a9d0194", "method": "GET", "route": "/api/v1/auth/csrf", "status": 200, "duration_ms": 72.12}
+{"event": "http_request", "request_id": "359c3797-698e-43d6-892a-ed2fc5a896e5", "method": "POST", "route": "/api/v1/auth/login", "status": 200, "duration_ms": 322.84}
+{"event": "http_request", "request_id": "96513f60-8b06-4044-949b-ad65efd87ab0", "method": "POST", "route": "/api/v1/auth/switch", "status": 200, "duration_ms": 18.96}
+{"event": "http_request", "request_id": "efe98b9c-db27-4b6e-b624-33f787610045", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 55.1}
+{"event": "http_request", "request_id": "a6e78303-afd3-4b93-a651-5b49accd2818", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 21.01}
+{"event": "http_request", "request_id": "520590aa-79f4-4abe-9721-b4a7557ecfb2", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 25.17}
+{"event": "http_request", "request_id": "670e9ad1-815c-4ea5-af1e-b11836513f26", "method": "POST", "route": "/api/v1/assessment/seed-examples", "status": 201, "duration_ms": 34.61}
+{"event": "http_request", "request_id": "6631e3a3-d0fa-46d6-a93a-1c2262e55ede", "method": "POST", "route": "/api/v1/assessment/seed-examples", "status": 201, "duration_ms": 21.94}
+{"event": "http_request", "request_id": "ed84a279-1d1c-445b-b07b-706c039f6aee", "method": "POST", "route": "/api/v1/assessment/frameworks/{framework_id}/publish", "status": 201, "duration_ms": 22.14}
+{"event": "http_request", "request_id": "25e587ec-f47c-49d4-a0a3-2a3b325c2364", "method": "POST", "route": "/api/v1/assessment/frameworks/{framework_id}/publish", "status": 201, "duration_ms": 17.64}
+{"event": "http_request", "request_id": "b0657cee-eb32-4bd9-9044-d358346aeb27", "method": "POST", "route": "/api/v1/assessment/frameworks/{framework_id}/publish", "status": 201, "duration_ms": 16.61}
+{"event": "http_request", "request_id": "056b5a8f-5b93-4c8a-a1e0-d7d7bec597a3", "method": "POST", "route": "/api/v1/assessment/frameworks/{framework_id}/publish", "status": 201, "duration_ms": 16.31}
+{"event": "http_request", "request_id": "462dfeb9-7b69-4ec4-bba9-2d3ffcacef83", "method": "POST", "route": "/api/v1/assessment/frameworks", "status": 201, "duration_ms": 16.02}
+{"event": "http_request", "request_id": "7eac4fae-cf49-4779-a9d9-43a9c7d6dc1a", "method": "POST", "route": "/api/v1/assessment/frameworks/{framework_id}/publish", "status": 201, "duration_ms": 19.16}
+{"event": "http_request", "request_id": "c8b29ba0-b64b-4cfe-b469-65797817b90f", "method": "POST", "route": "/api/v1/assessment/assessments", "status": 500, "duration_ms": 20.3}
+------------------------------ Captured log call -------------------------------
+INFO     ppm.requests:main.py:136 {"event": "http_request", "request_id": "278b469a-8eb9-4b21-a894-92ec3a9d0194", "method": "GET", "route": "/api/v1/auth/csrf", "status": 200, "duration_ms": 72.12}
+INFO     ppm.requests:main.py:136 {"event": "http_request", "request_id": "359c3797-698e-43d6-892a-ed2fc5a896e5", "method": "POST", "route": "/api/v1/auth/login", "status": 200, "duration_ms": 322.84}
+INFO     ppm.requests:main.py:136 {"event": "http_request", "request_id": "96513f60-8b06-4044-949b-ad65efd87ab0", "method": "POST", "route": "/api/v1/auth/switch", "status": 200, "duration_ms": 18.96}
+INFO     ppm.requests:main.py:136 {"event": "http_request", "request_id": "efe98b9c-db27-4b6e-b624-33f787610045", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 55.1}
+INFO     ppm.requests:main.py:136 {"event": "http_request", "request_id": "a6e78303-afd3-4b93-a651-5b49accd2818", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 21.01}
+INFO     ppm.requests:main.py:136 {"event": "http_request", "request_id": "520590aa-79f4-4abe-9721-b4a7557ecfb2", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 25.17}
+INFO     ppm.requests:main.py:136 {"event": "http_request", "request_id": "670e9ad1-815c-4ea5-af1e-b11836513f26", "method": "POST", "route": "/api/v1/assessment/seed-examples", "status": 201, "duration_ms": 34.61}
+INFO     ppm.requests:main.py:136 {"event": "http_request", "request_id": "6631e3a3-d0fa-46d6-a93a-1c2262e55ede", "method": "POST", "route": "/api/v1/assessment/seed-examples", "status": 201, "duration_ms": 21.94}
+INFO     ppm.requests:main.py:136 {"event": "http_request", "request_id": "ed84a279-1d1c-445b-b07b-706c039f6aee", "method": "POST", "route": "/api/v1/assessment/frameworks/{framework_id}/publish", "status": 201, "duration_ms": 22.14}
+INFO     ppm.requests:main.py:136 {"event": "http_request", "request_id": "25e587ec-f47c-49d4-a0a3-2a3b325c2364", "method": "POST", "route": "/api/v1/assessment/frameworks/{framework_id}/publish", "status": 201, "duration_ms": 17.64}
+INFO     ppm.requests:main.py:136 {"event": "http_request", "request_id": "b0657cee-eb32-4bd9-9044-d358346aeb27", "method": "POST", "route": "/api/v1/assessment/frameworks/{framework_id}/publish", "status": 201, "duration_ms": 16.61}
+INFO     ppm.requests:main.py:136 {"event": "http_request", "request_id": "056b5a8f-5b93-4c8a-a1e0-d7d7bec597a3", "method": "POST", "route": "/api/v1/assessment/frameworks/{framework_id}/publish", "status": 201, "duration_ms": 16.31}
+INFO     ppm.requests:main.py:136 {"event": "http_request", "request_id": "462dfeb9-7b69-4ec4-bba9-2d3ffcacef83", "method": "POST", "route": "/api/v1/assessment/frameworks", "status": 201, "duration_ms": 16.02}
+INFO     ppm.requests:main.py:136 {"event": "http_request", "request_id": "7eac4fae-cf49-4779-a9d9-43a9c7d6dc1a", "method": "POST", "route": "/api/v1/assessment/frameworks/{framework_id}/publish", "status": 201, "duration_ms": 19.16}
+INFO     ppm.requests:main.py:136 {"event": "http_request", "request_id": "c8b29ba0-b64b-4cfe-b469-65797817b90f", "method": "POST", "route": "/api/v1/assessment/assessments", "status": 500, "duration_ms": 20.3}
+___________ test_command_reconciliation_discrepancy_history_filters ____________
+
+identity = (<httpx.AsyncClient object at 0x7f5f0344ab40>, <fastapi.applications.FastAPI object at 0x7f5f0977b9b0>, <sqlalchemy.ex... 'a474df37-8f9b-451e-a4de-1f7273f9c6f4@example.com', 'other': '4f9489df-d645-4498-9667-2b5959ac381e@example.com', ...})
+
+    @pytest.mark.integration
+    async def test_command_reconciliation_discrepancy_history_filters(identity):
+        c, app, owner, ids, emails, portfolio, project = await setup(identity)
+        project = (
+            await change(
+                c,
+                project,
+                status="active",
+                ledger_complete=True,
+                reported_health="Green",
+                forecast_end_date="2026-11-08",
+            )
+        ).json()
+        pid = project["id"]
+        await create(c, "budget_lines", project_id=pid, amount="100000", currency="INR", approved=True)
+        await create(
+            c, "expenditures", project_id=pid, amount="25000", currency="INR", spent_on="2026-10-05"
+        )
+        await create(
+            c, "expenditures", project_id=pid, amount="5000", currency="INR", spent_on="2026-09-05"
+        )
+        await create(
+            c,
+            "milestones",
+            name="Critical overdue release",
+            project_id=pid,
+            due_date=(now().date() - timedelta(days=2)).isoformat(),
+            critical=True,
+        )
+        baseline = await create(c, "baselines", project_id=pid, description="Approved schedule")
+        cal = await create(
+            c,
+            "calendars",
+            timezone="Asia/Kolkata",
+            monday="8",
+            tuesday="8",
+            wednesday="8",
+            thursday="8",
+            friday="8",
+            saturday="0",
+            sunday="0",
+            holidays="",
+        )
+        await create(
+            c,
+            "metric_plans",
+            project_id=pid,
+            baseline_id=baseline["id"],
+            calendar_id=cal["id"],
+            forecast_cost="110000",
+        )
+        benefit = await create(
+            c,
+            "benefits",
+            project_id=pid,
+            unit="hours saved",
+            target="100",
+            realized="20",
+            period_start="2026-10-01",
+            period_end="2026-11-01",
+        )
+        risk = await create(
+            c, "risks", project_id=pid, severity=5, likelihood=4, review_on="2026-10-20"
+        )
+        assert (await change(c, risk, status="mitigating")).status_code == 422
+        risk = (
+            await change(
+                c, risk, status="mitigating", owner_id=str(ids["pm"]), mitigation="Replan release"
+            )
+        ).json()
+>       assert (await change(c, risk, status="closed")).status_code == 422
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_command.py:203: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+c = <httpx.AsyncClient object at 0x7f5f0344ab40>
+row = {'error': {'code': 'INTERNAL_ERROR', 'message': 'An internal error occurred.', 'request_id': '202b391c-5aa3-4656-bd65-845d71101c53', 'details': []}}
+values = {'status': 'closed'}
+
+    async def change(c, row, **values):
+        return await send(
+            c,
+            "PATCH",
+>           f"/delivery/{row['data']['kind']}/{row['id']}",
+                         ^^^^^^^^^^^
+            headers={"if-match": str(row["revision"])},
+            json=row["data"] | values,
+        )
+E       KeyError: 'data'
+
+tests/test_delivery.py:33: KeyError
+----------------------------- Captured stderr call -----------------------------
+{"event": "http_request", "request_id": "018105cd-4c60-4862-8737-f499e38f7c49", "method": "GET", "route": "/api/v1/auth/csrf", "status": 200, "duration_ms": 146.5}
+{"event": "http_request", "request_id": "af622e7d-dc88-4a63-9442-41e3b5325d76", "method": "POST", "route": "/api/v1/auth/login", "status": 200, "duration_ms": 485.44}
+{"event": "http_request", "request_id": "ebde9766-4091-4735-bc49-248e199e9ffe", "method": "POST", "route": "/api/v1/auth/switch", "status": 200, "duration_ms": 40.96}
+{"event": "http_request", "request_id": "8d2c73cb-245a-4b09-ab35-f3f2b7769fb4", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 115.05}
+{"event": "http_request", "request_id": "b07680e7-de83-444c-8ea1-5fed6833f484", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 88.51}
+{"event": "http_request", "request_id": "1fb82709-5748-402c-9f67-efed4cf71427", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 83.74}
+{"event": "http_request", "request_id": "5f9068df-f3e6-482e-a8fe-26a4be6dbf32", "method": "PATCH", "route": "/api/v1/delivery/{kind}/{id_}", "status": 200, "duration_ms": 55.77}
+{"event": "http_request", "request_id": "7fb97504-bf6e-4461-affa-eb522d4a0444", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 49.64}
+{"event": "http_request", "request_id": "488240a7-971a-400d-a581-faecdf650e83", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 47.98}
+{"event": "http_request", "request_id": "dc2f63b1-b0b3-4c4d-90af-686560a837c8", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 30.96}
+{"event": "http_request", "request_id": "45540edd-1e79-4caf-962a-dc1253629be8", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 34.02}
+{"event": "http_request", "request_id": "37187d97-88ad-4174-b7bb-c11a534c215e", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 70.26}
+{"event": "http_request", "request_id": "831cbb91-a877-4d31-8c04-1feb1a995be5", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 41.16}
+{"event": "http_request", "request_id": "895ddd2b-fc30-413a-9648-8054480a2a2c", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 57.99}
+{"event": "http_request", "request_id": "518a0d8d-ae4b-4940-8b59-acccd785c3a1", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 41.02}
+{"event": "http_request", "request_id": "6f2976ca-7c57-4d78-b0cc-91c71c721c74", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 38.94}
+{"event": "http_request", "request_id": "18034f56-a907-465b-8157-f535fc5b82f4", "method": "PATCH", "route": "/api/v1/delivery/{kind}/{id_}", "status": 422, "duration_ms": 10.12}
+{"event": "http_request", "request_id": "202b391c-5aa3-4656-bd65-845d71101c53", "method": "PATCH", "route": "/api/v1/delivery/{kind}/{id_}", "status": 500, "duration_ms": 35.15}
+------------------------------ Captured log call -------------------------------
+INFO     ppm.requests:main.py:136 {"event": "http_request", "request_id": "018105cd-4c60-4862-8737-f499e38f7c49", "method": "GET", "route": "/api/v1/auth/csrf", "status": 200, "duration_ms": 146.5}
+INFO     ppm.requests:main.py:136 {"event": "http_request", "request_id": "af622e7d-dc88-4a63-9442-41e3b5325d76", "method": "POST", "route": "/api/v1/auth/login", "status": 200, "duration_ms": 485.44}
+INFO     ppm.requests:main.py:136 {"event": "http_request", "request_id": "ebde9766-4091-4735-bc49-248e199e9ffe", "method": "POST", "route": "/api/v1/auth/switch", "status": 200, "duration_ms": 40.96}
+INFO     ppm.requests:main.py:136 {"event": "http_request", "request_id": "8d2c73cb-245a-4b09-ab35-f3f2b7769fb4", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 115.05}
+INFO     ppm.requests:main.py:136 {"event": "http_request", "request_id": "b07680e7-de83-444c-8ea1-5fed6833f484", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 88.51}
+INFO     ppm.requests:main.py:136 {"event": "http_request", "request_id": "1fb82709-5748-402c-9f67-efed4cf71427", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 83.74}
+INFO     ppm.requests:main.py:136 {"event": "http_request", "request_id": "5f9068df-f3e6-482e-a8fe-26a4be6dbf32", "method": "PATCH", "route": "/api/v1/delivery/{kind}/{id_}", "status": 200, "duration_ms": 55.77}
+INFO     ppm.requests:main.py:136 {"event": "http_request", "request_id": "7fb97504-bf6e-4461-affa-eb522d4a0444", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 49.64}
+INFO     ppm.requests:main.py:136 {"event": "http_request", "request_id": "488240a7-971a-400d-a581-faecdf650e83", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 47.98}
+INFO     ppm.requests:main.py:136 {"event": "http_request", "request_id": "dc2f63b1-b0b3-4c4d-90af-686560a837c8", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 30.96}
+INFO     ppm.requests:main.py:136 {"event": "http_request", "request_id": "45540edd-1e79-4caf-962a-dc1253629be8", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 34.02}
+INFO     ppm.requests:main.py:136 {"event": "http_request", "request_id": "37187d97-88ad-4174-b7bb-c11a534c215e", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 70.26}
+INFO     ppm.requests:main.py:136 {"event": "http_request", "request_id": "831cbb91-a877-4d31-8c04-1feb1a995be5", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 41.16}
+INFO     ppm.requests:main.py:136 {"event": "http_request", "request_id": "895ddd2b-fc30-413a-9648-8054480a2a2c", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 57.99}
+INFO     ppm.requests:main.py:136 {"event": "http_request", "request_id": "518a0d8d-ae4b-4940-8b59-acccd785c3a1", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 41.02}
+INFO     ppm.requests:main.py:136 {"event": "http_request", "request_id": "6f2976ca-7c57-4d78-b0cc-91c71c721c74", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 38.94}
+INFO     ppm.requests:main.py:136 {"event": "http_request", "request_id": "18034f56-a907-465b-8157-f535fc5b82f4", "method": "PATCH", "route": "/api/v1/delivery/{kind}/{id_}", "status": 422, "duration_ms": 10.12}
+INFO     ppm.requests:main.py:136 {"event": "http_request", "request_id": "202b391c-5aa3-4656-bd65-845d71101c53", "method": "PATCH", "route": "/api/v1/delivery/{kind}/{id_}", "status": 500, "duration_ms": 35.15}
+=============================== warnings summary ===============================
+.venv/lib/python3.12/site-packages/fastapi/testclient.py:1
+  /app/.venv/lib/python3.12/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED tests/test_assessment.py::test_two_departments_review_versions_evidence_and_retries
+FAILED tests/test_assessment.py::test_tenants_rls_immutable_and_invalid_input
+FAILED tests/test_assessment.py::test_examples_publish_and_text_completeness
+FAILED tests/test_command.py::test_command_reconciliation_discrepancy_history_filters
+4 failed, 63 passed, 1 warning in 128.63s (0:02:08)
+Traceback (most recent call last):
+  File "/app/scripts/test_backend.py", line 28, in <module>
+    subprocess.run(command, check=True, env=env)
+  File "/usr/local/lib/python3.12/subprocess.py", line 571, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['/app/.venv/bin/python', '-m', 'pytest', '-q']' returned non-zero exit status 1.
+

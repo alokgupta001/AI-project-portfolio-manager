@@ -1,0 +1,7 @@
+Command: npm.cmd run lint
+
+> enterprise-ppm@0.1.0 lint
+> eslint apps/web packages/contracts/src tests/browser
+
+
+Exit: 0

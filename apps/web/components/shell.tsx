@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState, type ReactNode } from "react";
 import { usePathname } from "next/navigation";
-import { Button, Modal, Badge, StatePanel } from "./ui";
+import { Button, Modal, Badge } from "./ui";
 
 export function ThemeControl() {
   const [theme, setTheme] = useState("light");
@@ -81,13 +81,16 @@ export function AuthFrame({ children }: { children: ReactNode }) {
     </div>
   );
 }
+import { RecordSearch, PersonalFeed } from "./pilot";
 export function Shell({
   children,
+  transport,
   name,
   role,
   organizationControl,
 }: {
   children: ReactNode;
+  transport: typeof fetch;
   name: string;
   role: string;
   organizationControl: ReactNode;
@@ -102,6 +105,7 @@ export function Shell({
     { name: "Projects", href: "/projects", icon: "▤" },
     { name: "Maturity assessments", href: "/assessments", icon: "◉" },
     { name: "Command center", href: "/command-center", icon: "◈" },
+    { name: "Integrations & jobs", href: "/integrations", icon: "◇" },
     { name: "Resource planning", href: "/resources", icon: "▦" },
     { name: "Portfolios", href: "/portfolios", icon: "▦" },
     ...(role === "Admin"
@@ -221,19 +225,21 @@ export function Shell({
                 ? "Overview"
                 : path === "/design-system"
                   ? "Component gallery"
-                  : path.startsWith("/command-center")
-                    ? "Command center"
-                    : path.startsWith("/assessments")
-                      ? "Maturity assessments"
-                      : path.startsWith("/resources")
-                        ? "Resource planning"
-                        : path.startsWith("/projects")
-                          ? "Projects"
-                          : path.startsWith("/portfolios")
-                            ? "Portfolios"
-                            : path === "/organization"
-                              ? "Organization setup"
-                              : "Account & access"}
+                  : path.startsWith("/integrations")
+                    ? "Integrations & jobs"
+                    : path.startsWith("/command-center")
+                      ? "Command center"
+                      : path.startsWith("/assessments")
+                        ? "Maturity assessments"
+                        : path.startsWith("/resources")
+                          ? "Resource planning"
+                          : path.startsWith("/projects")
+                            ? "Projects"
+                            : path.startsWith("/portfolios")
+                              ? "Portfolios"
+                              : path === "/organization"
+                                ? "Organization setup"
+                                : "Account & access"}
             </span>
           </nav>
           {children}
@@ -257,10 +263,7 @@ export function Shell({
         title="Notifications"
         drawer
       >
-        <StatePanel title="Notifications aren't connected yet">
-          Delivery alerts and subscriptions will become available with later
-          modules. No notification feed is active.
-        </StatePanel>
+        {notifications && <PersonalFeed transport={transport} notifications />}
       </Modal>
       <Modal
         open={palette}
@@ -268,8 +271,8 @@ export function Shell({
         title="Workspace commands"
       >
         <p className="muted">
-          Search available pages. Project and document search are not enabled
-          yet.
+          Search available pages, or find permitted projects, work, risks and
+          assessments below.
         </p>
         <label className="field">
           Find a page
@@ -315,6 +318,7 @@ export function Shell({
           ))}
         </nav>
         {results.length === 0 && <p>No available pages match your search.</p>}
+        {palette && <RecordSearch transport={transport} />}
         <p className="muted">↑ ↓ to move · Enter to open · Esc to close</p>
       </Modal>
     </div>

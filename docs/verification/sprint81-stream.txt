@@ -1,0 +1,81 @@
+ Image enterprise-ppm-test Building 
+#1 [internal] load local bake definitions
+#1 reading from stdin 590B done
+#1 DONE 0.0s
+
+#2 [internal] load build definition from api.Dockerfile
+#2 transferring dockerfile: 774B 0.1s done
+#2 DONE 0.1s
+
+#3 [internal] load metadata for docker.io/library/python:3.12-slim-bookworm@sha256:54c85f3c47607a77f32adec749d3c81d1348bf25833671f512b26a9b6d778cb3
+#3 DONE 0.1s
+
+#4 [internal] load .dockerignore
+#4 transferring context: 205B 0.0s done
+#4 DONE 0.0s
+
+#5 [internal] load build context
+#5 DONE 0.0s
+
+#6 [ 1/10] FROM docker.io/library/python:3.12-slim-bookworm@sha256:54c85f3c47607a77f32adec749d3c81d1348bf25833671f512b26a9b6d778cb3
+#6 resolve docker.io/library/python:3.12-slim-bookworm@sha256:54c85f3c47607a77f32adec749d3c81d1348bf25833671f512b26a9b6d778cb3 0.1s done
+#6 DONE 0.1s
+
+#5 [internal] load build context
+#5 transferring context: 24.10kB 0.0s done
+#5 DONE 0.1s
+
+#7 [ 6/10] COPY services ./services
+#7 CACHED
+
+#8 [ 2/10] WORKDIR /app
+#8 CACHED
+
+#9 [ 3/10] RUN pip install --no-cache-dir uv==0.11.15
+#9 CACHED
+
+#10 [ 4/10] COPY pyproject.toml uv.lock ./
+#10 CACHED
+
+#11 [ 5/10] RUN uv sync --frozen --no-managed-python
+#11 CACHED
+
+#12 [ 7/10] COPY scripts ./scripts
+#12 CACHED
+
+#13 [ 8/10] COPY tests ./tests
+#13 DONE 0.1s
+
+#14 [ 9/10] COPY alembic.ini ./
+#14 DONE 0.2s
+
+#15 [10/10] RUN useradd --uid 10001 --create-home ppm && mkdir -p /var/ppm/objects && chown -R ppm:ppm /var/ppm && chown ppm:ppm /app
+#15 DONE 0.7s
+
+#16 exporting to image
+#16 exporting layers
+#16 exporting layers 0.6s done
+#16 exporting manifest sha256:f1cebd72a5f0d1f5effc3f64bb12221d76ceaa2b2dfa0934746f6a2f30d8a233 0.0s done
+#16 exporting config sha256:109a80edd59d8a07b65a1538e0465b4ed3223c535cb49d31e5bee7160259cba6 0.0s done
+#16 exporting attestation manifest sha256:08c8f6f39dc0786c7c3724a29764d6a6e73fa0b9028fd31e29a9023ff4873ba2
+#16 exporting attestation manifest sha256:08c8f6f39dc0786c7c3724a29764d6a6e73fa0b9028fd31e29a9023ff4873ba2 0.1s done
+#16 exporting manifest list sha256:0c81f99400b219ca2f9edec0212a23a608628e9bbe16edaea588a5e60f1f96e8 0.1s done
+#16 naming to docker.io/library/enterprise-ppm-test:latest
+#16 naming to docker.io/library/enterprise-ppm-test:latest 0.0s done
+#16 unpacking to docker.io/library/enterprise-ppm-test:latest
+#16 unpacking to docker.io/library/enterprise-ppm-test:latest 0.3s done
+#16 DONE 1.4s
+
+#17 resolving provenance for metadata file
+#17 DONE 0.1s
+ Image enterprise-ppm-test Built 
+ Container enterprise-ppm-redis-1 Running 
+ Container enterprise-ppm-postgres-1 Running 
+ Container enterprise-ppm-postgres-1 Waiting 
+ Container enterprise-ppm-redis-1 Waiting 
+ Container enterprise-ppm-postgres-1 Healthy 
+ Container enterprise-ppm-redis-1 Healthy 
+ Container enterprise-ppm-test-run-80aa80ef5861 Creating 
+ Container enterprise-ppm-test-run-80aa80ef5861 Created 
+.                                                                        [100%]
+1 passed in 6.40s
