@@ -351,10 +351,10 @@ Source-derived AST inventory. Search symbols instead of relying on line numbers;
 - `__init__` — line 597
 - `state` — line 610
 - `call` — line 625
-- `keyword_branch` — line 768
-- `hybrid_branch` — line 776
-- `index` — line 815
-- `ai_worker` — line 846
+- `keyword_branch` — line 771
+- `hybrid_branch` — line 779
+- `index` — line 818
+- `ai_worker` — line 849
 
 ## services/api/ppm_api/ai_evaluation.py
 
@@ -646,8 +646,9 @@ Source-derived AST inventory. Search symbols instead of relying on line numbers;
 - `validate` — line 28
 - `scan` — line 86
 - `ocr` — line 109
-- `extract` — line 125
-- `isolated_extract` — line 271
+- `validate_pdf_objects` — line 125
+- `extract` — line 167
+- `isolated_extract` — line 314
 
 ## services/api/ppm_api/document_retrieval.py
 
@@ -1066,38 +1067,39 @@ Source-derived AST inventory. Search symbols instead of relying on line numbers;
 
 [Source](../../tests/test_ai.py)
 
-- `Double` — line 35
-- `__init__` — line 38
-- `embed` — line 44
-- `complete` — line 50
-- `fixture` — line 72
-- `start` — line 109
-- `work` — line 120
-- `test_disabled_fallback_replay_sse_and_deleted_citation` — line 128
-- `test_index_hybrid_usage_version_invalidation_and_immutable_snapshot` — line 160
-- `test_provider_failures_truthful_partial_and_bounded_accounting` — line 213
-- `test_concurrent_budget_reservations_and_revision_guards` — line 245
-- `test_roles_tenants_tools_foreign_ids_and_private_diagnostics` — line 286
-- `test_inflight_revocation_or_cancel_fences_late_publication` — line 315
-- `Slow` — line 318
-- `complete` — line 319
-- `observed_batch` — line 333
-- `test_crash_unknown_worker_lease_and_deadline_no_replay_spend` — line 390
-- `test_circuit_opens_and_recovers` — line 425
-- `test_unsupported_numerical_output_is_rejected` — line 456
-- `Invented` — line 457
-- `complete` — line 458
-- `test_real_wait_timeout_missing_evidence_and_bad_vector_fallback` — line 485
-- `Timeout` — line 486
-- `embed` — line 487
-- `test_inflight_source_tombstone_and_forged_tuple_are_safe` — line 507
-- `SlowIndex` — line 510
-- `embed` — line 511
-- `test_worker_token_fencing_blocks_late_result` — line 570
-- `Slow` — line 573
-- `complete` — line 574
-- `test_foreign_source_scope_csrf_rls_and_replay_hash_conflict` — line 602
-- `test_gemini_zero_ledger_quota_fallback_and_persistent_call_limit` — line 636
+- `Double` — line 36
+- `__init__` — line 39
+- `embed` — line 45
+- `complete` — line 51
+- `fixture` — line 73
+- `start` — line 110
+- `work` — line 121
+- `test_disabled_fallback_replay_sse_and_deleted_citation` — line 129
+- `test_index_hybrid_usage_version_invalidation_and_immutable_snapshot` — line 161
+- `test_provider_failures_truthful_partial_and_bounded_accounting` — line 214
+- `test_concurrent_budget_reservations_and_revision_guards` — line 246
+- `test_roles_tenants_tools_foreign_ids_and_private_diagnostics` — line 287
+- `test_inflight_revocation_or_cancel_fences_late_publication` — line 317
+- `Slow` — line 322
+- `complete` — line 323
+- `observed_batch` — line 339
+- `test_crash_unknown_worker_lease_and_deadline_no_replay_spend` — line 417
+- `test_circuit_opens_and_recovers` — line 452
+- `test_unsupported_numerical_output_is_rejected` — line 483
+- `Invented` — line 484
+- `complete` — line 485
+- `test_real_wait_timeout_missing_evidence_and_bad_vector_fallback` — line 512
+- `Timeout` — line 513
+- `embed` — line 514
+- `test_inflight_source_tombstone_and_forged_tuple_are_safe` — line 534
+- `SlowIndex` — line 537
+- `embed` — line 538
+- `test_worker_token_fencing_blocks_late_result` — line 598
+- `Slow` — line 601
+- `complete` — line 602
+- `test_foreign_source_scope_csrf_rls_and_replay_hash_conflict` — line 649
+- `test_gemini_zero_ledger_quota_fallback_and_persistent_call_limit` — line 683
+- `test_gemini_disabled_embeddings_do_not_consume_attempts_or_failures` — line 743
 
 ## tests/test_ai_contracts.py
 
@@ -1193,14 +1195,19 @@ Source-derived AST inventory. Search symbols instead of relying on line numbers;
 
 [Source](../../tests/test_document_parser.py)
 
-- `office` — line 13
-- `text_pdf` — line 39
-- `scanned_pdf` — line 63
-- `test_formats_and_source_locations` — line 118
-- `test_untrusted_intake_rejected` — line 149
-- `test_prompt_injection_is_ordinary_escaped_text_and_chunking_is_bounded` — line 154
-- `test_chunk_budget_refuses_an_unpageable_partial_source` — line 161
-- `test_real_scanned_pdf_and_image_ocr` — line 171
+- `office` — line 14
+- `text_pdf` — line 40
+- `compressed_objects_pdf` — line 64
+- `add` — line 73
+- `stream` — line 77
+- `test_benign_compressed_pdf_with_cyclic_page_references_extracts` — line 112
+- `test_active_names_in_compressed_pdf_objects_are_rejected` — line 138
+- `scanned_pdf` — line 146
+- `test_formats_and_source_locations` — line 201
+- `test_untrusted_intake_rejected` — line 232
+- `test_prompt_injection_is_ordinary_escaped_text_and_chunking_is_bounded` — line 237
+- `test_chunk_budget_refuses_an_unpageable_partial_source` — line 244
+- `test_real_scanned_pdf_and_image_ocr` — line 254
 
 ## tests/test_documents.py
 

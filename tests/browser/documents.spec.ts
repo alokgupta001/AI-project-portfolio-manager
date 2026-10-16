@@ -15,6 +15,15 @@ test("document upload, locations, versions, safe download, policy, hold and eras
   const fixture = JSON.parse(
     readFileSync(process.env.PPM_IDENTITY_FIXTURE!, "utf8"),
   );
+  const staleProject = "11111111-1111-4111-8111-111111111111";
+  await page.route("**/api/v1/delivery/projects?*", (route) =>
+    route.fulfill({
+      json: {
+        items: [{ id: staleProject, data: { name: "Stale form project" } }],
+        total: 1,
+      },
+    }),
+  );
   const errors: string[] = [];
   page.on("pageerror", (e) => errors.push(e.message));
   await page.goto("/login");
@@ -87,6 +96,12 @@ test("document upload, locations, versions, safe download, policy, hold and eras
   ).toBeVisible();
   await page
     .getByLabel("Add version to open document", { exact: true })
+    .uncheck();
+  await page
+    .getByRole("combobox", { name: "Document project", exact: true })
+    .selectOption(staleProject);
+  await page
+    .getByLabel("Add version to open document", { exact: true })
     .check();
   await page.getByLabel("Source file", { exact: true }).setInputFiles({
     name: "governance-v2.txt",
@@ -101,6 +116,7 @@ test("document upload, locations, versions, safe download, policy, hold and eras
     .getByRole("button", { name: "Store and process source", exact: true })
     .click();
   const appendResponse = await appended;
+  expect(appendResponse.request().postDataJSON().project_id).toBeNull();
   expect(appendResponse.status(), await appendResponse.text()).toBe(202);
   const appendedVersion = await appendResponse.json();
   await expect(

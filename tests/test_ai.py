@@ -21,6 +21,7 @@ from pydantic import ValidationError
 from sqlalchemy.exc import DBAPIError
 from test_delivery import create, setup
 from test_documents import clean_scanner, process, upload
+from test_gemini import gemini as gemini
 from test_identity import identity as identity
 from test_identity import login, send
 
@@ -312,13 +313,18 @@ async def test_roles_tenants_tools_foreign_ids_and_private_diagnostics(identity,
 
 
 @pytest.mark.parametrize("revoke", [True, False])
-async def test_inflight_revocation_or_cancel_fences_late_publication(identity, monkeypatch, revoke):
+@pytest.mark.parametrize("provider_error", [False, True])
+async def test_inflight_revocation_or_cancel_fences_late_publication(
+    identity, monkeypatch, revoke, provider_error
+):
     entered, release = asyncio.Event(), asyncio.Event()
 
     class Slow(Double):
         async def complete(self, query, evidence):
             entered.set()
             await release.wait()
+            if provider_error:
+                raise ProviderError("PROVIDER_UNAVAILABLE", True)
             return await super().complete(query, evidence)
 
     c, app, owner, ids, _, project, _ = await fixture(identity, monkeypatch, adapter=Slow())
@@ -385,6 +391,27 @@ async def test_inflight_revocation_or_cancel_fences_late_publication(identity, m
             .one()
         )
         assert b["reserved_usd"] == 0 and b["spent_usd"] == saved["charged_usd"]
+        completed = (
+            (
+                await conn.execute(
+                    sa.select(A.calls).where(
+                        A.calls.c.run_id == saved["id"], A.calls.c.operation == "completion"
+                    )
+                )
+            )
+            .mappings()
+            .one()
+        )
+        if revoke:
+            # Revoked authority cannot reopen tenant accounting; retain the precharge.
+            assert completed["status"] == "unknown"
+            assert b["failures"] == 0
+        else:
+            assert completed["status"] == ("failed" if provider_error else "succeeded")
+            assert completed["code"] == ("PROVIDER_UNAVAILABLE" if provider_error else None)
+            assert completed["input_tokens"] == (None if provider_error else 11)
+            assert completed["output_tokens"] == (None if provider_error else 13)
+            assert b["failures"] == int(provider_error)
 
 
 async def test_crash_unknown_worker_lease_and_deadline_no_replay_spend(identity, monkeypatch):
@@ -567,13 +594,16 @@ async def test_inflight_source_tombstone_and_forged_tuple_are_safe(identity, mon
         )  # hold retained immutable source, no derived publication
 
 
-async def test_worker_token_fencing_blocks_late_result(identity, monkeypatch):
+@pytest.mark.parametrize("provider_error", [False, True])
+async def test_worker_token_fencing_blocks_late_result(identity, monkeypatch, provider_error):
     entered, release = asyncio.Event(), asyncio.Event()
 
     class Slow(Double):
         async def complete(self, query, evidence):
             entered.set()
             await release.wait()
+            if provider_error:
+                raise ProviderError("PROVIDER_UNAVAILABLE", True)
             return await super().complete(query, evidence)
 
     c, app, owner, ids, _, project, _ = await fixture(identity, monkeypatch, adapter=Slow())
@@ -595,6 +625,23 @@ async def test_worker_token_fencing_blocks_late_result(identity, monkeypatch):
             .one()
         )
         assert not saved["settled"] and saved["result"] == []
+        call = (
+            (
+                await conn.execute(
+                    sa.select(A.calls).where(
+                        A.calls.c.run_id == saved["id"], A.calls.c.operation == "completion"
+                    )
+                )
+            )
+            .mappings()
+            .one()
+        )
+        assert call["status"] == ("failed" if provider_error else "succeeded")
+        assert call["code"] == ("PROVIDER_UNAVAILABLE" if provider_error else None)
+        failures = await conn.scalar(
+            sa.select(A.budgets.c.failures).where(A.budgets.c.organization_id == ids["a"])
+        )
+        assert failures == int(provider_error)
     result, _ = await work(c, app, owner, ids, run)
     assert result.json()["diagnostic"] == "CALL_OUTCOME_UNKNOWN"
 
@@ -664,6 +711,7 @@ async def test_gemini_zero_ledger_quota_fallback_and_persistent_call_limit(
     assert first_run.json()["evidence"]
     assert first_run.json()["answer_status"] == ("source_fallback" if quota else "supported")
     assert adapter.count == (1 if quota else 2)
+
     second = await start(c, project)
     second_run, _ = await work(c, app, owner, ids, second.json())
     assert second_run.json()["diagnostic"] == "FREE_TIER_CALL_LIMIT"
@@ -689,3 +737,50 @@ async def test_gemini_zero_ledger_quota_fallback_and_persistent_call_limit(
     assert limited_run.json()["answer_status"] == "source_fallback"
     assert Decimal(limited_run.json()["charged_usd"]) == 0
     assert adapter.count == (1 if quota else 2)
+
+
+@pytest.mark.parametrize("operation", ["query", "index"])
+async def test_gemini_disabled_embeddings_do_not_consume_attempts_or_failures(
+    identity, monkeypatch, gemini, operation
+):
+    adapter = Double()
+    c, app, owner, ids, _, project, accepted = await fixture(
+        identity, monkeypatch, configured=False, adapter=adapter
+    )
+    config = app.state.settings
+    for name in type(config).model_fields:
+        if name.startswith("ai_"):
+            setattr(config, name, getattr(gemini, name))
+    config.ai_embedding_model = ""
+    config.ai_gemini_daily_call_limit = 1
+    request = {"operation": "index", "query": "", "version_id": accepted["version_id"]}
+    created = await start(c, project, **(request if operation == "index" else {}))
+    assert created.status_code == 202, created.text
+    result, _ = await work(c, app, owner, ids, created.json())
+    if operation == "query":
+        assert result.json()["answer_status"] == "supported"
+        assert "EMBEDDINGS_DISABLED" in result.json()["limitations"]
+    else:
+        assert result.json()["status"] == "failed"
+        assert result.json()["diagnostic"] == "EMBEDDINGS_DISABLED"
+    assert adapter.count == (1 if operation == "query" else 0)
+    async with owner.connect() as conn:
+        calls = list(
+            (
+                await conn.execute(sa.select(A.calls).where(A.calls.c.organization_id == ids["a"]))
+            ).mappings()
+        )
+        assert [call["operation"] for call in calls] == (
+            ["completion"] if operation == "query" else []
+        )
+        b = (
+            (
+                await conn.execute(
+                    sa.select(A.budgets).where(A.budgets.c.organization_id == ids["a"])
+                )
+            )
+            .mappings()
+            .one()
+        )
+        assert b["failures"] == 0 and b["circuit_until"] is None
+        assert b["spent_usd"] == b["reserved_usd"] == 0

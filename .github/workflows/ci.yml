@@ -39,10 +39,10 @@ jobs:
       - name: Build and run isolated local stack
         run: |
           .venv/bin/python scripts/bootstrap.py
-          docker compose config --quiet
+          docker compose -f compose.yaml -f compose.documents.yaml config --quiet
           docker compose -f compose.yaml -f compose.documents.yaml up --build -d --wait --wait-timeout 600
           docker compose -f compose.yaml -f compose.documents.yaml --profile test run --rm test
-          docker compose exec -T api python scripts/smoke_worker.py
+          docker compose -f compose.yaml -f compose.documents.yaml exec -T api python scripts/smoke_worker.py
       - name: Browser and persistence acceptance
         run: |
           npx playwright install --with-deps chromium

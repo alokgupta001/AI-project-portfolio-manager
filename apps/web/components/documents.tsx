@@ -366,7 +366,7 @@ export function Documents({
                   {
                     title: d?.title || title,
                     category: d?.category || category,
-                    project_id: d?.project_id || project || null,
+                    project_id: d ? d.project_id : project || null,
                     document_id: d?.id || null,
                     filename: file.name,
                     content_base64: await readFile(file),

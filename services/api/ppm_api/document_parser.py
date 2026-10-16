@@ -122,6 +122,48 @@ def ocr(path: Path) -> tuple[str, float | None]:
     return text, confidence
 
 
+def validate_pdf_objects(reader: Any) -> None:
+    """Inspect resolved containers, including compressed objects, without following cycles."""
+    from pypdf.generic import ArrayObject, DictionaryObject, IndirectObject, NameObject
+
+    active_names = {
+        "/JavaScript",
+        "/JS",
+        "/Launch",
+        "/EmbeddedFile",
+        "/EmbeddedFiles",
+        "/OpenAction",
+        "/AA",
+    }
+    pending = [reader.trailer]
+    references: set[tuple[int, int]] = set()
+    containers: set[int] = set()
+    examined = 0
+    while pending:
+        examined += 1
+        if examined > 50_000:
+            raise IntakeError("PDF_OBJECT_LIMIT")
+        obj = pending.pop()
+        if isinstance(obj, IndirectObject):
+            reference = (obj.idnum, obj.generation)
+            if reference in references:
+                continue
+            references.add(reference)
+            obj = obj.get_object()
+        if isinstance(obj, NameObject) and str(obj) in active_names:
+            raise IntakeError("ACTIVE_PDF")
+        if isinstance(obj, (DictionaryObject, ArrayObject)):
+            if id(obj) in containers:
+                continue
+            containers.add(id(obj))
+            if isinstance(obj, DictionaryObject):
+                if any(str(key) in active_names for key in obj):
+                    raise IntakeError("ACTIVE_PDF")
+                pending.extend(obj.values())
+            else:
+                pending.extend(obj)
+
+
 def extract(data: bytes, filename: str) -> list[dict]:
     ext = validate(data, filename)
     locations: list[tuple[str, str, str, float | None]] = []
@@ -209,6 +251,7 @@ def extract(data: bytes, filename: str) -> list[dict]:
                 reader = PdfReader(io.BytesIO(data), strict=True)
                 if reader.is_encrypted or not 0 < len(reader.pages) <= 50:
                     raise IntakeError("PDF_LIMIT_OR_ENCRYPTED")
+                validate_pdf_objects(reader)
                 for i, page in enumerate(reader.pages, 1):
                     text = page.extract_text() or ""
                     confidence = None

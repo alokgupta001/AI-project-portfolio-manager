@@ -651,6 +651,8 @@ class Runtime:
                     raise P.ProviderError("CIRCUIT_OPEN")
                 if not P.enabled(self.settings) or self.adapter.name == "disabled":
                     raise P.ProviderError("PROVIDER_DISABLED")
+                if operation != "completion" and not self.settings.ai_embedding_model:
+                    raise P.ProviderError("EMBEDDINGS_DISABLED")
                 if self.settings.ai_provider == "gemini":
                     # Locking the tenant budget serializes attempt admission across workers.
                     # A zero-dollar ledger alone cannot bound request counts.
@@ -756,8 +758,9 @@ class Runtime:
                         latency_ms=elapsed,
                     )
                 )
-                if run["settled"] or job["lease_token"] != self.token:
-                    raise P.ProviderError("RUN_CANCELLED")
+                fenced = run["settled"] or job["lease_token"] != self.token
+            if fenced:
+                raise P.ProviderError("RUN_CANCELLED")
             if not error and result:
                 return result
             if error and (not error.retryable or attempt == 2):

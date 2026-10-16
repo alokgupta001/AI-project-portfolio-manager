@@ -5,6 +5,7 @@ import io
 import shutil
 import subprocess
 import zipfile
+import zlib
 
 import pytest
 from ppm_api.document_parser import IntakeError, extract, isolated_extract, validate
@@ -58,6 +59,88 @@ def text_pdf():
     result = io.BytesIO()
     writer.write(result)
     return result.getvalue()
+
+
+def compressed_objects_pdf(catalog_entry=b"", hidden=b"<< >>"):
+    """A real PDF 1.5 xref stream whose catalog and named dictionary are compressed."""
+    catalog = b"<< /Type /Catalog /Pages 2 0 R /Names 7 0 R " + catalog_entry + b" >>"
+    header = f"1 0 7 {len(catalog) + 1} ".encode()
+    objects = zlib.compress(header + catalog + b" " + hidden)
+    content = b"BT /F1 26 Tf 60 700 Td (Supplier delivery risk) Tj ET"
+    data = bytearray(b"%PDF-1.5\n")
+    offsets = {}
+
+    def add(number, body):
+        offsets[number] = len(data)
+        data.extend(f"{number} 0 obj\n".encode() + body + b"\nendobj\n")
+
+    def stream(properties, value):
+        return (
+            b"<< "
+            + properties
+            + f" /Length {len(value)} >>\nstream\n".encode()
+            + value
+            + b"\nendstream"
+        )
+
+    add(2, b"<< /Type /Pages /Kids [3 0 R] /Count 1 >>")
+    add(
+        3,
+        b"<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] "
+        b"/Resources << /Font << /F1 4 0 R >> >> /Contents 5 0 R >>",
+    )
+    add(4, b"<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>")
+    add(5, stream(b"", content))
+    add(
+        6, stream(f"/Type /ObjStm /N 2 /First {len(header)} /Filter /FlateDecode".encode(), objects)
+    )
+    xref_offset = len(data)
+    entries = [(0, 0, 65535), (2, 6, 0)]
+    entries += [(1, offsets[n], 0) for n in range(2, 7)]
+    entries += [(2, 6, 1), (1, xref_offset, 0)]
+    xref = b"".join(t.to_bytes(1) + a.to_bytes(4) + b.to_bytes(2) for t, a, b in entries)
+    add(
+        8,
+        stream(
+            b"/Type /XRef /Size 9 /Root 1 0 R /W [1 4 2] /Filter /FlateDecode", zlib.compress(xref)
+        ),
+    )
+    data.extend(f"startxref\n{xref_offset}\n%%EOF\n".encode())
+    return bytes(data)
+
+
+def test_benign_compressed_pdf_with_cyclic_page_references_extracts():
+    result = extract(compressed_objects_pdf(), "compressed.pdf")
+    assert result[0]["text"] == "Supplier delivery risk"
+
+
+@pytest.mark.parametrize(
+    "catalog_entry,hidden",
+    [
+        (b"/OpenAction 7 0 R", b"<< /S /JavaScript /JS (alert) >>"),
+        (b"", b"<< /JavaScript << /Names [] >> >>"),
+        (b"", b"<< /JS (alert) >>"),
+        (b"", b"<< /S /Launch /F (payload) >>"),
+        (b"", b"<< /AA << /WC 7 0 R >> >>"),
+        (b"", b"<< /EmbeddedFiles << /Names [] >> >>"),
+        (b"", b"<< /Type /EmbeddedFile >>"),
+    ],
+    ids=[
+        "open-action",
+        "javascript",
+        "js",
+        "launch-action-value",
+        "additional-action",
+        "embedded-file-tree",
+        "embedded-file-type",
+    ],
+)
+def test_active_names_in_compressed_pdf_objects_are_rejected(catalog_entry, hidden):
+    data = compressed_objects_pdf(catalog_entry, hidden)
+    # The old raw-byte check admits these valid compressed-object containers.
+    assert validate(data, "compressed.pdf") == "pdf"
+    with pytest.raises(IntakeError, match="^ACTIVE_PDF$"):
+        isolated_extract(data, "compressed.pdf")
 
 
 def scanned_pdf(tmp_path):
