@@ -1,5 +1,7 @@
 # Identity tenant and permission contract
 
+Sprint 11 [authority](agents.md): Admin starts/cancels analysis; ordinary reviews require an independent authorized project editor; assessment-linked reviews require the named independent reviewer plus project scope. Private-evidence access is rechecked. Agents have no approval/mutation privilege.
+
 Sprint 09 adds [source authorization](documents.md): project read grants bound library,
 preview, keyword/citation and signed download; Admin or PM project edit/manage bounds
 uploads/version/reprocess/delete. Organization policies are member-readable and

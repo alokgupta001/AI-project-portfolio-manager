@@ -1,5 +1,7 @@
 # AI runtime — ai-evidence-v1
 
+Sprint 11 extends the runtime with the additive `agents` operation and [specialist contract](agents.md). It reuses calls/reservations/leases/cancellation; query/index replay hashes and all six PR #1 fixes remain. No model/ceiling/confirmation change.
+
 Sprint 10 adds a bounded evidence runtime, not Sprint 11 domain agents. `/ai` uses
 `/api/v1/ai`. OpenAPI/generated TypeScript remains authoritative. The default is
 disabled. On 16 October the user authorized Gemini free-tier use at $0, confirmed

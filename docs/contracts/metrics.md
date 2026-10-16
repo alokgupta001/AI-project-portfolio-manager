@@ -1,5 +1,7 @@
 # Versioned metric dictionary
 
+Sprint 11 [agents](agents.md) consume `command.snapshot` and `assessment.compute_scores` without new metric formulas. Confidence 0–1 stays separate from maturity 0–100; original/suggested/reviewer-approved scores are distinct. Team blocker summaries retain the existing minimum-five privacy policy.
+
 Sprint 05 implements `capacity-v1` for M07–M10 and initial team support signals:
 [exact local-date formulas, completeness and scope rules](capacity.md). Full-resource
 utilization is never inferred from a caller's visible subset of project allocations.

@@ -1,5 +1,7 @@
 # Decisions assumptions and source reconciliation
 
+Current explicit Sprint 11 authorization permits PPM-11-001/002/003, deterministic acceptance and additive test migration 0013. [ADR 017](../architecture/adr/017-specialists-and-human-review.md) records shared batching, distinct scores and independent reviewed-only decisions. USD 0; no live providers or deployment. Stop before Sprint 12.
+
 Sprint 05 is explicitly authorized and implemented locally. [ADR 011](../architecture/adr/011-resource-capacity.md)
 records resource/calendar boundaries, partial project scope, sensitive effort grants,
 team suppression and immutable planning snapshots. The dated authorization statements

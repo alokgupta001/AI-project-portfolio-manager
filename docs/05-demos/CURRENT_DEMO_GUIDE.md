@@ -1,5 +1,9 @@
 # Current demo guide
 
+Sprint 11 executable synthetic journey: [isolated specialist review demo](sprint-based/sprint-11/README.md). It persists mock semantic scores/review history, demonstrates discrepancies and disabled-provider fallback, and does not call a real provider. [Actual results](../04-testing/sprint-based/sprint-11/TESTING_REPORT.md). No quality/production claim follows from mock success.
+
+## Historical checkpoints before Sprint 11
+
 **CURRENT DEMO**, source-reviewed against the local pilot and retained browser checks. Development Gmail signup, existing-account Viewer invitation and recovery were completed on 10 October; broader business scenarios were not all rerun. Use fictional data and separate browser profiles. Live Jira/GitHub and production demonstration retain their external gates. [Sprint 04 sample setup](sprint-based/sprint-04/DEMO-DEVELOPMENT.md) is the canonical guarded seed guide; the operator follows [local setup](../07-setup-and-deployment/LOCAL-DEVELOPMENT.md) and [Gmail SMTP setup](../07-setup-and-deployment/GMAIL-SMTP-SETUP.md). Ordinary members follow the website/email path; no default password exists.
 
 | Scenario | Exact page/actions | Expected result | Recovery / limitation |

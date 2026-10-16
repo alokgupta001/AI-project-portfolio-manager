@@ -1,5 +1,7 @@
 # Requirement coverage matrix
 
+Sprint 11 current evidence: [report](../03-sprints/completed/sprint-11/SPRINT_REPORT.md) and [tests](../04-testing/sprint-based/sprint-11/TESTING_REPORT.md). All three packages cover local controls; real-provider interpretation quality remains UNVERIFIED/BLOCKED. Dated notes below retain their historical scope.
+
 Source keys resolve to exact headings in [source index](../source/INDEX.md). Each row names an independently reviewable capability or constraint. Type: F required feature; N nonfunctional/control requirement; E proposed enhancement; T technology choice; P planning deliverable. Owners are sprint numbers. Dependencies are prerequisite sprint checkpoints, not claims of current completion. `Planned` means not implemented; evidence is deliberately absent until verified. Technical alternatives are resolved in ADRs rather than silently classified as completed product features.
 
 ## Sprint 00 planning
@@ -43,9 +45,9 @@ Source keys resolve to exact headings in [source index](../source/INDEX.md). Eac
 | F-020 | F | W1/Features | Agile maturity analysis | 06 | 04 | Agile dimension results retain framework version and evidence | Accepted locally | [Sprint 06 checks](../04-testing/sprint-based/sprint-06/TESTING_REPORT.md) |
 | F-021 | F | W1/Features | Governance evaluation | 06 | 04 | Governance dimension scores and gaps are reviewable | Accepted locally | [Sprint 06 checks](../04-testing/sprint-based/sprint-06/TESTING_REPORT.md) |
 | F-022 | F | W1/Features | Delivery capability scoring | 06 | 04 | Delivery dimension score handles incomplete answers explicitly | Accepted locally | [Sprint 06 checks](../04-testing/sprint-based/sprint-06/TESTING_REPORT.md) |
-| F-023 | F | W1/AI Features | Semantic answer evaluation | 11 | 06,10 | AI interpretation cites answer/rubric and remains separate from approved score | Planned | — |
-| F-024 | F | W1/AI Features | Pattern and maturity gap detection | 11 | 06,10 | Fixture inconsistency produces supported gap without fabricated evidence | Planned | — |
-| F-025 | F | W1/AI Features | Improvement suggestions | 11 | 06,10 | Suggestions map to identified dimensions and human review | Planned | — |
+| F-023 | F | W1/AI Features | Semantic answer evaluation | 11 | 06,10 | AI interpretation cites answer/rubric and remains separate from approved score | Implemented local controls; real semantic quality UNVERIFIED/BLOCKED | [Sprint 11 evidence](../04-testing/sprint-based/sprint-11/TESTING_REPORT.md) |
+| F-024 | F | W1/AI Features | Pattern and maturity gap detection | 11 | 06,10 | Fixture inconsistency produces supported gap without fabricated evidence | Implemented local controls; real semantic quality UNVERIFIED/BLOCKED | [Sprint 11 evidence](../04-testing/sprint-based/sprint-11/TESTING_REPORT.md) |
+| F-025 | F | W1/AI Features | Improvement suggestions | 11 | 06,10 | Suggestions map to identified dimensions and human review | Implemented local controls; real semantic quality UNVERIFIED/BLOCKED | [Sprint 11 evidence](../04-testing/sprint-based/sprint-11/TESTING_REPORT.md) |
 | F-026 | F | W3/Executive Dashboard | Portfolio health | 07 | 04,05,06 | Weighted health reconciles to covered projects with unknowns displayed | Implemented locally | [Sprint 07 checks](../04-testing/sprint-based/sprint-07/TESTING_REPORT.md); [command center](../contracts/command-center.md) |
 | F-027 | F | W3/Executive Dashboard | Business value | 07 | 04,05,06 | Target/realized benefits show explicit units and source records | Implemented locally | [Sprint 07 checks](../04-testing/sprint-based/sprint-07/TESTING_REPORT.md); [command center](../contracts/command-center.md) |
 | F-028 | F | W3/Executive Dashboard | Budget usage | 07 | 04,05,06 | Dashboard spend/budget agrees with ledger by currency | Implemented locally | [Sprint 07 checks](../04-testing/sprint-based/sprint-07/TESTING_REPORT.md); [command center](../contracts/command-center.md) |
@@ -65,16 +67,16 @@ Source keys resolve to exact headings in [source index](../source/INDEX.md). Eac
 
 | ID | Type | Source | Requirement | Owner | Depends | Acceptance criterion | Status | Evidence |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| F-040 | F | W2/Agents | PMO agent | 11 | 06,07,10 | Portfolio synthesis links to scoped metrics and findings | Planned | — |
-| F-041 | F | W2/Agents | Risk agent | 11 | 06,07,10 | Structured risks/mitigations validate and missing evidence stays unknown | Planned | — |
-| F-042 | F | W2/Agents | Governance agent | 11 | 06,07,10 | Gaps reference policy versions; no unsupported compliance certification | Planned | — |
-| F-043 | F | W2/Agents | Agile coach agent | 11 | 06,07,10 | Practice suggestions connect to maturity/delivery evidence | Planned | — |
-| F-044 | F | W2/Agents | Executive agent | 11 | 06,07,10 | Concise summary preserves source values and limitations | Planned | — |
-| F-045 | F | W2/Agents | Resource agent | 11 | 06,07,10 | Staffing proposals honor capacity and remain unexecuted drafts | Planned | — |
-| F-046 | F | S4.3 | Financial agent | 11 | 06,07,10 | Costs match metric service and currency grouping | Planned | — |
-| F-047 | F | S4.3 | Schedule agent | 11 | 06,07,10 | Schedule findings reference baseline/dependency versions | Planned | — |
-| F-048 | F | S4.3 | Sentiment agent | 11 | 06,07,10 | Team-level blockers include source support and uncertainty | Planned | — |
-| F-049 | F | W2; S4.3 | Multi-agent aggregation | 11 | 10 | Partial failure, disagreement and duplicates handled deterministically | Planned | — |
+| F-040 | F | W2/Agents | PMO agent | 11 | 06,07,10 | Portfolio synthesis links to scoped metrics and findings | Implemented local controls; real semantic quality UNVERIFIED/BLOCKED | [Sprint 11 evidence](../04-testing/sprint-based/sprint-11/TESTING_REPORT.md) |
+| F-041 | F | W2/Agents | Risk agent | 11 | 06,07,10 | Structured risks/mitigations validate and missing evidence stays unknown | Implemented local controls; real semantic quality UNVERIFIED/BLOCKED | [Sprint 11 evidence](../04-testing/sprint-based/sprint-11/TESTING_REPORT.md) |
+| F-042 | F | W2/Agents | Governance agent | 11 | 06,07,10 | Gaps reference policy versions; no unsupported compliance certification | Implemented local controls; real semantic quality UNVERIFIED/BLOCKED | [Sprint 11 evidence](../04-testing/sprint-based/sprint-11/TESTING_REPORT.md) |
+| F-043 | F | W2/Agents | Agile coach agent | 11 | 06,07,10 | Practice suggestions connect to maturity/delivery evidence | Implemented local controls; real semantic quality UNVERIFIED/BLOCKED | [Sprint 11 evidence](../04-testing/sprint-based/sprint-11/TESTING_REPORT.md) |
+| F-044 | F | W2/Agents | Executive agent | 11 | 06,07,10 | Concise summary preserves source values and limitations | Implemented local controls; real semantic quality UNVERIFIED/BLOCKED | [Sprint 11 evidence](../04-testing/sprint-based/sprint-11/TESTING_REPORT.md) |
+| F-045 | F | W2/Agents | Resource agent | 11 | 06,07,10 | Staffing proposals honor capacity and remain unexecuted drafts | Implemented local controls; real semantic quality UNVERIFIED/BLOCKED | [Sprint 11 evidence](../04-testing/sprint-based/sprint-11/TESTING_REPORT.md) |
+| F-046 | F | S4.3 | Financial agent | 11 | 06,07,10 | Costs match metric service and currency grouping | Implemented local controls; real semantic quality UNVERIFIED/BLOCKED | [Sprint 11 evidence](../04-testing/sprint-based/sprint-11/TESTING_REPORT.md) |
+| F-047 | F | S4.3 | Schedule agent | 11 | 06,07,10 | Schedule findings reference baseline/dependency versions | Implemented local controls; real semantic quality UNVERIFIED/BLOCKED | [Sprint 11 evidence](../04-testing/sprint-based/sprint-11/TESTING_REPORT.md) |
+| F-048 | F | S4.3 | Sentiment agent | 11 | 06,07,10 | Team-level blockers include source support and uncertainty | Implemented local controls; real semantic quality UNVERIFIED/BLOCKED | [Sprint 11 evidence](../04-testing/sprint-based/sprint-11/TESTING_REPORT.md) |
+| F-049 | F | W2; S4.3 | Multi-agent aggregation | 11 | 10 | Partial failure, disagreement and duplicates handled deterministically | Implemented local controls; real semantic quality UNVERIFIED/BLOCKED | [Sprint 11 evidence](../04-testing/sprint-based/sprint-11/TESTING_REPORT.md) |
 | F-050 | F | W4/Delay Prediction | Sprint delay model | 13 | 12 | As-of sprint labels and out-of-time evaluation precede model promotion | Planned | — |
 | F-051 | F | W4/Delay Prediction; S5M | Project delay regression | 13 | 12 | Delay-day MAE versus baseline and horizon documented | Planned | — |
 | F-052 | F | W4/Delay Prediction | Missed milestone model | 13 | 12 | Eligible milestone forecast has explicit baseline date and horizon | Planned | — |
@@ -96,13 +98,13 @@ Source keys resolve to exact headings in [source index](../source/INDEX.md). Eac
 | ID | Type | Source | Requirement | Owner | Depends | Acceptance criterion | Status | Evidence |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | F-065 | F | W5/Supported Documents | SRS BRD PRD classification | 09 | 08 | Each document category retains type, version and source locations | Accepted locally: categories, immutable versions, source locations | [Sprint 09 checks](../verification/PPM-09-001.md) |
-| F-066 | F | W5/Supported Documents | MOM and sprint report ingestion | 09,11 | 08 | Both categories yield attributable text/findings | Partial: attributed text accepted; semantic findings pending 11 | [Sprint 09 checks](../verification/PPM-09-001.md) |
-| F-067 | F | W5/Supported Documents | Risk log ingestion | 09,11 | 08 | Tabular/text risk candidates enter review without duplicate live risks | Partial: tabular/text sources accepted; candidate review pending 11 | [Sprint 09 checks](../verification/PPM-09-001.md) |
+| F-066 | F | W5/Supported Documents | MOM and sprint report ingestion | 09,11 | 08 | Both categories yield attributable text/findings | Implemented local controls; real semantic quality UNVERIFIED/BLOCKED | [Sprint 11 evidence](../04-testing/sprint-based/sprint-11/TESTING_REPORT.md) |
+| F-067 | F | W5/Supported Documents | Risk log ingestion | 09,11 | 08 | Tabular/text risk candidates enter review without duplicate live risks | Implemented local controls; real semantic quality UNVERIFIED/BLOCKED | [Sprint 11 evidence](../04-testing/sprint-based/sprint-11/TESTING_REPORT.md) |
 | F-068 | F | W5/Supported Documents | Project charter ingestion | 09 | 08 | Charter evidence links to project and source version | Accepted locally: scoped charter version/source evidence | [Sprint 09 checks](../verification/PPM-09-001.md) |
 | F-069 | F | W5/Supported Documents | Governance policy ingestion | 09 | 08 | Restricted policy version used only by authorized consumers | Accepted locally: scoped policy registry and source versions | [Sprint 09 checks](../verification/PPM-09-003.md) |
-| F-070 | F | W5/AI Processing | Extract risks and blockers | 11 | 08,09,10 | Sprint 09 candidate interfaces integrate with shared AI gateway; schema and evidence validate | Planned | — |
-| F-071 | F | W5/AI Processing | Extract dependencies | 11 | 08,09,10 | Semantic extraction integrates with gateway; proposed edges require review | Planned | — |
-| F-072 | F | W5/AI Processing | Compliance gaps and maturity indicators | 11 | 08,09,10 | Semantic findings cite sources and remain provisional until reviewed | Planned | — |
+| F-070 | F | W5/AI Processing | Extract risks and blockers | 11 | 08,09,10 | Sprint 09 candidate interfaces integrate with shared AI gateway; schema and evidence validate | Implemented local controls; real semantic quality UNVERIFIED/BLOCKED | [Sprint 11 evidence](../04-testing/sprint-based/sprint-11/TESTING_REPORT.md) |
+| F-071 | F | W5/AI Processing | Extract dependencies | 11 | 08,09,10 | Semantic extraction integrates with gateway; proposed edges require review | Implemented local controls; real semantic quality UNVERIFIED/BLOCKED | [Sprint 11 evidence](../04-testing/sprint-based/sprint-11/TESTING_REPORT.md) |
+| F-072 | F | W5/AI Processing | Compliance gaps and maturity indicators | 11 | 08,09,10 | Semantic findings cite sources and remain provisional until reviewed | Implemented local controls; real semantic quality UNVERIFIED/BLOCKED | [Sprint 11 evidence](../04-testing/sprint-based/sprint-11/TESTING_REPORT.md) |
 | F-073 | F | W5/Add OCR + RAG | OCR | 09 | 08 | Scanned fixture extracts text with page references/confidence | Accepted locally: real English scanned PDF/PNG/JPEG OCR | [Sprint 09 checks](../verification/PPM-09-001.md) |
 | F-074 | F | W5/Add OCR + RAG | Scoped RAG | 09,10 | 08 | Retrieval prevents access leakage and invalid/deleted citations | Partial: budgeted hybrid/fallback implemented; Gemini embedding smoke passed; retrieval quality/scale unverified | [Sprint 10 checks](../04-testing/sprint-based/sprint-10/TESTING_REPORT.md); [ADR 016](../architecture/adr/016-budgeted-ai-runtime.md) |
 | F-075 | F | W2/Capabilities; WA1 | Conversational copilot | 14 | 09,10,11,13 | Scoped multi-turn answers contain valid evidence or abstain | Planned | — |

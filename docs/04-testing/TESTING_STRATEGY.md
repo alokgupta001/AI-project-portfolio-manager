@@ -1,5 +1,9 @@
 # Testing strategy and current commands
 
+Sprint 11 [actual testing report](sprint-based/sprint-11/TESTING_REPORT.md) adds 36 per-agent input cases plus real database review/privacy/revocation/budget/cancellation/lease/replay fixtures, migration lifecycle and persistent browser journeys. All use offline doubles/intercepts with provider transports denied. Keep real-model quality UNVERIFIED/BLOCKED; destructive lifecycle is guarded to `test/ppm_test`.
+
+## Historical checkpoints before Sprint 11
+
 This is strategy/run guidance, not an executed full application report. Historical evidence: [sprint checks](sprint-based/README.md) and [8.1 report](../03-sprints/completed/sprint-8.1/SPRINT_REPORT.md). Future acceptance: [gap plan](GAP_ACCEPTANCE_TEST_PLAN.md).
 
 | Category / purpose | Real infrastructure and run command | Scope / limits |

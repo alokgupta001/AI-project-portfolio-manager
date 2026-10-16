@@ -29,8 +29,8 @@ Read the [audit](SPRINT_8_1_GAP_AUDIT.md), [Sprint 8.1 plan](SPRINT_8_1_PLAN.md)
 | G-013 Retention and pilot restore evidence | LOCAL RETENTION/RESTORE VERIFIED; RELEASE RECOVERY 22/23 OPEN | P1 | PPM-09-003 / 09 | Establish scoped purge/hold rules and a non-destructive scratch restore before real documents; finish all surfaces in 22/23. | A17 |
 | G-014 Document and AI dependency conflict | PARTIALLY IMPLEMENTED | P1 | PPM-10-001 / 10 | Stage keyword retrieval/contracts in 09, budgeted embedding adapter in 10, reviewed extraction in 11. | A12 |
 | G-015 AI gateway and operations | PARTIALLY IMPLEMENTED | P1 | PPM-10-001 / 10 | Shared runtime/UI and local guards verified; Gemini free-tier completion/embedding smoke passed; broader model/retrieval quality and scale remain unverified. | — |
-| G-016 Nine agents and semantic maturity scoring | PLANNED | P1 | PPM-11-001 / 11 | Build all nine agents with evidence and distinct suggested/reviewer scores. | — |
-| G-017 Recommendation review versus application | PLANNED | P1 | PPM-11-003 / 11 | Separate accepted recommendation from applied change; no generic mutation before 15. | A13 |
+| G-016 Nine agents and semantic maturity scoring | IMPLEMENTED LOCALLY; real-model quality blocked | P1 | PPM-11-001 / 11 | Build all nine agents with evidence and distinct suggested/reviewer scores. | — |
+| G-017 Recommendation review versus application | IMPLEMENTED LOCALLY; real-model quality blocked | P1 | PPM-11-003 / 11 | Separate accepted recommendation from applied change; no generic mutation before 15. | A13 |
 | G-018 Repeat assessments, due dates and trend/export | PARTIALLY IMPLEMENTED | P2 | PPM-15-002 / 15 | Extend the existing assessment lifecycle and connect workflow reminders, keeping published score history immutable. | A10 |
 | G-019 Unattended connector identity and conflict resolution | PARTIALLY IMPLEMENTED | P1 | PPM-12-001 / 12 | Add narrow renewable connector authority, source identity uniqueness and reviewable conflict resolution. | A14 |
 | G-020 Live Jira/GitHub acceptance | BLOCKED | P1 | PPM-12-001 / 12 | Run authorized read-only provider checks and controlled import with scoped credentials in 12; preserve fixtures and mark blocked until supplied. | — |
@@ -111,9 +111,9 @@ Each original coverage row appears once below, including controls, technologies 
 | F-020 | Agile maturity analysis | VERIFIED COMPLETE | PPM-81-010 | Agile dimension results retain framework version and evidence |
 | F-021 | Governance evaluation | VERIFIED COMPLETE | PPM-81-010 | Governance dimension scores and gaps are reviewable |
 | F-022 | Delivery capability scoring | VERIFIED COMPLETE | PPM-81-010 | Delivery dimension score handles incomplete answers explicitly |
-| F-023 | Semantic answer evaluation | NOT IMPLEMENTED | PPM-11-002 | AI interpretation cites answer/rubric and remains separate from approved score |
-| F-024 | Pattern and maturity gap detection | NOT IMPLEMENTED | PPM-11-003 | Fixture inconsistency produces supported gap without fabricated evidence |
-| F-025 | Improvement suggestions | NOT IMPLEMENTED | PPM-11-003 | Suggestions map to identified dimensions and human review |
+| F-023 | Semantic answer evaluation | IMPLEMENTED LOCALLY; real-model quality blocked | PPM-11-002 | AI interpretation cites answer/rubric and remains separate from approved score |
+| F-024 | Pattern and maturity gap detection | IMPLEMENTED LOCALLY; real-model quality blocked | PPM-11-003 | Fixture inconsistency produces supported gap without fabricated evidence |
+| F-025 | Improvement suggestions | IMPLEMENTED LOCALLY; real-model quality blocked | PPM-11-003 | Suggestions map to identified dimensions and human review |
 | F-026 | Portfolio health | VERIFIED COMPLETE | PPM-81-010 | Weighted health reconciles to covered projects with unknowns displayed |
 | F-027 | Business value | VERIFIED COMPLETE | PPM-81-010 | Target/realized benefits show explicit units and source records |
 | F-028 | Budget usage | VERIFIED COMPLETE | PPM-81-010 | Dashboard spend/budget agrees with ledger by currency |
@@ -128,16 +128,16 @@ Each original coverage row appears once below, including controls, technologies 
 | F-037 | Reported versus evidence health | VERIFIED COMPLETE | PPM-81-010 | Reported-green troubled fixture displays evidence discrepancy |
 | F-038 | Live project visibility | PARTIAL | PPM-81-009 | Authorized event updates dashboard; reconnect resumes or requests snapshot |
 | F-039 | AI progress streaming | IMPLEMENTED AND VERIFIED LOCALLY | PPM-10-002 | SSE exposes observable stages, not hidden reasoning or secret inputs |
-| F-040 | PMO agent | NOT IMPLEMENTED | PPM-11-001 | Portfolio synthesis links to scoped metrics and findings |
-| F-041 | Risk agent | NOT IMPLEMENTED | PPM-11-001 | Structured risks/mitigations validate and missing evidence stays unknown |
-| F-042 | Governance agent | NOT IMPLEMENTED | PPM-11-001 | Gaps reference policy versions; no unsupported compliance certification |
-| F-043 | Agile coach agent | NOT IMPLEMENTED | PPM-11-001 | Practice suggestions connect to maturity/delivery evidence |
-| F-044 | Executive agent | NOT IMPLEMENTED | PPM-11-001 | Concise summary preserves source values and limitations |
-| F-045 | Resource agent | NOT IMPLEMENTED | PPM-11-001 | Staffing proposals honor capacity and remain unexecuted drafts |
-| F-046 | Financial agent | NOT IMPLEMENTED | PPM-11-001 | Costs match metric service and currency grouping |
-| F-047 | Schedule agent | NOT IMPLEMENTED | PPM-11-001 | Schedule findings reference baseline/dependency versions |
-| F-048 | Sentiment agent | NOT IMPLEMENTED | PPM-11-001 | Team-level blockers include source support and uncertainty |
-| F-049 | Multi-agent aggregation | NOT IMPLEMENTED | PPM-11-001 | Partial failure, disagreement and duplicates handled deterministically |
+| F-040 | PMO agent | IMPLEMENTED LOCALLY; real-model quality blocked | PPM-11-001 | Portfolio synthesis links to scoped metrics and findings |
+| F-041 | Risk agent | IMPLEMENTED LOCALLY; real-model quality blocked | PPM-11-001 | Structured risks/mitigations validate and missing evidence stays unknown |
+| F-042 | Governance agent | IMPLEMENTED LOCALLY; real-model quality blocked | PPM-11-001 | Gaps reference policy versions; no unsupported compliance certification |
+| F-043 | Agile coach agent | IMPLEMENTED LOCALLY; real-model quality blocked | PPM-11-001 | Practice suggestions connect to maturity/delivery evidence |
+| F-044 | Executive agent | IMPLEMENTED LOCALLY; real-model quality blocked | PPM-11-001 | Concise summary preserves source values and limitations |
+| F-045 | Resource agent | IMPLEMENTED LOCALLY; real-model quality blocked | PPM-11-001 | Staffing proposals honor capacity and remain unexecuted drafts |
+| F-046 | Financial agent | IMPLEMENTED LOCALLY; real-model quality blocked | PPM-11-001 | Costs match metric service and currency grouping |
+| F-047 | Schedule agent | IMPLEMENTED LOCALLY; real-model quality blocked | PPM-11-001 | Schedule findings reference baseline/dependency versions |
+| F-048 | Sentiment agent | IMPLEMENTED LOCALLY; real-model quality blocked | PPM-11-001 | Team-level blockers include source support and uncertainty |
+| F-049 | Multi-agent aggregation | IMPLEMENTED LOCALLY; real-model quality blocked | PPM-11-001 | Partial failure, disagreement and duplicates handled deterministically |
 | F-050 | Sprint delay model | NOT IMPLEMENTED | PPM-13-001 | As-of sprint labels and out-of-time evaluation precede model promotion |
 | F-051 | Project delay regression | NOT IMPLEMENTED | PPM-13-001 | Delay-day MAE versus baseline and horizon documented |
 | F-052 | Missed milestone model | NOT IMPLEMENTED | PPM-13-001 | Eligible milestone forecast has explicit baseline date and horizon |
@@ -154,13 +154,13 @@ Each original coverage row appears once below, including controls, technologies 
 | F-063 | Authorized public repository data | NOT IMPLEMENTED | PPM-12-002 | Source/license/rate limits and as-of feature mapping recorded |
 | F-064 | Synthetic dataset generator | NOT IMPLEMENTED | PPM-12-002 | Seeded schema-valid fixtures isolated from real accuracy claims |
 | F-065 | SRS BRD PRD classification | IMPLEMENTED AND VERIFIED LOCALLY | PPM-09-001 | Each document category retains type, version and source locations |
-| F-066 | MOM and sprint report ingestion | PARTIALLY IMPLEMENTED | PPM-11-003 | Both categories yield attributable text/findings |
-| F-067 | Risk log ingestion | PARTIALLY IMPLEMENTED | PPM-11-003 | Tabular/text risk candidates enter review without duplicate live risks |
+| F-066 | MOM and sprint report ingestion | PARTIALLY IMPLEMENTED; local review controls verified | PPM-11-003 | Both categories yield attributable text/findings |
+| F-067 | Risk log ingestion | PARTIALLY IMPLEMENTED; local review controls verified | PPM-11-003 | Tabular/text risk candidates enter review without duplicate live risks |
 | F-068 | Project charter ingestion | IMPLEMENTED AND VERIFIED LOCALLY | PPM-09-001 | Charter evidence links to project and source version |
 | F-069 | Governance policy ingestion | IMPLEMENTED AND VERIFIED LOCALLY | PPM-09-003 | Restricted policy version used only by authorized consumers |
-| F-070 | Extract risks and blockers | NOT IMPLEMENTED | PPM-11-003 | Sprint 09 candidate interfaces integrate with shared AI gateway; schema and evidence validate |
-| F-071 | Extract dependencies | NOT IMPLEMENTED | PPM-11-003 | Semantic extraction integrates with gateway; proposed edges require review |
-| F-072 | Compliance gaps and maturity indicators | NOT IMPLEMENTED | PPM-11-003 | Semantic findings cite sources and remain provisional until reviewed |
+| F-070 | Extract risks and blockers | IMPLEMENTED LOCALLY; real-model quality blocked | PPM-11-003 | Sprint 09 candidate interfaces integrate with shared AI gateway; schema and evidence validate |
+| F-071 | Extract dependencies | IMPLEMENTED LOCALLY; real-model quality blocked | PPM-11-003 | Semantic extraction integrates with gateway; proposed edges require review |
+| F-072 | Compliance gaps and maturity indicators | IMPLEMENTED LOCALLY; real-model quality blocked | PPM-11-003 | Semantic findings cite sources and remain provisional until reviewed |
 | F-073 | OCR | IMPLEMENTED AND VERIFIED LOCALLY | PPM-09-001 | Scanned fixture extracts text with page references/confidence |
 | F-074 | Scoped RAG | PARTIALLY IMPLEMENTED | PPM-10-001 | Retrieval prevents access leakage and invalid/deleted citations |
 | F-075 | Conversational copilot | NOT IMPLEMENTED | PPM-14-001 | Scoped multi-turn answers contain valid evidence or abstain |

@@ -1,5 +1,7 @@
 # Sprint reports in plain language
 
+Current: [Sprint 11 evidence and human review](completed/SPRINT-11.md), with [actual validation](../04-testing/sprint-based/sprint-11/TESTING_REPORT.md). Real-model quality UNVERIFIED/BLOCKED; normal data preserved; Sprint 12 unstarted.
+
 Current documentation closure for all Sprints 00–10 (including 8.1): [coverage, corrections, recorded evidence and remaining gates](../10-reference/PREVIOUS-SPRINTS-DOCUMENTATION-CLOSURE.md).
 
 Prepared 16 October 2026 from the sprint records and current application source.

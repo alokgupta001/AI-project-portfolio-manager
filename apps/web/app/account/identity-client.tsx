@@ -15,6 +15,7 @@ import {
 import { WorkspaceHome } from "../../components/workspace-home";
 import { Integrations } from "../../components/integrations";
 import { AI } from "../../components/ai";
+import { Agents } from "../../components/agents";
 import { Documents } from "../../components/documents";
 import { CommandCenter } from "../../components/command-center";
 import { Assessments } from "../../components/assessments";
@@ -99,7 +100,8 @@ export default function IdentityClient({
     | "command"
     | "integrations"
     | "documents"
-    | "ai";
+    | "ai"
+    | "agents";
 }) {
   const protectedMode = [
     "account",
@@ -112,6 +114,7 @@ export default function IdentityClient({
     "integrations",
     "documents",
     "ai",
+    "agents",
   ].includes(mode);
   const [confirmation, setConfirmation] = useState<Confirmation | null>(null);
   const [memberFilter, setMemberFilter] = useState("");
@@ -175,6 +178,7 @@ export default function IdentityClient({
         "integrations",
         "documents",
         "ai",
+        "agents",
       ].includes(mode)
     )
       load()
@@ -242,7 +246,8 @@ export default function IdentityClient({
         mode !== "command" &&
         mode !== "integrations" &&
         mode !== "documents" &&
-        mode !== "ai" && (
+        mode !== "ai" &&
+        mode !== "agents" && (
           <section className="intro">
             <p className="eyebrow">YOUR ENTERPRISE WORKSPACE</p>
             <h1>
@@ -450,6 +455,13 @@ export default function IdentityClient({
       {account && mode === "gallery" && <Gallery />}
       {account?.organization_id && mode === "ai" && (
         <AI
+          key={account.organization_id}
+          account={account}
+          transport={transport}
+        />
+      )}
+      {account?.organization_id && mode === "agents" && (
+        <Agents
           key={account.organization_id}
           account={account}
           transport={transport}

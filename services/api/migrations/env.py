@@ -3,6 +3,7 @@ import os
 
 from alembic import context
 from ppm_api import (  # noqa: F401
+    agent_tables,
     ai_tables,
     assessment_tables,
     command_tables,

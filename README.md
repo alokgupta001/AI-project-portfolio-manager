@@ -1,5 +1,9 @@
 # Enterprise PPM Intelligence and Transformation Platform
 
+Current checkpoint — 16 October 2026: Sprint 11 PPM-11-001/002/003 implemented with deterministic acceptance. [Report](docs/03-sprints/completed/sprint-11/SPRINT_REPORT.md), [handoff](docs/03-sprints/completed/sprint-11/HANDOFF.md) and [actual tests](docs/04-testing/sprint-based/sprint-11/TESTING_REPORT.md). Real-provider semantic quality is UNVERIFIED/BLOCKED. Normal database remains 0012; additive 0013 is validated only in disposable databases. Changes uncommitted; no deployment. Stop before Sprint 12.
+
+## Historical checkpoints before Sprint 11
+
 **Closeout — 16 October 2026: Sprints 8.1 and 10 are COMPLETED for their implemented development scope.** The reviewed application checkpoint `631c149` passed [hosted CI](https://github.com/alokgupta001/AI-project-portfolio-manager/actions/runs/38885041673), including regression, migration and browser checks. The current pilot Word guide is rendered and visually verified in the linked closeout evidence. Earlier blocked/active statements below describe their recorded checkpoints. Production deployment, broad real-model/agent quality and scale remain OPEN release/successor gates. Stop before 11. [Detailed closeout](docs/10-reference/SPRINT-8.1-AND-10-CLOSEOUT.md).
 
 Current checkpoint — 16 October 2026: Sprints 8.1 and 10 are COMPLETED for their implemented development scope at `0012_ai_runtime`. Reviewed application checkpoint `631c149` passed hosted CI; 201 backend tests and the document browser regression passed. A current pilot Word guide is rendered and visually verified. Gemini bounded completion/embedding smoke passed at maximum spend $0; confirmation does not expire daily. Production deployment, scale and broad agent/model quality remain OPEN release/successor gates. Sprint 11 is not started. Stop before 11.

@@ -209,7 +209,9 @@ The ten individually specified work packages and completion gate are in [SPRINT_
 
 ## Sprint 11 — Nine agents, semantic assessments and recommendations
 
-**State:** proposed. **Phase:** Evidence and intelligence. **Entry dependencies:** 06,07,09,10.
+**State:** implemented locally; real-provider quality UNVERIFIED/BLOCKED. **Phase:** Evidence and intelligence. **Entry dependencies:** 06,07,09,10.
+
+[Implementation report](../03-sprints/completed/sprint-11/SPRINT_REPORT.md) · [actual checks](../04-testing/sprint-based/sprint-11/TESTING_REPORT.md). Normal 0012 preserved; additive 0013 tested only in disposable databases. No Sprint 12 work.
 
 **Goal / why now:** Managers need evidence-backed interpretation of their own records and a safe review step.
 
@@ -219,7 +221,7 @@ The ten individually specified work packages and completion gate are in [SPRINT_
 
 ### PPM-11-001 — All nine specialized agents
 
-**Status:** proposed, not implemented by this planning task. **Priority:** P1. **Complexity:** High (relative effort, not a calendar estimate). **Dependencies:** 06,07,09,10.
+**Status:** implemented with deterministic local acceptance; real-model quality unverified. **Priority:** P1. **Complexity:** High (relative effort, not a calendar estimate). **Dependencies:** 06,07,09,10.
 
 **Change and user benefit:** Financial, Schedule, Sentiment, Risk, Resource, Governance, Agile Coach, PMO and Executive. Explicit inputs/allowed tools/typed output/citations/timeout/fallback/evaluation for each. Reuse common metrics and policy registry; aggregate with deterministic conflict/duplicate rules and missing-agent indicators. Team sentiment only from permitted text at privacy-safe group size.
 
@@ -235,11 +237,11 @@ The ten individually specified work packages and completion gate are in [SPRINT_
 
 **Tests:** Run focused unit/API fixtures and the user journey described above, including two tenants, allowed/denied roles, missing data, stale source versions, retries and dependency failure. Record real external acceptance separately from deterministic doubles.
 
-**Completion evidence:** record exact revision, relevant API/browser/negative-case results and screenshots or rendered output in `docs/verification/PPM-11-001.md` (**proposed**), linked from the sprint report. Include command, environment, fixture size, expected/actual result and external checks still blocked. A code path alone is not acceptance.
+**Completion evidence:** record exact revision, relevant API/browser/negative-case results and screenshots or rendered output in `docs/verification/PPM-11-001.md` , linked from the sprint report. Include command, environment, fixture size, expected/actual result and external checks still blocked. A code path alone is not acceptance.
 
 ### PPM-11-002 — Suggested semantic maturity scores
 
-**Status:** proposed, not implemented by this planning task. **Priority:** P1. **Complexity:** High (relative effort, not a calendar estimate). **Dependencies:** 06,07,09,10; PPM-11-001 interfaces.
+**Status:** implemented with deterministic local acceptance; real-model quality unverified. **Priority:** P1. **Complexity:** High (relative effort, not a calendar estimate). **Dependencies:** 06,07,09,10; PPM-11-001 interfaces.
 
 **Change and user benefit:** Evaluate free text against published rubric and cited document evidence. Store deterministic original, suggested and reviewer-approved scores separately, including model/prompt/framework versions and override reasons.
 
@@ -255,11 +257,11 @@ The ten individually specified work packages and completion gate are in [SPRINT_
 
 **Tests:** Run focused unit/API fixtures and the user journey described above, including two tenants, allowed/denied roles, missing data, stale source versions, retries and dependency failure. Record real external acceptance separately from deterministic doubles.
 
-**Completion evidence:** record exact revision, relevant API/browser/negative-case results and screenshots or rendered output in `docs/verification/PPM-11-002.md` (**proposed**), linked from the sprint report. Include command, environment, fixture size, expected/actual result and external checks still blocked. A code path alone is not acceptance.
+**Completion evidence:** record exact revision, relevant API/browser/negative-case results and screenshots or rendered output in `docs/verification/PPM-11-002.md` , linked from the sprint report. Include command, environment, fixture size, expected/actual result and external checks still blocked. A code path alone is not acceptance.
 
 ### PPM-11-003 — Recommendation center and document findings
 
-**Status:** proposed, not implemented by this planning task. **Priority:** P1. **Complexity:** High (relative effort, not a calendar estimate). **Dependencies:** 06,07,09,10; PPM-11-001 and PPM-11-002 interfaces/results.
+**Status:** implemented with deterministic local acceptance; real-model quality unverified. **Priority:** P1. **Complexity:** High (relative effort, not a calendar estimate). **Dependencies:** 06,07,09,10; PPM-11-001 and PPM-11-002 interfaces/results.
 
 **Change and user benefit:** Extract candidate risks/blockers/dependencies/compliance gaps/maturity evidence; review queue with severity/confidence/evidence and accept/reject history. Accepted means reviewed, not applied. Until 15 use ordinary authorized manual forms for any conversion, with no generic auto-action.
 
@@ -275,7 +277,7 @@ The ten individually specified work packages and completion gate are in [SPRINT_
 
 **Tests:** Run focused unit/API fixtures and the user journey described above, including two tenants, allowed/denied roles, missing data, stale source versions, retries and dependency failure. Record real external acceptance separately from deterministic doubles.
 
-**Completion evidence:** record exact revision, relevant API/browser/negative-case results and screenshots or rendered output in `docs/verification/PPM-11-003.md` (**proposed**), linked from the sprint report. Include command, environment, fixture size, expected/actual result and external checks still blocked. A code path alone is not acceptance.
+**Completion evidence:** record exact revision, relevant API/browser/negative-case results and screenshots or rendered output in `docs/verification/PPM-11-003.md` , linked from the sprint report. Include command, environment, fixture size, expected/actual result and external checks still blocked. A code path alone is not acceptance.
 
 **Definition of done:** all three task acceptances pass for their claimed environment; module contracts and source requirement dispositions updated; user journey recorded; report/handoff states real versus fixture evidence and open blockers. Published scores/history and existing stored records are preserved. A blocked required real-provider or model criterion prevents full product acceptance even if its implementation slice is locally accepted.
 

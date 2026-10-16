@@ -1,5 +1,74 @@
 // Generated from backend OpenAPI. Do not edit.
 export interface paths {
+    "/api/v1/agents/definitions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Definitions */
+        get: operations["definitions_api_v1_agents_definitions_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/agents/runs": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Listing */
+        get: operations["listing_api_v1_agents_runs_get"];
+        put?: never;
+        /** Create */
+        post: operations["create_api_v1_agents_runs_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/agents/runs/{id_}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Detail */
+        get: operations["detail_api_v1_agents_runs__id___get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/agents/runs/{id_}/reviews/{item_key}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Review */
+        post: operations["review_api_v1_agents_runs__id___reviews__item_key__post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/ai/budget": {
         parameters: {
             query?: never;
@@ -1739,12 +1808,14 @@ export interface components {
         };
         /** AIRunInput */
         AIRunInput: {
+            /** Assessment Id */
+            assessment_id?: string | null;
             /**
              * Operation
              * @default query
              * @enum {string}
              */
-            operation: "query" | "index";
+            operation: "query" | "index" | "agents";
             /**
              * Project Id
              * Format: uuid
@@ -1757,6 +1828,8 @@ export interface components {
             query: string;
             /** Version Id */
             version_id?: string | null;
+            /** Version Ids */
+            version_ids?: string[];
         };
         /** AIRunView */
         AIRunView: {
@@ -1904,6 +1977,52 @@ export interface components {
             reviewer_note: string;
             /** Reviewer Score */
             reviewer_score: number | string;
+        };
+        /** AgentDefinition */
+        AgentDefinition: {
+            /**
+             * Agent
+             * @enum {string}
+             */
+            agent: "financial" | "schedule" | "sentiment" | "risk" | "resource" | "governance" | "agile_coach" | "pmo" | "executive";
+            /**
+             * Evaluation Cases
+             * @default [
+             *       "supported",
+             *       "missing",
+             *       "contradictory",
+             *       "malicious"
+             *     ]
+             */
+            evaluation_cases: string[];
+            /** Fallback */
+            fallback: string;
+            /** Inputs */
+            inputs: string[];
+            /**
+             * Output Schema
+             * @default SpecialistOutput
+             */
+            output_schema: string;
+            /** Timeout Seconds */
+            timeout_seconds: number;
+            /** Tools */
+            tools: string[];
+        };
+        /** AgentState */
+        AgentState: {
+            /**
+             * Agent
+             * @enum {string}
+             */
+            agent: "financial" | "schedule" | "sentiment" | "risk" | "resource" | "governance" | "agile_coach" | "pmo" | "executive";
+            /** Code */
+            code?: string | null;
+            /**
+             * Status
+             * @enum {string}
+             */
+            status: "supported" | "fallback" | "unavailable" | "failed";
         };
         /** AlignmentInput */
         "AlignmentInput-Input": {
@@ -2054,6 +2173,64 @@ export interface components {
              * Format: date
              */
             start_date: string;
+        };
+        /** AnalysisInput */
+        AnalysisInput: {
+            /** Assessment Id */
+            assessment_id?: string | null;
+            /**
+             * Project Id
+             * Format: uuid
+             */
+            project_id: string;
+            /** Version Ids */
+            version_ids?: string[];
+        };
+        /** AnalysisView */
+        AnalysisView: {
+            /** Agents */
+            agents: components["schemas"]["AgentState"][];
+            /** Assessment Id */
+            assessment_id: string | null;
+            /** Assessment Revision */
+            assessment_revision: number | null;
+            /** Can Review */
+            can_review: boolean;
+            /** Evidence */
+            evidence: components["schemas"]["EvidenceView"][];
+            /** Findings */
+            findings: components["schemas"]["FindingView"][];
+            /** Framework Version Id */
+            framework_version_id: string | null;
+            /** Limitations */
+            limitations: string[];
+            /** Missing Agents */
+            missing_agents: ("financial" | "schedule" | "sentiment" | "risk" | "resource" | "governance" | "agile_coach" | "pmo" | "executive")[];
+            /**
+             * Model Quality
+             * @default UNVERIFIED/BLOCKED
+             * @constant
+             */
+            model_quality: "UNVERIFIED/BLOCKED";
+            /**
+             * Prompt Version
+             * @default specialists-rubric-v1
+             */
+            prompt_version: string;
+            /**
+             * Rule Version
+             * @default specialist-support-v1
+             */
+            rule_version: string;
+            run: components["schemas"]["AIRunView"];
+            /** Semantic Status */
+            semantic_status: string;
+            /** Source Snapshot Sha256 */
+            source_snapshot_sha256: string;
+            /** Stages */
+            stages: components["schemas"]["StageView"][];
+            /** Suggestions */
+            suggestions: components["schemas"]["SuggestionView"][];
         };
         /** AnswerBatchInput */
         AnswerBatchInput: {
@@ -3321,6 +3498,19 @@ export interface components {
              */
             attachment_id: string;
         };
+        /** EvidenceView */
+        EvidenceView: {
+            /** Location */
+            location: string;
+            /** Sha256 */
+            sha256: string;
+            /** Source */
+            source: string;
+            /** Text */
+            text: string;
+            /** Version */
+            version: string;
+        };
         /** ExpenditureInput */
         "ExpenditureInput-Input": {
             /** Amount */
@@ -3412,6 +3602,46 @@ export interface components {
              */
             updated_at: string;
         };
+        /** FindingView */
+        FindingView: {
+            /** Agents */
+            agents: ("financial" | "schedule" | "sentiment" | "risk" | "resource" | "governance" | "agile_coach" | "pmo" | "executive")[];
+            /** Available */
+            available: boolean;
+            /** Confidence */
+            confidence: string;
+            /** Conflicts */
+            conflicts: string[];
+            /** Discrepancy */
+            discrepancy: boolean;
+            /** Improvement */
+            improvement: string;
+            /** Key */
+            key: string;
+            /**
+             * Kind
+             * @enum {string}
+             */
+            kind: "risk" | "blocker" | "dependency" | "compliance_gap" | "maturity_evidence";
+            /** Review Revision */
+            review_revision: number;
+            /** Reviews */
+            reviews: components["schemas"]["ReviewView"][];
+            /**
+             * Severity
+             * @enum {string}
+             */
+            severity: "low" | "medium" | "high";
+            /**
+             * Signal
+             * @enum {string}
+             */
+            signal: "adverse" | "clear" | "uncertain";
+            /** Spans */
+            spans: components["schemas"]["Span"][];
+            /** Title */
+            title: string;
+        };
         /** FoundationResponse */
         FoundationResponse: {
             /**
@@ -3431,10 +3661,10 @@ export interface components {
             instance_id: string;
             /**
              * Schema Revision
-             * @default 0012_ai_runtime
+             * @default 0013_specialist_reviews
              * @constant
              */
-            schema_revision: "0012_ai_runtime";
+            schema_revision: "0013_specialist_reviews";
         };
         /** FrameworkInput */
         "FrameworkInput-Input": {
@@ -4575,17 +4805,36 @@ export interface components {
              */
             mode: "keyword";
         };
-        /** ReviewInput */
-        ReviewInput: {
+        /** ReviewView */
+        ReviewView: {
             /**
-             * Action
+             * Actor Id
+             * Format: uuid
+             */
+            actor_id: string;
+            /** Approved Score */
+            approved_score?: string | null;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /**
+             * Decision
              * @enum {string}
              */
-            action: "start" | "return" | "complete";
-            /** Adjustments */
-            adjustments?: components["schemas"]["Adjustment"][];
-            /** Note */
-            note: string;
+            decision: "accepted" | "rejected";
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Item Key */
+            item_key: string;
+            /** Reason */
+            reason: string;
+            /** Revision */
+            revision: number;
         };
         /** RiskInput */
         RiskInput: {
@@ -4847,6 +5096,15 @@ export interface components {
             /** Target Revision */
             target_revision: number;
         };
+        /** Span */
+        Span: {
+            /** End */
+            end: number;
+            /** Source */
+            source: string;
+            /** Start */
+            start: number;
+        };
         /** SprintInput */
         SprintInput: {
             /**
@@ -4939,6 +5197,38 @@ export interface components {
              * @enum {string}
              */
             reported_health: "Green" | "Amber" | "Red" | "Unknown";
+        };
+        /** SuggestionView */
+        SuggestionView: {
+            /** Approved Score */
+            approved_score: string | null;
+            /** Available */
+            available: boolean;
+            /** Confidence */
+            confidence: string | null;
+            /**
+             * Dimension Id
+             * Format: uuid
+             */
+            dimension_id: string;
+            /** Dimension Name */
+            dimension_name: string;
+            /** Gaps */
+            gaps: string[];
+            /** Improvement */
+            improvement: string;
+            /** Key */
+            key: string;
+            /** Original Score */
+            original_score: string | null;
+            /** Review Revision */
+            review_revision: number;
+            /** Reviews */
+            reviews: components["schemas"]["ReviewView"][];
+            /** Spans */
+            spans: components["schemas"]["Span"][];
+            /** Suggested Score */
+            suggested_score: string | null;
         };
         /** SummaryView */
         SummaryView: {
@@ -5392,6 +5682,30 @@ export interface components {
             /** Work Type */
             work_type?: ("task" | "bug" | "story" | "feature" | "other") | null;
         };
+        /** ReviewInput */
+        ppm_api__agent_schemas__ReviewInput: {
+            /** Approved Score */
+            approved_score?: number | string | null;
+            /**
+             * Decision
+             * @enum {string}
+             */
+            decision: "accepted" | "rejected";
+            /** Reason */
+            reason: string;
+        };
+        /** ReviewInput */
+        ppm_api__assessment_schemas__ReviewInput: {
+            /**
+             * Action
+             * @enum {string}
+             */
+            action: "start" | "return" | "complete";
+            /** Adjustments */
+            adjustments?: components["schemas"]["Adjustment"][];
+            /** Note */
+            note: string;
+        };
     };
     responses: never;
     parameters: never;
@@ -5401,6 +5715,176 @@ export interface components {
 }
 export type $defs = Record<string, never>;
 export interface operations {
+    definitions_api_v1_agents_definitions_get: {
+        parameters: {
+            query?: never;
+            header?: {
+                "x-organization-id"?: string | null;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AgentDefinition"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    listing_api_v1_agents_runs_get: {
+        parameters: {
+            query?: {
+                offset?: number;
+            };
+            header?: {
+                "x-organization-id"?: string | null;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AnalysisView"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_api_v1_agents_runs_post: {
+        parameters: {
+            query?: never;
+            header?: {
+                "x-organization-id"?: string | null;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AnalysisInput"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AnalysisView"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    detail_api_v1_agents_runs__id___get: {
+        parameters: {
+            query?: never;
+            header?: {
+                "x-organization-id"?: string | null;
+            };
+            path: {
+                id_: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AnalysisView"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    review_api_v1_agents_runs__id___reviews__item_key__post: {
+        parameters: {
+            query?: never;
+            header?: {
+                "x-organization-id"?: string | null;
+            };
+            path: {
+                id_: string;
+                item_key: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ppm_api__agent_schemas__ReviewInput"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AnalysisView"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     configure_api_v1_ai_budget_patch: {
         parameters: {
             query?: never;
@@ -6231,7 +6715,7 @@ export interface operations {
         };
         requestBody: {
             content: {
-                "application/json": components["schemas"]["ReviewInput"];
+                "application/json": components["schemas"]["ppm_api__assessment_schemas__ReviewInput"];
             };
         };
         responses: {

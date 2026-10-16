@@ -6,7 +6,7 @@ requirement dispositions and historical results remain in their owning contracts
 
 | Gate | Owning work | Required evidence before claiming acceptance |
 | --- | --- | --- |
-| Nine-agent and semantic assessment quality | Sprint 11 | Per-agent supported/missing/contradictory/injected fixtures; real-provider quality measured separately; reviewer approval, citation/source revocation and privacy checks |
+| Nine-agent and semantic assessment quality | Sprint 11; local controls [verified](../04-testing/sprint-based/sprint-11/TESTING_REPORT.md), real-model quality UNVERIFIED/BLOCKED | Per-agent supported/missing/contradictory/injected fixtures; real-provider quality measured separately; reviewer approval, citation/source revocation and privacy checks |
 | Predictive model validity and promotion | Sprints 12–13 | Suitable authorized real history, temporal/entity split, leakage controls, predeclared target metrics, calibration and reviewed promotion; synthetic data is not production accuracy evidence |
 | Retrieval scale and any pgvector/ANN replacement | Explicit retrieval extension and release work | Representative authorized corpus, relevance/latency/recall measurements and migration/rollback evidence; current bounds remain 20 chunks/index and 200 candidates |
 | Production identity, email and external integrations | Relevant integration/identity work and Sprint 23 | Authorized environment/provider setup, all required journeys and templates, recipient/delivery evidence, revocation and failure handling; development Gmail journeys do not establish universal deliverability |

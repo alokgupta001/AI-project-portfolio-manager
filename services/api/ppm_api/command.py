@@ -10,6 +10,7 @@ from zoneinfo import ZoneInfo
 import sqlalchemy as sa
 from fastapi import APIRouter, Request
 
+import ppm_api.command_tables  # noqa: F401 — worker callers also need the metric registry
 from ppm_api import capacity, delivery
 from ppm_api.command_schemas import CommandSnapshot
 from ppm_api.identity import Auth, now

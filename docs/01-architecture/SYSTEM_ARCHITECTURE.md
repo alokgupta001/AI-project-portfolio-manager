@@ -1,5 +1,9 @@
 # Current system architecture
 
+Sprint 11 adds [specialists and independent review](../contracts/agents.md), [ADR 017](../architecture/adr/017-specialists-and-human-review.md): one bounded batch over the existing AI ledger and durable jobs, immutable source snapshots and append-only decisions. Existing metric/scoring/authorization services stay authoritative. The new two-table forward migration is 0013, tested only in disposable databases; normal data remains 0012. No execution/auto-plan mutation path.
+
+## Historical checkpoints before Sprint 11
+
 Status: **IMPLEMENTED AND VERIFIED** within retained local checks; future design is separately labeled in the preserved proposed architecture. Current source uses a modular monolith, not a separate microservice for each business feature.
 
 ```mermaid

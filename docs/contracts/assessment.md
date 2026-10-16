@@ -1,5 +1,7 @@
 # Sprint 06 assessment contract
 
+Sprint 11 [semantic suggestions and reviews](agents.md) are separate immutable analysis/decision records. Existing published frameworks, answers, reviewer overrides, original scores, results and histories remain unchanged. Result-only grants never authorize analysis inputs.
+
 The API prefix is `/api/v1/assessment`; the UI is `/assessments`. OpenAPI is authoritative. All writes use the existing cookie/CSRF/active-organization transport, a UUID `Idempotency-Key`, and (when editing an existing aggregate) `If-Match`. Conflicts return 412, missing preconditions 428, reused keys with different requests 409. An organization transaction lock rechecks live membership before authorization or replay. Requests are capped at 2 MiB before JSON parsing.
 
 ## Frameworks and ownership

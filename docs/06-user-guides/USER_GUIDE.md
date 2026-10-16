@@ -1,5 +1,9 @@
 # Current user guide
 
+Sprint 11 adds **Agents & recommendations** at `/agents`: [role-specific steps](../03-sprints/completed/sprint-11/USER_GUIDE.md). Inspect exact evidence, compare original/suggested/approved maturity and record independent accept/reject decisions. Acceptance never applies a project change. Missing providers/agents/evidence remain explicit; real-model quality is unverified. Normal runtime adoption requires the tested forward 0013 migration; this task does not deploy it.
+
+## Historical checkpoints before Sprint 11
+
 Availability: **IMPLEMENTED AND VERIFIED** within retained local checks. Production acceptance remains open. Use [current status](../00-overview/CURRENT_STATUS.md) and [the catalogue](../00-overview/FEATURE_CATALOGUE.md) for exact scope. For complete Sprint 8.1 steps and recovery limits, use [the pilot tester guide](../03-sprints/completed/sprint-8.1/SPRINT_8_1_USER_GUIDE.md).
 
 For a self-contained organization, member, project and assessment exercise, use the [detailed website manual](WEBSITE_WALKTHROUGH.md). Development Gmail SMTP signup, existing-account invitation acceptance and recovery are verified. Personal signup arrived in Spam; test-Admin signup arrived in Inbox. The accepted invitation created the correct Viewer membership without changing the account's Admin role in its original organization. Check Inbox and Spam; provider acceptance alone does not prove inbox arrival. See [email verification](../04-testing/ACCOUNT_EMAIL_VERIFICATION.md).

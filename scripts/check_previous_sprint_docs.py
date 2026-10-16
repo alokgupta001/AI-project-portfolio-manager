@@ -8,7 +8,7 @@ ROOT = Path(__file__).resolve().parents[1]
 def main() -> None:
     errors: list[str] = []
     artifacts = 0
-    sprint_ids = [f"{number:02d}" for number in range(11)] + ["8.1"]
+    sprint_ids = [f"{number:02d}" for number in range(12)] + ["8.1"]
     for sprint_id in sprint_ids:
         state = "completed"
         home = ROOT / f"docs/03-sprints/{state}/sprint-{sprint_id}"

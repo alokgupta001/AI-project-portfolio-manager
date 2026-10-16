@@ -1,5 +1,7 @@
 # Feature catalogue
 
+Sprint 11 current disposition: [nine specialists, semantic suggestions and independent review](../03-sprints/completed/sprint-11/README.md) are locally verified with deterministic responses. Real-model quality UNVERIFIED/BLOCKED. [Actual tests](../04-testing/sprint-based/sprint-11/TESTING_REPORT.md); earlier dated notes retain their historical scope.
+
 Code and retained local evidence establish current capability; original acceptance obligations are unchanged. Read [current scope and evidence limits](CURRENT_STATUS.md). Current status labels below translate the existing traceability vocabulary; a multi-stage parent remains partial until all stages pass. Future sprints describe intended user outcomes, not available buttons.
 
 ## Gap-level user outcomes
@@ -23,8 +25,8 @@ Code and retained local evidence establish current capability; original acceptan
 | G-013 Retention and pilot restore evidence | PARTIALLY IMPLEMENTED | Scoped purge/holds and non-destructive scratch restore verified locally in 09; production backup erasure and all-surface release recovery remain 22/23. | PPM-09-003 / 09 |
 | G-014 Document and AI dependency conflict | PARTIALLY IMPLEMENTED | Stage keyword retrieval/contracts in 09, budgeted embedding adapter in 10, reviewed extraction in 11. | PPM-10-001 / 10 |
 | G-015 AI gateway and operations | PARTIALLY IMPLEMENTED | Shared runtime/UI and local guards verified; Gemini free-tier completion/embedding smoke passed; broader model/retrieval quality and scale remain unverified. | PPM-10-001 / 10 |
-| G-016 Nine agents and semantic maturity scoring | PLANNED | Build all nine agents with evidence and distinct suggested/reviewer scores. | PPM-11-001 / 11 |
-| G-017 Recommendation review versus application | PLANNED | Separate accepted recommendation from applied change; no generic mutation before 15. | PPM-11-003 / 11 |
+| G-016 Nine agents and semantic maturity scoring | IMPLEMENTED LOCALLY; real-model quality blocked | Build all nine agents with evidence and distinct suggested/reviewer scores. | PPM-11-001 / 11 |
+| G-017 Recommendation review versus application | IMPLEMENTED LOCALLY; real-model quality blocked | Separate accepted recommendation from applied change; no generic mutation before 15. | PPM-11-003 / 11 |
 | G-018 Repeat assessments, due dates and trend/export | PARTIALLY IMPLEMENTED | Extend the existing assessment lifecycle and connect workflow reminders, keeping published score history immutable. | PPM-15-002 / 15 |
 | G-019 Unattended connector identity and conflict resolution | PARTIALLY IMPLEMENTED | Add narrow renewable connector authority, source identity uniqueness and reviewable conflict resolution. | PPM-12-001 / 12 |
 | G-020 Live Jira/GitHub acceptance | BLOCKED | Run authorized read-only provider checks and controlled import with scoped credentials in 12; preserve fixtures and mark blocked until supplied. | PPM-12-001 / 12 |
@@ -78,9 +80,9 @@ These are the complete 156 approved crosswalk rows, including scope exclusions a
 | F-020 | Agile maturity analysis | IMPLEMENTED AND VERIFIED | PPM-81-010 |
 | F-021 | Governance evaluation | IMPLEMENTED AND VERIFIED | PPM-81-010 |
 | F-022 | Delivery capability scoring | IMPLEMENTED AND VERIFIED | PPM-81-010 |
-| F-023 | Semantic answer evaluation | PLANNED | PPM-11-002 |
-| F-024 | Pattern and maturity gap detection | PLANNED | PPM-11-003 |
-| F-025 | Improvement suggestions | PLANNED | PPM-11-003 |
+| F-023 | Semantic answer evaluation | IMPLEMENTED AND VERIFIED LOCALLY; model quality UNVERIFIED/BLOCKED | PPM-11-002 |
+| F-024 | Pattern and maturity gap detection | IMPLEMENTED AND VERIFIED LOCALLY; model quality UNVERIFIED/BLOCKED | PPM-11-003 |
+| F-025 | Improvement suggestions | IMPLEMENTED AND VERIFIED LOCALLY; model quality UNVERIFIED/BLOCKED | PPM-11-003 |
 | F-026 | Portfolio health | IMPLEMENTED AND VERIFIED | PPM-81-010 |
 | F-027 | Business value | IMPLEMENTED AND VERIFIED | PPM-81-010 |
 | F-028 | Budget usage | IMPLEMENTED AND VERIFIED | PPM-81-010 |
@@ -95,16 +97,16 @@ These are the complete 156 approved crosswalk rows, including scope exclusions a
 | F-037 | Reported versus evidence health | IMPLEMENTED AND VERIFIED | PPM-81-010 |
 | F-038 | Live project visibility | PARTIALLY IMPLEMENTED | PPM-81-009 |
 | F-039 | AI progress streaming | IMPLEMENTED AND VERIFIED LOCALLY | PPM-10-002 |
-| F-040 | PMO agent | PLANNED | PPM-11-001 |
-| F-041 | Risk agent | PLANNED | PPM-11-001 |
-| F-042 | Governance agent | PLANNED | PPM-11-001 |
-| F-043 | Agile coach agent | PLANNED | PPM-11-001 |
-| F-044 | Executive agent | PLANNED | PPM-11-001 |
-| F-045 | Resource agent | PLANNED | PPM-11-001 |
-| F-046 | Financial agent | PLANNED | PPM-11-001 |
-| F-047 | Schedule agent | PLANNED | PPM-11-001 |
-| F-048 | Sentiment agent | PLANNED | PPM-11-001 |
-| F-049 | Multi-agent aggregation | PLANNED | PPM-11-001 |
+| F-040 | PMO agent | IMPLEMENTED AND VERIFIED LOCALLY; model quality UNVERIFIED/BLOCKED | PPM-11-001 |
+| F-041 | Risk agent | IMPLEMENTED AND VERIFIED LOCALLY; model quality UNVERIFIED/BLOCKED | PPM-11-001 |
+| F-042 | Governance agent | IMPLEMENTED AND VERIFIED LOCALLY; model quality UNVERIFIED/BLOCKED | PPM-11-001 |
+| F-043 | Agile coach agent | IMPLEMENTED AND VERIFIED LOCALLY; model quality UNVERIFIED/BLOCKED | PPM-11-001 |
+| F-044 | Executive agent | IMPLEMENTED AND VERIFIED LOCALLY; model quality UNVERIFIED/BLOCKED | PPM-11-001 |
+| F-045 | Resource agent | IMPLEMENTED AND VERIFIED LOCALLY; model quality UNVERIFIED/BLOCKED | PPM-11-001 |
+| F-046 | Financial agent | IMPLEMENTED AND VERIFIED LOCALLY; model quality UNVERIFIED/BLOCKED | PPM-11-001 |
+| F-047 | Schedule agent | IMPLEMENTED AND VERIFIED LOCALLY; model quality UNVERIFIED/BLOCKED | PPM-11-001 |
+| F-048 | Sentiment agent | IMPLEMENTED AND VERIFIED LOCALLY; model quality UNVERIFIED/BLOCKED | PPM-11-001 |
+| F-049 | Multi-agent aggregation | IMPLEMENTED AND VERIFIED LOCALLY; model quality UNVERIFIED/BLOCKED | PPM-11-001 |
 | F-050 | Sprint delay model | PLANNED | PPM-13-001 |
 | F-051 | Project delay regression | PLANNED | PPM-13-001 |
 | F-052 | Missed milestone model | PLANNED | PPM-13-001 |
@@ -121,13 +123,13 @@ These are the complete 156 approved crosswalk rows, including scope exclusions a
 | F-063 | Authorized public repository data | PLANNED | PPM-12-002 |
 | F-064 | Synthetic dataset generator | PLANNED | PPM-12-002 |
 | F-065 | SRS BRD PRD classification | IMPLEMENTED AND VERIFIED LOCALLY | PPM-09-001 |
-| F-066 | MOM and sprint report ingestion | PARTIALLY IMPLEMENTED | PPM-11-003 |
-| F-067 | Risk log ingestion | PARTIALLY IMPLEMENTED | PPM-11-003 |
+| F-066 | MOM and sprint report ingestion | PARTIALLY IMPLEMENTED; local review controls verified, real semantic quality blocked | PPM-11-003 |
+| F-067 | Risk log ingestion | PARTIALLY IMPLEMENTED; local review controls verified, real semantic quality blocked | PPM-11-003 |
 | F-068 | Project charter ingestion | IMPLEMENTED AND VERIFIED LOCALLY | PPM-09-001 |
 | F-069 | Governance policy ingestion | IMPLEMENTED AND VERIFIED LOCALLY | PPM-09-003 |
-| F-070 | Extract risks and blockers | PLANNED | PPM-11-003 |
-| F-071 | Extract dependencies | PLANNED | PPM-11-003 |
-| F-072 | Compliance gaps and maturity indicators | PLANNED | PPM-11-003 |
+| F-070 | Extract risks and blockers | IMPLEMENTED AND VERIFIED LOCALLY; model quality UNVERIFIED/BLOCKED | PPM-11-003 |
+| F-071 | Extract dependencies | IMPLEMENTED AND VERIFIED LOCALLY; model quality UNVERIFIED/BLOCKED | PPM-11-003 |
+| F-072 | Compliance gaps and maturity indicators | IMPLEMENTED AND VERIFIED LOCALLY; model quality UNVERIFIED/BLOCKED | PPM-11-003 |
 | F-073 | OCR | IMPLEMENTED AND VERIFIED LOCALLY | PPM-09-001 |
 | F-074 | Scoped RAG | PARTIALLY IMPLEMENTED | PPM-10-001 |
 | F-075 | Conversational copilot | PLANNED | PPM-14-001 |

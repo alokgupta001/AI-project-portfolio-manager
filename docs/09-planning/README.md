@@ -1,5 +1,9 @@
 # Planning
 
+Sprint 11 local implementation is recorded in [its hub](../03-sprints/completed/sprint-11/README.md) and [test report](../04-testing/sprint-based/sprint-11/TESTING_REPORT.md). Real-provider semantic quality remains UNVERIFIED/BLOCKED. The roadmap retains future requirements and original thresholds. Stop before Sprint 12.
+
+## Historical checkpoints before Sprint 11
+
 **Closeout — 16 October 2026: Sprints 8.1 and 10 are COMPLETED for their implemented development scope.** The reviewed application checkpoint `631c149` passed [hosted CI](https://github.com/alokgupta001/AI-project-portfolio-manager/actions/runs/38885041673), including regression, migration and browser checks. The current pilot Word guide is rendered and visually verified in the linked closeout evidence. Earlier blocked/active statements below describe their recorded checkpoints. Production deployment, broad real-model/agent quality and scale remain OPEN release/successor gates. Stop before 11. [Detailed closeout](../10-reference/SPRINT-8.1-AND-10-CLOSEOUT.md).
 
 [Gap audit](SPRINT_8_1_GAP_AUDIT.md), [historical 8.1 plan](SPRINT_8_1_PLAN.md), [roadmap](FUTURE_SPRINT_ROADMAP.md), [traceability](FEATURE_GAP_TRACEABILITY.md), [tracker](DOCUMENTATION_UPDATE_TRACKER.md), [feature map](FEATURE_DOCUMENT_MAPPING.md), [sprint checklist](SPRINT_DOCUMENTATION_CHECKLIST.md).

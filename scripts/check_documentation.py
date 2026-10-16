@@ -84,6 +84,17 @@ def main() -> None:
         )
     if (ROOT / "docs/03-sprints/planned/sprint-10/README.md").exists():
         errors.append("Duplicate planned Sprint 10 home")
+    for topic in (
+        "03-sprints/completed",
+        "02-learning/sprint-based",
+        "04-testing/sprint-based",
+        "05-demos/sprint-based",
+    ):
+        if not (ROOT / "docs" / topic / "sprint-11/README.md").is_file():
+            errors.append(f"Missing Sprint 11 hub in {topic}")
+    for task in ("PPM-11-001", "PPM-11-002", "PPM-11-003"):
+        if not (ROOT / f"docs/verification/{task}.md").is_file():
+            errors.append(f"Missing Sprint 11 receipt {task}")
     catalogue = (ROOT / "docs/00-overview/FEATURE_CATALOGUE.md").read_text(encoding="utf-8")
     mapping = (ROOT / "docs/09-planning/FEATURE_DOCUMENT_MAPPING.md").read_text(encoding="utf-8")
     coverage = (ROOT / "docs/requirements/coverage.md").read_text(encoding="utf-8")

@@ -786,6 +786,23 @@ kbd {
   border-radius: 8px;
 }
 
+.agent-workspace {
+  display: grid;
+  gap: 16px;
+  min-width: 0;
+}
+.agent-workspace .panel {
+  margin: 0;
+  min-width: 0;
+}
+.agent-workspace .table-scroll table {
+  min-width: 720px;
+}
+.agent-workspace blockquote {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
 .document-workspace,
 .document-workspace .stack {
   display: grid;

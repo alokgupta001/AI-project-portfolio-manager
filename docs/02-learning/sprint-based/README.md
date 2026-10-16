@@ -1,5 +1,7 @@
 # Sprint-based documentation
 
+[Sprint 11 specialists, semantic suggestions and review](sprint-11/README.md) has local deterministic evidence; real-provider semantic quality remains UNVERIFIED/BLOCKED.
+
 One canonical report/test/demo location per artifact. Topic indexes link to it rather than copy historical records.
 
 - [Sprint 00](sprint-00/README.md)

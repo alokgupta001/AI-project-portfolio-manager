@@ -1,5 +1,9 @@
 # Sprint history and future work
 
+Current: [Sprint 11](completed/sprint-11/README.md) implements nine typed agents, semantic suggestions and independent reviewed recommendations. [Validation](../04-testing/sprint-based/sprint-11/TESTING_REPORT.md) separates local deterministic acceptance from blocked real-model quality. Sprint 12 remains planned and unstarted.
+
+## Historical checkpoints before Sprint 11
+
 **Closeout — 16 October 2026: Sprints 8.1 and 10 are COMPLETED for their implemented development scope.** The reviewed application checkpoint `631c149` passed [hosted CI](https://github.com/alokgupta001/AI-project-portfolio-manager/actions/runs/38885041673), including regression, migration and browser checks. The current pilot Word guide is rendered and visually verified in the linked closeout evidence. Earlier blocked/active statements below describe their recorded checkpoints. Production deployment, broad real-model/agent quality and scale remain OPEN release/successor gates. Stop before 11. [Detailed closeout](../10-reference/SPRINT-8.1-AND-10-CLOSEOUT.md).
 
 Current documentation closure for all Sprints 00–10 (including 8.1): [coverage, corrections, recorded evidence and remaining gates](../10-reference/PREVIOUS-SPRINTS-DOCUMENTATION-CLOSURE.md).
@@ -16,7 +20,7 @@ Current documentation closure for all Sprints 00–10 (including 8.1): [coverage
 - [Completed Sprint 8.1: pilot usability and account journeys](completed/sprint-8.1/README.md)
 - [Completed locally Sprint 09: evidence, keyword retrieval and governance](completed/sprint-09/README.md)
 - [Completed Sprint 10 (gateway/evaluation scope): AI gateway, embeddings, orchestration and evaluation](completed/sprint-10/README.md)
-- [PLANNED Sprint 11: Nine agents, semantic assessment and reviewed recommendations](planned/sprint-11/README.md)
+- [LOCAL Sprint 11: Nine agents, semantic assessment and reviewed recommendations](completed/sprint-11/README.md)
 - [PLANNED Sprint 12: Connector authority, historical labels and baseline models](planned/sprint-12/README.md)
 - [PLANNED Sprint 13: Eligible forecast serving with uncertainty](planned/sprint-13/README.md)
 - [PLANNED Sprint 14: Scoped copilot context and natural-language analytics](planned/sprint-14/README.md)

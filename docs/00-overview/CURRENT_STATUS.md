@@ -1,5 +1,9 @@
 # Current implementation and acceptance
 
+Current — 16 October 2026: Sprint 11 specialists, separate semantic maturity suggestions and recommendation review are implemented for deterministic local acceptance. [Report](../03-sprints/completed/sprint-11/SPRINT_REPORT.md) and [fresh validation](../04-testing/sprint-based/sprint-11/TESTING_REPORT.md) are authoritative. Real-provider semantic quality UNVERIFIED/BLOCKED; production/scale remain open. Normal database 0012 preserved, additive 0013 tested in disposable databases. No deployment/commit; stop before Sprint 12.
+
+## Historical checkpoints before Sprint 11
+
 **16 October 2026 update:** [Gemini free-tier support](../07-setup-and-deployment/GEMINI-FREE-TIER.md)
 is authorized at $0 on a user-confirmed project with no linked billing account.
 A real synthetic exact-excerpt completion and 256-dimension embedding smoke passed.
