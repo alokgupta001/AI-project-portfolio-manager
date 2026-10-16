@@ -184,8 +184,8 @@ Source-derived AST inventory. Search symbols instead of relying on line numbers;
 - `check` — line 61
 - `database` — line 69
 - `sql` — line 78
-- `objects` — line 154
-- `hashes` — line 181
+- `objects` — line 157
+- `hashes` — line 184
 
 ## scripts/sprint81_preserve.py
 
@@ -338,6 +338,13 @@ Source-derived AST inventory. Search symbols instead of relying on line numbers;
 - `upgrade` — line 84
 - `downgrade` — line 139
 
+## services/api/migrations/versions/0014_specialist_reviewer.py
+
+[Source](../../services/api/migrations/versions/0014_specialist_reviewer.py)
+
+- `upgrade` — line 23
+- `downgrade` — line 27
+
 ## services/api/ppm_api/account_mail.py
 
 [Source](../../services/api/ppm_api/account_mail.py)
@@ -386,27 +393,29 @@ Source-derived AST inventory. Search symbols instead of relying on line numbers;
 - `ReviewView` — line 109
 - `FindingView` — line 117
 - `SuggestionView` — line 134
-- `AnalysisView` — line 150
+- `AnalysisRunSummary` — line 150
+- `AnalysisSummary` — line 156
+- `AnalysisView` — line 161
 
 ## services/api/ppm_api/agents.py
 
 [Source](../../services/api/ppm_api/agents.py)
 
-- `internal_request` — line 36
-- `private_access` — line 40
-- `capture` — line 48
-- `add` — line 56
-- `get_analysis` — line 278
-- `current_sources` — line 291
-- `can_review` — line 311
-- `definitions` — line 325
-- `create` — line 330
-- `listing` — line 336
-- `detail` — line 352
-- `item` — line 368
-- `review` — line 442
-- `execute` — line 506
-- `publish` — line 545
+- `internal_request` — line 37
+- `private_access` — line 41
+- `capture` — line 49
+- `add` — line 57
+- `get_analysis` — line 279
+- `current_sources` — line 292
+- `can_review` — line 312
+- `definitions` — line 326
+- `create` — line 331
+- `listing` — line 337
+- `detail` — line 367
+- `item` — line 383
+- `review` — line 457
+- `execute` — line 521
+- `publish` — line 560
 
 ## services/api/ppm_api/ai.py
 
@@ -1154,26 +1163,28 @@ Source-derived AST inventory. Search symbols instead of relying on line numbers;
 
 [Source](../../tests/test_agents.py)
 
-- `source` — line 36
-- `candidate` — line 49
-- `test_every_agent_support_missing_conflict_and_injection` — line 61
-- `test_deterministic_merge_order_partial_and_typed_limits` — line 86
-- `test_semantic_rubric_weights_gaps_levels_and_duplicate_matches` — line 118
-- `test_domain_transport_keeps_gemini_allowlist_and_output_bound` — line 162
-- `Double` — line 177
-- `__init__` — line 180
-- `complete` — line 184
-- `start` — line 225
-- `work` — line 236
-- `fixture` — line 246
-- `test_hidden_risk_disabled_replay_independent_review_and_preservation` — line 258
-- `test_semantic_review_scores_rejection_immutable_history_and_stale_answers` — line 367
-- `test_domain_provider_failures_are_honest_and_bounded` — line 462
-- `test_late_output_fenced_and_call_accounting_retained` — line 491
-- `test_all_nine_agents_group_threshold_and_live_revocation` — line 554
-- `test_terminal_job_cannot_hide_new_run_diagnostics` — line 649
-- `pause_after_snapshot` — line 663
-- `test_worker_metrics_register_without_web_application_startup` — line 688
+- `source` — line 37
+- `candidate` — line 50
+- `test_every_agent_support_missing_conflict_and_injection` — line 62
+- `test_deterministic_merge_order_partial_and_typed_limits` — line 87
+- `test_semantic_rubric_weights_gaps_levels_and_duplicate_matches` — line 119
+- `test_domain_transport_keeps_gemini_allowlist_and_output_bound` — line 163
+- `test_realistic_specialist_batch_truncation_keeps_existing_budget` — line 173
+- `Double` — line 206
+- `__init__` — line 209
+- `complete` — line 213
+- `start` — line 254
+- `work` — line 265
+- `fixture` — line 275
+- `test_hidden_risk_disabled_replay_independent_review_and_preservation` — line 287
+- `no_evidence_walk` — line 314
+- `test_semantic_review_scores_rejection_immutable_history_and_stale_answers` — line 416
+- `test_domain_provider_failures_are_honest_and_bounded` — line 542
+- `test_late_output_fenced_and_call_accounting_retained` — line 571
+- `test_all_nine_agents_group_threshold_and_live_revocation` — line 634
+- `test_terminal_job_cannot_hide_new_run_diagnostics` — line 729
+- `pause_after_snapshot` — line 743
+- `test_worker_metrics_register_without_web_application_startup` — line 768
 
 ## tests/test_ai.py
 
@@ -1435,6 +1446,15 @@ Source-derived AST inventory. Search symbols instead of relying on line numbers;
 - `ConnectedRequest` — line 511
 - `is_disconnected` — line 512
 - `response` — line 515
+
+## tests/test_sprint11_preserve.py
+
+[Source](../../tests/test_sprint11_preserve.py)
+
+- `test_failed_validation_leaves_backup_capture_retryable` — line 13
+- `query` — line 20
+- `checkpoint` — line 32
+- `backup` — line 37
 
 ## tests/test_transaction_boundary.py
 

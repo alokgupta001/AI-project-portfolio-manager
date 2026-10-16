@@ -1,6 +1,15 @@
 # Sprint 11 technical handoff
 
-## Verified checkpoint
+## PR #3 review follow-up
+
+The dedicated branch is `sprint-11-specialist-review`, based on Sprint 11 commit
+`e608a09`. [Review fixes and fresh validation](../../../04-testing/sprint-based/sprint-11/REVIEW_FIXES.md)
+supersede the original checkpoint below. Forward `0014_specialist_reviewer`
+preserves 0013. Normal database remains 0012; test databases alone receive 0014.
+The output-budget increase is deferred under the explicit unchanged-limits
+instruction. No live provider calls, paid CLI review, merge, deployment or Sprint 12.
+
+## Original implementation checkpoint
 
 16 October 2026. PPM-11-001/002/003 implemented for local deterministic acceptance;
 real-model semantic quality **UNVERIFIED/BLOCKED**. Current branch

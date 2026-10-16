@@ -20,6 +20,7 @@ from ppm_api.agent_schemas import (
     AgentBatch,
     AgentDefinition,
     AnalysisInput,
+    AnalysisSummary,
     AnalysisView,
     ReviewInput,
     ReviewView,
@@ -332,20 +333,34 @@ async def create(body: AnalysisInput, request: Request, p: Auth) -> dict:
     return await detail(run["id"], p)
 
 
-@router.get("/runs", response_model=list[AnalysisView])
+@router.get("/runs", response_model=list[AnalysisSummary])
 async def listing(p: Auth, offset: int = Query(0, ge=0, le=10000)) -> list[dict]:
-    rows = list(
-        (
-            await p.conn.execute(
-                sa.select(T.analyses.c.run_id)
-                .join(ai.T.runs, ai.T.runs.c.id == T.analyses.c.run_id)
-                .order_by(ai.T.runs.c.created_at.desc(), T.analyses.c.id)
-                .offset(offset)
-                .limit(25)
+    # RLS filters current project/assessment scope. Listing never resolves source
+    # text or saved review comments; those remain exclusive to the detail route.
+    rows = (
+        await p.conn.execute(
+            sa.select(
+                T.analyses.c.run_id,
+                ai.T.runs.c.created_at,
+                ai.J.jobs.c.status,
+                sa.func.coalesce(
+                    T.analyses.c.output["semantic_status"].astext, "unavailable"
+                ).label("semantic_status"),
             )
-        ).scalars()
-    )
-    return [await detail(id_, p) for id_ in rows]
+            .join(ai.T.runs, ai.T.runs.c.id == T.analyses.c.run_id)
+            .join(ai.J.jobs, ai.J.jobs.c.ai_run_id == ai.T.runs.c.id)
+            .order_by(ai.T.runs.c.created_at.desc(), T.analyses.c.id)
+            .offset(offset)
+            .limit(25)
+        )
+    ).mappings()
+    return [
+        dict(
+            run=dict(id=r["run_id"], status=r["status"], created_at=r["created_at"]),
+            semantic_status=r["semantic_status"],
+        )
+        for r in rows
+    ]
 
 
 @router.get("/runs/{id_}", response_model=AnalysisView)

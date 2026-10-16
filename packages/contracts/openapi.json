@@ -1305,6 +1305,50 @@
         "title": "AnalysisInput",
         "type": "object"
       },
+      "AnalysisRunSummary": {
+        "additionalProperties": false,
+        "properties": {
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "status": {
+            "title": "Status",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "status",
+          "created_at"
+        ],
+        "title": "AnalysisRunSummary",
+        "type": "object"
+      },
+      "AnalysisSummary": {
+        "additionalProperties": false,
+        "properties": {
+          "run": {
+            "$ref": "#/components/schemas/AnalysisRunSummary"
+          },
+          "semantic_status": {
+            "title": "Semantic Status",
+            "type": "string"
+          }
+        },
+        "required": [
+          "run",
+          "semantic_status"
+        ],
+        "title": "AnalysisSummary",
+        "type": "object"
+      },
       "AnalysisView": {
         "additionalProperties": false,
         "properties": {
@@ -4636,8 +4680,8 @@
             "type": "string"
           },
           "schema_revision": {
-            "const": "0013_specialist_reviews",
-            "default": "0013_specialist_reviews",
+            "const": "0014_specialist_reviewer",
+            "default": "0014_specialist_reviewer",
             "title": "Schema Revision",
             "type": "string"
           }
@@ -9391,7 +9435,7 @@
               "application/json": {
                 "schema": {
                   "items": {
-                    "$ref": "#/components/schemas/AnalysisView"
+                    "$ref": "#/components/schemas/AnalysisSummary"
                   },
                   "title": "Response Listing Api V1 Agents Runs Get",
                   "type": "array"

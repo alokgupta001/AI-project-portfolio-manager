@@ -4,7 +4,7 @@ from uuid import UUID
 
 from pydantic import BaseModel, Field
 
-SCHEMA_REVISION: Final = "0013_specialist_reviews"
+SCHEMA_REVISION: Final = "0014_specialist_reviewer"
 
 
 class ErrorDetail(BaseModel):
@@ -41,5 +41,5 @@ class ReadyResponse(BaseModel):
 class FoundationResponse(BaseModel):
     instance_id: UUID
     initialized_at: datetime
-    schema_revision: Literal["0013_specialist_reviews"] = SCHEMA_REVISION
+    schema_revision: Literal["0014_specialist_reviewer"] = SCHEMA_REVISION
     environment: Literal["local", "test", "demo"]

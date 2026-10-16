@@ -11,6 +11,12 @@ if (
     or make_url(os.environ.get("PPM_MIGRATION_DATABASE_URL", "")).database != "ppm_test"
 ):
     raise SystemExit("Refusing specialist lifecycle outside test/ppm_test")
-for args in [("downgrade", "0012_ai_runtime"), ("upgrade", "head"), ("check",)]:
+for args in [
+    ("downgrade", "0013_specialist_reviews"),
+    ("upgrade", "head"),
+    ("downgrade", "0012_ai_runtime"),
+    ("upgrade", "head"),
+    ("check",),
+]:
     subprocess.run([sys.executable, "-m", "alembic", *args], check=True)
-print("PASS disposable 0012 -> 0013 lifecycle and metadata drift")
+print("PASS disposable 0012/0013 -> 0014 lifecycle and metadata drift")

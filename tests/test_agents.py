@@ -15,6 +15,7 @@ import sqlalchemy as sa
 from ppm_api import agent_engine as E
 from ppm_api import agent_tables as T
 from ppm_api import ai_tables as A
+from ppm_api import assessment_tables as AT
 from ppm_api import job_tables as J
 from ppm_api.agent_provider import AgentProvider
 from ppm_api.agent_schemas import AGENTS, AgentBatch
@@ -169,6 +170,34 @@ async def test_domain_transport_keeps_gemini_allowlist_and_output_bound(gemini, 
     assert not payload["generationConfig"]["thinkingConfig"]["includeThoughts"]
 
 
+async def test_realistic_specialist_batch_truncation_keeps_existing_budget(gemini, monkeypatch):
+    batch = AgentBatch.model_validate(
+        dict(
+            agents=[
+                dict(
+                    agent=agent,
+                    status="supported",
+                    findings=[candidate("metric:" + str(uuid4()) + ":financial_risk")],
+                )
+                for agent in AGENTS
+            ]
+        )
+    )
+    # This is a transport failure fixture, not a claim about a real tokenizer.
+    body = response(batch.model_dump_json()[:512])
+    body["candidates"][0]["finishReason"] = "MAX_TOKENS"
+    body["usageMetadata"].update(candidatesTokenCount=512, thoughtsTokenCount=0)
+    seen = transport(monkeypatch, body)
+    with pytest.raises(ProviderError, match="PROVIDER_MALFORMED"):
+        await AgentProvider(gemini).complete("synthetic-only", [])
+    assert len(seen) == 1
+    assert json.loads(seen[0].data)["generationConfig"]["maxOutputTokens"] == 512
+    fallback = E.evaluate(dict(sources=[]), None, "PROVIDER_MALFORMED")
+    assert fallback["semantic_status"] == "unavailable"
+    assert len(fallback["agents"]) == 9
+    assert all(s["status"] == "unavailable" for s in fallback["agents"])
+
+
 integration = pytest.mark.skipif(
     os.environ.get("PPM_RUN_INTEGRATION") != "1", reason="Requires guarded ppm_test"
 )
@@ -280,6 +309,23 @@ async def test_hidden_risk_disabled_replay_independent_review_and_preservation(
     ] == result["run"]["id"]
     assert (await start(c, project, key=key)).status_code == 409
     rid = result["run"]["id"]
+    with monkeypatch.context() as scoped:
+
+        async def no_evidence_walk(*_args, **_kwargs):
+            pytest.fail("Run summaries must not resolve details or revalidate evidence")
+
+        for name in ("detail", "capture", "current_sources"):
+            scoped.setattr("ppm_api.agents." + name, no_evidence_walk)
+        scoped.setattr("ppm_api.ai.view", no_evidence_walk)
+        listed = await c.get("/api/v1/agents/runs")
+        assert listed.status_code == 200, listed.text
+        assert listed.json() == [
+            dict(
+                run={k: result["run"][k] for k in ("id", "status", "created_at")},
+                semantic_status=result["semantic_status"],
+            )
+        ]
+        assert (await c.get("/api/v1/agents/runs?offset=1")).json() == []
     item = result["findings"][0]
     route = f"/agents/runs/{rid}/reviews/{item['key']}"
     assert (
@@ -336,8 +382,10 @@ async def test_hidden_risk_disabled_replay_independent_review_and_preservation(
     assert (await start(c, project)).status_code == 403
     await login(c, emails, "viewer", ids["a"])
     assert (await c.get(f"/api/v1/agents/runs/{rid}")).status_code == 404
+    assert (await c.get("/api/v1/agents/runs")).json() == []
     await login(c, emails, "other", ids["b"])
     assert (await c.get(f"/api/v1/agents/runs/{rid}")).status_code == 404
+    assert (await c.get("/api/v1/agents/runs")).json() == []
     await ai_worker(app.state.engine, job, ids["b"], ids["other"], app.state.settings)
     await login(c, emails, "admin", ids["a"])
     assert (await c.get(f"/api/v1/delivery/projects/{project['id']}")).json()["data"][
@@ -364,8 +412,9 @@ async def test_hidden_risk_disabled_replay_independent_review_and_preservation(
 
 @pytest.mark.integration
 @integration
+@pytest.mark.parametrize("reviewer_grant", ["edit", "read"])
 async def test_semantic_review_scores_rejection_immutable_history_and_stale_answers(
-    identity, monkeypatch, gemini
+    identity, monkeypatch, gemini, reviewer_grant
 ):
     adapter = Double()
     c, app, owner, ids, emails, project, _ = await fixture(identity, monkeypatch, gemini, adapter)
@@ -412,10 +461,16 @@ async def test_semantic_review_scores_rejection_immutable_history_and_stale_answ
     assert Decimal(s["confidence"]) == Decimal("0.7") and s["approved_score"] is None
     assert adapter.count == 1
 
-    await create(c, "grants", user_id=str(ids["pm"]), project_id=project["id"], access="edit")
+    await create(
+        c, "grants", user_id=str(ids["pm"]), project_id=project["id"], access=reviewer_grant
+    )
     await login(c, emails, "pm", ids["a"])
     rid = result["run"]["id"]
     route = f"/agents/runs/{rid}/reviews/{s['key']}"
+    assert (await c.get(f"/api/v1/agents/runs/{rid}")).json()["can_review"]
+    async with app.state.engine.begin() as conn:
+        await context(conn, ids["pm"], ids["a"], "Project Manager")
+        assert await conn.scalar(sa.select(T.analyses.c.id).where(T.analyses.c.run_id == UUID(rid)))
     accepted = await send(
         c,
         "POST",
@@ -454,6 +509,31 @@ async def test_semantic_review_scores_rejection_immutable_history_and_stale_answ
             json=dict(decision="accepted", reason="Stale evidence"),
         )
     ).status_code == 409
+
+    if reviewer_grant == "read":
+        # The read-only exception is restricted to independent assigned reviewers.
+        # Losing independence or reviewer identity must hide list and detail alike.
+        for field, value in (
+            ("submitted_by", ids["pm"]),
+            ("reviewer_id", ids["viewer"]),
+        ):
+            async with owner.begin() as conn:
+                original = await conn.scalar(
+                    sa.select(AT.assessments.c[field]).where(AT.assessments.c.id == UUID(a["id"]))
+                )
+                await conn.execute(
+                    AT.assessments.update()
+                    .where(AT.assessments.c.id == UUID(a["id"]))
+                    .values({field: value})
+                )
+            assert (await c.get(f"/api/v1/agents/runs/{rid}")).status_code == 404
+            assert (await c.get("/api/v1/agents/runs")).json() == []
+            async with owner.begin() as conn:
+                await conn.execute(
+                    AT.assessments.update()
+                    .where(AT.assessments.c.id == UUID(a["id"]))
+                    .values({field: original})
+                )
 
 
 @pytest.mark.integration

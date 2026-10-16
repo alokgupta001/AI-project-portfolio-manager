@@ -1,5 +1,10 @@
 # Latest technical handoff
 
+PR #3 follow-up — 16 October 2026: [review fixes](../04-testing/sprint-based/sprint-11/REVIEW_FIXES.md)
+on `sprint-11-specialist-review` supersede the uncommitted checkpoint below.
+Forward test head 0014; normal head 0012 preserved. Output-budget increase deferred
+under the existing limits. No merge, deployment or Sprint 12.
+
 Current — 16 October 2026: [Sprint 11 handoff](../03-sprints/completed/sprint-11/HANDOFF.md), [report](../03-sprints/completed/sprint-11/SPRINT_REPORT.md) and [fresh tests](../04-testing/sprint-based/sprint-11/TESTING_REPORT.md). All three Sprint 11 packages are implemented with deterministic acceptance; real-provider semantic quality UNVERIFIED/BLOCKED. Normal head remains 0012; 0013 validated only in disposable test databases. Uncommitted work, USD 0, no deployment. Stop before Sprint 12. Earlier stop-before-11 statements below describe completed historical tasks.
 
 ## Historical checkpoints before Sprint 11

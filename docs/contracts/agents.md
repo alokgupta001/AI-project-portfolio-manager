@@ -27,7 +27,7 @@ backfill, new broker or automatic action. Accepted means reviewed only.
 | --- | --- |
 | GET `/definitions` | Nine specialist allowlists, tools, output schema, timeout, fallback and evaluation cases |
 | POST `/runs` | Project, up to five distinct ready source-version IDs, optional private assessment; UUID Idempotency-Key; 202 |
-| GET `/runs?offset=0` | Stable latest 25, offset capped at 10000, permission-filtered |
+| GET `/runs?offset=0` | Stable latest 25 lightweight summaries (`run.id`, `run.status`, `run.created_at`, stored `semantic_status`), offset capped at 10000, permission-filtered; no evidence or review history |
 | GET `/runs/{id}` | Execution, per-agent outcome, missing agents, score separation, current evidence, discrepancies, stages and review history |
 | POST `/runs/{id}/reviews/{item_key}` | Accepted/rejected, required reason, optional maturity override 0–100; UUID Idempotency-Key and item review revision If-Match |
 | Existing `/ai/runs/{id}/cancel`, `/events`, `/stages` | Same cancellation, fenced leases, current authorization and safe persistent progress |
@@ -96,7 +96,13 @@ without deleting its history. Confidence 0–1 is never presented as maturity 0�
 Framework, assessment revision, model, prompt/schema hashes, source versions and
 rule versions are retained. Existing completed assessment results stay untouched.
 
-Capture and citation authority are repeated before inference, publication, reads
+Forward `0014_specialist_reviewer` preserves 0013 and extends its analysis read
+policy to independently eligible assessment reviewers with a current project
+read grant. Reviewer identity, assignee/submitter separation, actor separation,
+role, tenant and project scope still apply. The ordinary edit requirement for
+reviewing non-assessment analyses is unchanged.
+
+Capture and citation authority are repeated before inference, publication, detail reads
 and acceptance. Source change/revocation, assessment revision change, workforce
 group suppression or scope loss withholds unsupported excerpts/suggestions and
 marks unavailable findings. Sensitive old review comments/approved values are
@@ -104,3 +110,6 @@ withheld when their evidence is no longer available. Historic execution status
 stays distinct from current evidence availability. No saved provider prose is
 served. All nine agent contracts have supported/missing/conflicting/malicious
 fixtures; see [testing](../04-testing/sprint-based/sprint-11/TESTING_REPORT.md).
+List summaries expose historical execution metadata only; they do not claim
+current source support. Single-run detail and acceptance retain full evidence
+revalidation. Citation offsets use Unicode code points on both server and client.

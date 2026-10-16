@@ -2,6 +2,10 @@
 
 ## Status and scope
 
+PR #3 follow-up: see [review fixes](../../../04-testing/sprint-based/sprint-11/REVIEW_FIXES.md)
+for the four valid fixes, CI browser corrections, forward migration 0014 and the
+deferred output-budget increase. The original implementation checkpoint follows.
+
 16 October 2026. PPM-11-001/002/003 are implemented for deterministic local
 acceptance. Real-provider semantic quality is **UNVERIFIED/BLOCKED**; production
 and scale acceptance remain open. Base 77b330a on `close-sprints-8-1-and-10`, with

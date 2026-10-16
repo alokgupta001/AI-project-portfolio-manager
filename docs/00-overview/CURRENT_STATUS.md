@@ -1,5 +1,10 @@
 # Current implementation and acceptance
 
+PR #3 review follow-up — 16 October 2026: [four review fixes and CI corrections](../04-testing/sprint-based/sprint-11/REVIEW_FIXES.md)
+are on `sprint-11-specialist-review`. Forward 0014 preserves existing migrations;
+normal database remains 0012. The requested output-budget increase is deferred
+under the unchanged-limits constraint. Earlier checkpoint statements follow.
+
 Current — 16 October 2026: Sprint 11 specialists, separate semantic maturity suggestions and recommendation review are implemented for deterministic local acceptance. [Report](../03-sprints/completed/sprint-11/SPRINT_REPORT.md) and [fresh validation](../04-testing/sprint-based/sprint-11/TESTING_REPORT.md) are authoritative. Real-provider semantic quality UNVERIFIED/BLOCKED; production/scale remain open. Normal database 0012 preserved, additive 0013 tested in disposable databases. No deployment/commit; stop before Sprint 12.
 
 ## Historical checkpoints before Sprint 11

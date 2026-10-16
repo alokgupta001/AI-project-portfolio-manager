@@ -95,6 +95,27 @@ def database() -> None:
         ).strip()
 
     if phase == "before":
+        tables = sql(
+            "SELECT tablename FROM pg_tables WHERE schemaname='public' "
+            "AND tablename<>'alembic_version' ORDER BY tablename"
+        ).splitlines()
+    else:
+        tables = list(json.loads((FOLDER / "database-before.json").read_text())["tables"])
+    result = {"revision": sql("SELECT version_num FROM alembic_version"), "tables": {}}
+    for name in tables:
+        quoted = '"' + name.replace('"', '""') + '"'
+        projection = "to_jsonb(t) - 'ai_run_id'" if name == "durable_jobs" else "to_jsonb(t)"
+        result["tables"][name] = json.loads(
+            sql(
+                "SELECT json_build_object('count',count(*),'hash',md5(coalesce("
+                "string_agg(r::text,E'\\n' ORDER BY r::text),''))) FROM "
+                f"(SELECT {projection} r FROM {quoted} t) x"
+            )
+        )
+    target.write_text(json.dumps(result, indent=2), encoding="utf-8")
+    if phase == "before":
+        # Finish SQL/hash validation and write the checkpoint before creating
+        # permanent backups. A failed query/JSON write leaves the capture retryable.
         with (FOLDER / "database-before.dump").open("xb") as stream:
             subprocess.run(
                 [*base, "pg_dump", "-U", "postgres", "-Fc", "ppm_local"],
@@ -123,24 +144,6 @@ def database() -> None:
                 stdout=stream,
                 check=True,
             )
-        tables = sql(
-            "SELECT tablename FROM pg_tables WHERE schemaname='public' "
-            "AND tablename<>'alembic_version' ORDER BY tablename"
-        ).splitlines()
-    else:
-        tables = list(json.loads((FOLDER / "database-before.json").read_text())["tables"])
-    result = {"revision": sql("SELECT version_num FROM alembic_version"), "tables": {}}
-    for name in tables:
-        quoted = '"' + name.replace('"', '""') + '"'
-        projection = "to_jsonb(t) - 'ai_run_id'" if name == "durable_jobs" else "to_jsonb(t)"
-        result["tables"][name] = json.loads(
-            sql(
-                "SELECT json_build_object('count',count(*),'hash',md5(coalesce("
-                "string_agg(r::text,E'\\n' ORDER BY r::text),''))) FROM "
-                f"(SELECT {projection} r FROM {quoted} t) x"
-            )
-        )
-    target.write_text(json.dumps(result, indent=2), encoding="utf-8")
     if phase == "after":
         assert (
             result["tables"] == json.loads((FOLDER / "database-before.json").read_text())["tables"]

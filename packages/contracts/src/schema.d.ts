@@ -2186,6 +2186,27 @@ export interface components {
             /** Version Ids */
             version_ids?: string[];
         };
+        /** AnalysisRunSummary */
+        AnalysisRunSummary: {
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Status */
+            status: string;
+        };
+        /** AnalysisSummary */
+        AnalysisSummary: {
+            run: components["schemas"]["AnalysisRunSummary"];
+            /** Semantic Status */
+            semantic_status: string;
+        };
         /** AnalysisView */
         AnalysisView: {
             /** Agents */
@@ -3661,10 +3682,10 @@ export interface components {
             instance_id: string;
             /**
              * Schema Revision
-             * @default 0013_specialist_reviews
+             * @default 0014_specialist_reviewer
              * @constant
              */
-            schema_revision: "0013_specialist_reviews";
+            schema_revision: "0014_specialist_reviewer";
         };
         /** FrameworkInput */
         "FrameworkInput-Input": {
@@ -5765,7 +5786,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["AnalysisView"][];
+                    "application/json": components["schemas"]["AnalysisSummary"][];
                 };
             };
             /** @description Validation Error */

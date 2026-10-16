@@ -1,5 +1,10 @@
 # Canonical master prompt entry point
 
+PR #3 review follow-up — 16 October 2026: use the [review-fix record](../04-testing/sprint-based/sprint-11/REVIEW_FIXES.md)
+and latest handoff on `sprint-11-specialist-review`. The earlier uncommitted
+statements below are historical. Preserve the existing output/request/spending
+limits and migrations; forward 0014 is tested only in disposable databases.
+
 Current explicit authorization — 16 October 2026: Sprint 11 implementation authorized and implemented. Read [the handoff](../03-sprints/completed/sprint-11/HANDOFF.md) and [actual results](../04-testing/sprint-based/sprint-11/TESTING_REPORT.md). The frozen master/ordered prompts remain source records. Real-model quality UNVERIFIED/BLOCKED; normal 0012 preserved; no deployment or commit. Stop before Sprint 12.
 
 ## Historical checkpoints before Sprint 11

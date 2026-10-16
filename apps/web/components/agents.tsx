@@ -7,6 +7,7 @@ import { RecordSelect } from "./record-select";
 
 type S = components["schemas"];
 type Analysis = S["AnalysisView"];
+type Summary = S["AnalysisSummary"];
 type Item = S["FindingView"] | S["SuggestionView"];
 const terminal = new Set([
   "succeeded",
@@ -22,7 +23,7 @@ export function Agents({
   account: S["AccountView"];
   transport: typeof fetch;
 }) {
-  const [runs, setRuns] = useState<Analysis[]>([]);
+  const [runs, setRuns] = useState<Summary[]>([]);
   const [selected, setSelected] = useState<Analysis | null>(null);
   const [definitions, setDefinitions] = useState<S["AgentDefinition"][]>([]);
   const [project, setProject] = useState("");
@@ -66,7 +67,7 @@ export function Agents({
   );
   const refresh = useCallback(async () => {
     const [values, defs] = await Promise.all([
-      api<Analysis[]>(`/agents/runs?offset=${offset}`),
+      api<Summary[]>(`/agents/runs?offset=${offset}`),
       api<S["AgentDefinition"][]>("/agents/definitions"),
     ]);
     setRuns(values);
@@ -589,7 +590,7 @@ export function Agents({
                   Version {source.version} · SHA-256 {source.sha256}
                 </p>
                 <blockquote>
-                  {source.text.slice(span.start, span.end)}
+                  {Array.from(source.text).slice(span.start, span.end).join("")}
                 </blockquote>
               </details>
             ) : null;

@@ -177,9 +177,8 @@ small {
   color: var(--on-accent);
   font-weight: 600;
   text-decoration: none;
-  transition:
-    background var(--duration),
-    box-shadow var(--duration);
+  /* Theme text and backgrounds must change together to preserve contrast. */
+  transition: box-shadow var(--duration);
 }
 .button:hover,
 .identity-page button:hover {

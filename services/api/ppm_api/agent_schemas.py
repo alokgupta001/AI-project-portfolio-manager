@@ -147,6 +147,17 @@ class SuggestionView(Strict):
     reviews: list[ReviewView]
 
 
+class AnalysisRunSummary(Strict):
+    id: UUID
+    status: str
+    created_at: datetime
+
+
+class AnalysisSummary(Strict):
+    run: AnalysisRunSummary
+    semantic_status: str
+
+
 class AnalysisView(Strict):
     run: AIRunView
     prompt_version: str = PROMPT

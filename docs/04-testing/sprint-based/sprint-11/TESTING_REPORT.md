@@ -1,5 +1,8 @@
 # Sprint 11 testing report — 16 October 2026
 
+Current PR #3 follow-up: [review fixes and fresh validation](REVIEW_FIXES.md).
+The results below remain the original implementation checkpoints.
+
 Environment: Windows host, Python 3.12.14, Node 24.20.0; Linux Compose PostgreSQL
 18/Redis and existing locked app dependencies. All acceptance data is synthetic.
 Runtime test providers are disabled. Enabled-provider paths use local doubles or
