@@ -10,7 +10,7 @@ Start at [the documentation index](../README.md). Current status is authoritativ
 | 01-architecture | Current component, API and database explanations |
 | 02-learning | Practical cross-sprint code walkthroughs and learning entry points |
 | 03-sprints/completed/sprint-NN | Reports/handoffs for Sprints 00–09, with each sprint’s actual local acceptance limits |
-| 03-sprints/active/sprint-8.1 and sprint-10 | Open parent/model-quality acceptance with local and bounded provider evidence recorded |
+| 03-sprints/completed/sprint-8.1 and sprint-10 | Open parent/model-quality acceptance with local and bounded provider evidence recorded |
 | 03-sprints/planned/sprint-NN | Intended outcome, links to canonical roadmap and required documentation changes; no execution reports |
 | 04-testing | Strategy, current instructions and original sprint-specific test reports |
 | 05-demos | Current reproducible walkthroughs and clearly labeled future outlines |

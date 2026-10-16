@@ -221,7 +221,7 @@ Historical acceptance rows above remain unchanged. The current requirement-by-re
 
 ## Sprint 8.1 pilot execution
 
-The revised gap mapping adds PPM-81-001–010 without replacing source requirements. Identity F-001–003, delivery F-005–007, compatible comparison F-018 and enhancement A01–A08/A15–A18 now have pilot implementation evidence in the [report](../03-sprints/active/sprint-8.1/SPRINT_REPORT.md) and per-task checks. Local implementation does not establish real account delivery, hosted CI, Word layout or production acceptance. PPM-81-002 is BLOCKED external mail and010 PARTIAL; parent acceptance remains OPEN. Future original-spec capabilities keep their existing owning sprint and status.
+The revised gap mapping adds PPM-81-001–010 without replacing source requirements. Identity F-001–003, delivery F-005–007, compatible comparison F-018 and enhancement A01–A08/A15–A18 now have pilot implementation evidence in the [report](../03-sprints/completed/sprint-8.1/SPRINT_REPORT.md) and per-task checks. Local implementation does not establish real account delivery, hosted CI, Word layout or production acceptance. PPM-81-002 is BLOCKED external mail and010 PARTIAL; parent acceptance remains OPEN. Future original-spec capabilities keep their existing owning sprint and status.
 
 | Task | Pilot acceptance | Evidence |
 | --- | --- | --- |
@@ -248,7 +248,7 @@ was relabeled optional, and parent 8.1 external/visual gates remain open.
 
 ## Sprint 10 execution and follow-up — 16 October 2026
 
-PPM-10-001/002/003 have local implementation evidence in [the report](../03-sprints/active/sprint-10/SPRINT_REPORT.md)
+PPM-10-001/002/003 have local implementation evidence in [the report](../03-sprints/completed/sprint-10/SPRINT_REPORT.md)
 and [checks](../04-testing/sprint-based/sprint-10/TESTING_REPORT.md). F-039, N-009/010/014,
 E-008 and the ADR 016 typed-native T-006 alternative are verified locally. F-074,
 T-004 and T-007 remain partial for broad retrieval quality and scale obligations.

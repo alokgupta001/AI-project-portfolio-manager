@@ -1,0 +1,152 @@
+{
+  "checked_at": "2026-10-16T10:41:54.697683+00:00",
+  "status": "PASS",
+  "scope": "Sprint 8.1 pilot and Sprint 10 gateway/evaluation development closeout; production and future semantic capabilities retain explicit gates",
+  "completed_homes": [
+    "docs/03-sprints/completed/sprint-8.1",
+    "docs/03-sprints/completed/sprint-10"
+  ],
+  "completed_plain_language_reports": [
+    "docs/11-plain-language-sprint-reports/completed/SPRINT-8.1.md",
+    "docs/11-plain-language-sprint-reports/completed/SPRINT-10.md"
+  ],
+  "hosted_ci": {
+    "status": "success",
+    "application_commit": "631c14970d5e560dd6de1c72ec10fc0ca2cc50c3",
+    "run_id": 38885041673,
+    "url": "https://github.com/alokgupta001/AI-project-portfolio-manager/actions/runs/38885041673",
+    "later_documentation_edits": "Not claimed to have a new hosted CI run"
+  },
+  "recorded_application_checks": {
+    "backend_passed": 201,
+    "document_browser_passed": 1,
+    "source": "docs/verification/coderabbit-review-fixes.json",
+    "executed_again_in_this_task": false
+  },
+  "development_mail": {
+    "source": "docs/04-testing/ACCOUNT_EMAIL_VERIFICATION.md",
+    "status": "Previously verified Gmail signup, existing-account Viewer invitation acceptance and recovery; no new messages sent"
+  },
+  "word_guide": {
+    "current_path": "docs/03-sprints/completed/sprint-8.1/SPRINT_8_1_USER_GUIDE.docx",
+    "sha256": "0d3ba39c2e72e1e28a8ecbc43586c1164b8fca51ca38afaaf5e685b1680d7e6d",
+    "pages": 2,
+    "section_headings": 10,
+    "hyperlinks_checked": 6,
+    "render_helper": "Packaged documents/render_docx.py",
+    "renderer": "LibreOffice 7.4.7.2 in a temporary local Linux QA image",
+    "renderer_image": "sha256:c79aef103a7134cedb18579d99378bd1cccbe60a105e8f42022c93373feaa5ca",
+    "runtime_network": "none",
+    "visual_review": {
+      "pages": [
+        1,
+        2
+      ],
+      "status": "PASS",
+      "checks": [
+        "Readable text and headings",
+        "All nine numbered workflows present",
+        "No clipping or overlap",
+        "No title border or footer collision",
+        "No missing glyphs"
+      ]
+    },
+    "archived_snapshot": "Preserved unchanged; obsolete setup text/pagination is superseded by this current edition"
+  },
+  "offline_evaluation": {
+    "version": "ai-gates-v1",
+    "environment": "deterministic-fixtures-only",
+    "thresholds": {
+      "support": 1.0,
+      "citation_validity": 1.0,
+      "task_completion": 1.0,
+      "access_leakage": 0,
+      "unsupported_numbers": 0
+    },
+    "count": 12,
+    "passed": 12,
+    "failures": [],
+    "eligible": true,
+    "real_provider_acceptance": "BLOCKED",
+    "limitation": "Passing these gates is not model accuracy or Sprint 11 acceptance"
+  },
+  "offline_evaluation_interpretation": "The harness cannot establish live-model acceptance; its BLOCKED label does not override the separately verified Gemini smoke.",
+  "protected_files": {
+    "count": 710,
+    "changed": [],
+    "scope": "Application/tests/configuration, keys, source/prompt snapshots, migrations, retained verification records and archived binaries"
+  },
+  "real_ai_provider_requests": 0,
+  "paid_service_calls": 0,
+  "maximum_authorized_usd": 0,
+  "remaining_release_gates": "docs/09-planning/RELEASE-ACCEPTANCE-REGISTER.md",
+  "checks": [
+    {
+      "command": [
+        "C:\\Users\\alokg\\OneDrive\\Documents\\Codex\\enterprise-ppm\\.venv\\Scripts\\python.exe",
+        "scripts/check_documentation.py"
+      ],
+      "exit_code": 0,
+      "result": "PASS: 297 Markdown files; 4791 local links/anchors; zero missing\nPASS: catalogue/mapping each retain 156 requirements and 36 gaps\nPASS: Sprint 09 hubs and accepted/partial requirement status boundaries\nPASS: Sprint 10 hubs, verified-smoke/open-quality distinction and Sprint 11 boundary\nExternal URLs, plain-text paths and archived Word layout are outside this check"
+    },
+    {
+      "command": [
+        "C:\\Users\\alokg\\OneDrive\\Documents\\Codex\\enterprise-ppm\\.venv\\Scripts\\python.exe",
+        "scripts/check_previous_sprint_docs.py"
+      ],
+      "exit_code": 0,
+      "result": "PASS: 12 prior sprint packages; 107 required artifacts; canonical homes unique.\nPASS: current provider status, no daily expiry, $0 scope and historical boundaries."
+    },
+    {
+      "command": [
+        "C:\\Users\\alokg\\OneDrive\\Documents\\Codex\\enterprise-ppm\\.venv\\Scripts\\python.exe",
+        "scripts/documentation_inventory.py",
+        "--check"
+      ],
+      "exit_code": 0,
+      "result": "PASS: three source inventories match"
+    },
+    {
+      "command": [
+        "C:\\Users\\alokg\\OneDrive\\Documents\\Codex\\enterprise-ppm\\.venv\\Scripts\\python.exe",
+        "scripts/check_sources.py"
+      ],
+      "exit_code": 0,
+      "result": "PASS: 7 preserved sources/prompts match SHA256 manifest"
+    },
+    {
+      "command": [
+        "C:\\Users\\alokg\\OneDrive\\Documents\\Codex\\enterprise-ppm\\.venv\\Scripts\\ruff.exe",
+        "check",
+        "scripts/check_documentation.py",
+        "scripts/check_previous_sprint_docs.py",
+        "scripts/documentation_inventory.py"
+      ],
+      "exit_code": 0,
+      "result": "PASS"
+    },
+    {
+      "command": [
+        "C:\\Users\\alokg\\OneDrive\\Documents\\Codex\\enterprise-ppm\\.venv\\Scripts\\ruff.exe",
+        "format",
+        "--check",
+        "scripts/check_documentation.py",
+        "scripts/check_previous_sprint_docs.py",
+        "scripts/documentation_inventory.py"
+      ],
+      "exit_code": 0,
+      "result": "PASS"
+    },
+    {
+      "command": [
+        "git",
+        "-c",
+        "safe.directory=C:/Users/alokg/OneDrive/Documents/Codex/enterprise-ppm",
+        "diff",
+        "--check"
+      ],
+      "exit_code": 0,
+      "result": "PASS"
+    }
+  ]
+}

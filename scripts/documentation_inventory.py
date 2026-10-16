@@ -89,7 +89,7 @@ def inventories() -> dict[str, str]:
         "",
         "Generated from SQLAlchemy `Base.metadata` without a database connection. Source chain "
         "ends at `0012_ai_runtime`; the normal local applied head is independently recorded "
-        "in the [Sprint 10 handoff](../03-sprints/active/sprint-10/HANDOFF.md). "
+        "in the [Sprint 10 handoff](../03-sprints/completed/sprint-10/HANDOFF.md). "
         "Run `python scripts/documentation_inventory.py --check` for drift. "
         "SQL-only RLS, triggers, privileges and security-definer functions require reading "
         "[the migrations](../../services/api/migrations/versions) and "

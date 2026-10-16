@@ -1,5 +1,9 @@
 # Sprint 8.1 handoff
 
+**Closeout — 16 October 2026: Sprints 8.1 and 10 are COMPLETED for their implemented development scope.** The reviewed application checkpoint `631c149` passed [hosted CI](https://github.com/alokgupta001/AI-project-portfolio-manager/actions/runs/38885041673), including regression, migration and browser checks. The current pilot Word guide is rendered and visually verified in the linked closeout evidence. Earlier blocked/active statements below describe their recorded checkpoints. Production deployment, broad real-model/agent quality and scale remain OPEN release/successor gates. Stop before 11. [Acceptance matrix](../../../10-reference/SPRINT-8.1-AND-10-CLOSEOUT.md).
+
+## Historical record before closeout
+
 **Current reconciliation — 16 October 2026:** The 10 October [development mail evidence](../../../04-testing/ACCOUNT_EMAIL_VERIFICATION.md) supersedes missing-SMTP statements for signup, existing-account Viewer invitation and recovery. Sprint 09 is now complete locally and Sprint 10 has bounded Gemini smoke verification; resolve [LATEST](../../../handoffs/LATEST.md) before continuing. Earlier instructions below retain their historical scope and grant no successor authorization.
 
 Read the [report](SPRINT_REPORT.md), [task checks](../../../04-testing/sprint-based/sprint-8.1/PPM-81-010.md), [pilot contract](../../../contracts/pilot.md) and [tester guide](SPRINT_8_1_USER_GUIDE.md). Sprint 8.1 is implemented locally with parent acceptance OPEN. Migration head 0008_pilot_completion is now applied and frozen. Do not edit it; make another migration if a correction is required.

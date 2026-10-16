@@ -84,7 +84,7 @@ The exact documentation inventory is:
 | `docs/02-learning/05-security/AUTHENTICATION_AND_AUTHORIZATION.md` | Optional organization authentication, live authority and scoped grant explanation |
 | `docs/02-learning/05-security/ACCOUNT_EMAIL_AND_ROLE_ACCESS.md` | Global active status and invitation/reset/worker authority |
 | `docs/02-learning/06-ai-and-analytics/SCORING_AND_DASHBOARDS.md` | Calendar/navigation, manual inputs and planned AI distinction |
-| `docs/03-sprints/active/sprint-8.1/SPRINT_REPORT.md` | Dated follow-up link; original sprint evidence retained |
+| `docs/03-sprints/completed/sprint-8.1/SPRINT_REPORT.md` | Dated follow-up link; original sprint evidence retained |
 | `docs/04-testing/README.md` | Repair report index |
 | `docs/04-testing/ACCOUNT_WORKFLOW_REPAIR_REPORT.md` | This report covering the 14 requested areas |
 | `docs/04-testing/WALKTHROUGH_EXECUTION_CHECKLIST.md` | 611-entry original instruction/data/constraint inventory and evidence boundaries |

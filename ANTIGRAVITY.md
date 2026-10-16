@@ -1,8 +1,8 @@
 # Antigravity entry point — next sprint
 
-Current checkpoint — 16 October 2026: Sprint 10 local implementation is verified at `0012_ai_runtime`. Gemini free-tier completion and 256-dimension embedding smoke passed on the user-confirmed unbilled project with maximum spend $0; no daily renewal is required. The latest AI/provider regression suite recorded 63 passes. General model/retrieval quality, hosted CI, archived Word visual QA and production release remain unverified. Sprint 11 has not started. Stop before 11.
+Current checkpoint — 16 October 2026: Sprints 8.1 and 10 are COMPLETED for their implemented development scope at `0012_ai_runtime`. Reviewed application checkpoint `631c149` passed hosted CI; 201 backend tests and the document browser regression passed. A current pilot Word guide is rendered and visually verified. Gemini bounded completion/embedding smoke passed at maximum spend $0; confirmation does not expire daily. Production deployment, scale and broad agent/model quality remain OPEN release/successor gates. Sprint 11 is not started. Stop before 11.
 Read [LATEST](docs/handoffs/LATEST.md), [MASTER](docs/prompts/MASTER.md) and
-[Sprint 10 handoff](docs/03-sprints/active/sprint-10/HANDOFF.md). Preserve all applied
+[Sprint 10 handoff](docs/03-sprints/completed/sprint-10/HANDOFF.md). Preserve all applied
 0001–0012 migrations, .env, established data/objects and prior uncommitted work.
 Gemini free-tier calls are authorized at $0; no paid calls or automatic model/provider upgrades.
 Normal head 0012_ai_runtime; preservation and healthy runtime verified. Stop before 11.

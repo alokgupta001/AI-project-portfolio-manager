@@ -1,6 +1,6 @@
 # Current user guide
 
-Availability: **IMPLEMENTED AND VERIFIED** within retained local checks. Production acceptance remains open. Use [current status](../00-overview/CURRENT_STATUS.md) and [the catalogue](../00-overview/FEATURE_CATALOGUE.md) for exact scope. For complete Sprint 8.1 steps and recovery limits, use [the pilot tester guide](../03-sprints/active/sprint-8.1/SPRINT_8_1_USER_GUIDE.md).
+Availability: **IMPLEMENTED AND VERIFIED** within retained local checks. Production acceptance remains open. Use [current status](../00-overview/CURRENT_STATUS.md) and [the catalogue](../00-overview/FEATURE_CATALOGUE.md) for exact scope. For complete Sprint 8.1 steps and recovery limits, use [the pilot tester guide](../03-sprints/completed/sprint-8.1/SPRINT_8_1_USER_GUIDE.md).
 
 For a self-contained organization, member, project and assessment exercise, use the [detailed website manual](WEBSITE_WALKTHROUGH.md). Development Gmail SMTP signup, existing-account invitation acceptance and recovery are verified. Personal signup arrived in Spam; test-Admin signup arrived in Inbox. The accepted invitation created the correct Viewer membership without changing the account's Admin role in its original organization. Check Inbox and Spam; provider acceptance alone does not prove inbox arrival. See [email verification](../04-testing/ACCOUNT_EMAIL_VERIFICATION.md).
 
@@ -49,7 +49,7 @@ Semantic extraction, embeddings and policy approval are not available in this sl
 
 Open AI operations & evidence as Admin to retrieve a permitted project source
 preview, inspect no-key diagnostics and manage a zero-spend tenant budget. Follow
-[the current steps](../03-sprints/active/sprint-10/USER_GUIDE.md). Keyword excerpts are labeled source_fallback; no match
+[the current steps](../03-sprints/completed/sprint-10/USER_GUIDE.md). Keyword excerpts are labeled source_fallback; no match
 stays unavailable. Index embeddings and real model answers remain disabled until
 explicit provider/model/spend authorization. PM/Viewer use the document library;
 restricted Admin diagnostics are inaccessible. No semantic agents or plan edits.

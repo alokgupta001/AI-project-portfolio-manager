@@ -1,6 +1,6 @@
 # Sprint 8.1 — Making everyday use easier
 
-**Status:** Local pilot implementation exists; parent sprint acceptance remains open. This report is separate from the completed-sprint reports.
+**Status:** COMPLETED for the implemented development scope. Hosted CI and the current pilot guide checks are closed; broad model/production acceptance belongs to successor/release gates. [Closeout evidence](../../10-reference/SPRINT-8.1-AND-10-CLOSEOUT.md).
 
 ## What was built and why it matters
 
@@ -54,4 +54,4 @@ The [account-email verification](../../04-testing/ACCOUNT_EMAIL_VERIFICATION.md)
 
 The original pilot recorded 74 backend tests, 12 combined browser passes and later affected-flow checks. Subsequent account/email verification is documented separately. Hosted CI for the relevant working changes and visual verification of regenerated Word guides remain open in the sprint records. This is why the parent sprint remains outside the completed group.
 
-[Original report](../../03-sprints/active/sprint-8.1/SPRINT_REPORT.md) · [Pilot user guide](../../03-sprints/active/sprint-8.1/SPRINT_8_1_USER_GUIDE.md) · [Account repair evidence](../../04-testing/ACCOUNT_WORKFLOW_REPAIR_REPORT.md) · [Report index](../README.md)
+[Original report](../../03-sprints/completed/sprint-8.1/SPRINT_REPORT.md) · [Pilot user guide](../../03-sprints/completed/sprint-8.1/SPRINT_8_1_USER_GUIDE.md) · [Account repair evidence](../../04-testing/ACCOUNT_WORKFLOW_REPAIR_REPORT.md) · [Report index](../README.md)

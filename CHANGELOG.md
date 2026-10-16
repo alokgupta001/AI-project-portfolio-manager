@@ -1,5 +1,7 @@
 # Changelog
 
+16 October 2026: closed Sprint 8.1 and Sprint 10 development scope, reconciled successful hosted CI and reviewed fixes, published a current rendered pilot Word guide, moved both canonical/ordinary-language reports to completed, and repaired references/checkers. See [closeout](docs/10-reference/SPRINT-8.1-AND-10-CLOSEOUT.md).
+
 ## 16 October 2026 — previous-sprint documentation completion
 
 Reconciled Sprint 00–10/8.1 current versus historical status, later Gmail/Gemini evidence, no daily confirmation expiry, current user/demo/operator/learning instructions, source inventories and all canonical sprint navigation. Added complete package/status validation and [a single closure record](docs/10-reference/PREVIOUS-SPRINTS-DOCUMENTATION-CLOSURE.md). Original test results, source/prompts, application/configuration and legacy Word snapshots remain preserved. No Sprint 11, provider calls or product behavior changes.
@@ -11,7 +13,7 @@ versioned snapshots, tenant reservations/usage/circuits, protected evidence tool
 fenced jobs/cancellation/replay, bounded hybrid projection and Admin operations/
 evaluation UI. Real calls disabled by user instruction; provider acceptance BLOCKED.
 Source head 0012 follows frozen 0011. Local gates and actual normal rollout are in
-[the Sprint 10 report](docs/03-sprints/active/sprint-10/SPRINT_REPORT.md). Complete user/demo/operator/practical learning,
+[the Sprint 10 report](docs/03-sprints/completed/sprint-10/SPRINT_REPORT.md). Complete user/demo/operator/practical learning,
 contracts/ADR, traceability, inventories, indexes and closure matrix are maintained.
 No Sprint 11 agents, plan edits, paid calls, commit/push or external deployment.
 

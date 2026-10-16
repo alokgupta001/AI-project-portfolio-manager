@@ -1,5 +1,7 @@
 # Start here: learn AI-PPM one request at a time
 
+Current closeout: Sprints 8.1 and 10 are completed for development scope; hosted CI and the current pilot Word guide are verified. Broad agent/model quality, production and scale remain successor/release gates. See [acceptance disposition](../../10-reference/SPRINT-8.1-AND-10-CLOSEOUT.md). Earlier dated evidence below retains its historical scope.
+
 AI-PPM helps an organization keep project plans, spending, staffing and assessment results in one place. A manager can compare a person's reported project status with the facts behind it. Through Sprint 8.1, these calculations use ordinary Python formulas. AI features are still planned.
 
 This guide explains the existing application. It describes base `9056440` plus preserved uncommitted Sprint 08/8.1 code, source-reviewed on 9 October 2026. It does not require you to change code or create new data just to learn.
@@ -48,7 +50,7 @@ The previous chapter URLs remain as short links to the new guide. Source specifi
 
 Start with the current-status page before following older evidence. The new reading path includes the pilot walkthrough, current demo, test strategy and feature mapping. A source example remains a code explanation unless its test evidence is explicitly linked.
 
-Status: **IMPLEMENTED AND VERIFIED** within retained local evidence; external gates stay **BLOCKED** or **IMPLEMENTED BUT UNVERIFIED**. See [current status](../../00-overview/CURRENT_STATUS.md), [8.1 evidence](../../03-sprints/active/sprint-8.1/SPRINT_REPORT.md), [future concept and documentation map](../../09-planning/FEATURE_DOCUMENT_MAPPING.md) and [PLANNED work](../../09-planning/FUTURE_SPRINT_ROADMAP.md).
+Status: **IMPLEMENTED AND VERIFIED** within retained local evidence; external gates stay **BLOCKED** or **IMPLEMENTED BUT UNVERIFIED**. See [current status](../../00-overview/CURRENT_STATUS.md), [8.1 evidence](../../03-sprints/completed/sprint-8.1/SPRINT_REPORT.md), [future concept and documentation map](../../09-planning/FEATURE_DOCUMENT_MAPPING.md) and [PLANNED work](../../09-planning/FUTURE_SPRINT_ROADMAP.md).
 
 ## Verified Gmail and access update — 10 October 2026
 

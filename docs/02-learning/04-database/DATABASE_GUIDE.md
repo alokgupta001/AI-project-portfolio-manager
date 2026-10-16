@@ -116,7 +116,7 @@ To verify these relationships without writes, inspect `ppm_tables.py` and `asses
 
 Migration `0008_pilot_completion` adds nullable delivery metadata and registration/profile support, plus `identity_deliveries`, `personal_notifications` and `notification_preferences`. `pilot_tables.py` defines their columns and membership/token relationships. The notification unique key `(organization_id,user_id,event_key)` prevents duplicate receipts; recipient RLS and live target checks prevent unauthorized names/counts. `account_mail.enqueue` creates private delivery work with the challenge; `deliver_due` processes it. Inspect recorded preservation/restore evidence before proposing any future migration; this audit applies none.
 
-Status: **IMPLEMENTED AND VERIFIED** within retained local evidence; external gates stay **BLOCKED** or **IMPLEMENTED BUT UNVERIFIED**. See [current status](../../00-overview/CURRENT_STATUS.md), [8.1 evidence](../../03-sprints/active/sprint-8.1/SPRINT_REPORT.md), [future concept and documentation map](../../09-planning/FEATURE_DOCUMENT_MAPPING.md) and [PLANNED work](../../09-planning/FUTURE_SPRINT_ROADMAP.md).
+Status: **IMPLEMENTED AND VERIFIED** within retained local evidence; external gates stay **BLOCKED** or **IMPLEMENTED BUT UNVERIFIED**. See [current status](../../00-overview/CURRENT_STATUS.md), [8.1 evidence](../../03-sprints/completed/sprint-8.1/SPRINT_REPORT.md), [future concept and documentation map](../../09-planning/FEATURE_DOCUMENT_MAPPING.md) and [PLANNED work](../../09-planning/FUTURE_SPRINT_ROADMAP.md).
 
 ## Verified Gmail and access update — 10 October 2026
 

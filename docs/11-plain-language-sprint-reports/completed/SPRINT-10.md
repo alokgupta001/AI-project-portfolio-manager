@@ -1,6 +1,6 @@
 # Sprint 10 — Controlled AI evidence tools
 
-**Status:** Local implementation verified; full provider/model-quality acceptance remains open. The 16 October Gemini follow-up adds a bounded free-tier demonstration, not full sprint closure.
+**Status:** COMPLETED for the implemented development scope. Hosted CI and the current pilot guide checks are closed; broad model/production acceptance belongs to successor/release gates. [Closeout evidence](../../10-reference/SPRINT-8.1-AND-10-CLOSEOUT.md).
 
 ## What was built and why it matters
 
@@ -19,7 +19,7 @@ Open **AI operations & evidence** at [AI tools](http://localhost:3000/ai). Start
 | Budget, concurrency and usage controls | Admin tenant budget and diagnostics on `/ai`. | Read the configured limits and redacted usage. A tenant setting cannot override the operator's provider/spend limits. |
 | Optional source embeddings | **Index source embeddings**, when configured and authorized. | Read current availability. A successful index means a stored search representation, not proof of semantic search quality. |
 | Repeatable evaluation cases | Developer test/evaluation files linked below. | Inspect recorded results and distinguish fixtures from real-provider checks. A fixture pass does not prove real model quality. |
-| Gemini free-tier development follow-up | Provider disclosure/status on `/ai`; operator configuration. | Check whether the installation is active or paused. Confirmation expiry/quota/configuration can return it to fallback. |
+| Gemini free-tier development follow-up | Provider disclosure/status on `/ai`; operator configuration. | Check whether the installation is active or paused. Quota/configuration changes can return it to fallback; confirmation has no daily expiry. |
 
 An embedding is a numerical representation intended to help retrieval. Its existence does not mean the product has completed semantic assessments, a general copilot or autonomous agents.
 
@@ -57,6 +57,6 @@ The application relies on the operator's confirmation about the external project
 
 The original sprint's disabled-provider tests and acceptance boundaries are in its testing report. The Gemini follow-up recorded 62 isolated AI/provider regression tests, one intercepted-status browser test and the separate real synthetic smoke. The browser test itself did not make real provider calls.
 
-Full provider/model-quality acceptance, hosted CI and production gates remain open. Sprint 11 agents, semantic assessment findings, automatic score changes, automatic plan edits and the general copilot are not completed features here.
+Broad model/agent-quality and production gates remain OPEN for successor/release evaluation; hosted CI has passed. Sprint 11 agents, semantic assessment findings, automatic score changes, automatic plan edits and the general copilot are not completed features here.
 
-[Original sprint report](../../03-sprints/active/sprint-10/SPRINT_REPORT.md) · [Original testing](../../04-testing/sprint-based/sprint-10/TESTING_REPORT.md) · [Gemini follow-up evidence](../../04-testing/sprint-based/sprint-10/GEMINI-FOLLOWUP.md) · [Report index](../README.md)
+[Original sprint report](../../03-sprints/completed/sprint-10/SPRINT_REPORT.md) · [Original testing](../../04-testing/sprint-based/sprint-10/TESTING_REPORT.md) · [Gemini follow-up evidence](../../04-testing/sprint-based/sprint-10/GEMINI-FOLLOWUP.md) · [Report index](../README.md)

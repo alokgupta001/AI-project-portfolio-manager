@@ -51,6 +51,6 @@ For a full worked example with framework fields and people, follow the assessmen
 
 The sprint recorded 49 backend tests and a final targeted browser pass for the completed workflow. Original evidence attachments are TXT only, up to 512 KiB, with at most 50 per assessment. Reviewer release is a human review step, not an antivirus scan.
 
-Access-sharing controls and broader paging arrived in [Sprint 8.1](../in-progress/SPRINT-8.1.md). The separate multi-format library and same-file assessment links arrived in [Sprint 09](SPRINT-09.md). Neither replaces this private assessment workflow. AI scoring and automatic semantic findings were not delivered here.
+Access-sharing controls and broader paging arrived in [Sprint 8.1](../completed/SPRINT-8.1.md). The separate multi-format library and same-file assessment links arrived in [Sprint 09](SPRINT-09.md). Neither replaces this private assessment workflow. AI scoring and automatic semantic findings were not delivered here.
 
 [Original report](../../03-sprints/completed/sprint-06/SPRINT_REPORT.md) · [Recorded testing](../../04-testing/sprint-based/sprint-06/TESTING_REPORT.md) · [Report index](../README.md)

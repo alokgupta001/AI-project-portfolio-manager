@@ -86,7 +86,7 @@ The source drawer shows contributing facts, coverage and freshness. Saved views 
 
 My work uses `pilot.my_work` and `records` to select personal permitted records, including assigned/reviewer assessments not completed. Receipts are created transactionally by owning writes; `notify`, `feed`, `eligible_notification`, `mark_read` and `preference` implement deduplication, revalidation, read state and opt-out. A missing or revoked target is hidden before labels/counts. Thirty days is the presentation window, not purge. Scheduled reminders, approvals and external alerts are PLANNED for Sprints 15/21. Debug receipt kind, target access, enabled preference and timestamp before expecting a feed entry.
 
-Status: **IMPLEMENTED AND VERIFIED** within retained local evidence; external gates stay **BLOCKED** or **IMPLEMENTED BUT UNVERIFIED**. See [current status](../../00-overview/CURRENT_STATUS.md), [8.1 evidence](../../03-sprints/active/sprint-8.1/SPRINT_REPORT.md), [future concept and documentation map](../../09-planning/FEATURE_DOCUMENT_MAPPING.md) and [PLANNED work](../../09-planning/FUTURE_SPRINT_ROADMAP.md).
+Status: **IMPLEMENTED AND VERIFIED** within retained local evidence; external gates stay **BLOCKED** or **IMPLEMENTED BUT UNVERIFIED**. See [current status](../../00-overview/CURRENT_STATUS.md), [8.1 evidence](../../03-sprints/completed/sprint-8.1/SPRINT_REPORT.md), [future concept and documentation map](../../09-planning/FEATURE_DOCUMENT_MAPPING.md) and [PLANNED work](../../09-planning/FUTURE_SPRINT_ROADMAP.md).
 
 ## Verified Gmail and access update — 10 October 2026
 

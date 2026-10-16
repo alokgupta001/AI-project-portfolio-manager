@@ -1,6 +1,6 @@
 # Testing strategy and current commands
 
-This is strategy/run guidance, not an executed full application report. Historical evidence: [sprint checks](sprint-based/README.md) and [8.1 report](../03-sprints/active/sprint-8.1/SPRINT_REPORT.md). Future acceptance: [gap plan](GAP_ACCEPTANCE_TEST_PLAN.md).
+This is strategy/run guidance, not an executed full application report. Historical evidence: [sprint checks](sprint-based/README.md) and [8.1 report](../03-sprints/completed/sprint-8.1/SPRINT_REPORT.md). Future acceptance: [gap plan](GAP_ACCEPTANCE_TEST_PLAN.md).
 
 | Category / purpose | Real infrastructure and run command | Scope / limits |
 | --- | --- | --- |

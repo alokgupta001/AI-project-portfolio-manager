@@ -1,5 +1,9 @@
 # Sprint 8.1 report
 
+**Closeout — 16 October 2026: Sprints 8.1 and 10 are COMPLETED for their implemented development scope.** The reviewed application checkpoint `631c149` passed [hosted CI](https://github.com/alokgupta001/AI-project-portfolio-manager/actions/runs/38885041673), including regression, migration and browser checks. The current pilot Word guide is rendered and visually verified in the linked closeout evidence. Earlier blocked/active statements below describe their recorded checkpoints. Production deployment, broad real-model/agent quality and scale remain OPEN release/successor gates. Stop before 11. [Acceptance matrix](../../../10-reference/SPRINT-8.1-AND-10-CLOSEOUT.md).
+
+## Historical record before closeout
+
 **Current reconciliation — 16 October 2026:** Development Gmail signup, existing-account Viewer invitation and recovery were subsequently verified on 10 October; [mail evidence](../../../04-testing/ACCOUNT_EMAIL_VERIFICATION.md) supersedes the missing-SMTP blocker for those journeys. Parent hosted CI/archived Word visual and production gates remain open. The original task counts/results below are the dated 9 October baseline, not today's complete feature status.
 
 Execution date: 2026-10-09. **Implementation completed locally; parent acceptance remains OPEN.** No next sprint or live deployment was started. User authorization covered application, additive migration, tests and documentation. The revised planning pack is the execution authority; original specifications and frozen prompts remain unchanged.

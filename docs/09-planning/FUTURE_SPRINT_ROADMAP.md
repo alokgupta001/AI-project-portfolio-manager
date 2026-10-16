@@ -1,12 +1,16 @@
 # Complete future sprint roadmap
 
+**Closeout — 16 October 2026: Sprints 8.1 and 10 are COMPLETED for their implemented development scope.** The reviewed application checkpoint `631c149` passed [hosted CI](https://github.com/alokgupta001/AI-project-portfolio-manager/actions/runs/38885041673), including regression, migration and browser checks. The current pilot Word guide is rendered and visually verified in the linked closeout evidence. Earlier blocked/active statements below describe their recorded checkpoints. Production deployment, broad real-model/agent quality and scale remain OPEN release/successor gates. Stop before 11. [Closeout](../10-reference/SPRINT-8.1-AND-10-CLOSEOUT.md).
+
+## Historical record before closeout
+
 Execution update, 16 October 2026: Sprint 09 is locally verified and Sprint 10 is implemented at `0012_ai_runtime`;
-[current handoff](../03-sprints/active/sprint-10/HANDOFF.md) governs continuation.
+[current handoff](../03-sprints/completed/sprint-10/HANDOFF.md) governs continuation.
 Development Gmail and bounded Gemini free-tier smoke are verified; general model quality, CI/Word
 and production gates remain open. Sprints 11–23 remain PLANNED; stop before 11. Proposed paths in later
 sections remain plans. Historical planning-date statements below are retained as context.
 
-**Execution update 2026-10-09:** Sprint 8.1 local implementation is recorded in the [report](../03-sprints/active/sprint-8.1/SPRINT_REPORT.md); parent acceptance remains OPEN. The planning baseline below is historical. Future task scope and release criteria remain unchanged; no next sprint was started.
+**Execution update 2026-10-09:** Sprint 8.1 local implementation is recorded in the [report](../03-sprints/completed/sprint-8.1/SPRINT_REPORT.md); parent acceptance remains OPEN. The planning baseline below is historical. Future task scope and release criteria remain unchanged; no next sprint was started.
 
 **Historical planning baseline (before Sprint 8.1 execution):** 9 October 2026. Documentation only; no feature work is authorized by this pack.** Sprint 08 is complete locally; Sprint 8.1 is proposed, not started. Numbers describe execution order, not dates or delivery promises. The frozen source specifications and original prompt pack remain intact. For future work, this pack supersedes the earlier gap review and the future sections of the original ordered prompts; those prompts remain historical scope evidence. Completed reports retain their original meaning.
 
@@ -127,7 +131,7 @@ The ten individually specified work packages and completion gate are in [SPRINT_
 
 ## Sprint 10 — Shared AI gateway and evaluation
 
-**State:** local implementation and bounded Gemini free-tier completion/embedding smoke VERIFIED; broader model/retrieval quality and release acceptance OPEN. **Phase:** Evidence and intelligence. **Entry dependencies:** 09 keyword/source contracts; 08 jobs.
+**State:** COMPLETED for PPM-10-001/002/003 gateway/evaluation development scope; bounded Gemini smoke, deterministic gates and hosted CI VERIFIED. Broader agent/model quality and production release remain OPEN successor/release gates. **Phase:** Evidence and intelligence. **Entry dependencies:** 09 keyword/source contracts; 08 jobs.
 
 **Goal / why now:** One controlled runtime prevents separate agents from inventing facts, costs or authorization rules.
 
@@ -153,7 +157,7 @@ The ten individually specified work packages and completion gate are in [SPRINT_
 
 **Tests:** Run focused unit/API fixtures and the user journey described above, including two tenants, allowed/denied roles, missing data, stale source versions, retries and dependency failure. Record real external acceptance separately from deterministic doubles.
 
-**Completion evidence:** record exact revision, relevant API/browser/negative-case results and screenshots or rendered output in `docs/verification/PPM-10-001.md` (executed evidence is in the active Sprint 10 report), linked from the sprint report. Include command, environment, fixture size, expected/actual result and external checks still blocked. A code path alone is not acceptance.
+**Completion evidence:** record exact revision, relevant API/browser/negative-case results and screenshots or rendered output in `docs/verification/PPM-10-001.md` (executed evidence is in the completed Sprint 10 report), linked from the sprint report. Include command, environment, fixture size, expected/actual result and external checks still blocked. A code path alone is not acceptance.
 
 ### PPM-10-002 — Typed orchestration and protected tools
 
@@ -173,7 +177,7 @@ The ten individually specified work packages and completion gate are in [SPRINT_
 
 **Tests:** Run focused unit/API fixtures and the user journey described above, including two tenants, allowed/denied roles, missing data, stale source versions, retries and dependency failure. Record real external acceptance separately from deterministic doubles.
 
-**Completion evidence:** record exact revision, relevant API/browser/negative-case results and screenshots or rendered output in `docs/verification/PPM-10-002.md` (executed evidence is in the active Sprint 10 report), linked from the sprint report. Include command, environment, fixture size, expected/actual result and external checks still blocked. A code path alone is not acceptance.
+**Completion evidence:** record exact revision, relevant API/browser/negative-case results and screenshots or rendered output in `docs/verification/PPM-10-002.md` (executed evidence is in the completed Sprint 10 report), linked from the sprint report. Include command, environment, fixture size, expected/actual result and external checks still blocked. A code path alone is not acceptance.
 
 ### PPM-10-003 — AI operations and evaluation gates
 
@@ -193,7 +197,7 @@ The ten individually specified work packages and completion gate are in [SPRINT_
 
 **Tests:** Run focused unit/API fixtures and the user journey described above, including two tenants, allowed/denied roles, missing data, stale source versions, retries and dependency failure. Record real external acceptance separately from deterministic doubles.
 
-**Completion evidence:** record exact revision, relevant API/browser/negative-case results and screenshots or rendered output in `docs/verification/PPM-10-003.md` (executed evidence is in the active Sprint 10 report), linked from the sprint report. Include command, environment, fixture size, expected/actual result and external checks still blocked. A code path alone is not acceptance.
+**Completion evidence:** record exact revision, relevant API/browser/negative-case results and screenshots or rendered output in `docs/verification/PPM-10-003.md` (executed evidence is in the completed Sprint 10 report), linked from the sprint report. Include command, environment, fixture size, expected/actual result and external checks still blocked. A code path alone is not acceptance.
 
 **Definition of done:** all three task acceptances pass for their claimed environment; module contracts and source requirement dispositions updated; user journey recorded; report/handoff states real versus fixture evidence and open blockers. Published scores/history and existing stored records are preserved. A blocked required real-provider or model criterion prevents full product acceptance even if its implementation slice is locally accepted.
 

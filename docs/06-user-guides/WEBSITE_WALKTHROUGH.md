@@ -961,7 +961,7 @@ Keep this fictional organization separate from real business records. When the e
 These references explain the implemented scope; you do not need to read them to follow the exercise:
 
 - [Current user guide](USER_GUIDE.md)
-- [Sprint 8.1 tester guide](../03-sprints/active/sprint-8.1/SPRINT_8_1_USER_GUIDE.md)
+- [Sprint 8.1 tester guide](../03-sprints/completed/sprint-8.1/SPRINT_8_1_USER_GUIDE.md)
 - [Current capability and acceptance limits](../00-overview/CURRENT_STATUS.md)
 - [Feature catalogue](../00-overview/FEATURE_CATALOGUE.md)
 
@@ -989,7 +989,7 @@ Do not upload private workforce notes or purge real evidence for a walkthrough.
 
 Open AI operations & evidence as Admin to retrieve a permitted project source
 preview, inspect no-key diagnostics and manage a zero-spend tenant budget. Follow
-[the current steps](../03-sprints/active/sprint-10/USER_GUIDE.md). Keyword excerpts are labeled source_fallback; no match
+[the current steps](../03-sprints/completed/sprint-10/USER_GUIDE.md). Keyword excerpts are labeled source_fallback; no match
 stays unavailable. Index embeddings and real model answers remain disabled until
 explicit provider/model/spend authorization. PM/Viewer use the document library;
 restricted Admin diagnostics are inaccessible. No semantic agents or plan edits.

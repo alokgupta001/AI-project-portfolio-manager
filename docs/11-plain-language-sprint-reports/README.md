@@ -25,14 +25,14 @@ This folder explains what each sprint added, why it is useful, where you can fin
 | 08 | Imports from files/connectors and visible background-job progress | [Integrations and jobs](completed/SPRINT-08.md) |
 | 09 | A versioned document library with previews, keyword search and source links | [Document library](completed/SPRINT-09.md) |
 
-## Implemented work with acceptance still open
+## Additional completed development sprints
 
-These are separate so their useful working features are explained without presenting the whole sprint as complete.
+The closeout links the later Gmail, hosted CI and current guide evidence. Production and future agent/model gates remain explicit release requirements.
 
 | Sprint | What you can inspect | Status and report |
 | --- | --- | --- |
-| 8.1, between 08 and 09 | Signup, setup guidance, access sharing, record search, My work, notifications and updates | [Pilot improvements](in-progress/SPRINT-8.1.md). Local implementation exists; parent acceptance remains open. Later account repairs are identified separately. |
-| 10, after 09 | Controlled AI evidence previews, run history and budget controls | [AI evidence tools](in-progress/SPRINT-10.md). Local implementation is verified; full provider/model-quality acceptance remains open. Includes the 16 October Gemini follow-up. |
+| 8.1, between 08 and 09 | Signup, setup guidance, access sharing, record search, My work, notifications and updates | [Pilot improvements](completed/SPRINT-8.1.md). Development scope is completed. Later account repairs are identified separately. |
+| 10, after 09 | Controlled AI evidence previews, run history and budget controls | [AI evidence tools](completed/SPRINT-10.md). Gateway/evaluation scope is completed; broad model quality remains a successor gate. Includes the 16 October Gemini follow-up. |
 
 Sprint 11 onward is planned work and has no completed report here.
 
@@ -40,15 +40,15 @@ Sprint 11 onward is planned work and has no completed report here.
 
 | I want to check… | Start here |
 | --- | --- |
-| Login, password recovery, invitations, organization switching | [Sprint 02](completed/SPRINT-02.md); [signup and later improvements](in-progress/SPRINT-8.1.md) |
+| Login, password recovery, invitations, organization switching | [Sprint 02](completed/SPRINT-02.md); [signup and later improvements](completed/SPRINT-8.1.md) |
 | Organization setup, portfolios, project grants, tasks, budgets and plan history | [Sprint 04](completed/SPRINT-04.md) |
 | Capacity, leave, staffing and private timesheet access | [Sprint 05](completed/SPRINT-05.md) |
 | Frameworks, questionnaires, evidence, review and scores | [Sprint 06](completed/SPRINT-06.md) |
 | Executive/Delivery/Risk/Resource dashboards and saved views | [Sprint 07](completed/SPRINT-07.md) |
 | Imports, failed rows and background-job activity | [Sprint 08](completed/SPRINT-08.md) |
-| Signup, shared assessment results, search and notifications | [Sprint 8.1](in-progress/SPRINT-8.1.md) |
+| Signup, shared assessment results, search and notifications | [Sprint 8.1](completed/SPRINT-8.1.md) |
 | Uploads, versions, OCR, keyword search, policies and retention | [Sprint 09](completed/SPRINT-09.md) |
-| AI evidence retrieval and its current limits | [Sprint 10](in-progress/SPRINT-10.md) |
+| AI evidence retrieval and its current limits | [Sprint 10](completed/SPRINT-10.md) |
 
 ## How to read the reports
 
