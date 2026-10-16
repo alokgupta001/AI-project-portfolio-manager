@@ -7,7 +7,7 @@ weekly reconciliation, team signals, history and snapshots follow the
 
 Sprint 04 extends the shared UI with delivery routes and typed forms, server-paged tables, work board, calendar-date timeline, dependency relationships and baseline/audit history. See [delivery UI limits](delivery.md). `DataTable external` disables internal filtering/pagination for server-managed lists while preserving existing defaults.
 
-Implemented local shell; business modules remain unavailable. The [reuse/screen plan](../planning/PRODUCT-REUSE-AND-SCREEN-PLAN.md) remains the product reference.
+Implemented shell and connected delivery/capacity/assessment/command/source/job modules; /ai adds the controlled disabled/fallback evidence runtime. The [reuse/screen plan](../planning/PRODUCT-REUSE-AND-SCREEN-PLAN.md) remains the product reference.
 
 ## Components and ownership
 
@@ -42,3 +42,15 @@ Account detail still uses the proven sequential identity load, with no new query
 ## Sprint 07 command center
 
 `/command-center` reuses the authenticated shell, typed `CommandSnapshot`, modal evidence drawer and record editor. Four views share date/portfolio filters. Explicit metric units/period/source/freshness, accessible chart table, keyboard drawer return, truthful empty/unknown/partial states and personal saved views are implemented. JSON DTO download rechecks current access. [Contract](command-center.md).
+
+## Sprint 09 source extension
+
+`/documents` is registered in the authenticated shell/client. `documents.tsx` uses generated transport, server paging, escaped previews, job polling, can_manage actions and revalidated citations/original tickets. Open is disabled during pending save/load; mobile tables use a focusable horizontal region. [Source contract](documents.md) and [user guide](../03-sprints/completed/sprint-09/USER_GUIDE.md) define supported actions; semantic UI is deferred.
+## Sprint 10 AI runtime extension
+
+[ai-evidence-v1](ai.md) owns the additive /api/v1/ai and /ai behavior, immutable
+snapshots, budgets/accounting, protected source tools, citation reauthorization,
+versioned evaluation and disabled fallback. durable_jobs references exactly one
+integration, document version or AI run; existing event/SSE/authority rules remain.
+Bounded Gemini free-tier smoke verified; broad model quality unverified. No semantic agents, private assessment ingestion,
+metric changes or automatic plan edits. Admin-only restricted operations apply.

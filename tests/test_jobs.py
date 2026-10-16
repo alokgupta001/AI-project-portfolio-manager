@@ -249,6 +249,7 @@ async def test_actual_celery_process_crash_and_lease_recovery(identity, tmp_path
     import signal
     import subprocess
     import sys
+    from time import monotonic
 
     from ppm_worker.app import celery_app
 
@@ -289,10 +290,13 @@ async def test_actual_celery_process_crash_and_lease_recovery(identity, tmp_path
             )
 
         process = start()
+        started = monotonic()
         try:
             celery_app.send_task("pipeline.run", args=arguments, queue=queue)
             position = 0
-            for _ in range(500):
+            # Startup and 500 database effects vary with concurrent Compose/AV load.
+            # These are bounded harness waits, not a product latency/SLA assertion.
+            for _ in range(1500):
                 async with owner.connect() as conn:
                     position = await conn.scalar(sa.select(jobs.c.position).where(jobs.c.id == id_))
                 if position > 0:
@@ -308,7 +312,7 @@ async def test_actual_celery_process_crash_and_lease_recovery(identity, tmp_path
             assert crashed["status"] == "running" and 0 < crashed["position"] < 500
             process = start()
             # Actual 45-second lease expiry; no owner edit or test-only worker branch.
-            for iteration in range(90):
+            for iteration in range(180):
                 if iteration % 2 == 0:
                     celery_app.send_task("pipeline.run", args=arguments, queue=queue)
                 async with owner.connect() as conn:
@@ -335,7 +339,7 @@ async def test_actual_celery_process_crash_and_lease_recovery(identity, tmp_path
             assert count == effects == 500
             print(
                 f"REAL_WORKER_CRASH position={crashed['position']} "
-                "restart_attempts=2 unique_effects=500"
+                f"restart_attempts=2 unique_effects=500 elapsed_seconds={monotonic() - started:.2f}"
             )
         finally:
             if process.poll() is None:

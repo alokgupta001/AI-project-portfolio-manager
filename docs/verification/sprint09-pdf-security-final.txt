@@ -1,0 +1,6 @@
+Resolved 59 packages in 906ms
+Prepared 1 package in 155ms
+Uninstalled 1 package in 55ms
+Installed 1 package in 301ms
+ - pypdf==6.19.0
+ + pypdf==6.20.1

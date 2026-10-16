@@ -162,3 +162,15 @@ team suppression, frozen assessments and all metric definitions are unchanged.
 [GitHub webhook signatures](https://docs.github.com/en/webhooks/using-webhooks/validating-webhook-deliveries),
 [GitHub event envelopes](https://docs.github.com/en/webhooks/webhook-events-and-payloads).
 Reviewed 2026-10-09; existing pinned dependencies retained, no new package introduced.
+
+## Sprint 09 source extension
+
+`durable_jobs` now has an exclusive integration/document-version reference by job kind. Source jobs reuse outbox/dispatcher/Celery but validate persisted actor/session/document authority under organization locking and fenced leases before claim/publication. Three attempts and 120-second leases bound source processing; no unauthorized late publication. Legacy connector cancellation cannot be invoked with a forged document tuple. [Document contract](documents.md) specifies the source extension; existing connector scope/provider gates remain.
+## Sprint 10 AI runtime extension
+
+[ai-evidence-v1](ai.md) owns the additive /api/v1/ai and /ai behavior, immutable
+snapshots, budgets/accounting, protected source tools, citation reauthorization,
+versioned evaluation and disabled fallback. durable_jobs references exactly one
+integration, document version or AI run; existing event/SSE/authority rules remain.
+Bounded Gemini free-tier smoke verified; broad model quality unverified. No semantic agents, private assessment ingestion,
+metric changes or automatic plan edits. Admin-only restricted operations apply.

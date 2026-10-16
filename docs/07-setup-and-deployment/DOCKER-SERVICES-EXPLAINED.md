@@ -161,7 +161,7 @@ It uses the shared Python backend build from `infra/api.Dockerfile` but replaces
 alembic upgrade head
 ```
 
-`head` means the latest migration revision in the migration source bundled into that image. For this project checkpoint, the API readiness code expects `0008_pilot_completion`.
+`head` means the latest migration revision in the migration source bundled into that image. For the current Sprint 10 source checkpoint, readiness expects `0012_ai_runtime`. The optional `compose.documents.yaml` adds private ClamAV with its own signature volume; see [document processing](DOCUMENT-PROCESSING.md).
 
 ### Credentials and execution
 

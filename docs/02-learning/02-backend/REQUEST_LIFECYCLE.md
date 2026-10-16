@@ -137,3 +137,12 @@ Status: **IMPLEMENTED AND VERIFIED** within retained local evidence; external ga
 ## Verified Gmail and access update — 10 October 2026
 
 For account email, trace `identity.register` or `reset_request` into `issue_challenge`, the durable delivery row and `account_mail.deliver_due`. Provider processing is asynchronous; the generic request response is not proof of receipt. Completion uses the stored challenge kind; the URL action hint only selects frontend wording. Signup creates organization/Admin after verification, invitation adds the intended membership, and recovery revokes sessions. See [the complete account lifecycle](../05-security/ACCOUNT_EMAIL_AND_ROLE_ACCESS.md).
+
+## Sprint 09 extension
+
+The document path adds private original storage before transactional version/job/outbox publication. SQL and file storage are not atomic, so orphan cleanup must recompute all protected references. Reads revalidate current authority, latest version/deletion and original hash. [Follow the complete source request](../06-ai-and-analytics/DOCUMENT_SOURCES.md).
+## Sprint 10 evidence runtime
+
+The asynchronous evidence path starts at AI in ai.tsx, enters ai.create, commits the shared durable job/outbox and is claimed by ai_worker. It preserves the project creation example above.
+
+Read [the practical trace](../06-ai-and-analytics/AI_GATEWAY.md) for actual symbols, flow, failures and debugging. No Sprint 11 semantic agents or automatic changes are implemented.

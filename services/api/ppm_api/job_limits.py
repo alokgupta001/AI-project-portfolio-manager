@@ -14,7 +14,9 @@ class IntegrationBodyLimit:
         if (
             scope["type"] != "http"
             or scope["method"] in {"GET", "HEAD", "OPTIONS"}
-            or not scope["path"].startswith("/api/v1/integrations")
+            or not scope["path"].startswith(
+                ("/api/v1/integrations", "/api/v1/documents", "/api/v1/ai")
+            )
         ):
             await self.app(scope, receive, send)
             return
@@ -24,13 +26,14 @@ class IntegrationBodyLimit:
             if message["type"] == "http.disconnect":
                 return
             body.extend(message.get("body", b""))
-            if len(body) > 650000:
+            limit = 11200000 if scope["path"].startswith("/api/v1/documents") else 650000
+            if len(body) > limit:
                 response = JSONResponse(
                     status_code=413,
                     content={
                         "error": {
                             "code": "INPUT_LIMIT",
-                            "message": "Integration request exceeds the input limit.",
+                            "message": "Request exceeds the input limit.",
                             "request_id": scope.get("state", {}).get("request_id", str(uuid4())),
                             "details": [],
                         }

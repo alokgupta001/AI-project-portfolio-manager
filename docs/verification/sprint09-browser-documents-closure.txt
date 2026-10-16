@@ -1,0 +1,478 @@
+ Image enterprise-ppm-identity-test-web Building 
+ Image enterprise-ppm-identity-test-dispatcher Building 
+ Image enterprise-ppm-identity-test-api Building 
+ Image enterprise-ppm-identity-test-worker Building 
+ Image enterprise-ppm-identity-test-migrate Building 
+#1 [internal] load local bake definitions
+#1 reading from stdin 2.78kB done
+#1 DONE 0.0s
+
+#2 [migrate internal] load build definition from api.Dockerfile
+#2 transferring dockerfile: 916B 0.0s done
+#2 DONE 0.1s
+
+#3 [web internal] load build definition from web.Dockerfile
+#3 transferring dockerfile: 607B 0.0s done
+#3 DONE 0.1s
+
+#4 [api internal] load metadata for docker.io/library/python:3.12-slim-bookworm@sha256:54c85f3c47607a77f32adec749d3c81d1348bf25833671f512b26a9b6d778cb3
+#4 DONE 0.1s
+
+#5 [web internal] load metadata for docker.io/library/node:24-bookworm-slim@sha256:0e0ff40c39bc087845bfb27465a0df4ea419520094bc35842ff83dd8cbe6f9b6
+#5 DONE 0.1s
+
+#6 [api internal] load .dockerignore
+#6 transferring context: 205B done
+#6 DONE 0.0s
+
+#7 [worker internal] load build context
+#7 DONE 0.0s
+
+#8 [web internal] load build context
+#8 DONE 0.0s
+
+#9 [worker  1/11] FROM docker.io/library/python:3.12-slim-bookworm@sha256:54c85f3c47607a77f32adec749d3c81d1348bf25833671f512b26a9b6d778cb3
+#9 resolve docker.io/library/python:3.12-slim-bookworm@sha256:54c85f3c47607a77f32adec749d3c81d1348bf25833671f512b26a9b6d778cb3
+#9 resolve docker.io/library/python:3.12-slim-bookworm@sha256:54c85f3c47607a77f32adec749d3c81d1348bf25833671f512b26a9b6d778cb3 0.1s done
+#9 DONE 0.1s
+
+#10 [web 1/9] FROM docker.io/library/node:24-bookworm-slim@sha256:0e0ff40c39bc087845bfb27465a0df4ea419520094bc35842ff83dd8cbe6f9b6
+#10 resolve docker.io/library/node:24-bookworm-slim@sha256:0e0ff40c39bc087845bfb27465a0df4ea419520094bc35842ff83dd8cbe6f9b6 0.1s done
+#10 DONE 0.1s
+
+#7 [worker internal] load build context
+#7 transferring context: 35.77kB 0.0s done
+#7 DONE 0.1s
+
+#11 [api  3/11] RUN pip install --no-cache-dir uv==0.11.15
+#11 CACHED
+
+#12 [api  4/11] RUN apt-get update && apt-get install -y --no-install-recommends poppler-utils tesseract-ocr tesseract-ocr-eng && rm -rf /var/lib/apt/lists/*
+#12 CACHED
+
+#13 [api  5/11] COPY pyproject.toml uv.lock ./
+#13 CACHED
+
+#14 [api  6/11] RUN uv sync --frozen --no-managed-python
+#14 CACHED
+
+#15 [api  2/11] WORKDIR /app
+#15 CACHED
+
+#16 [api  7/11] COPY services ./services
+#16 CACHED
+
+#17 [worker  8/11] COPY scripts ./scripts
+#17 CACHED
+
+#8 [web internal] load build context
+#8 transferring context: 1.09MB 0.2s done
+#8 DONE 0.2s
+
+#18 [worker  9/11] COPY tests ./tests
+#18 ...
+
+#19 [web 4/9] COPY apps/web/package.json apps/web/package.json
+#19 CACHED
+
+#20 [web 5/9] COPY packages/contracts/package.json packages/contracts/package.json
+#20 CACHED
+
+#21 [web 2/9] WORKDIR /app
+#21 CACHED
+
+#22 [web 3/9] COPY package.json package-lock.json ./
+#22 CACHED
+
+#23 [web 6/9] RUN npm ci --no-audit --no-fund
+#23 CACHED
+
+#18 [dispatcher  9/11] COPY tests ./tests
+#18 DONE 0.2s
+
+#24 [api 10/11] COPY alembic.ini ./
+#24 ...
+
+#25 [web 7/9] COPY apps/web ./apps/web
+#25 DONE 0.3s
+
+#24 [migrate 10/11] COPY alembic.ini ./
+#24 DONE 0.3s
+
+#26 [worker 11/11] RUN useradd --uid 10001 --create-home ppm && mkdir -p /var/ppm/objects && chown -R ppm:ppm /var/ppm && chown ppm:ppm /app
+#26 ...
+
+#27 [web 8/9] COPY packages/contracts ./packages/contracts
+#27 DONE 0.3s
+
+#28 [web 9/9] RUN npm run build && chown -R node:node /app/apps/web/.next
+#28 ...
+
+#26 [worker 11/11] RUN useradd --uid 10001 --create-home ppm && mkdir -p /var/ppm/objects && chown -R ppm:ppm /var/ppm && chown ppm:ppm /app
+#26 DONE 0.8s
+
+#29 [api] exporting to image
+#29 exporting layers
+#29 exporting layers 0.6s done
+#29 exporting manifest sha256:2156344ec8772bb06e915543ce25c28ec9a3068cd9c220eee04065d84d9971c0 0.1s done
+#29 exporting config sha256:881646c2c9932ef6edcc45b57098b2493c339e380987e83d0f8a687b858e00d1
+#29 exporting config sha256:881646c2c9932ef6edcc45b57098b2493c339e380987e83d0f8a687b858e00d1 0.2s done
+#29 exporting attestation manifest sha256:e546b13560516de921a5305440de13691de7450c284b4241bf1a48903e98f327
+#29 exporting attestation manifest sha256:e546b13560516de921a5305440de13691de7450c284b4241bf1a48903e98f327 0.2s done
+#29 exporting manifest list sha256:6bd33540e3c9e97e1ca06980a6f60bb0ff9e916e708849177844659302f88d32
+#29 exporting manifest list sha256:6bd33540e3c9e97e1ca06980a6f60bb0ff9e916e708849177844659302f88d32 0.3s done
+#29 naming to docker.io/library/enterprise-ppm-identity-test-api:latest
+#29 naming to docker.io/library/enterprise-ppm-identity-test-api:latest 0.1s done
+#29 unpacking to docker.io/library/enterprise-ppm-identity-test-api:latest
+#29 unpacking to docker.io/library/enterprise-ppm-identity-test-api:latest 0.4s done
+#29 DONE 2.3s
+
+#30 [worker] exporting to image
+#30 exporting layers 0.7s done
+#30 exporting manifest sha256:d68bbb540d60ff3ee0965817bdadff9bee383b70e24b7e98c63fff3ffaa721ae 0.2s done
+#30 exporting config sha256:e519088accd306dde0b7a03cc745b6d662c816a3b9ca2818fd46132dd4e21821 0.2s done
+#30 exporting attestation manifest sha256:661ab45e034ae1f694957bc39fd2cd646e28bc1e6d38ed55dcf45bfef27f4f9e 0.2s done
+#30 exporting manifest list sha256:d4541e1415d113028b6e2b4bd475350409e92e68d8bb8e6248b99a272897fb90 0.3s done
+#30 naming to docker.io/library/enterprise-ppm-identity-test-worker:latest 0.0s done
+#30 unpacking to docker.io/library/enterprise-ppm-identity-test-worker:latest 0.4s done
+#30 DONE 2.4s
+
+#31 [migrate] exporting to image
+#31 exporting layers 0.6s done
+#31 exporting manifest sha256:18d16797a9e23eb53efd6e1876e914799faa5ed2a030d011e6944eaacc4247d1 0.2s done
+#31 exporting config sha256:085c3d0ec3312ae8ccca988561ceda396166d052747a28d9f6e16a3f5c458665 0.2s done
+#31 exporting attestation manifest sha256:824f40373d8b4e3f19ea97e9ab1f89b100c700611a149210501538c55513ea44 0.2s done
+#31 exporting manifest list sha256:532ad41fcb3aaf0ce26023a8da413eb5c4df9beeebd9014bda2496ab3e198d05 0.3s done
+#31 naming to docker.io/library/enterprise-ppm-identity-test-migrate:latest 0.1s done
+#31 unpacking to docker.io/library/enterprise-ppm-identity-test-migrate:latest 0.4s done
+#31 DONE 2.3s
+
+#32 [dispatcher] exporting to image
+#32 exporting layers 0.7s done
+#32 exporting manifest sha256:2722487cc7533db9cfc6d7927dfdfae8e222c5c66d14719af5b5d8615bb155ea 0.2s done
+#32 exporting config sha256:a74fec57285a64fbd0230c9b03a7ebe3fe982f439461ed68ac5aed6e4ee835ec 0.2s done
+#32 exporting attestation manifest sha256:6505dc4458f9d569b164f268d16abb576a3d0e44405a5f0a88528fb2bc5a3ce9 0.2s done
+#32 exporting manifest list sha256:1ae4c717d6a749bb5348c4133c892d7d361d74663aea25f75efe2aeb17f6c6a6 0.3s done
+#32 naming to docker.io/library/enterprise-ppm-identity-test-dispatcher:latest 0.0s done
+#32 unpacking to docker.io/library/enterprise-ppm-identity-test-dispatcher:latest 0.4s done
+#32 DONE 2.4s
+
+#28 [web 9/9] RUN npm run build && chown -R node:node /app/apps/web/.next
+#28 0.915 
+#28 0.915 > enterprise-ppm@0.1.0 build
+#28 0.915 > npm run build --workspace @ppm/web
+#28 0.915 
+#28 1.170 
+#28 1.170 > @ppm/web@0.1.0 build
+#28 1.170 > next build
+#28 1.170 
+#28 1.817 ▲ Next.js 16.3.8 (Turbopack)
+#28 1.913 ✓ Running next.config.ts took 94ms
+#28 1.939 
+#28 1.989   Creating an optimized production build ...
+#28 ...
+
+#33 [api] resolving provenance for metadata file
+#33 DONE 0.5s
+
+#34 [migrate] resolving provenance for metadata file
+#34 DONE 0.4s
+
+#35 [dispatcher] resolving provenance for metadata file
+#35 DONE 0.2s
+
+#36 [worker] resolving provenance for metadata file
+#36 DONE 0.0s
+
+#28 [web 9/9] RUN npm run build && chown -R node:node /app/apps/web/.next
+#28 11.08 ✓ Compiled successfully in 8.6s
+#28 11.09   Running TypeScript ...
+#28 20.28   Finished TypeScript in 9.2s ...
+#28 20.29   Collecting page data using 7 workers ...
+#28 21.81   Generating static pages using 7 workers (0/17) ...
+#28 22.19   Generating static pages using 7 workers (4/17) 
+#28 22.19   Generating static pages using 7 workers (8/17) 
+#28 22.36   Generating static pages using 7 workers (12/17) 
+#28 22.39 ✓ Generating static pages using 7 workers (17/17) in 581ms
+#28 22.40   Finalizing page optimization ...
+#28 22.42 
+#28 22.43 Route (app)
+#28 22.43 ┌ ○ /
+#28 22.43 ├ ○ /_not-found
+#28 22.43 ├ ○ /account
+#28 22.43 ├ ○ /account/complete
+#28 22.43 ├ ○ /account/reset
+#28 22.43 ├ ƒ /api/v1/[...path]
+#28 22.43 ├ ○ /assessments
+#28 22.43 ├ ○ /command-center
+#28 22.43 ├ ○ /design-system
+#28 22.43 ├ ○ /documents
+#28 22.43 ├ ○ /integrations
+#28 22.43 ├ ○ /login
+#28 22.43 ├ ○ /organization
+#28 22.43 ├ ○ /portfolios
+#28 22.43 ├ ○ /projects
+#28 22.43 ├ ƒ /projects/[id]
+#28 22.43 ├ ○ /resources
+#28 22.43 ├ ○ /signup
+#28 22.43 └ ƒ /system
+#28 22.43 
+#28 22.43 
+#28 22.43 ○  (Static)   prerendered as static content
+#28 22.43 ƒ  (Dynamic)  server-rendered on demand
+#28 22.43 
+#28 22.49 npm notice
+#28 22.49 npm notice New major version of npm available! 11.19.0 -> 12.2.0
+#28 22.49 npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.0
+#28 22.49 npm notice To update run: npm install -g npm@12.2.0
+#28 22.49 npm notice
+#28 DONE 22.6s
+
+#37 [web] exporting to image
+#37 exporting layers
+#37 exporting layers 2.8s done
+#37 exporting manifest sha256:fbbeff340a64c315fd921766246ba48350c1487f443388beea67bacfccdccbf8 0.1s done
+#37 exporting config sha256:2eb2f69d52c4d5064d86704e1e3770a15584ce527905cdaf4c6c880787e47de6 0.1s done
+#37 exporting attestation manifest sha256:546a51444072f83b69529b2b9139147cc6b362a4bcc39c90b0316f5e54274aef 0.1s done
+#37 exporting manifest list sha256:e3091eb1429f3b8b54418013a900104792825b26e6b37cae68e8710f62fc7aee
+#37 exporting manifest list sha256:e3091eb1429f3b8b54418013a900104792825b26e6b37cae68e8710f62fc7aee 0.1s done
+#37 naming to docker.io/library/enterprise-ppm-identity-test-web:latest done
+#37 unpacking to docker.io/library/enterprise-ppm-identity-test-web:latest
+#37 unpacking to docker.io/library/enterprise-ppm-identity-test-web:latest 0.8s done
+#37 DONE 4.0s
+
+#38 [web] resolving provenance for metadata file
+#38 DONE 0.0s
+ Image enterprise-ppm-identity-test-dispatcher Built 
+ Image enterprise-ppm-identity-test-migrate Built 
+ Image enterprise-ppm-identity-test-api Built 
+ Image enterprise-ppm-identity-test-web Built 
+ Image enterprise-ppm-identity-test-worker Built 
+ Network enterprise-ppm-identity-test_default Creating 
+ Network enterprise-ppm-identity-test_default Creating 
+ Network enterprise-ppm-identity-test_default Created 
+ Network enterprise-ppm-identity-test_default Created 
+ Container enterprise-ppm-identity-test-postgres-1 Creating 
+ Container enterprise-ppm-identity-test-clamav-1 Creating 
+ Container enterprise-ppm-identity-test-redis-1 Creating 
+ Container enterprise-ppm-identity-test-clamav-1 Created 
+ Container enterprise-ppm-identity-test-redis-1 Created 
+ Container enterprise-ppm-identity-test-postgres-1 Created 
+ Container enterprise-ppm-identity-test-migrate-1 Creating 
+ Container enterprise-ppm-identity-test-migrate-1 Created 
+ Container enterprise-ppm-identity-test-api-1 Creating 
+ Container enterprise-ppm-identity-test-api-1 Created 
+ Container enterprise-ppm-identity-test-worker-1 Creating 
+ Container enterprise-ppm-identity-test-dispatcher-1 Creating 
+ Container enterprise-ppm-identity-test-web-1 Creating 
+ Container enterprise-ppm-identity-test-worker-1 Created 
+ Container enterprise-ppm-identity-test-dispatcher-1 Created 
+ Container enterprise-ppm-identity-test-web-1 Created 
+ Container enterprise-ppm-identity-test-postgres-1 Starting 
+ Container enterprise-ppm-identity-test-redis-1 Starting 
+ Container enterprise-ppm-identity-test-clamav-1 Starting 
+ Container enterprise-ppm-identity-test-postgres-1 Started 
+ Container enterprise-ppm-identity-test-postgres-1 Waiting 
+ Container enterprise-ppm-identity-test-clamav-1 Started 
+ Container enterprise-ppm-identity-test-redis-1 Started 
+ Container enterprise-ppm-identity-test-postgres-1 Healthy 
+ Container enterprise-ppm-identity-test-migrate-1 Starting 
+ Container enterprise-ppm-identity-test-migrate-1 Started 
+ Container enterprise-ppm-identity-test-redis-1 Waiting 
+ Container enterprise-ppm-identity-test-migrate-1 Waiting 
+ Container enterprise-ppm-identity-test-redis-1 Healthy 
+ Container enterprise-ppm-identity-test-migrate-1 Exited 
+ Container enterprise-ppm-identity-test-api-1 Starting 
+ Container enterprise-ppm-identity-test-api-1 Started 
+ Container enterprise-ppm-identity-test-api-1 Waiting 
+ Container enterprise-ppm-identity-test-api-1 Waiting 
+ Container enterprise-ppm-identity-test-api-1 Waiting 
+ Container enterprise-ppm-identity-test-api-1 Healthy 
+ Container enterprise-ppm-identity-test-web-1 Starting 
+ Container enterprise-ppm-identity-test-api-1 Healthy 
+ Container enterprise-ppm-identity-test-worker-1 Starting 
+ Container enterprise-ppm-identity-test-api-1 Healthy 
+ Container enterprise-ppm-identity-test-dispatcher-1 Starting 
+ Container enterprise-ppm-identity-test-worker-1 Started 
+ Container enterprise-ppm-identity-test-dispatcher-1 Started 
+ Container enterprise-ppm-identity-test-web-1 Started 
+ Container enterprise-ppm-identity-test-redis-1 Waiting 
+ Container enterprise-ppm-identity-test-api-1 Waiting 
+ Container enterprise-ppm-identity-test-worker-1 Waiting 
+ Container enterprise-ppm-identity-test-web-1 Waiting 
+ Container enterprise-ppm-identity-test-migrate-1 Waiting 
+ Container enterprise-ppm-identity-test-clamav-1 Waiting 
+ Container enterprise-ppm-identity-test-postgres-1 Waiting 
+ Container enterprise-ppm-identity-test-dispatcher-1 Waiting 
+ Container enterprise-ppm-identity-test-dispatcher-1 Healthy 
+ Container enterprise-ppm-identity-test-worker-1 Healthy 
+ Container enterprise-ppm-identity-test-migrate-1 Exited 
+ Container enterprise-ppm-identity-test-api-1 Healthy 
+ Container enterprise-ppm-identity-test-postgres-1 Healthy 
+ Container enterprise-ppm-identity-test-redis-1 Healthy 
+ Container enterprise-ppm-identity-test-web-1 Healthy 
+ Container enterprise-ppm-identity-test-clamav-1 Healthy 
+ Image enterprise-ppm-identity-test-test Building 
+#1 [internal] load local bake definitions
+#1 reading from stdin 618B done
+#1 DONE 0.0s
+
+#2 [internal] load build definition from api.Dockerfile
+#2 transferring dockerfile: 916B 0.0s done
+#2 DONE 0.0s
+
+#3 [internal] load metadata for docker.io/library/python:3.12-slim-bookworm@sha256:54c85f3c47607a77f32adec749d3c81d1348bf25833671f512b26a9b6d778cb3
+#3 DONE 0.1s
+
+#4 [internal] load .dockerignore
+#4 transferring context: 205B done
+#4 DONE 0.0s
+
+#5 [internal] load build context
+#5 DONE 0.0s
+
+#6 [ 1/11] FROM docker.io/library/python:3.12-slim-bookworm@sha256:54c85f3c47607a77f32adec749d3c81d1348bf25833671f512b26a9b6d778cb3
+#6 resolve docker.io/library/python:3.12-slim-bookworm@sha256:54c85f3c47607a77f32adec749d3c81d1348bf25833671f512b26a9b6d778cb3
+#6 resolve docker.io/library/python:3.12-slim-bookworm@sha256:54c85f3c47607a77f32adec749d3c81d1348bf25833671f512b26a9b6d778cb3 0.1s done
+#6 DONE 0.1s
+
+#5 [internal] load build context
+#5 transferring context: 6.33kB 0.0s done
+#5 DONE 0.1s
+
+#7 [ 2/11] WORKDIR /app
+#7 CACHED
+
+#8 [ 9/11] COPY tests ./tests
+#8 CACHED
+
+#9 [ 5/11] COPY pyproject.toml uv.lock ./
+#9 CACHED
+
+#10 [ 6/11] RUN uv sync --frozen --no-managed-python
+#10 CACHED
+
+#11 [ 7/11] COPY services ./services
+#11 CACHED
+
+#12 [ 8/11] COPY scripts ./scripts
+#12 CACHED
+
+#13 [ 3/11] RUN pip install --no-cache-dir uv==0.11.15
+#13 CACHED
+
+#14 [10/11] COPY alembic.ini ./
+#14 CACHED
+
+#15 [ 4/11] RUN apt-get update && apt-get install -y --no-install-recommends poppler-utils tesseract-ocr tesseract-ocr-eng && rm -rf /var/lib/apt/lists/*
+#15 CACHED
+
+#16 [11/11] RUN useradd --uid 10001 --create-home ppm && mkdir -p /var/ppm/objects && chown -R ppm:ppm /var/ppm && chown ppm:ppm /app
+#16 CACHED
+
+#17 exporting to image
+#17 exporting layers 0.0s done
+#17 exporting manifest sha256:2615c3262b629c2baaa1fd742473a9c8663fc9ad4e273b21ba52ad7a14afa76a 0.1s done
+#17 exporting config sha256:7fa02e20ae41b56819b32d3e51ea4d466fbef50ad029da64fff2ce2f97e2798e 0.1s done
+#17 exporting attestation manifest sha256:720eb943f3a8f80c363d480b0618fb54395784d5171226b3cdf515296fbdee51 0.1s done
+#17 exporting manifest list sha256:9573f604e810bfe5a38da2fa9611b5d61760eb8ab157e655e9710ed8d9c7099d
+#17 exporting manifest list sha256:9573f604e810bfe5a38da2fa9611b5d61760eb8ab157e655e9710ed8d9c7099d 0.0s done
+#17 naming to docker.io/library/enterprise-ppm-identity-test-test:latest done
+#17 unpacking to docker.io/library/enterprise-ppm-identity-test-test:latest 0.0s done
+#17 DONE 0.4s
+
+#18 resolving provenance for metadata file
+#18 DONE 0.0s
+ Image enterprise-ppm-identity-test-test Built 
+
+Running 1 test using 1 worker
+
+(node:21464) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  1 [chromium] › tests\browser\documents.spec.ts:6:5 › document upload, locations, versions, safe download, policy, hold and erasure (22.8s)
+
+
+  1) [chromium] › tests\browser\documents.spec.ts:6:5 › document upload, locations, versions, safe download, policy, hold and erasure 
+
+    Error: expect(locator).toContainText(expected) failed
+
+    Locator: getByRole('alert')
+    Expected substring: "no legal hold"
+    Error: strict mode violation: getByRole('alert') resolved to 2 elements:
+        1) <section role="alert" class="state-panel state-error">…</section> aka getByText('!Document action')
+        2) <div role="alert" aria-live="assertive" id="__next-route-announcer__"></div> aka locator('[id="__next-route-announcer__"]')
+
+    Call log:
+      - Expect "toContainText" getByRole('alert') with timeout 5000ms
+      - waiting for getByRole('alert')
+        - locator resolved to <div role="alert" aria-live="assertive" id="__next-route-announcer__"></div>
+        - unexpected value ""
+
+
+      195 |     .getByRole("button", { name: "Confirm change", exact: true })
+      196 |     .click();
+    > 197 |   await expect(page.getByRole("alert")).toContainText("no legal hold");
+          |                                         ^
+      198 |   await page.getByLabel("Legal hold", { exact: true }).uncheck();
+      199 |   await page
+      200 |     .getByRole("button", { name: "Save governance", exact: true })
+        at C:\Users\alokg\OneDrive\Documents\Codex\enterprise-ppm\tests\browser\documents.spec.ts:197:41
+
+    Error Context: test-results\documents-document-upload--17b68-oad-policy-hold-and-erasure-chromium\error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\documents-document-upload--17b68-oad-policy-hold-and-erasure-chromium\trace.zip
+    Usage:
+
+        npx playwright show-trace test-results\documents-document-upload--17b68-oad-policy-hold-and-erasure-chromium\trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [chromium] › tests\browser\documents.spec.ts:6:5 › document upload, locations, versions, safe download, policy, hold and erasure 
+ Container enterprise-ppm-identity-test-dispatcher-1 Stopping 
+ Container enterprise-ppm-identity-test-web-1 Stopping 
+ Container enterprise-ppm-identity-test-worker-1 Stopping 
+ Container enterprise-ppm-identity-test-clamav-1 Stopping 
+ Container enterprise-ppm-identity-test-web-1 Stopped 
+ Container enterprise-ppm-identity-test-web-1 Removing 
+ Container enterprise-ppm-identity-test-clamav-1 Stopped 
+ Container enterprise-ppm-identity-test-clamav-1 Removing 
+ Container enterprise-ppm-identity-test-web-1 Removed 
+ Container enterprise-ppm-identity-test-dispatcher-1 Stopped 
+ Container enterprise-ppm-identity-test-dispatcher-1 Removing 
+ Container enterprise-ppm-identity-test-clamav-1 Removed 
+ Container enterprise-ppm-identity-test-dispatcher-1 Removed 
+ Container enterprise-ppm-identity-test-worker-1 Stopped 
+ Container enterprise-ppm-identity-test-worker-1 Removing 
+ Container enterprise-ppm-identity-test-worker-1 Removed 
+ Container enterprise-ppm-identity-test-api-1 Stopping 
+ Container enterprise-ppm-identity-test-api-1 Stopped 
+ Container enterprise-ppm-identity-test-api-1 Removing 
+ Container enterprise-ppm-identity-test-api-1 Removed 
+ Container enterprise-ppm-identity-test-redis-1 Stopping 
+ Container enterprise-ppm-identity-test-migrate-1 Stopping 
+ Container enterprise-ppm-identity-test-migrate-1 Stopped 
+ Container enterprise-ppm-identity-test-migrate-1 Removing 
+ Container enterprise-ppm-identity-test-migrate-1 Removed 
+ Container enterprise-ppm-identity-test-postgres-1 Stopping 
+ Container enterprise-ppm-identity-test-redis-1 Stopped 
+ Container enterprise-ppm-identity-test-redis-1 Removing 
+ Container enterprise-ppm-identity-test-redis-1 Removed 
+ Container enterprise-ppm-identity-test-postgres-1 Stopped 
+ Container enterprise-ppm-identity-test-postgres-1 Removing 
+ Container enterprise-ppm-identity-test-postgres-1 Removed 
+ Network enterprise-ppm-identity-test_default Removing 
+ Network enterprise-ppm-identity-test_default Removed 
+file:///C:/Users/alokg/OneDrive/Documents/Codex/enterprise-ppm/scripts/check-identity-browser.mjs:12
+  if(result.status!==0) throw new Error(`Acceptance command failed: ${command} (exit ${result.status})`);
+                              ^
+
+Error: Acceptance command failed: C:\Program Files\nodejs\node.exe (exit 1)
+    at run (file:///C:/Users/alokg/OneDrive/Documents/Codex/enterprise-ppm/scripts/check-identity-browser.mjs:12:31)
+    at file:///C:/Users/alokg/OneDrive/Documents/Codex/enterprise-ppm/scripts/check-identity-browser.mjs:22:3
+    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+    at async node:internal/modules/esm/loader:647:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+Node.js v24.20.0

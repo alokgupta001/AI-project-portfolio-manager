@@ -1,0 +1,127 @@
+time="2026-10-15T23:12:12+05:30" level=warning msg="Found orphan containers (enterprise-ppm-pgadmin-1) for this project. If you removed or renamed this service in your compose file, you can run this command with the --remove-orphans flag to clean it up."
+ Container enterprise-ppm-test-run-48d928666f3c Creating 
+ Container enterprise-ppm-test-run-48d928666f3c Created 
+Running: /app/.venv/bin/python -m alembic upgrade head
+Running: /app/.venv/bin/python -m alembic downgrade 0006_command_center
+Running: /app/.venv/bin/python -m alembic upgrade head
+Running: /app/.venv/bin/python -m alembic downgrade base
+Running: /app/.venv/bin/python -m alembic upgrade head
+Running: /app/.venv/bin/python -m alembic upgrade head
+Running: /app/.venv/bin/python -m alembic check
+No new upgrade operations detected.
+Running: /app/.venv/bin/python -m pytest -q
+.....................................F.................................. [ 48%]
+........................................................................ [ 96%]
+......                                                                   [100%]
+=================================== FAILURES ===================================
+___________ test_inflight_source_tombstone_and_forged_tuple_are_safe ___________
+
+identity = (<httpx.AsyncClient object at 0x716858caf3e0>, <fastapi.applications.FastAPI object at 0x716859513da0>, <sqlalchemy.ex... '871a7343-4e69-41c0-831c-78fa48ef09de@example.com', 'other': '255f35d8-1801-4f3d-b230-714ff2c467f9@example.com', ...})
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x716858e52360>
+
+    async def test_inflight_source_tombstone_and_forged_tuple_are_safe(identity, monkeypatch):
+        entered, release = asyncio.Event(), asyncio.Event()
+    
+        class SlowIndex(Double):
+            async def embed(self, texts):
+                entered.set()
+                await release.wait()
+                return await super().embed(texts)
+    
+        c, app, owner, ids, _, project, accepted = await fixture(
+            identity, monkeypatch, adapter=SlowIndex()
+        )
+        run = (
+            await start(c, project, operation="index", query="", version_id=accepted["version_id"])
+        ).json()
+        async with owner.connect() as conn:
+            job_id = await conn.scalar(
+                sa.select(J.jobs.c.id).where(J.jobs.c.ai_run_id == UUID(run["id"]))
+            )
+        await ai_worker(app.state.engine, job_id, ids["b"], ids["other"], app.state.settings)
+        assert (await c.get(f"/api/v1/ai/runs/{run['id']}")).json()["status"] == "queued"
+        task = asyncio.create_task(work(c, app, owner, ids, run))
+        await asyncio.wait_for(entered.wait(), 10)
+        held = await send(
+            c,
+            "PATCH",
+            "/documents/" + accepted["document"]["id"] + "/governance",
+            headers={"if-match": "1"},
+            json={"legal_hold": True, "retain_until": (now()+timedelta(days=30)).isoformat()},
+        )
+        assert held.status_code == 200
+        deleted = await send(
+            c,
+            "DELETE",
+            "/documents/" + accepted["document"]["id"],
+            headers={"if-match": str(held.json()["revision"])},
+        )
+        assert deleted.status_code == 200
+        release.set()
+        await task
+        async with owner.connect() as conn:
+            assert (
+                await conn.scalar(
+                    sa.select(sa.func.count())
+                    .select_from(A.embeddings)
+                    .where(A.embeddings.c.organization_id == ids["a"])
+                )
+                == 0
+            )
+            original = (
+                (
+                    await conn.execute(
+>                       sa.select(D.versions).where(D.versions.c.id == UUID(accepted["version_id"]))
+                                  ^
+                    )
+                )
+                .mappings()
+                .one()
+            )
+E           NameError: name 'D' is not defined
+
+tests/test_ai.py:541: NameError
+----------------------------- Captured stderr call -----------------------------
+{"event": "http_request", "request_id": "88efef60-9601-4376-9334-87cc56ff4654", "method": "GET", "route": "/api/v1/auth/csrf", "status": 200, "duration_ms": 99.21}
+{"event": "http_request", "request_id": "5a09fd8c-75ef-4355-ac92-56dbee8668e3", "method": "POST", "route": "/api/v1/auth/login", "status": 200, "duration_ms": 334.16}
+{"event": "http_request", "request_id": "3ae8a1b6-48da-4126-ad1e-25da1ea61d1c", "method": "POST", "route": "/api/v1/auth/switch", "status": 200, "duration_ms": 16.48}
+{"event": "http_request", "request_id": "fcade0e2-bf40-4d16-a2ab-d2efe91ba254", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 45.17}
+{"event": "http_request", "request_id": "e0224b49-ecef-4c16-9e37-c52f2d45fa18", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 24.16}
+{"event": "http_request", "request_id": "078835e1-c034-4d2f-bf7e-98186db9538a", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 28.44}
+{"event": "http_request", "request_id": "f643eba3-41d5-46f2-b0e2-a5796560e7c9", "method": "POST", "route": "/api/v1/documents", "status": 202, "duration_ms": 172.34}
+{"event": "http_request", "request_id": "d1bce86b-1c00-4fe4-af44-714ed2c6c88c", "method": "PATCH", "route": "/api/v1/ai/budget", "status": 200, "duration_ms": 21.73}
+{"event": "http_request", "request_id": "1d218d25-b1ff-4389-9ac4-9e13a3d26483", "method": "POST", "route": "/api/v1/ai/runs", "status": 202, "duration_ms": 187.56}
+{"event": "http_request", "request_id": "797bec11-c9c4-440c-9e08-c971cad3ffdd", "method": "GET", "route": "/api/v1/ai/runs/{id_}", "status": 200, "duration_ms": 32.68}
+{"event": "http_request", "request_id": "2453d806-1933-4b44-89ef-3ef16caa3d08", "method": "PATCH", "route": "/api/v1/documents/{id_}/governance", "status": 200, "duration_ms": 20.68}
+{"event": "http_request", "request_id": "eb763443-baa3-47e7-8626-34d86555e89c", "method": "DELETE", "route": "/api/v1/documents/{id_}", "status": 200, "duration_ms": 17.54}
+{"event": "http_request", "request_id": "dd9e0402-3784-4529-affb-d1185236ba15", "method": "GET", "route": "/api/v1/ai/runs/{id_}", "status": 200, "duration_ms": 10.83}
+------------------------------ Captured log call -------------------------------
+INFO     ppm.requests:main.py:140 {"event": "http_request", "request_id": "88efef60-9601-4376-9334-87cc56ff4654", "method": "GET", "route": "/api/v1/auth/csrf", "status": 200, "duration_ms": 99.21}
+INFO     ppm.requests:main.py:140 {"event": "http_request", "request_id": "5a09fd8c-75ef-4355-ac92-56dbee8668e3", "method": "POST", "route": "/api/v1/auth/login", "status": 200, "duration_ms": 334.16}
+INFO     ppm.requests:main.py:140 {"event": "http_request", "request_id": "3ae8a1b6-48da-4126-ad1e-25da1ea61d1c", "method": "POST", "route": "/api/v1/auth/switch", "status": 200, "duration_ms": 16.48}
+INFO     ppm.requests:main.py:140 {"event": "http_request", "request_id": "fcade0e2-bf40-4d16-a2ab-d2efe91ba254", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 45.17}
+INFO     ppm.requests:main.py:140 {"event": "http_request", "request_id": "e0224b49-ecef-4c16-9e37-c52f2d45fa18", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 24.16}
+INFO     ppm.requests:main.py:140 {"event": "http_request", "request_id": "078835e1-c034-4d2f-bf7e-98186db9538a", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 28.44}
+INFO     ppm.requests:main.py:140 {"event": "http_request", "request_id": "f643eba3-41d5-46f2-b0e2-a5796560e7c9", "method": "POST", "route": "/api/v1/documents", "status": 202, "duration_ms": 172.34}
+INFO     ppm.requests:main.py:140 {"event": "http_request", "request_id": "d1bce86b-1c00-4fe4-af44-714ed2c6c88c", "method": "PATCH", "route": "/api/v1/ai/budget", "status": 200, "duration_ms": 21.73}
+INFO     ppm.requests:main.py:140 {"event": "http_request", "request_id": "1d218d25-b1ff-4389-9ac4-9e13a3d26483", "method": "POST", "route": "/api/v1/ai/runs", "status": 202, "duration_ms": 187.56}
+INFO     ppm.requests:main.py:140 {"event": "http_request", "request_id": "797bec11-c9c4-440c-9e08-c971cad3ffdd", "method": "GET", "route": "/api/v1/ai/runs/{id_}", "status": 200, "duration_ms": 32.68}
+INFO     ppm.requests:main.py:140 {"event": "http_request", "request_id": "2453d806-1933-4b44-89ef-3ef16caa3d08", "method": "PATCH", "route": "/api/v1/documents/{id_}/governance", "status": 200, "duration_ms": 20.68}
+INFO     ppm.requests:main.py:140 {"event": "http_request", "request_id": "eb763443-baa3-47e7-8626-34d86555e89c", "method": "DELETE", "route": "/api/v1/documents/{id_}", "status": 200, "duration_ms": 17.54}
+INFO     ppm.requests:main.py:140 {"event": "http_request", "request_id": "dd9e0402-3784-4529-affb-d1185236ba15", "method": "GET", "route": "/api/v1/ai/runs/{id_}", "status": 200, "duration_ms": 10.83}
+=============================== warnings summary ===============================
+.venv/lib/python3.12/site-packages/fastapi/testclient.py:1
+  /app/.venv/lib/python3.12/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED tests/test_ai.py::test_inflight_source_tombstone_and_forged_tuple_are_safe
+1 failed, 149 passed, 1 warning in 289.12s (0:04:49)
+Traceback (most recent call last):
+  File "/app/scripts/test_backend.py", line 28, in <module>
+    subprocess.run(command, check=True, env=env)
+  File "/usr/local/lib/python3.12/subprocess.py", line 571, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['/app/.venv/bin/python', '-m', 'pytest', '-q']' returned non-zero exit status 1.
+

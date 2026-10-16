@@ -62,3 +62,19 @@ Provider accounts, live connector/cloud credentials, approved recipients/data ri
 ## Safe implementation handoff
 
 This planning request creates no new feature, migration or cloud deployment. A future session must be authorized for the intended sprint, inspect current uncommitted work, preserve unrelated changes and normal databases, and use task IDs/report evidence from this pack. Existing Sprint 08 is the implementation baseline; 8.1 is the next proposed work. Source specifications and frozen original prompts remain hash-identical.
+
+## Sprint 09 local checkpoint — 15 October 2026
+
+Source intake/OCR, scoped keyword citations, policy registry and document retention/pilot
+scratch recovery now have [local evidence](../03-sprints/completed/sprint-09/SPRINT_REPORT.md).
+This does not check off full release requirements: F-066/067/074 remain partial,
+embeddings/semantic inference are pending 10/11, policy approvals pending 15, and
+production backup erasure/all-surface recovery remain 22/23. Hosted CI at a reviewed
+revision and archived Word visual acceptance remain open. Existing release criteria
+above are unchanged; no production or complete-RAG acceptance is inferred.
+## Sprint 10 execution boundary
+
+Sprint 10 implementation and local verification are complete for the authorized mock/fallback slice under explicit
+authorization. Required real-provider smoke is BLOCKED by user instruction; mocks
+and fallback do not close full-product provider/embedding gates. No release checkbox
+above is closed by a code path or fixture. Sprint 11 remains separately authorized.

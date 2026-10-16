@@ -1,5 +1,7 @@
 # Sprint 07 — Deterministic command center
 
+> Historical sprint checkpoint — documentation review, 16 October 2026. The original outcomes, schema/version and stop-at-next-sprint statements below describe their recorded date. For today's availability and safe setup, use [current status](../../../00-overview/CURRENT_STATUS.md) and [documentation closure](../../../10-reference/PREVIOUS-SPRINTS-DOCUMENTATION-CLOSURE.md).
+
 Historical completed sprint; availability is limited to the original report's acceptance. Its plan and actual outcome are distinguished in [SPRINT_REPORT](SPRINT_REPORT.md); do not infer current release status from an old report.
 
 | Question | Canonical evidence |

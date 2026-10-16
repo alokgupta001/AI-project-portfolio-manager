@@ -1,0 +1,81 @@
+{
+  "renderedMs": 3717,
+  "computeMs": 413.5,
+  "projects": 1,
+  "profile": "Local Docker production Next build; Playwright Chromium; tiny isolated fixture; no performance compliance claim",
+  "navigation": [
+    {
+      "name": "http://localhost:3001/command-center",
+      "entryType": "navigation",
+      "startTime": 0,
+      "duration": 109.79999999981374,
+      "navigationId": 9671,
+      "initiatorType": "navigation",
+      "deliveryType": "cache",
+      "nextHopProtocol": "",
+      "renderBlockingStatus": "non-blocking",
+      "contentType": "text/html",
+      "contentEncoding": "gzip",
+      "workerStart": 0,
+      "workerRouterEvaluationStart": 0,
+      "workerCacheLookupStart": 0,
+      "workerMatchedSourceType": "",
+      "workerFinalSourceType": "",
+      "redirectStart": 0,
+      "redirectEnd": 0,
+      "fetchStart": 0.19999999972060323,
+      "domainLookupStart": 0.19999999972060323,
+      "domainLookupEnd": 0.19999999972060323,
+      "connectStart": 0.19999999972060323,
+      "secureConnectionStart": 0,
+      "connectEnd": 0.19999999972060323,
+      "requestStart": 1.6999999997206032,
+      "responseStart": 57.5,
+      "firstInterimResponseStart": 0,
+      "finalResponseHeadersStart": 57.5,
+      "responseEnd": 58.299999999813735,
+      "transferSize": 300,
+      "encodedBodySize": 2548,
+      "decodedBodySize": 8090,
+      "responseStatus": 200,
+      "serverTiming": [],
+      "unloadEventStart": 69,
+      "unloadEventEnd": 69,
+      "domInteractive": 84.39999999990687,
+      "domContentLoadedEventStart": 84.39999999990687,
+      "domContentLoadedEventEnd": 84.59999999962747,
+      "domComplete": 109.79999999981374,
+      "loadEventStart": 109.79999999981374,
+      "loadEventEnd": 109.79999999981374,
+      "type": "reload",
+      "redirectCount": 0,
+      "activationStart": 0,
+      "criticalCHRestart": 0,
+      "notRestoredReasons": null,
+      "confidence": {
+        "randomizedTriggerRate": 0.4994798,
+        "value": "high"
+      }
+    }
+  ],
+  "paint": [
+    {
+      "name": "first-paint",
+      "entryType": "paint",
+      "startTime": 116,
+      "duration": 0,
+      "navigationId": 9671,
+      "paintTime": 87.5,
+      "presentationTime": 116
+    },
+    {
+      "name": "first-contentful-paint",
+      "entryType": "paint",
+      "startTime": 116,
+      "duration": 0,
+      "navigationId": 9671,
+      "paintTime": 87.5,
+      "presentationTime": 116
+    }
+  ]
+}

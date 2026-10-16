@@ -1,5 +1,7 @@
 # Sprint 07 implementation report
 
+> Historical sprint checkpoint — documentation review, 16 October 2026. The original outcomes, schema/version and stop-at-next-sprint statements below describe their recorded date. For today's availability and safe setup, use [current status](../../../00-overview/CURRENT_STATUS.md) and [documentation closure](../../../10-reference/PREVIOUS-SPRINTS-DOCUMENTATION-CLOSURE.md).
+
 ## Status and scope
 2026-10-08. Portfolio command center and metric consistency: **complete locally**. Previous base `f53d771`; the user-authorized savepoint commit `savepoint up to sprint 7` records Sprint 06–07 work. Scope: F-015, F-026–F-033, F-036–F-037, E-001–E-003; Word Module 3 and supplementary command center/watermelon effect. No Sprint 08, AI or production acceptance claim.
 

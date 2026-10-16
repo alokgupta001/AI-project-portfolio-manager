@@ -1,5 +1,7 @@
 # Sprint 07 technical handoff
 
+> Historical sprint checkpoint — documentation review, 16 October 2026. The original outcomes, schema/version and stop-at-next-sprint statements below describe their recorded date. For today's availability and safe setup, use [current status](../../../00-overview/CURRENT_STATUS.md) and [documentation closure](../../../10-reference/PREVIOUS-SPRINTS-DOCUMENTATION-CLOSURE.md).
+
 ## Verified checkpoint
 **Sprint 07 complete locally**, 2026-10-08. Previous base commit `f53d771`; Sprint 06–07 work is recorded in the savepoint commit `savepoint up to sprint 7`. The user authorized this commit and GitHub push on 2026-10-08. Sprint 08 remains separately authorized work. Normal Docker web/API are healthy on 3000/8000, migration `0006_command_center`.
 

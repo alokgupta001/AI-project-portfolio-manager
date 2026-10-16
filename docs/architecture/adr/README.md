@@ -19,3 +19,9 @@ Records 001–006 are the Sprint 00 **proposed baseline**. Record 007 describes 
 - [012 — Versioned assessments and quarantined evidence](012-assessment-engine.md): implemented Sprint 06 boundaries.
 
 - [ADR 013 — Shared deterministic command-center snapshots](013-command-center.md)
+
+- [ADR 015 — Versioned document sources, keyword retrieval and retention](015-document-sources.md): implemented Sprint 09 local slice; inference/embeddings and production erasure remain gated.
+
+## Sprint 10 shared AI runtime
+
+[Sprint 10 runtime and evidence](016-budgeted-ai-runtime.md). Local implementation and bounded Gemini free-tier smoke verified; general model/retrieval quality remains unverified. $0 authorization and source fallback apply; no daily renewal. Stop before 11.

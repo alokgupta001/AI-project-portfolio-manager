@@ -1,0 +1,156 @@
+ Image enterprise-ppm-migrate Building 
+ Image enterprise-ppm-worker Building 
+ Image enterprise-ppm-dispatcher Building 
+ Image enterprise-ppm-api Building 
+#1 [internal] load local bake definitions
+#1 reading from stdin 2.14kB done
+#1 DONE 0.0s
+
+#2 [api internal] load build definition from api.Dockerfile
+#2 DONE 0.0s
+
+#2 [migrate internal] load build definition from api.Dockerfile
+#2 transferring dockerfile: 1.03kB 0.0s done
+#2 DONE 0.1s
+
+#3 [migrate internal] load metadata for docker.io/library/python:3.12-slim-bookworm@sha256:54c85f3c47607a77f32adec749d3c81d1348bf25833671f512b26a9b6d778cb3
+#3 DONE 0.1s
+
+#4 [migrate internal] load .dockerignore
+#4 transferring context: 205B done
+#4 DONE 0.0s
+
+#5 [api internal] load build context
+#5 DONE 0.0s
+
+#6 [api  1/13] FROM docker.io/library/python:3.12-slim-bookworm@sha256:54c85f3c47607a77f32adec749d3c81d1348bf25833671f512b26a9b6d778cb3
+#6 resolve docker.io/library/python:3.12-slim-bookworm@sha256:54c85f3c47607a77f32adec749d3c81d1348bf25833671f512b26a9b6d778cb3 0.1s done
+#6 DONE 0.1s
+
+#6 [dispatcher  1/13] FROM docker.io/library/python:3.12-slim-bookworm@sha256:54c85f3c47607a77f32adec749d3c81d1348bf25833671f512b26a9b6d778cb3
+#6 resolve docker.io/library/python:3.12-slim-bookworm@sha256:54c85f3c47607a77f32adec749d3c81d1348bf25833671f512b26a9b6d778cb3 0.1s done
+#6 DONE 0.1s
+
+#5 [migrate internal] load build context
+#5 transferring context: 28.45kB 0.0s done
+#5 DONE 0.0s
+
+#7 [api  2/13] WORKDIR /app
+#7 CACHED
+
+#8 [api  3/13] RUN pip install --no-cache-dir uv==0.11.15
+#8 CACHED
+
+#9 [api  5/13] COPY pyproject.toml uv.lock ./
+#9 CACHED
+
+#10 [api  4/13] RUN apt-get update && apt-get install -y --no-install-recommends poppler-utils tesseract-ocr tesseract-ocr-eng && rm -rf /var/lib/apt/lists/*
+#10 CACHED
+
+#11 [worker  6/13] RUN uv sync --frozen --no-managed-python
+#11 CACHED
+
+#12 [migrate  7/13] COPY services ./services
+#12 DONE 0.1s
+
+#12 [dispatcher  7/13] COPY services ./services
+#12 DONE 0.1s
+
+#13 [api  8/13] COPY scripts ./scripts
+#13 DONE 0.1s
+
+#13 [migrate  8/13] COPY scripts ./scripts
+#13 DONE 0.1s
+
+#14 [api  9/13] COPY tests ./tests
+#14 DONE 0.1s
+
+#14 [worker  9/13] COPY tests ./tests
+#14 DONE 0.1s
+
+#15 [dispatcher 10/13] COPY alembic.ini ./
+#15 DONE 0.2s
+
+#15 [api 10/13] COPY alembic.ini ./
+#15 DONE 0.2s
+
+#16 [dispatcher 11/13] COPY infra/document-packages.lock ./infra/document-packages.lock
+#16 DONE 0.1s
+
+#16 [migrate 11/13] COPY infra/document-packages.lock ./infra/document-packages.lock
+#16 DONE 0.1s
+
+#17 [dispatcher 12/13] RUN python scripts/verify_document_runtime.py
+#17 0.419 PASS exact parser/OCR package versions match document-packages.lock
+#17 DONE 0.5s
+
+#18 [dispatcher 13/13] RUN useradd --uid 10001 --create-home ppm && mkdir -p /var/ppm/objects && chown -R ppm:ppm /var/ppm && chown ppm:ppm /app
+#18 DONE 0.5s
+
+#18 [api 13/13] RUN useradd --uid 10001 --create-home ppm && mkdir -p /var/ppm/objects && chown -R ppm:ppm /var/ppm && chown ppm:ppm /app
+#18 DONE 0.5s
+
+#19 [worker] exporting to image
+#19 exporting layers
+#19 exporting layers 1.6s done
+#19 exporting manifest sha256:261bca4d9fbe3f52a629d97eeb9e68865b35b9afdfbac972ab5b23e048ace303 0.1s done
+#19 exporting config sha256:10dd4dc2422e1f0268e946ba99a779ce3f97d543c633cf29adae9420ccf65a55
+#19 exporting config sha256:10dd4dc2422e1f0268e946ba99a779ce3f97d543c633cf29adae9420ccf65a55 0.2s done
+#19 exporting attestation manifest sha256:5a35232b82ce29fdbefe75fc1b29937ce7ac79b981a1ef6ca17be3e1c47c5578
+#19 exporting attestation manifest sha256:5a35232b82ce29fdbefe75fc1b29937ce7ac79b981a1ef6ca17be3e1c47c5578 0.2s done
+#19 exporting manifest list sha256:64723bfc439b0b1dd42041135a6d7ebf741c40fcc9f9985f4daa553c014789a3
+#19 exporting manifest list sha256:64723bfc439b0b1dd42041135a6d7ebf741c40fcc9f9985f4daa553c014789a3 0.2s done
+#19 naming to docker.io/library/enterprise-ppm-worker:latest
+#19 naming to docker.io/library/enterprise-ppm-worker:latest 0.0s done
+#19 unpacking to docker.io/library/enterprise-ppm-worker:latest
+#19 unpacking to docker.io/library/enterprise-ppm-worker:latest 1.0s done
+#19 DONE 3.6s
+
+#20 [api] exporting to image
+#20 exporting layers 1.6s done
+#20 exporting manifest sha256:423a3a55844d99cf1de1a1d12311c817d3a57d7e31dc9e96a7fb5b3fa83c8974 0.1s done
+#20 exporting config sha256:1b2c53dc21506a1c0b600e2b54ac7e481e4583c4c4acb461bbd4adabf64ceab3 0.2s done
+#20 exporting attestation manifest sha256:ecf5bc921753eec7bd9b41611ebb94235e1092de6acb449015c98d39ad7525d0 0.2s done
+#20 exporting manifest list sha256:8c03ccb7ed0b1b3a9386fa9da96ead591cafcef8b0ddb2d6564d0b0869643b98 0.1s done
+#20 naming to docker.io/library/enterprise-ppm-api:latest 0.0s done
+#20 unpacking to docker.io/library/enterprise-ppm-api:latest 1.0s done
+#20 DONE 3.6s
+
+#21 [migrate] exporting to image
+#21 exporting layers 1.6s done
+#21 exporting manifest sha256:3c3b752802039136aabca9a24b972ab8099894944466706d0a98e32ae2f3d4c2 0.1s done
+#21 exporting config sha256:dc66f6c29473bbed87fcce79c37a614212b68a2f8b86c4df9e50fdd271c161d3 0.2s done
+#21 exporting attestation manifest sha256:1a9c24da37c83d39a4ad3100855f633f1566aceb781c55eaa67dd40652d73d61 0.2s done
+#21 exporting manifest list sha256:e8e2b5d8e2374a05e92d7e4e4c8f130c6951ca01a44217368025fb8c057a42c9 0.2s done
+#21 naming to docker.io/library/enterprise-ppm-migrate:latest 0.0s done
+#21 unpacking to docker.io/library/enterprise-ppm-migrate:latest 1.0s done
+#21 DONE 3.6s
+
+#22 [dispatcher] exporting to image
+#22 exporting layers 1.6s done
+#22 exporting manifest sha256:f3adbb87f754d2aa1b6a078af21cf0130b16cb2bb345d4879d6cdf096840ec5b 0.1s done
+#22 exporting config sha256:40a8909f42092c0fdd39ebccec5f4fb020beb1771fe0643a77dbb97f1ce5d068 0.2s done
+#22 exporting attestation manifest sha256:d9cfec198be03f4c5a726cf445342e2a29f317e3cab76ed8fce6a6dffbe44acd 0.2s done
+#22 exporting manifest list sha256:7672d1985cbfa268e5e50134b31a872655115eb518393b39ae940ab74aebdabf 0.2s done
+#22 naming to docker.io/library/enterprise-ppm-dispatcher:latest 0.0s done
+#22 unpacking to docker.io/library/enterprise-ppm-dispatcher:latest 1.0s done
+#22 DONE 3.7s
+
+#23 [api] resolving provenance for metadata file
+#23 ...
+
+#24 [migrate] resolving provenance for metadata file
+#24 DONE 0.3s
+
+#23 [api] resolving provenance for metadata file
+#23 DONE 0.3s
+
+#25 [worker] resolving provenance for metadata file
+#25 DONE 0.1s
+
+#26 [dispatcher] resolving provenance for metadata file
+#26 DONE 0.0s
+ Image enterprise-ppm-migrate Built 
+ Image enterprise-ppm-api Built 
+ Image enterprise-ppm-worker Built 
+ Image enterprise-ppm-dispatcher Built 

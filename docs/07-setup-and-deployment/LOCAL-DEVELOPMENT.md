@@ -1,8 +1,8 @@
 # Local development and foundation checks
 
-Current checkpoint: Sprint 8.1 local implementation, migration `0010_account_authority`; parent acceptance remains open. See the [pilot report](../03-sprints/active/sprint-8.1/SPRINT_REPORT.md) and [tester guide](../03-sprints/active/sprint-8.1/SPRINT_8_1_USER_GUIDE.md). Identity, shell, delivery, capacity, assessments, command center and durable integrations are implemented within their documented bounds. Workspace overview is at `/`, component gallery at `/design-system` and technical diagnostics at `/system`. Use [IDENTITY-DEVELOPMENT](IDENTITY-DEVELOPMENT.md) for first-admin activation and secure localhost access, and [current verification](../04-testing/SPRINT_VERIFICATION_REPORT.md) for tested behavior and remaining blockers. Production remains disabled.
+Current source checkpoint: Sprint 10 implementation; normal rollout is recorded in the handoff, migration `0012_ai_runtime`; earlier Sprint 8.1 parent acceptance remains open. Use [document processing setup/recovery](DOCUMENT-PROCESSING.md) for the mandatory scanner override, runtime locks and exact source limits. See the [pilot report](../03-sprints/active/sprint-8.1/SPRINT_REPORT.md) and [tester guide](../03-sprints/active/sprint-8.1/SPRINT_8_1_USER_GUIDE.md). Identity, shell, delivery, capacity, assessments, command center and durable integrations are implemented within their documented bounds. Workspace overview is at `/`, component gallery at `/design-system` and technical diagnostics at `/system`. Use [IDENTITY-DEVELOPMENT](IDENTITY-DEVELOPMENT.md) for first-admin activation and secure localhost access, and [current verification](../04-testing/SPRINT_VERIFICATION_REPORT.md) for tested behavior and remaining blockers. Production remains disabled.
 
-This is a local development stack with identity and organization authorization. Assessment evidence supports bounded UTF-8 text with manual quarantine release; general document intelligence and AI remain planned. Jira/GitHub live sync requires operator credentials and remains unverified. The API rejects `PPM_APP_ENV=production`. Compose binds published ports to `127.0.0.1`; production acceptance is not established.
+This is a local development stack with identity and organization authorization. Assessment evidence supports bounded UTF-8 text with manual quarantine release; the separate document library now supports bounded PDF/DOCX/TXT/CSV/XLSX/image intake, English OCR and keyword citations. Semantic AI remains planned. Jira/GitHub live sync requires operator credentials and remains unverified. The API rejects `PPM_APP_ENV=production`. Compose binds published ports to `127.0.0.1`; production acceptance is not established.
 
 ## Start with Docker
 
@@ -48,7 +48,7 @@ Bootstrap creates random local database credentials and preserves an existing `.
 | web | Next.js server rendering through generated API types/client; no mocked checkpoint |
 | test | Profile-gated isolated test runner, including migration lifecycle on `ppm_test` only |
 
-Migrations `0001_foundation` through `0010_account_authority` implement foundation, identity, delivery, capacity, assessment, command center and durable ingestion. The application role has SELECT only on the non-tenant foundation checkpoint; domain tables use scoped policies. Applied migrations are frozen. See [jobs guarantees](../contracts/jobs-integrations.md) for outbox/retry and connector bounds.
+Migrations `0001_foundation` through `0012_ai_runtime` implement foundation, identity, delivery, capacity, assessment, command center and durable ingestion. The application role has SELECT only on the non-tenant foundation checkpoint; domain tables use scoped policies. Applied migrations are frozen. See [jobs guarantees](../contracts/jobs-integrations.md) for outbox/retry and connector bounds.
 
 ## Backend integration and worker acceptance
 
@@ -136,3 +136,10 @@ CI runs frozen installs, static checks, contract drift, unit/integration/browser
 Use [the guarded walkthrough provisioning guide](../05-demos/WALKTHROUGH_DATA.md). The full seed provisions four fictional accounts and 41 records in a separate Northstar Website Training organization without resetting existing data. Credentials are generated privately, never committed. `--empty` provisions only identities on first use, for practicing setup yourself. A fresh browser signup remains the best way to execute every setup step.
 
 The additive `0009_account_repair` migration preserves established identities, memberships, invitations and delivery records. Its downgrade discards only organization-free sessions and their refresh credentials, which the prior schema cannot represent. Back up an established database before maintenance; never run the test runner's downgrade lifecycle against it.
+
+## Enable document intake
+
+Use `docker compose -f compose.yaml -f compose.documents.yaml up -d --build`, wait
+for ClamAV health/signatures and follow [Document processing](DOCUMENT-PROCESSING.md).
+Base Compose deliberately leaves scanning unconfigured and source intake quarantines.
+Use the same override for guarded document tests; preserve existing `.env`/volumes.

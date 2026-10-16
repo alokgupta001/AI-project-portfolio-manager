@@ -106,6 +106,8 @@ export function Shell({
     { name: "Maturity assessments", href: "/assessments", icon: "◉" },
     { name: "Command center", href: "/command-center", icon: "◈" },
     { name: "Integrations & jobs", href: "/integrations", icon: "◇" },
+    { name: "Document library", href: "/documents", icon: "▤" },
+    { name: "AI operations & evidence", href: "/ai", icon: "◇" },
     { name: "Resource planning", href: "/resources", icon: "▦" },
     { name: "Portfolios", href: "/portfolios", icon: "▦" },
     ...(role === "Admin"
@@ -225,21 +227,25 @@ export function Shell({
                 ? "Overview"
                 : path === "/design-system"
                   ? "Component gallery"
-                  : path.startsWith("/integrations")
-                    ? "Integrations & jobs"
-                    : path.startsWith("/command-center")
-                      ? "Command center"
-                      : path.startsWith("/assessments")
-                        ? "Maturity assessments"
-                        : path.startsWith("/resources")
-                          ? "Resource planning"
-                          : path.startsWith("/projects")
-                            ? "Projects"
-                            : path.startsWith("/portfolios")
-                              ? "Portfolios"
-                              : path === "/organization"
-                                ? "Organization setup"
-                                : "Account & access"}
+                  : path.startsWith("/ai")
+                    ? "AI operations & evidence"
+                    : path.startsWith("/documents")
+                      ? "Document library"
+                      : path.startsWith("/integrations")
+                        ? "Integrations & jobs"
+                        : path.startsWith("/command-center")
+                          ? "Command center"
+                          : path.startsWith("/assessments")
+                            ? "Maturity assessments"
+                            : path.startsWith("/resources")
+                              ? "Resource planning"
+                              : path.startsWith("/projects")
+                                ? "Projects"
+                                : path.startsWith("/portfolios")
+                                  ? "Portfolios"
+                                  : path === "/organization"
+                                    ? "Organization setup"
+                                    : "Account & access"}
             </span>
           </nav>
           {children}

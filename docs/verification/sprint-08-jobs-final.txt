@@ -122,13 +122,13 @@ tests/test_identity.py:46: in identity
            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-params = ConnectionParameters(user='ppm_owner', password='f8d27270ecf0aaf825751e64ef551598beaec07b8d577026', database='ppm_test...postgres'>, server_settings=None, target_session_attrs=<SessionAttribute.any: 'any'>, krbsrvname=None, gsslib='gssapi')
+params = ConnectionParameters(user='ppm_owner', password='[REDACTED_LOCAL_DATABASE_PASSWORD]', database='ppm_test...postgres'>, server_settings=None, target_session_attrs=<SessionAttribute.any: 'any'>, krbsrvname=None, gsslib='gssapi')
 retry = True, addr = ('postgres', 5432)
 loop = <_UnixSelectorEventLoop running=False closed=False debug=False>
 config = ConnectionConfiguration(command_timeout=None, statement_cache_size=100, max_cached_statement_lifetime=300, max_cacheable_statement_size=15360)
 connection_class = <class 'asyncpg.connection.Connection'>
 record_class = <class 'asyncpg.protocol.record.Record'>
-params_input = ConnectionParameters(user='ppm_owner', password='f8d27270ecf0aaf825751e64ef551598beaec07b8d577026', database='ppm_test...postgres'>, server_settings=None, target_session_attrs=<SessionAttribute.any: 'any'>, krbsrvname=None, gsslib='gssapi')
+params_input = ConnectionParameters(user='ppm_owner', password='[REDACTED_LOCAL_DATABASE_PASSWORD]', database='ppm_test...postgres'>, server_settings=None, target_session_attrs=<SessionAttribute.any: 'any'>, krbsrvname=None, gsslib='gssapi')
 
     async def __connect_addr(
         params,

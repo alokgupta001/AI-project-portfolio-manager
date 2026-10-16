@@ -1,5 +1,7 @@
 # Sprint 08 technical handoff
 
+> Historical sprint checkpoint — documentation review, 16 October 2026. The original outcomes, schema/version and stop-at-next-sprint statements below describe their recorded date. For today's availability and safe setup, use [current status](../../../00-overview/CURRENT_STATUS.md) and [documentation closure](../../../10-reference/PREVIOUS-SPRINTS-DOCUMENTATION-CLOSURE.md).
+
 ## Verified checkpoint
 **Sprint 08 complete locally**, 2026-10-09. Branch `main`, base `90564405bcacc8389e34f3b06d8ab8d00984c5c1`. Sprint changes remain uncommitted; no push performed. Preserve the user's pre-existing README modification and untracked learning documents/artifacts. Normal Docker API/web healthy on 8000/3000, PostgreSQL/Redis on 15432/16379, worker and dispatcher running; applied head `0007_durable_jobs`.
 

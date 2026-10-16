@@ -1,0 +1,25 @@
+{
+  "checked_at": "2026-10-16T05:14:41.139117+00:00",
+  "provider": "gemini",
+  "project": "gen-lang-client-0537111029",
+  "completion_model": "gemini-3.5-flash-lite",
+  "embedding_model": "gemini-embedding-2",
+  "billing_verification": "operator-confirmed Free Tier; no linked billing account",
+  "usd_authorized": "0",
+  "input": "synthetic-only",
+  "requests": 2,
+  "acceptance": "BOUNDED_SMOKE_PASS",
+  "checks": {
+    "completion": {
+      "status": "PASS",
+      "input_tokens": 149,
+      "output_tokens": 67
+    },
+    "embedding": {
+      "status": "PASS",
+      "input_tokens": null,
+      "output_tokens": null,
+      "dimensions": 256
+    }
+  }
+}

@@ -1,5 +1,13 @@
 # Antigravity entry point — next sprint
 
+Current checkpoint — 16 October 2026: Sprint 10 local implementation is verified at `0012_ai_runtime`. Gemini free-tier completion and 256-dimension embedding smoke passed on the user-confirmed unbilled project with maximum spend $0; no daily renewal is required. The latest AI/provider regression suite recorded 63 passes. General model/retrieval quality, hosted CI, archived Word visual QA and production release remain unverified. Sprint 11 has not started. Stop before 11.
+Read [LATEST](docs/handoffs/LATEST.md), [MASTER](docs/prompts/MASTER.md) and
+[Sprint 10 handoff](docs/03-sprints/active/sprint-10/HANDOFF.md). Preserve all applied
+0001–0012 migrations, .env, established data/objects and prior uncommitted work.
+Gemini free-tier calls are authorized at $0; no paid calls or automatic model/provider upgrades.
+Normal head 0012_ai_runtime; preservation and healthy runtime verified. Stop before 11.
+Earlier Sprint 06 instructions below are historical and grant no successor execution.
+
 Open this repository folder, not its parent:
 `C:\Users\alokg\OneDrive\Documents\Codex\enterprise-ppm`.
 

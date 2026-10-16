@@ -7,3 +7,9 @@
 - [Members, Project Managers and access](MEMBERS_ROLES_AND_ACCESS.md): invitations, role changes, deactivation and project/resource/framework/result grants.
 - [Gmail SMTP operator setup](../07-setup-and-deployment/GMAIL-SMTP-SETUP.md): private provider configuration, separate from ordinary website tasks.
 - [Verified account-email progress](../04-testing/ACCOUNT_EMAIL_VERIFICATION.md): actual Gmail receipt and browser completion, with testing limits.
+
+[Document library user steps](../03-sprints/completed/sprint-09/USER_GUIDE.md) cover scoped upload/preview/search/version, private evidence references and Admin policy/retention.
+
+## Sprint 10 shared AI runtime
+
+[Sprint 10 runtime and evidence](../03-sprints/active/sprint-10/USER_GUIDE.md). Local implementation and bounded Gemini free-tier smoke verified; general model/retrieval quality remains unverified. $0 authorization and source fallback apply; no daily renewal. Stop before 11.

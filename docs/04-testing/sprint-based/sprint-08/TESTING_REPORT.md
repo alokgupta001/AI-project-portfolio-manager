@@ -1,5 +1,7 @@
 # Sprint 08 acceptance checks
 
+> Historical sprint checkpoint — documentation review, 16 October 2026. The original outcomes, schema/version and stop-at-next-sprint statements below describe their recorded date. For today's availability and safe setup, use [current status](../../../00-overview/CURRENT_STATUS.md) and [documentation closure](../../../10-reference/PREVIOUS-SPRINTS-DOCUMENTATION-CLOSURE.md).
+
 Verified 2026-10-09 on Windows PowerShell with Linux Docker services, PostgreSQL 18, Redis 8, pinned local Python/Node dependencies. Fixtures use guarded `ppm_test` or the isolated browser Compose project (3001/8001). Normal stack stays on 3000/8000. No live connector credential was available. [Report](../../../03-sprints/completed/sprint-08/SPRINT_REPORT.md), [jobs-v1](../../../contracts/jobs-integrations.md).
 
 | Gate / actual command | Observed result | Evidence |

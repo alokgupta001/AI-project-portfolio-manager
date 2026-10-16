@@ -82,3 +82,12 @@ Status: **IMPLEMENTED AND VERIFIED** within retained local evidence; external ga
 ## Verified Gmail and access update — 10 October 2026
 
 `identity-client.tsx` reads the private fragment token, masks it in the completion form and removes it from the address. The nonsecret action hint selects Reset your password or invitation instructions; it does not authorize the backend operation. Reset success now says Password reset. `pilot.tsx` renders queued/provider-accepted/local/failure labels and browser framework/result Access panels. Role selectors change membership, not record grants. Follow [account email and role access](../05-security/ACCOUNT_EMAIL_AND_ROLE_ACCESS.md).
+
+## Sprint 09 extension
+
+`apps/web/components/documents.tsx` renders `/documents` using the established identity/client shell. It polls bounded job status, pages previews, escapes text and opens validated source locations. Selection is disabled during pending load/save to avoid stale reopen. Tables retain a minimum width inside a focusable horizontal region at 360 px. [Source workflow](../06-ai-and-analytics/DOCUMENT_SOURCES.md) links the real component and browser evidence.
+## Sprint 10 evidence runtime
+
+AI in components/ai.tsx receives the existing IdentityClient transport. /ai displays disabled/empty/loading/error/recovery/partial states, current citations, authorized stages and Admin budget/diagnostic controls.
+
+Read [the practical trace](../06-ai-and-analytics/AI_GATEWAY.md) for actual symbols, flow, failures and debugging. No Sprint 11 semantic agents or automatic changes are implemented.

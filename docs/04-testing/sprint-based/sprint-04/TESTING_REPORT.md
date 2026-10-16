@@ -1,5 +1,7 @@
 # Sprint 04 acceptance evidence
 
+> Historical sprint checkpoint — documentation review, 16 October 2026. The original outcomes, schema/version and stop-at-next-sprint statements below describe their recorded date. For today's availability and safe setup, use [current status](../../../00-overview/CURRENT_STATUS.md) and [documentation closure](../../../10-reference/PREVIOUS-SPRINTS-DOCUMENTATION-CLOSURE.md).
+
 Executed 2026-10-06 on Node 24.20.0 / npm 11.19.0 / Python 3.12.14 / Docker Linux / PostgreSQL / Redis / Chromium. Existing dependency locks retained; no new package. Results are actual local observations, not hosted CI or production claims.
 
 | Check / command | Actual result | Evidence |

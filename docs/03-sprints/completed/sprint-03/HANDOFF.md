@@ -1,5 +1,7 @@
 # Sprint 03 technical handoff
 
+> Historical sprint checkpoint — documentation review, 16 October 2026. The original outcomes, schema/version and stop-at-next-sprint statements below describe their recorded date. For today's availability and safe setup, use [current status](../../../00-overview/CURRENT_STATUS.md) and [documentation closure](../../../10-reference/PREVIOUS-SPRINTS-DOCUMENTATION-CLOSURE.md).
+
 ## Checkpoint
 
 2026-10-05: enterprise shell/design system implemented, local only. Branch main has no commit/remote; all existing/new files remain uncommitted. Migration head stays `0002_identity`; no backfill/schema changes. [Report](SPRINT_REPORT.md), [checks](../../../04-testing/sprint-based/sprint-03/TESTING_REPORT.md), [coverage](../../../requirements/coverage.md). N-004/N-005/E-004 accepted in shell scope; N-013 core checks accepted, release-wide review remains ongoing. T-001 still partial.

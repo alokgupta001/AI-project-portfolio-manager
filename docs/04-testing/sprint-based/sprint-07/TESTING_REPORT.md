@@ -1,5 +1,7 @@
 # Sprint 07 acceptance checks
 
+> Historical sprint checkpoint — documentation review, 16 October 2026. The original outcomes, schema/version and stop-at-next-sprint statements below describe their recorded date. For today's availability and safe setup, use [current status](../../../00-overview/CURRENT_STATUS.md) and [documentation closure](../../../10-reference/PREVIOUS-SPRINTS-DOCUMENTATION-CLOSURE.md).
+
 Verified locally 2026-10-08 on Windows with Docker Linux services and Playwright
 Chromium. **Passed within the documented local scope.** No production, hosted CI,
 predictive-model or complete accessibility certification.

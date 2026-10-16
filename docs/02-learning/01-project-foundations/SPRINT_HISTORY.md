@@ -62,7 +62,7 @@ The [CI correction record](../../04-testing/sprint-based/sprint-07/SPRINT-07-CI-
 
 ## Historical future boundary after Sprint 07
 
-At the Sprint 07 checkpoint, Sprint 08 durable jobs/integrations and later work were plans. Sprint 08 and local Sprint 8.1 are now implemented; Sprint 09 document retrieval, Sprint 10 model gateway, Sprint 11 agents/semantic features, and later ML/copilot/release work remain plans in [`roadmap.md`](../../requirements/roadmap.md). A numbered future sprint is not an implementation claim. Older reports saying that a later sprint had not begun were accurate at their own dates.
+At the Sprint 07 checkpoint, Sprint 08 durable jobs/integrations and later work were plans. Sprint 08 and local Sprint 8.1 are now implemented; Sprint 09 versioned documents/OCR/keyword retrieval are locally verified; Sprint 10 now implements a shared disabled/fallback gateway with bounded Gemini smoke verified; broader model quality unverified; Sprint 11 agents/semantic features and later ML/copilot/release work remain plans in [`roadmap.md`](../../requirements/roadmap.md). A numbered future sprint is not an implementation claim. Older reports saying that a later sprint had not begun were accurate at their own dates.
 
 
 ## Source-reviewed Sprint 8.1 update — 9 October 2026
@@ -74,3 +74,11 @@ Status: **IMPLEMENTED AND VERIFIED** within retained local evidence; external ga
 ## Verified Gmail and access update — 10 October 2026
 
 The 10 October follow-up adds real Gmail acceptance evidence and fixes reset-page wording without adding a schema migration. SMTP authentication/configuration, templates, truthful sending status and expired invitation handling were improved, then signup, existing-account Viewer acceptance and recovery were completed. Earlier sprint reports retain their original evidence. See [the current learning chapter](../05-security/ACCOUNT_EMAIL_AND_ROLE_ACCESS.md).
+
+## Sprint 10 shared runtime — 15 October 2026
+
+ai.py/provider/retrieval/evaluation modules and /ai extend the existing source and
+job contracts. Local deterministic gates and no-key browser evidence are recorded
+in [the active report](../../03-sprints/active/sprint-10/SPRINT_REPORT.md). Overall
+acceptance OPEN; Gemini free-tier smoke verified; broader quality unverified. The later user authorization permits free-tier Gemini at $0 with no daily expiry. Normal
+forward rollout is recorded separately. No Sprint 11 agent or plan-edit work.

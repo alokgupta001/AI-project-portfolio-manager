@@ -8,7 +8,7 @@ Enterprise PPM helps an organization plan projects, manage people and money, rec
 
 Each section explains its purpose, the information entered, why that information matters, and the value it can provide over time. The presentation sentences can be read aloud or adapted into slides. Long term benefits depend on people keeping the records accurate and current.
 
-### The nine menu sections
+### The current menu sections
 
 | **Section** | **Main question it helps answer** |
 | --- | --- |
@@ -17,6 +17,7 @@ Each section explains its purpose, the information entered, why that information
 | Maturity assessments | How consistently do we follow useful working practices? |
 | Command center | Where do managers need to investigate or act? |
 | Integrations and jobs | How do we bring in supported data and check the outcome? |
+| Document library | Which source version supports this claim, and who may read it? |
 | Resource planning | Do people have enough time for their commitments? |
 | Portfolios | How does our group of projects support business priorities? |
 | Account and access | Who can see or change which information? |
@@ -26,7 +27,7 @@ Each section explains its purpose, the information entered, why that information
 
 Required means the record or action needs that information. Optional information can still be important for reporting. Most business records require a Name and offer a Description. Selecting an Owner identifies responsibility; permissions must still be granted separately.
 
-The implemented features use saved records, defined calculations, and human review. AI analysis, predictive models, and general Word or PDF document intake are planned capabilities.
+The implemented features use saved records, defined calculations, and human review. Versioned Word/PDF/source intake, English OCR and keyword citations are now locally verified in Sprint 09. The bounded Gemini evidence preview is available at $0; semantic agent analysis and predictive models remain planned; use [the document demo](../05-demos/sprint-based/sprint-09/README.md) to demonstrate the current boundary.
 
 ## 1 Workspace overview
 
@@ -515,8 +516,29 @@ Governance means the rules for responsibility, decisions, and checks. A baseline
 
 ### Current capabilities and future plans
 
-The current foundation includes accounts and scoped access, delivery records, resource capacity, rubric assessments, defined dashboards, CSV imports, labelled integration fixtures, search, and in-app notices. Live Jira/GitHub acceptance still needs the relevant credentials and external checks. AI analysis, predictive models, broad document intake, and wider automated approvals, reminders, and report workflows belong to later planned work.
+The current foundation includes accounts and scoped access, delivery records, resource capacity, rubric assessments, defined dashboards, CSV imports, labelled integration fixtures, search, and in-app notices. Live Jira/GitHub acceptance still needs the relevant credentials and external checks. Versioned document intake, English OCR and scoped keyword citations are now local Sprint 09 capabilities. AI analysis, predictive models and wider automated approvals, reminders and reports remain planned.
 
 ### Suggested closing
 
 Maintaining this information gives us a reliable record of what we planned, what happened, and where our practices need to improve. Over time, that record can support more realistic planning, clearer responsibility, and better informed decisions about future projects.
+
+## 10 Document library
+
+**Presentation sentence:** This section keeps versioned source evidence, shows where
+text came from, and lets authorized readers verify original documents and keyword citations.
+
+Authorized Admin/PM users supply a title, category, project and supported file up to
+8 MiB. A healthy scanner must accept it before bounded text/OCR extraction. Readers
+can inspect source locations and original history; project grants and private assessment
+authority remain separate. Admin records policy owner/applicability/version/dates/state
+and retention/holds. Keyword results and OCR confidence are not AI interpretation or
+compliance certification. [The user steps](../03-sprints/completed/sprint-09/USER_GUIDE.md)
+and [current demo](../05-demos/sprint-based/sprint-09/README.md) give the exact journey.
+## AI evidence preview — Sprint 10
+
+Open AI operations & evidence as Admin to retrieve a permitted project source
+preview, inspect no-key diagnostics and manage a zero-spend tenant budget. Follow
+[the current steps](../03-sprints/active/sprint-10/USER_GUIDE.md). Keyword excerpts are labeled source_fallback; no match
+stays unavailable. Index embeddings and real model answers remain disabled until
+explicit provider/model/spend authorization. PM/Viewer use the document library;
+restricted Admin diagnostics are inaccessible. No semantic agents or plan edits.

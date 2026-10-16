@@ -36,7 +36,7 @@ The website has **Admin**, **Project Manager**, and **Viewer** roles. Respondent
 
 A Viewer does not submit assessments, upload assessment evidence, create delivery records, or review assessments. They inspect permitted projects, dashboards, and shared completed scores. Both assessment participants must be different active Admin or Project Manager members. This manual uses a Project Manager as respondent and another Project Manager as reviewer.
 
-Business users sometimes provide requirements, acceptance feedback, meeting notes, or evidence to a project manager. There is currently no Viewer document-submission journey in this website. The sample documents in Section 12 therefore belong in the assigned respondent's evidence notes. A future document library, PDF/Word intake, OCR, and AI document analysis are not current website features.
+Business users sometimes provide requirements, acceptance feedback, meeting notes, or evidence to a project manager. There is currently no Viewer document-submission journey in this website. The sample documents in Section 12 therefore belong in the assigned respondent's evidence notes. Sprint 09 now provides a separate Document library for authorized Admin/PM uploads, PDF/Word intake, English OCR and keyword citations. Viewer can read permitted sources but cannot submit them. Follow [the library guide](../03-sprints/completed/sprint-09/USER_GUIDE.md); AI interpretation remains planned.
 
 ## 2. Your sample organization and people
 
@@ -849,7 +849,7 @@ One assessment is not a benchmark across departments. To exercise comparison, As
 
 ### 15.4 What documents does a Viewer submit?
 
-**In the current website: none through a Viewer submission flow.** Viewer membership is for reading permitted information. The site has no general document library/upload inbox for Viewer business documents, and no Viewer assessment-submit action.
+**In the current website: none through a Viewer submission flow.** Viewer membership is for reading permitted information. Document library permits scoped Viewer reads, with uploads/changes restricted to authorized Admin/PM. Viewer has no document-upload or assessment-submit action.
 
 Typical business material and the supported handling are:
 
@@ -861,7 +861,7 @@ Typical business material and the supported handling are:
 | Risk log | Document D | PM creates structured risks and provides assessment evidence |
 | Evidence register | Document E | Respondent adds evidence notes to the relevant questions |
 | Assessment summary/improvement action | Document F | Assigned respondent submits; assigned independent reviewer reviews |
-| PDF/Word/Excel/scanned source documents | No supported direct intake in this journey | Do not expect them to upload as assessment evidence |
+| PDF/Word/Excel/scanned source documents | Separate Document library for authorized Admin/PM, with scoped Viewer reads | Assessment attachment upload remains TXT; [library steps](../03-sprints/completed/sprint-09/USER_GUIDE.md) explain same-byte released evidence links |
 
 If Vera must personally submit assessment evidence, Asha would need to change Vera to Project Manager and assign Vera as respondent in a new suitable assessment, with a different eligible reviewer. That changes the person's capabilities and is a separate workflow; it does not demonstrate Viewer submission. Do not upgrade real members merely to bypass an intended read-only policy.
 
@@ -975,3 +975,21 @@ The complete original 1–18 flow above is preserved. [Current execution evidenc
 Sign-in and account-completion password inputs start masked; use **Show password**/**Hide password** without losing the value. Removing Active from a membership immediately denies that organization's operations while the verified, globally active account can still sign in and manage its own profile/sessions. With no memberships, the website explains the missing organization access; an Admin invitation is needed to join an existing organization. Choosing an accessible organization rechecks its own role. Global disabling is a separate operator operation.
 
 Operators can prepare the four fictional accounts and planning inputs using [guarded training provisioning](../05-demos/WALKTHROUGH_DATA.md). The prepared seed already contains setup and a draft assessment; use a fresh website signup to practice setup from the beginning. No shared password is published here. Keep the prepared organization separate from the user's existing invitation-test organization.
+
+## 18. Reuse project documents in the separate library
+
+For the same permitted fictional project, follow [Sprint 09 user steps](../03-sprints/completed/sprint-09/USER_GUIDE.md)
+and [document demo](../05-demos/sprint-based/sprint-09/README.md). Admin/PM upload,
+inspect job status, preview pages/paragraphs/sheets, search keywords, open source locations
+and append versions. Viewer reads only granted sources and shared organization policies.
+The TXT-only assessment upload in Section 12 remains a separate private release workflow.
+Linking identical released bytes does not alter answers, coverage or saved scores.
+Do not upload private workforce notes or purge real evidence for a walkthrough.
+## AI evidence preview — Sprint 10
+
+Open AI operations & evidence as Admin to retrieve a permitted project source
+preview, inspect no-key diagnostics and manage a zero-spend tenant budget. Follow
+[the current steps](../03-sprints/active/sprint-10/USER_GUIDE.md). Keyword excerpts are labeled source_fallback; no match
+stays unavailable. Index embeddings and real model answers remain disabled until
+explicit provider/model/spend authorization. PM/Viewer use the document library;
+restricted Admin diagnostics are inaccessible. No semantic agents or plan edits.

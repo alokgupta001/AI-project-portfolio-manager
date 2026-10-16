@@ -91,3 +91,12 @@ Status: **IMPLEMENTED AND VERIFIED** within retained local evidence; external ga
 ## Verified Gmail and access update — 10 October 2026
 
 The account workflow is website request → durable queue → Gmail message → one-time completion → separate sign-in. Actual signup, existing-account Viewer invitation and recovery are verified. Project/portfolio grants, Resource access, framework Access and completed-result Access are browser administration flows. Their grants are distinct from organization roles and named assessment assignments. Follow [account email and role access](../05-security/ACCOUNT_EMAIL_AND_ROLE_ACCESS.md).
+
+## Sprint 09 extension
+
+Document library (`/documents`) now supports authorized uploads → queued job → scanned/bounded extraction → ready source locations → keyword citation/original download, with explicit versions and policy/retention. [User guide](../../03-sprints/completed/sprint-09/USER_GUIDE.md) and [code trace](../06-ai-and-analytics/DOCUMENT_SOURCES.md) are canonical. Semantic findings remain Sprint 11.
+## Sprint 10 evidence runtime
+
+Retrieve evidence preview creates a budgeted durable run; the no-key path returns current source excerpts with a fallback label, not a model answer.
+
+Read [the practical trace](../06-ai-and-analytics/AI_GATEWAY.md) for actual symbols, flow, failures and debugging. No Sprint 11 semantic agents or automatic changes are implemented.

@@ -7,6 +7,8 @@ x-backend: &backend
   env_file:
     - path: ./artifacts/local/connector-secrets.env
       required: false
+    - path: ./artifacts/local/ai-provider.env
+      required: false
   environment: &backend-env
     PPM_APP_ENV: local
     PPM_JWT_SECRET: ${PPM_JWT_SECRET:?Run bootstrap first}
@@ -21,6 +23,7 @@ x-backend: &backend
     PPM_DATABASE_URL: postgresql+asyncpg://ppm_app:${PPM_APP_PASSWORD:?Run bootstrap first}@postgres:5432/ppm_local
     PPM_REDIS_URL: redis://redis:6379/0
     PPM_STORAGE_ROOT: /var/ppm/objects
+    PPM_DOCUMENT_SCANNER_HOST: ${PPM_DOCUMENT_SCANNER_HOST:-}
   volumes:
     - objects:/var/ppm/objects
   init: true
@@ -119,6 +122,9 @@ services:
       PPM_REDIS_URL: redis://redis:6379/1
       PPM_STORAGE_ROOT: /tmp/ppm-test-objects
       PPM_RUN_INTEGRATION: "1"
+      PPM_AI_PROVIDER: disabled
+      PPM_AI_REAL_CALLS_AUTHORIZED: "false"
+      PPM_AI_API_KEY: ""
     command: [python, scripts/test_backend.py]
     volumes: []
     depends_on:

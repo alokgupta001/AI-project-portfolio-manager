@@ -1,5 +1,7 @@
 # Sprint 02 technical handoff
 
+> Historical sprint checkpoint — documentation review, 16 October 2026. The original outcomes, schema/version and stop-at-next-sprint statements below describe their recorded date. For today's availability and safe setup, use [current status](../../../00-overview/CURRENT_STATUS.md) and [documentation closure](../../../10-reference/PREVIOUS-SPRINTS-DOCUMENTATION-CLOSURE.md).
+
 ## Verified checkpoint
 
 2026-10-05: **Sprint 02 local identity complete**. Workspace `C:\Users\alokg\OneDrive\Documents\Codex\enterprise-ppm`; branch main, no commit/remote. All task files remain uncommitted. [Report](SPRINT_REPORT.md), [evidence](../../../04-testing/sprint-based/sprint-02/TESTING_REPORT.md), [coverage](../../../requirements/coverage.md). Accepted within implemented scope: F-001/F-002/F-003/N-001; N-012/N-018 ongoing. Original specifications, prompt pack and migration 0001 are unchanged. Sprint 03 is not authorized.

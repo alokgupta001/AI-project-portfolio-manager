@@ -1,8 +1,8 @@
 # View the project database on this PC
 
 The Enterprise PPM application uses PostgreSQL, running in Docker Desktop's Linux
-engine. Its main database is `ppm_local`, with 63 public tables at migration
-`0008_pilot_completion` (verified 10 October 2026). Test/demo databases are separate.
+engine. Its main database is `ppm_local`, with 67 public tables including Alembic at migration
+`0012_ai_runtime` (Sprint 09 normal rollout, 15 October 2026). Test/demo databases are separate.
 
 ## Open the viewer
 

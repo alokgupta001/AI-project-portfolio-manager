@@ -65,7 +65,7 @@ Update `delivery.write`/`refs` if the field introduces rules or references. `vie
 
 ## Add an AI feature later
 
-First define a narrow user action and output. There is no existing provider gateway or RAG service to reuse. The current Celery checkpoint is insufficient evidence of durable business-job recovery.
+First define a narrow user action and output. Reuse ai.py/ai_provider.py/ai_retrieval.py and the existing sources/jobs contracts. Deterministic support gates and disabled fallback exist; real provider and model-quality acceptance are blocked. Durable business recovery is the jobs/outbox protocol, not the foundation checkpoint.
 
 Implement the planned durable job foundation before relying on background model work. A job needs persistent state and retry/failure handling. An outbox is a database record saved with a change so a worker can reliably discover work after commit; this is future work here. Calling a provider after commit without such handling can lose the action if the process crashes between the two steps.
 
@@ -102,3 +102,12 @@ Status: **IMPLEMENTED AND VERIFIED** within retained local evidence; external ga
 ## Verified Gmail and access update — 10 October 2026
 
 Use `tests/test_account_mail.py` for templates, SMTP/TLS/auth/refusals/configuration and `tests/test_identity.py`/`test_pilot.py` plus browser identity/pilot tests for lifecycle/permissions. Isolated services force local mail despite a real configured sender. The latest recovery regression checks reset heading, masked token, password reset, revoked old session and new-password login. Keep automated results, SMTP acceptance and actual Gmail receipt separate in the [email report](../../04-testing/ACCOUNT_EMAIL_VERIFICATION.md); diagnose credentials with booleans, never raw values or private links.
+
+## Sprint 09 extension
+
+For source changes, preserve byte identity/history and live scope. Use `test_documents.py`, `test_document_parser.py` and `documents.spec.ts` in guarded isolated environments. Include scanner failure/EICAR, actual OCR, replay/revocation, stale citations/tickets and held archived references. [Executed results](../../04-testing/sprint-based/sprint-09/TESTING_REPORT.md) and [bugs/fixes](../../04-testing/sprint-based/sprint-09/BUGS_AND_FIXES.md) distinguish failed runs from accepted evidence. Refresh/check source inventories with `python scripts/documentation_inventory.py --check`.
+## Sprint 10 evidence runtime
+
+Run scripts/evaluate_ai.py offline; tests/test_ai.py uses real app-role PostgreSQL with labeled provider doubles and network access forbidden. Browser ai.spec.ts drives the no-key flow. Keep provider/model acceptance separate.
+
+Read [the practical trace](../06-ai-and-analytics/AI_GATEWAY.md) for actual symbols, flow, failures and debugging. No Sprint 11 semantic agents or automatic changes are implemented.

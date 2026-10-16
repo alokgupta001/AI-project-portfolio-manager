@@ -1,6 +1,6 @@
 # Sprint 02 identity: local operation and acceptance
 
-This page retains the operator-only local-preview alternative. Development Gmail signup, existing-account invitation and recovery are now verified. Normal users follow the [website manual](../06-user-guides/WEBSITE_WALKTHROUGH.md) and [member/PM access guide](../06-user-guides/MEMBERS_ROLES_AND_ACCESS.md); operators follow [Gmail SMTP setup](GMAIL-SMTP-SETUP.md) and [email delivery](EMAIL-DELIVERY.md). Current schema head is `0008_pilot_completion`; statements about the Sprint 02 migration below describe that historical checkpoint.
+This page retains the operator-only local-preview alternative. Development Gmail signup, existing-account invitation and recovery are now verified. Normal users follow the [website manual](../06-user-guides/WEBSITE_WALKTHROUGH.md) and [member/PM access guide](../06-user-guides/MEMBERS_ROLES_AND_ACCESS.md); operators follow [Gmail SMTP setup](GMAIL-SMTP-SETUP.md) and [email delivery](EMAIL-DELIVERY.md). Current schema head is `0012_ai_runtime`; statements about the Sprint 02 migration below describe that historical checkpoint.
 
 Use the project root. Start Docker's Linux engine, then:
 

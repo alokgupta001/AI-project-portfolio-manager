@@ -1,3 +1,5 @@
 # Sprint 07 — Deterministic command center
 
-[Sprint record](../../../03-sprints/completed/sprint-07/README.md) identifies original scope, actual outcome, tests, limitations and later changes. [Current topic guide](../../01-project-foundations/FEATURE_WORKFLOWS.md) explains the current application; historical demo/learning details remain in the report, without duplicated copies.
+[Canonical sprint record](../../../03-sprints/completed/sprint-07/README.md) owns the dated scope, results and handoff. [Practical topic guide](../../06-ai-and-analytics/SCORING_AND_DASHBOARDS.md) explains the current implementation. [Plain-language feature and user checks](../../../11-plain-language-sprint-reports/completed/SPRINT-07.md) explains the business behavior and prerequisites.
+
+Use [the previous-sprint documentation closure](../../../10-reference/PREVIOUS-SPRINTS-DOCUMENTATION-CLOSURE.md) to distinguish current configuration from historical test outcomes. The current source and owning contracts outrank historical line numbers. A test definition is not a newly executed result.

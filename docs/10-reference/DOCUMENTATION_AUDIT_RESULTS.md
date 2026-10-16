@@ -1,5 +1,13 @@
 # Documentation audit results — 9 October 2026
 
+**Current reconciliation — 16 October 2026:** The current [Sprints 00–10 documentation closure](PREVIOUS-SPRINTS-DOCUMENTATION-CLOSURE.md) supersedes availability/inventory/review status in the dated audit below. Historical measurements and incomplete checks remain retained outcomes, not new results.
+
+Current follow-up: [Sprint 09 documentation closure](../04-testing/sprint-based/sprint-09/DOCUMENTATION_CHECKS.md),
+15 October 2026, records current Markdown/inventory checks. Measurements and missing
+mail/implementation statements below describe the historical 9 October audit only;
+development Gmail was verified 10 October and Sprint 09 sources are locally verified.
+Hosted CI and archived Word visual acceptance remain open.
+
 ## Measured work
 
 | Measure | Result |
@@ -35,3 +43,7 @@ Full browser/integration/migration/performance/hosted CI/provider/deployment che
 Sprint organization: completed 00–08 reports/handoffs in `03-sprints/completed`; original test reports in testing sprint folders; active implemented-but-open 8.1 in `03-sprints/active`; planned 09–23 folders link exact canonical roadmap tasks and impact-based documentation obligations without fake execution reports. Raw verification logs/screenshots stay stable; topic guides link to canonical records.
 
 Main entry: [docs/README](../README.md). [Tracker](../09-planning/DOCUMENTATION_UPDATE_TRACKER.md) and [feature mapping](../09-planning/FEATURE_DOCUMENT_MAPPING.md) identify subsequent work.
+
+## Sprint 10 current closure
+
+[Sprint 10 runtime and evidence](../04-testing/sprint-based/sprint-10/DOCUMENTATION_CHECKS.md). Retain prior coverage and original thresholds. Gemini free-tier completion/embedding smoke passed; general model-quality, hosted CI and archived Word visual gates remain open. Current evidence is in the Sprint 10 Gemini follow-up.

@@ -1,0 +1,6 @@
+{
+  "web_status": 200,
+  "readiness": "ready",
+  "pgadmin_status": 200,
+  "schema_revision": "0011_document_sources"
+}

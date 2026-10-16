@@ -1,0 +1,26 @@
+{
+  "checked_at": "2026-10-16T05:44:28.475467+00:00",
+  "change": "Remove Gemini confirmation expiry at user request",
+  "confirmation_expires_hours": null,
+  "backend_tests": {
+    "passed": 63,
+    "seconds": 54.21
+  },
+  "real_provider_requests_for_this_change": 0,
+  "static_checks": "PASS",
+  "unchanged_controls": [
+    "zero-dollar provider settings",
+    "reviewed model allowlist",
+    "key/project confirmation binding",
+    "persistent request limits",
+    "quota and error fallback"
+  ],
+  "source_sha256": {
+    "services/api/ppm_api/ai_provider.py": "f4633d2dee0aed4362aeb858f800f54bf722170fb4411811ea50da4bd0f77f3f",
+    "scripts/configure_gemini_free_tier.py": "ab431ca04aa9e04db428c872938cb9ac6153a161f562ffbbef360ed33a35d411",
+    "scripts/verify_gemini_runtime.py": "3af8fcd5b5372b371c39267d30037883338525d689f9369885a69b8fc21972cd",
+    "tests/test_gemini.py": "fd1608af72cc5d9bc8e220c9794ce9398ca509549d4a92d3299803a6a99e2d6f",
+    "tests/test_ai.py": "33ddb9fdd9439fe7ead35c0dd246da3a62093503889cbe9107321d091d34f99d",
+    "apps/web/components/ai.tsx": "17684984043c5497bac9dae25555d326204bcddfeba9992da19adf63f5df9dc9"
+  }
+}

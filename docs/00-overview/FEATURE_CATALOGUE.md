@@ -12,17 +12,17 @@ Code and retained local evidence establish current capability; original acceptan
 | G-002 Usable invitation and recovery delivery | IMPLEMENTED AND VERIFIED IN DEVELOPMENT | Gmail signup, existing-account Viewer invitation acceptance and recovery confirmed; lifecycle variants covered in isolated tests. Production acceptance remains open. | PPM-81-002 / 8.1 |
 | G-003 First-time setup and organization profile | IMPLEMENTED AND VERIFIED | Add setup checklist and minimal profile editing with clear account versus resource explanations. | PPM-81-003 / 8.1 |
 | G-004 Browser access management | IMPLEMENTED AND VERIFIED | Expose existing project/resource/assessment grants and understandable effective-access explanations. | PPM-81-004 / 8.1 |
-| G-005 Search actual records | IMPLEMENTED AND VERIFIED | Add permission-filtered record search; document content search remains Sprint 09. | PPM-81-005 / 8.1 |
+| G-005 Search actual records | IMPLEMENTED AND VERIFIED | Add permission-filtered record search; document content keyword search is separately verified in Sprint 09. | PPM-81-005 / 8.1 |
 | G-006 Complete lists and selectors | IMPLEMENTED AND VERIFIED | Add pagination and server search; make departmental comparison period and full cohort explicit. | PPM-81-006 / 8.1 |
 | G-007 My work and basic notifications | IMPLEMENTED AND VERIFIED | Provide assigned work/assessment views and a small in-app feed; timed reminders and external channels stay in 15/21. | PPM-81-007 / 8.1 |
 | G-008 Metadata needed by later analytics | IMPLEMENTED AND VERIFIED | Add optional controlled metadata with unknown values; never backfill invented categories. | PPM-81-008 / 8.1 |
 | G-009 Live refresh of manual changes | IMPLEMENTED AND VERIFIED | Publish bounded authorized change notices and show freshness; do not broadcast record content. | PPM-81-009 / 8.1 |
 | G-010 Guide and readiness wording | PARTIALLY IMPLEMENTED | Correct the guide steps and readiness descriptions; verify each documented route on the browser. | PPM-81-010 / 8.1 |
-| G-011 Document library and assessment evidence bridge | PLANNED | Build shared versioned documents; preserve existing assessment scores and attachment authority. | PPM-09-001 / 09 |
-| G-012 Governance policy lifecycle | PLANNED | Create policy registry in 09 and approval integration in 15. | PPM-09-003 / 09 |
-| G-013 Retention and pilot restore evidence | PARTIALLY IMPLEMENTED | Establish scoped purge/hold rules and a non-destructive scratch restore before real documents; finish all surfaces in 22/23. | PPM-09-003 / 09 |
+| G-011 Document library and assessment evidence bridge | IMPLEMENTED AND VERIFIED LOCALLY | Versioned sources/OCR and same-byte released-attachment bridge; original assessment authority/scores preserved. | PPM-09-001 / 09 |
+| G-012 Governance policy lifecycle | PARTIALLY IMPLEMENTED | Registry/owner/applicability/source/dates/state verified locally in 09; approval integration remains 15. | PPM-09-003 / 09 |
+| G-013 Retention and pilot restore evidence | PARTIALLY IMPLEMENTED | Scoped purge/holds and non-destructive scratch restore verified locally in 09; production backup erasure and all-surface release recovery remain 22/23. | PPM-09-003 / 09 |
 | G-014 Document and AI dependency conflict | PARTIALLY IMPLEMENTED | Stage keyword retrieval/contracts in 09, budgeted embedding adapter in 10, reviewed extraction in 11. | PPM-10-001 / 10 |
-| G-015 AI gateway and operations | PLANNED | Implement shared adapters, bounded orchestration and evaluation before agents. | PPM-10-001 / 10 |
+| G-015 AI gateway and operations | PARTIALLY IMPLEMENTED | Shared runtime/UI and local guards verified; Gemini free-tier completion/embedding smoke passed; broader model/retrieval quality and scale remain unverified. | PPM-10-001 / 10 |
 | G-016 Nine agents and semantic maturity scoring | PLANNED | Build all nine agents with evidence and distinct suggested/reviewer scores. | PPM-11-001 / 11 |
 | G-017 Recommendation review versus application | PLANNED | Separate accepted recommendation from applied change; no generic mutation before 15. | PPM-11-003 / 11 |
 | G-018 Repeat assessments, due dates and trend/export | PARTIALLY IMPLEMENTED | Extend the existing assessment lifecycle and connect workflow reminders, keeping published score history immutable. | PPM-15-002 / 15 |
@@ -94,7 +94,7 @@ These are the complete 156 approved crosswalk rows, including scope exclusions a
 | F-036 | Allocation workload dashboard | IMPLEMENTED AND VERIFIED | PPM-81-010 |
 | F-037 | Reported versus evidence health | IMPLEMENTED AND VERIFIED | PPM-81-010 |
 | F-038 | Live project visibility | PARTIALLY IMPLEMENTED | PPM-81-009 |
-| F-039 | AI progress streaming | PLANNED | PPM-10-002 |
+| F-039 | AI progress streaming | IMPLEMENTED AND VERIFIED LOCALLY | PPM-10-002 |
 | F-040 | PMO agent | PLANNED | PPM-11-001 |
 | F-041 | Risk agent | PLANNED | PPM-11-001 |
 | F-042 | Governance agent | PLANNED | PPM-11-001 |
@@ -120,16 +120,16 @@ These are the complete 156 approved crosswalk rows, including scope exclusions a
 | F-062 | Jira dataset suitability | PLANNED | PPM-12-002 |
 | F-063 | Authorized public repository data | PLANNED | PPM-12-002 |
 | F-064 | Synthetic dataset generator | PLANNED | PPM-12-002 |
-| F-065 | SRS BRD PRD classification | PLANNED | PPM-09-001 |
-| F-066 | MOM and sprint report ingestion | PLANNED | PPM-11-003 |
-| F-067 | Risk log ingestion | PLANNED | PPM-11-003 |
-| F-068 | Project charter ingestion | PLANNED | PPM-09-001 |
-| F-069 | Governance policy ingestion | PLANNED | PPM-09-003 |
+| F-065 | SRS BRD PRD classification | IMPLEMENTED AND VERIFIED LOCALLY | PPM-09-001 |
+| F-066 | MOM and sprint report ingestion | PARTIALLY IMPLEMENTED | PPM-11-003 |
+| F-067 | Risk log ingestion | PARTIALLY IMPLEMENTED | PPM-11-003 |
+| F-068 | Project charter ingestion | IMPLEMENTED AND VERIFIED LOCALLY | PPM-09-001 |
+| F-069 | Governance policy ingestion | IMPLEMENTED AND VERIFIED LOCALLY | PPM-09-003 |
 | F-070 | Extract risks and blockers | PLANNED | PPM-11-003 |
 | F-071 | Extract dependencies | PLANNED | PPM-11-003 |
 | F-072 | Compliance gaps and maturity indicators | PLANNED | PPM-11-003 |
-| F-073 | OCR | PLANNED | PPM-09-001 |
-| F-074 | Scoped RAG | PLANNED | PPM-09-002 |
+| F-073 | OCR | IMPLEMENTED AND VERIFIED LOCALLY | PPM-09-001 |
+| F-074 | Scoped RAG | PARTIALLY IMPLEMENTED | PPM-10-001 |
 | F-075 | Conversational copilot | PLANNED | PPM-14-001 |
 | F-076 | Root causes and predicted impact | PLANNED | PPM-14-001 |
 | F-077 | Natural language analytics | PLANNED | PPM-14-001 |
@@ -173,15 +173,15 @@ These are the complete 156 approved crosswalk rows, including scope exclusions a
 | N-006 | FCP under 2 seconds | PLANNED | PPM-23-001 |
 | N-007 | 60fps chart rendering target | PLANNED | PPM-23-001 |
 | N-008 | Nonblocking asynchronous processing | PARTIALLY IMPLEMENTED | PPM-23-001 |
-| N-009 | Typed AI output validation | PLANNED | PPM-10-002 |
-| N-010 | Timeout fallback | PLANNED | PPM-10-002 |
+| N-009 | Typed AI output validation | IMPLEMENTED AND VERIFIED LOCALLY | PPM-10-002 |
+| N-010 | Timeout fallback | IMPLEMENTED AND VERIFIED LOCALLY | PPM-10-002 |
 | N-011 | 99.9% alert worker availability target | PLANNED | PPM-21-003 |
 | N-012 | Versioned migrations and contracts | PARTIALLY IMPLEMENTED | PPM-81-010 |
 | N-013 | Accessibility target | PARTIALLY IMPLEMENTED | PPM-23-001 |
-| N-014 | AI and retrieval access isolation | PLANNED | PPM-10-002 |
+| N-014 | AI and retrieval access isolation | IMPLEMENTED AND VERIFIED LOCALLY | PPM-10-002 |
 | N-015 | Model validity and lineage | PLANNED | PPM-12-003 |
 | N-016 | Audit retention and revocation | PLANNED | PPM-22-003 |
-| N-017 | Backup restore and deployment recovery | PLANNED | PPM-23-002 |
+| N-017 | Backup restore and deployment recovery | PARTIALLY IMPLEMENTED | PPM-23-002 |
 | N-018 | Sprint report and follow-up document | PARTIALLY IMPLEMENTED | PPM-81-010 |
 | E-001 | Evidence drawer | IMPLEMENTED AND VERIFIED | PPM-81-010 |
 | E-002 | Freshness and data coverage | IMPLEMENTED AND VERIFIED | PPM-81-010 |
@@ -190,15 +190,15 @@ These are the complete 156 approved crosswalk rows, including scope exclusions a
 | E-005 | Decision log | PLANNED | PPM-16-003 |
 | E-006 | Scenario comparison | PLANNED | PPM-17-002 |
 | E-007 | Data-quality console | IMPLEMENTED AND VERIFIED | PPM-81-010 |
-| E-008 | AI usage console | PLANNED | PPM-10-003 |
+| E-008 | AI usage console | IMPLEMENTED AND VERIFIED LOCALLY | PPM-10-003 |
 | E-009 | CSV Jira GitHub connectors | BLOCKED | PPM-12-001 |
 | T-001 | Next.js TypeScript Tailwind shadcn Motion Zustand Recharts; Chart.js alternative | PARTIALLY IMPLEMENTED | PPM-23-001 |
 | T-002 | FastAPI Python Uvicorn Pydantic; NestJS alternative | IMPLEMENTED AND VERIFIED | PPM-81-010 |
 | T-003 | PostgreSQL JSONB SQLAlchemy Alembic Redis | IMPLEMENTED AND VERIFIED | PPM-81-010 |
-| T-004 | Pinecone/Weaviate versus pgvector | PLANNED | PPM-09-002 |
+| T-004 | Pinecone/Weaviate versus pgvector | PARTIALLY IMPLEMENTED | PPM-10-001 / ADR 016 |
 | T-005 | Neo4j | PLANNED | PPM-18-001 |
-| T-006 | LangChain; LlamaIndex alternative | PLANNED | PPM-10-002 |
-| T-007 | OpenAI Gemini Ollama HuggingFace options | PLANNED | PPM-10-001 |
+| T-006 | LangChain; LlamaIndex alternative | IMPLEMENTED AND VERIFIED LOCALLY | PPM-10-002 |
+| T-007 | OpenAI Gemini Ollama HuggingFace options | PARTIALLY IMPLEMENTED | PPM-10-001 |
 | T-008 | scikit-learn pandas XGBoost Random Forest MLflow | PLANNED | PPM-12-003 |
 | T-009 | LightGBM LSTM time-series PyTorch DistilBERT candidates | PLANNED | PPM-12-003 |
 | T-010 | Docker AWS ECS/RDS/S3 Terraform GitHub Actions | PARTIALLY IMPLEMENTED | PPM-23-002 |
@@ -209,3 +209,12 @@ These are the complete 156 approved crosswalk rows, including scope exclusions a
 | T-015 | Names recruitment and resume claims | NOT IN SCOPE | Scope decision: working name only |
 
 User steps: [current guide](../06-user-guides/USER_GUIDE.md); future outcomes/acceptance: [roadmap](../09-planning/FUTURE_SPRINT_ROADMAP.md); obligations: [traceability](../09-planning/FEATURE_GAP_TRACEABILITY.md).
+
+## Sprint 09 requirement boundaries
+
+[Task evidence](../04-testing/sprint-based/sprint-09/README.md): F-065/068/069/073
+accepted locally. F-066/067 cover attributable MOM/sprint/risk-log text now; findings/review
+remain Sprint 11. F-074 covers scoped keyword/citation interfaces now; embeddings/hybrid
+are implemented with bounded Gemini completion/embedding smoke verified; broad quality remains unverified. F-070–072 remain planned for 11. T-004 vector-provider choice is not
+activated by PostgreSQL keyword search. [Coverage](../requirements/coverage.md) retains
+the combined acceptance obligations; approvals and production recovery are not closed.

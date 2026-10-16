@@ -3,7 +3,7 @@ import { mkdirSync, writeFileSync, existsSync, unlinkSync } from "node:fs";
 import { resolve } from "node:path";
 
 const docker = process.env.PPM_DOCKER || "docker";
-const args = ["compose", "-f", "compose.yaml", "-f", "compose.identity-test.yaml"];
+const args = ["compose", "-f", "compose.yaml", "-f", "compose.documents.yaml", "-f", "compose.identity-test.yaml"];
 const env = {...process.env, PPM_WEB_PORT:"3001", PPM_API_PORT:"8001", PPM_POSTGRES_PORT:"15433",
   PPM_REDIS_PORT:"16380", PPM_WEB_ORIGIN:"http://localhost:3001",
   PPM_WEB_URL:"http://localhost:3001", PPM_API_URL:"http://127.0.0.1:8001"};

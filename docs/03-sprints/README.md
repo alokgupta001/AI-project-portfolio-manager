@@ -1,5 +1,7 @@
 # Sprint history and future work
 
+Current documentation closure for all Sprints 00–10 (including 8.1): [coverage, corrections, recorded evidence and remaining gates](../10-reference/PREVIOUS-SPRINTS-DOCUMENTATION-CLOSURE.md).
+
 - [Completed Sprint 00: Scope reconciliation and architecture contracts](completed/sprint-00/README.md)
 - [Completed Sprint 01: Reproducible runtime foundation](completed/sprint-01/README.md)
 - [Completed Sprint 02: Identity and tenant authorization](completed/sprint-02/README.md)
@@ -10,8 +12,8 @@
 - [Completed Sprint 07: Deterministic command center](completed/sprint-07/README.md)
 - [Completed Sprint 08: Durable jobs and ingestion](completed/sprint-08/README.md)
 - [Active Sprint 8.1: local implementation, parent acceptance open](active/sprint-8.1/README.md)
-- [PLANNED Sprint 09: Versioned evidence, keyword retrieval and governance](planned/sprint-09/README.md)
-- [PLANNED Sprint 10: AI gateway, embeddings, orchestration and evaluation](planned/sprint-10/README.md)
+- [Completed locally Sprint 09: evidence, keyword retrieval and governance](completed/sprint-09/README.md)
+- [Active Sprint 10 (bounded Gemini smoke verified; broader quality open): AI gateway, embeddings, orchestration and evaluation](active/sprint-10/README.md)
 - [PLANNED Sprint 11: Nine agents, semantic assessment and reviewed recommendations](planned/sprint-11/README.md)
 - [PLANNED Sprint 12: Connector authority, historical labels and baseline models](planned/sprint-12/README.md)
 - [PLANNED Sprint 13: Eligible forecast serving with uncertainty](planned/sprint-13/README.md)
@@ -27,3 +29,7 @@
 - [PLANNED Sprint 23: Integrated release, performance, recovery and deployment](planned/sprint-23/README.md)
 
 [Documentation acceptance applies to every future sprint](../09-planning/SPRINT_DOCUMENTATION_CHECKLIST.md). Dates/numbers are execution order, not delivery promises.
+
+## Sprint 10 shared AI runtime
+
+[Sprint 10 runtime and evidence](active/sprint-10/README.md). Local implementation and bounded Gemini free-tier smoke verified; general model/retrieval quality remains unverified. $0 authorization and source fallback apply; no daily renewal. Stop before 11.

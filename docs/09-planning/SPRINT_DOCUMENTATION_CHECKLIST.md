@@ -15,3 +15,15 @@ Use this for every future task, scoped to the feature's actual impact. A sprint 
 11. Confirm planned/current distinction, source references, links and application/document preservation.
 
 Completion record: list affected canonical paths, checks run, unresolved documentation/provider gates and next owner action. Do not report a test pass before execution. Do not make unrelated edits for a minor feature change. Use [the feature map](FEATURE_DOCUMENT_MAPPING.md) to select documents.
+
+## Sprint 09 completion record — 15 October 2026
+
+[Documentation closure](../04-testing/sprint-based/sprint-09/DOCUMENTATION_CHECKS.md)
+maps all eleven obligations above to affected canonical paths, checks and exact
+remaining gates. Current learning/user/demo/operator/inventory/tracker/mapping content
+has been reconciled with the implemented local slice. Archived Word visual acceptance,
+hosted CI and production release requirements remain open. No Sprint 10 work started.
+
+## Sprint 10 current closure
+
+[Sprint 10 runtime and evidence](../04-testing/sprint-based/sprint-10/DOCUMENTATION_CHECKS.md). Retain prior coverage and original thresholds. Gemini free-tier completion/embedding smoke passed; general model-quality, hosted CI and archived Word visual gates remain open. Current evidence is in the Sprint 10 Gemini follow-up.

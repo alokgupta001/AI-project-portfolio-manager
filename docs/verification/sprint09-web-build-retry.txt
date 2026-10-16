@@ -1,0 +1,53 @@
+
+> enterprise-ppm@0.1.0 build
+> npm run build --workspace @ppm/web
+
+
+> @ppm/web@0.1.0 build
+> next build
+
+▲ Next.js 16.3.8 (Turbopack)
+✓ Running next.config.ts took 199ms
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 4.2s
+  Running TypeScript ...
+  Finished TypeScript in 9.7s ...
+  Collecting page data using 7 workers ...
+  Generating static pages using 7 workers (0/17) ...
+  Generating static pages using 7 workers (4/17) 
+  Generating static pages using 7 workers (8/17) 
+  Generating static pages using 7 workers (12/17) 
+✓ Generating static pages using 7 workers (17/17) in 718ms
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ○ /account
+├ ○ /account/complete
+├ ○ /account/reset
+├ ƒ /api/v1/[...path]
+├ ○ /assessments
+├ ○ /command-center
+├ ○ /design-system
+├ ○ /documents
+├ ○ /integrations
+├ ○ /login
+├ ○ /organization
+├ ○ /portfolios
+├ ○ /projects
+├ ƒ /projects/[id]
+├ ○ /resources
+├ ○ /signup
+└ ƒ /system
+
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+
+npm notice
+npm notice New major version of npm available! 11.19.0 -> 12.2.0
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.0
+npm notice To update run: npm install -g npm@12.2.0
+npm notice

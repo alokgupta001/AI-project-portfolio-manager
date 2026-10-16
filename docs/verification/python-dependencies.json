@@ -282,6 +282,12 @@
     "license_classifiers": []
   },
   {
+    "name": "pypdf",
+    "version": "6.20.1",
+    "declared_license": "BSD-3-Clause",
+    "license_classifiers": []
+  },
+  {
     "name": "pytest",
     "version": "9.1.1",
     "declared_license": "MIT",

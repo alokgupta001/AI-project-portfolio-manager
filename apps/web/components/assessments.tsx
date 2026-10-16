@@ -707,6 +707,14 @@ export function Assessments({
                                 )}{" "}
                                 · {e.file_size} bytes
                               </p>
+                              {e.released && (
+                                <p
+                                  className="muted"
+                                  style={{ overflowWrap: "anywhere" }}
+                                >
+                                  Reusable document attachment reference: {e.id}
+                                </p>
+                              )}
                               <div className="button-row">
                                 <Button
                                   variant="secondary"

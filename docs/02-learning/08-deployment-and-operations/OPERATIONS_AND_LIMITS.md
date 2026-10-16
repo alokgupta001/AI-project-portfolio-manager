@@ -2,25 +2,29 @@
 
 [Learning roadmap](../00-getting-started/README.md)
 
-Current verification: **9 October 2026**, Git base **`9056440`** plus preserved uncommitted Sprint 08/8.1 changes, with migration chain ending **`0008_pilot_completion`**. Sprint 8.1 is implemented locally with open parent acceptance. See [fresh verification results](../../04-testing/SPRINT_VERIFICATION_REPORT.md); older acceptance records retain their historical scope.
+Current Sprint 10 source checkpoint: uncommitted over b98110e, additive 0012_ai_runtime.
+Normal rollout/evidence are recorded in the [active handoff](../../03-sprints/active/sprint-10/HANDOFF.md).
+The shared runtime and no-key evidence preview are implemented; Gemini free-tier smoke verified; broader quality unverified.
+Earlier Sprint 8.1 Word/CI and production gates remain open.
 
 ## Complete slices, partial features and plans
 
 | Status | Scope | Current source / how to inspect |
 | --- | --- | --- |
-| Implemented within stated limits | Identity, delivery, capacity, versioned assessments, four command-center views, risk/benefit records and saved filters | Owning API modules, frontend components and tests described in chapters 2–8 |
+| Implemented within stated limits | Identity, delivery, capacity, versioned assessments, four command-center views, risk/benefit records and saved filters | Owning API modules, frontend components and tests described in chapters 2â€“8 |
 | Implemented diagnostic | Celery database checkpoint, readiness, generated contracts, CI definition | `services/worker/ppm_worker/app.py`, `main.py`, `scripts/contracts.mjs`, `.github/workflows/ci.yml` |
-| Partial against broad product requirements | Evidence intake/review and activation/reset delivery | Narrow UTF-8 text plus manual release; local-preview alternative plus verified development Gmail signup/invitation/recovery; no general document/scanning pipeline |
+| Partial against broad product requirements | Evidence intake/review and activation/reset delivery | Assessment intake remains narrow UTF-8/manual release; separate Sprint 09 source library/scanner/OCR/keyword pipeline is locally verified; development Gmail is verified |
 | Browser administration | Scoped assessment access | `assessment.set_access` and browser Framework/Assessment Access panels now exist |
 | Implemented within local bounds | Durable jobs/outbox, CSV and labelled Jira/GitHub fixtures, live progress/SSE | Sprint 08 report and jobs contract; real provider authentication and deployed webhooks remain unverified |
-| Planned | Retrieval, AI gateway/agents, predictive models/copilot and cloud release | Roadmap and decision records; no complete current user flow |
+| Implemented, local verification | Shared gateway/budgeted hybrid/disabled fallback | Gemini free-tier smoke verified; bounded JSONB vectors, broad quality/scale unverified |
+| Planned | Agents, predictive models/copilot and cloud release | Sprint 11 onward requires separate authorization |
 | Not established | Production readiness, real-world throughput, full accessibility/security certification, off-host recovery | Existing local/CI checks do not prove these outcomes |
 
 Implementation means a connected code path exists and has the recorded acceptance described here. It does not mean every broad requirement or future sprint is complete.
 
 ## Practical limits you will encounter
 
-The command snapshot bounds input to 200 projects, 100 assigned resources and 5,000 rows per loaded source kind. Selected date ranges are 1–366 days. Sprint 8.1 selectors now page/search on the server; snapshot input limits remain. A list or chart should not be treated as unlimited enterprise data.
+The command snapshot bounds input to 200 projects, 100 assigned resources and 5,000 rows per loaded source kind. Selected date ranges are 1â€“366 days. Sprint 8.1 selectors now page/search on the server; snapshot input limits remain. A list or chart should not be treated as unlimited enterprise data.
 
 Cooperating writes and snapshots serialize by organization. This favors straightforward cross-record checks, but can limit throughput. The small historical two-project/one-resource measurement is not a production performance guarantee.
 
@@ -61,7 +65,7 @@ Backend tests cover input, identity/session/CSRF, RLS, revisions/retries, delive
 
 The old Sprint 07 records include 53 backend tests plus later focused command cases and separately recorded browser acceptance. A subsequent [CI correction record](../../04-testing/sprint-based/sprint-07/SPRINT-07-CI-FIX.md) supersedes old claims that hosted CI had not run: it records 55 local backend tests and successful hosted run **37754868462**, confirmed 9 October 2026. This guide relies on that repository evidence and does not claim to have independently queried the live hosted run.
 
-CI runs on push/pull request through `.github/workflows/ci.yml`: locked dependency installation → static/contracts/source checks → isolated stack/backend/worker → browser/persistence → artifact upload/cleanup. It has no production deployment job. A past dependency audit does not establish current vulnerability status.
+CI runs on push/pull request through `.github/workflows/ci.yml`: locked dependency installation â†’ static/contracts/source checks â†’ isolated stack/backend/worker â†’ browser/persistence â†’ artifact upload/cleanup. It has no production deployment job. A past dependency audit does not establish current vulnerability status.
 
 For checks actually run during this rewrite, see [documentation verification](../../10-reference/history/LEARNING-DOCUMENTATION-VERIFICATION.md). No application test pass is inferred from a file existing, and no normal database mutation is necessary to verify Markdown links and source references.
 
@@ -72,12 +76,17 @@ After a code change, follow its UI-to-database path and update the corresponding
 Existing `docs/learning` generators encode older authored chapters. Do not rerun them over this guide without reviewing the output: old snapshots contain outdated commit/CI wording and dense explanations. Prefer editing the source-reviewed chapters and checking links. Regenerate detailed inventories only when needed and verify their results against the current source.
 
 
-## Source-reviewed Sprint 8.1 update — 9 October 2026
+## Source-reviewed Sprint 8.1 update â€” 9 October 2026
 
-Current local setup includes migration 0008, a mail adapter and pilot controls. Development Gmail account delivery is verified; production delivery, current hosted CI and regenerated archived Word visual QA remain separate gates. Read CURRENT_STATUS for current scope and the original sprint reports for what was verified at each date. Legacy Word files/generators are retained and are not automatically the current canonical guide.
+Current local setup reaches migration 0011 with mail/pilot controls and the optional mandatory-for-intake ClamAV override. Development Gmail account delivery is verified; production delivery, current hosted CI and regenerated archived Word visual QA remain separate gates. Read CURRENT_STATUS for current scope and the original sprint reports for what was verified at each date. Legacy Word files/generators are retained and are not automatically the current canonical guide.
 
 Status: **IMPLEMENTED AND VERIFIED** within retained local evidence; external gates stay **BLOCKED** or **IMPLEMENTED BUT UNVERIFIED**. See [current status](../../00-overview/CURRENT_STATUS.md), [8.1 evidence](../../03-sprints/active/sprint-8.1/SPRINT_REPORT.md), [future concept and documentation map](../../09-planning/FEATURE_DOCUMENT_MAPPING.md) and [PLANNED work](../../09-planning/FUTURE_SPRINT_ROADMAP.md).
 
-## Verified Gmail and access update — 10 October 2026
+## Verified Gmail and access update â€” 10 October 2026
 
 Development Gmail SMTP is now verified for signup, existing-account Viewer acceptance and recovery. Infrastructure configuration remains an operator task; members use only website/email. Changing `.env` requires service recreation, not just restart, to load new environment values. Isolated tests retain local delivery. Follow [Gmail SMTP setup](../../07-setup-and-deployment/GMAIL-SMTP-SETUP.md) for exact keys and safe diagnostics; [the email report](../../04-testing/ACCOUNT_EMAIL_VERIFICATION.md) does not certify production, other providers or every live lifecycle variant.
+## Sprint 10 evidence runtime
+
+Sprint 10 source adds the shared gateway and disabled evidence runtime. Current exact runtime and acceptance are in its handoff; do not infer normal migration from image source. Real provider remains BLOCKED.
+
+Read [the practical trace](../06-ai-and-analytics/AI_GATEWAY.md) for actual symbols, flow, failures and debugging. No Sprint 11 semantic agents or automatic changes are implemented.

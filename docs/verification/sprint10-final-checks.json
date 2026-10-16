@@ -1,0 +1,104 @@
+{
+  "started_at": "2026-10-15T18:18:24.917346+00:00",
+  "scope": "Sprint 10 local closure only; real provider BLOCKED",
+  "checks": [
+    {
+      "command": [
+        "C:\\Users\\alokg\\OneDrive\\Documents\\Codex\\enterprise-ppm\\.venv\\Scripts\\python.exe",
+        "scripts/documentation_inventory.py"
+      ],
+      "exit_code": 0,
+      "log": "docs/verification/sprint10-doc-inventory.txt"
+    },
+    {
+      "command": [
+        "C:\\Users\\alokg\\OneDrive\\Documents\\Codex\\enterprise-ppm\\.venv\\Scripts\\python.exe",
+        "scripts/documentation_inventory.py",
+        "--check"
+      ],
+      "exit_code": 0,
+      "log": "docs/verification/sprint10-doc-inventory-check.txt"
+    },
+    {
+      "command": [
+        "C:\\Users\\alokg\\OneDrive\\Documents\\Codex\\enterprise-ppm\\.venv\\Scripts\\python.exe",
+        "scripts/check_documentation.py"
+      ],
+      "exit_code": 0,
+      "log": "docs/verification/sprint10-doc-check.txt"
+    },
+    {
+      "command": [
+        "C:\\Users\\alokg\\OneDrive\\Documents\\Codex\\enterprise-ppm\\.venv\\Scripts\\python.exe",
+        "scripts/check_sources.py"
+      ],
+      "exit_code": 0,
+      "log": "docs/verification/sprint10-sources.txt"
+    },
+    {
+      "command": [
+        "C:\\Users\\alokg\\OneDrive\\Documents\\Codex\\enterprise-ppm\\.venv\\Scripts\\python.exe",
+        "scripts/sprint10_preserve.py",
+        "check"
+      ],
+      "exit_code": 0,
+      "log": "docs/verification/sprint10-preservation-files.txt"
+    },
+    {
+      "command": [
+        "C:\\Users\\alokg\\OneDrive\\Documents\\Codex\\enterprise-ppm\\.venv\\Scripts\\ruff.exe",
+        "check",
+        "services",
+        "scripts",
+        "tests"
+      ],
+      "exit_code": 0,
+      "log": "docs/verification/sprint10-ruff.txt"
+    },
+    {
+      "command": [
+        "C:\\Users\\alokg\\OneDrive\\Documents\\Codex\\enterprise-ppm\\.venv\\Scripts\\ruff.exe",
+        "format",
+        "--check",
+        "services",
+        "scripts",
+        "tests"
+      ],
+      "exit_code": 0,
+      "log": "docs/verification/sprint10-python-format.txt"
+    },
+    {
+      "command": [
+        "C:\\Users\\alokg\\OneDrive\\Documents\\Codex\\enterprise-ppm\\.venv\\Scripts\\mypy.exe",
+        "services/api/ppm_api",
+        "services/worker/ppm_worker"
+      ],
+      "exit_code": 0,
+      "log": "docs/verification/sprint10-mypy.txt"
+    },
+    {
+      "command": [
+        "node",
+        "scripts/contracts.mjs",
+        "--check"
+      ],
+      "exit_code": 0,
+      "log": "docs/verification/sprint10-contracts-check.txt"
+    },
+    {
+      "command": [
+        "git",
+        "-c",
+        "safe.directory=C:/Users/alokg/OneDrive/Documents/Codex/enterprise-ppm",
+        "-c",
+        "core.safecrlf=false",
+        "diff",
+        "--check"
+      ],
+      "exit_code": 0,
+      "log": "docs/verification/sprint10-diff-check.txt"
+    }
+  ],
+  "completed_at": "2026-10-15T18:18:39.468136+00:00",
+  "result": "PASS"
+}

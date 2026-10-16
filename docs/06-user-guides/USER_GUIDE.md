@@ -26,7 +26,7 @@ Account email: after a verified real-email setup, check Inbox and Spam; verifica
 
 Wrong organization or absent grant can hide a row; recheck Account and access rather than changing IDs. Keep separate browser profiles for different users. On 401 sign in/refresh; on stale revision reload before editing. Unknown metrics need source/calendar/coverage corrections, not invented zeros. Failed imports expose bounded diagnostics through their job surface. Local challenge links are private, expire and cannot be replayed.
 
-**PLANNED:** reusable documents/retrieval (09), AI/agents (10–11), predictive models (12–13), project/multi-project copilot (14), approvals/reminders (15), transformation/scenarios/graph/benchmarks/meetings (16–20), reports/exports/alerts/audio (21), passkeys/lifecycle (22), production recovery/deployment (23). There is no executable AI assistant or report-export demo at this checkpoint. Follow [approved future scope](../09-planning/FUTURE_SPRINT_ROADMAP.md); optional additions are not guaranteed.
+**IMPLEMENTED, verification in progress:** /ai disabled source previews and Admin controls (10), Gemini free-tier smoke verified; broader quality unverified. **PLANNED:** agents (11), predictive models (12–13), project/multi-project copilot (14), approvals/reminders (15), transformation/scenarios/graph/benchmarks/meetings (16–20), reports/exports/alerts/audio (21), passkeys/lifecycle (22), production recovery/deployment (23). There is no executable AI assistant or report-export demo at this checkpoint. Follow [approved future scope](../09-planning/FUTURE_SPRINT_ROADMAP.md); optional additions are not guaranteed.
 
 
 ## Account and setup repair — 10 October 2026
@@ -34,3 +34,22 @@ Wrong organization or absent grant can hide a row; recheck Account and access ra
 The organization profile now shows read-only name, saved description/industry/website, live administrators, member counts and operating settings. Use **Edit name** to enter Save/Cancel mode. Resource planning exposes **Working calendars** directly; create immutable schedule versions and reference them from dated availability. Field and business-rule errors retain their specific explanations.
 
 Membership removal denies only that organization and preserves the global account; no-membership accounts can sign in and manage their own profile/sessions. Existing-project sprint writes need explicit project edit/manage access. See [the full walkthrough](WEBSITE_WALKTHROUGH.md), [training provisioning](../05-demos/WALKTHROUGH_DATA.md), and [current verification](../04-testing/ACCOUNT_WORKFLOW_REPAIR_REPORT.md).
+
+## Document library — Sprint 09
+
+Open **Document library** (`/documents`). Admin or a PM with project edit/manage can
+upload categorized PDF/scans, DOCX, TXT/CSV/XLSX or PNG/JPEG up to 8 MiB. Viewer reads
+only permitted sources; ownership grants no access. Wait for Ready, open a paged source
+location, search keywords, verify a citation, download the original or append a version.
+Missing scanner quarantines; ask the operator to restore health and explicitly reprocess.
+Follow the [canonical library guide](../03-sprints/completed/sprint-09/USER_GUIDE.md) for
+every step, private assessment references, Admin policy/hold/deletion/purge and recovery.
+Semantic extraction, embeddings and policy approval are not available in this slice.
+## AI evidence preview — Sprint 10
+
+Open AI operations & evidence as Admin to retrieve a permitted project source
+preview, inspect no-key diagnostics and manage a zero-spend tenant budget. Follow
+[the current steps](../03-sprints/active/sprint-10/USER_GUIDE.md). Keyword excerpts are labeled source_fallback; no match
+stays unavailable. Index embeddings and real model answers remain disabled until
+explicit provider/model/spend authorization. PM/Viewer use the document library;
+restricted Admin diagnostics are inaccessible. No semantic agents or plan edits.

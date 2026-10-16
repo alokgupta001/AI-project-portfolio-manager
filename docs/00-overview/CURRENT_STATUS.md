@@ -1,6 +1,12 @@
 # Current implementation and acceptance
 
-Audited 9 October 2026 (Asia/Calcutta). Code checkpoint: base `9056440` plus the existing dirty working tree; not a committed Sprint 8.1 release. Schema source ends at `0008_pilot_completion`. No runtime/database mutation was performed by this documentation audit.
+**16 October 2026 update:** [Gemini free-tier support](../07-setup-and-deployment/GEMINI-FREE-TIER.md)
+is authorized at $0 on a user-confirmed project with no linked billing account.
+A real synthetic exact-excerpt completion and 256-dimension embedding smoke passed.
+This supersedes the authorization restriction in the original checkpoint below;
+general model-quality and production acceptance remain open. No new migration.
+
+Current checkpoint — 16 October 2026: Sprint 10 local implementation is verified at `0012_ai_runtime`. Gemini free-tier completion and 256-dimension embedding smoke passed on the user-confirmed unbilled project with maximum spend $0; no daily renewal is required. The latest AI/provider regression suite recorded 63 passes. General model/retrieval quality, hosted CI, archived Word visual QA and production release remain unverified. Sprint 11 has not started. Stop before 11.
 
 | Capability | Status | Evidence and limits |
 | --- | --- | --- |
@@ -8,10 +14,13 @@ Audited 9 October 2026 (Asia/Calcutta). Code checkpoint: base `9056440` plus the
 | Durable jobs, CSV imports, labeled Jira/GitHub fixtures | IMPLEMENTED AND VERIFIED | Sprint 08 report and job tests; fixture success is not live-provider acceptance. |
 | Signup, setup/profile, browser grants, scoped record search, paging/comparison, My work/notifications, optional metadata, authorized refresh | IMPLEMENTED AND VERIFIED | PPM-81-001 and 003–009 have current source and recorded local acceptance. |
 | SMTP delivery to a real inbox | VERIFIED IN DEVELOPMENT | Development SMTP enabled; verified STARTTLS/authentication pass and signup reached provider_accepted. Signup receipt in Spam and verified Admin activation confirmed; recovery accepted by provider, with recovery completion confirmed by recipient; existing-account invitation acceptance and correct Viewer membership are confirmed. |
-| Sprint 8.1 closure | PARTIALLY IMPLEMENTED | 8 of 10 tasks complete locally; 002 external mail gate and 010 CI/Word visual gates remain open. |
+| Sprint 8.1 closure | PARTIALLY IMPLEMENTED | Original report retained; development Gmail journeys were verified on 10 October. Hosted CI/current revision and archived Word visual gates remain open. |
 | Current hosted CI and regenerated Word layout | IMPLEMENTED BUT UNVERIFIED | Workflow/document artifacts exist; current revision CI and every-page visual acceptance are not established. |
 | Live Jira/GitHub sync | BLOCKED | Explicit credentials/provider acceptance required; do not present fixtures as customer integration. |
-| Versioned document library, OCR, retrieval, AI gateway/agents/copilot, predictive models | PLANNED | Sprints 09–14. Existing plain-text assessment evidence is a narrower implemented feature. |
+| Versioned document library, English OCR, keyword retrieval/citations | IMPLEMENTED AND VERIFIED LOCALLY | `/documents`, source versions/locations, real ClamAV, scoped history/downloads and same-byte assessment links; [guide](../03-sprints/completed/sprint-09/USER_GUIDE.md). |
+| Policy registry and document retention/pilot restore | IMPLEMENTED AND VERIFIED LOCALLY | Admin owner/applicability/dates/state, holds, deletion/eligible purge and synthetic scratch recovery; approvals remain 15, production backup erasure/recovery remain 22/23. |
+| Shared AI gateway, bounded embeddings/hybrid, orchestration, Admin controls | IMPLEMENTED AND VERIFIED LOCALLY | Recorded 150 backend / 16 browser / 12 offline baseline cases; Gemini free-tier smoke and later 63 AI/provider regressions passed. $0, no daily renewal; broad retrieval/model quality unverified. |
+| Agents/copilot and predictive models | PLANNED | Sprints 11–14; no semantic findings or automatic edits. |
 | Approvals, transformation, simulations, graph, broad benchmarking, meetings, reports/alerts/passkeys, production release | PLANNED | Sprints 15–23; current departmental comparison is a narrow local capability. |
 | Optional unadopted additions and alternative stacks | NOT IN SCOPE | Only adopted required scope counts toward release; see the release criteria. |
 
@@ -28,4 +37,22 @@ Assessment evidence remains bounded UTF-8 text with manual release. Notification
 
 ## 10 October 2026 account and website repair follow-up
 
-Current local schema head is `0010_account_authority`. Global account status, organization-free personal sessions, organization profile editing, visible calendar navigation, trusted business errors and the scoped Hement correction are implemented. Guarded Northstar training data is provisioned independently of existing organizations. [Current verification and walkthrough inventory](../04-testing/ACCOUNT_WORKFLOW_REPAIR_REPORT.md) give actual results. Production, live connector acceptance and the planned AI/document-intelligence phases retain their existing gates.
+The 10 October follow-up reached `0010_account_authority`; Sprint 09 subsequently advanced the normal head to `0011_document_sources`. Global account status, organization-free personal sessions, organization profile editing, visible calendar navigation, trusted business errors and the scoped Hement correction are implemented. Guarded Northstar training data is provisioned independently of existing organizations. [Current verification and walkthrough inventory](../04-testing/ACCOUNT_WORKFLOW_REPAIR_REPORT.md) give actual results. Production and live connector acceptance retain their gates. Document intake/OCR/keyword retrieval are now local Sprint 09 capabilities; AI interpretation remains planned.
+
+## Sprint 09 evidence and limits
+
+The full backend/lifecycle run passed 123 cases. Focused source/parser acceptance passed
+24, final security passed nine and the final chunk boundary passed one. Fourteen browser
+regressions passed in the full run; after repairing the new document flow, its affected
+scenario passed separately. This is not a claim of a single all-green combined browser run.
+Static/contract checks and npm/locked Python vulnerability audits passed. Local data
+preservation used a fresh quiesced checkpoint after one legitimate refresh-token row
+appeared while the previous stack was live; that row was retained. Recovery used new
+scratch targets only. [Exact evidence and failures](../04-testing/sprint-based/sprint-09/TESTING_REPORT.md).
+
+The optional ClamAV override must be healthy for intake; unavailable scanning quarantines
+without a manual bypass. Sources are bounded to 8 MiB, with strict parser limits and
+English OCR. Only latest ready versions participate in keyword search. Workforce notes
+are excluded; private assessment evidence keeps independent authority. Policy labels use
+UTC calendar dates, not a compliance certification. Pilot retention is 30 days; production
+storage, backup erasure, performance/availability, hosted CI and Word visual QA remain open.

@@ -121,3 +121,12 @@ Status: **IMPLEMENTED AND VERIFIED** within retained local evidence; external ga
 ## Verified Gmail and access update — 10 October 2026
 
 The email update uses existing `identity_users`, `memberships`, `identity_challenges`, `identity_sessions` and `identity_deliveries`; no new migration was required. Challenges store a digest/purpose/expiry/used state. The private delivery payload must survive transient retry, then is cleared on terminal outcomes. Provider acceptance does not change membership: successful challenge completion does. Recipient-scoped RLS context is needed when reading membership evidence; an unscoped empty result is not proof that no membership exists. See [account email and role access](../05-security/ACCOUNT_EMAIL_AND_ROLE_ACCESS.md).
+
+## Sprint 09 extension
+
+`0011_document_sources` adds `source_documents`, `source_versions`, `source_chunks`, `source_evidence_links` and the exclusive durable-job document/integration reference. Originals have SQL-protected immutable identity; chunks are replaceable derived data. App-role hard deletion is denied; guarded purge preserves tombstones. The narrow Admin retention-reference function includes archived-project holds/references. [Current dictionary](../../01-architecture/DATABASE-DICTIONARY.md) and [source trace](../06-ai-and-analytics/DOCUMENT_SOURCES.md) explain the actual schema; never lifecycle-downgrade normal data.
+## Sprint 10 evidence runtime
+
+0012_ai_runtime adds ai_budgets, ai_runs, ai_calls and ai_embeddings. durable_jobs has an exclusive third ai_run_id reference. JSONB vectors are a bounded rebuildable projection; pgvector is not installed.
+
+Read [the practical trace](../06-ai-and-analytics/AI_GATEWAY.md) for actual symbols, flow, failures and debugging. No Sprint 11 semantic agents or automatic changes are implemented.

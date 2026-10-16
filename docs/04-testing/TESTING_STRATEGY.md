@@ -12,7 +12,7 @@ This is strategy/run guidance, not an executed full application report. Historic
 | Security/tenant isolation | Full guarded backend and browser suites; focus `test_identity.py`, `test_pilot.py`, assessment/capacity cases | Two tenants, ID substitution, revocation, CSRF, changed scope and sensitive effort; check negative cases rather than relying on UI hiding |
 | Worker/persistence | `docker compose exec -T api python scripts/smoke_worker.py`; `node scripts/check-persistence.mjs` | Specific worker round trip/restart fixture; writes/restarts require intended local acceptance scope and are not run during a docs-only audit |
 | Source preservation | `.\.venv\Scripts\python.exe scripts/check_sources.py` | Frozen source hashes; separate from application regression |
-| AI grounding/quality | PLANNED TEST — NOT YET EXECUTED | Sprints 09–14: scoped retrieval/citations, provider failure/invalid output/adversarial text, evaluation and genuine-label model suitability |
+| Source/keyword grounding | Sprint 09 isolated backend/parser and document browser checks; [executed report](sprint-based/sprint-09/TESTING_REPORT.md) | Scope/citations/tickets, real scanner/OCR, hostile text and synthetic keyword baseline verified locally. Model inference/semantic quality remain planned 10–14. |
 | Performance/recovery/release smoke | PLANNED TEST — NOT YET EXECUTED | 22/23 documented workload/device/profile and restore/rollback exercises; historical tiny-fixture timings do not prove targets |
 
 ## Test environment and interpreting results
@@ -22,3 +22,17 @@ Follow [local environment instructions](../07-setup-and-deployment/LOCAL-DEVELOP
 For a regression, record expected/actual, command, environment, fixtures, code revision and retained output. Preserve old successful reports even when a current run fails; add the current defect separately. Cover empty/invalid/stale/network/unavailable-provider cases, totals/relationships/periods and permissions. Run only checks relevant to changed behavior; documentation-only link/source checks do not require resetting application data.
 
 Final release acceptance remains [the existing release criteria](../00-overview/FINAL_PRODUCT_SCOPE_AND_RELEASE_CRITERIA.md); no gate is weakened by this strategy.
+
+## Sprint 09 scanner-aware acceptance
+
+Use `docker compose -f compose.yaml -f compose.documents.yaml --profile test run --build --rm test`
+with a healthy scanner; the runner guards the disposable database. Browser runner:
+`node scripts/check-identity-browser.mjs documents.spec.ts`. Real commands, log names,
+123 full backend passes and separately accepted browser runs are in [Sprint 09 checks](sprint-based/sprint-09/TESTING_REPORT.md).
+This docs-only follow-up does not rerun application/migration suites. Documentation
+gates are `python scripts/documentation_inventory.py --check`,
+`python scripts/check_documentation.py`, source hashes and `git diff --check`.
+
+## Sprint 10 current closure
+
+[Sprint 10 runtime and evidence](sprint-based/sprint-10/TESTING_REPORT.md). Retain prior coverage and original thresholds. Gemini free-tier completion/embedding smoke passed; general model-quality, hosted CI and archived Word visual gates remain open. Current evidence is in the Sprint 10 Gemini follow-up.
