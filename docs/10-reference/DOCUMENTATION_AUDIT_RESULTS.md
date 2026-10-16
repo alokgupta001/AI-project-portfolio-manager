@@ -1,5 +1,9 @@
 # Documentation audit results — 9 October 2026
 
+**Closeout — 16 October 2026: Sprints 8.1 and 10 are COMPLETED for their implemented development scope.** The reviewed application checkpoint `631c149` passed [hosted CI](https://github.com/alokgupta001/AI-project-portfolio-manager/actions/runs/38885041673), including regression, migration and browser checks. The current pilot Word guide is rendered and visually verified in the linked closeout evidence. Earlier blocked/active statements below describe their recorded checkpoints. Production deployment, broad real-model/agent quality and scale remain OPEN release/successor gates. Stop before 11. [Current closeout](../10-reference/SPRINT-8.1-AND-10-CLOSEOUT.md).
+
+## Historical record before closeout
+
 **Current reconciliation — 16 October 2026:** The current [Sprints 00–10 documentation closure](PREVIOUS-SPRINTS-DOCUMENTATION-CLOSURE.md) supersedes availability/inventory/review status in the dated audit below. Historical measurements and incomplete checks remain retained outcomes, not new results.
 
 Current follow-up: [Sprint 09 documentation closure](../04-testing/sprint-based/sprint-09/DOCUMENTATION_CHECKS.md),

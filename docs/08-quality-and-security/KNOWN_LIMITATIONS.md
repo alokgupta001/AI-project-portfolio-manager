@@ -1,5 +1,7 @@
 # Quality, security and operational limitations
 
+Current closeout: Sprints 8.1 and 10 are completed for development scope; hosted CI and the current pilot Word guide are verified. Broad agent/model quality, production and scale remain successor/release gates. See [acceptance disposition](../10-reference/SPRINT-8.1-AND-10-CLOSEOUT.md). Earlier dated evidence below retains its historical scope.
+
 [Current limitations](../00-overview/CURRENT_STATUS.md) identifies snapshot bounds, evidence/file transaction limits, notification presentation retention, SSE polling cost and open external/release gates. [Security walkthrough](../02-learning/05-security/AUTHENTICATION_AND_AUTHORIZATION.md) explains live membership, RLS, roles/grants/ownership and private effort. [Test strategy](../04-testing/TESTING_STRATEGY.md) maps negative cases; [Release criteria](../00-overview/FINAL_PRODUCT_SCOPE_AND_RELEASE_CRITERIA.md) retains performance/recovery/accessibility obligations. Existing local checks do not imply independent security certification, production throughput or full recovery acceptance.
 
 ## Sprint 09 boundaries

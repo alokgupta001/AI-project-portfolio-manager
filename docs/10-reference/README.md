@@ -8,4 +8,4 @@ Current documentation closure for all Sprints 00–10 (including 8.1): [coverage
 
 ## Sprint 10 shared AI runtime
 
-[Sprint 10 runtime and evidence](../03-sprints/active/sprint-10/README.md). Local implementation and bounded Gemini free-tier smoke verified; general model/retrieval quality remains unverified. $0 authorization and source fallback apply; no daily renewal. Stop before 11.
+[Sprint 10 runtime and evidence](../03-sprints/completed/sprint-10/README.md). Local implementation and bounded Gemini free-tier smoke verified; general model/retrieval quality remains unverified. $0 authorization and source fallback apply; no daily renewal. Stop before 11.

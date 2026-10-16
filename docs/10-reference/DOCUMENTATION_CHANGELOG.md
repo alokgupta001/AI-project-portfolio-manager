@@ -11,7 +11,7 @@ versioned snapshots, tenant reservations/usage/circuits, protected evidence tool
 fenced jobs/cancellation/replay, bounded hybrid projection and Admin operations/
 evaluation UI. Real calls disabled by user instruction; provider acceptance BLOCKED.
 Source head 0012 follows frozen 0011. Local gates and actual normal rollout are in
-[the Sprint 10 report](../03-sprints/active/sprint-10/SPRINT_REPORT.md). Complete user/demo/operator/practical learning,
+[the Sprint 10 report](../03-sprints/completed/sprint-10/SPRINT_REPORT.md). Complete user/demo/operator/practical learning,
 contracts/ADR, traceability, inventories, indexes and closure matrix are maintained.
 No Sprint 11 agents, plan edits, paid calls, commit/push or external deployment.
 

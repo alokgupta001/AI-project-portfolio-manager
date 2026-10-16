@@ -1,5 +1,7 @@
 # Sprint history and future work
 
+**Closeout — 16 October 2026: Sprints 8.1 and 10 are COMPLETED for their implemented development scope.** The reviewed application checkpoint `631c149` passed [hosted CI](https://github.com/alokgupta001/AI-project-portfolio-manager/actions/runs/38885041673), including regression, migration and browser checks. The current pilot Word guide is rendered and visually verified in the linked closeout evidence. Earlier blocked/active statements below describe their recorded checkpoints. Production deployment, broad real-model/agent quality and scale remain OPEN release/successor gates. Stop before 11. [Detailed closeout](../10-reference/SPRINT-8.1-AND-10-CLOSEOUT.md).
+
 Current documentation closure for all Sprints 00–10 (including 8.1): [coverage, corrections, recorded evidence and remaining gates](../10-reference/PREVIOUS-SPRINTS-DOCUMENTATION-CLOSURE.md).
 
 - [Completed Sprint 00: Scope reconciliation and architecture contracts](completed/sprint-00/README.md)
@@ -11,9 +13,9 @@ Current documentation closure for all Sprints 00–10 (including 8.1): [coverage
 - [Completed Sprint 06: Versioned maturity assessments](completed/sprint-06/README.md)
 - [Completed Sprint 07: Deterministic command center](completed/sprint-07/README.md)
 - [Completed Sprint 08: Durable jobs and ingestion](completed/sprint-08/README.md)
-- [Active Sprint 8.1: local implementation, parent acceptance open](active/sprint-8.1/README.md)
+- [Completed Sprint 8.1: pilot usability and account journeys](completed/sprint-8.1/README.md)
 - [Completed locally Sprint 09: evidence, keyword retrieval and governance](completed/sprint-09/README.md)
-- [Active Sprint 10 (bounded Gemini smoke verified; broader quality open): AI gateway, embeddings, orchestration and evaluation](active/sprint-10/README.md)
+- [Completed Sprint 10 (gateway/evaluation scope): AI gateway, embeddings, orchestration and evaluation](completed/sprint-10/README.md)
 - [PLANNED Sprint 11: Nine agents, semantic assessment and reviewed recommendations](planned/sprint-11/README.md)
 - [PLANNED Sprint 12: Connector authority, historical labels and baseline models](planned/sprint-12/README.md)
 - [PLANNED Sprint 13: Eligible forecast serving with uncertainty](planned/sprint-13/README.md)
@@ -32,4 +34,4 @@ Current documentation closure for all Sprints 00–10 (including 8.1): [coverage
 
 ## Sprint 10 shared AI runtime
 
-[Sprint 10 runtime and evidence](active/sprint-10/README.md). Local implementation and bounded Gemini free-tier smoke verified; general model/retrieval quality remains unverified. $0 authorization and source fallback apply; no daily renewal. Stop before 11.
+[Sprint 10 runtime and evidence](completed/sprint-10/README.md). Local implementation and bounded Gemini free-tier smoke verified; general model/retrieval quality remains unverified. $0 authorization and source fallback apply; no daily renewal. Stop before 11.

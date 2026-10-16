@@ -1,5 +1,9 @@
 # Gap acceptance test plan
 
+**Closeout — 16 October 2026: Sprints 8.1 and 10 are COMPLETED for their implemented development scope.** The reviewed application checkpoint `631c149` passed [hosted CI](https://github.com/alokgupta001/AI-project-portfolio-manager/actions/runs/38885041673), including regression, migration and browser checks. The current pilot Word guide is rendered and visually verified in the linked closeout evidence. Earlier blocked/active statements below describe their recorded checkpoints. Production deployment, broad real-model/agent quality and scale remain OPEN release/successor gates. Stop before 11. [Current closeout](../10-reference/SPRINT-8.1-AND-10-CLOSEOUT.md).
+
+## Historical record before closeout
+
 This table covers all 36 confirmed/blocked findings. The exact task's acceptance and negative cases remain in [the roadmap](../09-planning/FUTURE_SPRINT_ROADMAP.md) or [historical 8.1 plan](../09-planning/SPRINT_8_1_PLAN.md); acceptance obligations are not reduced to a generic test. Existing results remain in the linked evidence. Planned tests are **PLANNED TEST — NOT YET EXECUTED** until real execution.
 
 | Gap / feature | Owning acceptance | Test disposition | Cases to retain / add |

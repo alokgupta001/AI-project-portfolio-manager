@@ -3,7 +3,7 @@
 [Learning roadmap](../00-getting-started/README.md)
 
 Current Sprint 10 source checkpoint: uncommitted over b98110e, additive 0012_ai_runtime.
-Normal rollout/evidence are recorded in the [active handoff](../../03-sprints/active/sprint-10/HANDOFF.md).
+Normal rollout/evidence are recorded in the [active handoff](../../03-sprints/completed/sprint-10/HANDOFF.md).
 The shared runtime and no-key evidence preview are implemented; Gemini free-tier smoke verified; broader quality unverified.
 Earlier Sprint 8.1 Word/CI and production gates remain open.
 
@@ -80,7 +80,7 @@ Existing `docs/learning` generators encode older authored chapters. Do not rerun
 
 Current local setup reaches migration 0011 with mail/pilot controls and the optional mandatory-for-intake ClamAV override. Development Gmail account delivery is verified; production delivery, current hosted CI and regenerated archived Word visual QA remain separate gates. Read CURRENT_STATUS for current scope and the original sprint reports for what was verified at each date. Legacy Word files/generators are retained and are not automatically the current canonical guide.
 
-Status: **IMPLEMENTED AND VERIFIED** within retained local evidence; external gates stay **BLOCKED** or **IMPLEMENTED BUT UNVERIFIED**. See [current status](../../00-overview/CURRENT_STATUS.md), [8.1 evidence](../../03-sprints/active/sprint-8.1/SPRINT_REPORT.md), [future concept and documentation map](../../09-planning/FEATURE_DOCUMENT_MAPPING.md) and [PLANNED work](../../09-planning/FUTURE_SPRINT_ROADMAP.md).
+Status: **IMPLEMENTED AND VERIFIED** within retained local evidence; external gates stay **BLOCKED** or **IMPLEMENTED BUT UNVERIFIED**. See [current status](../../00-overview/CURRENT_STATUS.md), [8.1 evidence](../../03-sprints/completed/sprint-8.1/SPRINT_REPORT.md), [future concept and documentation map](../../09-planning/FEATURE_DOCUMENT_MAPPING.md) and [PLANNED work](../../09-planning/FUTURE_SPRINT_ROADMAP.md).
 
 ## Verified Gmail and access update â€” 10 October 2026
 

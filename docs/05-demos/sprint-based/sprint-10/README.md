@@ -1,6 +1,6 @@
 # Sprint 10 current evidence demo
 
-Use the [Admin user walkthrough](../../../03-sprints/active/sprint-10/USER_GUIDE.md)
+Use the [Admin user walkthrough](../../../03-sprints/completed/sprint-10/USER_GUIDE.md)
 with synthetic project sources. This is an extractive preview, not a copilot or
 semantic agent demonstration. Current Gemini setup is free-tier only at $0,
 with one-time confirmed unbilled project/key and no daily renewal.

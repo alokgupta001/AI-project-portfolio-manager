@@ -1,5 +1,7 @@
 # AI-PPM documentation
 
+**Closeout — 16 October 2026: Sprints 8.1 and 10 are COMPLETED for their implemented development scope.** The reviewed application checkpoint `631c149` passed [hosted CI](https://github.com/alokgupta001/AI-project-portfolio-manager/actions/runs/38885041673), including regression, migration and browser checks. The current pilot Word guide is rendered and visually verified in the linked closeout evidence. Earlier blocked/active statements below describe their recorded checkpoints. Production deployment, broad real-model/agent quality and scale remain OPEN release/successor gates. Stop before 11. [Detailed closeout](10-reference/SPRINT-8.1-AND-10-CLOSEOUT.md).
+
 Current documentation closure for all Sprints 00–10 (including 8.1): [coverage, corrections, recorded evidence and remaining gates](10-reference/PREVIOUS-SPRINTS-DOCUMENTATION-CLOSURE.md).
 
 For simple explanations of what each sprint built, where to find each feature and how to check it, open the separate [plain-language sprint reports](11-plain-language-sprint-reports/README.md).
@@ -16,6 +18,6 @@ Updated 10 October 2026 for verified development Gmail signup, existing-account 
 6. [Demonstrate current features](05-demos/CURRENT_DEMO_GUIDE.md); [use the application](06-user-guides/USER_GUIDE.md).
 7. [Find each sprint’s plan, actual outcome and limitations](03-sprints/README.md).
 8. [Understand gaps and remaining product work](09-planning/SPRINT_8_1_GAP_AUDIT.md), [future roadmap](09-planning/FUTURE_SPRINT_ROADMAP.md) and [release criteria](00-overview/FINAL_PRODUCT_SCOPE_AND_RELEASE_CRITERIA.md).
-9. [Close active Sprint 8.1 gates](03-sprints/active/sprint-8.1/README.md); [implemented Sprint 09](03-sprints/completed/sprint-09/README.md).
+9. [Close active Sprint 8.1 gates](03-sprints/completed/sprint-8.1/README.md); [implemented Sprint 09](03-sprints/completed/sprint-09/README.md).
 
 [Documentation organization/status rules](00-overview/DOCUMENTATION_GUIDE.md) · [Update tracker and remaining work](09-planning/DOCUMENTATION_UPDATE_TRACKER.md) · [Feature-to-document map](09-planning/FEATURE_DOCUMENT_MAPPING.md) · [Maintenance checklist](09-planning/SPRINT_DOCUMENTATION_CHECKLIST.md) · [Audit checks](10-reference/DOCUMENTATION_AUDIT_RESULTS.md).

@@ -8,7 +8,7 @@ supersedes availability/head statements below: normal head `0011_document_source
 separately. Later sections retain historical outcomes. Development Gmail was separately
 verified on 10 October; current hosted CI and Word visual gates remain open.
 
-**Sprint 8.1 execution update:** 74 full backend checks plus focused SSE verification, 12 full browser checks plus 6 affected closure checks and all eight static gates pass. Existing 59 table hashes/counts and the object hash match after additive head 0008; scratch restore passed. See the [current report](../03-sprints/active/sprint-8.1/SPRINT_REPORT.md) for open SMTP, hosted CI and Word visual gates. The detailed Sprint 08 walkthrough below is retained as historical evidence.
+**Sprint 8.1 execution update:** 74 full backend checks plus focused SSE verification, 12 full browser checks plus 6 affected closure checks and all eight static gates pass. Existing 59 table hashes/counts and the object hash match after additive head 0008; scratch restore passed. See the [current report](../03-sprints/completed/sprint-8.1/SPRINT_REPORT.md) for open SMTP, hosted CI and Word visual gates. The detailed Sprint 08 walkthrough below is retained as historical evidence.
 
 Date: 9 October 2026 (Asia/Calcutta). Scope: implemented Sprints 00–08 only. No Sprint 09 features, paid provider calls, external messages or deployment were performed.
 

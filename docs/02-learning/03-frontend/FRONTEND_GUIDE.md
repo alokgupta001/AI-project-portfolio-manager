@@ -77,7 +77,7 @@ Styling uses `app/globals.css`, Tailwind/PostCSS and shared UI components. `ui.t
 
 Open `apps/web/components/pilot.tsx` for setup/My work, `pilot-api.ts` for transport, `shell.tsx` for the record palette, and `record-select.tsx` for paged selectors. Input changes request a server page; a result carries its authorized destination. Selection opens the owning page, which fetches the record again. Empty results mean no permitted matches; a 401 or changed organization must not reuse another scope’s records. Debug Network requests, active organization and component error state; reproduce two profiles with `tests/browser/pilot.spec.ts`.
 
-Status: **IMPLEMENTED AND VERIFIED** within retained local evidence; external gates stay **BLOCKED** or **IMPLEMENTED BUT UNVERIFIED**. See [current status](../../00-overview/CURRENT_STATUS.md), [8.1 evidence](../../03-sprints/active/sprint-8.1/SPRINT_REPORT.md), [future concept and documentation map](../../09-planning/FEATURE_DOCUMENT_MAPPING.md) and [PLANNED work](../../09-planning/FUTURE_SPRINT_ROADMAP.md).
+Status: **IMPLEMENTED AND VERIFIED** within retained local evidence; external gates stay **BLOCKED** or **IMPLEMENTED BUT UNVERIFIED**. See [current status](../../00-overview/CURRENT_STATUS.md), [8.1 evidence](../../03-sprints/completed/sprint-8.1/SPRINT_REPORT.md), [future concept and documentation map](../../09-planning/FEATURE_DOCUMENT_MAPPING.md) and [PLANNED work](../../09-planning/FUTURE_SPRINT_ROADMAP.md).
 
 ## Verified Gmail and access update — 10 October 2026
 

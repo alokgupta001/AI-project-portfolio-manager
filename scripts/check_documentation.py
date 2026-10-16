@@ -55,7 +55,7 @@ def main() -> None:
         if not (ROOT / "docs" / topic / "sprint-09/README.md").is_file():
             errors.append(f"Missing Sprint 09 README in {topic}")
     for topic in (
-        "03-sprints/active",
+        "03-sprints/completed",
         "02-learning/sprint-based",
         "04-testing/sprint-based",
         "05-demos/sprint-based",
@@ -71,7 +71,7 @@ def main() -> None:
     ):
         if not (ROOT / "docs" / name).is_file():
             errors.append(f"Missing Sprint 10 artifact {name}")
-    sprint10 = (ROOT / "docs/03-sprints/active/sprint-10/SPRINT_REPORT.md").read_text(
+    sprint10 = (ROOT / "docs/03-sprints/completed/sprint-10/SPRINT_REPORT.md").read_text(
         encoding="utf-8"
     )
     current_sprint10 = sprint10.split("## Historical 15 October record", 1)[0]

@@ -17,7 +17,7 @@ Code and retained local evidence establish current capability; original acceptan
 | G-007 My work and basic notifications | IMPLEMENTED AND VERIFIED | Provide assigned work/assessment views and a small in-app feed; timed reminders and external channels stay in 15/21. | PPM-81-007 / 8.1 |
 | G-008 Metadata needed by later analytics | IMPLEMENTED AND VERIFIED | Add optional controlled metadata with unknown values; never backfill invented categories. | PPM-81-008 / 8.1 |
 | G-009 Live refresh of manual changes | IMPLEMENTED AND VERIFIED | Publish bounded authorized change notices and show freshness; do not broadcast record content. | PPM-81-009 / 8.1 |
-| G-010 Guide and readiness wording | PARTIALLY IMPLEMENTED | Correct the guide steps and readiness descriptions; verify each documented route on the browser. | PPM-81-010 / 8.1 |
+| G-010 Guide and readiness wording | IMPLEMENTED AND VERIFIED IN DEVELOPMENT | Current pilot guide corrected, rendered and visually verified; prior browser journeys and hosted CI at 631c149 pass. Production release remains separate. | PPM-81-010 / 8.1 |
 | G-011 Document library and assessment evidence bridge | IMPLEMENTED AND VERIFIED LOCALLY | Versioned sources/OCR and same-byte released-attachment bridge; original assessment authority/scores preserved. | PPM-09-001 / 09 |
 | G-012 Governance policy lifecycle | PARTIALLY IMPLEMENTED | Registry/owner/applicability/source/dates/state verified locally in 09; approval integration remains 15. | PPM-09-003 / 09 |
 | G-013 Retention and pilot restore evidence | PARTIALLY IMPLEMENTED | Scoped purge/holds and non-destructive scratch restore verified locally in 09; production backup erasure and all-surface release recovery remain 22/23. | PPM-09-003 / 09 |
@@ -41,7 +41,7 @@ Code and retained local evidence establish current capability; original acceptan
 | G-031 Reports, alerts and daily audio | PARTIALLY IMPLEMENTED | Ship exports and authorized subscriptions; account emails remain 8.1. | PPM-21-001 / 21 |
 | G-032 Passkeys and account lifecycle settings | PARTIALLY IMPLEMENTED | Implement passkeys and settings, preserving last-admin protection and all-surface revocation. | PPM-22-001 / 22 |
 | G-033 Release engineering and production configuration | PARTIALLY IMPLEMENTED | Integrate all journeys and prepare deployment profiles; live deployment requires credentials and authorization. | PPM-23-001 / 23 |
-| G-034 Sprint 08 hosted CI | IMPLEMENTED BUT UNVERIFIED | Record a reviewed checkpoint and hosted checks during implementation closure without discarding existing changes. | PPM-81-010 / 8.1 |
+| G-034 Sprint 08 hosted CI | IMPLEMENTED AND VERIFIED IN DEVELOPMENT | Reviewed application checkpoint 631c149 passed hosted CI run 38885041673; earlier source/data evidence is preserved. | PPM-81-010 / 8.1 |
 | G-035 Current direct ASGI rerun | IMPLEMENTED AND VERIFIED | Full isolated suite completed:74 passing, including transaction-boundary tests. See Sprint 8.1 report. | PPM-81-010 / 8.1 |
 | G-036 Planning consistency and source reconciliation | PARTIALLY IMPLEMENTED | Make the new future roadmap authoritative, preserve originals and reconcile every requirement at release. | PPM-81-010 / 8.1 |
 

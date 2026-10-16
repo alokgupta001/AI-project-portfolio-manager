@@ -2,7 +2,7 @@
 
 Sprint 09 current execution (15 October 2026): [report](../03-sprints/completed/sprint-09/SPRINT_REPORT.md) and [checks](../04-testing/sprint-based/sprint-09/TESTING_REPORT.md) establish local source/keyword/policy/retention acceptance. Semantic/approval/release dependencies remain open. Earlier dated baselines below are historical.
 
-**8.1 follow-up:** PPM-81-001 and 003–009 complete locally; development Gmail delivery/acceptance/recovery verified 10 October, while 010 remains PARTIAL for hosted CI/archived Word visual QA. [Sprint 8.1 report](../03-sprints/active/sprint-8.1/SPRINT_REPORT.md) is the evidence authority. The baseline below remains historical.
+**8.1 follow-up:** PPM-81-001 and 003–009 complete locally; development Gmail delivery/acceptance/recovery verified 10 October, while 010 remains PARTIAL for hosted CI/archived Word visual QA. [Sprint 8.1 report](../03-sprints/completed/sprint-8.1/SPRINT_REPORT.md) is the evidence authority. The baseline below remains historical.
 
 **Historical planning baseline (before Sprint 8.1 execution):** 9 October 2026. Documentation only; no feature work is authorized by this pack.** Sprint 08 is complete locally; Sprint 8.1 is proposed, not started. Numbers describe execution order, not dates or delivery promises. The frozen source specifications and original prompt pack remain intact. For future work, this pack supersedes the earlier gap review and the future sections of the original ordered prompts; those prompts remain historical scope evidence. Completed reports retain their original meaning.
 
@@ -10,7 +10,7 @@ Read the [audit](SPRINT_8_1_GAP_AUDIT.md), [Sprint 8.1 plan](SPRINT_8_1_PLAN.md)
 
 ## Findings to execution
 
-32 confirmed gaps and 4 blocked/unverified items, each with a primary owning task. Some tasks close several related gaps; follow-on stage dependencies are retained in the roadmap. Current execution evidence is in the [Sprint 8.1 report](../03-sprints/active/sprint-8.1/SPRINT_REPORT.md). External delivery/CI and Word visual acceptance remain open.
+32 confirmed gaps and 4 blocked/unverified items, each with a primary owning task. Some tasks close several related gaps; follow-on stage dependencies are retained in the roadmap. Current execution evidence is in the [Sprint 8.1 report](../03-sprints/completed/sprint-8.1/SPRINT_REPORT.md). External delivery/CI and Word visual acceptance remain open.
 
 | Finding | Current status | Impact | Primary task / sprint | Intended result | Previous review |
 | --- | --- | --- | --- | --- | --- |
@@ -23,7 +23,7 @@ Read the [audit](SPRINT_8_1_GAP_AUDIT.md), [Sprint 8.1 plan](SPRINT_8_1_PLAN.md)
 | G-007 My work and basic notifications | IMPLEMENTED AND VERIFIED | P1 | PPM-81-007 / 8.1 | Provide assigned work/assessment views and a small in-app feed; timed reminders and external channels stay in 15/21. | A06 |
 | G-008 Metadata needed by later analytics | IMPLEMENTED AND VERIFIED | P1 | PPM-81-008 / 8.1 | Add optional controlled metadata with unknown values; never backfill invented categories. | A07,A08 |
 | G-009 Live refresh of manual changes | IMPLEMENTED AND VERIFIED | P2 | PPM-81-009 / 8.1 | Publish bounded authorized change notices and show freshness; do not broadcast record content. | A15 |
-| G-010 Guide and readiness wording | PARTIALLY IMPLEMENTED | P1 | PPM-81-010 / 8.1 | Correct the guide steps and readiness descriptions; verify each documented route on the browser. | A16,A18 |
+| G-010 Guide and readiness wording | IMPLEMENTED AND VERIFIED IN DEVELOPMENT | P1 | PPM-81-010 / 8.1 | Current pilot guide corrected, rendered and visually verified; prior browser journeys and hosted CI at 631c149 pass. Production release remains separate. | A16,A18 |
 | G-011 Document library and assessment evidence bridge | IMPLEMENTED AND VERIFIED LOCALLY | P1 | PPM-09-001 / 09 | Build shared versioned documents; preserve existing assessment scores and attachment authority. | A09 |
 | G-012 Governance policy lifecycle | REGISTRY VERIFIED; APPROVALS PENDING 15 | P1 | PPM-09-003 / 09 | Create policy registry in 09 and approval integration in 15. | A11 |
 | G-013 Retention and pilot restore evidence | LOCAL RETENTION/RESTORE VERIFIED; RELEASE RECOVERY 22/23 OPEN | P1 | PPM-09-003 / 09 | Establish scoped purge/hold rules and a non-destructive scratch restore before real documents; finish all surfaces in 22/23. | A17 |
@@ -47,7 +47,7 @@ Read the [audit](SPRINT_8_1_GAP_AUDIT.md), [Sprint 8.1 plan](SPRINT_8_1_PLAN.md)
 | G-031 Reports, alerts and daily audio | PARTIALLY IMPLEMENTED | P1 | PPM-21-001 / 21 | Ship exports and authorized subscriptions; account emails remain 8.1. | A16 |
 | G-032 Passkeys and account lifecycle settings | PARTIALLY IMPLEMENTED | P1 | PPM-22-001 / 22 | Implement passkeys and settings, preserving last-admin protection and all-surface revocation. | A03,A04 |
 | G-033 Release engineering and production configuration | PARTIALLY IMPLEMENTED | P1 | PPM-23-001 / 23 | Integrate all journeys and prepare deployment profiles; live deployment requires credentials and authorization. | A17 |
-| G-034 Sprint 08 hosted CI | IMPLEMENTED BUT UNVERIFIED | P1 | PPM-81-010 / 8.1 | Record a reviewed checkpoint and hosted checks during implementation closure without discarding existing changes. | — |
+| G-034 Sprint 08 hosted CI | IMPLEMENTED AND VERIFIED IN DEVELOPMENT | P1 | PPM-81-010 / 8.1 | Reviewed application checkpoint 631c149 passed hosted CI run 38885041673; earlier source/data evidence is preserved. | — |
 | G-035 Current direct ASGI rerun | IMPLEMENTED AND VERIFIED | P2 | PPM-81-010 / 8.1 | Full isolated suite completed:74 passing, including transaction-boundary tests. See Sprint 8.1 report. | — |
 | G-036 Planning consistency and source reconciliation | PARTIALLY IMPLEMENTED | P1 | PPM-81-010 / 8.1 | Make the new future roadmap authoritative, preserve originals and reconcile every requirement at release. | A18 |
 

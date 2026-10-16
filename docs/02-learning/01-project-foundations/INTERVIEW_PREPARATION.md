@@ -95,7 +95,7 @@ For deeper answers, use [database relationships](../04-database/DATABASE_GUIDE.m
 
 Knowledge checks: Why is fixture connector success different from real-provider acceptance? Why must notification counts recheck target permission? Why does server pagination not remove command snapshot bounds? Why is SMTP acceptance different from inbox arrival? Why can the original 8.1 plan still be historical while local implementation is verified? Cite the owning functions/tests and current report; do not claim that a dirty tree has a hosted CI checkpoint or that deterministic scores are AI predictions.
 
-Status: **IMPLEMENTED AND VERIFIED** within retained local evidence; external gates stay **BLOCKED** or **IMPLEMENTED BUT UNVERIFIED**. See [current status](../../00-overview/CURRENT_STATUS.md), [8.1 evidence](../../03-sprints/active/sprint-8.1/SPRINT_REPORT.md), [future concept and documentation map](../../09-planning/FEATURE_DOCUMENT_MAPPING.md) and [PLANNED work](../../09-planning/FUTURE_SPRINT_ROADMAP.md).
+Status: **IMPLEMENTED AND VERIFIED** within retained local evidence; external gates stay **BLOCKED** or **IMPLEMENTED BUT UNVERIFIED**. See [current status](../../00-overview/CURRENT_STATUS.md), [8.1 evidence](../../03-sprints/completed/sprint-8.1/SPRINT_REPORT.md), [future concept and documentation map](../../09-planning/FEATURE_DOCUMENT_MAPPING.md) and [PLANNED work](../../09-planning/FUTURE_SPRINT_ROADMAP.md).
 
 ## Verified Gmail and access update — 10 October 2026
 

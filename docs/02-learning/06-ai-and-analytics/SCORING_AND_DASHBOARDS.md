@@ -138,7 +138,7 @@ To verify a number, inspect the snapshot response and source drawer, find its me
 
 `pilot.comparison` selects completed departmental assessments for one framework version and an ordered UTC creation period of at most ten years. It computes count/scored_count/average from the full permitted cohort, independent of display pagination, and preserves null scores. `pilot.stream` polls committed RLS-visible revision aggregates; `apps/web/components/live-workspace.ts` coalesces notices/refetches. No names or values are broadcast. A refetch does not make old source data fresh, change formulas or reconstruct historical snapshots. Debug version, period, missing scores and scope; compare independently with `test_pilot.py` and retain snapshot bounds.
 
-Status: **IMPLEMENTED AND VERIFIED** within retained local evidence; external gates stay **BLOCKED** or **IMPLEMENTED BUT UNVERIFIED**. See [current status](../../00-overview/CURRENT_STATUS.md), [8.1 evidence](../../03-sprints/active/sprint-8.1/SPRINT_REPORT.md), [future concept and documentation map](../../09-planning/FEATURE_DOCUMENT_MAPPING.md) and [PLANNED work](../../09-planning/FUTURE_SPRINT_ROADMAP.md).
+Status: **IMPLEMENTED AND VERIFIED** within retained local evidence; external gates stay **BLOCKED** or **IMPLEMENTED BUT UNVERIFIED**. See [current status](../../00-overview/CURRENT_STATUS.md), [8.1 evidence](../../03-sprints/completed/sprint-8.1/SPRINT_REPORT.md), [future concept and documentation map](../../09-planning/FEATURE_DOCUMENT_MAPPING.md) and [PLANNED work](../../09-planning/FUTURE_SPRINT_ROADMAP.md).
 
 ## Verified Gmail and access update — 10 October 2026
 

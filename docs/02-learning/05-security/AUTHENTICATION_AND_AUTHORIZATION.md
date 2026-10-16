@@ -107,7 +107,7 @@ Evidence upload uses generated paths, size/content restrictions and manual revie
 
 Trace `/signup` to `identity.register`, then the challenge completion branch in `identity.complete`. Email-scoped locking and one atomic transaction create the verified user, organization and first Admin only after verification. `account_mail.py` stores/dispatches local or SMTP delivery; a timeout may follow provider acceptance, so single-use/replaced challenges remain the authority. Organization profile editing requires Admin and If-Match; invitation resend/cancel rechecks live inviter authority. Framework/result Access panels reuse assessment guards. Debug private operator mailbox configuration and challenge expiry without exposing tokens; `test_pilot.py` covers replay, revoked authority and scope.
 
-Status: **IMPLEMENTED AND VERIFIED** within retained local evidence; external gates stay **BLOCKED** or **IMPLEMENTED BUT UNVERIFIED**. See [current status](../../00-overview/CURRENT_STATUS.md), [8.1 evidence](../../03-sprints/active/sprint-8.1/SPRINT_REPORT.md), [future concept and documentation map](../../09-planning/FEATURE_DOCUMENT_MAPPING.md) and [PLANNED work](../../09-planning/FUTURE_SPRINT_ROADMAP.md).
+Status: **IMPLEMENTED AND VERIFIED** within retained local evidence; external gates stay **BLOCKED** or **IMPLEMENTED BUT UNVERIFIED**. See [current status](../../00-overview/CURRENT_STATUS.md), [8.1 evidence](../../03-sprints/completed/sprint-8.1/SPRINT_REPORT.md), [future concept and documentation map](../../09-planning/FEATURE_DOCUMENT_MAPPING.md) and [PLANNED work](../../09-planning/FUTURE_SPRINT_ROADMAP.md).
 
 ## Verified Gmail and access update — 10 October 2026
 

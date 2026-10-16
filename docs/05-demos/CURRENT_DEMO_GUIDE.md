@@ -31,7 +31,7 @@ Existing assessment evidence remains a separate TXT/manual-release intake.
 
 Open AI operations & evidence as Admin to retrieve a permitted project source
 preview, inspect no-key diagnostics and manage a zero-spend tenant budget. Follow
-[the current steps](../03-sprints/active/sprint-10/USER_GUIDE.md). Keyword excerpts are labeled source_fallback; no match
+[the current steps](../03-sprints/completed/sprint-10/USER_GUIDE.md). Keyword excerpts are labeled source_fallback; no match
 stays unavailable. Index embeddings and real model answers remain disabled until
 explicit provider/model/spend authorization. PM/Viewer use the document library;
 restricted Admin diagnostics are inaccessible. No semantic agents or plan edits.

@@ -97,7 +97,7 @@ Use [`LOCAL-DEVELOPMENT.md`](../../07-setup-and-deployment/LOCAL-DEVELOPMENT.md)
 
 Follow the feature-to-document map when changing code. Confirm the exact task/acceptance and owning contract; implement, test and record real results before changing availability labels. Search functions by name because generated older line numbers moved. Update affected learning, user/demo, API/database, sprint report, limitations, catalogue and tracker; unrelated guides need no edit. Existing legacy generators contain snapshots and must not overwrite reviewed canonical guides.
 
-Status: **IMPLEMENTED AND VERIFIED** within retained local evidence; external gates stay **BLOCKED** or **IMPLEMENTED BUT UNVERIFIED**. See [current status](../../00-overview/CURRENT_STATUS.md), [8.1 evidence](../../03-sprints/active/sprint-8.1/SPRINT_REPORT.md), [future concept and documentation map](../../09-planning/FEATURE_DOCUMENT_MAPPING.md) and [PLANNED work](../../09-planning/FUTURE_SPRINT_ROADMAP.md).
+Status: **IMPLEMENTED AND VERIFIED** within retained local evidence; external gates stay **BLOCKED** or **IMPLEMENTED BUT UNVERIFIED**. See [current status](../../00-overview/CURRENT_STATUS.md), [8.1 evidence](../../03-sprints/completed/sprint-8.1/SPRINT_REPORT.md), [future concept and documentation map](../../09-planning/FEATURE_DOCUMENT_MAPPING.md) and [PLANNED work](../../09-planning/FUTURE_SPRINT_ROADMAP.md).
 
 ## Verified Gmail and access update — 10 October 2026
 

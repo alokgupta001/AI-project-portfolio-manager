@@ -1,5 +1,9 @@
 # Latest technical handoff
 
+**Closeout — 16 October 2026: Sprints 8.1 and 10 are COMPLETED for their implemented development scope.** The reviewed application checkpoint `631c149` passed [hosted CI](https://github.com/alokgupta001/AI-project-portfolio-manager/actions/runs/38885041673), including regression, migration and browser checks. The current pilot Word guide is rendered and visually verified in the linked closeout evidence. Earlier blocked/active statements below describe their recorded checkpoints. Production deployment, broad real-model/agent quality and scale remain OPEN release/successor gates. Stop before 11. [Completed pilot](../03-sprints/completed/sprint-8.1/README.md) · [Completed gateway](../03-sprints/completed/sprint-10/README.md) · [Closeout](../10-reference/SPRINT-8.1-AND-10-CLOSEOUT.md). Next planned sprint: 11; its execution still requires a direct instruction.
+
+## Historical record before closeout
+
 **16 October documentation closeout:** [All previous-sprint documentation reconciled](../10-reference/PREVIOUS-SPRINTS-DOCUMENTATION-CLOSURE.md). Current Gemini $0 smoke and non-expiring confirmation are recorded; old blocked/planned statements are labeled historical. General model quality, CI/Word/production gates remain open. Sprint 11 is untouched and requires separate authorization.
 
 16 October 2026: [Gemini $0 follow-up](../04-testing/sprint-based/sprint-10/GEMINI-FOLLOWUP.md)
@@ -14,8 +18,8 @@ The 15 October checkpoint below is retained historical evidence.
 ## Historical checkpoints
 
 15 October 2026: Sprint 10 local implementation VERIFIED; overall acceptance OPEN (provider BLOCKED). Read
-[Sprint 10 handoff](../03-sprints/active/sprint-10/HANDOFF.md),
-[report](../03-sprints/active/sprint-10/SPRINT_REPORT.md) and
+[Sprint 10 handoff](../03-sprints/completed/sprint-10/HANDOFF.md),
+[report](../03-sprints/completed/sprint-10/SPRINT_REPORT.md) and
 [testing/documentation closure](../04-testing/sprint-based/sprint-10/README.md).
 Normal head **0012_ai_runtime** is applied following verified 0011. All 66 established
 table hashes/counts, five original objects and frozen files preserved. Normal services,
@@ -70,7 +74,7 @@ Only the viewer was added; no application data or migrations were modified.
 No Sprint 09 work was started. The local bootstrap secret is ignored under
 `artifacts/local/`; preserve it and the existing `.env` and Docker data volumes.
 
-**Sprint 8.1 implemented locally, acceptance OPEN**, 2026-10-09. Applied head `0008_pilot_completion`; preserved existing normal data. See [Sprint 8.1 handoff](../03-sprints/active/sprint-8.1/HANDOFF.md), [report](../03-sprints/active/sprint-8.1/SPRINT_REPORT.md), [pilot contracts](../contracts/pilot.md) and [user guide](../03-sprints/active/sprint-8.1/SPRINT_8_1_USER_GUIDE.md). Real SMTP delivery BLOCKED; hosted CI and regenerated DOCX layout UNVERIFIED. Stop before Sprint 09; no deployment authorization.
+**Sprint 8.1 implemented locally, acceptance OPEN**, 2026-10-09. Applied head `0008_pilot_completion`; preserved existing normal data. See [Sprint 8.1 handoff](../03-sprints/completed/sprint-8.1/HANDOFF.md), [report](../03-sprints/completed/sprint-8.1/SPRINT_REPORT.md), [pilot contracts](../contracts/pilot.md) and [user guide](../03-sprints/completed/sprint-8.1/SPRINT_8_1_USER_GUIDE.md). Real SMTP delivery BLOCKED; hosted CI and regenerated DOCX layout UNVERIFIED. Stop before Sprint 09; no deployment authorization.
 
 ## Preserved Sprint 08 handoff history
 

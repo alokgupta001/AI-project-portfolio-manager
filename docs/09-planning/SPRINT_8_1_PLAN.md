@@ -1,6 +1,6 @@
 # Sprint 8.1 — Product Gap Closure and Completion Readiness
 
-**Execution update 2026-10-09:** Sprint 8.1 local implementation is recorded in the [report](../03-sprints/active/sprint-8.1/SPRINT_REPORT.md); parent acceptance remains OPEN. The planning baseline below is historical. Future task scope and release criteria remain unchanged; no next sprint was started.
+**Execution update 2026-10-09:** Sprint 8.1 local implementation is recorded in the [report](../03-sprints/completed/sprint-8.1/SPRINT_REPORT.md); parent acceptance remains OPEN. The planning baseline below is historical. Future task scope and release criteria remain unchanged; no next sprint was started.
 
 **Historical planning baseline (before Sprint 8.1 execution):** 9 October 2026. Documentation only; no feature work is authorized by this pack.** Sprint 08 is complete locally; Sprint 8.1 is proposed, not started. Numbers describe execution order, not dates or delivery promises. The frozen source specifications and original prompt pack remain intact. For future work, this pack supersedes the earlier gap review and the future sections of the original ordered prompts; those prompts remain historical scope evidence. Completed reports retain their original meaning.
 
@@ -263,7 +263,7 @@ Entry: normal migration head 0007, local accepted 08, current source/test baseli
 - At least 125 records prove full list/selector access; comparison totals use complete authorized cohorts. New metadata preserves unknown values and existing records.
 - Guide walkthrough, mobile/keyboard flows, contract/type/lint/build/source checks and migration preservation pass. Resolve the interrupted transaction test with an actual completed run in the established test environment.
 - Reviewed CI checkpoint and scratch pilot restore evidence exist; no normal database reset, no source/prompt hash change. Each failed or provider-blocked acceptance stays open; screenshots alone cannot close backend/security criteria.
-- Produce **proposed** `docs/03-sprints/active/sprint-8.1/SPRINT_REPORT.md`, `docs/03-sprints/active/sprint-8.1/HANDOFF.md` and per-task verification notes; update LATEST, coverage and changelog only after implementation. Record planned versus completed work explicitly.
+- Produce **proposed** `docs/03-sprints/completed/sprint-8.1/SPRINT_REPORT.md`, `docs/03-sprints/completed/sprint-8.1/HANDOFF.md` and per-task verification notes; update LATEST, coverage and changelog only after implementation. Record planned versus completed work explicitly.
 
 ## Deferred work
 

@@ -69,7 +69,7 @@ At the Sprint 07 checkpoint, Sprint 08 durable jobs/integrations and later work 
 
 Sprint 08 implemented durable jobs/outbox, CSV mapping, labeled connector fixtures and progress streams. Sprint 8.1 subsequently added signup/setup, browser grants, record discovery/paging, personal receipts, nullable metadata and authorized workspace refresh. Original reports and checks are preserved in completed/active sprint folders. The latest 8.1 report records 74 backend and 12 browser tests plus focused closure checks; this documentation audit did not repeat those suites. Mail/CI/Word gates remain open, so 8.1 is not moved to completed.
 
-Status: **IMPLEMENTED AND VERIFIED** within retained local evidence; external gates stay **BLOCKED** or **IMPLEMENTED BUT UNVERIFIED**. See [current status](../../00-overview/CURRENT_STATUS.md), [8.1 evidence](../../03-sprints/active/sprint-8.1/SPRINT_REPORT.md), [future concept and documentation map](../../09-planning/FEATURE_DOCUMENT_MAPPING.md) and [PLANNED work](../../09-planning/FUTURE_SPRINT_ROADMAP.md).
+Status: **IMPLEMENTED AND VERIFIED** within retained local evidence; external gates stay **BLOCKED** or **IMPLEMENTED BUT UNVERIFIED**. See [current status](../../00-overview/CURRENT_STATUS.md), [8.1 evidence](../../03-sprints/completed/sprint-8.1/SPRINT_REPORT.md), [future concept and documentation map](../../09-planning/FEATURE_DOCUMENT_MAPPING.md) and [PLANNED work](../../09-planning/FUTURE_SPRINT_ROADMAP.md).
 
 ## Verified Gmail and access update — 10 October 2026
 
@@ -79,6 +79,6 @@ The 10 October follow-up adds real Gmail acceptance evidence and fixes reset-pag
 
 ai.py/provider/retrieval/evaluation modules and /ai extend the existing source and
 job contracts. Local deterministic gates and no-key browser evidence are recorded
-in [the active report](../../03-sprints/active/sprint-10/SPRINT_REPORT.md). Overall
+in [the active report](../../03-sprints/completed/sprint-10/SPRINT_REPORT.md). Overall
 acceptance OPEN; Gemini free-tier smoke verified; broader quality unverified. The later user authorization permits free-tier Gemini at $0 with no daily expiry. Normal
 forward rollout is recorded separately. No Sprint 11 agent or plan-edit work.

@@ -6,7 +6,7 @@ A real synthetic exact-excerpt completion and 256-dimension embedding smoke pass
 This supersedes the authorization restriction in the original checkpoint below;
 general model-quality and production acceptance remain open. No new migration.
 
-Current checkpoint — 16 October 2026: Sprint 10 local implementation is verified at `0012_ai_runtime`. Gemini free-tier completion and 256-dimension embedding smoke passed on the user-confirmed unbilled project with maximum spend $0; no daily renewal is required. The latest AI/provider regression suite recorded 63 passes. General model/retrieval quality, hosted CI, archived Word visual QA and production release remain unverified. Sprint 11 has not started. Stop before 11.
+Current checkpoint — 16 October 2026: Sprints 8.1 and 10 are COMPLETED for their implemented development scope at `0012_ai_runtime`. Reviewed application checkpoint `631c149` passed hosted CI; 201 backend tests and the document browser regression passed. A current pilot Word guide is rendered and visually verified. Gemini bounded completion/embedding smoke passed at maximum spend $0; confirmation does not expire daily. Production deployment, scale and broad agent/model quality remain OPEN release/successor gates. Sprint 11 is not started. Stop before 11.
 
 | Capability | Status | Evidence and limits |
 | --- | --- | --- |
@@ -14,8 +14,8 @@ Current checkpoint — 16 October 2026: Sprint 10 local implementation is verifi
 | Durable jobs, CSV imports, labeled Jira/GitHub fixtures | IMPLEMENTED AND VERIFIED | Sprint 08 report and job tests; fixture success is not live-provider acceptance. |
 | Signup, setup/profile, browser grants, scoped record search, paging/comparison, My work/notifications, optional metadata, authorized refresh | IMPLEMENTED AND VERIFIED | PPM-81-001 and 003–009 have current source and recorded local acceptance. |
 | SMTP delivery to a real inbox | VERIFIED IN DEVELOPMENT | Development SMTP enabled; verified STARTTLS/authentication pass and signup reached provider_accepted. Signup receipt in Spam and verified Admin activation confirmed; recovery accepted by provider, with recovery completion confirmed by recipient; existing-account invitation acceptance and correct Viewer membership are confirmed. |
-| Sprint 8.1 closure | PARTIALLY IMPLEMENTED | Original report retained; development Gmail journeys were verified on 10 October. Hosted CI/current revision and archived Word visual gates remain open. |
-| Current hosted CI and regenerated Word layout | IMPLEMENTED BUT UNVERIFIED | Workflow/document artifacts exist; current revision CI and every-page visual acceptance are not established. |
+| Sprint 8.1 closure | COMPLETED DEVELOPMENT SCOPE | Ten work packages accepted for the pilot; retained local checks, development Gmail journeys, hosted CI and current Word-guide visual QA. See [closeout](../10-reference/SPRINT-8.1-AND-10-CLOSEOUT.md). |
+| Reviewed hosted CI and current pilot Word layout | VERIFIED | CI run 38885041673 succeeded at `631c149`; the current pilot Word edition was rendered and every page visually inspected. Older Word snapshots retain their historical status. |
 | Live Jira/GitHub sync | BLOCKED | Explicit credentials/provider acceptance required; do not present fixtures as customer integration. |
 | Versioned document library, English OCR, keyword retrieval/citations | IMPLEMENTED AND VERIFIED LOCALLY | `/documents`, source versions/locations, real ClamAV, scoped history/downloads and same-byte assessment links; [guide](../03-sprints/completed/sprint-09/USER_GUIDE.md). |
 | Policy registry and document retention/pilot restore | IMPLEMENTED AND VERIFIED LOCALLY | Admin owner/applicability/dates/state, holds, deletion/eligible purge and synthetic scratch recovery; approvals remain 15, production backup erasure/recovery remain 22/23. |
@@ -24,7 +24,7 @@ Current checkpoint — 16 October 2026: Sprint 10 local implementation is verifi
 | Approvals, transformation, simulations, graph, broad benchmarking, meetings, reports/alerts/passkeys, production release | PLANNED | Sprints 15–23; current departmental comparison is a narrow local capability. |
 | Optional unadopted additions and alternative stacks | NOT IN SCOPE | Only adopted required scope counts toward release; see the release criteria. |
 
-Verification means the named behavior has source plus **retained successful local evidence**, not a new full rerun or production certification. BROKEN requires demonstrated failure; an unrun check is not a defect. Read [Sprint 8.1 evidence](../03-sprints/active/sprint-8.1/SPRINT_REPORT.md) for exact commands, counts and blockers; [catalogue](FEATURE_CATALOGUE.md) for feature-level scope.
+Verification means the named behavior has source plus **retained successful local evidence**, not a new full rerun or production certification. BROKEN requires demonstrated failure; an unrun check is not a defect. Read [Sprint 8.1 evidence](../03-sprints/completed/sprint-8.1/SPRINT_REPORT.md) for exact commands, counts and blockers; [catalogue](FEATURE_CATALOGUE.md) for feature-level scope.
 
 ## Current limits
 

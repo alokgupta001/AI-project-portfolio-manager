@@ -1,5 +1,9 @@
 # Sprint 8.1 gap audit
 
+**Closeout — 16 October 2026: Sprints 8.1 and 10 are COMPLETED for their implemented development scope.** The reviewed application checkpoint `631c149` passed [hosted CI](https://github.com/alokgupta001/AI-project-portfolio-manager/actions/runs/38885041673), including regression, migration and browser checks. The current pilot Word guide is rendered and visually verified in the linked closeout evidence. Earlier blocked/active statements below describe their recorded checkpoints. Production deployment, broad real-model/agent quality and scale remain OPEN release/successor gates. Stop before 11. [Current closeout](../10-reference/SPRINT-8.1-AND-10-CLOSEOUT.md).
+
+## Historical record before closeout
+
 Current execution note, 15 October 2026: this is the historical gap audit, not today's
 availability inventory. [Current status](../00-overview/CURRENT_STATUS.md),
 [Sprint 09 report](../03-sprints/completed/sprint-09/SPRINT_REPORT.md) and
@@ -7,7 +11,7 @@ availability inventory. [Current status](../00-overview/CURRENT_STATUS.md),
 retention work and retained semantic/production gaps. Development Gmail was verified
 10 October; current hosted CI and archived Word visual gates remain open.
 
-**Execution update 2026-10-09:** Sprint 8.1 local implementation is recorded in the [report](../03-sprints/active/sprint-8.1/SPRINT_REPORT.md); parent acceptance remains OPEN. The planning baseline below is historical. Future task scope and release criteria remain unchanged; no next sprint was started.
+**Execution update 2026-10-09:** Sprint 8.1 local implementation is recorded in the [report](../03-sprints/completed/sprint-8.1/SPRINT_REPORT.md); parent acceptance remains OPEN. The planning baseline below is historical. Future task scope and release criteria remain unchanged; no next sprint was started.
 
 **Historical planning baseline (before Sprint 8.1 execution):** 9 October 2026. Documentation only; no feature work is authorized by this pack.** Sprint 08 is complete locally; Sprint 8.1 is proposed, not started. Numbers describe execution order, not dates or delivery promises. The frozen source specifications and original prompt pack remain intact. For future work, this pack supersedes the earlier gap review and the future sections of the original ordered prompts; those prompts remain historical scope evidence. Completed reports retain their original meaning.
 
@@ -15,7 +19,7 @@ Read the [audit](SPRINT_8_1_GAP_AUDIT.md), [Sprint 8.1 plan](SPRINT_8_1_PLAN.md)
 
 ## Execution disposition
 
-G-001 and G-003–009 are implemented and locally accepted; G-002 remains BLOCKED for real account email. G-010 is content-corrected and PARTIAL pending Word visual QA. G-035 is VERIFIED by the completed backend suite; G-034 remains UNVERIFIED hosted CI. G-036 now points to revised roadmap plus execution evidence; frozen historical prompt dependency conflicts remain documented rather than rewritten. [Report](../03-sprints/active/sprint-8.1/SPRINT_REPORT.md).
+G-001 and G-003–009 are implemented and locally accepted; G-002 remains BLOCKED for real account email. G-010 is content-corrected and PARTIAL pending Word visual QA. G-035 is VERIFIED by the completed backend suite; G-034 remains UNVERIFIED hosted CI. G-036 now points to revised roadmap plus execution evidence; frozen historical prompt dependency conflicts remain documented rather than rewritten. [Report](../03-sprints/completed/sprint-8.1/SPRINT_REPORT.md).
 
 ## Historical pre-execution baseline and evidence limits
 

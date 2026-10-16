@@ -132,7 +132,7 @@ On failure, the form sets an error and retains unsaved values. Closing and reope
 
 The project-save lifecycle remains authoritative. Optional priority, industry, category, methodology and size travel through delivery form fields, `ppm_schemas.py`, `delivery.write`, and nullable project columns. Work priority/type follow the same route. Unknown is stored as missing metadata, not an invented classification. Inspect 0008 and `test_pilot.py` when a value is rejected; unrelated identity/notification changes do not alter dashboard formulas.
 
-Status: **IMPLEMENTED AND VERIFIED** within retained local evidence; external gates stay **BLOCKED** or **IMPLEMENTED BUT UNVERIFIED**. See [current status](../../00-overview/CURRENT_STATUS.md), [8.1 evidence](../../03-sprints/active/sprint-8.1/SPRINT_REPORT.md), [future concept and documentation map](../../09-planning/FEATURE_DOCUMENT_MAPPING.md) and [PLANNED work](../../09-planning/FUTURE_SPRINT_ROADMAP.md).
+Status: **IMPLEMENTED AND VERIFIED** within retained local evidence; external gates stay **BLOCKED** or **IMPLEMENTED BUT UNVERIFIED**. See [current status](../../00-overview/CURRENT_STATUS.md), [8.1 evidence](../../03-sprints/completed/sprint-8.1/SPRINT_REPORT.md), [future concept and documentation map](../../09-planning/FEATURE_DOCUMENT_MAPPING.md) and [PLANNED work](../../09-planning/FUTURE_SPRINT_ROADMAP.md).
 
 ## Verified Gmail and access update — 10 October 2026
 

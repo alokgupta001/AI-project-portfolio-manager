@@ -43,6 +43,6 @@ People can sign in, manage their own accounts and work inside the correct organi
 
 ## Recorded checks, later changes and limits
 
-The sprint recorded 28 backend and three browser tests covering account flows, permissions and organization isolation. Original delivery used a private local mailbox. Self-service signup, email delivery, invitation resend/cancel and later account repairs are described in [Sprint 8.1](../in-progress/SPRINT-8.1.md); they were not all delivered in Sprint 02.
+The sprint recorded 28 backend and three browser tests covering account flows, permissions and organization isolation. Original delivery used a private local mailbox. Self-service signup, email delivery, invitation resend/cancel and later account repairs are described in [Sprint 8.1](../completed/SPRINT-8.1.md); they were not all delivered in Sprint 02.
 
 [Original report](../../03-sprints/completed/sprint-02/SPRINT_REPORT.md) · [Recorded testing](../../04-testing/sprint-based/sprint-02/TESTING_REPORT.md) · [Report index](../README.md)

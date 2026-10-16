@@ -117,7 +117,7 @@ To inspect without changing data, read those routes and `tests/test_api.py`/`tes
 
 In `services/api/ppm_api/pilot.py`, `search` validates query length, type, offset and limit, then calls `records`. It builds SELECTs for projects/work/risks/assessments, escapes SQL wildcard characters, counts under the current principal/RLS, sorts by due date/name/type/id and returns items with links. `my_work` uses the same function with personal filters. Debug the authenticated organization and owning-row access before blaming pagination. This is SQL record discovery, not semantic document search; the latter is PLANNED in Sprint 09.
 
-Status: **IMPLEMENTED AND VERIFIED** within retained local evidence; external gates stay **BLOCKED** or **IMPLEMENTED BUT UNVERIFIED**. See [current status](../../00-overview/CURRENT_STATUS.md), [8.1 evidence](../../03-sprints/active/sprint-8.1/SPRINT_REPORT.md), [future concept and documentation map](../../09-planning/FEATURE_DOCUMENT_MAPPING.md) and [PLANNED work](../../09-planning/FUTURE_SPRINT_ROADMAP.md).
+Status: **IMPLEMENTED AND VERIFIED** within retained local evidence; external gates stay **BLOCKED** or **IMPLEMENTED BUT UNVERIFIED**. See [current status](../../00-overview/CURRENT_STATUS.md), [8.1 evidence](../../03-sprints/completed/sprint-8.1/SPRINT_REPORT.md), [future concept and documentation map](../../09-planning/FEATURE_DOCUMENT_MAPPING.md) and [PLANNED work](../../09-planning/FUTURE_SPRINT_ROADMAP.md).
 
 ## Verified Gmail and access update — 10 October 2026
 
