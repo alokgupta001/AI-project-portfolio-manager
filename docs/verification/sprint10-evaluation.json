@@ -1,0 +1,17 @@
+{
+  "version": "ai-gates-v1",
+  "environment": "deterministic-fixtures-only",
+  "thresholds": {
+    "support": 1.0,
+    "citation_validity": 1.0,
+    "task_completion": 1.0,
+    "access_leakage": 0,
+    "unsupported_numbers": 0
+  },
+  "count": 12,
+  "passed": 12,
+  "failures": [],
+  "eligible": true,
+  "real_provider_acceptance": "BLOCKED",
+  "limitation": "Passing these gates is not model accuracy or Sprint 11 acceptance"
+}

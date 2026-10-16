@@ -1,0 +1,20 @@
+time="2026-10-15T11:01:46+05:30" level=warning msg="Found orphan containers (enterprise-ppm-pgadmin-1) for this project. If you removed or renamed this service in your compose file, you can run this command with the --remove-orphans flag to clean it up."
+ Container enterprise-ppm-test-run-4e3b584718ea Creating 
+ Container enterprise-ppm-test-run-4e3b584718ea Created 
+{"event": "http_request", "request_id": "430e2577-5f9a-470f-bede-39b69ca68308", "method": "GET", "route": "/api/v1/auth/csrf", "status": 200, "duration_ms": 88.16}
+{"event": "http_request", "request_id": "7eacf5b3-342d-42ed-b05e-942bff12bfd6", "method": "POST", "route": "/api/v1/auth/login", "status": 200, "duration_ms": 315.11}
+{"event": "http_request", "request_id": "91c87210-93d1-4e42-a0ce-5fe3a9f4336f", "method": "POST", "route": "/api/v1/documents", "status": 202, "duration_ms": 180.26}
+{"event": "http_request", "request_id": "f21608c3-fe61-43dd-841f-58a26adbe71f", "method": "POST", "route": "/api/v1/documents/versions/{id_}/download-ticket", "status": 200, "duration_ms": 13.96}
+{"event": "http_request", "request_id": "710b6334-bf13-40eb-90f8-cc122f2c952e", "method": "GET", "route": "/api/v1/documents/versions/{id_}/download", "status": 200, "duration_ms": 25.73}
+{"event": "http_request", "request_id": "e1475f12-7bbd-4d53-be88-c3dac970bda3", "method": "GET", "route": "/api/v1/documents/search", "status": 200, "duration_ms": 21.98}
+PASS seed: authenticated signed original and keyword citation match restored fixture hash
+time="2026-10-15T11:03:18+05:30" level=warning msg="Found orphan containers (enterprise-ppm-pgadmin-1) for this project. If you removed or renamed this service in your compose file, you can run this command with the --remove-orphans flag to clean it up."
+ Container enterprise-ppm-test-run-ec20e115abae Creating 
+ Container enterprise-ppm-test-run-ec20e115abae Created 
+{"event": "http_request", "request_id": "ea4fd317-a4a4-46da-a077-f0adc69acfe7", "method": "GET", "route": "/api/v1/auth/csrf", "status": 200, "duration_ms": 184.3}
+{"event": "http_request", "request_id": "f78f9fb2-ed3a-4ca0-b55b-58bf4da8bffd", "method": "POST", "route": "/api/v1/auth/login", "status": 200, "duration_ms": 583.99}
+{"event": "http_request", "request_id": "46ef93c1-dc37-4132-82ab-b53ab5f87f7d", "method": "POST", "route": "/api/v1/documents/versions/{id_}/download-ticket", "status": 200, "duration_ms": 59.4}
+{"event": "http_request", "request_id": "be442600-b3d8-4a90-9c41-9697f903e5fb", "method": "GET", "route": "/api/v1/documents/versions/{id_}/download", "status": 200, "duration_ms": 64.03}
+{"event": "http_request", "request_id": "f456ae43-54f4-43ca-a3b3-c03177d9c083", "method": "GET", "route": "/api/v1/documents/search", "status": 200, "duration_ms": 53.12}
+PASS verify: authenticated signed original and keyword citation match restored fixture hash
+PASS document scratch restore: 67 table hashes/counts, 1 object hashes, authenticated signed download and keyword citation

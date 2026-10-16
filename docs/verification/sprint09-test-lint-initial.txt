@@ -1,0 +1,449 @@
+E501 Line too long (302 > 100)
+  --> tests\test_document_parser.py:16:101
+   |
+14 | …
+15 | …
+16 | ….org/wordprocessingml/2006/main"><w:body><w:p><w:r><w:t>Charter approval</w:t></w:r></w:p><w:tbl><w:tr><w:tc><w:p><w:r><w:t>Risk register table</w:t></w:r></w:p></w:tc></w:tr></w:tbl></w:body></w:document>')
+   |       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+17 | …
+18 | …preadsheetml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"><sheets><sheet name="Risk register" sheetId="1" r:id="rId1"/></sheets></workbook>')
+   |
+
+E501 Line too long (280 > 100)
+  --> tests\test_document_parser.py:18:101
+   |
+16 | ….org/wordprocessingml/2006/main"><w:body><w:p><w:r><w:t>Charter approval</w:t></w:r></w:p><w:tbl><w:tr><w:tc><w:p><w:r><w:t>Risk register table</w:t></w:r></w:p></w:tc></w:tr></w:tbl></w:bod…
+17 | …
+18 | …preadsheetml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"><sheets><sheet name="Risk register" sheetId="1" r:id="rId1"/></sheets></workbook>')
+   |       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+19 | …xmlformats.org/package/2006/relationships"><Relationship Id="rId1" Target="worksheets/sheet1.xml"/></Relationships>')
+20 | …mats.org/spreadsheetml/2006/main"><sheetData><row r="1"><c r="A1" t="inlineStr"><is><t>Supplier delay</t></is></c><c r="B1"><f>HYPERLINK("https://invalid")</f><v>999</v></c></row></sheetData…
+   |
+
+E501 Line too long (212 > 100)
+  --> tests\test_document_parser.py:19:101
+   |
+17 | …
+18 | …org/spreadsheetml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"><sheets><sheet name="Risk …
+19 | ….openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Target="worksheets/sheet1.xml"/></Relationships>')
+   |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+20 | …mlformats.org/spreadsheetml/2006/main"><sheetData><row r="1"><c r="A1" t="inlineStr"><is><t>Supplier delay</t></is></c><c r="B1"><f>H…
+21 | …
+   |
+
+E501 Line too long (300 > 100)
+  --> tests\test_document_parser.py:20:101
+   |
+18 | …preadsheetml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"><sheets><sheet name="Risk register" sheetId="1" r:id="rId1"/></sheets></workbook>')
+19 | …xmlformats.org/package/2006/relationships"><Relationship Id="rId1" Target="worksheets/sheet1.xml"/></Relationships>')
+20 | …mats.org/spreadsheetml/2006/main"><sheetData><row r="1"><c r="A1" t="inlineStr"><is><t>Supplier delay</t></is></c><c r="B1"><f>HYPERLINK("https://invalid")</f><v>999</v></c></row></sheetData></worksheet>')
+   |       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+21 | …
+22 | …
+   |
+
+E501 Line too long (121 > 100)
+  --> tests\test_document_parser.py:34:101
+   |
+32 |                              NameObject("/Subtype"): NameObject("/Type1"),
+33 |                              NameObject("/BaseFont"): NameObject("/Helvetica")})
+34 |     page[NameObject("/Resources")] = DictionaryObject({NameObject("/Font"): DictionaryObject({NameObject("/F1"): font})})
+   |                                                                                                     ^^^^^^^^^^^^^^^^^^^^^
+35 |     stream = DecodedStreamObject()
+36 |     stream.set_data(b"BT /F1 26 Tf 60 700 Td (Supplier delivery risk) Tj ET")
+   |
+
+E501 Line too long (130 > 100)
+  --> tests\test_document_parser.py:48:101
+   |
+46 |     source = tmp_path / "text.pdf"
+47 |     source.write_bytes(text_pdf())
+48 |     subprocess.run(["pdftoppm", "-singlefile", "-r", "100", str(source), str(tmp_path / "page")], check=True, capture_output=True)
+   |                                                                                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+49 |     raw = (tmp_path / "page.ppm").read_bytes()
+50 |     header, dimensions, maximum, pixels = raw.split(b"\n", 3)
+   |
+
+E501 Line too long (108 > 100)
+  --> tests\test_document_parser.py:57:101
+   |
+55 |     image = DecodedStreamObject()
+56 |     image.set_data(pixels)
+57 |     image.update({NameObject("/Type"): NameObject("/XObject"), NameObject("/Subtype"): NameObject("/Image"),
+   |                                                                                                     ^^^^^^^^
+58 |                   NameObject("/Width"): NumberObject(width), NameObject("/Height"): NumberObject(height),
+59 |                   NameObject("/ColorSpace"): NameObject("/DeviceRGB"), NameObject("/BitsPerComponent"): NumberObject(8)})
+   |
+
+E501 Line too long (105 > 100)
+  --> tests\test_document_parser.py:58:101
+   |
+56 |     image.set_data(pixels)
+57 |     image.update({NameObject("/Type"): NameObject("/XObject"), NameObject("/Subtype"): NameObject("/Image"),
+58 |                   NameObject("/Width"): NumberObject(width), NameObject("/Height"): NumberObject(height),
+   |                                                                                                     ^^^^^
+59 |                   NameObject("/ColorSpace"): NameObject("/DeviceRGB"), NameObject("/BitsPerComponent"): NumberObject(8)})
+60 |     page[NameObject("/Resources")] = DictionaryObject({NameObject("/XObject"): DictionaryObject({NameObject("/Im0"): writer._add_objec…
+   |
+
+E501 Line too long (121 > 100)
+  --> tests\test_document_parser.py:59:101
+   |
+57 |     image.update({NameObject("/Type"): NameObject("/XObject"), NameObject("/Subtype"): NameObject("/Image"),
+58 |                   NameObject("/Width"): NumberObject(width), NameObject("/Height"): NumberObject(height),
+59 |                   NameObject("/ColorSpace"): NameObject("/DeviceRGB"), NameObject("/BitsPerComponent"): NumberObject(8)})
+   |                                                                                                     ^^^^^^^^^^^^^^^^^^^^^
+60 |     page[NameObject("/Resources")] = DictionaryObject({NameObject("/XObject"): DictionaryObject({NameObject("/Im0"): writer._add_objec…
+61 |     stream = DecodedStreamObject()
+   |
+
+E501 Line too long (161 > 100)
+  --> tests\test_document_parser.py:60:101
+   |
+58 | …eObject("/Height"): NumberObject(height),
+59 | …RGB"), NameObject("/BitsPerComponent"): NumberObject(8)})
+60 | …t("/XObject"): DictionaryObject({NameObject("/Im0"): writer._add_object(image.flate_encode())})})
+   |                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+61 | …
+62 | …
+   |
+
+E501 Line too long (113 > 100)
+   --> tests\test_document_parser.py:103:101
+    |
+103 | @pytest.mark.skipif(not shutil.which("pdftoppm") or not shutil.which("tesseract"), reason="Requires OCR runtime")
+    |                                                                                                     ^^^^^^^^^^^^^
+104 | def test_real_scanned_pdf_and_image_ocr(tmp_path):
+105 |     scanned = scanned_pdf(tmp_path)
+    |
+
+E501 Line too long (141 > 100)
+   --> tests\test_document_parser.py:109:101
+    |
+107 | …"page 1" in result[0]["location"]
+108 | …[0]["confidence"] <= 1
+109 | …str(tmp_path / "text.pdf"), str(tmp_path / "image")], check=True, capture_output=True)
+    |                                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+110 | …(), "scan.png")
+111 | …mage[0]["method"] == "ocr"
+    |
+
+E501 Line too long (118 > 100)
+  --> tests\test_documents.py:36:101
+   |
+35 | async def process(app, accepted, ids, actor="admin"):
+36 |     assert await document_worker(app.state.engine, UUID(accepted["job_id"]), ids["a"], ids[actor], app.state.settings)
+   |                                                                                                     ^^^^^^^^^^^^^^^^^^
+
+E501 Line too long (129 > 100)
+  --> tests\test_documents.py:76:101
+   |
+74 |         with pytest.raises(DBAPIError):
+75 |             async with conn.begin_nested():
+76 |                 await conn.execute(D.versions.update().where(D.versions.c.id == UUID(one["version_id"])).values(sha256="0" * 64))
+   |                                                                                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+77 |     d = second["document"]
+78 |     replayed = await send(c, "POST", f"/documents/versions/{second['version_id']}/reprocess", headers={"idempotency-key": str(uuid4())…
+   |
+
+E501 Line too long (168 > 100)
+  --> tests\test_documents.py:78:101
+   |
+76 | …ons.c.id == UUID(one["version_id"])).values(sha256="0" * 64))
+77 | …
+78 | …version_id']}/reprocess", headers={"idempotency-key": str(uuid4()), "if-match": str(d["revision"])})
+   |                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+79 | …
+80 | …
+   |
+
+E501 Line too long (212 > 100)
+   --> tests\test_documents.py:98:101
+    |
+ 96 | …
+ 97 | …
+ 98 | …, json={"title": "Denied", "category": "SRS", "project_id": project["id"], "filename": "x.txt", "content_base64": "eA=="})
+    |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ 99 | …
+100 | …
+    |
+
+E501 Line too long (126 > 100)
+   --> tests\test_documents.py:101:101
+    |
+ 99 |     assert denied.status_code == 403
+100 |     async with owner.begin() as conn:
+101 |         await conn.execute(TABLES["grants"].update().where(TABLES["grants"].c.user_id == ids["viewer"]).values(archived=True))
+    |                                                                                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^
+102 |     assert (await c.get(url)).status_code == 404
+103 |     assert (await c.get("/api/v1/documents")).json()["total"] == 0
+    |
+
+E501 Line too long (122 > 100)
+   --> tests\test_documents.py:108:101
+    |
+106 |     queued = await upload(c, project, b"PM source text")
+107 |     async with owner.begin() as conn:
+108 |         await conn.execute(TABLES["grants"].update().where(TABLES["grants"].c.user_id == ids["pm"]).values(archived=True))
+    |                                                                                                     ^^^^^^^^^^^^^^^^^^^^^^
+109 |     await process(app, queued, ids, "pm")
+110 |     async with owner.connect() as conn:
+    |
+
+E501 Line too long (120 > 100)
+   --> tests\test_documents.py:111:101
+    |
+109 |     await process(app, queued, ids, "pm")
+110 |     async with owner.connect() as conn:
+111 |         assert await conn.scalar(sa.select(J.jobs.c.status).where(J.jobs.c.id == UUID(queued["job_id"]))) == "cancelled"
+    |                                                                                                     ^^^^^^^^^^^^^^^^^^^^
+112 |     await login(c, emails, "other", ids["b"])
+113 |     assert (await c.get("/api/v1/documents/" + d)).status_code == 404
+    |
+
+E501 Line too long (181 > 100)
+   --> tests\test_documents.py:122:101
+    |
+120 | …
+121 | …
+122 | …anization_id=ids["b"], version_id=UUID(v), ordinal=999, location="forged", text="foreign", method="text"))
+    |                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+E501 Line too long (102 > 100)
+   --> tests\test_documents.py:129:101
+    |
+127 |     bad = await upload(c, project, b"not a PDF", filename="bad.pdf")
+128 |     await process(app, bad, ids)
+129 |     assert (await c.get(f"/api/v1/documents/versions/{bad['version_id']}/preview")).status_code == 409
+    |                                                                                                     ^^
+130 |     monkeypatch.setattr("ppm_api.documents.scan", lambda *_: (_ for _ in ()).throw(IntakeError("SCANNER_UNAVAILABLE")))
+131 |     blocked = await upload(c, project)
+    |
+
+E501 Line too long (119 > 100)
+   --> tests\test_documents.py:130:101
+    |
+128 |     await process(app, bad, ids)
+129 |     assert (await c.get(f"/api/v1/documents/versions/{bad['version_id']}/preview")).status_code == 409
+130 |     monkeypatch.setattr("ppm_api.documents.scan", lambda *_: (_ for _ in ()).throw(IntakeError("SCANNER_UNAVAILABLE")))
+    |                                                                                                     ^^^^^^^^^^^^^^^^^^^
+131 |     blocked = await upload(c, project)
+132 |     await process(app, blocked, ids)
+    |
+
+E501 Line too long (134 > 100)
+   --> tests\test_documents.py:137:101
+    |
+135 |     await clean_scanner(monkeypatch)
+136 |     queued = await upload(c, project, b"Cancelled source")
+137 |     assert (await send(c, "POST", f"/documents/versions/{queued['version_id']}/cancel", headers={"if-match": "1"})).status_code == 200
+    |                                                                                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+138 |     await process(app, queued, ids)
+139 |     assert not (await c.get("/api/v1/documents/search?q=Cancelled")).json()["items"]
+    |
+
+E501 Line too long (125 > 100)
+   --> tests\test_documents.py:151:101
+    |
+149 |     task = asyncio.create_task(process(app, running, ids))
+150 |     assert await asyncio.to_thread(entered.wait, 10)
+151 |     assert (await send(c, "DELETE", "/documents/" + running["document"]["id"], headers={"if-match": "1"})).status_code == 200
+    |                                                                                                     ^^^^^^^^^^^^^^^^^^^^^^^^^
+152 |     release.set()
+153 |     await task
+    |
+
+E501 Line too long (106 > 100)
+   --> tests\test_documents.py:155:101
+    |
+153 |     await task
+154 |     assert not (await c.get("/api/v1/documents/search?q=flight")).json()["items"]
+155 |     assert (await c.get(f"/api/v1/documents/versions/{running['version_id']}/preview")).status_code == 404
+    |                                                                                                     ^^^^^^
+
+E501 Line too long (193 > 100)
+   --> tests\test_documents.py:164:101
+    |
+162 | …
+163 | …
+164 | …nce", state="current", version_id=accepted["version_id"], effective_date="2026-01-01", review_date="2026-02-01")
+    |                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+165 | …rmat(), policy=policy)
+166 | …s, headers={"if-match": "1"})
+    |
+
+E501 Line too long (103 > 100)
+   --> tests\test_documents.py:165:101
+    |
+163 |     d = accepted["document"]
+164 |     policy = dict(owner_id=str(ids["admin"]), applicability="Organization governance", state="current", version_id=accepted["version_…
+165 |     values = dict(legal_hold=True, retain_until=(now() - timedelta(days=1)).isoformat(), policy=policy)
+    |                                                                                                     ^^^
+166 |     saved = await send(c, "PATCH", f"/documents/{d['id']}/governance", json=values, headers={"if-match": "1"})
+167 |     assert saved.status_code == 200, saved.text
+    |
+
+E501 Line too long (110 > 100)
+   --> tests\test_documents.py:166:101
+    |
+164 |     policy = dict(owner_id=str(ids["admin"]), applicability="Organization governance", state="current", version_id=accepted["version_…
+165 |     values = dict(legal_hold=True, retain_until=(now() - timedelta(days=1)).isoformat(), policy=policy)
+166 |     saved = await send(c, "PATCH", f"/documents/{d['id']}/governance", json=values, headers={"if-match": "1"})
+    |                                                                                                     ^^^^^^^^^^
+167 |     assert saved.status_code == 200, saved.text
+168 |     assert saved.json()["policy_label"] == "review overdue"
+    |
+
+E501 Line too long (130 > 100)
+   --> tests\test_documents.py:169:101
+    |
+167 |     assert saved.status_code == 200, saved.text
+168 |     assert saved.json()["policy_label"] == "review overdue"
+169 |     assert (await send(c, "PATCH", f"/documents/{d['id']}/governance", json=values, headers={"if-match": "1"})).status_code == 412
+    |                                                                                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+170 |     await login(c, emails, "pm", ids["a"])
+171 |     assert (await c.get("/api/v1/documents/" + d["id"])).status_code == 200
+    |
+
+E501 Line too long (130 > 100)
+   --> tests\test_documents.py:172:101
+    |
+170 |     await login(c, emails, "pm", ids["a"])
+171 |     assert (await c.get("/api/v1/documents/" + d["id"])).status_code == 200
+172 |     assert (await send(c, "PATCH", f"/documents/{d['id']}/governance", json=values, headers={"if-match": "2"})).status_code == 403
+    |                                                                                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+173 |     await login(c, emails, org=ids["a"])
+174 |     ticket = (await send(c, "POST", f"/documents/versions/{accepted['version_id']}/download-ticket")).json()
+    |
+
+E501 Line too long (108 > 100)
+   --> tests\test_documents.py:174:101
+    |
+172 |     assert (await send(c, "PATCH", f"/documents/{d['id']}/governance", json=values, headers={"if-match": "2"})).status_code == 403
+173 |     await login(c, emails, org=ids["a"])
+174 |     ticket = (await send(c, "POST", f"/documents/versions/{accepted['version_id']}/download-ticket")).json()
+    |                                                                                                     ^^^^^^^^
+175 |     assert (await send(c, "DELETE", "/documents/" + d["id"], headers={"if-match": "2"})).status_code == 200
+176 |     assert (await c.get(f"/api/v1/documents/versions/{accepted['version_id']}/download?token={ticket['token']}")).status_code == 404
+    |
+
+E501 Line too long (107 > 100)
+   --> tests\test_documents.py:175:101
+    |
+173 |     await login(c, emails, org=ids["a"])
+174 |     ticket = (await send(c, "POST", f"/documents/versions/{accepted['version_id']}/download-ticket")).json()
+175 |     assert (await send(c, "DELETE", "/documents/" + d["id"], headers={"if-match": "2"})).status_code == 200
+    |                                                                                                     ^^^^^^^
+176 |     assert (await c.get(f"/api/v1/documents/versions/{accepted['version_id']}/download?token={ticket['token']}")).status_code == 404
+177 |     assert (await send(c, "POST", f"/documents/{d['id']}/purge", headers={"if-match": "3"})).status_code == 409
+    |
+
+E501 Line too long (132 > 100)
+   --> tests\test_documents.py:176:101
+    |
+174 |     ticket = (await send(c, "POST", f"/documents/versions/{accepted['version_id']}/download-ticket")).json()
+175 |     assert (await send(c, "DELETE", "/documents/" + d["id"], headers={"if-match": "2"})).status_code == 200
+176 |     assert (await c.get(f"/api/v1/documents/versions/{accepted['version_id']}/download?token={ticket['token']}")).status_code == 404
+    |                                                                                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+177 |     assert (await send(c, "POST", f"/documents/{d['id']}/purge", headers={"if-match": "3"})).status_code == 409
+178 |     values["legal_hold"] = False
+    |
+
+E501 Line too long (111 > 100)
+   --> tests\test_documents.py:177:101
+    |
+175 |     assert (await send(c, "DELETE", "/documents/" + d["id"], headers={"if-match": "2"})).status_code == 200
+176 |     assert (await c.get(f"/api/v1/documents/versions/{accepted['version_id']}/download?token={ticket['token']}")).status_code == 404
+177 |     assert (await send(c, "POST", f"/documents/{d['id']}/purge", headers={"if-match": "3"})).status_code == 409
+    |                                                                                                     ^^^^^^^^^^^
+178 |     values["legal_hold"] = False
+179 |     values["policy"] = None
+    |
+
+E501 Line too long (110 > 100)
+   --> tests\test_documents.py:180:101
+    |
+178 |     values["legal_hold"] = False
+179 |     values["policy"] = None
+180 |     saved = await send(c, "PATCH", f"/documents/{d['id']}/governance", json=values, headers={"if-match": "3"})
+    |                                                                                                     ^^^^^^^^^^
+181 |     assert saved.status_code == 200, saved.text
+182 |     assert (await send(c, "POST", f"/documents/{d['id']}/purge", headers={"if-match": "4"})).status_code == 200
+    |
+
+E501 Line too long (111 > 100)
+   --> tests\test_documents.py:182:101
+    |
+180 |     saved = await send(c, "PATCH", f"/documents/{d['id']}/governance", json=values, headers={"if-match": "3"})
+181 |     assert saved.status_code == 200, saved.text
+182 |     assert (await send(c, "POST", f"/documents/{d['id']}/purge", headers={"if-match": "4"})).status_code == 200
+    |                                                                                                     ^^^^^^^^^^^
+183 |     async with owner.connect() as conn:
+184 |         v = (await conn.execute(sa.select(D.versions).where(D.versions.c.id == UUID(accepted["version_id"])))).mappings().one()
+    |
+
+E501 Line too long (127 > 100)
+   --> tests\test_documents.py:184:101
+    |
+182 |     assert (await send(c, "POST", f"/documents/{d['id']}/purge", headers={"if-match": "4"})).status_code == 200
+183 |     async with owner.connect() as conn:
+184 |         v = (await conn.execute(sa.select(D.versions).where(D.versions.c.id == UUID(accepted["version_id"])))).mappings().one()
+    |                                                                                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+185 |         assert v["status"] == "purged"
+186 |         assert not await conn.scalar(sa.select(D.chunks.c.id).where(D.chunks.c.version_id == v["id"]))
+    |
+
+E501 Line too long (102 > 100)
+   --> tests\test_documents.py:186:101
+    |
+184 |         v = (await conn.execute(sa.select(D.versions).where(D.versions.c.id == UUID(accepted["version_id"])))).mappings().one()
+185 |         assert v["status"] == "purged"
+186 |         assert not await conn.scalar(sa.select(D.chunks.c.id).where(D.chunks.c.version_id == v["id"]))
+    |                                                                                                     ^^
+187 |         assert not app.state.storage._path(v["object_key"]).exists()
+    |
+
+E501 Line too long (277 > 100)
+   --> tests\test_documents.py:193:101
+    |
+191 | …
+192 | …
+193 | …t usability", "MOM": "Committee minutes", "sprint_report": "Iteration throughput", "risk_log": "Supplier disruption", "charter": "Sponsorship mandate", "policy": "Governance review"}
+    |       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+194 | …
+195 | …
+    |
+
+E501 Line too long (109 > 100)
+   --> tests\test_documents.py:200:101
+    |
+198 |     for category, text in labels.items():
+199 |         result = (await c.get("/api/v1/documents/search", params={"q": text})).json()["items"]
+200 |         correct += bool(result and result[0]["title"] == category and "paragraph 1" in result[0]["location"])
+    |                                                                                                     ^^^^^^^^^
+201 |     assert correct == len(labels), f"Keyword top-1 locations: {correct}/{len(labels)}"
+    |
+
+E501 Line too long (125 > 100)
+   --> tests\test_documents.py:208:101
+    |
+206 |     if not app.state.settings.document_scanner_host:
+207 |         pytest.skip("Live clamd not configured; fixture results do not establish live scanning")
+208 |     assert await asyncio.to_thread(scan, b"live clean fixture", app.state.settings.document_scanner_host) == "clamd-instream"
+    |                                                                                                     ^^^^^^^^^^^^^^^^^^^^^^^^^
+209 |     with pytest.raises(IntakeError, match="SCAN_REJECTED"):
+210 |         await asyncio.to_thread(scan, b"X5O!P%@AP[4\\PZX54(P^)7CC)7}$EICAR-STANDARD-ANTIVIRUS-TEST-FILE!$H+H*", app.state.settings.do…
+    |
+
+E501 Line too long (153 > 100)
+   --> tests\test_documents.py:210:101
+    |
+208 | …", app.state.settings.document_scanner_host) == "clamd-instream"
+209 | …
+210 | …)7CC)7}$EICAR-STANDARD-ANTIVIRUS-TEST-FILE!$H+H*", app.state.settings.document_scanner_host)
+    |                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+211 | …
+212 | …
+    |
+
+Found 44 errors (2 fixed, 42 remaining).

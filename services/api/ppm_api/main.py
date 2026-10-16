@@ -19,6 +19,7 @@ from starlette.exceptions import HTTPException
 import ppm_api.assessment_tables  # noqa: F401 — registers assessment tables into TABLES
 import ppm_api.command_tables  # noqa: F401
 import ppm_api.job_tables  # noqa: F401
+from ppm_api.ai import router as ai_router
 from ppm_api.assessment import router as assessment_router
 from ppm_api.capacity import router as capacity_router
 from ppm_api.command import router as command_router
@@ -26,6 +27,7 @@ from ppm_api.config import Settings, load_settings
 from ppm_api.database import FoundationState, make_engine
 from ppm_api.delivery import DomainError
 from ppm_api.delivery import router as delivery_router
+from ppm_api.documents import router as documents_router
 from ppm_api.identity import router as identity_router
 from ppm_api.job_limits import IntegrationBodyLimit
 from ppm_api.jobs import router as jobs_router
@@ -81,6 +83,8 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     app = FastAPI(title="Enterprise PPM foundation", version="0.1.0", lifespan=lifespan)
     app.add_middleware(IntegrationBodyLimit)
     app.include_router(jobs_router)
+    app.include_router(documents_router)
+    app.include_router(ai_router)
     app.include_router(command_router)
     app.include_router(capacity_router)
     app.include_router(assessment_router)
@@ -212,7 +216,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
                 if result.scalar_one_or_none() is None:
                     raise RuntimeError("Missing migration checkpoint")
                 revision = await conn.scalar(text("SELECT version_num FROM alembic_version"))
-                if revision != "0010_account_authority":
+                if revision != "0012_ai_runtime":
                     raise RuntimeError("Schema revision mismatch")
 
         async def redis_probe() -> None:

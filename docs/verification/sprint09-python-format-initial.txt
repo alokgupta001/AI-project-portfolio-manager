@@ -1,0 +1,37 @@
+unformatted: File would be reformatted
+   --> services\api\ppm_api\documents.py:736:1
+    |
+735 |     from ppm_api.assessment_tables import assessments, evidence_attachments
+736 +
+737 |     await version(p, id_)
+738 |     result = []
+    -     rows = (await p.conn.execute(sa.select(evidence_attachments.c.id.label("attachment_id"),
+    -         assessments).join(T.links, T.links.c.attachment_id == evidence_attachments.c.id)
+    -         .join(assessments, assessments.c.id == evidence_attachments.c.assessment_id)
+    -         .where(T.links.c.version_id == id_).order_by(evidence_attachments.c.id).limit(100))).mappings()
+739 +     rows = (
+740 +         await p.conn.execute(
+741 +             sa.select(evidence_attachments.c.id.label("attachment_id"), assessments)
+742 +             .join(T.links, T.links.c.attachment_id == evidence_attachments.c.id)
+743 +             .join(assessments, assessments.c.id == evidence_attachments.c.assessment_id)
+744 +             .where(T.links.c.version_id == id_)
+745 +             .order_by(evidence_attachments.c.id)
+746 +             .limit(100)
+747 +         )
+748 +     ).mappings()
+749 |     for row in rows:
+--------------------------------------------------------------------------------
+753 |             continue
+    -         result.append(dict(attachment_id=row["attachment_id"], assessment_id=row["id"],
+    -                            assessment_name=row["name"]))
+754 +         result.append(
+755 +             dict(
+756 +                 attachment_id=row["attachment_id"],
+757 +                 assessment_id=row["id"],
+758 +                 assessment_name=row["name"],
+759 +             )
+760 +         )
+761 |     return result
+    |
+
+1 file would be reformatted, 92 files already formatted

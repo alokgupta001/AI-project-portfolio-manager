@@ -1,0 +1,1 @@
+PASS private object archive and 10 frozen migration hashes captured

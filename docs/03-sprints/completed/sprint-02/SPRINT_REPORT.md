@@ -1,5 +1,7 @@
 # Sprint 02 implementation report
 
+> Historical sprint checkpoint — documentation review, 16 October 2026. The original outcomes, schema/version and stop-at-next-sprint statements below describe their recorded date. For today's availability and safe setup, use [current status](../../../00-overview/CURRENT_STATUS.md) and [documentation closure](../../../10-reference/PREVIOUS-SPRINTS-DOCUMENTATION-CLOSURE.md).
+
 ## Status and scope
 
 2026-10-05: **Complete for local identity and organization authorization.** F-001 JWT/session lifecycle, F-002 identity/member RBAC, F-003 implemented tenant isolation and N-001 bcrypt are accepted within this scope. N-012/N-018 remain ongoing. Source S4.1 and Sprint 02 map through [coverage](../../../requirements/coverage.md). Branch main has no commit/remote; work is uncommitted. Originals and `0001_foundation` are preserved. No paid service, external email, AI or later domain module was implemented. Sprint 03 has not started.

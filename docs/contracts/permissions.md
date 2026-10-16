@@ -1,5 +1,13 @@
 # Identity tenant and permission contract
 
+Sprint 09 adds [source authorization](documents.md): project read grants bound library,
+preview, keyword/citation and signed download; Admin or PM project edit/manage bounds
+uploads/version/reprocess/delete. Organization policies are member-readable and
+Admin-managed. Policy/hold/purge/orphan administration is Admin-only. Assessment links
+require private evidence authority plus document edit; result-only grants reveal no
+private reference. Admin retention discovery includes held/archived references without
+returning content. Existing workforce effort privacy and ownership rules are unchanged.
+
 Sprint 05 implements [resource permissions](capacity.md): resource-level manager
 capabilities plus project edit for allocations; explicit effort grants even for
 Admin; Viewer read-only; sensitive record/audit revocation enforced by RLS. Only
@@ -109,3 +117,11 @@ Organization profile reads require membership; writes require Admin, CSRF, match
 | Disable global identity | Operator only | Operator only | Operator only | Operator only |
 
 Global disable is an explicit development operator command, `scripts/account_status.py`, requiring the migration-owner connection. Organization Admin alone cannot disable another person's global identity. It preserves memberships/ownership, revokes sessions, refuses the last active verified Admin, and enabling requires a new login. Production identity administration remains PLANNED; the app rejects production configuration. Workers and queued invitation delivery also recheck global active status. See [repair verification](../04-testing/ACCOUNT_WORKFLOW_REPAIR_REPORT.md).
+## Sprint 10 AI runtime extension
+
+[ai-evidence-v1](ai.md) owns the additive /api/v1/ai and /ai behavior, immutable
+snapshots, budgets/accounting, protected source tools, citation reauthorization,
+versioned evaluation and disabled fallback. durable_jobs references exactly one
+integration, document version or AI run; existing event/SSE/authority rules remain.
+Bounded Gemini free-tier smoke verified; broad model quality unverified. No semantic agents, private assessment ingestion,
+metric changes or automatic plan edits. Admin-only restricted operations apply.

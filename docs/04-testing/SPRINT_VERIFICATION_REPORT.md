@@ -1,5 +1,13 @@
 # Sprint verification and repairs
 
+**Current reconciliation — 16 October 2026:** Current verification is Sprint 10 at `0012_ai_runtime`: the recorded baseline is 150 backend/16 browser/12 offline gate cases; later Gemini smoke and 63 AI/provider regressions passed. See [current evidence](sprint-based/sprint-10/GEMINI-FOLLOWUP.md). The dated Sprint 09 and earlier records below remain historical; no new application test was run by this documentation audit.
+
+**Current checkpoint — 15 October 2026:** [Sprint 09 verification](sprint-based/sprint-09/TESTING_REPORT.md)
+supersedes availability/head statements below: normal head `0011_document_sources`,
+123 full backend passes, 14 browser regressions plus the affected document flow passed
+separately. Later sections retain historical outcomes. Development Gmail was separately
+verified on 10 October; current hosted CI and Word visual gates remain open.
+
 **Sprint 8.1 execution update:** 74 full backend checks plus focused SSE verification, 12 full browser checks plus 6 affected closure checks and all eight static gates pass. Existing 59 table hashes/counts and the object hash match after additive head 0008; scratch restore passed. See the [current report](../03-sprints/active/sprint-8.1/SPRINT_REPORT.md) for open SMTP, hosted CI and Word visual gates. The detailed Sprint 08 walkthrough below is retained as historical evidence.
 
 Date: 9 October 2026 (Asia/Calcutta). Scope: implemented Sprints 00–08 only. No Sprint 09 features, paid provider calls, external messages or deployment were performed.

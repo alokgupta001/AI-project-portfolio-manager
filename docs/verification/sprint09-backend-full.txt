@@ -1,0 +1,58 @@
+time="2026-10-15T10:35:44+05:30" level=warning msg="Found orphan containers (enterprise-ppm-pgadmin-1) for this project. If you removed or renamed this service in your compose file, you can run this command with the --remove-orphans flag to clean it up."
+ Container enterprise-ppm-test-run-db760be3e396 Creating 
+ Container enterprise-ppm-test-run-db760be3e396 Created 
+Running: /app/.venv/bin/python -m alembic upgrade head
+Running: /app/.venv/bin/python -m alembic downgrade 0006_command_center
+Running: /app/.venv/bin/python -m alembic upgrade head
+Running: /app/.venv/bin/python -m alembic downgrade base
+Running: /app/.venv/bin/python -m alembic upgrade head
+Running: /app/.venv/bin/python -m alembic upgrade head
+Running: /app/.venv/bin/python -m alembic check
+No new upgrade operations detected.
+Running: /app/.venv/bin/python -m pytest -q
+........................................................................ [ 58%]
+...................................F...............                      [100%]
+=================================== FAILURES ===================================
+_____________ test_actual_celery_process_crash_and_lease_recovery ______________
+
+identity = (<httpx.AsyncClient object at 0x76eb6bf92120>, <fastapi.applications.FastAPI object at 0x76eb6bebbda0>, <sqlalchemy.ex... '3c193194-e4aa-4a13-8331-859ff702166b@example.com', 'other': '5c7e3b57-899a-44ec-99ef-2e3b3b62cb93@example.com', ...})
+tmp_path = PosixPath('/tmp/pytest-of-ppm/pytest-0/test_actual_celery_process_cra0')
+
+>   ???
+E   assert 0 < 0
+
+C:\Users\alokg\OneDrive\Documents\Codex\enterprise-ppm\tests\test_jobs.py:301: AssertionError
+----------------------------- Captured stderr call -----------------------------
+{"event": "http_request", "request_id": "3e6b9c3c-86f9-49d3-a2db-a092a0fa0491", "method": "GET", "route": "/api/v1/auth/csrf", "status": 200, "duration_ms": 738.0}
+{"event": "http_request", "request_id": "990ec08d-4852-4d71-ab8a-a41281e59ef8", "method": "POST", "route": "/api/v1/auth/login", "status": 200, "duration_ms": 975.74}
+{"event": "http_request", "request_id": "7694cdf5-a4ac-4aa5-a9ed-b2021b7f92f8", "method": "POST", "route": "/api/v1/auth/switch", "status": 200, "duration_ms": 62.75}
+{"event": "http_request", "request_id": "4f72f130-973a-47f3-ac7e-171758793b5c", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 238.12}
+{"event": "http_request", "request_id": "2236a6e2-5c07-4c94-82ba-74ff39d6b6c0", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 79.32}
+{"event": "http_request", "request_id": "a0fa0ddf-d058-46b9-bd53-cfbe2769add9", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 110.3}
+{"event": "http_request", "request_id": "a219cd7d-1e09-4a2f-90a5-3ff99bc57aa0", "method": "POST", "route": "/api/v1/integrations", "status": 201, "duration_ms": 98.46}
+{"event": "http_request", "request_id": "00977504-bf1e-43d9-a39b-140140c2148d", "method": "POST", "route": "/api/v1/integrations/{id_}/sync", "status": 202, "duration_ms": 395.41}
+------------------------------ Captured log call -------------------------------
+INFO     ppm.requests:main.py:138 {"event": "http_request", "request_id": "3e6b9c3c-86f9-49d3-a2db-a092a0fa0491", "method": "GET", "route": "/api/v1/auth/csrf", "status": 200, "duration_ms": 738.0}
+INFO     ppm.requests:main.py:138 {"event": "http_request", "request_id": "990ec08d-4852-4d71-ab8a-a41281e59ef8", "method": "POST", "route": "/api/v1/auth/login", "status": 200, "duration_ms": 975.74}
+INFO     ppm.requests:main.py:138 {"event": "http_request", "request_id": "7694cdf5-a4ac-4aa5-a9ed-b2021b7f92f8", "method": "POST", "route": "/api/v1/auth/switch", "status": 200, "duration_ms": 62.75}
+INFO     ppm.requests:main.py:138 {"event": "http_request", "request_id": "4f72f130-973a-47f3-ac7e-171758793b5c", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 238.12}
+INFO     ppm.requests:main.py:138 {"event": "http_request", "request_id": "2236a6e2-5c07-4c94-82ba-74ff39d6b6c0", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 79.32}
+INFO     ppm.requests:main.py:138 {"event": "http_request", "request_id": "a0fa0ddf-d058-46b9-bd53-cfbe2769add9", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 110.3}
+INFO     ppm.requests:main.py:138 {"event": "http_request", "request_id": "a219cd7d-1e09-4a2f-90a5-3ff99bc57aa0", "method": "POST", "route": "/api/v1/integrations", "status": 201, "duration_ms": 98.46}
+INFO     ppm.requests:main.py:138 {"event": "http_request", "request_id": "00977504-bf1e-43d9-a39b-140140c2148d", "method": "POST", "route": "/api/v1/integrations/{id_}/sync", "status": 202, "duration_ms": 395.41}
+=============================== warnings summary ===============================
+.venv/lib/python3.12/site-packages/fastapi/testclient.py:1
+  /app/.venv/lib/python3.12/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED tests/test_jobs.py::test_actual_celery_process_crash_and_lease_recovery
+1 failed, 122 passed, 1 warning in 365.24s (0:06:05)
+Traceback (most recent call last):
+  File "/app/scripts/test_backend.py", line 28, in <module>
+    subprocess.run(command, check=True, env=env)
+  File "/usr/local/lib/python3.12/subprocess.py", line 571, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['/app/.venv/bin/python', '-m', 'pytest', '-q']' returned non-zero exit status 1.
+

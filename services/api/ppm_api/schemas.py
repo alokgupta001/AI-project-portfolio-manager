@@ -39,5 +39,5 @@ class ReadyResponse(BaseModel):
 class FoundationResponse(BaseModel):
     instance_id: UUID
     initialized_at: datetime
-    schema_revision: Literal["0010_account_authority"] = "0010_account_authority"
+    schema_revision: Literal["0012_ai_runtime"] = "0012_ai_runtime"
     environment: Literal["local", "test", "demo"]

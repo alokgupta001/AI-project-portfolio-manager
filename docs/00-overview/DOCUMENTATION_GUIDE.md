@@ -9,8 +9,8 @@ Start at [the documentation index](../README.md). Current status is authoritativ
 | 00-overview | Current scope/status, catalogue, vision and release criteria |
 | 01-architecture | Current component, API and database explanations |
 | 02-learning | Practical cross-sprint code walkthroughs and learning entry points |
-| 03-sprints/completed/sprint-NN | Original reports/handoffs for Sprints 00–08 |
-| 03-sprints/active/sprint-8.1 | Implemented pilot with open parent acceptance; original plan lives in 09-planning |
+| 03-sprints/completed/sprint-NN | Reports/handoffs for Sprints 00–09, with each sprint’s actual local acceptance limits |
+| 03-sprints/active/sprint-8.1 and sprint-10 | Open parent/model-quality acceptance with local and bounded provider evidence recorded |
 | 03-sprints/planned/sprint-NN | Intended outcome, links to canonical roadmap and required documentation changes; no execution reports |
 | 04-testing | Strategy, current instructions and original sprint-specific test reports |
 | 05-demos | Current reproducible walkthroughs and clearly labeled future outlines |
@@ -19,6 +19,7 @@ Start at [the documentation index](../README.md). Current status is authoritativ
 | 08-quality-and-security | Current limitations and acceptance boundaries |
 | 09-planning | Gap audit, plans, roadmap, tracker, feature mappings and sprint checklist |
 | 10-reference | Source-derived inventories, changelog and historical generated snapshots |
+| 11-plain-language-sprint-reports | Business explanations and user-check steps for completed/local prior sprint scope |
 
 Each sprint-specific folder has a README. Reports, testing evidence, demos and learning notes have one canonical home; topic/sprint indexes link to it. Zero-pad whole sprint numbers, retain `sprint-8.1`, and preserve Sprint 00. A later sprint extends history; it does not rewrite a past test outcome.
 
@@ -26,7 +27,7 @@ Each sprint-specific folder has a README. Reports, testing evidence, demos and l
 
 The established `architecture/adr`, `contracts`, `requirements`, `source` and `prompts` trees remain in place because they are referenced scope/decision/interface collections. Frozen source and original prompt copies remain unchanged. `verification` retains raw logs, screenshots and JSON with stable paths; human test reports moved to testing sprint folders. `learning` retains legacy generators and Word artifacts as historical/unverified outputs; do not run older generators over canonical guides. Existing short chapter redirects remain compatibility links, with no independent canonical claim.
 
-Sprint 8.1 is **active**, because implementation and genuine evidence already exist while parent acceptance remains open. Calling those records wholly PLANNED would erase verified work. Its original requirements remain a labeled historical plan; Sprints 09–23 are PLANNED. No future test or implementation report was fabricated.
+Sprint 8.1 is **active**, because implementation and genuine evidence already exist while parent acceptance remains open. Calling those records wholly PLANNED would erase verified work. Its original requirements remain a labeled historical plan; Sprint 09 is locally implemented under `03-sprints/completed/sprint-09`; its former planned compatibility entry has been removed after updating internal links. Sprint 10 is implemented with bounded Gemini smoke acceptance and open broader quality gates; Sprints 11–23 are PLANNED. No future test or implementation report was fabricated.
 
 ## Status vocabulary and maintenance
 

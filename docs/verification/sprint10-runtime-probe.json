@@ -1,0 +1,28 @@
+{
+  "schema_revision": "0012_ai_runtime",
+  "api_ready": 200,
+  "web_ai": 200,
+  "dependencies": [
+    {
+      "name": "database",
+      "status": "ready"
+    },
+    {
+      "name": "redis",
+      "status": "ready"
+    },
+    {
+      "name": "storage",
+      "status": "ready"
+    }
+  ],
+  "ai": {
+    "provider": "disabled",
+    "enabled": false,
+    "real_calls_authorized": false,
+    "spend_limit_usd": "0"
+  },
+  "real_provider_acceptance": "BLOCKED",
+  "hosted_ci": "unverified",
+  "scope": "Sprint 10 only; stop before 11"
+}

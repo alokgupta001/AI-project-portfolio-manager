@@ -1,5 +1,11 @@
 # AI-PPM Future Product Vision and User Guide
 
+Availability update, 15 October 2026: [current status](CURRENT_STATUS.md) and
+[the document library guide](../03-sprints/completed/sprint-09/USER_GUIDE.md) record
+implemented Sprint 09 intake/OCR/keyword/policy controls. Future-tense semantic
+findings, embeddings, AI answers and later workflows in this vision remain planned.
+This document is a product vision; source behavior and executed checks govern availability.
+
 **Current canonical availability (9 October 2026):** [current status](CURRENT_STATUS.md), [feature catalogue](FEATURE_CATALOGUE.md) and [executable user steps](../06-user-guides/USER_GUIDE.md). This long-form product vision retains future business explanations and its dated baseline; Sprint 8.1 is locally implemented with open mail/CI/Word gates. Any older planned statement about core pilot controls is historical, not current availability. Detailed section-by-section reconciliation remains tracked; do not use a future journey as an executable demo.
 
 
@@ -29,7 +35,7 @@ An organization might use it to manage a customer portal, a billing upgrade and 
 
 Artificial intelligence (AI) is intended to help people interpret authorized information, investigate possible causes, draft recommendations and prepare summaries. People will still decide priorities, approve material changes and check whether advice fits their circumstances.
 
-**Today:** the local application supports project and portfolio records, delivery tracking, capacity planning, reviewed assessments, four command-center views, a risk register and bounded imports. **Planned:** the connected AI, document intelligence, forecasts and later enterprise workflows. No AI capability is verified as available at Sprint 08.
+**Today:** the local application supports project and portfolio records, delivery tracking, capacity planning, reviewed assessments, four command-center views, a risk register and bounded imports. **Today also:** Sprint 09 versioned source intake, English OCR, keyword citations and policy/retention. **Planned:** connected AI interpretation, embeddings, forecasts and later enterprise workflows. No AI capability is verified as available at Sprint 08.
 
 ## 2. The Problem It Solves
 
@@ -758,7 +764,7 @@ The documented scope does not provide automatic currency conversion, an unrestri
 
 The named work connectors are CSV, **Jira Cloud** issue/sprint data and **GitHub** issue/pull-request data. Current provider host/input limits apply; arbitrary self-hosted Jira, GitHub Enterprise hosts, commit-history imports and raw workforce notes are not supported by the current adapters. Research/training references to repository data do not create a general product connector.
 
-Planned outbound delivery uses configured **email and Slack**. Planned AI, transcription and speech services use selected configured providers; a specific final provider is not promised. Documents and meeting uploads are planned intake paths, not evidence of SharePoint, Drive, Teams, Outlook or other named integrations. Additional integrations need explicit scope confirmation.
+Planned outbound delivery uses configured **email and Slack**. Planned AI, transcription and speech services use selected configured providers; a specific final provider is not promised. Versioned document upload is now local Sprint 09 scope; meeting uploads remain planned. Neither is not evidence of SharePoint, Drive, Teams, Outlook or other named integrations. Additional integrations need explicit scope confirmation.
 
 ### Current practical boundaries
 
@@ -806,7 +812,7 @@ The following stages preserve the numbered dependency plan. Sprint numbers ident
 | Briefings and all-surface access, 21–22 | Stakeholders need consistent authorized updates and stronger access options. | PDF/HTML/weekly reports, email/Slack alerts, daily audio, passkeys, retention/provider settings and access hardening. | Planned; the end of 22 is a functional-scope candidate, not automatic release acceptance. |
 | Integrated release acceptance, 23 | Working pieces alone do not prove a dependable whole product. | Complete user journeys, release-wide access/accessibility/performance checks, backup/recovery and configured deployment verification. | Planned. Real release depends on evidence, configuration and unresolved blockers. |
 
-The next planned capability after the present checkpoint is document intelligence in Sprint 09. This guide does not execute or authorize a development sprint. No application code was changed to produce it.
+Sprint 09 intake/OCR/keyword retrieval is now locally verified; the next planned capability is the separately authorized Sprint 10 AI gateway/embeddings. See [the current Sprint 09 hub](../03-sprints/completed/sprint-09/README.md). This guide does not execute or authorize a development sprint. No application code was changed to produce it.
 
 ## 17. Glossary of Simple Terms
 

@@ -1,0 +1,80 @@
+ Image enterprise-ppm-test Building 
+#1 [internal] load local bake definitions
+#1 reading from stdin 590B done
+#1 DONE 0.0s
+
+#2 [internal] load build definition from api.Dockerfile
+#2 transferring dockerfile: 1.03kB 0.0s done
+#2 DONE 0.0s
+
+#3 [internal] load metadata for docker.io/library/python:3.12-slim-bookworm@sha256:54c85f3c47607a77f32adec749d3c81d1348bf25833671f512b26a9b6d778cb3
+#3 DONE 0.1s
+
+#4 [internal] load .dockerignore
+#4 transferring context: 205B done
+#4 DONE 0.0s
+
+#5 [internal] load build context
+#5 DONE 0.0s
+
+#6 [ 1/13] FROM docker.io/library/python:3.12-slim-bookworm@sha256:54c85f3c47607a77f32adec749d3c81d1348bf25833671f512b26a9b6d778cb3
+#6 resolve docker.io/library/python:3.12-slim-bookworm@sha256:54c85f3c47607a77f32adec749d3c81d1348bf25833671f512b26a9b6d778cb3 0.1s done
+#6 DONE 0.1s
+
+#5 [internal] load build context
+#5 transferring context: 176.31kB 0.0s done
+#5 DONE 0.1s
+
+#7 [ 2/13] WORKDIR /app
+#7 CACHED
+
+#8 [ 3/13] RUN pip install --no-cache-dir uv==0.11.15
+#8 CACHED
+
+#9 [ 4/13] RUN apt-get update && apt-get install -y --no-install-recommends poppler-utils tesseract-ocr tesseract-ocr-eng && rm -rf /var/lib/apt/lists/*
+#9 CACHED
+
+#10 [ 5/13] COPY pyproject.toml uv.lock ./
+#10 CACHED
+
+#11 [ 6/13] RUN uv sync --frozen --no-managed-python
+#11 CACHED
+
+#12 [ 7/13] COPY services ./services
+#12 DONE 0.2s
+
+#13 [ 8/13] COPY scripts ./scripts
+#13 DONE 0.1s
+
+#14 [ 9/13] COPY tests ./tests
+#14 DONE 0.2s
+
+#15 [10/13] COPY alembic.ini ./
+#15 DONE 0.2s
+
+#16 [11/13] COPY infra/document-packages.lock ./infra/document-packages.lock
+#16 DONE 0.1s
+
+#17 [12/13] RUN python scripts/verify_document_runtime.py
+#17 0.531 PASS exact parser/OCR package versions match document-packages.lock
+#17 DONE 0.6s
+
+#18 [13/13] RUN useradd --uid 10001 --create-home ppm && mkdir -p /var/ppm/objects && chown -R ppm:ppm /var/ppm && chown ppm:ppm /app
+#18 DONE 0.5s
+
+#19 exporting to image
+#19 exporting layers
+#19 exporting layers 1.0s done
+#19 exporting manifest sha256:fc2744f25224fc484b88f0fd1076b8bf22763c394a67a101c97871e5eb5d02e7 0.0s done
+#19 exporting config sha256:d2ea93ecb3f47ab0accf6edbd2797ff8f420888be086831f6564487d11dd480a 0.0s done
+#19 exporting attestation manifest sha256:ce36cde833b5de8a58ee6df6e939ae91cae4ccd1fdbc49020bcc8a4cb1dffb09
+#19 exporting attestation manifest sha256:ce36cde833b5de8a58ee6df6e939ae91cae4ccd1fdbc49020bcc8a4cb1dffb09 0.0s done
+#19 exporting manifest list sha256:bc717a4402793d1d31dc6ff738db2d66c374020c2cab362834d9f365a3d43157 0.0s done
+#19 naming to docker.io/library/enterprise-ppm-test:latest done
+#19 unpacking to docker.io/library/enterprise-ppm-test:latest
+#19 unpacking to docker.io/library/enterprise-ppm-test:latest 0.3s done
+#19 DONE 1.6s
+
+#20 resolving provenance for metadata file
+#20 DONE 0.0s
+ Image enterprise-ppm-test Built 

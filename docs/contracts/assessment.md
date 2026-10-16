@@ -31,3 +31,7 @@ Respondents may remove attachment metadata only from draft/returned assessments.
 ## Verification
 
 `tests/test_assessment.py` covers scoring, missing/invalid data, two departments, immutable versions, review/return, adjustments, wrong-assessment attacks, Viewer denial, delegated editing, result-only access, CSRF, tenant/RLS, immutable SQL records, revision conflicts and replay. `tests/browser/assessment.spec.ts` exercises the real UI and escaped evidence flow on isolated fixtures, with 1440/768/360px screenshots and automated accessibility checks. See Sprint 06 checks for actual final command results and limitations.
+
+## Sprint 09 source extension
+
+The separate source library can reference an existing released attachment only when original bytes/hash match and the actor has both document-edit and independent private-evidence authority. References are permission-filtered on read. No saved answer, score, coverage or assessment history is rewritten. Assessment TXT/manual-release intake remains distinct from general scanner-gated source processing. [Document contract](documents.md) is canonical.

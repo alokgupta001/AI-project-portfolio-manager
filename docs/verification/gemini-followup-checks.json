@@ -1,0 +1,53 @@
+{
+  "scope": "Gemini free-tier follow-up only; no Sprint 11",
+  "backend_ai_tests": {
+    "passed": 62,
+    "seconds": 52.71
+  },
+  "isolated_browser": {
+    "passed": 1,
+    "seconds": 5.4
+  },
+  "smoke": {
+    "checked_at": "2026-10-16T05:14:41.139117+00:00",
+    "provider": "gemini",
+    "project": "gen-lang-client-0537111029",
+    "completion_model": "gemini-3.5-flash-lite",
+    "embedding_model": "gemini-embedding-2",
+    "billing_verification": "operator-confirmed Free Tier; no linked billing account",
+    "usd_authorized": "0",
+    "input": "synthetic-only",
+    "requests": 2,
+    "acceptance": "BOUNDED_SMOKE_PASS",
+    "checks": {
+      "completion": {
+        "status": "PASS",
+        "input_tokens": 149,
+        "output_tokens": 67
+      },
+      "embedding": {
+        "status": "PASS",
+        "input_tokens": null,
+        "output_tokens": null,
+        "dimensions": 256
+      }
+    }
+  },
+  "source_sha256": {
+    "services/api/ppm_api/ai.py": "e17ae1a6e386a3f9a2d6054eafb83ab5287fd3e77d45d8f48dc5b831b52ced74",
+    "services/api/ppm_api/ai_provider.py": "dd65c19577fe54ca27fec21ed68aeebad6dd474294ad62d881b5026dff747217",
+    "services/api/ppm_api/config.py": "fa57d837071987e87fade769d8c348b98480a475c2cf1849374edefc5022efa5",
+    "apps/web/components/ai.tsx": "1b76292a4006020fb262d71ca152e8ba4d2b28a79803c4b874a71126abbf343a",
+    "tests/test_ai.py": "4dcbb93785deba3f89aae8b2749d646dc9c5908831be3c0fb076c11c192c2ff7",
+    "tests/test_gemini.py": "99201f136fe6eefa629f401efa3dc139f1878cf7c8238629b545e7922cb68714",
+    "tests/browser/gemini.spec.ts": "5213ff5482b78a9b1fb8b0f3007030ebab53eb15e820d93e8e00a697c21c8073",
+    "scripts/configure_gemini_free_tier.py": "1cc76d66f35bdf614c24e0295772ff60c1f3434eebb789e1475b754da96dcb89",
+    "scripts/smoke_gemini_free_tier.py": "ce7ce540fb2b955e13f635ee942c7a7af0bf513571644415dcb87dd422bf3340",
+    "scripts/verify_gemini_runtime.py": "3d76ffc03ed08b0e3b421316c0d5b5538f58d64afa29abc308e11f51a37db098"
+  },
+  "limitations": [
+    "Google billing status is operator-confirmed, not independently API-verified",
+    "Confirmation expires after 24 hours",
+    "General model quality and production acceptance remain unverified"
+  ]
+}

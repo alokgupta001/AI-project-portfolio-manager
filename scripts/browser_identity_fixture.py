@@ -30,13 +30,26 @@ async def run() -> None:
     integration_email = f"integration-{integration_user}@example.com"
     command_org, command_user = uuid4(), uuid4()
     command_email = f"command-{command_user}@example.com"
+    document_org, document_user = uuid4(), uuid4()
+    ai_org, ai_user = uuid4(), uuid4()
+    ai_email = f"ai-{ai_user}@example.com"
+    document_email = f"documents-{document_user}@example.com"
     hashed = await password_hash(password)
     no_org_user = uuid4()
     no_org_email = f"account-only-{no_org_user}@example.com"
     engine = create_async_engine(url)
     try:
         async with engine.begin() as conn:
-            for oid in (a, b, capacity_org, assessment_org, command_org, integration_org):
+            for oid in (
+                a,
+                b,
+                capacity_org,
+                assessment_org,
+                command_org,
+                integration_org,
+                document_org,
+                ai_org,
+            ):
                 await conn.execute(
                     organizations.insert().values(
                         id=oid, name="Acceptance organization", created_at=now()
@@ -46,6 +59,8 @@ async def run() -> None:
                 (no_org_user, no_org_email),
                 (integration_user, integration_email),
                 (command_user, command_email),
+                (document_user, document_email),
+                (ai_user, ai_email),
                 (uid, email),
                 (other, f"{other}@example.com"),
                 (capacity_user, capacity_email),
@@ -66,6 +81,10 @@ async def run() -> None:
                 (integration_org, integration_user, "Admin"),
                 (b, integration_user, "Viewer"),
                 (command_org, command_user, "Admin"),
+                (document_org, document_user, "Admin"),
+                (ai_org, ai_user, "Admin"),
+                (b, ai_user, "Viewer"),
+                (b, document_user, "Viewer"),
                 (b, command_user, "Viewer"),
                 (a, uid, "Admin"),
                 (b, uid, "Viewer"),
@@ -87,6 +106,11 @@ async def run() -> None:
             json.dumps(
                 {
                     **pilot,
+                    "ai_org": str(ai_org),
+                    "ai_email": ai_email,
+                    "document_org": str(document_org),
+                    "document_user": str(document_user),
+                    "document_email": document_email,
                     "integration_org": str(integration_org),
                     "integration_email": integration_email,
                     "command_org": str(command_org),

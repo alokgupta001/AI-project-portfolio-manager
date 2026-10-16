@@ -1,0 +1,25 @@
+# Optional local document scanner. Private network only; no host socket/port or source volume.
+services:
+  clamav:
+    image: clamav/clamav:1.4.6_base@sha256:934a62e82e30bfa2665216b0cf042c01d8842d010540c82b1fdc9e3b87784731
+    volumes:
+      - document_signatures:/var/lib/clamav
+    healthcheck:
+      test: [CMD, clamdcheck.sh]
+      interval: 15s
+      timeout: 10s
+      retries: 40
+      start_period: 120s
+    mem_limit: 2g
+    cpus: 1.0
+  api:
+    environment:
+      PPM_DOCUMENT_SCANNER_HOST: clamav
+  worker:
+    environment:
+      PPM_DOCUMENT_SCANNER_HOST: clamav
+  test:
+    environment:
+      PPM_DOCUMENT_SCANNER_HOST: clamav
+volumes:
+  document_signatures:

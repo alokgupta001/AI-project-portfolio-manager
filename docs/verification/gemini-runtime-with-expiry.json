@@ -1,0 +1,61 @@
+{
+  "checked_at": "2026-10-16T05:21:52.917174+00:00",
+  "services": {
+    "api": {
+      "status": {
+        "provider": "gemini",
+        "enabled": true,
+        "reason": "FREE_TIER_OPERATOR_CONFIRMED",
+        "completion_model": "gemini-3.5-flash-lite",
+        "embedding_model": "gemini-embedding-2"
+      },
+      "spend_limit_usd": "0",
+      "daily_call_limit": 20,
+      "confirmation_expires_hours": 24
+    },
+    "worker": {
+      "status": {
+        "provider": "gemini",
+        "enabled": true,
+        "reason": "FREE_TIER_OPERATOR_CONFIRMED",
+        "completion_model": "gemini-3.5-flash-lite",
+        "embedding_model": "gemini-embedding-2"
+      },
+      "spend_limit_usd": "0",
+      "daily_call_limit": 20,
+      "confirmation_expires_hours": 24
+    },
+    "dispatcher": {
+      "status": {
+        "provider": "gemini",
+        "enabled": true,
+        "reason": "FREE_TIER_OPERATOR_CONFIRMED",
+        "completion_model": "gemini-3.5-flash-lite",
+        "embedding_model": "gemini-embedding-2"
+      },
+      "spend_limit_usd": "0",
+      "daily_call_limit": 20,
+      "confirmation_expires_hours": 24
+    }
+  },
+  "readiness": {
+    "status": "ready",
+    "dependencies": [
+      {
+        "name": "database",
+        "status": "ready"
+      },
+      {
+        "name": "redis",
+        "status": "ready"
+      },
+      {
+        "name": "storage",
+        "status": "ready"
+      }
+    ]
+  },
+  "schema_revision": "0012_ai_runtime",
+  "web_ai_http": 200,
+  "provider_requests": 0
+}

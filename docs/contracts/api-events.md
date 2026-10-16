@@ -1,6 +1,13 @@
 # API event and AI contracts
 
-Current implemented checkpoint: Sprint 08, migration `0007_durable_jobs`. [Implemented jobs, outbox, ingestion and SSE](jobs-integrations.md) replace the job/event planning proposals below for this slice. Shared AI result envelopes remain planning contracts.
+Sprint 09 adds `/api/v1/documents` and [sources-v1](documents.md), generated DTOs,
+scoped keyword/citation access and session-bound download tickets.
+`document.processing_requested` / `document.quarantined` use the existing version-1
+outbox envelope. Document jobs extend the shared durable queue with an exclusive
+source-version reference; connector routes/consumers remain compatible. No semantic
+AI output, embedding activation or new SSE authority is introduced.
+
+Historical Sprint 08 checkpoint: migration `0007_durable_jobs`. [Implemented jobs, outbox, ingestion and SSE](jobs-integrations.md) replace the job/event planning proposals below for this slice. The planned shared AI envelope below is now specialized by the implemented ai-evidence-v1 contract; bounded Gemini smoke passed while broad model-quality acceptance remains unverified.
 
 Historical Sprint 04 checkpoint: migration `0003_delivery`. [Delivery endpoints/DTOs](delivery.md) extend the identity API; generated OpenAPI/TypeScript is authoritative. Future job/event/AI envelopes below remain planning contracts.
 
@@ -50,7 +57,7 @@ Never serialize exception traces, credentials or foreign object existence. For e
 
 Retryable POST/apply operations require an idempotency key scoped to organization, actor, route and canonical request hash. Same key/hash returns the stored outcome; same key/different body returns 409. Proposed retention 24 hours for ordinary API keys; financial/scenario/workflow effects retain unique logical action IDs beyond that. Approval/apply checks expected versions for every affected record in one transaction, failing atomically if stale.
 
-`/projects`, `/portfolios`, `/resources`, `/assessments`, `/documents`, `/ai-runs`, `/workflows`, `/scenarios`, `/reports` are planned resource families, not live routes. Generate clients from backend OpenAPI. Compatible additive fields are allowed when clients ignore unknowns; removing/changing meaning requires version/deprecation plan and impacted-consumer checks. Never rewrite applied migrations; expand/backfill/contract with a single Alembic head.
+Those original resource-family names were planning examples. Current live delivery/assessment/document/AI paths are in generated OpenAPI; workflows/scenarios/reports remain planned. The AI route is `/api/v1/ai/runs`. Generate clients from backend OpenAPI. Compatible additive fields are allowed when clients ignore unknowns; removing/changing meaning requires version/deprecation plan and impacted-consumer checks. Never rewrite applied migrations; expand/backfill/contract with a single Alembic head.
 
 ## Durable event envelope
 
@@ -116,3 +123,11 @@ GET `/api/v1/health/live` reports process liveness (200); GET `/api/v1/health/re
 [`DomainError`](../../services/api/ppm_api/errors.py) preserves fixed, trusted business-rule messages. The HTTP handler in `main.py` keeps that message and the request ID/code/status; generic exceptions return a sanitized error. Validation details contain field paths and Pydantic's bounded explanation, excluding rejected input values. Authentication stays non-enumerating and hidden records stay 404. Constraint errors use a safe 409 rather than database text.
 
 The shared [`apiError`](../../apps/web/components/api-error.ts) parser joins the message with field/reason details for identity, delivery, resources, assessments, command center, integrations and pilot controls. Forms keep unsaved values on failure. Missing revision is 428, stale revision 412, invalid field 422, insufficient scope 403, incompatible business state or duplicate conflict 409. The password control is independent of submission, so toggling it preserves values and validation.
+## Sprint 10 AI runtime extension
+
+[ai-evidence-v1](ai.md) owns the additive /api/v1/ai and /ai behavior, immutable
+snapshots, budgets/accounting, protected source tools, citation reauthorization,
+versioned evaluation and disabled fallback. durable_jobs references exactly one
+integration, document version or AI run; existing event/SSE/authority rules remain.
+Bounded Gemini free-tier smoke verified; broad model quality unverified. No semantic agents, private assessment ingestion,
+metric changes or automatic plan edits. Admin-only restricted operations apply.

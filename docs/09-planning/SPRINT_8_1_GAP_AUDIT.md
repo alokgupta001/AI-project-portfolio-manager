@@ -1,5 +1,12 @@
 # Sprint 8.1 gap audit
 
+Current execution note, 15 October 2026: this is the historical gap audit, not today's
+availability inventory. [Current status](../00-overview/CURRENT_STATUS.md),
+[Sprint 09 report](../03-sprints/completed/sprint-09/SPRINT_REPORT.md) and
+[traceability](FEATURE_GAP_TRACEABILITY.md) record locally verified source/keyword/policy/
+retention work and retained semantic/production gaps. Development Gmail was verified
+10 October; current hosted CI and archived Word visual gates remain open.
+
 **Execution update 2026-10-09:** Sprint 8.1 local implementation is recorded in the [report](../03-sprints/active/sprint-8.1/SPRINT_REPORT.md); parent acceptance remains OPEN. The planning baseline below is historical. Future task scope and release criteria remain unchanged; no next sprint was started.
 
 **Historical planning baseline (before Sprint 8.1 execution):** 9 October 2026. Documentation only; no feature work is authorized by this pack.** Sprint 08 is complete locally; Sprint 8.1 is proposed, not started. Numbers describe execution order, not dates or delivery promises. The frozen source specifications and original prompt pack remain intact. For future work, this pack supersedes the earlier gap review and the future sections of the original ordered prompts; those prompts remain historical scope evidence. Completed reports retain their original meaning.

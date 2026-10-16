@@ -1,0 +1,82 @@
+{
+  "checked_at": "2026-10-16T10:06:35.734108+00:00",
+  "pull_request": "https://github.com/alokgupta001/AI-project-portfolio-manager/pull/1",
+  "scope": "Verify and address the six original CodeRabbit findings only",
+  "status": "PASS",
+  "findings_verified": 6,
+  "findings_fixed": 6,
+  "findings_skipped": [],
+  "fixes": [
+    {
+      "file": ".github/workflows/ci.yml",
+      "change": "Use the same base/document overlay for config, up, test, exec and down.",
+      "validation": "Compose configuration validates with both files."
+    },
+    {
+      "file": "apps/web/components/documents.tsx",
+      "change": "Appending a version preserves the selected document's project_id, including null; new uploads retain the form project.",
+      "validation": "Browser scenario selects a stale form project, appends an organization policy version, asserts project_id is null and receives HTTP 202."
+    },
+    {
+      "file": "README.md",
+      "change": "Restore the intended em dash and middle-dot separators without changing links or surrounding text.",
+      "validation": "UTF-8 assertions and documentation link checks pass."
+    },
+    {
+      "file": "services/api/ppm_api/ai.py",
+      "change": "Commit completed call accounting before raising cancellation or lease fencing; retain authorization checks and block late result publication.",
+      "validation": "Success/failure cases after cancellation and lease replacement retain call outcomes and failure counts. Revoked authority remains fenced."
+    },
+    {
+      "file": "services/api/ppm_api/ai.py",
+      "change": "Reject disabled embedding operations before admitting attempts; completion remains usable without an embedding model.",
+      "validation": "Gemini query/index fixtures verify provider invocation counts, persisted calls, circuit state and zero-dollar accounting."
+    },
+    {
+      "file": "services/api/ppm_api/document_parser.py",
+      "change": "Inspect the resolved PDF object graph for active action/attachment names, including compressed objects, with cycle detection and a 50000-node bound. Retain raw-byte checks and sandbox extraction.",
+      "validation": "Seven compressed active-content fixtures are rejected; benign compressed PDF and normal/scanned document extraction still pass."
+    }
+  ],
+  "validation": {
+    "before_fixes": {
+      "ai_regression_subset": "6 expected failures, 2 passes against previous local test image",
+      "compressed_pdf_subset": "7 expected failures against previous local test image"
+    },
+    "backend": {
+      "command": "docker compose -f compose.yaml -f compose.documents.yaml --profile test run --rm --no-deps test python -m pytest -q --tb=short",
+      "passed": 201,
+      "seconds": 254.09,
+      "warnings": "One existing Starlette/httpx deprecation warning"
+    },
+    "browser": {
+      "command": "node scripts/check-identity-browser.mjs documents.spec.ts",
+      "passed": 1,
+      "initial_attempt": "Test locator did not match the implicit select label; corrected to the accessible combobox role and rerun.",
+      "historical_screenshots": "Restored byte-for-byte; new evidence saved privately."
+    },
+    "static": "Ruff lint/format, mypy, ESLint, TypeScript, Prettier and contract drift PASS",
+    "documentation": "295 Markdown files, 4749 local links/anchors, 12 prior sprint packages and 105 required artifacts PASS; source manifests and all three source inventories PASS",
+    "whitespace": "PASS"
+  },
+  "cost": {
+    "maximum_authorized_usd": 0,
+    "real_ai_provider_requests": 0,
+    "provider_transport": "Offline doubles or intercepted HTTP; real AI disabled in Compose test services",
+    "mail": "Local only",
+    "paid_agents_or_cli": "Not invoked"
+  },
+  "hash_normalization": "CRLF normalized to LF",
+  "sha256": {
+    ".github/workflows/ci.yml": "debe0771253cdb9c0a9edc91e8614579487e9eecac0b29864f6d35af5e978988",
+    "README.md": "39fdcf3daf068e163a70e11d8f5b291fcc6522e7c1ae8ca7a0d0e35ec9fc262f",
+    "apps/web/components/documents.tsx": "8bbdcf2069d012e2976c5fe7045458e4e1857be59ea1565fba4f193972c1931f",
+    "services/api/ppm_api/ai.py": "35c3500d3fafa1e9fbefd31e960ee54dc8d8dc1a44de705dff21b5ff0241ff18",
+    "services/api/ppm_api/document_parser.py": "963586d8ba9df615dbf5a143212d7ae0e8b756d9cd145d76814f79f2272807fc",
+    "tests/test_ai.py": "c36f76ee363189ad1e3538e4dec16281e402e7a58ba614b51f4f312b091408f0",
+    "tests/test_document_parser.py": "a15040f51aa9c895ba58baca23317c6a54338e780b414aa95bf64e91f7814a87",
+    "tests/browser/documents.spec.ts": "2305778b5be75ae88247f15d867d246fa86814c06d642426f0638de0a792f551",
+    "docs/10-reference/CODE-AND-TEST-INDEX.md": "50fbcfd865accbe8d54ecc44faa0608081a08323890983bef3761a6302b23fe1"
+  },
+  "limits": "Hosted CI and subsequent CodeRabbit review at the fix commit remain pending publication. No Sprint 11 or production acceptance claimed."
+}

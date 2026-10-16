@@ -1,5 +1,7 @@
 # Sprint 08 implementation report
 
+> Historical sprint checkpoint — documentation review, 16 October 2026. The original outcomes, schema/version and stop-at-next-sprint statements below describe their recorded date. For today's availability and safe setup, use [current status](../../../00-overview/CURRENT_STATUS.md) and [documentation closure](../../../10-reference/PREVIOUS-SPRINTS-DOCUMENTATION-CLOSURE.md).
+
 ## Status and scope
 2026-10-09. Durable jobs, integrations and live progress: **complete locally within documented connector bounds**. Base `90564405bcacc8389e34f3b06d8ab8d00984c5c1`, branch `main`; implementation remains uncommitted. The pre-existing README edit and learning documents/artifacts are preserved. Scope: F-038, N-008, E-007 and E-009; supplementary live visibility/asynchronous processing and ingestion support. Live Jira/GitHub authentication and sync remain unverified because credentials are absent, as explicitly permitted by the Sprint 08 prompt. No Sprint 09 work started.
 

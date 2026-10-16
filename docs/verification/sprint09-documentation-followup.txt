@@ -1,0 +1,116 @@
+PASS: 133 pre-existing non-Markdown implementation/evidence files unchanged from prior Sprint 09 checkpoint
+PASS: applied 0011 migration unchanged; no application/data/secret mutation in documentation follow-up
+
+$ C:\Users\alokg\OneDrive\Documents\Codex\enterprise-ppm\.venv\Scripts\python.exe -B scripts/documentation_inventory.py --check
+PASS: three source inventories match
+Exit: 0
+
+$ C:\Users\alokg\OneDrive\Documents\Codex\enterprise-ppm\.venv\Scripts\python.exe -B scripts/check_documentation.py
+PASS: 263 Markdown files; 4220 local links/anchors; zero missing
+PASS: catalogue/mapping each retain 156 requirements and 36 gaps
+PASS: Sprint 09 hubs and accepted/partial requirement status boundaries
+External URLs, plain-text paths and archived Word layout are outside this check
+Exit: 0
+
+$ C:\Users\alokg\OneDrive\Documents\Codex\enterprise-ppm\.venv\Scripts\python.exe -B scripts/check_sources.py
+PASS: 7 preserved sources/prompts match SHA256 manifest
+Exit: 0
+
+$ C:\Users\alokg\OneDrive\Documents\Codex\enterprise-ppm\.venv\Scripts\ruff.exe check scripts/documentation_inventory.py scripts/check_documentation.py
+All checks passed!
+Exit: 0
+
+$ C:\Users\alokg\OneDrive\Documents\Codex\enterprise-ppm\.venv\Scripts\ruff.exe format --check scripts/documentation_inventory.py scripts/check_documentation.py
+2 files already formatted
+Exit: 0
+
+$ git -c safe.directory=C:/Users/alokg/OneDrive/Documents/Codex/enterprise-ppm -c core.autocrlf=false diff --check
+warning: in the working copy of 'ANTIGRAVITY.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'CHANGELOG.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'README.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web/app/account/identity-client.tsx', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web/app/globals.css', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web/components/assessments.tsx', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'apps/web/components/shell.tsx', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'compose.yaml', CRLF will be replaced by LF the next time Git touches it
+warning: in the working copy of 'docs/00-overview/AI_PPM_FUTURE_PRODUCT_VISION_AND_USER_GUIDE.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'docs/00-overview/CURRENT_STATUS.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'docs/00-overview/DOCUMENTATION_GUIDE.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'docs/00-overview/FEATURE_CATALOGUE.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'docs/00-overview/FINAL_PRODUCT_SCOPE_AND_RELEASE_CRITERIA.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'docs/00-overview/README.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'docs/01-architecture/18-api-contracts.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'docs/01-architecture/DATABASE-DICTIONARY.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'docs/01-architecture/README.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'docs/01-architecture/SYSTEM_ARCHITECTURE.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'docs/02-learning/00-getting-started/README.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'docs/02-learning/01-project-foundations/FEATURE_WORKFLOWS.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'docs/02-learning/01-project-foundations/PROJECT_OVERVIEW.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'docs/02-learning/01-project-foundations/SPRINT_HISTORY.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'docs/02-learning/02-backend/BACKEND_GUIDE.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'docs/02-learning/02-backend/REQUEST_LIFECYCLE.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'docs/02-learning/03-frontend/FRONTEND_GUIDE.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'docs/02-learning/04-database/DATABASE_GUIDE.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'docs/02-learning/05-security/AUTHENTICATION_AND_AUTHORIZATION.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'docs/02-learning/06-ai-and-analytics/AI_AND_JOBS.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'docs/02-learning/06-ai-and-analytics/SCORING_AND_DASHBOARDS.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'docs/02-learning/07-testing-and-debugging/DEVELOPER_GUIDE.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'docs/02-learning/08-deployment-and-operations/OPERATIONS_AND_LIMITS.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'docs/02-learning/README.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'docs/02-learning/sprint-based/README.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'docs/03-sprints/README.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'docs/03-sprints/planned/sprint-09/README.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'docs/04-testing/GAP_ACCEPTANCE_TEST_PLAN.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'docs/04-testing/README.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'docs/04-testing/SPRINT_VERIFICATION_REPORT.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'docs/04-testing/TESTING_STRATEGY.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'docs/04-testing/sprint-based/README.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'docs/05-demos/CURRENT_DEMO_GUIDE.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'docs/05-demos/FUTURE_DEMO_PLANS.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'docs/05-demos/README.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'docs/05-demos/sprint-based/README.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'docs/06-user-guides/PROJECT_PRESENTATION_GUIDE.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'docs/06-user-guides/README.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'docs/06-user-guides/USER_GUIDE.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'docs/06-user-guides/WEBSITE_WALKTHROUGH.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'docs/07-setup-and-deployment/DATABASE-VIEWER.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'docs/07-setup-and-deployment/DOCKER-SERVICES-EXPLAINED.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'docs/07-setup-and-deployment/ENVIRONMENT_VARIABLES.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'docs/07-setup-and-deployment/IDENTITY-DEVELOPMENT.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'docs/07-setup-and-deployment/LOCAL-DEVELOPMENT.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'docs/07-setup-and-deployment/README.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'docs/08-quality-and-security/KNOWN_LIMITATIONS.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'docs/09-planning/DOCUMENTATION_UPDATE_TRACKER.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'docs/09-planning/FEATURE_DOCUMENT_MAPPING.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'docs/09-planning/FEATURE_GAP_TRACEABILITY.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'docs/09-planning/FUTURE_SPRINT_ROADMAP.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'docs/09-planning/README.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'docs/09-planning/SPRINT_8_1_GAP_AUDIT.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'docs/09-planning/SPRINT_DOCUMENTATION_CHECKLIST.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'docs/10-reference/CODE-AND-TEST-INDEX.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'docs/10-reference/DOCUMENTATION_AUDIT_RESULTS.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'docs/10-reference/DOCUMENTATION_CHANGELOG.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'docs/10-reference/README.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'docs/AI-PPM-MASTER-LEARNING-GUIDE.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'docs/README.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'docs/architecture/adr/README.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'docs/contracts/assessment.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'docs/contracts/frontend.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'docs/contracts/jobs-integrations.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'docs/handoffs/LATEST.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'docs/prompts/MASTER.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'docs/requirements/coverage.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'docs/requirements/decisions-and-assumptions.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'docs/verification/python-dependencies.json', CRLF will be replaced by LF the next time Git touches it
+warning: in the working copy of 'infra/api.Dockerfile', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'packages/contracts/src/schema.d.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'pyproject.toml', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'scripts/browser_identity_fixture.py', CRLF will be replaced by LF the next time Git touches it
+warning: in the working copy of 'scripts/check-identity-browser.mjs', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/api/migrations/env.py', CRLF will be replaced by LF the next time Git touches it
+warning: in the working copy of 'services/api/ppm_api/job_tables.py', CRLF will be replaced by LF the next time Git touches it
+warning: in the working copy of 'services/api/ppm_api/jobs.py', CRLF will be replaced by LF the next time Git touches it
+warning: in the working copy of 'services/api/ppm_api/main.py', CRLF will be replaced by LF the next time Git touches it
+warning: in the working copy of 'services/api/ppm_api/schemas.py', CRLF will be replaced by LF the next time Git touches it
+warning: in the working copy of 'tests/test_jobs.py', CRLF will be replaced by LF the next time Git touches it
+Exit: 0

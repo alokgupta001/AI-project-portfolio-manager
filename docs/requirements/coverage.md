@@ -59,7 +59,7 @@ Source keys resolve to exact headings in [source index](../source/INDEX.md). Eac
 | F-036 | F | W3/Resource Dashboard | Allocation workload dashboard | 07 | 05,06 | Capacity and team workload values reconcile with source allocations | Implemented locally | [Sprint 07 checks](../04-testing/sprint-based/sprint-07/TESTING_REPORT.md); [command center](../contracts/command-center.md) |
 | F-037 | F | S1 | Reported versus evidence health | 07 | 04,05,06 | Reported-green troubled fixture displays evidence discrepancy | Implemented locally | [Sprint 07 checks](../04-testing/sprint-based/sprint-07/TESTING_REPORT.md); [command center](../contracts/command-center.md) |
 | F-038 | F | S4.2 | Live project visibility | 08 | 07 | Authorized event updates dashboard; reconnect resumes or requests snapshot | Accepted locally: authorized sync-stage dashboard refresh/resume; other mutation broadcasts outside slice | [Sprint 08 checks](../04-testing/sprint-based/sprint-08/TESTING_REPORT.md); [jobs-v1](../contracts/jobs-integrations.md) |
-| F-039 | F | S4.2 | AI progress streaming | 10 | 08,09 | SSE exposes observable stages, not hidden reasoning or secret inputs | Planned | — |
+| F-039 | F | S4.2 | AI progress streaming | 10 | 08,09 | SSE exposes observable stages, not hidden reasoning or secret inputs | Accepted locally: deterministic/runtime/browser gates; real model acceptance not claimed | [Sprint 10 checks](../04-testing/sprint-based/sprint-10/TESTING_REPORT.md); [ADR 016](../architecture/adr/016-budgeted-ai-runtime.md) |
 
 ## Agents and predictive analytics
 
@@ -95,16 +95,16 @@ Source keys resolve to exact headings in [source index](../source/INDEX.md). Eac
 
 | ID | Type | Source | Requirement | Owner | Depends | Acceptance criterion | Status | Evidence |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| F-065 | F | W5/Supported Documents | SRS BRD PRD classification | 09 | 08 | Each document category retains type, version and source locations | Planned | — |
-| F-066 | F | W5/Supported Documents | MOM and sprint report ingestion | 09 | 08 | Both categories yield attributable text/findings | Planned | — |
-| F-067 | F | W5/Supported Documents | Risk log ingestion | 09 | 08 | Tabular/text risk candidates enter review without duplicate live risks | Planned | — |
-| F-068 | F | W5/Supported Documents | Project charter ingestion | 09 | 08 | Charter evidence links to project and source version | Planned | — |
-| F-069 | F | W5/Supported Documents | Governance policy ingestion | 09 | 08 | Restricted policy version used only by authorized consumers | Planned | — |
+| F-065 | F | W5/Supported Documents | SRS BRD PRD classification | 09 | 08 | Each document category retains type, version and source locations | Accepted locally: categories, immutable versions, source locations | [Sprint 09 checks](../verification/PPM-09-001.md) |
+| F-066 | F | W5/Supported Documents | MOM and sprint report ingestion | 09,11 | 08 | Both categories yield attributable text/findings | Partial: attributed text accepted; semantic findings pending 11 | [Sprint 09 checks](../verification/PPM-09-001.md) |
+| F-067 | F | W5/Supported Documents | Risk log ingestion | 09,11 | 08 | Tabular/text risk candidates enter review without duplicate live risks | Partial: tabular/text sources accepted; candidate review pending 11 | [Sprint 09 checks](../verification/PPM-09-001.md) |
+| F-068 | F | W5/Supported Documents | Project charter ingestion | 09 | 08 | Charter evidence links to project and source version | Accepted locally: scoped charter version/source evidence | [Sprint 09 checks](../verification/PPM-09-001.md) |
+| F-069 | F | W5/Supported Documents | Governance policy ingestion | 09 | 08 | Restricted policy version used only by authorized consumers | Accepted locally: scoped policy registry and source versions | [Sprint 09 checks](../verification/PPM-09-003.md) |
 | F-070 | F | W5/AI Processing | Extract risks and blockers | 11 | 08,09,10 | Sprint 09 candidate interfaces integrate with shared AI gateway; schema and evidence validate | Planned | — |
 | F-071 | F | W5/AI Processing | Extract dependencies | 11 | 08,09,10 | Semantic extraction integrates with gateway; proposed edges require review | Planned | — |
 | F-072 | F | W5/AI Processing | Compliance gaps and maturity indicators | 11 | 08,09,10 | Semantic findings cite sources and remain provisional until reviewed | Planned | — |
-| F-073 | F | W5/Add OCR + RAG | OCR | 09 | 08 | Scanned fixture extracts text with page references/confidence | Planned | — |
-| F-074 | F | W5/Add OCR + RAG | Scoped RAG | 09 | 08 | Retrieval prevents access leakage and invalid/deleted citations | Planned | — |
+| F-073 | F | W5/Add OCR + RAG | OCR | 09 | 08 | Scanned fixture extracts text with page references/confidence | Accepted locally: real English scanned PDF/PNG/JPEG OCR | [Sprint 09 checks](../verification/PPM-09-001.md) |
+| F-074 | F | W5/Add OCR + RAG | Scoped RAG | 09,10 | 08 | Retrieval prevents access leakage and invalid/deleted citations | Partial: budgeted hybrid/fallback implemented; Gemini embedding smoke passed; retrieval quality/scale unverified | [Sprint 10 checks](../04-testing/sprint-based/sprint-10/TESTING_REPORT.md); [ADR 016](../architecture/adr/016-budgeted-ai-runtime.md) |
 | F-075 | F | W2/Capabilities; WA1 | Conversational copilot | 14 | 09,10,11,13 | Scoped multi-turn answers contain valid evidence or abstain | Planned | — |
 | F-076 | F | W2/Capabilities | Root causes and predicted impact | 14 | 09,10,11,13 | Distinguish supported associations, hypotheses and measured predictions | Planned | — |
 | F-077 | F | WA2 | Natural language analytics | 14 | 09,10,11,13 | Allowlisted query plan matches deterministic expected answer | Planned | — |
@@ -158,15 +158,15 @@ Source keys resolve to exact headings in [source index](../source/INDEX.md). Eac
 | N-006 | N | S4.2 | FCP under 2 seconds | 23 | 22 | Representative authenticated dashboard meets documented browser profile | Planned | — |
 | N-007 | N | S4.2 | 60fps chart rendering target | 23 | 22 | Frame-time distribution reported for documented dataset/device/actions | Planned | — |
 | N-008 | N | S4.3 | Nonblocking asynchronous processing | 08 | 07 | Heavy jobs separate from API and restart safely under load | Accepted locally: leased worker/crash recovery with bounded inputs; production load unverified | [Sprint 08 checks](../04-testing/sprint-based/sprint-08/TESTING_REPORT.md); [jobs-v1](../contracts/jobs-integrations.md) |
-| N-009 | N | S4.3 | Typed AI output validation | 10 | 08,09 | Invalid provider output never accepted as valid result | Planned | — |
-| N-010 | N | S4.3 | Timeout fallback | 10 | 08,09 | Bounded retries and truthful degraded/failure states tested | Planned | — |
+| N-009 | N | S4.3 | Typed AI output validation | 10 | 08,09 | Invalid provider output never accepted as valid result | Accepted locally: deterministic/runtime/browser gates; real model acceptance not claimed | [Sprint 10 checks](../04-testing/sprint-based/sprint-10/TESTING_REPORT.md); [ADR 016](../architecture/adr/016-budgeted-ai-runtime.md) |
+| N-010 | N | S4.3 | Timeout fallback | 10 | 08,09 | Bounded retries and truthful degraded/failure states tested | Accepted locally: deterministic/runtime/browser gates; real model acceptance not claimed | [Sprint 10 checks](../04-testing/sprint-based/sprint-10/TESTING_REPORT.md); [ADR 016](../architecture/adr/016-budgeted-ai-runtime.md) |
 | N-011 | N | S4.4 | 99.9% alert worker availability target | 23 | 21,22 | SLI monitoring/runbook created; observed window reported separately | Planned | — |
 | N-012 | N | Master prompt | Versioned migrations and contracts | 01 | 00 | Clean/prior-state migration and API client drift checks exist | Foundation accepted; ongoing | [Sprint 01 checks](../04-testing/sprint-based/sprint-01/TESTING_REPORT.md); initial base/head lifecycle and contract drift pass; later revisions need new checks |
 | N-013 | N | Master prompt | Accessibility target | 03 | 02 | Core keyboard/screen-reader/contrast checks, then release regression | Core checks accepted; release-wide verification ongoing | [Sprint 03 checks](../04-testing/sprint-based/sprint-03/TESTING_REPORT.md); full assistive-technology certification not claimed |
-| N-014 | N | Master prompt | AI and retrieval access isolation | 10 | 09 | Adversarial source text and changed-access fixtures do not leak data | Planned | — |
+| N-014 | N | Master prompt | AI and retrieval access isolation | 09,10 | 09 | Adversarial source text and changed-access fixtures do not leak data | Accepted locally: deterministic/runtime/browser gates; real model acceptance not claimed | [Sprint 10 checks](../04-testing/sprint-based/sprint-10/TESTING_REPORT.md); [ADR 016](../architecture/adr/016-budgeted-ai-runtime.md) |
 | N-015 | N | Master prompt | Model validity and lineage | 12 | 08,11 | Temporal/entity split, model card, baseline and license evidence recorded | Planned | — |
 | N-016 | N | Master prompt | Audit retention and revocation | 22 | 02,21 | Revocation covers download/stream/cache/jobs; retention configured | Planned | — |
-| N-017 | N | Master prompt | Backup restore and deployment recovery | 23 | 22 | Restore/rollback exercise records measured results and remaining risks | Planned | — |
+| N-017 | N | Master prompt | Backup restore and deployment recovery | 09,23 | 22 | Restore/rollback exercise records measured results and remaining risks | Partial: pilot scratch restore verified; production/all-surface recovery pending 23 | [Recovery checks](../verification/PPM-09-003.md) |
 | N-018 | N | User request | Sprint report and follow-up document | 01 | 00 | Every sprint/sub-sprint updates report, handoff, coverage and evidence | Met through Sprint 02; ongoing | [Report](../03-sprints/completed/sprint-02/SPRINT_REPORT.md), [handoff](../03-sprints/completed/sprint-02/HANDOFF.md) |
 | E-001 | E | Prompt pack enhancement | Evidence drawer | 07 | 04,05,06 | KPI drill-down shows authorized sources and gaps | Implemented locally | [Sprint 07 checks](../04-testing/sprint-based/sprint-07/TESTING_REPORT.md); [command center](../contracts/command-center.md) |
 | E-002 | E | Prompt pack enhancement | Freshness and data coverage | 07 | 04,05,06 | Stale/missing sources visible without fabricated zeros | Implemented locally | [Sprint 07 checks](../04-testing/sprint-based/sprint-07/TESTING_REPORT.md); [command center](../contracts/command-center.md) |
@@ -175,7 +175,7 @@ Source keys resolve to exact headings in [source index](../source/INDEX.md). Eac
 | E-005 | E | Prompt pack enhancement | Decision log | 16 | 14,15 | Approved alternatives/rationale and outcome review retained | Planned | — |
 | E-006 | E | Prompt pack enhancement | Scenario comparison | 17 | 13,15 | Baseline and scenario differences include assumptions | Planned | — |
 | E-007 | E | Prompt pack enhancement | Data-quality console | 08 | 07 | Import errors and rejected rows can be inspected/retried | Accepted locally: row errors, partial recovery and new corrected sync | [Sprint 08 checks](../04-testing/sprint-based/sprint-08/TESTING_REPORT.md); [jobs-v1](../contracts/jobs-integrations.md) |
-| E-008 | E | Prompt pack enhancement | AI usage console | 10 | 08,09 | Tenant usage/errors/budgets visible only to Admin | Planned | — |
+| E-008 | E | Prompt pack enhancement | AI usage console | 10 | 08,09 | Tenant usage/errors/budgets visible only to Admin | Accepted locally: deterministic/runtime/browser gates; real model acceptance not claimed | [Sprint 10 checks](../04-testing/sprint-based/sprint-10/TESTING_REPORT.md); [ADR 016](../architecture/adr/016-budgeted-ai-runtime.md) |
 | E-009 | E | Ingestion support | CSV Jira GitHub connectors | 08 | 04,07 | Preview/incremental sync/replay limits tested; live credentials explicit | Accepted locally: CSV/Jira issue+sprint/GitHub issue+PR fixtures; live auth/sync unverified | [Sprint 08 checks](../04-testing/sprint-based/sprint-08/TESTING_REPORT.md); [jobs-v1](../contracts/jobs-integrations.md) |
 
 ## Technology and source passages without product acceptance claims
@@ -185,10 +185,10 @@ Source keys resolve to exact headings in [source index](../source/INDEX.md). Eac
 | T-001 | T | WT; ST | Next.js TypeScript Tailwind shadcn Motion Zustand Recharts; Chart.js alternative | 01 | 00 | Compatible versions pinned; Gantt not misrepresented as built-in chart capability | Partial: foundation and enterprise shell | ADR 007; [checks](../04-testing/sprint-based/sprint-01/TESTING_REPORT.md); [ADR 009](../architecture/adr/009-enterprise-shell.md): native shared components implemented; shadcn/Motion/state/chart runtime deferred |
 | T-002 | T | WT; ST | FastAPI Python Uvicorn Pydantic; NestJS alternative | 01 | 00 | Async API and schema foundation reproducible | Foundation accepted | ADR 007; [checks](../04-testing/sprint-based/sprint-01/TESTING_REPORT.md) |
 | T-003 | T | WT; ST | PostgreSQL JSONB SQLAlchemy Alembic Redis | 01 | 00 | Runtime and initial migrations verified | Foundation accepted; domain schema planned | ADR 007; [checks](../04-testing/sprint-based/sprint-01/TESTING_REPORT.md); no domain JSONB schema claimed |
-| T-004 | T | WT | Pinecone/Weaviate versus pgvector | 09 | 08 | Chosen retrieval adapter records explicit substitution | Planned | ADR 003 |
+| T-004 | T | WT | Pinecone/Weaviate versus pgvector | 09,10 | 08 | Chosen retrieval adapter records explicit substitution | Partial: bounded JSONB projection; pgvector/ANN unverified (ADR 016) | [Sprint 10 checks](../04-testing/sprint-based/sprint-10/TESTING_REPORT.md); [ADR 016](../architecture/adr/016-budgeted-ai-runtime.md) |
 | T-005 | T | W8; WT | Neo4j | 18 | 04,09,11 | Derived graph rebuild and scope tests pass | Planned | ADR 003 |
-| T-006 | T | WT; ST | LangChain; LlamaIndex alternative | 10 | 08,09 | One orchestration/tool contract, no duplicated framework stacks | Planned | ADR 005 |
-| T-007 | T | WT; ST | OpenAI Gemini Ollama HuggingFace options | 10 | 08,09 | One configured adapter with supported model and explicit disabled mode | Planned | ADR 005 |
+| T-006 | T | WT; ST | LangChain; LlamaIndex alternative | 10 | 08,09 | One orchestration/tool contract, no duplicated framework stacks | Accepted local typed-native alternative; ADR 016 (no duplicate frameworks) | [Sprint 10 checks](../04-testing/sprint-based/sprint-10/TESTING_REPORT.md); [ADR 016](../architecture/adr/016-budgeted-ai-runtime.md) |
+| T-007 | T | WT; ST | OpenAI Gemini Ollama HuggingFace options | 10 | 08,09 | One configured adapter with supported model and explicit disabled mode | Adapter/disabled path implemented; real configured provider BLOCKED | [Sprint 10 checks](../04-testing/sprint-based/sprint-10/TESTING_REPORT.md); [ADR 016](../architecture/adr/016-budgeted-ai-runtime.md) |
 | T-008 | T | W4; WT; S5M | scikit-learn pandas XGBoost Random Forest MLflow | 12 | 08,11 | Reproducible baseline training/evaluation and lineage | Planned | ADR 005 |
 | T-009 | T | W4; WT; S5M | LightGBM LSTM time-series PyTorch DistilBERT candidates | 12 | 08,11 | Suitability assessed; experimental candidates not promised production | Planned | ADR 005 |
 | T-010 | T | WT; ST | Docker AWS ECS/RDS/S3 Terraform GitHub Actions | 23 | 01,22 | Reusable images/IaC/CI with explicit deployment evidence | Partial: local Compose and CI definition | ADR 007; [checks](../04-testing/sprint-based/sprint-01/TESTING_REPORT.md); hosted CI/cloud/IaC not executed |
@@ -235,3 +235,26 @@ The revised gap mapping adds PPM-81-001–010 without replacing source requireme
 | PPM-81-008 | COMPLETE locally | [Task checks](../04-testing/sprint-based/sprint-8.1/PPM-81-008.md) |
 | PPM-81-009 | COMPLETE locally | [Task checks](../04-testing/sprint-based/sprint-8.1/PPM-81-009.md) |
 | PPM-81-010 | PARTIAL hosted CI and DOCX visual QA | [Task checks](../04-testing/sprint-based/sprint-8.1/PPM-81-010.md) |
+
+
+## Sprint 09 execution — 15 October 2026
+
+PPM-09-001/002/003 accepted locally for the revised source/keyword/policy/retention
+slice. [Report](../03-sprints/completed/sprint-09/SPRINT_REPORT.md) and
+[checks](../04-testing/sprint-based/sprint-09/TESTING_REPORT.md) distinguish full,
+focused and browser runs. F-066/067/074 remain partial for their combined semantic
+scope. F-070–072 stay planned for 11; embeddings/hybrid stay 10. No required scope
+was relabeled optional, and parent 8.1 external/visual gates remain open.
+
+## Sprint 10 execution and follow-up — 16 October 2026
+
+PPM-10-001/002/003 have local implementation evidence in [the report](../03-sprints/active/sprint-10/SPRINT_REPORT.md)
+and [checks](../04-testing/sprint-based/sprint-10/TESTING_REPORT.md). F-039, N-009/010/014,
+E-008 and the ADR 016 typed-native T-006 alternative are verified locally. F-074,
+T-004 and T-007 remain partial for broad retrieval quality and scale obligations.
+Gemini free-tier completion/embedding smoke passed and the final no-expiry AI suite
+recorded 63 passes. G-014 keeps semantic review in 11; G-015 remains partial for
+broader quality/release acceptance rather than missing provider authorization.
+Normal 0012 upgrade preserved 66 established tables, five original objects,
+.env, frozen sources/prompts and eleven predecessor migration files. No required
+capability was relabeled optional; overall acceptance stays OPEN. Stop before 11.

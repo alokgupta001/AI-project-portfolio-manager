@@ -1,5 +1,7 @@
 """Validate configuration without exposing credential values in failures."""
 
+from datetime import datetime
+from decimal import Decimal
 from pathlib import Path
 from typing import Literal
 
@@ -32,6 +34,23 @@ class Settings(BaseSettings):
     smtp_user: str = ""
     smtp_password: SecretStr = SecretStr("")
     mail_sender: str = ""
+    document_scanner_host: str = ""
+    document_scanner_port: int = Field(default=3310, ge=1, le=65535)
+    ai_provider: Literal["disabled", "openai", "gemini"] = "disabled"
+    ai_real_calls_authorized: bool = False
+    ai_api_key: SecretStr = SecretStr("")
+    ai_completion_model: str = Field(default="", max_length=160)
+    ai_embedding_model: str = Field(default="", max_length=160)
+    ai_spend_limit_usd: Decimal = Field(default=Decimal("0"), ge=0, le=10000)
+    ai_input_usd_per_million: Decimal = Field(default=Decimal("0"), ge=0, le=1000)
+    ai_output_usd_per_million: Decimal = Field(default=Decimal("0"), ge=0, le=1000)
+    ai_embedding_usd_per_million: Decimal = Field(default=Decimal("0"), ge=0, le=1000)
+    # Gemini API has no request-level "free only" switch. This records the operator's
+    # confirmation that this key's project has NO linked Cloud Billing account.
+    ai_gemini_free_tier_project: str = Field(default="", max_length=100)
+    ai_gemini_free_tier_confirmed_at: datetime | None = None
+    ai_gemini_free_tier_key_sha256: str = Field(default="", max_length=64)
+    ai_gemini_daily_call_limit: int = Field(default=20, ge=1, le=100)
 
     @model_validator(mode="after")
     def validate_mail(self) -> "Settings":

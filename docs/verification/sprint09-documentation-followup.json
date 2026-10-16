@@ -1,0 +1,69 @@
+{
+  "date": "2026-10-15",
+  "scope": "Sprint 09 documentation follow-up only; stop before Sprint 10",
+  "unchanged_prior_non_markdown": 133,
+  "applied_0011_unchanged": true,
+  "openapi_paths": 83,
+  "openapi_operations": 95,
+  "checks": [
+    {
+      "command": [
+        "C:\\Users\\alokg\\OneDrive\\Documents\\Codex\\enterprise-ppm\\.venv\\Scripts\\python.exe",
+        "-B",
+        "scripts/documentation_inventory.py",
+        "--check"
+      ],
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "C:\\Users\\alokg\\OneDrive\\Documents\\Codex\\enterprise-ppm\\.venv\\Scripts\\python.exe",
+        "-B",
+        "scripts/check_documentation.py"
+      ],
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "C:\\Users\\alokg\\OneDrive\\Documents\\Codex\\enterprise-ppm\\.venv\\Scripts\\python.exe",
+        "-B",
+        "scripts/check_sources.py"
+      ],
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "C:\\Users\\alokg\\OneDrive\\Documents\\Codex\\enterprise-ppm\\.venv\\Scripts\\ruff.exe",
+        "check",
+        "scripts/documentation_inventory.py",
+        "scripts/check_documentation.py"
+      ],
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "C:\\Users\\alokg\\OneDrive\\Documents\\Codex\\enterprise-ppm\\.venv\\Scripts\\ruff.exe",
+        "format",
+        "--check",
+        "scripts/documentation_inventory.py",
+        "scripts/check_documentation.py"
+      ],
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "git",
+        "-c",
+        "safe.directory=C:/Users/alokg/OneDrive/Documents/Codex/enterprise-ppm",
+        "-c",
+        "core.autocrlf=false",
+        "diff",
+        "--check"
+      ],
+      "exit_code": 0
+    }
+  ],
+  "application_suites_rerun": false,
+  "hosted_ci": "unverified",
+  "archived_word_visual_qa": "open"
+}

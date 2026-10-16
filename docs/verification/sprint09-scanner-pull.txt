@@ -1,0 +1,22 @@
+docker.io/clamav/clamav@sha256:be37f82c9cccf6c2559a44b8fb537e6f11e8547b37988650b169c4540c2f298c: Pulling from clamav/clamav
+0fc1f9526f7b: Pulling fs layer
+589002ba0eae: Pulling fs layer
+2b39b984fc83: Pulling fs layer
+189267053666: Pulling fs layer
+fce4d85d1000: Pulling fs layer
+6c0f07480bfb: Pulling fs layer
+6c0f07480bfb: Download complete
+589002ba0eae: Download complete
+589002ba0eae: Pull complete
+fce4d85d1000: Download complete
+189267053666: Download complete
+189267053666: Pull complete
+0fc1f9526f7b: Download complete
+2b39b984fc83: Download complete
+fce4d85d1000: Pull complete
+2b39b984fc83: Pull complete
+6c0f07480bfb: Pull complete
+0fc1f9526f7b: Pull complete
+Digest: sha256:be37f82c9cccf6c2559a44b8fb537e6f11e8547b37988650b169c4540c2f298c
+Status: Downloaded newer image for clamav/clamav@sha256:be37f82c9cccf6c2559a44b8fb537e6f11e8547b37988650b169c4540c2f298c
+docker.io/clamav/clamav:1.4.3_base@sha256:be37f82c9cccf6c2559a44b8fb537e6f11e8547b37988650b169c4540c2f298c

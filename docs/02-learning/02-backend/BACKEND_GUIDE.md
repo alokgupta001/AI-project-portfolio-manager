@@ -122,3 +122,12 @@ Status: **IMPLEMENTED AND VERIFIED** within retained local evidence; external ga
 ## Verified Gmail and access update — 10 October 2026
 
 Read `account_mail.account_message`, `smtp_delivery` and `deliver_due` with `identity.issue_challenge`/`complete`. STARTTLS verifies certificates, recipient refusal is failure, attempts are bounded, and terminal payloads are cleared. `provider_accepted` is distinct from `local_preview` and actual Gmail receipt. New links include an action hint but the stored challenge remains authoritative. Follow [account email and role access](../05-security/ACCOUNT_EMAIL_AND_ROLE_ACCESS.md) for code, live evidence and role/grant boundaries.
+
+## Sprint 09 extension
+
+Trace `documents.upload` → persisted version/job/outbox → `document_worker` → ClamAV/isolated parser → atomically replaced chunks. Actor/session/tenant authority is rechecked under the organization lock before publication; a broker tuple is not authority. [Document sources](../06-ai-and-analytics/DOCUMENT_SOURCES.md) explains transaction boundaries, replay, fencing and failures.
+## Sprint 10 evidence runtime
+
+ai.create, Runtime.call, ai_worker and settle extend the shared authorization, outbox and worker flow. Input/model/tool provenance is immutable; publication rechecks authority.
+
+Read [the practical trace](../06-ai-and-analytics/AI_GATEWAY.md) for actual symbols, flow, failures and debugging. No Sprint 11 semantic agents or automatic changes are implemented.

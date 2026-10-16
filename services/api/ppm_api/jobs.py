@@ -121,7 +121,12 @@ async def get_job(p: Principal, id_: UUID, locked: bool = False) -> dict:
     row = (await p.conn.execute(query.with_for_update() if locked else query)).mappings().first()
     if not row:
         delivery.fail(404, "Job not available")
-    await get_integration(p, row["integration_id"])
+    if row["ai_run_id"]:
+        from ppm_api.ai import access
+
+        await access(p, row["ai_run_id"])
+    else:
+        await get_integration(p, row["integration_id"])
     return dict(row)
 
 
@@ -693,6 +698,15 @@ async def run_job(
     engine: Any, id_: UUID, oid: UUID, uid: UUID, stop_after: int | None = None
 ) -> None:
     """Each source effect + provenance + checkpoint commits atomically; leases fence old tasks."""
+    from ppm_api.ai import ai_worker
+    from ppm_api.config import load_settings
+    from ppm_api.documents import document_worker
+
+    if await ai_worker(engine, id_, oid, uid, load_settings()):
+        return
+
+    if await document_worker(engine, id_, oid, uid, load_settings()):
+        return
     token = uuid4()
     async with engine.begin() as conn:
         p, row = await worker_transaction(conn, oid, uid, id_)

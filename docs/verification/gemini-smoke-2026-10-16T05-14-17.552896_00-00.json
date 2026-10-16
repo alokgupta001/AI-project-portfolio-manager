@@ -1,0 +1,19 @@
+{
+  "checked_at": "2026-10-16T05:14:17.552896+00:00",
+  "provider": "gemini",
+  "project": "gen-lang-client-0537111029",
+  "completion_model": "gemini-3.5-flash-lite",
+  "embedding_model": "gemini-embedding-2",
+  "billing_verification": "operator-confirmed Free Tier; no linked billing account",
+  "usd_authorized": "0",
+  "input": "synthetic-only",
+  "requests": 1,
+  "acceptance": "BLOCKED",
+  "checks": {
+    "completion": {
+      "status": "BLOCKED",
+      "code": "PROVIDER_MALFORMED",
+      "http_status": null
+    }
+  }
+}

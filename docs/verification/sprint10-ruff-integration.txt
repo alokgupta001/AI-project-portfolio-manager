@@ -1,0 +1,137 @@
+E501 Line too long (104 > 100)
+  --> services\api\ppm_api\ai_evaluation.py:13:101
+   |
+12 | def run_evaluation() -> dict:
+13 |     document = json.loads(Path(__file__).with_name("ai_evaluation_v1.json").read_text(encoding="utf-8"))
+   |                                                                                                     ^^^^
+14 |     failures = []
+15 |     for case in document["cases"]:
+   |
+
+E501 Line too long (105 > 100)
+   --> tests\test_ai.py:478:101
+    |
+476 |     run = (await start(c, project)).json()
+477 |     result, _ = await work(c, app, owner, ids, run)
+478 |     assert result.json()["retrieval"] == "keyword" and "PROVIDER_TIMEOUT" in result.json()["limitations"]
+    |                                                                                                     ^^^^^
+479 |     assert adapter.count == 3  # two timed-out embeddings plus one successful completion
+480 |     empty = (await start(c, project, query="NoMatchingEvidenceAnywhere")).json()
+    |
+
+E501 Line too long (104 > 100)
+   --> tests\test_ai.py:492:101
+    |
+490 |             await release.wait()
+491 |             return await super().embed(texts)
+492 |     c, app, owner, ids, _, project, accepted = await fixture(identity, monkeypatch, adapter=SlowIndex())
+    |                                                                                                     ^^^^
+493 |     run = (await start(c, project, operation="index", query="", version_id=accepted["version_id"])).json()
+494 |     async with owner.connect() as conn:
+    |
+
+E501 Line too long (106 > 100)
+   --> tests\test_ai.py:493:101
+    |
+491 |             return await super().embed(texts)
+492 |     c, app, owner, ids, _, project, accepted = await fixture(identity, monkeypatch, adapter=SlowIndex())
+493 |     run = (await start(c, project, operation="index", query="", version_id=accepted["version_id"])).json()
+    |                                                                                                     ^^^^^^
+494 |     async with owner.connect() as conn:
+495 |         job_id = await conn.scalar(sa.select(J.jobs.c.id).where(J.jobs.c.ai_run_id == UUID(run["id"])))
+    |
+
+E501 Line too long (103 > 100)
+   --> tests\test_ai.py:495:101
+    |
+493 |     run = (await start(c, project, operation="index", query="", version_id=accepted["version_id"])).json()
+494 |     async with owner.connect() as conn:
+495 |         job_id = await conn.scalar(sa.select(J.jobs.c.id).where(J.jobs.c.ai_run_id == UUID(run["id"])))
+    |                                                                                                     ^^^
+496 |     await ai_worker(app.state.engine, job_id, ids["b"], ids["other"], app.state.settings)
+497 |     assert (await c.get(f"/api/v1/ai/runs/{run['id']}")).json()["status"] == "queued"
+    |
+
+F821 Undefined name `D`
+   --> tests\test_ai.py:511:50
+    |
+509 |         assert await conn.scalar(sa.select(sa.func.count()).select_from(A.embeddings).where(
+510 |             A.embeddings.c.organization_id == ids["a"])) == 0
+511 |         original = (await conn.execute(sa.select(D.versions).where(
+    |                                                  ^
+512 |             D.versions.c.id == UUID(accepted["version_id"])))).mappings().one()
+513 |         assert original["status"] != "purged"  # hold retained immutable source, no derived publication
+    |
+
+F821 Undefined name `D`
+   --> tests\test_ai.py:512:13
+    |
+510 |             A.embeddings.c.organization_id == ids["a"])) == 0
+511 |         original = (await conn.execute(sa.select(D.versions).where(
+512 |             D.versions.c.id == UUID(accepted["version_id"])))).mappings().one()
+    |             ^
+513 |         assert original["status"] != "purged"  # hold retained immutable source, no derived publication
+    |
+
+E501 Line too long (103 > 100)
+   --> tests\test_ai.py:513:101
+    |
+511 |         original = (await conn.execute(sa.select(D.versions).where(
+512 |             D.versions.c.id == UUID(accepted["version_id"])))).mappings().one()
+513 |         assert original["status"] != "purged"  # hold retained immutable source, no derived publication
+    |                                                                                                     ^^^
+
+E501 Line too long (110 > 100)
+   --> tests\test_ai.py:533:101
+    |
+531 |     await task
+532 |     async with owner.connect() as conn:
+533 |         saved = (await conn.execute(sa.select(A.runs).where(A.runs.c.id == UUID(run["id"])))).mappings().one()
+    |                                                                                                     ^^^^^^^^^^
+534 |         assert not saved["settled"] and saved["result"] == []
+535 |     result, _ = await work(c, app, owner, ids, run)
+    |
+
+E501 Line too long (101 > 100)
+   --> tests\test_ai.py:541:101
+    |
+539 | async def test_foreign_source_scope_csrf_rls_and_replay_hash_conflict(identity, monkeypatch):
+540 |     c, app, _, ids, _, project, accepted = await fixture(identity, monkeypatch)
+541 |     other = await create(c, "projects", portfolio_id=project["data"]["portfolio_id"], currency="INR",
+    |                                                                                                     ^
+542 |                          start_date="2026-10-01", target_end_date="2026-11-01")
+543 |     wrong = await start(c, other, query="", operation="index", version_id=accepted["version_id"])
+    |
+
+E501 Line too long (113 > 100)
+   --> tests\test_ai.py:549:101
+    |
+547 |     assert created.status_code == 202
+548 |     assert (await start(c, project, key=key, query="different")).status_code == 409
+549 |     assert (await c.post("/api/v1/ai/runs", json={"project_id": project["id"], "query": "x"})).status_code == 403
+    |                                                                                                     ^^^^^^^^^^^^^
+550 |     async with app.state.engine.begin() as conn:
+551 |         for table in (A.runs, A.calls, A.budgets, A.embeddings):
+    |
+
+E501 Line too long (101 > 100)
+  --> tests\test_ai_contracts.py:18:101
+   |
+18 | @pytest.mark.parametrize("value", [[], [[0.0]*256], [[float("nan")]*256], [[1.0]*255], [[True]*256]])
+   |                                                                                                     ^
+19 | def test_malformed_embeddings_rejected(value):
+20 |     with pytest.raises(ProviderError, match="EMBEDDING_INVALID"):
+   |
+
+E501 Line too long (103 > 100)
+  --> tests\test_ai_contracts.py:31:101
+   |
+29 |         seen.append((path, body))
+30 |         if path == "embeddings":
+31 |             return {"data": [{"index": 0, "embedding": [1.0]+[0.0]*255}], "usage": {"total_tokens": 5}}
+   |                                                                                                     ^^^
+32 |         return {"choices": [{"message": {"content": '{"status":"unavailable","excerpts":[]}'}}],
+33 |                 "usage": {"prompt_tokens": 10, "completion_tokens": 3}}
+   |
+
+Found 13 errors.

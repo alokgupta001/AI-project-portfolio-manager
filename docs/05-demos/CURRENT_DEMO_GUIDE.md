@@ -18,3 +18,20 @@
 Use the isolated demo project/database and documented deterministic seed; repeated seeding preserves subsequent edits and does not reset everything. Archive fictional records through authorized forms only after dependent checks. A fresh scenario can use another fictional organization. Do not reset/delete databases or use `down --volumes`. Stop the demo with its identical compose file arguments; preserve volumes. No cleanup/reset command was run by this audit.
 
 Record expected/actual result and Pass/Fail/Blocked when you actually execute. Do not reuse old screenshots as proof of a new run. [Future outlines](FUTURE_DEMO_PLANS.md) contain unavailable assistant/report experiences.
+
+## Current source-library demonstration
+
+The [Sprint 09 demo](sprint-based/sprint-09/README.md) gives a concrete fictional
+charter upload, Ready/preview/download, keyword citation, appended version, permitted
+Viewer and denied tenant, private assessment reference and Admin policy/retention journey.
+Run with the optional healthy scanner in the isolated environment. Its browser
+acceptance and mobile screenshots are retained; future semantic results are not shown.
+Existing assessment evidence remains a separate TXT/manual-release intake.
+## AI evidence preview — Sprint 10
+
+Open AI operations & evidence as Admin to retrieve a permitted project source
+preview, inspect no-key diagnostics and manage a zero-spend tenant budget. Follow
+[the current steps](../03-sprints/active/sprint-10/USER_GUIDE.md). Keyword excerpts are labeled source_fallback; no match
+stays unavailable. Index embeddings and real model answers remain disabled until
+explicit provider/model/spend authorization. PM/Viewer use the document library;
+restricted Admin diagnostics are inaccessible. No semantic agents or plan edits.

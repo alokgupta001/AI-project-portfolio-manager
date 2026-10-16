@@ -75,3 +75,12 @@ Status: **IMPLEMENTED AND VERIFIED** within retained local evidence; external ga
 ## Verified Gmail and access update — 10 October 2026
 
 Account email now has real development evidence: personal signup and invitation arrived in Spam, second-Admin signup in Inbox, and recovery receipt/reset/sign-in were confirmed. The same person remained Admin in one organization and became Viewer in another. Learn the boundaries in [account email and role access](../05-security/ACCOUNT_EMAIL_AND_ROLE_ACCESS.md).
+
+## Sprint 09 extension
+
+Versioned source intake, real ClamAV, English OCR, scoped keyword citations, private evidence references and Admin policy/retention now exist locally. [Practical source chapter](../06-ai-and-analytics/DOCUMENT_SOURCES.md) explains their purpose and actual boundaries; embeddings/model intelligence remain later work.
+## Sprint 10 evidence runtime
+
+The /ai evidence runtime reuses current sources and jobs; real AI providers are disabled. The existing operational domain remains authoritative.
+
+Read [the practical trace](../06-ai-and-analytics/AI_GATEWAY.md) for actual symbols, flow, failures and debugging. No Sprint 11 semantic agents or automatic changes are implemented.

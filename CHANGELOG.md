@@ -1,5 +1,28 @@
 # Changelog
 
+## 16 October 2026 — previous-sprint documentation completion
+
+Reconciled Sprint 00–10/8.1 current versus historical status, later Gmail/Gemini evidence, no daily confirmation expiry, current user/demo/operator/learning instructions, source inventories and all canonical sprint navigation. Added complete package/status validation and [a single closure record](docs/10-reference/PREVIOUS-SPRINTS-DOCUMENTATION-CLOSURE.md). Original test results, source/prompts, application/configuration and legacy Word snapshots remain preserved. No Sprint 11, provider calls or product behavior changes.
+
+## 15 October 2026 — Sprint 10 controlled AI runtime
+
+Implemented shared completion/embedding provider boundaries, disabled defaults,
+versioned snapshots, tenant reservations/usage/circuits, protected evidence tools,
+fenced jobs/cancellation/replay, bounded hybrid projection and Admin operations/
+evaluation UI. Real calls disabled by user instruction; provider acceptance BLOCKED.
+Source head 0012 follows frozen 0011. Local gates and actual normal rollout are in
+[the Sprint 10 report](docs/03-sprints/active/sprint-10/SPRINT_REPORT.md). Complete user/demo/operator/practical learning,
+contracts/ADR, traceability, inventories, indexes and closure matrix are maintained.
+No Sprint 11 agents, plan edits, paid calls, commit/push or external deployment.
+
+
+## 2026-10-15 Sprint 09 local acceptance
+
+- Added scanner-gated versioned document library, bounded extraction/OCR, scoped keyword/citations and signed originals, with additive migration 0011.
+- Added private assessment references, policy metadata and guarded retention/hold/purge/orphan controls, including held archived-project protection and scratch recovery evidence.
+- Preserved 62 quiesced table hashes/counts, five object hashes and all prior applied migrations. Backend 123 plus focused 24/final security 9; fourteen browser regressions and final source flow passed. Reports/checks/coverage/handoff updated; semantic/hybrid remain later work. Stop before Sprint 10.
+
+
 ## 2026-10-09 Sprint 8.1 local implementation
 
 - Added verified signup, first organization/Admin, revisioned organization profile and invitation resend/cancel with durable account delivery adapter. Real SMTP inbox acceptance remains BLOCKED.
@@ -80,3 +103,13 @@
 - Added module architecture, ER diagrams, six ADRs, permissions, API/event/AI contracts and metric definitions.
 - Added quality plan, repeatable documentation verification, Sprint 00 report and technical handoff.
 - Application implementation has not started; Sprint 01 is the next work package.
+
+## 15 October 2026 — Sprint 09 documentation completion follow-up
+
+Reconciled current status/catalogue, learning/user/demo/operator guides, setup,
+architecture/contracts, API/schema/symbol inventories, indexes, tracker and feature
+mapping. Added source learning, scanner/recovery operations, current demo and bugs/fixes;
+replaced the stale Sprint 09 planned entry with a compatibility link. Reproducible local
+inventory/link checks and [documentation closure](docs/04-testing/sprint-based/sprint-09/DOCUMENTATION_CHECKS.md)
+record exact scope. No application/data/migration/secret mutation in this follow-up;
+hosted CI/archived Word QA and production gates remain open. Stop before Sprint 10.

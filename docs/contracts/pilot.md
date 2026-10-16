@@ -13,3 +13,11 @@ Assignment, review and import outcome receipts are written transactionally with 
 Implementation decision: use the existing stored revisions as the freshness authority instead of adding a second manual-change outbox. This preserves transaction semantics, handles changes from all existing writers, and avoids backfilling events. It is a local pilot polling design, with approximately one aggregate query per source per active connection per second; production scaling remains a later release concern. Notification receipts and mail deliveries are durable queues because they require persistent read/retry state. Existing job outbox/progress semantics and dashboard formulas are retained.
 
 Pre-upgrade pending invitations retain their original token hashes and rows. Listings derive an opaque UUID reference for legacy rows without storing it or returning the hash. Admin operations resolve it only within the active organization and the bounded visible legacy set; current UUID references use direct lookup. Missing legacy delivery evidence is labeled unverified, rather than delivered. Focused resend/cancel tests cover the transition.
+## Sprint 10 AI runtime extension
+
+[ai-evidence-v1](ai.md) owns the additive /api/v1/ai and /ai behavior, immutable
+snapshots, budgets/accounting, protected source tools, citation reauthorization,
+versioned evaluation and disabled fallback. durable_jobs references exactly one
+integration, document version or AI run; existing event/SSE/authority rules remain.
+Bounded Gemini free-tier smoke verified; broad model quality unverified. No semantic agents, private assessment ingestion,
+metric changes or automatic plan edits. Admin-only restricted operations apply.

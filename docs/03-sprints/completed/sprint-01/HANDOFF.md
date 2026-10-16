@@ -1,5 +1,7 @@
 # Sprint 01 technical handoff
 
+> Historical sprint checkpoint — documentation review, 16 October 2026. The original outcomes, schema/version and stop-at-next-sprint statements below describe their recorded date. For today's availability and safe setup, use [current status](../../../00-overview/CURRENT_STATUS.md) and [documentation closure](../../../10-reference/PREVIOUS-SPRINTS-DOCUMENTATION-CLOSURE.md).
+
 ## Verified checkpoint
 
 2026-10-05: **Sprint 01 local foundation complete**. Branch `main`, no commit or remote. All files are uncommitted task work; preserve them. Workspace: `C:\Users\alokg\OneDrive\Documents\Codex\enterprise-ppm`. Matching [report](SPRINT_REPORT.md) and [acceptance record](../../../04-testing/sprint-based/sprint-01/TESTING_REPORT.md) distinguish actual tests from unverified hosted/demo execution.

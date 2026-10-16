@@ -1,3 +1,5 @@
-# Sprint 01 — Reproducible runtime foundation
+# Sprint 01 — Runtime foundation
 
-[Sprint record](../../../03-sprints/completed/sprint-01/README.md) identifies original scope, actual outcome, tests, limitations and later changes. [Current topic guide](../../01-project-foundations/FEATURE_WORKFLOWS.md) explains the current application; historical demo/learning details remain in the report, without duplicated copies.
+[Canonical sprint record](../../../03-sprints/completed/sprint-01/README.md) owns the dated scope, results and handoff. [Practical topic guide](../../../07-setup-and-deployment/LOCAL-DEVELOPMENT.md) explains the current implementation. [Plain-language feature and user checks](../../../11-plain-language-sprint-reports/completed/SPRINT-01.md) explains the business behavior and prerequisites.
+
+Use [the previous-sprint documentation closure](../../../10-reference/PREVIOUS-SPRINTS-DOCUMENTATION-CLOSURE.md) to distinguish current configuration from historical test outcomes. The current source and owning contracts outrank historical line numbers. A test definition is not a newly executed result.

@@ -64,3 +64,23 @@ bounded source import and observable SSE. Provider fixtures are separated from l
 credentials. Jira sprint modification time and historical point coverage remain
 unknown. No Sprint 09 document/AI work, cloud provisioning or external notification
 is activated. Production retention and unattended connector identity remain open.
+
+## Sprint 09 authorized local implementation — 15 October 2026
+
+Current explicit authorization covers only 09. [ADR 015](../architecture/adr/015-document-sources.md)
+accepts safe versioned sources, existing durable jobs, scoped keyword/citation access,
+policy registry and local retention/recovery. Revised staging keeps embeddings/hybrid
+in 10 and semantic findings in 11; those combined requirements stay partial. Existing
+metrics/results/identity/privacy and applied 0001–0010 are preserved. New normal head
+0011 is frozen. Earlier 8.1 hosted-CI/Word-layout gates remain open. Stop before 10.
+
+## Sprint 10 explicit authorization — 15 October 2026
+
+Current authorization covers implementation, isolated verification, non-destructive
+local forward upgrade and documentation for 10 only. User explicitly requires mocks
+and fallback; no real AI calls or charges until separate provider/model/spend approval.
+[ADR 016](../architecture/adr/016-budgeted-ai-runtime.md) records typed native graph,
+Admin-only costly work, conservative reservations and bounded exact JSONB vectors
+instead of a database-image/pgvector change. Provider acceptance remains BLOCKED;
+semantic agents, metrics/assessment rewrites and automatic plan edits are excluded.
+Applied 0001–0011 and all earlier work are preserved. Stop before 11.

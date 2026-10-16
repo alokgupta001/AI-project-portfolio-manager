@@ -1,0 +1,5 @@
+services\api\ppm_api\ai_retrieval.py:103: error: Need type annotation for "scores" (hint: "scores: dict[<type>, <type>] = ...")  [var-annotated]
+services\api\ppm_api\ai.py:650: error: Incompatible types in assignment (expression has type "Principal | None", variable has type "Principal")  [assignment]
+services\api\ppm_api\ai.py:650: error: Incompatible types in assignment (expression has type "dict[Any, Any] | None", variable has type "dict[Any, Any]")  [assignment]
+services\api\ppm_api\ai.py:862: error: Incompatible types in assignment (expression has type "dict[Any, Any] | None", variable has type "dict[Any, Any]")  [assignment]
+Found 4 errors in 2 files (checked 41 source files)

@@ -14,6 +14,8 @@ import {
 } from "../../components/pilot";
 import { WorkspaceHome } from "../../components/workspace-home";
 import { Integrations } from "../../components/integrations";
+import { AI } from "../../components/ai";
+import { Documents } from "../../components/documents";
 import { CommandCenter } from "../../components/command-center";
 import { Assessments } from "../../components/assessments";
 import { Capacity } from "../../components/capacity";
@@ -95,7 +97,9 @@ export default function IdentityClient({
     | "capacity"
     | "assessment"
     | "command"
-    | "integrations";
+    | "integrations"
+    | "documents"
+    | "ai";
 }) {
   const protectedMode = [
     "account",
@@ -106,6 +110,8 @@ export default function IdentityClient({
     "assessment",
     "command",
     "integrations",
+    "documents",
+    "ai",
   ].includes(mode);
   const [confirmation, setConfirmation] = useState<Confirmation | null>(null);
   const [memberFilter, setMemberFilter] = useState("");
@@ -167,6 +173,8 @@ export default function IdentityClient({
         "assessment",
         "command",
         "integrations",
+        "documents",
+        "ai",
       ].includes(mode)
     )
       load()
@@ -232,7 +240,9 @@ export default function IdentityClient({
         mode !== "capacity" &&
         mode !== "assessment" &&
         mode !== "command" &&
-        mode !== "integrations" && (
+        mode !== "integrations" &&
+        mode !== "documents" &&
+        mode !== "ai" && (
           <section className="intro">
             <p className="eyebrow">YOUR ENTERPRISE WORKSPACE</p>
             <h1>
@@ -438,6 +448,20 @@ export default function IdentityClient({
         </>
       )}
       {account && mode === "gallery" && <Gallery />}
+      {account?.organization_id && mode === "ai" && (
+        <AI
+          key={account.organization_id}
+          account={account}
+          transport={transport}
+        />
+      )}
+      {account?.organization_id && mode === "documents" && (
+        <Documents
+          key={account.organization_id}
+          account={account}
+          transport={transport}
+        />
+      )}
       {account?.organization_id && mode === "integrations" && (
         <Integrations
           key={account.organization_id}

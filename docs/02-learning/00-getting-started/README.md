@@ -53,3 +53,14 @@ Status: **IMPLEMENTED AND VERIFIED** within retained local evidence; external ga
 ## Verified Gmail and access update — 10 October 2026
 
 After the login chapter, follow [account email and role access](../05-security/ACCOUNT_EMAIL_AND_ROLE_ACCESS.md). Reproduce signup/invitation/recovery in the website and Gmail, then add a PM with the website access guide. Sender setup is a separate operator task; ordinary members need no commands.
+
+## Learn Sprint 09 source processing
+
+Follow [Document sources](../06-ai-and-analytics/DOCUMENT_SOURCES.md) through upload authority, private bytes, job/outbox,
+ClamAV, bounded extraction/OCR, chunks, keyword citations, original tickets and retention.
+It includes real symbols, a worked failure/revocation exercise and debugging steps.
+Model inference/embeddings/semantic findings remain later work.
+
+## Sprint 10 shared AI runtime
+
+[Sprint 10 runtime and evidence](../06-ai-and-analytics/AI_GATEWAY.md). Local implementation and bounded Gemini free-tier smoke verified; general model/retrieval quality remains unverified. $0 authorization and source fallback apply; no daily renewal. Stop before 11.

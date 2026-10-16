@@ -1,5 +1,7 @@
 # Sprint 8.1 report
 
+**Current reconciliation — 16 October 2026:** Development Gmail signup, existing-account Viewer invitation and recovery were subsequently verified on 10 October; [mail evidence](../../../04-testing/ACCOUNT_EMAIL_VERIFICATION.md) supersedes the missing-SMTP blocker for those journeys. Parent hosted CI/archived Word visual and production gates remain open. The original task counts/results below are the dated 9 October baseline, not today's complete feature status.
+
 Execution date: 2026-10-09. **Implementation completed locally; parent acceptance remains OPEN.** No next sprint or live deployment was started. User authorization covered application, additive migration, tests and documentation. The revised planning pack is the execution authority; original specifications and frozen prompts remain unchanged.
 
 10 October follow-up: the SMTP block described below records the original 9 October run. Real development Gmail signup, existing-account Viewer invitation acceptance and password recovery have since been verified in the [account email verification report](../../../04-testing/ACCOUNT_EMAIL_VERIFICATION.md). Use its current evidence and linked website/setup guides; unrelated parent acceptance gates remain open.

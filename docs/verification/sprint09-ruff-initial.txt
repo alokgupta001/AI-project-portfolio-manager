@@ -1,0 +1,12 @@
+E501 Line too long (103 > 100)
+   --> services\api\ppm_api\documents.py:741:101
+    |
+739 |         assessments).join(T.links, T.links.c.attachment_id == evidence_attachments.c.id)
+740 |         .join(assessments, assessments.c.id == evidence_attachments.c.assessment_id)
+741 |         .where(T.links.c.version_id == id_).order_by(evidence_attachments.c.id).limit(100))).mappings()
+    |                                                                                                     ^^^
+742 |     for row in rows:
+743 |         try:
+    |
+
+Found 1 error.

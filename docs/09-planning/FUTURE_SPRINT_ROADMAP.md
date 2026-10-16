@@ -1,5 +1,11 @@
 # Complete future sprint roadmap
 
+Execution update, 16 October 2026: Sprint 09 is locally verified and Sprint 10 is implemented at `0012_ai_runtime`;
+[current handoff](../03-sprints/active/sprint-10/HANDOFF.md) governs continuation.
+Development Gmail and bounded Gemini free-tier smoke are verified; general model quality, CI/Word
+and production gates remain open. Sprints 11–23 remain PLANNED; stop before 11. Proposed paths in later
+sections remain plans. Historical planning-date statements below are retained as context.
+
 **Execution update 2026-10-09:** Sprint 8.1 local implementation is recorded in the [report](../03-sprints/active/sprint-8.1/SPRINT_REPORT.md); parent acceptance remains OPEN. The planning baseline below is historical. Future task scope and release criteria remain unchanged; no next sprint was started.
 
 **Historical planning baseline (before Sprint 8.1 execution):** 9 October 2026. Documentation only; no feature work is authorized by this pack.** Sprint 08 is complete locally; Sprint 8.1 is proposed, not started. Numbers describe execution order, not dates or delivery promises. The frozen source specifications and original prompt pack remain intact. For future work, this pack supersedes the earlier gap review and the future sections of the original ordered prompts; those prompts remain historical scope evidence. Completed reports retain their original meaning.
@@ -43,7 +49,7 @@ The ten individually specified work packages and completion gate are in [SPRINT_
 
 ## Sprint 09 — Document evidence and governance foundation
 
-**State:** proposed. **Phase:** Evidence and intelligence. **Entry dependencies:** 8.1; completed 08.
+**State:** implemented and verified locally on 15 October 2026 for the revised 09 slice; [report](../03-sprints/completed/sprint-09/SPRINT_REPORT.md) / [checks](../04-testing/sprint-based/sprint-09/TESTING_REPORT.md). **Phase:** Evidence and intelligence. **Entry dependencies:** existing 8.1 interfaces and completed 08; earlier 8.1 parent CI/Word acceptance remains open. Original acceptance below is retained; 10/11 extensions remain planned.
 
 **Goal / why now:** Users need safe reusable source documents before intelligence can make supported claims.
 
@@ -121,24 +127,24 @@ The ten individually specified work packages and completion gate are in [SPRINT_
 
 ## Sprint 10 — Shared AI gateway and evaluation
 
-**State:** proposed. **Phase:** Evidence and intelligence. **Entry dependencies:** 09 keyword/source contracts; 08 jobs.
+**State:** local implementation and bounded Gemini free-tier completion/embedding smoke VERIFIED; broader model/retrieval quality and release acceptance OPEN. **Phase:** Evidence and intelligence. **Entry dependencies:** 09 keyword/source contracts; 08 jobs.
 
 **Goal / why now:** One controlled runtime prevents separate agents from inventing facts, costs or authorization rules.
 
 **User outcome:** Providers, embeddings and limits; Typed orchestration and protected tools; AI operations and evaluation gates.
 
-**Existing foundations:** evidence R plus J durable run events and 09 sources. These already exist where identified in the audit; new domain paths below are proposed.
+**Existing foundations:** evidence R plus J durable run events and 09 sources. These already exist where identified in the audit; the source and evidence paths below are now implemented locally; bounded Gemini smoke passed; broader quality remains unverified.
 
 ### PPM-10-001 — Providers, embeddings and limits
 
-**Status:** proposed, not implemented by this planning task. **Priority:** P1. **Complexity:** High (relative effort, not a calendar estimate). **Dependencies:** 09 keyword/source contracts; 08 jobs.
+**Status:** implemented and verified locally; bounded Gemini smoke passed; broader quality/scale unverified. **Priority:** P1. **Complexity:** High (relative effort, not a calendar estimate). **Dependencies:** 09 keyword/source contracts; 08 jobs.
 
 **Change and user benefit:** One configured completion/embedding provider, disabled states and test doubles; version prompts/model/tool schemas, run input snapshots/evidence, redacted diagnostics, cost/token/latency tracking, per-tenant budgets/concurrency/deadlines/retry/circuit breaker. Activate budgeted hybrid retrieval through 09 interface.
 
 | Implementation concern | Required work |
 | --- | --- |
-| Backend | Proposed module `services/api/ppm_api/ai.py` (or a scoped package under that name); extend existing owning modules rather than duplicate their formulas/access. Workers use existing durable jobs. Add typed contracts for the changes named above. |
-| Frontend | Proposed `apps/web/app/ai/` and `apps/web/components/ai.tsx`, or extend existing related screens. Build the specific upload/review/query/comparison/settings views described; include accessible tables, keyboard use and loading/empty/error states. |
+| Backend | Implemented module `services/api/ppm_api/ai.py` with scoped provider/retrieval/schema/evaluation modules; extend existing owning modules rather than duplicate their formulas/access. Workers use existing durable jobs. Add typed contracts for the changes named above. |
+| Frontend | Implemented `apps/web/app/ai/` and `apps/web/components/ai.tsx` using the existing shell/transport. Build the specific upload/review/query/comparison/settings views described; include accessible tables, keyboard use and loading/empty/error states. |
 | Database / migration | New `ai` domain records/versions only where the specified user behavior requires them, via new forward migrations after current head; tenant keys, scoped references, indexes and preservation/upgrade tests. Derived stores must be rebuildable; no edits to applied migrations. |
 | AI / data | Use only the provider/model operations named in this task; preserve evidence/version/cost and disabled states. Non-AI tasks require no model calls. No synthetic fixture is production accuracy evidence. |
 | Security | Permission-filter before retrieval/aggregation; recheck at download/action/delivery. Validate bounded files/queries/tools, protect secrets, redact diagnostics and audit authorized transitions. |
@@ -147,18 +153,18 @@ The ten individually specified work packages and completion gate are in [SPRINT_
 
 **Tests:** Run focused unit/API fixtures and the user journey described above, including two tenants, allowed/denied roles, missing data, stale source versions, retries and dependency failure. Record real external acceptance separately from deterministic doubles.
 
-**Completion evidence:** record exact revision, relevant API/browser/negative-case results and screenshots or rendered output in `docs/verification/PPM-10-001.md` (**proposed**), linked from the sprint report. Include command, environment, fixture size, expected/actual result and external checks still blocked. A code path alone is not acceptance.
+**Completion evidence:** record exact revision, relevant API/browser/negative-case results and screenshots or rendered output in `docs/verification/PPM-10-001.md` (executed evidence is in the active Sprint 10 report), linked from the sprint report. Include command, environment, fixture size, expected/actual result and external checks still blocked. A code path alone is not acceptance.
 
 ### PPM-10-002 — Typed orchestration and protected tools
 
-**Status:** proposed, not implemented by this planning task. **Priority:** P1. **Complexity:** High (relative effort, not a calendar estimate). **Dependencies:** 09 keyword/source contracts; 08 jobs; PPM-10-001 interfaces.
+**Status:** accepted locally for typed tools, cancellation, replay, partial aggregation and authorized progress. **Priority:** P1. **Complexity:** High (relative effort, not a calendar estimate). **Dependencies:** 09 keyword/source contracts; 08 jobs; PPM-10-001 interfaces.
 
 **Change and user benefit:** Bounded graph fan-out, cancellation/partial aggregation and independently authorized allowlisted tools. Retrieved text cannot choose arbitrary tools or scope. Emit observable progress, concise evidence/rationale, not private model reasoning.
 
 | Implementation concern | Required work |
 | --- | --- |
-| Backend | Proposed module `services/api/ppm_api/ai.py` (or a scoped package under that name); extend existing owning modules rather than duplicate their formulas/access. Workers use existing durable jobs. Add typed contracts for the changes named above. |
-| Frontend | Proposed `apps/web/app/ai/` and `apps/web/components/ai.tsx`, or extend existing related screens. Build the specific upload/review/query/comparison/settings views described; include accessible tables, keyboard use and loading/empty/error states. |
+| Backend | Implemented module `services/api/ppm_api/ai.py` with scoped provider/retrieval/schema/evaluation modules; extend existing owning modules rather than duplicate their formulas/access. Workers use existing durable jobs. Add typed contracts for the changes named above. |
+| Frontend | Implemented `apps/web/app/ai/` and `apps/web/components/ai.tsx` using the existing shell/transport. Build the specific upload/review/query/comparison/settings views described; include accessible tables, keyboard use and loading/empty/error states. |
 | Database / migration | New `ai` domain records/versions only where the specified user behavior requires them, via new forward migrations after current head; tenant keys, scoped references, indexes and preservation/upgrade tests. Derived stores must be rebuildable; no edits to applied migrations. |
 | AI / data | Use only the provider/model operations named in this task; preserve evidence/version/cost and disabled states. Non-AI tasks require no model calls. No synthetic fixture is production accuracy evidence. |
 | Security | Permission-filter before retrieval/aggregation; recheck at download/action/delivery. Validate bounded files/queries/tools, protect secrets, redact diagnostics and audit authorized transitions. |
@@ -167,18 +173,18 @@ The ten individually specified work packages and completion gate are in [SPRINT_
 
 **Tests:** Run focused unit/API fixtures and the user journey described above, including two tenants, allowed/denied roles, missing data, stale source versions, retries and dependency failure. Record real external acceptance separately from deterministic doubles.
 
-**Completion evidence:** record exact revision, relevant API/browser/negative-case results and screenshots or rendered output in `docs/verification/PPM-10-002.md` (**proposed**), linked from the sprint report. Include command, environment, fixture size, expected/actual result and external checks still blocked. A code path alone is not acceptance.
+**Completion evidence:** record exact revision, relevant API/browser/negative-case results and screenshots or rendered output in `docs/verification/PPM-10-002.md` (executed evidence is in the active Sprint 10 report), linked from the sprint report. Include command, environment, fixture size, expected/actual result and external checks still blocked. A code path alone is not acceptance.
 
 ### PPM-10-003 — AI operations and evaluation gates
 
-**Status:** proposed, not implemented by this planning task. **Priority:** P1. **Complexity:** High (relative effort, not a calendar estimate). **Dependencies:** 09 keyword/source contracts; 08 jobs; PPM-10-001 and PPM-10-002 interfaces/results.
+**Status:** accepted locally for Admin operations, disabled UI and versioned validator gates. **Priority:** P1. **Complexity:** High (relative effort, not a calendar estimate). **Dependencies:** 09 keyword/source contracts; 08 jobs; PPM-10-001 and PPM-10-002 interfaces/results.
 
 **Change and user benefit:** Admin usage/errors/provider console with budgets, run inspection and redacted evidence. Version evaluation fixtures for support, citations, completion and leakage. Establish agent release thresholds before 11 evaluation.
 
 | Implementation concern | Required work |
 | --- | --- |
-| Backend | Proposed module `services/api/ppm_api/ai.py` (or a scoped package under that name); extend existing owning modules rather than duplicate their formulas/access. Workers use existing durable jobs. Add typed contracts for the changes named above. |
-| Frontend | Proposed `apps/web/app/ai/` and `apps/web/components/ai.tsx`, or extend existing related screens. Build the specific upload/review/query/comparison/settings views described; include accessible tables, keyboard use and loading/empty/error states. |
+| Backend | Implemented module `services/api/ppm_api/ai.py` with scoped provider/retrieval/schema/evaluation modules; extend existing owning modules rather than duplicate their formulas/access. Workers use existing durable jobs. Add typed contracts for the changes named above. |
+| Frontend | Implemented `apps/web/app/ai/` and `apps/web/components/ai.tsx` using the existing shell/transport. Build the specific upload/review/query/comparison/settings views described; include accessible tables, keyboard use and loading/empty/error states. |
 | Database / migration | New `ai` domain records/versions only where the specified user behavior requires them, via new forward migrations after current head; tenant keys, scoped references, indexes and preservation/upgrade tests. Derived stores must be rebuildable; no edits to applied migrations. |
 | AI / data | Use only the provider/model operations named in this task; preserve evidence/version/cost and disabled states. Non-AI tasks require no model calls. No synthetic fixture is production accuracy evidence. |
 | Security | Permission-filter before retrieval/aggregation; recheck at download/action/delivery. Validate bounded files/queries/tools, protect secrets, redact diagnostics and audit authorized transitions. |
@@ -187,7 +193,7 @@ The ten individually specified work packages and completion gate are in [SPRINT_
 
 **Tests:** Run focused unit/API fixtures and the user journey described above, including two tenants, allowed/denied roles, missing data, stale source versions, retries and dependency failure. Record real external acceptance separately from deterministic doubles.
 
-**Completion evidence:** record exact revision, relevant API/browser/negative-case results and screenshots or rendered output in `docs/verification/PPM-10-003.md` (**proposed**), linked from the sprint report. Include command, environment, fixture size, expected/actual result and external checks still blocked. A code path alone is not acceptance.
+**Completion evidence:** record exact revision, relevant API/browser/negative-case results and screenshots or rendered output in `docs/verification/PPM-10-003.md` (executed evidence is in the active Sprint 10 report), linked from the sprint report. Include command, environment, fixture size, expected/actual result and external checks still blocked. A code path alone is not acceptance.
 
 **Definition of done:** all three task acceptances pass for their claimed environment; module contracts and source requirement dispositions updated; user journey recorded; report/handoff states real versus fixture evidence and open blockers. Published scores/history and existing stored records are preserved. A blocked required real-provider or model criterion prevents full product acceptance even if its implementation slice is locally accepted.
 

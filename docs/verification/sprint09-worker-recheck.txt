@@ -1,0 +1,116 @@
+time="2026-10-15T10:44:29+05:30" level=warning msg="Found orphan containers (enterprise-ppm-pgadmin-1) for this project. If you removed or renamed this service in your compose file, you can run this command with the --remove-orphans flag to clean it up."
+ Container enterprise-ppm-test-run-ade2defcfe4c Creating 
+ Container enterprise-ppm-test-run-ade2defcfe4c Created 
+{"event": "http_request", "request_id": "354ce732-2e74-454a-ae06-e2448976b8f3", "method": "GET", "route": "/api/v1/auth/csrf", "status": 200, "duration_ms": 652.8}
+{"event": "http_request", "request_id": "a1a8a8d4-01c3-48ba-a71a-36b91ba3f344", "method": "POST", "route": "/api/v1/auth/login", "status": 200, "duration_ms": 1487.81}
+{"event": "http_request", "request_id": "7b46495c-0a41-4a83-99db-ddc833f04ba2", "method": "POST", "route": "/api/v1/auth/switch", "status": 200, "duration_ms": 72.95}
+{"event": "http_request", "request_id": "a453ee6d-bf02-4766-b7d9-477ba68b7479", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 302.39}
+{"event": "http_request", "request_id": "73a250b3-9687-4f6a-acbb-6c5561dcd8b9", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 147.72}
+{"event": "http_request", "request_id": "9f26bc53-21dc-4661-93f5-c14d3af75ef4", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 130.44}
+{"event": "http_request", "request_id": "e7ac863a-a19b-4a3d-b499-99d5535fbf65", "method": "POST", "route": "/api/v1/integrations", "status": 201, "duration_ms": 101.23}
+{"event": "http_request", "request_id": "75ca89eb-d99d-41b3-814d-b5eb49f1ad43", "method": "POST", "route": "/api/v1/integrations/{id_}/sync", "status": 202, "duration_ms": 405.2}
+F
+=================================== FAILURES ===================================
+_____________ test_actual_celery_process_crash_and_lease_recovery ______________
+
+identity = (<httpx.AsyncClient object at 0x7144540fc3e0>, <fastapi.applications.FastAPI object at 0x7144542a1ac0>, <sqlalchemy.ex... '294e4076-c66a-4f16-afd2-c0c006659ad2@example.com', 'other': 'a0420911-ebf5-4294-bd28-b399ec58a067@example.com', ...})
+tmp_path = PosixPath('/tmp/pytest-of-ppm/pytest-0/test_actual_celery_process_cra0')
+
+    @pytest.mark.integration
+    async def test_actual_celery_process_crash_and_lease_recovery(identity, tmp_path):
+        import asyncio
+        import os
+        import signal
+        import subprocess
+        import sys
+    
+        from ppm_worker.app import celery_app
+    
+        if os.name != "posix":
+            pytest.skip("Actual Celery process lifecycle runs in the Linux test container")
+        c, app, owner, ids, emails, portfolio, project = await setup(identity)
+        integration = await connection(c, project)
+        text = "id,name,updated_at,status\n" + "\n".join(
+            f"{i},Crash recovery work {i},2026-10-09T00:00:00Z,backlog" for i in range(500)
+        )
+        result = await submit(c, integration, text)
+        assert result.status_code == 202, result.text
+        id_ = UUID(result.json()["id"])
+        queue = "sprint08-crash-" + str(uuid4())
+        arguments = [str(id_), str(ids["a"]), str(ids["admin"])]
+        with (tmp_path / "worker.log").open("w") as log:
+    
+            def start():
+                return subprocess.Popen(
+                    [
+                        sys.executable,
+                        "-m",
+                        "celery",
+                        "-A",
+                        "ppm_worker.app:celery_app",
+                        "worker",
+                        "--pool=solo",
+                        "--loglevel=WARNING",
+                        "-Q",
+                        queue,
+                        "--without-mingle",
+                        "--without-gossip",
+                        "--without-heartbeat",
+                    ],
+                    stdout=log,
+                    stderr=log,
+                    start_new_session=True,
+                )
+    
+            process = start()
+            try:
+                celery_app.send_task("pipeline.run", args=arguments, queue=queue)
+                position = 0
+                for _ in range(500):
+                    async with owner.connect() as conn:
+                        position = await conn.scalar(sa.select(jobs.c.position).where(jobs.c.id == id_))
+                    if position > 0:
+                        break
+                    await asyncio.sleep(0.02)
+                assert 0 < position < 500
+                os.killpg(process.pid, signal.SIGKILL)
+                process.wait(timeout=5)
+                async with owner.connect() as conn:
+                    crashed = (
+                        (await conn.execute(sa.select(jobs).where(jobs.c.id == id_))).mappings().one()
+                    )
+                assert crashed["status"] == "running" and 0 < crashed["position"] < 500
+                process = start()
+                # Actual 45-second lease expiry; no owner edit or test-only worker branch.
+                for iteration in range(90):
+                    if iteration % 2 == 0:
+                        celery_app.send_task("pipeline.run", args=arguments, queue=queue)
+                    async with owner.connect() as conn:
+                        state = (
+                            (await conn.execute(sa.select(jobs).where(jobs.c.id == id_)))
+                            .mappings()
+                            .one()
+                        )
+                    if state["status"] == "succeeded":
+                        break
+                    await asyncio.sleep(1)
+>               assert state["status"] == "succeeded" and state["attempt"] == 2
+E               AssertionError: assert ('running' == 'succeeded'
+E                 
+E                 - succeeded
+E                 + running)
+
+tests/test_jobs.py:323: AssertionError
+------------------------------ Captured log call -------------------------------
+INFO     ppm.requests:main.py:138 {"event": "http_request", "request_id": "354ce732-2e74-454a-ae06-e2448976b8f3", "method": "GET", "route": "/api/v1/auth/csrf", "status": 200, "duration_ms": 652.8}
+INFO     ppm.requests:main.py:138 {"event": "http_request", "request_id": "a1a8a8d4-01c3-48ba-a71a-36b91ba3f344", "method": "POST", "route": "/api/v1/auth/login", "status": 200, "duration_ms": 1487.81}
+INFO     ppm.requests:main.py:138 {"event": "http_request", "request_id": "7b46495c-0a41-4a83-99db-ddc833f04ba2", "method": "POST", "route": "/api/v1/auth/switch", "status": 200, "duration_ms": 72.95}
+INFO     ppm.requests:main.py:138 {"event": "http_request", "request_id": "a453ee6d-bf02-4766-b7d9-477ba68b7479", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 302.39}
+INFO     ppm.requests:main.py:138 {"event": "http_request", "request_id": "73a250b3-9687-4f6a-acbb-6c5561dcd8b9", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 147.72}
+INFO     ppm.requests:main.py:138 {"event": "http_request", "request_id": "9f26bc53-21dc-4661-93f5-c14d3af75ef4", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 130.44}
+INFO     ppm.requests:main.py:138 {"event": "http_request", "request_id": "e7ac863a-a19b-4a3d-b499-99d5535fbf65", "method": "POST", "route": "/api/v1/integrations", "status": 201, "duration_ms": 101.23}
+INFO     ppm.requests:main.py:138 {"event": "http_request", "request_id": "75ca89eb-d99d-41b3-814d-b5eb49f1ad43", "method": "POST", "route": "/api/v1/integrations/{id_}/sync", "status": 202, "duration_ms": 405.2}
+=========================== short test summary info ============================
+FAILED tests/test_jobs.py::test_actual_celery_process_crash_and_lease_recovery
+1 failed in 109.45s (0:01:49)
+

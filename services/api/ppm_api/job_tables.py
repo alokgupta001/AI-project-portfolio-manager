@@ -40,7 +40,22 @@ integrations = tenant_table(
 )
 jobs = tenant_table(
     "durable_jobs",
-    sa.Column("integration_id", sa.Uuid(), nullable=False),
+    sa.Column("integration_id", sa.Uuid(), nullable=True),
+    sa.Column("document_version_id", sa.Uuid(), nullable=True),
+    sa.Column("ai_run_id", sa.Uuid(), nullable=True),
+    sa.ForeignKeyConstraint(
+        ["organization_id", "ai_run_id"],
+        ["ai_runs.organization_id", "ai_runs.id"],
+        name="fk_job_ai_run",
+    ),
+    sa.ForeignKeyConstraint(
+        ["organization_id", "document_version_id"],
+        ["source_versions.organization_id", "source_versions.id"],
+        name="fk_job_document_version",
+    ),
+    sa.CheckConstraint(
+        "num_nonnulls(integration_id,document_version_id,ai_run_id)=1", name="ck_job_source_kind"
+    ),
     sa.ForeignKeyConstraint(
         ["organization_id", "integration_id"],
         ["job_integrations.organization_id", "job_integrations.id"],

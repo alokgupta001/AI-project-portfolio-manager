@@ -1,0 +1,1 @@
+PASS normal 0012 API readiness/web AI route; real provider disabled with zero ceiling

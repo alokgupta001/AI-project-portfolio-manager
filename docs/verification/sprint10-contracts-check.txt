@@ -1,0 +1,1 @@
+OpenAPI and TypeScript contracts match.

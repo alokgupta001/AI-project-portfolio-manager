@@ -1,0 +1,5 @@
+time="2026-10-15T11:05:27+05:30" level=warning msg="Found orphan containers (enterprise-ppm-pgadmin-1) for this project. If you removed or renamed this service in your compose file, you can run this command with the --remove-orphans flag to clean it up."
+ Container enterprise-ppm-test-run-3c9e22926ef9 Creating 
+ Container enterprise-ppm-test-run-3c9e22926ef9 Created 
+........................                                                 [100%]
+24 passed in 117.84s (0:01:57)

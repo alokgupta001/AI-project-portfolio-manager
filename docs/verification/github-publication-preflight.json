@@ -1,0 +1,50 @@
+{
+  "checked_at": "2026-10-16T09:34:27.335514+00:00",
+  "scope": "Publication preflight for Sprint 09/10 implementation, Gemini $0 support and previous-sprint documentation",
+  "branch": "sprint10-documents-ai-closeout",
+  "coderabbit": {
+    "github_app": "coderabbitai",
+    "repository_access": "Only select repositories: alokgupta001/AI-project-portfolio-manager",
+    "verified_in_github_settings": true,
+    "configuration_constraints": "PASS",
+    "free_tier_enabled": true,
+    "paid_plan_or_addons_enabled_by_this_task": false,
+    "live_review": "Initial review skipped above the 100-file service limit; retry pending after narrowing to application, infrastructure and tests.",
+    "automatic_review_service_limit": "Manual trigger required while repository has fewer than 10 stars.",
+    "selected_files_after_scope_adjustment": 71,
+    "documentation_review": "Excluded from bot review; validated with dedicated repository documentation checkers."
+  },
+  "checks": {
+    "backend_pytest": {
+      "passed": 188,
+      "seconds": 234.19,
+      "real_ai_calls_enabled": false,
+      "smtp_mode": "local"
+    },
+    "ruff_lint": "PASS",
+    "ruff_format": "PASS: 119 files",
+    "mypy": "PASS: 42 source files",
+    "eslint": "PASS",
+    "typescript": "PASS",
+    "prettier": "PASS",
+    "contract_drift": "PASS",
+    "source_manifest": "PASS: 7 sources/prompts",
+    "documentation_inventories": "PASS: 3 inventories",
+    "previous_sprint_packages": "PASS: 12 packages and 105 required artifacts",
+    "documentation_links": "PASS: 295 Markdown files and 4749 local links/anchors",
+    "source_config_documentation_whitespace": "PASS; raw verification logs retain original formatting"
+  },
+  "publication_scan": {
+    "status": "PASS",
+    "files_scanned": 1005,
+    "configured_local_secrets_checked": 6,
+    "findings_after_redaction": [],
+    "ignored_but_tracked": [],
+    "oversized_files": [],
+    "historical_log_redaction": "Two local database password occurrences redacted in sprint-08-jobs-final.txt; older Git history was not rewritten and exposed credentials require rotation"
+  },
+  "limits": [
+    "Hosted CI and live CodeRabbit review are pending publication; local checks do not establish production readiness.",
+    "No real AI provider requests, paid services, cloud deployment or Sprint 11 work performed in this publication task."
+  ]
+}

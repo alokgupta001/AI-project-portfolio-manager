@@ -1,0 +1,11 @@
+{
+  "status": "BLOCKED",
+  "reason": "Explicit user instruction: mocks/fallback only; no provider/model/spend authorization",
+  "provider": null,
+  "model": null,
+  "real_provider_requests": 0,
+  "authorized_spend_usd": "0",
+  "real_smoke_executed": false,
+  "fixture_evidence": "sprint10-evaluation.json",
+  "limitation": "Deterministic tests and disabled fallback are not real-provider acceptance"
+}

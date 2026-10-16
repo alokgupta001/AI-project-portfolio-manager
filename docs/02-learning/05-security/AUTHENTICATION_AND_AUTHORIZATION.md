@@ -121,3 +121,12 @@ Real Gmail signup, existing-account Viewer invitation acceptance and recovery ar
 [`account_status.py`](../../../scripts/account_status.py) is a separate development operator operation. Disabling a user preserves membership and project ownership, revokes sessions and protects the last active Admin. Organization administrators cannot call a global-disable API. Background jobs also read global status before effects.
 
 The Hement example illustrates the next boundary: portfolio manage permits creating a project; editing an Admin-created project requires a direct project edit/manage grant. Neither an owner label nor a team assignment creates that permission. The guarded local correction gives only the diagnosed portal project edit grant. See [repair results](../../04-testing/ACCOUNT_WORKFLOW_REPAIR_REPORT.md).
+
+## Sprint 09 extension
+
+Project document reads require scoped grants; writes require Admin or explicitly permitted PM. Organization-wide policy writes require Admin. Same-byte assessment links separately require private released-evidence authority. Citation/download reads recheck live scope/deletion; a 60-second ticket also binds user/session/org/version/hash. Workers revalidate persisted authority and fenced leases. [Source security/debugging](../06-ai-and-analytics/DOCUMENT_SOURCES.md) explains fail-closed antivirus, hostile text, limits and retention.
+## Sprint 10 evidence runtime
+
+Admin starts analyses and reads diagnostics; PM/Viewer cannot access restricted usage/errors/budgets. SourceTool independently rechecks immutable run scope, and every result resolves current permitted citations. Retrieved text has no mutation or tool authority.
+
+Read [the practical trace](../06-ai-and-analytics/AI_GATEWAY.md) for actual symbols, flow, failures and debugging. No Sprint 11 semantic agents or automatic changes are implemented.

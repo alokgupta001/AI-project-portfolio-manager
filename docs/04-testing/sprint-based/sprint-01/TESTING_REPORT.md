@@ -1,5 +1,7 @@
 # Sprint 01 acceptance evidence
 
+> Historical sprint checkpoint — documentation review, 16 October 2026. The original outcomes, schema/version and stop-at-next-sprint statements below describe their recorded date. For today's availability and safe setup, use [current status](../../../00-overview/CURRENT_STATUS.md) and [documentation closure](../../../10-reference/PREVIOUS-SPRINTS-DOCUMENTATION-CLOSURE.md).
+
 Verified 2026-10-05 on Windows with Docker Desktop's Linux engine 29.7.2. Host: Node 24.20.0, npm 11.19.0, Python 3.12.14; container Python 3.12.15. Exact package versions, licenses and image digests are recorded in the lockfiles, Compose/Dockerfiles, dependency inventories and [ADR 007](../../../architecture/adr/007-sprint-01-runtime.md).
 
 Commands below run from the repository root. On this host Docker is not on PATH: use `$env:LOCALAPPDATA\Programs\DockerDesktop\resources\bin\docker.exe`, or add that directory to the terminal PATH. Node/npm are under `C:\Program Files\nodejs`. See [setup](../../../07-setup-and-deployment/LOCAL-DEVELOPMENT.md).
