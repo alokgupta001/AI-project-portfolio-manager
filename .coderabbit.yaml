@@ -1,0 +1,63 @@
+# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json
+language: "en-US"
+enable_free_tier: true
+
+reviews:
+  profile: "chill"
+  request_changes_workflow: false
+  high_level_summary: true
+  review_status: true
+  poem: false
+  path_filters:
+    - "!docs/source/originals/**"
+    - "!docs/verification/**"
+    - "!artifacts/**"
+    - "!packages/contracts/openapi.json"
+    - "!packages/contracts/src/schema.d.ts"
+    - "!package-lock.json"
+    - "!uv.lock"
+  auto_review:
+    enabled: true
+    drafts: false
+  path_instructions:
+    - path: "services/api/**"
+      instructions: |
+        Pay close attention to tenant and organization isolation, role-based
+        authorization, request validation, async transaction boundaries, and
+        safe error handling. Treat data ownership and authorization as core
+        invariants; base findings on the established contracts.
+    - path: "services/worker/**"
+      instructions: |
+        Check idempotency, retry behavior, transaction boundaries, bounded
+        resource use, and safe handling of task failures.
+    - path: "services/api/ppm_api/ai*.py"
+      instructions: |
+        Verify the Gemini free-tier-only, maximum USD 0 contract: explicit
+        authorization, key-bound confirmation, exact allowed models, zero
+        configured tariffs, persisted attempt limits, bounded retries and
+        redacted errors. Missing keys, timeouts and provider failures must
+        fail closed or use the documented fallback. Check citation ownership,
+        cancellation, replay fencing and read-only orchestration. A daily
+        confirmation expiry was intentionally removed; changing the API key
+        must still invalidate the confirmation.
+    - path: "services/api/migrations/**"
+      instructions: |
+        Check upgrade/downgrade ordering, tenant-scoped constraints, row-level
+        security and preservation of existing rows. Migration lifecycle tests
+        must use the isolated ppm_test database.
+    - path: "docs/**"
+      instructions: |
+        Check claims against current implementation and linked verification.
+        Preserve historical sprint outcomes and distinguish local acceptance
+        from hosted CI, production, scale and model-quality gates. Sprint 11
+        remains unstarted; do not suggest treating planned capabilities as
+        implemented.
+    - path: "apps/web/**"
+      instructions: |
+        Check authentication gating, server/client boundaries, tenant-scoped
+        API access, accessibility, and loading and error states. Avoid
+        preference-only styling feedback.
+    - path: "tests/**"
+      instructions: |
+        Check that assertions cover meaningful behavior, including relevant
+        negative and edge cases. Prioritize regression risk over test quantity.
