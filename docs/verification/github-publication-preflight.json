@@ -9,7 +9,10 @@
     "configuration_constraints": "PASS",
     "free_tier_enabled": true,
     "paid_plan_or_addons_enabled_by_this_task": false,
-    "live_review": "Pending pull request creation"
+    "live_review": "Initial review skipped above the 100-file service limit; retry pending after narrowing to application, infrastructure and tests.",
+    "automatic_review_service_limit": "Manual trigger required while repository has fewer than 10 stars.",
+    "selected_files_after_scope_adjustment": 71,
+    "documentation_review": "Excluded from bot review; validated with dedicated repository documentation checkers."
   },
   "checks": {
     "backend_pytest": {

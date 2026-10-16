@@ -9,8 +9,9 @@ reviews:
   review_status: true
   poem: false
   path_filters:
-    - "!docs/source/originals/**"
-    - "!docs/verification/**"
+    # Free OSS reviews currently allow at most 100 selected files. Keep code,
+    # infrastructure and tests in scope; documentation has dedicated checkers.
+    - "!docs/**"
     - "!artifacts/**"
     - "!packages/contracts/openapi.json"
     - "!packages/contracts/src/schema.d.ts"
@@ -45,13 +46,6 @@ reviews:
         Check upgrade/downgrade ordering, tenant-scoped constraints, row-level
         security and preservation of existing rows. Migration lifecycle tests
         must use the isolated ppm_test database.
-    - path: "docs/**"
-      instructions: |
-        Check claims against current implementation and linked verification.
-        Preserve historical sprint outcomes and distinguish local acceptance
-        from hosted CI, production, scale and model-quality gates. Sprint 11
-        remains unstarted; do not suggest treating planned capabilities as
-        implemented.
     - path: "apps/web/**"
       instructions: |
         Check authentication gating, server/client boundaries, tenant-scoped
