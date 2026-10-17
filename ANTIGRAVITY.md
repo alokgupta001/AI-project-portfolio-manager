@@ -1,5 +1,9 @@
 # Antigravity entry point — next sprint
 
+Current Sprint 11 checkpoint: read the [handoff](docs/03-sprints/completed/sprint-11/HANDOFF.md). Nine typed specialists, semantic suggestions and independent review are implemented; real-model quality UNVERIFIED/BLOCKED. Preserve normal 0012 data, objects, credentials and existing history. 0013 is tested only in disposable databases. No commit/push/deployment; stop before Sprint 12.
+
+## Historical checkpoints before Sprint 11
+
 Current checkpoint — 16 October 2026: Sprints 8.1 and 10 are COMPLETED for their implemented development scope at `0012_ai_runtime`. Reviewed application checkpoint `631c149` passed hosted CI; 201 backend tests and the document browser regression passed. A current pilot Word guide is rendered and visually verified. Gemini bounded completion/embedding smoke passed at maximum spend $0; confirmation does not expire daily. Production deployment, scale and broad agent/model quality remain OPEN release/successor gates. Sprint 11 is not started. Stop before 11.
 Read [LATEST](docs/handoffs/LATEST.md), [MASTER](docs/prompts/MASTER.md) and
 [Sprint 10 handoff](docs/03-sprints/completed/sprint-10/HANDOFF.md). Preserve all applied

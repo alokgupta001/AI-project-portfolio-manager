@@ -17,9 +17,11 @@ GRAPH_VERSION = "evidence-graph-v1"
 
 class AIRunInput(Strict):
     project_id: UUID
-    operation: Literal["query", "index"] = "query"
+    operation: Literal["query", "index", "agents"] = "query"
     query: str = Field(default="", max_length=160)
     version_id: UUID | None = None
+    version_ids: list[UUID] = Field(default_factory=list, max_length=5)
+    assessment_id: UUID | None = None
 
 
 class AIExcerpt(Strict):

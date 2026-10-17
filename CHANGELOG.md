@@ -1,5 +1,9 @@
 # Changelog
 
+## 16 October 2026 — Sprint 11 specialists and independent review
+
+Implemented nine bounded read-only agents, evidence aggregation/conflicts, separate semantic maturity suggestions and independent append-only reviews at `/agents`. Shared metrics/scoring/jobs/budgets/provider controls remain. Added 0013 after verified 0012; validated only in disposable databases. Normal data, objects and configuration preserved. Fixed atomic run/job reads for polling. [Report](docs/03-sprints/completed/sprint-11/SPRINT_REPORT.md) · [actual tests](docs/04-testing/sprint-based/sprint-11/TESTING_REPORT.md). Real-model quality UNVERIFIED/BLOCKED; USD 0; no commit/deployment or Sprint 12 work.
+
 16 October 2026: closed Sprint 8.1 and Sprint 10 development scope, reconciled successful hosted CI and reviewed fixes, published a current rendered pilot Word guide, moved both canonical/ordinary-language reports to completed, and repaired references/checkers. See [closeout](docs/10-reference/SPRINT-8.1-AND-10-CLOSEOUT.md).
 
 ## 16 October 2026 — previous-sprint documentation completion

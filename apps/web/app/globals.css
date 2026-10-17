@@ -177,9 +177,8 @@ small {
   color: var(--on-accent);
   font-weight: 600;
   text-decoration: none;
-  transition:
-    background var(--duration),
-    box-shadow var(--duration);
+  /* Theme text and backgrounds must change together to preserve contrast. */
+  transition: box-shadow var(--duration);
 }
 .button:hover,
 .identity-page button:hover {
@@ -784,6 +783,23 @@ kbd {
   overflow-x: auto;
   border: 1px solid var(--line);
   border-radius: 8px;
+}
+
+.agent-workspace {
+  display: grid;
+  gap: 16px;
+  min-width: 0;
+}
+.agent-workspace .panel {
+  margin: 0;
+  min-width: 0;
+}
+.agent-workspace .table-scroll table {
+  min-width: 720px;
+}
+.agent-workspace blockquote {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
 }
 
 .document-workspace,

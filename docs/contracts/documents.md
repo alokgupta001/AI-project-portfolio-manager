@@ -1,5 +1,7 @@
 # Document sources — sources-v1
 
+Sprint 11 [candidate document findings](agents.md) consume selected ready source spans with current authorization/version/hash checks. Acceptance means reviewed only. Source version/revocation changes withhold unsupported outputs; source ingestion and original objects are unchanged.
+
 Sprint 09 extends the existing API, storage abstraction, durable_jobs/outbox/events,
 Celery dispatcher and live identity/project grants. Migration 0011 follows the actual
 0010_account_authority baseline. Applied 0001–0010 and source prompts are frozen.

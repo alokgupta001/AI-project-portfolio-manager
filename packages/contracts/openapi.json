@@ -397,11 +397,24 @@
       "AIRunInput": {
         "additionalProperties": false,
         "properties": {
+          "assessment_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Assessment Id"
+          },
           "operation": {
             "default": "query",
             "enum": [
               "query",
-              "index"
+              "index",
+              "agents"
             ],
             "title": "Operation",
             "type": "string"
@@ -428,6 +441,15 @@
               }
             ],
             "title": "Version Id"
+          },
+          "version_ids": {
+            "items": {
+              "format": "uuid",
+              "type": "string"
+            },
+            "maxItems": 5,
+            "title": "Version Ids",
+            "type": "array"
           }
         },
         "required": [
@@ -828,6 +850,122 @@
         "title": "Adjustment",
         "type": "object"
       },
+      "AgentDefinition": {
+        "additionalProperties": false,
+        "properties": {
+          "agent": {
+            "enum": [
+              "financial",
+              "schedule",
+              "sentiment",
+              "risk",
+              "resource",
+              "governance",
+              "agile_coach",
+              "pmo",
+              "executive"
+            ],
+            "title": "Agent",
+            "type": "string"
+          },
+          "evaluation_cases": {
+            "default": [
+              "supported",
+              "missing",
+              "contradictory",
+              "malicious"
+            ],
+            "items": {
+              "type": "string"
+            },
+            "title": "Evaluation Cases",
+            "type": "array"
+          },
+          "fallback": {
+            "title": "Fallback",
+            "type": "string"
+          },
+          "inputs": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Inputs",
+            "type": "array"
+          },
+          "output_schema": {
+            "default": "SpecialistOutput",
+            "title": "Output Schema",
+            "type": "string"
+          },
+          "timeout_seconds": {
+            "title": "Timeout Seconds",
+            "type": "integer"
+          },
+          "tools": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Tools",
+            "type": "array"
+          }
+        },
+        "required": [
+          "agent",
+          "inputs",
+          "tools",
+          "timeout_seconds",
+          "fallback"
+        ],
+        "title": "AgentDefinition",
+        "type": "object"
+      },
+      "AgentState": {
+        "additionalProperties": false,
+        "properties": {
+          "agent": {
+            "enum": [
+              "financial",
+              "schedule",
+              "sentiment",
+              "risk",
+              "resource",
+              "governance",
+              "agile_coach",
+              "pmo",
+              "executive"
+            ],
+            "title": "Agent",
+            "type": "string"
+          },
+          "code": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Code"
+          },
+          "status": {
+            "enum": [
+              "supported",
+              "fallback",
+              "unavailable",
+              "failed"
+            ],
+            "title": "Status",
+            "type": "string"
+          }
+        },
+        "required": [
+          "agent",
+          "status"
+        ],
+        "title": "AgentState",
+        "type": "object"
+      },
       "AlignmentInput-Input": {
         "additionalProperties": false,
         "properties": {
@@ -1129,6 +1267,235 @@
           "hours_per_day"
         ],
         "title": "AllocationInput",
+        "type": "object"
+      },
+      "AnalysisInput": {
+        "additionalProperties": false,
+        "properties": {
+          "assessment_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Assessment Id"
+          },
+          "project_id": {
+            "format": "uuid",
+            "title": "Project Id",
+            "type": "string"
+          },
+          "version_ids": {
+            "items": {
+              "format": "uuid",
+              "type": "string"
+            },
+            "maxItems": 5,
+            "title": "Version Ids",
+            "type": "array"
+          }
+        },
+        "required": [
+          "project_id"
+        ],
+        "title": "AnalysisInput",
+        "type": "object"
+      },
+      "AnalysisRunSummary": {
+        "additionalProperties": false,
+        "properties": {
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "status": {
+            "title": "Status",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "status",
+          "created_at"
+        ],
+        "title": "AnalysisRunSummary",
+        "type": "object"
+      },
+      "AnalysisSummary": {
+        "additionalProperties": false,
+        "properties": {
+          "run": {
+            "$ref": "#/components/schemas/AnalysisRunSummary"
+          },
+          "semantic_status": {
+            "title": "Semantic Status",
+            "type": "string"
+          }
+        },
+        "required": [
+          "run",
+          "semantic_status"
+        ],
+        "title": "AnalysisSummary",
+        "type": "object"
+      },
+      "AnalysisView": {
+        "additionalProperties": false,
+        "properties": {
+          "agents": {
+            "items": {
+              "$ref": "#/components/schemas/AgentState"
+            },
+            "title": "Agents",
+            "type": "array"
+          },
+          "assessment_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Assessment Id"
+          },
+          "assessment_revision": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Assessment Revision"
+          },
+          "can_review": {
+            "title": "Can Review",
+            "type": "boolean"
+          },
+          "evidence": {
+            "items": {
+              "$ref": "#/components/schemas/EvidenceView"
+            },
+            "title": "Evidence",
+            "type": "array"
+          },
+          "findings": {
+            "items": {
+              "$ref": "#/components/schemas/FindingView"
+            },
+            "title": "Findings",
+            "type": "array"
+          },
+          "framework_version_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Framework Version Id"
+          },
+          "limitations": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Limitations",
+            "type": "array"
+          },
+          "missing_agents": {
+            "items": {
+              "enum": [
+                "financial",
+                "schedule",
+                "sentiment",
+                "risk",
+                "resource",
+                "governance",
+                "agile_coach",
+                "pmo",
+                "executive"
+              ],
+              "type": "string"
+            },
+            "title": "Missing Agents",
+            "type": "array"
+          },
+          "model_quality": {
+            "const": "UNVERIFIED/BLOCKED",
+            "default": "UNVERIFIED/BLOCKED",
+            "title": "Model Quality",
+            "type": "string"
+          },
+          "prompt_version": {
+            "default": "specialists-rubric-v1",
+            "title": "Prompt Version",
+            "type": "string"
+          },
+          "rule_version": {
+            "default": "specialist-support-v1",
+            "title": "Rule Version",
+            "type": "string"
+          },
+          "run": {
+            "$ref": "#/components/schemas/AIRunView"
+          },
+          "semantic_status": {
+            "title": "Semantic Status",
+            "type": "string"
+          },
+          "source_snapshot_sha256": {
+            "title": "Source Snapshot Sha256",
+            "type": "string"
+          },
+          "stages": {
+            "items": {
+              "$ref": "#/components/schemas/StageView"
+            },
+            "title": "Stages",
+            "type": "array"
+          },
+          "suggestions": {
+            "items": {
+              "$ref": "#/components/schemas/SuggestionView"
+            },
+            "title": "Suggestions",
+            "type": "array"
+          }
+        },
+        "required": [
+          "run",
+          "framework_version_id",
+          "assessment_id",
+          "assessment_revision",
+          "source_snapshot_sha256",
+          "semantic_status",
+          "agents",
+          "missing_agents",
+          "findings",
+          "suggestions",
+          "evidence",
+          "stages",
+          "limitations",
+          "can_review"
+        ],
+        "title": "AnalysisView",
         "type": "object"
       },
       "AnswerBatchInput": {
@@ -3957,6 +4324,40 @@
         "title": "EvidenceReference",
         "type": "object"
       },
+      "EvidenceView": {
+        "additionalProperties": false,
+        "properties": {
+          "location": {
+            "title": "Location",
+            "type": "string"
+          },
+          "sha256": {
+            "title": "Sha256",
+            "type": "string"
+          },
+          "source": {
+            "title": "Source",
+            "type": "string"
+          },
+          "text": {
+            "title": "Text",
+            "type": "string"
+          },
+          "version": {
+            "title": "Version",
+            "type": "string"
+          }
+        },
+        "required": [
+          "source",
+          "version",
+          "sha256",
+          "location",
+          "text"
+        ],
+        "title": "EvidenceView",
+        "type": "object"
+      },
       "ExpenditureInput-Input": {
         "additionalProperties": false,
         "properties": {
@@ -4137,6 +4538,126 @@
         "title": "Fact",
         "type": "object"
       },
+      "FindingView": {
+        "additionalProperties": false,
+        "properties": {
+          "agents": {
+            "items": {
+              "enum": [
+                "financial",
+                "schedule",
+                "sentiment",
+                "risk",
+                "resource",
+                "governance",
+                "agile_coach",
+                "pmo",
+                "executive"
+              ],
+              "type": "string"
+            },
+            "title": "Agents",
+            "type": "array"
+          },
+          "available": {
+            "title": "Available",
+            "type": "boolean"
+          },
+          "confidence": {
+            "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+            "title": "Confidence",
+            "type": "string"
+          },
+          "conflicts": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Conflicts",
+            "type": "array"
+          },
+          "discrepancy": {
+            "title": "Discrepancy",
+            "type": "boolean"
+          },
+          "improvement": {
+            "title": "Improvement",
+            "type": "string"
+          },
+          "key": {
+            "title": "Key",
+            "type": "string"
+          },
+          "kind": {
+            "enum": [
+              "risk",
+              "blocker",
+              "dependency",
+              "compliance_gap",
+              "maturity_evidence"
+            ],
+            "title": "Kind",
+            "type": "string"
+          },
+          "review_revision": {
+            "title": "Review Revision",
+            "type": "integer"
+          },
+          "reviews": {
+            "items": {
+              "$ref": "#/components/schemas/ReviewView"
+            },
+            "title": "Reviews",
+            "type": "array"
+          },
+          "severity": {
+            "enum": [
+              "low",
+              "medium",
+              "high"
+            ],
+            "title": "Severity",
+            "type": "string"
+          },
+          "signal": {
+            "enum": [
+              "adverse",
+              "clear",
+              "uncertain"
+            ],
+            "title": "Signal",
+            "type": "string"
+          },
+          "spans": {
+            "items": {
+              "$ref": "#/components/schemas/Span"
+            },
+            "title": "Spans",
+            "type": "array"
+          },
+          "title": {
+            "title": "Title",
+            "type": "string"
+          }
+        },
+        "required": [
+          "key",
+          "kind",
+          "signal",
+          "severity",
+          "confidence",
+          "title",
+          "improvement",
+          "agents",
+          "spans",
+          "discrepancy",
+          "conflicts",
+          "available",
+          "review_revision",
+          "reviews"
+        ],
+        "title": "FindingView",
+        "type": "object"
+      },
       "FoundationResponse": {
         "properties": {
           "environment": {
@@ -4159,8 +4680,8 @@
             "type": "string"
           },
           "schema_revision": {
-            "const": "0012_ai_runtime",
-            "default": "0012_ai_runtime",
+            "const": "0014_specialist_reviewer",
+            "default": "0014_specialist_reviewer",
             "title": "Schema Revision",
             "type": "string"
           }
@@ -6775,38 +7296,69 @@
         "title": "Retrieval",
         "type": "object"
       },
-      "ReviewInput": {
+      "ReviewView": {
         "additionalProperties": false,
         "properties": {
-          "action": {
-            "enum": [
-              "start",
-              "return",
-              "complete"
+          "actor_id": {
+            "format": "uuid",
+            "title": "Actor Id",
+            "type": "string"
+          },
+          "approved_score": {
+            "anyOf": [
+              {
+                "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d{0,4}0*$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
             ],
-            "title": "Action",
+            "title": "Approved Score"
+          },
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
             "type": "string"
           },
-          "adjustments": {
-            "items": {
-              "$ref": "#/components/schemas/Adjustment"
-            },
-            "maxItems": 500,
-            "title": "Adjustments",
-            "type": "array"
+          "decision": {
+            "enum": [
+              "accepted",
+              "rejected"
+            ],
+            "title": "Decision",
+            "type": "string"
           },
-          "note": {
-            "maxLength": 2000,
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "item_key": {
+            "title": "Item Key",
+            "type": "string"
+          },
+          "reason": {
+            "maxLength": 1000,
             "minLength": 1,
-            "title": "Note",
+            "title": "Reason",
             "type": "string"
+          },
+          "revision": {
+            "title": "Revision",
+            "type": "integer"
           }
         },
         "required": [
-          "action",
-          "note"
+          "decision",
+          "reason",
+          "id",
+          "item_key",
+          "actor_id",
+          "created_at",
+          "revision"
         ],
-        "title": "ReviewInput",
+        "title": "ReviewView",
         "type": "object"
       },
       "RiskInput": {
@@ -7322,6 +7874,36 @@
         "title": "SourceView",
         "type": "object"
       },
+      "Span": {
+        "additionalProperties": false,
+        "properties": {
+          "end": {
+            "exclusiveMinimum": 0.0,
+            "maximum": 20000.0,
+            "title": "End",
+            "type": "integer"
+          },
+          "source": {
+            "maxLength": 160,
+            "minLength": 1,
+            "title": "Source",
+            "type": "string"
+          },
+          "start": {
+            "maximum": 20000.0,
+            "minimum": 0.0,
+            "title": "Start",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "source",
+          "start",
+          "end"
+        ],
+        "title": "Span",
+        "type": "object"
+      },
       "SprintInput": {
         "additionalProperties": false,
         "properties": {
@@ -7467,6 +8049,122 @@
           "reported_health"
         ],
         "title": "StatusInput",
+        "type": "object"
+      },
+      "SuggestionView": {
+        "additionalProperties": false,
+        "properties": {
+          "approved_score": {
+            "anyOf": [
+              {
+                "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Approved Score"
+          },
+          "available": {
+            "title": "Available",
+            "type": "boolean"
+          },
+          "confidence": {
+            "anyOf": [
+              {
+                "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Confidence"
+          },
+          "dimension_id": {
+            "format": "uuid",
+            "title": "Dimension Id",
+            "type": "string"
+          },
+          "dimension_name": {
+            "title": "Dimension Name",
+            "type": "string"
+          },
+          "gaps": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Gaps",
+            "type": "array"
+          },
+          "improvement": {
+            "title": "Improvement",
+            "type": "string"
+          },
+          "key": {
+            "title": "Key",
+            "type": "string"
+          },
+          "original_score": {
+            "anyOf": [
+              {
+                "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Original Score"
+          },
+          "review_revision": {
+            "title": "Review Revision",
+            "type": "integer"
+          },
+          "reviews": {
+            "items": {
+              "$ref": "#/components/schemas/ReviewView"
+            },
+            "title": "Reviews",
+            "type": "array"
+          },
+          "spans": {
+            "items": {
+              "$ref": "#/components/schemas/Span"
+            },
+            "title": "Spans",
+            "type": "array"
+          },
+          "suggested_score": {
+            "anyOf": [
+              {
+                "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Suggested Score"
+          }
+        },
+        "required": [
+          "key",
+          "dimension_id",
+          "dimension_name",
+          "original_score",
+          "suggested_score",
+          "confidence",
+          "approved_score",
+          "gaps",
+          "improvement",
+          "spans",
+          "available",
+          "review_revision",
+          "reviews"
+        ],
+        "title": "SuggestionView",
         "type": "object"
       },
       "SummaryView": {
@@ -8558,6 +9256,82 @@
         ],
         "title": "WorkInput",
         "type": "object"
+      },
+      "ppm_api__agent_schemas__ReviewInput": {
+        "additionalProperties": false,
+        "properties": {
+          "approved_score": {
+            "anyOf": [
+              {
+                "maximum": 100.0,
+                "minimum": 0.0,
+                "type": "number"
+              },
+              {
+                "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d{0,4}0*$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Approved Score"
+          },
+          "decision": {
+            "enum": [
+              "accepted",
+              "rejected"
+            ],
+            "title": "Decision",
+            "type": "string"
+          },
+          "reason": {
+            "maxLength": 1000,
+            "minLength": 1,
+            "title": "Reason",
+            "type": "string"
+          }
+        },
+        "required": [
+          "decision",
+          "reason"
+        ],
+        "title": "ReviewInput",
+        "type": "object"
+      },
+      "ppm_api__assessment_schemas__ReviewInput": {
+        "additionalProperties": false,
+        "properties": {
+          "action": {
+            "enum": [
+              "start",
+              "return",
+              "complete"
+            ],
+            "title": "Action",
+            "type": "string"
+          },
+          "adjustments": {
+            "items": {
+              "$ref": "#/components/schemas/Adjustment"
+            },
+            "maxItems": 500,
+            "title": "Adjustments",
+            "type": "array"
+          },
+          "note": {
+            "maxLength": 2000,
+            "minLength": 1,
+            "title": "Note",
+            "type": "string"
+          }
+        },
+        "required": [
+          "action",
+          "note"
+        ],
+        "title": "ReviewInput",
+        "type": "object"
       }
     }
   },
@@ -8567,6 +9341,323 @@
   },
   "openapi": "3.1.0",
   "paths": {
+    "/api/v1/agents/definitions": {
+      "get": {
+        "operationId": "definitions_api_v1_agents_definitions_get",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "x-organization-id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Organization-Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/AgentDefinition"
+                  },
+                  "title": "Response Definitions Api V1 Agents Definitions Get",
+                  "type": "array"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Definitions",
+        "tags": [
+          "Specialists and recommendations"
+        ]
+      }
+    },
+    "/api/v1/agents/runs": {
+      "get": {
+        "operationId": "listing_api_v1_agents_runs_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "offset",
+            "required": false,
+            "schema": {
+              "default": 0,
+              "maximum": 10000,
+              "minimum": 0,
+              "title": "Offset",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "header",
+            "name": "x-organization-id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Organization-Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/AnalysisSummary"
+                  },
+                  "title": "Response Listing Api V1 Agents Runs Get",
+                  "type": "array"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Listing",
+        "tags": [
+          "Specialists and recommendations"
+        ]
+      },
+      "post": {
+        "operationId": "create_api_v1_agents_runs_post",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "x-organization-id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Organization-Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AnalysisInput"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "202": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AnalysisView"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Create",
+        "tags": [
+          "Specialists and recommendations"
+        ]
+      }
+    },
+    "/api/v1/agents/runs/{id_}": {
+      "get": {
+        "operationId": "detail_api_v1_agents_runs__id___get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id_",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Id ",
+              "type": "string"
+            }
+          },
+          {
+            "in": "header",
+            "name": "x-organization-id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Organization-Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AnalysisView"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Detail",
+        "tags": [
+          "Specialists and recommendations"
+        ]
+      }
+    },
+    "/api/v1/agents/runs/{id_}/reviews/{item_key}": {
+      "post": {
+        "operationId": "review_api_v1_agents_runs__id___reviews__item_key__post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id_",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Id ",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "item_key",
+            "required": true,
+            "schema": {
+              "title": "Item Key",
+              "type": "string"
+            }
+          },
+          {
+            "in": "header",
+            "name": "x-organization-id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Organization-Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ppm_api__agent_schemas__ReviewInput"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AnalysisView"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Review",
+        "tags": [
+          "Specialists and recommendations"
+        ]
+      }
+    },
     "/api/v1/ai/budget": {
       "patch": {
         "operationId": "configure_api_v1_ai_budget_patch",
@@ -10179,7 +11270,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/ReviewInput"
+                "$ref": "#/components/schemas/ppm_api__assessment_schemas__ReviewInput"
               }
             }
           },

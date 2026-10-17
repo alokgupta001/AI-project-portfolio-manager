@@ -1,5 +1,7 @@
 # Shared sprint documentation acceptance checklist
 
+Sprint 11 [completion matrix](../04-testing/sprint-based/sprint-11/DOCUMENTATION_CHECKS.md) and [fresh tests](../04-testing/sprint-based/sprint-11/TESTING_REPORT.md) map all eleven obligations to artifacts. Real-model quality UNVERIFIED/BLOCKED; normal data preserved; Sprint 12 unstarted. Earlier entries retain their historical scope.
+
 Use this for every future task, scoped to the feature's actual impact. A sprint is not fully documented while a required guide is inaccurate or missing.
 
 1. Confirm canonical task requirement, feature/gap IDs and acceptance criteria.

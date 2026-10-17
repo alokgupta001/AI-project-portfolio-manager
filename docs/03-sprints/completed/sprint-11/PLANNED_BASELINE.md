@@ -1,3 +1,5 @@
+> Historical planning baseline retained verbatim below. Current implementation and results are in [the Sprint 11 hub](README.md).
+
 # Sprint 11 — Nine agents, semantic assessment and reviewed recommendations
 
 **PLANNED**. No implementation, executed tests or completed report is claimed. Purpose and intended work: Nine agents, semantic assessment and reviewed recommendations. Actual implementation/test result: none for this sprint in the audited tree. Incomplete: all planned packages and their external acceptance. Dependencies, exact tasks and acceptance remain in [the canonical roadmap](../../../09-planning/FUTURE_SPRINT_ROADMAP.md) (Sprint 11 section). Later extensions/dependencies are listed in its sequence.

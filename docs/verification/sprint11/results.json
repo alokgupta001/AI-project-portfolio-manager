@@ -1,0 +1,181 @@
+{
+  "checked_at": "2026-10-16T16:00:05.803553+00:00",
+  "scope": [
+    "PPM-11-001",
+    "PPM-11-002",
+    "PPM-11-003"
+  ],
+  "status": "PASS_LOCAL_DETERMINISTIC",
+  "base_commit": "77b330a",
+  "branch": "close-sprints-8-1-and-10",
+  "worktree": "uncommitted",
+  "remote_fetch": "PASS; origin/main 275e50b and PR #1 fix 631c149 are ancestors",
+  "baseline": {
+    "normal_head_verified": "0012_ai_runtime",
+    "prior_backend_result_201": "historical; not reused as current result",
+    "coderabbit_fixes": 6
+  },
+  "full_backend_before_final_ai_fixes": {
+    "tests": 251,
+    "seconds": 479.931,
+    "failures": 0,
+    "errors": 0,
+    "junit_sha256": "2bb5b9da41ce4d6db999990a7ef47c192f8a980fa9066ce682dda0af1bb8bb6f"
+  },
+  "final_affected_backend": {
+    "tests": 127,
+    "seconds": 167.235,
+    "failures": 0,
+    "errors": 0,
+    "junit_sha256": "3e7a19beb7fb3bf84a4018da7d044100610d9935a934af9762d201b638fe153a"
+  },
+  "counts_overlap": true,
+  "specialist_tests_in_final_suite": 52,
+  "agent_evaluation_version": "specialists-rubric-v1",
+  "per_agent_evaluations": {
+    "financial": {
+      "supported": "PASS",
+      "missing": "PASS",
+      "contradictory": "PASS",
+      "malicious": "PASS"
+    },
+    "schedule": {
+      "supported": "PASS",
+      "missing": "PASS",
+      "contradictory": "PASS",
+      "malicious": "PASS"
+    },
+    "sentiment": {
+      "supported": "PASS",
+      "missing": "PASS",
+      "contradictory": "PASS",
+      "malicious": "PASS"
+    },
+    "risk": {
+      "supported": "PASS",
+      "missing": "PASS",
+      "contradictory": "PASS",
+      "malicious": "PASS"
+    },
+    "resource": {
+      "supported": "PASS",
+      "missing": "PASS",
+      "contradictory": "PASS",
+      "malicious": "PASS"
+    },
+    "governance": {
+      "supported": "PASS",
+      "missing": "PASS",
+      "contradictory": "PASS",
+      "malicious": "PASS"
+    },
+    "agile_coach": {
+      "supported": "PASS",
+      "missing": "PASS",
+      "contradictory": "PASS",
+      "malicious": "PASS"
+    },
+    "pmo": {
+      "supported": "PASS",
+      "missing": "PASS",
+      "contradictory": "PASS",
+      "malicious": "PASS"
+    },
+    "executive": {
+      "supported": "PASS",
+      "missing": "PASS",
+      "contradictory": "PASS",
+      "malicious": "PASS"
+    }
+  },
+  "browser": {
+    "sprint11_final": "PASS: 1 in 26.0 seconds; 24.2-second journey",
+    "latest_regressions": {
+      "ai": "PASS 36.1 seconds",
+      "assessment": "PASS 10.9 seconds",
+      "documents": "PASS 29.9 seconds"
+    },
+    "separate_runs": true,
+    "responsive_widths": [
+      1440,
+      768,
+      360
+    ],
+    "automated_wcag_violations": 0,
+    "keyboard_horizontal_scroll": "PASS",
+    "manual_visual_review": "desktop/mobile screenshots inspected",
+    "manual_assistive_technology": "UNVERIFIED"
+  },
+  "migration": {
+    "new_head": "0013_specialist_reviews",
+    "clean_and_prior_lifecycle": "PASS guarded test/ppm_test",
+    "final_0012_to_0013": "PASS",
+    "metadata_drift": "PASS",
+    "normal_applied": false
+  },
+  "preservation": {
+    "normal_head": "0012_ai_runtime",
+    "established_tables_unchanged": 70,
+    "objects_unchanged": 5,
+    "frozen_file_hashes_unchanged": 22,
+    "source_manifest_entries": 7,
+    "historical_regression_screenshots_restored": 10
+  },
+  "static": {
+    "ruff_lint_format": "PASS",
+    "mypy_app_worker": "PASS",
+    "eslint": "PASS",
+    "typescript": "PASS",
+    "prettier": "PASS",
+    "openapi_client_drift": "PASS",
+    "source_inventories": "PASS",
+    "documentation": "PASS; 314 Markdown files, 4934 local links/anchors",
+    "prior_sprint_packages": "PASS; 13 packages, 115 required artifacts",
+    "source_manifests": "PASS"
+  },
+  "cost": {
+    "authorized_usd": 0,
+    "spent_usd": 0,
+    "real_provider_requests": 0,
+    "paid_coding_or_review_agents": 0,
+    "transport": "deterministic doubles/intercepted HTTP; explicit network denial"
+  },
+  "real_provider_semantic_quality": "UNVERIFIED/BLOCKED",
+  "hosted_ci_this_uncommitted_revision": "UNVERIFIED",
+  "production_deployment": "NOT RUN",
+  "sprint12": "NOT STARTED",
+  "limitations": [
+    "512-token batch can produce partial/malformed larger outputs",
+    "Sentiment is a privacy-safe group blocker signal, not emotional sentiment",
+    "Conservative recapture can withhold an entire selected evidence set",
+    "Normal runtime adoption requires separately controlled forward 0013 application"
+  ],
+  "hash_normalization": "Implementation text: CRLF to LF; screenshots and JUnit: raw bytes",
+  "implementation_sha256": {
+    "services/api/ppm_api/agents.py": "3c6f93cdb785bc64940dd86e3f150447aac4e757a4d64b3eb02511636d1bb6b3",
+    "services/api/ppm_api/agent_engine.py": "12b45675aeeb724b0e76d7886aaadb4b814a31863b57c0cfa556493cfd482da6",
+    "services/api/ppm_api/agent_provider.py": "8326cfa7ac85feb531e2f6d4a4f41d18e817a0ddaa1b56ed45ff0dfb3595dfd5",
+    "services/api/ppm_api/agent_schemas.py": "137226de5be64422321bb6d56f58d1426e53a45f03b00f7f388e2f684f60df33",
+    "services/api/ppm_api/agent_tables.py": "2ee3e94528367432306f18732e2bcb53f1bb40569be781ec64449a46124df3d0",
+    "services/api/ppm_api/ai.py": "e287ac08bc5d6a30a681234e5781d48bfbbf2b6ad1d3b41d2b603f5cc968dd63",
+    "services/api/ppm_api/ai_schemas.py": "e011d89298bda750c843decc90320382a77ee215a485c2e43f5b55a2bb766998",
+    "services/api/ppm_api/command.py": "e1f6aa08cd01e4569b47cd0071cbf58c2525b9810e42844b8d1f4a37d7855d04",
+    "services/api/ppm_api/main.py": "690ee36f2f4af6ba406897b5caec8c8f55ff8741438d9cf7bfad42e396d2210f",
+    "services/api/ppm_api/schemas.py": "ddae8a47e056a696eec269e3a57b2b5052daa3ea117c5ec3730be591affb8b64",
+    "services/api/migrations/versions/0013_specialist_reviews.py": "baa5809235910e42aa0c38c484adc2e01b48a367d5b711bf7b9ae36ebf13305a",
+    "apps/web/components/agents.tsx": "469f7465072ef47d950e21adf1dde07afaa6cfad2805dd4090ccfc916df11f3a",
+    "apps/web/components/shell.tsx": "385ba8199870d2ef0cbcabad5dc7fef235cd32c7c31c6a89a5aad846d7538b86",
+    "apps/web/app/account/identity-client.tsx": "454dea83df4ebb3dfc59a954dbc881f1aa1c78479d010f48476254c1af49d152",
+    "apps/web/app/globals.css": "dc4071f03702f94df2091f58fd9eeca171d1fd3277d99869a90e5023be37be7a",
+    "apps/web/app/agents/page.tsx": "b9f4645b4c6ee060cf6eb67f613bda7fbdfa29da0e2919fed1a144e2f56c30a9",
+    "tests/test_agents.py": "02bd54bbf1fde5a1c1ae0b239a0a291c7bc57fe82e1e9bb887c5b1005bc0c9c9",
+    "tests/browser/agents.spec.ts": "798b32f5397fb1d7e4a65b9de8ec5a7d06872933884a205d92c431c6760341ad",
+    "tests/browser/documents.spec.ts": "8242d8f5059822fdefd53480ab09f3554ae0c3117473807f6f54e2ab5dd81cc7",
+    "scripts/browser_agent_fixture.py": "acbc55b0fccf3b87936c4bea9d35172508342c35396ef455dadf09ad83f8ba63"
+  },
+  "screenshots_sha256": {
+    "review-1440.png": "8a9d889ea09ea61552e25c4806c8f2ec2fbaec2600cfeab8303dcceb198b5940",
+    "review-360.png": "a3936f789ebe346505a9fcabed9bcba9e0f831a0b6d5fb96ad92e7ecc8146bdf",
+    "review-768.png": "e7c843c9b055825aeb6a91db70ef1ff7c7fd28d9236ef44e2f125540dc17d989"
+  }
+}

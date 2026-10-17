@@ -1,12 +1,14 @@
 # Future demo plans
 
+Sprint 11 now has an [executable isolated synthetic demo](sprint-based/sprint-11/README.md). Its older outline below is historical planning; real-model quality remains unverified. Sprint 12 and later remain future plans.
+
 Sprint 09 has moved to the [current document demo](sprint-based/sprint-09/README.md). The future scenarios below start at Sprint 11; Sprint 10 has configured Gemini and no-key fallback demonstrations; its bounded provider smoke passed and broader quality remains unverified.
 
 **FUTURE DEMO PLAN** throughout; none is executable evidence. Activate only after the owning sprint’s real UI and acceptance exist.
 
 | Sprint | Intended demonstration | Acceptance authority |
 | --- | --- | --- |
-| 11 | Nine agents, semantic assessment and reviewed recommendations; show only actual implemented screens/results after verification | [plan and gates](../03-sprints/planned/sprint-11/README.md) |
+| 11 | Nine agents, semantic assessment and reviewed recommendations; show only actual implemented screens/results after verification | [plan and gates](../03-sprints/completed/sprint-11/README.md) |
 | 12 | Connector authority, historical labels and baseline models; show only actual implemented screens/results after verification | [plan and gates](../03-sprints/planned/sprint-12/README.md) |
 | 13 | Eligible forecast serving with uncertainty; show only actual implemented screens/results after verification | [plan and gates](../03-sprints/planned/sprint-13/README.md) |
 | 14 | Scoped copilot context and natural-language analytics; show only actual implemented screens/results after verification | [plan and gates](../03-sprints/planned/sprint-14/README.md) |

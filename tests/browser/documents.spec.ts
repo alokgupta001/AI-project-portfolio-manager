@@ -32,9 +32,15 @@ test("document upload, locations, versions, safe download, policy, hold and eras
     .fill(fixture.document_email);
   await page.getByLabel("Password", { exact: true }).fill(fixture.password);
   await page.getByRole("button", { name: "Sign in", exact: true }).click();
+  const organizationSwitched = page.waitForResponse(
+    (r) =>
+      r.url().endsWith("/api/v1/auth/switch") &&
+      r.request().method() === "POST",
+  );
   await page
     .getByRole("combobox", { name: "Organization", exact: true })
     .selectOption(fixture.document_org);
+  expect((await organizationSwitched).status()).toBe(200);
   await page.goto("/documents");
   await expect(
     page.getByRole("heading", { name: "Document library", exact: true }),

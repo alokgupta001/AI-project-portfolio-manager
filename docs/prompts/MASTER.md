@@ -1,5 +1,14 @@
 # Canonical master prompt entry point
 
+PR #3 review follow-up — 16 October 2026: use the [review-fix record](../04-testing/sprint-based/sprint-11/REVIEW_FIXES.md)
+and latest handoff on `sprint-11-specialist-review`. The earlier uncommitted
+statements below are historical. Preserve the existing output/request/spending
+limits and migrations; forward 0014 is tested only in disposable databases.
+
+Current explicit authorization — 16 October 2026: Sprint 11 implementation authorized and implemented. Read [the handoff](../03-sprints/completed/sprint-11/HANDOFF.md) and [actual results](../04-testing/sprint-based/sprint-11/TESTING_REPORT.md). The frozen master/ordered prompts remain source records. Real-model quality UNVERIFIED/BLOCKED; normal 0012 preserved; no deployment or commit. Stop before Sprint 12.
+
+## Historical checkpoints before Sprint 11
+
 **Closeout — 16 October 2026: Sprints 8.1 and 10 are COMPLETED for their implemented development scope.** The reviewed application checkpoint `631c149` passed [hosted CI](https://github.com/alokgupta001/AI-project-portfolio-manager/actions/runs/38885041673), including regression, migration and browser checks. The current pilot Word guide is rendered and visually verified in the linked closeout evidence. Earlier blocked/active statements below describe their recorded checkpoints. Production deployment, broad real-model/agent quality and scale remain OPEN release/successor gates. Stop before 11. [Completed pilot](../03-sprints/completed/sprint-8.1/README.md) · [Completed gateway](../03-sprints/completed/sprint-10/README.md) · [Closeout](../10-reference/SPRINT-8.1-AND-10-CLOSEOUT.md). Next planned sprint: 11; its execution still requires a direct instruction.
 
 ## Historical record before closeout

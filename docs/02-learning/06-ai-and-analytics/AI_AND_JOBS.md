@@ -1,5 +1,9 @@
 # AI runtime, sources and durable jobs
 
+Sprint 11 implementation: [trace specialist evidence to human review](SPECIALISTS_REVIEW.md), [contract](../../contracts/agents.md) and [tests](../../04-testing/sprint-based/sprint-11/TESTING_REPORT.md). One bounded completion batches nine read-only agents; shared metrics/scoring/jobs/ledger remain authoritative. Original scores, suggestions and reviewer decisions are distinct. Real semantic quality remains UNVERIFIED/BLOCKED.
+
+## Historical checkpoints before Sprint 11
+
 The current implementation has versioned source intake, real English OCR, keyword
 citations and a controlled Sprint 10 evidence runtime. New installations default to disabled; the configured local Gemini free tier is authorized at $0 with no daily expiry and passed its bounded completion/embedding smoke. Read [the practical gateway trace](AI_GATEWAY.md) for real
 symbols and flows; [document sources](DOCUMENT_SOURCES.md) owns intake/OCR/retention.

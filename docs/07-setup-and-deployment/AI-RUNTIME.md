@@ -1,5 +1,9 @@
 # AI runtime operator guide
 
+Sprint 11 operators: [specialist contract](../contracts/agents.md), [handoff](../03-sprints/completed/sprint-11/HANDOFF.md) and [test commands](../04-testing/sprint-based/sprint-11/TESTING_REPORT.md). Model allowlist, confirmation, budget/request/retry/output/cancellation limits remain unchanged. One batch serves nine agents; no paid failover. Normal data remains 0012; forward 0013 adoption is not deployed by this task. No live provider call is made in Sprint 11 acceptance.
+
+## Historical checkpoints before Sprint 11
+
 As of 16 October 2026, the user authorizes Gemini on a confirmed Free Tier project
 with no linked Cloud Billing account and a maximum spend of **$0**. The bounded
 synthetic completion/embedding smoke passed. Full provider-quality acceptance

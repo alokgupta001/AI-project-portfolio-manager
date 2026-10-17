@@ -1,8 +1,10 @@
 from datetime import datetime
-from typing import Literal
+from typing import Final, Literal
 from uuid import UUID
 
 from pydantic import BaseModel, Field
+
+SCHEMA_REVISION: Final = "0014_specialist_reviewer"
 
 
 class ErrorDetail(BaseModel):
@@ -39,5 +41,5 @@ class ReadyResponse(BaseModel):
 class FoundationResponse(BaseModel):
     instance_id: UUID
     initialized_at: datetime
-    schema_revision: Literal["0012_ai_runtime"] = "0012_ai_runtime"
+    schema_revision: Literal["0014_specialist_reviewer"] = SCHEMA_REVISION
     environment: Literal["local", "test", "demo"]

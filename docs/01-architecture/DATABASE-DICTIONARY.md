@@ -6,7 +6,57 @@ Generated from SQLAlchemy `Base.metadata` without a database connection. Source 
 
 Live organization membership → transaction-local principal/RLS → scoped domain facts. Published assessment history remains immutable. `source_documents` owns scope/retention; `source_versions` owns immutable byte identity and mutable processing status; `source_chunks` is replaceable derived text; `source_evidence_links` references separately authorized released attachments. `durable_jobs` references exactly one integration, document version or AI run according to job kind. AI run provenance/budgets, attempt accounting and rebuildable vectors follow the [AI contract](../contracts/ai.md). Originals remain private objects; logical deletion revokes reads, guarded purge removes bytes/text/links but retains tombstones. `ai_embeddings` stores the bounded exact JSONB projection; no pgvector/ANN or semantic-finding table is activated.
 
-**Inventory:** 70 metadata tables (Alembic's runtime version table is separate).
+**Inventory:** 72 metadata tables (Alembic's runtime version table is separate).
+
+## agent_analyses
+
+| Column | SQL type | Nullable | Primary key | Foreign reference |
+| --- | --- | --- | --- | --- |
+| `id` | `CHAR(32)` | False | True | — |
+| `organization_id` | `CHAR(32)` | False | False | ai_runs.organization_id, memberships.organization_id, organizations.id, ppm_assessments.organization_id, ppm_projects.organization_id |
+| `run_id` | `CHAR(32)` | False | False | ai_runs.id |
+| `project_id` | `CHAR(32)` | False | False | ppm_projects.id |
+| `assessment_id` | `CHAR(32)` | True | False | ppm_assessments.id |
+| `actor_id` | `CHAR(32)` | False | False | memberships.user_id |
+| `snapshot` | `JSONB` | False | False | — |
+| `output` | `JSONB` | True | False | — |
+
+- ForeignKeyConstraint (unnamed): organization_id
+- ForeignKeyConstraint (unnamed): organization_id, actor_id
+- ForeignKeyConstraint (unnamed): organization_id, assessment_id
+- ForeignKeyConstraint (unnamed): organization_id, project_id
+- ForeignKeyConstraint (unnamed): organization_id, run_id
+- PrimaryKeyConstraint (unnamed): id
+- UniqueConstraint (unnamed): organization_id, id
+- UniqueConstraint (unnamed): run_id
+
+## agent_reviews
+
+| Column | SQL type | Nullable | Primary key | Foreign reference |
+| --- | --- | --- | --- | --- |
+| `id` | `CHAR(32)` | False | True | — |
+| `organization_id` | `CHAR(32)` | False | False | agent_analyses.organization_id, memberships.organization_id, organizations.id |
+| `analysis_id` | `CHAR(32)` | False | False | agent_analyses.id |
+| `item_key` | `VARCHAR(96)` | False | False | — |
+| `actor_id` | `CHAR(32)` | False | False | memberships.user_id |
+| `decision` | `VARCHAR(16)` | False | False | — |
+| `reason` | `VARCHAR(1000)` | False | False | — |
+| `approved_score` | `NUMERIC(7, 4)` | True | False | — |
+| `revision` | `INTEGER` | False | False | — |
+| `key` | `CHAR(32)` | False | False | — |
+| `fingerprint` | `VARCHAR(64)` | False | False | — |
+| `created_at` | `DATETIME` | False | False | — |
+
+- CheckConstraint (unnamed): approved_score IS NULL OR approved_score BETWEEN 0 AND 100
+- CheckConstraint (unnamed): decision IN ('accepted','rejected')
+- CheckConstraint (unnamed): revision > 0
+- ForeignKeyConstraint (unnamed): organization_id
+- ForeignKeyConstraint (unnamed): organization_id, actor_id
+- ForeignKeyConstraint (unnamed): organization_id, analysis_id
+- PrimaryKeyConstraint (unnamed): id
+- UniqueConstraint (unnamed): analysis_id, item_key, revision
+- UniqueConstraint (unnamed): organization_id, actor_id, key
+- UniqueConstraint (unnamed): organization_id, id
 
 ## ai_budgets
 

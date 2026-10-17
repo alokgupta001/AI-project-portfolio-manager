@@ -1,5 +1,7 @@
 # Learn the current application
 
+Current Sprint 11: [Specialists and human review](06-ai-and-analytics/SPECIALISTS_REVIEW.md) traces the actual code, separate score records, bounded calls, privacy, source revocation and independent decisions. Real-model quality remains unverified. Earlier sprint boundaries below retain their historical scope.
+
 Follow [the practical reading order](00-getting-started/README.md). Fourteen existing cross-sprint chapters were retained and corrected for Sprint 8.1; they trace the real UI, API, data, authorization, formulas, failures and debugging path.
 
 General concepts belong in topic folders; [sprint-based links](sprint-based/README.md) explain which sprint introduced or extended them. [The feature map](../09-planning/FEATURE_DOCUMENT_MAPPING.md) supplies PLANNED concepts, business purpose, task ownership and future documentation changes without fake code walkthroughs.

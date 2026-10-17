@@ -1,0 +1,125 @@
+{
+  "pull_request": "https://github.com/alokgupta001/AI-project-portfolio-manager/pull/3",
+  "base_commit": "e608a09f234ef76d6821c4c2d214d6e6aefd8549",
+  "branch": "sprint-11-specialist-review",
+  "status": "PASS_LOCAL_WITH_ONE_DEFERRED_FINDING",
+  "findings_verified": 5,
+  "findings_fixed": 4,
+  "findings_deferred": [
+    {
+      "file": "services/api/ppm_api/agent_provider.py",
+      "reason": "Increasing the existing 512-token ceiling conflicts with the user's explicit preserve-limits instruction. Large nine-agent batches remain a known limitation; intercepted truncation verifies honest unavailable states, not tokenizer fit or real-provider quality."
+    }
+  ],
+  "budget": {
+    "spend_usd": 0,
+    "live_provider_calls": 0,
+    "paid_review_agents": 0,
+    "max_completion_tokens": 512,
+    "provider_configuration_changed": false,
+    "real_provider_semantic_quality": "UNVERIFIED/BLOCKED"
+  },
+  "migration": {
+    "normal_head": "0012_ai_runtime",
+    "test_head": "0014_specialist_reviewer",
+    "existing_0001_through_0013_changed": false,
+    "normal_migration_performed": false,
+    "normal_database_downgrade_performed": false,
+    "docker_volumes_deleted": false,
+    "disposable_prior_0012_and_0013_lifecycle_and_drift": "passed",
+    "full_clean_base_prior_head_repeated_upgrade_and_metadata_drift": "passed"
+  },
+  "original_hosted_failure": {
+    "run_id": 38930286777,
+    "static_backend_migration_steps": "passed",
+    "browser": {
+      "passed": 16,
+      "failed": 2
+    },
+    "causes": [
+      "Specialist fixtures omitted from default browser runner",
+      "Transient button contrast during theme background transition"
+    ]
+  },
+  "intermediate_local_results": [
+    "Read-only fixture initially used invalid API value view; corrected to established value read",
+    "Reviewer edit/read and backup failure/retry focused tests: 4 passed in 18.27s",
+    "Browser first completed full rerun: 17 passed, 1 failed due to competing logout/login navigation; explicit redirect synchronization added",
+    "First full backend/migration run: lifecycle and metadata drift passed; 256 tests passed and one failed because the initial read-only fixture used view instead of read (581.56s)."
+  ],
+  "checked_at": "2026-10-16T17:01:09.490692+00:00",
+  "local_browser": {
+    "command": "node scripts/check-identity-browser.mjs --workers=2",
+    "passed": 18,
+    "failed": 0,
+    "duration": "4.3m",
+    "axe_themes": [
+      "light",
+      "dark"
+    ],
+    "viewport_widths": [
+      360,
+      768,
+      1440
+    ],
+    "exact_unicode_excerpt_and_read_only_reviewer": "passed"
+  },
+  "static": {
+    "ruff_check": "passed",
+    "ruff_format_files": 131,
+    "mypy_modules": 47,
+    "eslint": "passed",
+    "typescript": "passed",
+    "prettier": "passed",
+    "openapi_typescript_drift": "passed",
+    "source_inventories": "three match"
+  },
+  "preservation": {
+    "normal_head_after_browser": "0012_ai_runtime",
+    "frozen_files_hashes_unchanged": 22,
+    "source_manifest_entries_unchanged": 7,
+    "historical_regression_artifacts_restored_byte_for_byte": 24,
+    "fresh_renders": "ignored test-results/sprint11-review and artifacts/local/sprint11-review",
+    "normal_stack_restarted": false
+  },
+  "backend": {
+    "command": "docker compose -f compose.yaml -f compose.documents.yaml --profile test run --rm --no-deps (read-only tests/scripts mounts, private evidence mount, PYTEST_ADDOPTS=--junitxml=/evidence/backend-final.xml) test python scripts/test_backend.py",
+    "passed": 257,
+    "failed": 0,
+    "duration_seconds": 451.34,
+    "specialist_tests": 54,
+    "backup_retry_tests": 2,
+    "junit_sha256": "2fb98c2937b098f7ff36559ab482f2652ecf3b8f3ab05b9691ae50b66a7e1c90",
+    "warning": "Existing Starlette/httpx test-client deprecation"
+  },
+  "documentation": {
+    "markdown_files": 315,
+    "local_links_anchors": 4945,
+    "missing_links": 0,
+    "requirements": 156,
+    "gaps": 36,
+    "sprint_packages": 13,
+    "required_sprint_artifacts": 115
+  },
+  "hosted_validation_at_local_checkpoint": "Not yet run for the upcoming commit; consult live PR #3 checks. Previous failure is preserved above.",
+  "no_merge_or_deployment": true,
+  "sprint_12_started": false,
+  "code_sha256_normalized_lf": {
+    "apps/web/app/globals.css": "c9dedc8a5239a4a7916dfb682558edd600b465adedd5a8069149e92899c9670c",
+    "apps/web/components/agents.tsx": "86d075c305e8ce8805c162f9ab538949e690239b8c1659d9495b4ac00bd378b4",
+    "services/api/migrations/versions/0013_specialist_reviews.py": "baa5809235910e42aa0c38c484adc2e01b48a367d5b711bf7b9ae36ebf13305a",
+    "services/api/migrations/versions/0014_specialist_reviewer.py": "2cdd9319d4df9659f1e79e2b8073b0dd397a14fdd2dd324ba54359a98f881cf3",
+    "services/api/ppm_api/agent_schemas.py": "6d9c67d65b2b39adc385d7b9d7c83733b02a44f1c3179da370537d8f1d027c67",
+    "services/api/ppm_api/agents.py": "a0242e3f1cca9d10789a2ab750a3ca62dad750bd49c25e4ffbbec5f1af376c2e",
+    "services/api/ppm_api/schemas.py": "fc7fee31b676519d34f4e0ff8064d1db6547c567bcfcc81258e96d4f20bb96dd",
+    "services/api/ppm_api/agent_provider.py": "8326cfa7ac85feb531e2f6d4a4f41d18e817a0ddaa1b56ed45ff0dfb3595dfd5",
+    "services/api/ppm_api/ai.py": "e287ac08bc5d6a30a681234e5781d48bfbbf2b6ad1d3b41d2b603f5cc968dd63",
+    "scripts/sprint11_preserve.py": "01a05192a8aa6cd8145ae980f5584d1549a0a2f3faeeaece086dd9e4492a3d3a",
+    "scripts/browser_agent_fixture.py": "5b9d420a7152e8b77951313475ad7d97d3bb90b8383814ab328029cd2f75e1bb",
+    "scripts/check-identity-browser.mjs": "8b214d3169cff72a9d99edfcb68f4f22d4967c5377473d6a06fb9b06d289055c",
+    "scripts/check_agent_migration.py": "2bd36c8d995ca232e7777b6b1366f2cbbd80cca4771d128757ffc1fcd9fd59de",
+    "tests/test_agents.py": "3b2d308163c53cfbb8a14fda3d94e2c7128c9c8836690b65a66645ac141a0d4e",
+    "tests/test_sprint11_preserve.py": "c7e160e40901f053a2712fde8873d932775ede6b02441bea8a6e2812f15e4b18",
+    "tests/browser/agents.spec.ts": "4c380a5d5345a7ca94aef8ddcb578931eb7d4c6490a9f8ceacbe71de3f9a2a28"
+  }
+}

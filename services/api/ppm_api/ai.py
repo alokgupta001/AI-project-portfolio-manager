@@ -12,6 +12,7 @@ from uuid import UUID, uuid4
 import sqlalchemy as sa
 from fastapi import APIRouter, Query, Request
 from fastapi.responses import StreamingResponse
+from pydantic import BaseModel
 
 from ppm_api import ai_provider as P
 from ppm_api import ai_tables as T
@@ -134,14 +135,26 @@ async def budget(p: Principal, create: bool = False) -> dict:
 
 
 async def access(p: Principal, id_: UUID) -> tuple[dict, dict]:
-    row = (await p.conn.execute(sa.select(T.runs).where(T.runs.c.id == id_))).mappings().first()
-    if not row:
+    # One statement observes the run and its job at the same PostgreSQL snapshot.
+    # Separate READ COMMITTED reads could pair old evidence with a new terminal job,
+    # causing a polling client to stop before receiving the final diagnostic/result.
+    pair = (
+        await p.conn.execute(
+            sa.select(T.runs, J.jobs)
+            .join(J.jobs, J.jobs.c.ai_run_id == T.runs.c.id)
+            .where(T.runs.c.id == id_)
+        )
+    ).first()
+    if not pair:
         delivery.fail(404, "Run unavailable")
+    row = {c.name: pair._mapping[c] for c in T.runs.c}
+    job = {c.name: pair._mapping[c] for c in J.jobs.c}
+    if row["snapshot"]["operation"] == "agents":
+        from ppm_api.agents import get_analysis
+
+        await get_analysis(p, id_)
     await delivery.get(p, "projects", row["project_id"], True)
-    job = (
-        (await p.conn.execute(sa.select(J.jobs).where(J.jobs.c.ai_run_id == id_))).mappings().one()
-    )
-    return dict(row), dict(job)
+    return row, job
 
 
 async def view(p: Principal, run: dict, job: dict) -> dict:
@@ -293,11 +306,24 @@ async def create(body: AIRunInput, request: Request, p: Auth) -> dict:
     await delivery.lock(p, request)
     admin(p)  # PM has no explicit costly-analysis grant in the current permission model.
     await delivery.get(p, "projects", body.project_id, True)
-    if (body.operation == "query" and (not body.query.strip() or body.version_id)) or (
-        body.operation == "index" and (not body.version_id or body.query)
+    if (
+        (body.operation == "query" and (not body.query.strip() or body.version_id))
+        or (body.operation == "index" and (not body.version_id or body.query))
+        or (body.operation != "agents" and (body.version_ids or body.assessment_id))
+        or (body.operation == "agents" and (body.query or body.version_id))
     ):
         delivery.fail(422, "Choose a query or one ready source version to index")
-    key, fingerprint = documents.request_identity(request, body)
+    # Preserve Sprint 10 request hashes for query/index replays after additive fields.
+    identity_body = (
+        body.model_dump(exclude={"version_ids", "assessment_id"})
+        if body.operation != "agents"
+        else body
+    )
+    key, fingerprint = documents.request_identity(request, identity_body)
+    if body.operation == "agents":
+        from ppm_api.agents import private_access
+
+        await private_access(p, body.assessment_id)
     previous = (
         (
             await p.conn.execute(
@@ -315,6 +341,11 @@ async def create(body: AIRunInput, request: Request, p: Auth) -> dict:
         if previous["request_hash"] != fingerprint or not previous["ai_run_id"]:
             delivery.fail(409, "Idempotency key has a different request")
         return await detail(previous["ai_run_id"], p)
+    analysis_snapshot = None
+    if body.operation == "agents":
+        from ppm_api.agents import capture
+
+        analysis_snapshot = await capture(p, body)
     refs = []
     if body.version_id:
         _, rows = await index_chunks(p, body.project_id, body.version_id)
@@ -370,6 +401,21 @@ async def create(body: AIRunInput, request: Request, p: Auth) -> dict:
         created_at=now(),
     )
     await p.conn.execute(T.runs.insert().values(**run))
+    if analysis_snapshot is not None:
+        from ppm_api import agent_tables
+
+        await p.conn.execute(
+            agent_tables.analyses.insert().values(
+                id=run_id,
+                run_id=run_id,
+                organization_id=oid(p),
+                project_id=body.project_id,
+                assessment_id=body.assessment_id,
+                actor_id=p.user["id"],
+                snapshot=analysis_snapshot,
+                output=None,
+            )
+        )
     await p.conn.execute(
         T.budgets.update()
         .where(T.budgets.c.id == b["id"])
@@ -623,7 +669,12 @@ class Runtime:
         return p, run, job
 
     async def call(
-        self, operation: str, texts: list[str], query: str = "", rows: list[dict] | None = None
+        self,
+        operation: str,
+        texts: list[str],
+        query: str = "",
+        rows: list[dict] | None = None,
+        output_schema: type[BaseModel] = AIOutput,
     ) -> P.ProviderResult:
         p: Principal | None
         run: dict | None
@@ -717,7 +768,7 @@ class Runtime:
                     ),
                 )
                 if operation == "completion":
-                    result.value = AIOutput.model_validate(result.value)
+                    result.value = output_schema.model_validate(result.value)
                 else:
                     result.value = P.vectors(result.value, len(texts))
                 for value in (result.input_tokens, result.output_tokens):
@@ -889,9 +940,19 @@ async def ai_worker(engine: Any, id_: UUID, tenant: UUID, actor: UUID, settings:
         await stage(conn, job, "validating_sources")
     runtime = Runtime(engine, id_, tenant, actor, settings, P.provider(settings), token)
     result, refs, code, limitations, retrieval = [], [], None, [], "none"
+    agent_output = None
     final_status = "succeeded"
     try:
-        if run["snapshot"]["operation"] == "index":
+        if run["snapshot"]["operation"] == "agents":
+            from ppm_api.agents import execute
+
+            agent_output, code = await execute(runtime, run)
+            if code or any(s["status"] != "supported" for s in agent_output["agents"]):
+                final_status = "partially_succeeded"
+            limitations.append(
+                "Specialists propose review candidates only; real model quality UNVERIFIED/BLOCKED"
+            )
+        elif run["snapshot"]["operation"] == "index":
             async with engine.begin() as conn:
                 p, current, _ = await runtime.state(conn)
                 request, _ = await index_chunks(
@@ -967,6 +1028,10 @@ async def ai_worker(engine: Any, id_: UUID, tenant: UUID, actor: UUID, settings:
             return True
         try:
             await validate_snapshot(p, result)
+            if agent_output is not None:
+                from ppm_api.agents import publish
+
+                await publish(p, current, agent_output)
         except (delivery.DomainError, P.ProviderError):
             result, code, final_status = [], "EVIDENCE_UNAVAILABLE", "failed"
         await settle(
