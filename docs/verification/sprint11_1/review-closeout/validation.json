@@ -1,18 +1,19 @@
 {
-  "code_commit": "40e3e9c8ac268d360295df7bc163f5929edeae79",
+  "code_commit": "880629da4ae273bf8745feaa03bcefadb222ab63",
   "base_commit": "72e0b8efb00d8e9d2dcd650ed1800caf1d5bdf05",
   "full_backend": {
-    "passed": 487,
+    "passed": 493,
     "failed": 0,
-    "seconds": 466.83,
+    "seconds": 474.52,
     "warnings": ["Inherited Starlette TestClient/httpx deprecation"],
     "database": "ppm_test",
     "migration_lifecycle": "passed",
     "alembic_drift": "passed"
   },
   "focused_scopes_overlap_full_backend": {
-    "benchmark_file": 50,
-    "new_database_regressions": 5
+    "benchmark_file": 53,
+    "new_database_regressions": 8,
+    "benchmark_acceptance_specialist_scope": 94
   },
   "static_checks": {
     "ruff": "passed",
@@ -24,7 +25,7 @@
     "frontend_format": "passed",
     "source_inventories": "passed",
     "preserved_source_hashes": 7,
-    "local_links_checked": 283,
+    "local_links_checked": 289,
     "missing_links": 0
   },
   "normal_state_read_only": {
@@ -35,17 +36,17 @@
     "qualified_profiles": 0,
     "ollama_processes": 0
   },
-  "real_provider_requests": 0,
-  "held_out_inference_requests": 0,
-  "independent_label_approval": false,
+  "real_provider_requests": "acceptance calibration in progress; exact retained counts reported separately",
+  "held_out_inference_requests": "bounded sequence in progress; source strategy frozen",
+  "independent_label_approval": true,
   "hosted_ci": "in_progress_at_local_receipt",
-  "coderabbit_review": "in_progress_at_local_receipt",
+  "coderabbit_review": "latest re-review rate-limited; not an approval",
   "followup": {
     "runtime_regressions": 8,
     "benchmark_file": 53,
     "benchmark_acceptance_specialist_scope": 94,
     "scopes_overlap": true,
-    "full_backend": "rerunning after final corpus/export fixes; previous 487-pass receipt above is historical",
+    "full_backend": "493 passed; migration lifecycle and schema drift passed",
     "intermediate_full_run": "intentionally stopped to replace the obsolete corpus/export snapshot; retained private log, not reported as a pass",
     "source_sha256": {
       "scripts/benchmark_agent_runtime.py": "d2acef0c9bceb9a3614a4be275f79b3247a302f6e513e07b38594bf749a94dfa",
@@ -54,6 +55,20 @@
       "services/api/ppm_api/model_adapters.py": "6395fa25780d6dffaae5a1fa8a3a289a775ebb7b4fbf85578a3d1d040b8e7271",
       "services/api/ppm_api/model_registry.py": "e3f8cf3a9a3b3476770de13621c59a772212d213f718be4037a6abf8430fd746",
       "tests/fixtures/agent_v2_cloud_quality.json": "c13f5ad5526df7d6ec2bb50c2a40952a30bead042ab6a0d4a454e47bfa39e6be"
-    }
-  }
+    },
+    "backend_log_sha256": "7a557bcfa4ea72df08e81b6c61eac936f975401b93e2ca757c9570255436f770"
+  },
+  "previous_full_backend": {
+    "code_commit": "40e3e9c8ac268d360295df7bc163f5929edeae79",
+    "passed": 487,
+    "failed": 0,
+    "seconds": 466.83,
+    "warnings": ["Inherited Starlette TestClient/httpx deprecation"],
+    "database": "ppm_test",
+    "migration_lifecycle": "passed",
+    "alembic_drift": "passed"
+  },
+  "label_review_kind": "independent_ai_only",
+  "human_approval": false,
+  "provider_accuracy_approved": false
 }

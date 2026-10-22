@@ -1,5 +1,21 @@
 # Sprint 11.1 implementation handoff
 
+## Current evaluation checkpoint
+
+Final backend/lifecycle/drift: **493 tests pass**, 474.52 seconds, one inherited
+Starlette warning. CodeRabbit's independent AI label re-audit passed all 108
+revised cases/54 held out and both hashes at `880629d`; the frozen approval record
+explicitly excludes human approval and measured accuracy. Bounded acceptance is
+running with the same frozen source strategy, one request/minute and twenty/day
+account caps, stopping each provider on invalid/unknown output or its cap. First
+four calibration calls cover all nine roles and pass hard checks. No prompt tuning,
+qualification or activation. Independent output review remains required.
+Latest CodeRabbit code re-review is rate-limited; hosted CI is in progress. Read
+the [current receipt](../../../verification/sprint11_1/review-closeout/README.md)
+and PR #5 status before continuing. Normal 0012, seven disabled profiles, $0 and
+21 older artifacts remain preserved; stop before Sprint 12. Earlier entries below
+retain their historical status.
+
 ## Independent AI review follow-up
 
 CodeRabbit code review passed docstring coverage at 92.35%. Verified follow-ups

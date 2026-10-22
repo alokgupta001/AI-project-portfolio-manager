@@ -1,0 +1,24 @@
+{
+  "review_type": "independent_ai_label_audit",
+  "reviewer": "coderabbitai[bot]",
+  "review_url": "https://github.com/alokgupta001/AI-project-portfolio-manager/pull/5#issuecomment-6353685644",
+  "reviewed_commit": "880629da4ae273bf8745feaa03bcefadb222ab63",
+  "reviewed_at": "2026-10-22T23:35:08Z",
+  "corpus_sha256": "c13f5ad5526df7d6ec2bb50c2a40952a30bead042ab6a0d4a454e47bfa39e6be",
+  "strategy_sha256": "f9c761cd0be72169a8cd47b424bca666327eebf04b491ffd5453e17a0691adf2",
+  "reviewed_cases": 108,
+  "reviewed_held_out_cases": 54,
+  "supported_labels": 54,
+  "abstention_labels": 54,
+  "remaining_ambiguous_cases": [],
+  "label_verdict": "pass_against_supplied_evidence_and_role_contracts",
+  "human_approval": false,
+  "provider_accuracy_measured_by_this_audit": false,
+  "historical_outputs_reviewed_by_this_audit": false,
+  "limitations": [
+    "Synthetic shared templates and contextual metrics remain.",
+    "Negative scenario families differ across calibration and held-out splits.",
+    "No external training or prompt contamination audit was performed.",
+    "This is neither PR approval nor measured provider accuracy."
+  ]
+}

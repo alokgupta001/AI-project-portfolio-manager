@@ -1,5 +1,14 @@
 # Sprint 11.1 implementation
 
+**Current evaluation checkpoint:** 493 full backend/lifecycle/drift tests pass.
+CodeRabbit independently AI-reviewed all 108 revised labels/54 held out and
+verified their hashes. Its label verdict is recorded as AI review, not human
+approval or model accuracy. The bounded, frozen-strategy measurement sequence is
+running; first four calibration calls cover all nine roles with hard checks
+passing. Output review and qualification remain pending. Latest code re-review is
+rate-limited; hosted CI is running. [Current receipt](../../../verification/sprint11_1/review-closeout/README.md).
+Earlier checkpoint text below retains its original status.
+
 **23 October review closeout:** PR #4 is merged after both hosted CI runs passed.
 The follow-up fixes four remaining verified CodeRabbit findings: stable local
 attempt roots, cancellation propagation after settlement, bounded context binding,

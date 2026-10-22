@@ -1,5 +1,20 @@
 # Latest technical handoff
 
+**Current — 23 October 2026, evaluation checkpoint:** final backend/lifecycle/drift
+passes **493 tests** (474.52 seconds), one inherited Starlette warning. CodeRabbit's
+independent labels-only AI audit passed all 108 revised cases/54 held out at
+`880629d`, with corpus and nine-source hashes verified. The frozen approval names
+the AI reviewer; it is not human approval, model accuracy or PR approval. A bounded
+acceptance sequence is running under the same frozen strategy and retained
+one/minute, twenty/day account caps. First four calibration calls cover all nine
+roles with hard checks passing; no prompt tuning during measurement. Stop each
+provider on its first invalid/unknown result or the existing cap. No profile
+activation. Latest CodeRabbit code re-review is rate-limited, not an approval;
+hosted CI remains in progress. [Evidence](../verification/sprint11_1/review-closeout/README.md).
+Normal 0012, seven disabled profiles, $0 and 21 older artifact changes are
+preserved. Output ratings/qualification remain open; stop before Sprint 12.
+Earlier entries retain their point-in-time status.
+
 **Current — independent AI review follow-up:** CodeRabbit code review passed
 docstring coverage at 92.35%. Verified follow-ups normalize source order in version
 3 roots, preserve unknown call status, correct two network/path docstrings, and

@@ -1,5 +1,13 @@
 # Independent cloud acceptance review
 
+**Current:** CodeRabbit's [labels-only re-audit passed](review-closeout/label-audit-pass.json)
+all 108 revised cases/54 held out, with both hashes verified. The actual
+[AI approval record](review-closeout/ai-label-approval.json) is frozen before
+inference; it is not human approval or a provider-accuracy verdict. The bounded
+measurement sequence is running with unchanged prompts. Independent output
+ratings and measured qualification are still required. Earlier packet labels are
+historical; use the current source corpus and fresh export for output review.
+
 Current follow-up: 23 October 2026. The user asked us to arrange the review.
 CodeRabbit independently audited all 108 labels and [declined approval](review-closeout/label-audit-round-1.json):
 18 ambiguous cases, duplicated governance evidence across splits, and a CRLF/LF

@@ -1,5 +1,29 @@
 # Sprint 11.1 review closeout — 23 October 2026
 
+## Current checkpoint
+
+The final full backend/lifecycle/drift run passes **493 tests** in 474.52 seconds,
+with one inherited Starlette warning. CodeRabbit independently [passed all 108
+revised labels](label-audit-pass.json), including 54 held-out cases, at the exact
+corpus/strategy hashes. The [frozen approval record](ai-label-approval.json) names
+the AI reviewer and explicitly excludes human approval and measured accuracy.
+The original empty template remains a template. Earlier failed and incomplete
+audits remain evidence, rather than approvals.
+
+A separately bounded acceptance sequence now uses that frozen strategy and
+retains every provider attempt. The first four calibration calls cover all nine
+roles and pass hard checks. Calibration precedes held-out inference; no prompt
+tuning occurs during this sequence. Existing one-request/minute and twenty/day
+account caps remain, with a maximum additional allocation of 36 calls/provider.
+Each provider stops on its first invalid/unknown result or its existing cap.
+Output review and measured qualification remain pending; profiles stay disabled.
+
+The latest CodeRabbit code re-review is rate-limited. Its successful check status
+does not mean the latest commit was reviewed. The first code review passed
+docstring coverage at 92.35%; all four subsequent findings have verified fixes and
+regressions. Latest hosted CI is still running. The [validation receipt](validation.json)
+binds the full backend result to `880629d`.
+
 ## Follow-up after independent AI review
 
 CodeRabbit's first code review passed docstring coverage at **92.35%** and found
