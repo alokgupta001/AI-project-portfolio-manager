@@ -1,0 +1,34 @@
+{
+  "schema_version": "cloud-batch-calibration-v1",
+  "provider": "groq",
+  "model": "openai/gpt-oss-20b",
+  "corpus_sha256": "f626c0b210daf73110cfc98d0aa6f7a974842bab0bf3e98f52e177e8ab516a24",
+  "policy_sha256": "143f5442bdd2294d8e95f0f023dd61726139b4a5be9aed7155f30437ec434f8e",
+  "selected_cases": [
+    "financial_05",
+    "schedule_05",
+    "resource_05"
+  ],
+  "prompt_sha256": "a87dbb4c9fabcbcae4106b3235a9de2afd596007fe4f92a42cb374e9ca92f937",
+  "request_sha256": "e515e6d30dbe9c7abd5c0198189a4f436b71e6ae5406ee98ef7047568f5357bb",
+  "max_output_tokens": 512,
+  "context_tokens": 8192,
+  "qualified_classes": [],
+  "profile_activated": false,
+  "weight_training": false,
+  "independent_semantic_review": "pending",
+  "attempts": [
+    {
+      "attempt_id": "2a483fac-6c70-4842-afb6-35398fc4833e",
+      "cases": [
+        "financial_05",
+        "schedule_05",
+        "resource_05"
+      ],
+      "request_sha256": "e515e6d30dbe9c7abd5c0198189a4f436b71e6ae5406ee98ef7047568f5357bb",
+      "native_sha256": "f507e6d2ef2a18efe54048d64f6141e1b4014f67dd9012dd88c7f0b949757070",
+      "code": "CONFIGURATION"
+    }
+  ],
+  "status": "stopped_on_failure"
+}

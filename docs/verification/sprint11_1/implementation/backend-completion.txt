@@ -1,0 +1,220 @@
+time="2026-10-17T15:17:32+05:30" level=warning msg="Found orphan containers (enterprise-ppm-pgadmin-1) for this project. If you removed or renamed this service in your compose file, you can run this command with the --remove-orphans flag to clean it up."
+ Container enterprise-ppm-test-run-5ef311f7f958 Creating 
+ Container enterprise-ppm-test-run-5ef311f7f958 Created 
+Running: /app/.venv/bin/python -m alembic upgrade head
+Running: /app/.venv/bin/python -m alembic downgrade 0006_command_center
+Running: /app/.venv/bin/python -m alembic upgrade head
+Running: /app/.venv/bin/python -m alembic downgrade base
+Running: /app/.venv/bin/python -m alembic upgrade head
+Running: /app/.venv/bin/python -m alembic upgrade head
+Running: /app/.venv/bin/python -m alembic check
+No new upgrade operations detected.
+Running: /app/.venv/bin/python -m pytest -q
+........................................................................ [ 16%]
+........................................................................ [ 33%]
+........................................................................ [ 50%]
+........................................................................ [ 67%]
+............................................................EEEEEE...... [ 84%]
+....................................................................     [100%]
+==================================== ERRORS ====================================
+____ ERROR at setup of test_default_is_dry_run_without_network_or_promotion ____
+
+tmp_path = PosixPath('/tmp/pytest-of-ppm/pytest-0/test_default_is_dry_run_withou0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7641e76b6ea0>
+
+>   ???
+
+C:\Users\alokg\OneDrive\Documents\Codex\enterprise-ppm\tests\test_groq_smoke.py:23: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/local/lib/python3.12/pathlib.py:1027: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('config/model-policy.example.json'), mode = 'r', buffering = -1
+encoding = 'locale', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed to by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return io.open(self, mode, buffering, encoding, errors, newline)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: 'config/model-policy.example.json'
+
+/usr/local/lib/python3.12/pathlib.py:1013: FileNotFoundError
+_ ERROR at setup of test_three_calls_are_durable_and_cannot_be_repeated_same_day _
+
+tmp_path = PosixPath('/tmp/pytest-of-ppm/pytest-0/test_three_calls_are_durable_a0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7641e772f1d0>
+
+>   ???
+
+C:\Users\alokg\OneDrive\Documents\Codex\enterprise-ppm\tests\test_groq_smoke.py:23: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/local/lib/python3.12/pathlib.py:1027: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('config/model-policy.example.json'), mode = 'r', buffering = -1
+encoding = 'locale', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed to by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return io.open(self, mode, buffering, encoding, errors, newline)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: 'config/model-policy.example.json'
+
+/usr/local/lib/python3.12/pathlib.py:1013: FileNotFoundError
+_ ERROR at setup of test_changed_key_and_changed_corpus_are_denied_before_http _
+
+tmp_path = PosixPath('/tmp/pytest-of-ppm/pytest-0/test_changed_key_and_changed_c0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7641e7a64170>
+
+>   ???
+
+C:\Users\alokg\OneDrive\Documents\Codex\enterprise-ppm\tests\test_groq_smoke.py:23: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/local/lib/python3.12/pathlib.py:1027: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('config/model-policy.example.json'), mode = 'r', buffering = -1
+encoding = 'locale', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed to by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return io.open(self, mode, buffering, encoding, errors, newline)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: 'config/model-policy.example.json'
+
+/usr/local/lib/python3.12/pathlib.py:1013: FileNotFoundError
+_______ ERROR at setup of test_ambiguous_failure_stops_and_blocks_replay _______
+
+tmp_path = PosixPath('/tmp/pytest-of-ppm/pytest-0/test_ambiguous_failure_stops_a0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7641e7b98530>
+
+>   ???
+
+C:\Users\alokg\OneDrive\Documents\Codex\enterprise-ppm\tests\test_groq_smoke.py:23: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/local/lib/python3.12/pathlib.py:1027: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('config/model-policy.example.json'), mode = 'r', buffering = -1
+encoding = 'locale', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed to by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return io.open(self, mode, buffering, encoding, errors, newline)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: 'config/model-policy.example.json'
+
+/usr/local/lib/python3.12/pathlib.py:1013: FileNotFoundError
+__________ ERROR at setup of test_cooldown_stops_subsequent_requests ___________
+
+tmp_path = PosixPath('/tmp/pytest-of-ppm/pytest-0/test_cooldown_stops_subsequent0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7641ed30ef60>
+
+>   ???
+
+C:\Users\alokg\OneDrive\Documents\Codex\enterprise-ppm\tests\test_groq_smoke.py:23: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/local/lib/python3.12/pathlib.py:1027: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('config/model-policy.example.json'), mode = 'r', buffering = -1
+encoding = 'locale', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed to by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return io.open(self, mode, buffering, encoding, errors, newline)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: 'config/model-policy.example.json'
+
+/usr/local/lib/python3.12/pathlib.py:1013: FileNotFoundError
+_ ERROR at setup of test_logical_section_attempt_limit_survives_a_new_invocation _
+
+tmp_path = PosixPath('/tmp/pytest-of-ppm/pytest-0/test_logical_section_attempt_l0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7641e7cf8980>
+
+>   ???
+
+C:\Users\alokg\OneDrive\Documents\Codex\enterprise-ppm\tests\test_groq_smoke.py:23: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/usr/local/lib/python3.12/pathlib.py:1027: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('config/model-policy.example.json'), mode = 'r', buffering = -1
+encoding = 'locale', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed to by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return io.open(self, mode, buffering, encoding, errors, newline)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: 'config/model-policy.example.json'
+
+/usr/local/lib/python3.12/pathlib.py:1013: FileNotFoundError
+=============================== warnings summary ===============================
+.venv/lib/python3.12/site-packages/fastapi/testclient.py:1
+  /app/.venv/lib/python3.12/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+ERROR tests/test_groq_smoke.py::test_default_is_dry_run_without_network_or_promotion
+ERROR tests/test_groq_smoke.py::test_three_calls_are_durable_and_cannot_be_repeated_same_day
+ERROR tests/test_groq_smoke.py::test_changed_key_and_changed_corpus_are_denied_before_http
+ERROR tests/test_groq_smoke.py::test_ambiguous_failure_stops_and_blocks_replay
+ERROR tests/test_groq_smoke.py::test_cooldown_stops_subsequent_requests - Fil...
+ERROR tests/test_groq_smoke.py::test_logical_section_attempt_limit_survives_a_new_invocation
+422 passed, 1 warning, 6 errors in 493.54s (0:08:13)
+Traceback (most recent call last):
+  File "/app/scripts/test_backend.py", line 28, in <module>
+    subprocess.run(command, check=True, env=env)
+  File "/usr/local/lib/python3.12/subprocess.py", line 571, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['/app/.venv/bin/python', '-m', 'pytest', '-q']' returned non-zero exit status 1.
+

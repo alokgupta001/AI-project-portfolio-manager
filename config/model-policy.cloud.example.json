@@ -1,0 +1,81 @@
+{
+  "schema_version": "model-policy-v1",
+  "profiles": [
+    {
+      "id": "groq-candidate",
+      "provider": "groq",
+      "model": "openai/gpt-oss-20b",
+      "enabled": false,
+      "billing_class": "verified_free",
+      "quota_scope": "groq:operator-account",
+      "credential_ref": "PPM_AI_GROQ_API_KEY",
+      "allowed_tenants": [],
+      "allowed_projects": [],
+      "qualified_task_classes": [],
+      "assigned_task_classes": [
+        "team_support_advice",
+        "portfolio_synthesis",
+        "executive_synthesis"
+      ],
+      "benchmark_only": true,
+      "context_tokens": 8192,
+      "max_output_tokens": 512,
+      "concurrency": 1,
+      "requests_per_minute": 1,
+      "requests_per_day": 20,
+      "tenant_requests_per_day": 5,
+      "tokens_per_minute": 8000
+    },
+    {
+      "id": "gemini-candidate",
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "enabled": false,
+      "billing_class": "verified_free",
+      "quota_scope": "gemini:operator-account",
+      "credential_ref": "PPM_AI_API_KEY",
+      "allowed_tenants": [],
+      "allowed_projects": [],
+      "qualified_task_classes": [],
+      "assigned_task_classes": [
+        "financial_interpretation",
+        "schedule_interpretation",
+        "resource_interpretation"
+      ],
+      "benchmark_only": true,
+      "context_tokens": 8192,
+      "max_output_tokens": 512,
+      "concurrency": 1,
+      "requests_per_minute": 1,
+      "requests_per_day": 20,
+      "tenant_requests_per_day": 5,
+      "tokens_per_minute": 8000
+    },
+    {
+      "id": "puter-candidate",
+      "provider": "puter",
+      "model": "gpt-4.1-mini-2025-04-14",
+      "enabled": false,
+      "billing_class": "verified_free",
+      "quota_scope": "puter:operator-account",
+      "credential_ref": "PPM_AI_PUTER_API_KEY",
+      "upstream_provider": "openai-completion",
+      "allowed_tenants": [],
+      "allowed_projects": [],
+      "qualified_task_classes": [],
+      "assigned_task_classes": [
+        "risk_extraction",
+        "governance_interpretation",
+        "agile_advice"
+      ],
+      "benchmark_only": true,
+      "context_tokens": 8192,
+      "max_output_tokens": 512,
+      "concurrency": 1,
+      "requests_per_minute": 1,
+      "requests_per_day": 20,
+      "tenant_requests_per_day": 5,
+      "tokens_per_minute": 8000
+    }
+  ]
+}

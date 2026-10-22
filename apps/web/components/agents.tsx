@@ -26,6 +26,9 @@ export function Agents({
   const [runs, setRuns] = useState<Summary[]>([]);
   const [selected, setSelected] = useState<Analysis | null>(null);
   const [definitions, setDefinitions] = useState<S["AgentDefinition"][]>([]);
+  const [mode, setMode] =
+    useState<NonNullable<S["AnalysisInput"]["analysis_mode"]>>("auto");
+  const [roles, setRoles] = useState<S["AgentDefinition"]["agent"][]>([]);
   const [project, setProject] = useState("");
   const [assessment, setAssessment] = useState("");
   const [assessments, setAssessments] = useState<S["AssessmentRecord"][]>([]);
@@ -39,6 +42,9 @@ export function Agents({
   const [busy, setBusy] = useState(false);
   const [offset, setOffset] = useState(0);
   const admin = account.role === "Admin";
+  const hybrid = definitions.some(
+    (d) => d.execution_policy === "hybrid_on_demand",
+  );
   const api = useCallback(
     async <T,>(
       path: string,
@@ -138,6 +144,17 @@ export function Agents({
         .then((x) => {
           if (live) {
             setSelected(x);
+            setRuns((old) =>
+              old.map((r) =>
+                r.run.id === x.run.id
+                  ? {
+                      ...r,
+                      run: { ...r.run, status: x.run.status },
+                      semantic_status: x.semantic_status,
+                    }
+                  : r,
+              ),
+            );
             setItem((old) =>
               old
                 ? ([...x.findings, ...x.suggestions].find(
@@ -236,6 +253,18 @@ export function Agents({
                 project_id: project,
                 version_ids: versions,
                 assessment_id: assessment || null,
+                ...(hybrid
+                  ? {
+                      runtime_version: "v2",
+                      analysis_mode: mode,
+                      requested_agents:
+                        mode === "all_specialists"
+                          ? null
+                          : roles.length
+                            ? roles
+                            : null,
+                    }
+                  : {}),
               });
               setSelected(result);
               setItem(null);
@@ -264,6 +293,61 @@ export function Agents({
               ))}
             </select>
           </Field>
+          {hybrid && (
+            <>
+              <Field label="Analysis goal">
+                <select
+                  value={mode}
+                  onChange={(e) => setMode(e.target.value as typeof mode)}
+                >
+                  <option value="auto">Automatic priorities</option>
+                  <option value="metrics">Metrics only · no model calls</option>
+                  <option value="domain">
+                    Selected specialist interpretation
+                  </option>
+                  <option value="assessment">Assessment rubric review</option>
+                  <option value="portfolio">Portfolio synthesis</option>
+                  <option value="executive">Executive synthesis</option>
+                  <option value="all_specialists">
+                    All nine specialists · up to four calls
+                  </option>
+                </select>
+              </Field>
+              <fieldset>
+                <legend>
+                  Requested specialists (selection order sets priority)
+                </legend>
+                <p>
+                  {mode === "all_specialists"
+                    ? "All nine roles are requested in four bounded batches. Missing evidence, provider limits or a failed batch can leave partial coverage. Assessment answers require separate scoped analysis."
+                    : "Leave empty for automatic selection. Up to three initial AI sections fit in one run; other requested interpretations remain deferred."}{" "}
+                  Metrics and AI coverage are reported separately.
+                </p>
+                {definitions.map((d) => (
+                  <label key={d.agent}>
+                    <input
+                      type="checkbox"
+                      disabled={mode === "all_specialists"}
+                      checked={
+                        mode === "all_specialists" || roles.includes(d.agent)
+                      }
+                      onChange={(e) =>
+                        setRoles((old) =>
+                          e.target.checked
+                            ? [...old, d.agent]
+                            : old.filter((r) => r !== d.agent),
+                        )
+                      }
+                    />{" "}
+                    {d.agent}
+                  </label>
+                ))}
+                {mode !== "all_specialists" && roles.length > 0 && (
+                  <p>Priority: {roles.join(" → ")}</p>
+                )}
+              </fieldset>
+            </>
+          )}
           <fieldset>
             <legend>Ready document evidence (up to five)</legend>
             <p>
@@ -294,8 +378,26 @@ export function Agents({
               ) : null;
             })}
           </fieldset>
-          <Button type="submit" disabled={busy || !project}>
-            Run nine specialists
+          <Button
+            type="submit"
+            disabled={
+              busy ||
+              !project ||
+              (hybrid &&
+                ((mode === "domain" && roles.length === 0) ||
+                  (mode === "assessment" && !assessment) ||
+                  (mode === "assessment" &&
+                    roles.length > 0 &&
+                    !roles.includes("governance")) ||
+                  (mode === "portfolio" &&
+                    roles.length > 0 &&
+                    !roles.includes("pmo")) ||
+                  (mode === "executive" &&
+                    roles.length > 0 &&
+                    !roles.includes("executive"))))
+            }
+          >
+            {hybrid ? "Run scoped analysis" : "Run nine specialists"}
           </Button>
           <p>
             Existing provider settings, request limits, budget, retries and
@@ -378,6 +480,82 @@ export function Agents({
             Execution: {selected.run.status} · Semantic result:{" "}
             {selected.semantic_status}
           </p>
+          {selected.blocked_reason && (
+            <p>
+              <strong>{selected.blocked_reason}</strong>
+            </p>
+          )}
+          {selected.runtime_version === "v2" && (
+            <>
+              <h3>Baseline and AI coverage</h3>
+              <div
+                className="table-scroll"
+                tabIndex={0}
+                role="region"
+                aria-label="Capability coverage table"
+              >
+                <table>
+                  <caption>
+                    Goal: {selected.analysis_mode}. Zero required items means
+                    not applicable.
+                  </caption>
+                  <thead>
+                    <tr>
+                      <th>Specialist</th>
+                      <th>Baseline</th>
+                      <th>AI interpretation</th>
+                      <th>AI items covered / required</th>
+                      <th>Deferred items</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {(selected.capability_details ?? []).map((d) => (
+                      <tr key={d.agent}>
+                        <th>{d.agent}</th>
+                        <td>
+                          {d.base_outcome} · {d.base_covered_ids?.length ?? 0}/
+                          {d.base_required_ids?.length ?? 0}
+                        </td>
+                        <td>
+                          {d.semantic_outcome}
+                          {d.code ? ` · ${d.code}` : ""}
+                        </td>
+                        <td>
+                          {d.semantic_required_ids?.length
+                            ? `${d.semantic_covered_ids?.length ?? 0}/${d.semantic_required_ids.length}`
+                            : "Not applicable"}
+                        </td>
+                        <td>{d.semantic_deferred_ids?.length || "None"}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+              <p>
+                Hard checks validate structure, numbers and citation identity.
+                AI interpretations remain provisional and require human
+                judgment.
+              </p>
+              <details>
+                <summary>Model attempts and usage</summary>
+                {!selected.route_summary?.length && (
+                  <p>No model calls were admitted.</p>
+                )}
+                <ul>
+                  {(selected.route_summary ?? []).map((r, i) => (
+                    <li key={i}>
+                      {String(r.provider_id)} · {String(r.model_id)} ·{" "}
+                      {String(r.finish_category ?? "unknown")} ·{" "}
+                      {String(r.latency_ms)} ms · input{" "}
+                      {String(r.input_tokens ?? "unknown")} / output{" "}
+                      {String(r.output_tokens ?? "unknown")} tokens
+                      {r.code ? ` · ${String(r.code)}` : ""}
+                    </li>
+                  ))}
+                </ul>
+              </details>
+            </>
+          )}
           <p>
             Provider: {selected.run.provider} · Model:{" "}
             {selected.run.model ?? "unavailable"} · Charge USD{" "}
@@ -421,7 +599,14 @@ export function Agents({
                   <tr key={a.agent}>
                     <th>{a.agent}</th>
                     <td>{a.status}</td>
-                    <td>{a.code ?? "Supported by cited sources"}</td>
+                    <td>
+                      {a.code ??
+                        (a.status === "supported"
+                          ? "Supported by cited sources"
+                          : a.status === "fallback"
+                            ? "Canonical fallback; no AI interpretation"
+                            : "No supported interpretation")}
+                    </td>
                   </tr>
                 ))}
               </tbody>
@@ -492,7 +677,16 @@ export function Agents({
                       {f.agents.join(", ")}
                     </td>
                     <td>{f.severity}</td>
-                    <td>{f.confidence} (0–1)</td>
+                    <td>
+                      {f.confidence === null
+                        ? "Unknown"
+                        : `${f.confidence} (0–1)`}
+                      {f.epistemic && (
+                        <p>
+                          {f.epistemic} · {f.semantic_status}
+                        </p>
+                      )}
+                    </td>
                     <td>
                       {f.discrepancy
                         ? "Conflicting evidence / reported health"

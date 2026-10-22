@@ -1,5 +1,7 @@
 # Planning
 
+17 October 2026 — [Sprint 11.1 AI architecture package](sprint-11.1/README.md): discovery, nine hybrid specialist contracts with on-demand AI reasoning, local/hybrid routing, goal-aware execution and validation/recovery. The user subsequently authorized the [implementation checkpoint](../03-sprints/active/sprint-11.1/README.md); current [handoff](../03-sprints/active/sprint-11.1/HANDOFF.md) supersedes the original planning-only start point. Model qualification and normal rollout remain open.
+
 Sprint 11 local implementation is recorded in [its hub](../03-sprints/completed/sprint-11/README.md) and [test report](../04-testing/sprint-based/sprint-11/TESTING_REPORT.md). Real-provider semantic quality remains UNVERIFIED/BLOCKED. The roadmap retains future requirements and original thresholds. Stop before Sprint 12.
 
 ## Historical checkpoints before Sprint 11

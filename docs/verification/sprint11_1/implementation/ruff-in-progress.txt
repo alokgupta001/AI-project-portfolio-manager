@@ -1,0 +1,494 @@
+E501 Line too long (101 > 100)
+ --> services\api\ppm_api\agent_recovery.py:6:101
+  |
+6 | def recovery(error: ModelFailure, section_attempts: int, run_attempts: int, remaining: float) -> str:
+  |                                                                                                     ^
+7 |     if section_attempts >= 2 or run_attempts >= 4 or remaining < 27:
+8 |         return "stop"
+  |
+
+E501 Line too long (109 > 100)
+  --> services\api\ppm_api\agent_runtime.py:69:101
+   |
+67 |         await conn.execute(T.sections.insert().values(
+68 |             id=uuid5(task["id"], "result"), organization_id=runtime.tenant, run_id=run["id"],
+69 |             task_id=task["id"], section_id=task["section_id"], logical_section_id=task["logical_section_id"],
+   |                                                                                                     ^^^^^^^^^
+70 |             result=result, validation=result.get("validation", {"hard_checks":"passed"}),
+71 |             content_sha256=digest(result), schema_version="capability-result-v2", created_at=now(),
+   |
+
+E501 Line too long (117 > 100)
+  --> services\api\ppm_api\agent_runtime.py:85:101
+   |
+83 |     findings = E.aggregate(items)
+84 |     for finding in findings:
+85 |         finding.update(epistemic="deterministic", semantic_status="not_assessed", basis=[], predicate="risk_present")
+   |                                                                                                     ^^^^^^^^^^^^^^^^^
+86 |     own = [s for s in snapshot["sources"] if agent in s["permitted_agents"] and s["source"] in current]
+87 |     return dict(findings=findings, matches=[],
+   |
+
+E501 Line too long (103 > 100)
+  --> services\api\ppm_api\agent_runtime.py:86:101
+   |
+84 |     for finding in findings:
+85 |         finding.update(epistemic="deterministic", semantic_status="not_assessed", basis=[], predicate="risk_present")
+86 |     own = [s for s in snapshot["sources"] if agent in s["permitted_agents"] and s["source"] in current]
+   |                                                                                                     ^^^
+87 |     return dict(findings=findings, matches=[],
+88 |                 base_covered_ids=[s["source"] for s in own],
+   |
+
+E501 Line too long (106 > 100)
+   --> services\api\ppm_api\agent_runtime.py:103:101
+    |
+101 |                 await conn.execute(J.jobs.update().where(J.jobs.c.id == runtime.job_id,
+102 |                     J.jobs.c.lease_token == runtime.token).values(
+103 |                         heartbeat_at=now(), lease_until=min(now()+timedelta(seconds=30),run["deadline"])))
+    |                                                                                                     ^^^^^^
+
+E501 Line too long (113 > 100)
+   --> services\api\ppm_api\agent_runtime.py:113:101
+    |
+111 |         async with runtime.engine.begin() as conn:
+112 |             _, run, _ = await runtime.state(conn)
+113 |             rows = (await conn.execute(sa.select(A.calls).where(A.calls.c.run_id == run["id"]))).mappings().all()
+    |                                                                                                     ^^^^^^^^^^^^^
+114 |         options, reasons = candidates(policy, RouteRequirements(
+115 |             runtime.tenant, run["project_id"], spec.task_class,
+    |
+
+E501 Line too long (117 > 100)
+   --> services\api\ppm_api\agent_runtime.py:116:101
+    |
+114 |         options, reasons = candidates(policy, RouteRequirements(
+115 |             runtime.tenant, run["project_id"], spec.task_class,
+116 |             context["input_tokens"]+len(PROMPT.encode()), categories=tuple(context["categories"])), runtime.settings)
+    |                                                                                                     ^^^^^^^^^^^^^^^^^
+117 |         options = [p for p in options if p.id not in excluded]
+118 |         if not options:
+    |
+
+E501 Line too long (105 > 100)
+   --> services\api\ppm_api\agent_runtime.py:119:101
+    |
+117 |         options = [p for p in options if p.id not in excluded]
+118 |         if not options:
+119 |             raise ModelFailure("CONTEXT_LIMIT" if "CONTEXT_LIMIT" in reasons.values() else "UNAVAILABLE")
+    |                                                                                                     ^^^^^
+120 |         admitted = None
+121 |         for profile in options:
+    |
+
+E501 Line too long (127 > 100)
+   --> services\api\ppm_api\agent_runtime.py:127:101
+    |
+125 |                 _, run, _ = await runtime.state(conn)
+126 |                 admission = await conn.scalar(sa.text(
+127 |                     "SELECT public.ppm_model_admit(:run,:task,:scope,:model,:policy,:lease,:attempt,:input,:output,:timeout)"),
+    |                                                                                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+128 |                     dict(run=run["id"], task=task["id"], scope=profile.quota_scope, model=profile.model,
+129 |                          policy=policy.policy_hash, lease=runtime.token, attempt=aid,
+    |
+
+E501 Line too long (104 > 100)
+   --> services\api\ppm_api\agent_runtime.py:128:101
+    |
+126 |                 admission = await conn.scalar(sa.text(
+127 |                     "SELECT public.ppm_model_admit(:run,:task,:scope,:model,:policy,:lease,:attempt,:input,:output,:timeout)"),
+128 |                     dict(run=run["id"], task=task["id"], scope=profile.quota_scope, model=profile.model,
+    |                                                                                                     ^^^^
+129 |                          policy=policy.policy_hash, lease=runtime.token, attempt=aid,
+130 |                          input=context["input_tokens"]+len(PROMPT.encode()), output=512, timeout=timeout))
+    |
+
+E501 Line too long (106 > 100)
+   --> services\api\ppm_api\agent_runtime.py:130:101
+    |
+128 |                     dict(run=run["id"], task=task["id"], scope=profile.quota_scope, model=profile.model,
+129 |                          policy=policy.policy_hash, lease=runtime.token, attempt=aid,
+130 |                          input=context["input_tokens"]+len(PROMPT.encode()), output=512, timeout=timeout))
+    |                                                                                                     ^^^^^^
+131 |                 if "code" not in admission:
+132 |                     admitted = (profile,aid,run,timeout)
+    |
+
+E501 Line too long (114 > 100)
+   --> services\api\ppm_api\agent_runtime.py:149:101
+    |
+147 |             ))
+148 |             if response.completion != "complete":
+149 |                 raise ModelFailure("TRUNCATED" if response.completion == "incomplete" else "REFUSED", "completed")
+    |                                                                                                     ^^^^^^^^^^^^^^
+150 |             output = SectionOutput.model_validate_json(response.text)
+151 |             result = validate_section(node, context, output)
+    |
+
+E501 Line too long (119 > 100)
+   --> services\api\ppm_api\agent_runtime.py:165:101
+    |
+163 |             await worker_context(conn, runtime.job_id, runtime.tenant, runtime.actor)
+164 |             usage = response.usage if response else None
+165 |             category = "unknown" if failure and failure.certainty == "unknown" else "failed" if failure else "complete"
+    |                                                                                                     ^^^^^^^^^^^^^^^^^^^
+166 |             await conn.execute(sa.text("SELECT public.ppm_model_settle(:id,:category,:code,:i,:o)"),
+167 |                 dict(id=aid, category=category, code=failure.code if failure else None,
+    |
+
+E501 Line too long (131 > 100)
+   --> services\api\ppm_api\agent_runtime.py:169:101
+    |
+167 |                 dict(id=aid, category=category, code=failure.code if failure else None,
+168 |                      i=usage.input_tokens if usage else None,
+169 |                      o=(usage.output_tokens+(usage.reasoning_tokens or 0)) if usage and usage.output_tokens is not None else None))
+    |                                                                                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+170 |             await conn.execute(A.calls.update().where(A.calls.c.id == aid).values(
+171 |                 status="failed" if failure else "succeeded", code=failure.code if failure else None,
+    |
+
+E501 Line too long (116 > 100)
+   --> services\api\ppm_api\agent_runtime.py:176:101
+    |
+174 |                 output_tokens=usage.output_tokens if usage else None,
+175 |                 reasoning_tokens=usage.reasoning_tokens if usage else None,
+176 |                 usage_source=usage.source if usage else "unknown", send_state="returned" if response else "unknown",
+    |                                                                                                     ^^^^^^^^^^^^^^^^
+177 |                 native_reason=response.native_finish_reason if response else None,
+178 |                 latency_ms=response.latency_ms if response else 0,
+    |
+
+E501 Line too long (101 > 100)
+   --> services\api\ppm_api\agent_runtime.py:214:101
+    |
+212 |                 p, _, _ = await runtime.state(conn)
+213 |                 task = dict((await conn.execute(sa.select(T.tasks).where(
+214 |                     T.tasks.c.run_id==run["id"],T.tasks.c.task_key==node["key"])) ).mappings().one())
+    |                                                                                                     ^
+215 |                 stored = list((await conn.execute(sa.select(T.sections).where(T.sections.c.run_id==run["id"]))).mappings())
+216 |                 live = await current_sources(p,analysis,run)
+    |
+
+E501 Line too long (123 > 100)
+   --> services\api\ppm_api\agent_runtime.py:215:101
+    |
+213 |                 task = dict((await conn.execute(sa.select(T.tasks).where(
+214 |                     T.tasks.c.run_id==run["id"],T.tasks.c.task_key==node["key"])) ).mappings().one())
+215 |                 stored = list((await conn.execute(sa.select(T.sections).where(T.sections.c.run_id==run["id"]))).mappings())
+    |                                                                                                     ^^^^^^^^^^^^^^^^^^^^^^^
+216 |                 live = await current_sources(p,analysis,run)
+217 |             if task["state"] in TERMINAL:
+    |
+
+E501 Line too long (150 > 100)
+   --> services\api\ppm_api\agent_runtime.py:227:101
+    |
+225 | ….calls.c.status=="unknown"))).mappings().all()
+226 | …
+227 | …ECT public.ppm_model_settle(:id,'unknown','OUTCOME_UNKNOWN',NULL,NULL)"),{"id":call["id"]})
+    |                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+228 | …unknown")
+229 | …):
+    |
+
+E501 Line too long (103 > 100)
+   --> services\api\ppm_api\agent_runtime.py:238:101
+    |
+236 |                     context = pack(snapshot,node,live,prior)
+237 |                     if task["bound_at"] is None:
+238 |                         task = await task_update(runtime,task["id"], resolved_context_manifest=context,
+    |                                                                                                     ^^^
+239 |                             resolved_input_hash=digest(context),bound_at=now())
+240 |                     elif task["resolved_input_hash"] != digest(context):
+    |
+
+E501 Line too long (119 > 100)
+   --> services\api\ppm_api\agent_runtime.py:243:101
+    |
+241 |                         raise ModelFailure("AUTHORITY_REVOKED")
+242 |                     if task["candidate_payload"] is not None:
+243 |                         result = validate_section(node,context,SectionOutput.model_validate(task["candidate_payload"]))
+    |                                                                                                     ^^^^^^^^^^^^^^^^^^^
+244 |                     else:
+245 |                         result = await complete_task(runtime,task,node,context,policy)
+    |
+
+E501 Line too long (124 > 100)
+   --> services\api\ppm_api\agent_runtime.py:250:101
+    |
+248 |                 async with runtime.engine.begin() as conn:
+249 |                     await runtime.state(conn)
+250 |                     actual = dict((await conn.execute(sa.select(T.tasks).where(T.tasks.c.id==task["id"]))).mappings().one())
+    |                                                                                                     ^^^^^^^^^^^^^^^^^^^^^^^^
+251 |                 if actual["state"] not in TERMINAL:
+252 |                     await task_update(runtime,task["id"],state="BLOCKED",diagnostic=exc.code)
+    |
+
+E501 Line too long (119 > 100)
+   --> services\api\ppm_api\agent_runtime.py:255:101
+    |
+253 |         async with runtime.engine.begin() as conn:
+254 |             p, _, _ = await runtime.state(conn)
+255 |             stored = list((await conn.execute(sa.select(T.sections).where(T.sections.c.run_id==run["id"]))).mappings())
+    |                                                                                                     ^^^^^^^^^^^^^^^^^^^
+256 |             tasks = list((await conn.execute(sa.select(T.tasks).where(T.tasks.c.run_id==run["id"]))).mappings())
+257 |             current = await current_sources(p,analysis,run)
+    |
+
+E501 Line too long (112 > 100)
+   --> services\api\ppm_api\agent_runtime.py:256:101
+    |
+254 |             p, _, _ = await runtime.state(conn)
+255 |             stored = list((await conn.execute(sa.select(T.sections).where(T.sections.c.run_id==run["id"]))).mappings())
+256 |             tasks = list((await conn.execute(sa.select(T.tasks).where(T.tasks.c.run_id==run["id"]))).mappings())
+    |                                                                                                     ^^^^^^^^^^^^
+257 |             current = await current_sources(p,analysis,run)
+258 |         return assemble(snapshot,stored,tasks,current), None
+    |
+
+E501 Line too long (115 > 100)
+   --> services\api\ppm_api\agent_runtime.py:292:101
+    |
+290 |         detail.update(base_outcome=base.get("outcome","insufficient_evidence"),
+291 |                       base_covered_ids=base.get("base_covered_ids",[]),base_required_ids=base.get("base_covered_ids",[]),
+292 |                       semantic_covered_ids=covered,semantic_deferred_ids=[i for i in required if i not in covered],
+    |                                                                                                     ^^^^^^^^^^^^^^^
+293 |                       execution_method="hybrid" if covered else "deterministic")
+294 |         if required:
+    |
+
+E501 Line too long (123 > 100)
+   --> services\api\ppm_api\agent_runtime.py:295:101
+    |
+293 |                       execution_method="hybrid" if covered else "deterministic")
+294 |         if required:
+295 |             failed = next((t for t in tasks if t["agent"]==agent and t["kind"]=="semantic" and t["state"]=="BLOCKED"),None)
+    |                                                                                                     ^^^^^^^^^^^^^^^^^^^^^^^
+296 |             detail["semantic_outcome"] = "completed" if set(required)<=set(covered) else "unavailable" if failed else "deferred"
+297 |             detail["code"] = failed["diagnostic"] if failed else None
+    |
+
+E501 Line too long (128 > 100)
+   --> services\api\ppm_api\agent_runtime.py:296:101
+    |
+294 |         if required:
+295 |             failed = next((t for t in tasks if t["agent"]==agent and t["kind"]=="semantic" and t["state"]=="BLOCKED"),None)
+296 |             detail["semantic_outcome"] = "completed" if set(required)<=set(covered) else "unavailable" if failed else "deferred"
+    |                                                                                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+297 |             detail["code"] = failed["diagnostic"] if failed else None
+298 |         details.append(CapabilityDetail.model_validate(detail).model_dump(mode="json"))
+    |
+
+E501 Line too long (109 > 100)
+   --> services\api\ppm_api\agent_runtime.py:300:101
+    |
+298 |         details.append(CapabilityDetail.model_validate(detail).model_dump(mode="json"))
+299 |         states.append(dict(agent=agent,status="supported" if detail["semantic_outcome"]=="completed"
+300 |                            else "fallback" if any(agent in f["agents"] for f in findings) else "unavailable",
+    |                                                                                                     ^^^^^^^^^
+301 |                            code=detail.get("code")))
+302 |     partial = any(d["semantic_required_ids"] and d["semantic_outcome"]!="completed" for d in details)
+    |
+
+E501 Line too long (101 > 100)
+   --> services\api\ppm_api\agent_runtime.py:302:101
+    |
+300 |                            else "fallback" if any(agent in f["agents"] for f in findings) else "unavailable",
+301 |                            code=detail.get("code")))
+302 |     partial = any(d["semantic_required_ids"] and d["semantic_outcome"]!="completed" for d in details)
+    |                                                                                                     ^
+303 |     return dict(agents=states,findings=findings,suggestions=E.semantic_suggestions(snapshot,matches,current),
+304 |                 semantic_status="hybrid_partial" if partial else "hybrid_complete",
+    |
+
+E501 Line too long (109 > 100)
+   --> services\api\ppm_api\agent_runtime.py:303:101
+    |
+301 |                            code=detail.get("code")))
+302 |     partial = any(d["semantic_required_ids"] and d["semantic_outcome"]!="completed" for d in details)
+303 |     return dict(agents=states,findings=findings,suggestions=E.semantic_suggestions(snapshot,matches,current),
+    |                                                                                                     ^^^^^^^^^
+304 |                 semantic_status="hybrid_partial" if partial else "hybrid_complete",
+305 |                 runtime_version="v2",analysis_mode=plan["mode"],capability_details=details,
+    |
+
+E501 Line too long (134 > 100)
+   --> services\api\ppm_api\agent_runtime.py:308:101
+    |
+306 |                 completion_status="partially_succeeded" if partial else "succeeded",
+307 |                 validation_summary={"hard_checks":"passed","semantic_quality":"UNVERIFIED/BLOCKED"},
+308 |                 task_summary=[{k:t[k] for k in ("id","task_key","agent","kind","state","diagnostic","attempt_count")} for t in tasks])
+    |                                                                                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+E501 Line too long (119 > 100)
+  --> services\api\ppm_api\agent_validation.py:52:101
+   |
+51 |     for finding in output.findings:
+52 |         if finding.subject not in context["subjects"] or finding.predicate not in PREDICATES.get(node["agent"], set()):
+   |                                                                                                     ^^^^^^^^^^^^^^^^^^^
+53 |             raise ModelFailure("INVALID_OUTPUT", "completed")
+54 |         value = item(finding.claim, finding.advice, finding.spans, kind=finding.kind,
+   |
+
+E501 Line too long (102 > 100)
+  --> services\api\ppm_api\agent_validation.py:67:101
+   |
+65 |         seen.add(match.question)
+66 |         q = question["rubric"]
+67 |         levels = [0, 1] if q["answer_type"] == "boolean" else [v["level"] for v in q["rubric_levels"]]
+   |                                                                                                     ^^
+68 |         refs = spans(match.spans)
+69 |         if match.level not in levels or not any(s["source"] == "answer:"+question["id"] for s in refs):
+   |
+
+E501 Line too long (103 > 100)
+  --> services\api\ppm_api\agent_validation.py:69:101
+   |
+67 |         levels = [0, 1] if q["answer_type"] == "boolean" else [v["level"] for v in q["rubric_levels"]]
+68 |         refs = spans(match.spans)
+69 |         if match.level not in levels or not any(s["source"] == "answer:"+question["id"] for s in refs):
+   |                                                                                                     ^^^
+70 |             raise ModelFailure("INVALID_OUTPUT", "completed")
+71 |         matches.append(dict(question_id=question["id"], level=match.level, spans=refs, confidence="0"))
+   |
+
+E501 Line too long (103 > 100)
+  --> services\api\ppm_api\agent_validation.py:71:101
+   |
+69 |         if match.level not in levels or not any(s["source"] == "answer:"+question["id"] for s in refs):
+70 |             raise ModelFailure("INVALID_OUTPUT", "completed")
+71 |         matches.append(dict(question_id=question["id"], level=match.level, spans=refs, confidence="0"))
+   |                                                                                                     ^^^
+72 |     for narrative in output.narrative:
+73 |         if any(key not in context["basis"] for key in narrative.basis):
+   |
+
+E501 Line too long (110 > 100)
+  --> services\api\ppm_api\agent_validation.py:80:101
+   |
+78 |         if not all(s["source"] in allowed_sources for s in refs):
+79 |             raise ModelFailure("INVALID_OUTPUT", "completed")
+80 |         value = item(narrative.claim, narrative.advice, narrative.spans, kind=bases[0].get("kind", "blocker"),
+   |                                                                                                     ^^^^^^^^^^
+81 |                      signal="uncertain", severity=bases[0].get("severity", "low"),
+82 |                      epistemic=narrative.epistemic, predicate="practice_gap",
+   |
+
+E501 Line too long (106 > 100)
+  --> services\api\ppm_api\agent_validation.py:89:101
+   |
+87 |     covered = set(output.covered) & required
+88 |     if output.outcome == "supported":
+89 |         cited = {ref.e for f in [*output.findings, *output.matches, *output.narrative] for ref in f.spans}
+   |                                                                                                     ^^^^^^
+90 |         if output.mode == "findings" and not covered <= cited:
+91 |             raise ModelFailure("INVALID_OUTPUT", "completed")
+   |
+
+E501 Line too long (104 > 100)
+  --> services\api\ppm_api\agent_validation.py:94:101
+   |
+92 |         if output.mode == "rubric" and not covered <= seen:
+93 |             raise ModelFailure("INVALID_OUTPUT", "completed")
+94 |         if output.mode == "synthesis" and not covered <= {b for n in output.narrative for b in n.basis}:
+   |                                                                                                     ^^^^
+95 |             raise ModelFailure("INVALID_OUTPUT", "completed")
+96 |     complete = bool(required) and covered == required and not output.gaps
+   |
+
+E501 Line too long (110 > 100)
+   --> services\api\ppm_api\agent_validation.py:102:101
+    |
+100 |                                 hard_checks="passed", semantic_status="unreviewed",
+101 |                                 required_aliases=sorted(required), covered_aliases=sorted(covered),
+102 |                                 limitations=["Citations prove identity; interpretation remains provisional"]),
+    |                                                                                                     ^^^^^^^^^^
+103 |                 outcome=output.outcome)
+    |
+
+E501 Line too long (105 > 100)
+   --> services\api\ppm_api\agent_validation.py:121:101
+    |
+119 |             and {s["source"] for s in item["spans"]} & {s["source"] for s in other["spans"]}]
+120 |         item["discrepancy"] |= bool(item["conflicts"])
+121 |     return sorted(merged.values(), key=lambda v: ({"high":0,"medium":1,"low":2}[v["severity"]],v["key"]))
+    |                                                                                                     ^^^^^
+
+E501 Line too long (132 > 100)
+   --> services\api\ppm_api\agents.py:285:101
+    |
+283 |         from ppm_api.model_contracts import SectionOutput
+284 |
+285 |         if body.question_ids and (not framework or not {str(q) for q in body.question_ids} <= set(assessment.questions(framework))):
+    |                                                                                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+286 |             delivery.fail(422, "Choose published assessment questions")
+287 |         snapshot.update(prompt_version="hybrid-specialists-v2", rule_version="hybrid-support-v2",
+    |
+
+E501 Line too long (121 > 100)
+   --> services\api\ppm_api\agents.py:395:101
+    |
+393 |         from ppm_api import agent_task_tables as tasks
+394 |         from ppm_api.agent_runtime import assemble
+395 |         sections = list((await p.conn.execute(sa.select(tasks.sections).where(tasks.sections.c.run_id==id_))).mappings())
+    |                                                                                                     ^^^^^^^^^^^^^^^^^^^^^
+396 |         task_rows = list((await p.conn.execute(sa.select(tasks.tasks).where(tasks.tasks.c.run_id==id_))).mappings())
+397 |         output = assemble(row["snapshot"],sections,task_rows,current)
+    |
+
+E501 Line too long (116 > 100)
+   --> services\api\ppm_api\agents.py:396:101
+    |
+394 |         from ppm_api.agent_runtime import assemble
+395 |         sections = list((await p.conn.execute(sa.select(tasks.sections).where(tasks.sections.c.run_id==id_))).mappings())
+396 |         task_rows = list((await p.conn.execute(sa.select(tasks.tasks).where(tasks.tasks.c.run_id==id_))).mappings())
+    |                                                                                                     ^^^^^^^^^^^^^^^^
+397 |         output = assemble(row["snapshot"],sections,task_rows,current)
+398 |     history = [
+    |
+
+E501 Line too long (141 > 100)
+   --> services\api\ppm_api\agents.py:449:101
+    |
+447 | …] != "supported"]
+448 | …
+449 | …lysis_mode","capability_details","task_summary","validation_summary") if k in output},
+    |                                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+450 | …f "executive" in f["agents"]][:20],
+451 | …
+    |
+
+E501 Line too long (128 > 100)
+   --> services\api\ppm_api\agents.py:594:101
+    |
+592 |     row = await get_analysis(p, run["id"])
+593 |     live = await current_sources(p, row, run)
+594 |     if output.get("runtime_version") != "v2" and any(s["source"] not in live for s in row["snapshot"]["sources"] if s["fresh"]):
+    |                                                                                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+595 |         raise ProviderError("EVIDENCE_CHANGED")
+596 |     await p.conn.execute(
+    |
+
+E501 Line too long (153 > 100)
+   --> services\api\ppm_api\ai.py:359:101
+    |
+357 | …
+358 | …
+359 | …napshot"].get("assessment_id") != (str(body.assessment_id) if body.assessment_id else None):
+    |                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+360 | …
+361 | …
+    |
+
+E501 Line too long (113 > 100)
+   --> services\api\ppm_api\ai.py:398:101
+    |
+396 |         from ppm_api.model_registry import load_policy
+397 |         versions.update(runtime_version="v2", graph_version="specialist-dag-v2",
+398 |                         schema_version="capability-result-v2", model_policy_hash=load_policy(config).policy_hash,
+    |                                                                                                     ^^^^^^^^^^^^^
+399 |                         execution_mode=config.ai_execution_mode, provider="hybrid",call_cap_usd="0")
+400 |     run = dict(
+    |
+
+Found 50 errors (4 fixed, 46 remaining).

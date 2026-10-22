@@ -1,0 +1,14 @@
+# Test-only overlay used by the isolated browser runner. No model or cloud access.
+services:
+  api:
+    environment:
+      PPM_AI_RUNTIME_V2_ENABLED: "true"
+      PPM_AI_OLLAMA_ENABLED: "false"
+      PPM_AI_CLOUD_ENABLED: "false"
+      PPM_AI_EXECUTION_MODE: local_only
+  worker:
+    environment:
+      PPM_AI_RUNTIME_V2_ENABLED: "true"
+      PPM_AI_OLLAMA_ENABLED: "false"
+      PPM_AI_CLOUD_ENABLED: "false"
+      PPM_AI_EXECUTION_MODE: local_only

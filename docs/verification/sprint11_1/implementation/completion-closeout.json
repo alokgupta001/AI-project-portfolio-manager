@@ -1,0 +1,61 @@
+{
+  "schema_version": "sprint111-completion-v1",
+  "baseline": "d0ebe32e691a3d63166ced669450911c63151127",
+  "implementation_scope": "mandatory code complete; AT17 real-model acceptance blocked",
+  "source_fingerprints_verified": 55,
+  "frozen_files_verified": 24,
+  "corpus_cases": 108,
+  "held_out_cases": 54,
+  "corpus_sha256": "f626c0b210daf73110cfc98d0aa6f7a974842bab0bf3e98f52e177e8ab516a24",
+  "independent_label_review": "pending; draft labels only",
+  "dry_run_cases_prepared": 108,
+  "new_live_provider_requests": 0,
+  "local_generations": 0,
+  "groq_original_admissions_preserved": 3,
+  "disabled_profiles": 4,
+  "model_qualification": "none",
+  "optional_native_puter_cloud_benchmark_embeddings": "disabled/deferred",
+  "backend_full": {
+    "passed": 422,
+    "fixture_errors": 6,
+    "inherited_warnings": 1,
+    "seconds": 493.54,
+    "disposition": "all missing-template fixture errors fixed; affected scope rerun"
+  },
+  "packaged_scope": {
+    "passed": 58,
+    "seconds": 2.61
+  },
+  "final_corpus_scope": {
+    "passed": 51,
+    "seconds": 5.43
+  },
+  "browser_full": {
+    "passed": 18,
+    "skipped": 1,
+    "minutes": 4.2
+  },
+  "browser_final_hybrid": {
+    "passed": 1,
+    "seconds": 28.8
+  },
+  "note": "Test scopes overlap; no uninterrupted 428-pass full run claimed.",
+  "static": {
+    "ruff_files": 164,
+    "mypy_modules": 62,
+    "contracts": "match",
+    "web_checks": "pass"
+  },
+  "normal_revision": "0012_ai_runtime",
+  "normal_table_hashes_preserved": 70,
+  "normal_object_hashes_preserved": 5,
+  "normal_readiness_http": 200,
+  "normal_migration": false,
+  "normal_activation": false,
+  "commit_push": false,
+  "screenshots_preserved_privately": {
+    "coverage-1440.png": "3d7942b49fd7fb4062a3cbef4cb0fce8ef341d23b3d2c51f2e1f582bf6215abd",
+    "coverage-768.png": "aab3cf7004b155d7538aa8734ce3f996122c2e9f5fe852f317b48d40ea0bc9e7",
+    "coverage-360.png": "54588149db773c0a02fc84bb5edac8cf770a30429ffe81011c16f5f57ab9dead"
+  }
+}

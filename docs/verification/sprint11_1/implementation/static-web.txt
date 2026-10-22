@@ -1,0 +1,23 @@
+
+> enterprise-ppm@0.1.0 contracts:check
+> node scripts/contracts.mjs --check
+
+OpenAPI and TypeScript contracts match.
+
+> enterprise-ppm@0.1.0 typecheck
+> npm run typecheck --workspace @ppm/web
+
+
+> @ppm/web@0.1.0 typecheck
+> tsc --noEmit
+
+
+> enterprise-ppm@0.1.0 lint
+> eslint apps/web packages/contracts/src tests/browser
+
+
+> enterprise-ppm@0.1.0 format:check
+> prettier --check apps/web packages/contracts/src tests/browser package.json
+
+Checking formatting...
+All matched files use Prettier code style!

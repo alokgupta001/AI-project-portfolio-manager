@@ -1,0 +1,33 @@
+{
+  "schema_version": "sprint111-review-fix-v1",
+  "pull_request": 4,
+  "baseline": "3b11c4874b5693a94e004fe20f5d9327e7010a77",
+  "finding": "Malformed completed provider responses can leak AttributeError from result parsers.",
+  "disposition": "valid_fixed",
+  "change": "The shared execute response handler maps AttributeError to ModelFailure(INVALID_OUTPUT, completed).",
+  "regression_before": {
+    "failed": 3,
+    "reason": "AttributeError escaped for null, list and string message values."
+  },
+  "verification": {
+    "offline_mocked_http_tests": 88,
+    "ruff_check": "passed",
+    "ruff_format": "2 files passed",
+    "mypy": "1 source file passed"
+  },
+  "files": [
+    {
+      "path": "services/api/ppm_api/model_adapters.py",
+      "sha256": "139cd1d8c0967746ec03647b76dec5f22d791f1643827569d05611b2a18ecabc"
+    },
+    {
+      "path": "tests/test_model_routing.py",
+      "sha256": "95c7f7c86b2dbfcf5b347d0e3ffa5d9c435000bc04e2e749efc837d16cb1a4f7"
+    }
+  ],
+  "live_provider_calls": 0,
+  "normal_environment_changed": false,
+  "independent_accuracy_acceptance": "blocked",
+  "historical_fingerprints": "Prior 72-file manifests describe the earlier implementation checkpoint and are retained unchanged.",
+  "hosted_ci": "Latest inspected head 3b11c48 failed npm audit on the separate Next.js advisory; this fix does not address it."
+}

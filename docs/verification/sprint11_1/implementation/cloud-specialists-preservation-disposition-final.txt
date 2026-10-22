@@ -1,0 +1,6 @@
+time="2026-10-17T19:52:26+05:30" level=warning msg="Found orphan containers (enterprise-ppm-clamav-1, enterprise-ppm-pgadmin-1) for this project. If you removed or renamed this service in your compose file, you can run this command with the --remove-orphans flag to clean it up."
+ Container enterprise-ppm-api-run-6da8d123a057 Creating 
+ Container enterprise-ppm-api-run-6da8d123a057 Created 
+{"schema_version": "normal-preservation-disposition-v1", "normal_revision": "0012_ai_runtime", "table_count": 70, "unchanged_table_hashes": 69, "changed_table": "identity_refresh_tokens", "original_refresh_token_rows_retained": 65, "added_refresh_token_rows": 2, "used_false_to_true": 1, "removed_rows": 0, "session_binding_changes": 0, "interpretation": "Changes are confined to refresh-token additions/consumption and are consistent with ordinary session refresh; no attribution to a particular client is claimed.", "initial_strict_snapshot_failure_retained": true}
+PASS 24 preserved .env/source/prompt/migration hashes
+PASS 5 original object keys/byte hashes unchanged

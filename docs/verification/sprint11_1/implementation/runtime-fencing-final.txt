@@ -1,0 +1,76 @@
+time="2026-10-17T10:31:44+05:30" level=warning msg="Found orphan containers (enterprise-ppm-pgadmin-1) for this project. If you removed or renamed this service in your compose file, you can run this command with the --remove-orphans flag to clean it up."
+ Container enterprise-ppm-test-run-17ef78fa768e Creating 
+ Container enterprise-ppm-test-run-17ef78fa768e Created 
+....F
+=================================== FAILURES ===================================
+________ test_truncation_uses_one_smaller_replacement_and_retains_usage ________
+
+identity = (<httpx.AsyncClient object at 0x73219549ba40>, <fastapi.applications.FastAPI object at 0x732194e25a30>, <sqlalchemy.ex... 'ad45bee1-2777-4803-b6ab-228ff7764f4d@example.com', 'other': '84feb803-c0ef-469e-93c3-80fadae83925@example.com', ...})
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x73219530a570>
+tmp_path = PosixPath('/tmp/pytest-of-ppm/pytest-0/test_truncation_uses_one_small0')
+
+    async def test_truncation_uses_one_smaller_replacement_and_retains_usage(
+        identity, monkeypatch, tmp_path
+    ):
+        c, app, owner, ids, project, accepted, seen = await configure(
+            identity, monkeypatch, tmp_path, True
+        )
+        from ppm_api.agent_runtime import NativeAdapter
+    
+        original = NativeAdapter.execute
+        requests = []
+    
+        async def truncated(self, request):
+            requests.append(request)
+            if len(requests) == 1:
+                return ModelResult(
+                    attempt_id=request.permit.attempt_id,
+                    provider_id="ollama",
+                    model_id=self.profile.model,
+                    completion="incomplete",
+                    text="{",
+                    usage=ModelUsage(input_tokens=11, output_tokens=512, source="reported"),
+                )
+            return await original(self, request)
+    
+        monkeypatch.setattr(NativeAdapter, "execute", truncated)
+        response = await start(
+            c,
+            project,
+            analysis_mode="domain",
+            requested_agents=["risk"],
+            version_ids=[accepted["version_id"]],
+        )
+        assert response.status_code == 202, response.text
+        result, _ = await work(c, app, owner, ids, response.json())
+>       assert len(requests) == 2 and len(seen) == 1, result
+E       AssertionError: {'run': {'id': 'c3fc9929-f360-43d0-b991-70a555bf168c', 'organization_id': 'e766679c-e146-4e6b-9881-8951173df6cc', 'inp.....}, 'prompt_version': 'hybrid-specialists-v2', 'rule_version': 'hybrid-support-v2', 'framework_version_id': None, ...}
+E       assert (1 == 2)
+E        +  where 1 = len([ModelRequest(permit=ExecutionPermit(attempt_id=UUID('3284c26d-ca75-4041-9665-4351fc85c29d'), provider_id='ollama', mo...1-e1b3ecccc001'), task_class='risk_extraction', categories=('document:project',), num_ctx=4096, max_output_tokens=512)])
+
+tests/test_agent_v2_runtime.py:266: AssertionError
+----------------------------- Captured stderr call -----------------------------
+{"event": "http_request", "request_id": "7e164f5c-fd01-4bf8-9da3-8adf65376dde", "method": "GET", "route": "/api/v1/auth/csrf", "status": 200, "duration_ms": 87.44}
+{"event": "http_request", "request_id": "d4a52930-6c57-492e-83e7-9a1f8bf7a764", "method": "POST", "route": "/api/v1/auth/login", "status": 200, "duration_ms": 274.74}
+{"event": "http_request", "request_id": "0e01bf67-41e3-4353-8acc-a35663a68600", "method": "POST", "route": "/api/v1/auth/switch", "status": 200, "duration_ms": 16.34}
+{"event": "http_request", "request_id": "f9bac458-885e-4525-a32d-00762ff1faf9", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 41.66}
+{"event": "http_request", "request_id": "7807c25a-f4bb-49a6-a795-8de45ec8d99e", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 28.94}
+{"event": "http_request", "request_id": "e3941222-73a3-4948-81a0-72bad88a62a4", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 24.58}
+{"event": "http_request", "request_id": "0c519e6b-97fb-45dc-9346-3351fce81143", "method": "POST", "route": "/api/v1/documents", "status": 202, "duration_ms": 269.42}
+{"event": "http_request", "request_id": "57137dc4-71b4-445c-a7a7-e73beec1583c", "method": "POST", "route": "/api/v1/agents/runs", "status": 202, "duration_ms": 578.59}
+{"event": "http_request", "request_id": "35d8bf7c-94ac-4ac2-b85c-97f537454f4b", "method": "GET", "route": "/api/v1/agents/runs/{id_}", "status": 200, "duration_ms": 159.87}
+------------------------------ Captured log call -------------------------------
+INFO     ppm.requests:main.py:144 {"event": "http_request", "request_id": "7e164f5c-fd01-4bf8-9da3-8adf65376dde", "method": "GET", "route": "/api/v1/auth/csrf", "status": 200, "duration_ms": 87.44}
+INFO     ppm.requests:main.py:144 {"event": "http_request", "request_id": "d4a52930-6c57-492e-83e7-9a1f8bf7a764", "method": "POST", "route": "/api/v1/auth/login", "status": 200, "duration_ms": 274.74}
+INFO     ppm.requests:main.py:144 {"event": "http_request", "request_id": "0e01bf67-41e3-4353-8acc-a35663a68600", "method": "POST", "route": "/api/v1/auth/switch", "status": 200, "duration_ms": 16.34}
+INFO     ppm.requests:main.py:144 {"event": "http_request", "request_id": "f9bac458-885e-4525-a32d-00762ff1faf9", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 41.66}
+INFO     ppm.requests:main.py:144 {"event": "http_request", "request_id": "7807c25a-f4bb-49a6-a795-8de45ec8d99e", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 28.94}
+INFO     ppm.requests:main.py:144 {"event": "http_request", "request_id": "e3941222-73a3-4948-81a0-72bad88a62a4", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 24.58}
+INFO     ppm.requests:main.py:144 {"event": "http_request", "request_id": "0c519e6b-97fb-45dc-9346-3351fce81143", "method": "POST", "route": "/api/v1/documents", "status": 202, "duration_ms": 269.42}
+INFO     ppm.requests:main.py:144 {"event": "http_request", "request_id": "57137dc4-71b4-445c-a7a7-e73beec1583c", "method": "POST", "route": "/api/v1/agents/runs", "status": 202, "duration_ms": 578.59}
+INFO     ppm.requests:main.py:144 {"event": "http_request", "request_id": "35d8bf7c-94ac-4ac2-b85c-97f537454f4b", "method": "GET", "route": "/api/v1/agents/runs/{id_}", "status": 200, "duration_ms": 159.87}
+=========================== short test summary info ============================
+FAILED tests/test_agent_v2_runtime.py::test_truncation_uses_one_smaller_replacement_and_retains_usage
+!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!
+1 failed, 4 passed in 24.78s
+

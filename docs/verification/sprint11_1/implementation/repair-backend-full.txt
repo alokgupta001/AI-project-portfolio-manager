@@ -1,0 +1,69 @@
+time="2026-10-17T20:37:57+05:30" level=warning msg="Found orphan containers (enterprise-ppm-pgadmin-1) for this project. If you removed or renamed this service in your compose file, you can run this command with the --remove-orphans flag to clean it up."
+ Container enterprise-ppm-test-run-581276aefd23 Creating 
+ Container enterprise-ppm-test-run-581276aefd23 Created 
+Running: /app/.venv/bin/python -m alembic upgrade head
+Running: /app/.venv/bin/python -m alembic downgrade 0006_command_center
+Running: /app/.venv/bin/python -m alembic upgrade head
+Running: /app/.venv/bin/python -m alembic downgrade base
+Running: /app/.venv/bin/python -m alembic upgrade head
+Running: /app/.venv/bin/python -m alembic upgrade head
+Running: /app/.venv/bin/python -m alembic check
+No new upgrade operations detected.
+Running: /app/.venv/bin/python -m pytest -q
+........................................................................ [ 15%]
+........................................................................ [ 30%]
+........................................................................ [ 46%]
+........................................................................ [ 61%]
+......F................................................................. [ 76%]
+........................................................................ [ 92%]
+.....................................                                    [100%]
+=================================== FAILURES ===================================
+____________ test_cloud_calibration_dry_run_never_calls_or_promotes ____________
+
+calibration = (PosixPath('/tmp/pytest-of-ppm/pytest-0/test_cloud_calibration_dry_run0/ai-v2'), ModelProfile(id='groq-candidate', pro...4e65371f7', free_tier_confirmed=True, data_policy_confirmed=False, upstream_provider=None, memory_reservation_mb=4096))
+
+    async def test_cloud_calibration_dry_run_never_calls_or_promotes(calibration):
+        folder, _ = calibration
+    
+        def forbid(req):
+            raise AssertionError("No HTTP in dry run")
+    
+        report = await cloud_benchmark.run(
+            "groq", ["financial_01"], False, folder, httpx.MockTransport(forbid)
+        )
+        assert report["status"] == "prepared_no_requests" and not report["profile_activated"]
+        assert not (folder / "groq-specialist-ledger.json").exists()
+        for ids in (["financial_02"], ["risk_01"], ["financial_01"] * 4):
+            with pytest.raises(ValueError):
+>               await cloud_benchmark.run("groq", ids, True, folder, httpx.MockTransport(forbid))
+
+tests/test_cloud_specialists.py:286: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+scripts/benchmark_cloud_specialists.py:154: in run
+    if any(c["split"] != "calibration" or ROLE_PROVIDERS.get(c["agent"]) != provider for c in cases):
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+.0 = <list_iterator object at 0x7de8a052dba0>
+
+>   if any(c["split"] != "calibration" or ROLE_PROVIDERS.get(c["agent"]) != provider for c in cases):
+                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   KeyError: 'risk'
+
+scripts/benchmark_cloud_specialists.py:154: KeyError
+=============================== warnings summary ===============================
+.venv/lib/python3.12/site-packages/fastapi/testclient.py:1
+  /app/.venv/lib/python3.12/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED tests/test_cloud_specialists.py::test_cloud_calibration_dry_run_never_calls_or_promotes
+1 failed, 468 passed, 1 warning in 482.42s (0:08:02)
+Traceback (most recent call last):
+  File "/app/scripts/test_backend.py", line 28, in <module>
+    subprocess.run(command, check=True, env=env)
+  File "/usr/local/lib/python3.12/subprocess.py", line 571, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['/app/.venv/bin/python', '-m', 'pytest', '-q']' returned non-zero exit status 1.
+

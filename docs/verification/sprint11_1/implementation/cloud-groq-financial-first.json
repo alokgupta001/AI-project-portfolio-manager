@@ -1,0 +1,43 @@
+{
+  "schema_version": "cloud-specialist-calibration-v1",
+  "provider": "groq",
+  "model": "openai/gpt-oss-20b",
+  "corpus_sha256": "f626c0b210daf73110cfc98d0aa6f7a974842bab0bf3e98f52e177e8ab516a24",
+  "selected_cases": [
+    "financial_01"
+  ],
+  "qualified_classes": [],
+  "profile_activated": false,
+  "weight_training": false,
+  "max_output_tokens": 512,
+  "independent_semantic_review": "pending",
+  "attempts": [
+    {
+      "case": "financial_01",
+      "agent": "financial",
+      "attempt_id": "d463d6a2-d36f-4a88-b037-5df9bdec242e",
+      "prompt_sha256": "7b85ba0267135d893a1e57eeb1cbed62447256a51a76c0c6cf2d291c1c184184",
+      "request_sha256": "7d5e47103d063786ca435e5297df5de07f147798690b2dfca0be5f5a803359d4",
+      "candidate_sha256": "466853cecf8a10a08f05c321eab39b86ae6c58c2782c8b3eabd38f30dc9664e1",
+      "completion": "complete",
+      "usage": {
+        "input_tokens": 953,
+        "output_tokens": 221,
+        "reasoning_tokens": 74,
+        "source": "reported"
+      },
+      "latency_ms": 789,
+      "hard_validation": "validated",
+      "finding_count": 1,
+      "semantic_review": "pending"
+    }
+  ],
+  "limits": {
+    "attempts_per_case": 2,
+    "attempts_per_batch": 3,
+    "batch_seconds": 90,
+    "attempt_seconds": 22,
+    "authorization_calls": 9
+  },
+  "status": "completed_pending_review"
+}

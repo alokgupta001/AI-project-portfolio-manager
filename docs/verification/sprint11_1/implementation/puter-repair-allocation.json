@@ -1,0 +1,7 @@
+{
+  "status": "repair_phase_prepared",
+  "provider": "puter",
+  "prior_calls": 8,
+  "additional_calls": 6,
+  "model_requests": 0
+}

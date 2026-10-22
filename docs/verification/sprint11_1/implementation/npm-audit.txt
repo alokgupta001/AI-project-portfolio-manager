@@ -1,0 +1,4 @@
+npm warn audit request to https://registry.npmjs.org/-/npm/v1/security/advisories/bulk failed, reason: getaddrinfo ENOTFOUND registry.npmjs.org
+undefined
+npm error audit endpoint returned an error
+npm error A complete log of this run can be found in: C:\Users\alokg\AppData\Local\Packages\sandbox.{***}\AC\npm-cache\_logs\2026-10-17T04_34_21_595Z-debug-0.log

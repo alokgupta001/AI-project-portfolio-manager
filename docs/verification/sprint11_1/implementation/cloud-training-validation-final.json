@@ -1,0 +1,20 @@
+{
+  "schema_version": "training-example-validation-v1",
+  "examples": 36,
+  "role_counts": {
+    "financial": 4,
+    "schedule": 4,
+    "sentiment": 4,
+    "risk": 4,
+    "resource": 4,
+    "governance": 4,
+    "agile_coach": 4,
+    "pmo": 4,
+    "executive": 4
+  },
+  "corpus_sha256": "0b8feec883369266b6bca8a94c78d54b185739f6bb0eb03e7ea1034ea6babcbf",
+  "hard_output_checks": "passed",
+  "labels_independently_reviewed": false,
+  "model_weights_trained": false,
+  "model_requests": 0
+}

@@ -1,0 +1,32 @@
+{
+  "schema_version": "cloud-specialist-calibration-v1",
+  "provider": "puter",
+  "model": "gpt-4.1-mini-2025-04-14",
+  "corpus_sha256": "f626c0b210daf73110cfc98d0aa6f7a974842bab0bf3e98f52e177e8ab516a24",
+  "selected_cases": [
+    "sentiment_01"
+  ],
+  "qualified_classes": [],
+  "profile_activated": false,
+  "weight_training": false,
+  "max_output_tokens": 512,
+  "independent_semantic_review": "pending",
+  "attempts": [
+    {
+      "case": "sentiment_01",
+      "agent": "sentiment",
+      "attempt_id": "29ce141b-1b45-403d-af37-18e848fdb466",
+      "prompt_sha256": "8fff6ffe81a268aad59aba6e394ce72e03d02408886be5a48472abb8206ed2de",
+      "request_sha256": "773ca854d3349af4e9f43cca9973fcafc06fd537a858f6419a84f8e2a5d7ef42",
+      "code": "INVALID_OUTPUT"
+    }
+  ],
+  "limits": {
+    "attempts_per_case": 2,
+    "attempts_per_batch": 3,
+    "batch_seconds": 90,
+    "attempt_seconds": 22,
+    "authorization_calls": 9
+  },
+  "status": "stopped_on_failure"
+}

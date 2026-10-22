@@ -1,0 +1,19 @@
+{
+  "schema_version": "ollama-setup-v1",
+  "recorded_date": "2026-10-17",
+  "version": "0.40.5",
+  "installer_source": "https://github.com/ollama/ollama/releases/download/v0.40.5/OllamaSetup.exe",
+  "installer_sha256": "ea0b50685d382bc0af164abdbf9b41bd89abb98de14fc51e4890a7176757a519",
+  "installer_verified_by": "winget",
+  "binary_sha256": "ec9f3325f134597c7188b735dcc4e79a9eca4bf53f6b958ddf22aa04bf5ce57a",
+  "host_endpoint": "http://127.0.0.1:11434",
+  "docker_endpoint": "http://host.docker.internal:11434",
+  "native_version_verified": true,
+  "docker_version_verified": true,
+  "resident_models": 0,
+  "inference_requests": 0,
+  "cloud_disabled": true,
+  "maximum_loaded_models": 1,
+  "parallel_generations": 1,
+  "configured_context": 4096
+}

@@ -1,0 +1,33 @@
+{
+  "schema_version": "groq-synthetic-smoke-v1",
+  "provider": "groq",
+  "model": "openai/gpt-oss-20b",
+  "corpus_sha256": "4d9f54f9add381bd909d9947785f3bddbff4a62c0643ecd335f2d05f1beb5e60",
+  "purpose": "transport_schema_only",
+  "independent_quality_qualification": false,
+  "profile_activated": false,
+  "max_calls": 1,
+  "max_output_tokens": 512,
+  "per_attempt_timeout_seconds": 22,
+  "run_deadline_seconds": 90,
+  "billing_basis": "user_confirmed_free_account",
+  "attempts": [
+    {
+      "case": "missing",
+      "attempt_id": "1510dff7-6c5e-4205-901b-eb3d391cda98",
+      "request_hash": "95cb23e9ef666924577c7871ff268cde369e94dc5cfe054787b9cd6dd60337f7",
+      "completion": "complete",
+      "native_finish_reason": "stop",
+      "usage": {
+        "input_tokens": 897,
+        "output_tokens": 104,
+        "reasoning_tokens": 40,
+        "source": "reported"
+      },
+      "latency_ms": 623,
+      "validation_stage": "evidence_hard_checks",
+      "code": "INVALID_OUTPUT"
+    }
+  ],
+  "status": "stopped_on_failure"
+}

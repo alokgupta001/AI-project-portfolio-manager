@@ -1,0 +1,1351 @@
+{
+  "status": "calibration_only_unreviewed",
+  "candidates": [
+    {
+      "report": "gemini-repair-assurance-absent.json",
+      "report_sha256": "870754644818095877097936fd54f784599ab72bf73fa34fe05169e0a0bf2ab0",
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "cases": [
+        "risk_07",
+        "governance_07",
+        "agile_coach_07"
+      ],
+      "prompt_sha256": "6c3af985b6164c90f75f98587462eab9f5cad99e0783f7b6c527a720c956fa6a",
+      "attempt": {
+        "attempt_id": "400321c6-343a-44f8-a00f-908d0709f04b",
+        "cases": [
+          "risk_07",
+          "governance_07",
+          "agile_coach_07"
+        ],
+        "request_sha256": "aa941803f92df4009644109ff2758ee67c3076aa6c3c19f33e981feb4591e6b4",
+        "native_sha256": "b12898ab7a0d1e0eca5e3d41c91da5f89a1c32d44ecf503b9bf3f78d2bd22764",
+        "candidate_sha256": "eed84daff7970ce92f475ecd6b8b9b845ce29072610d7ab3824041b55600d07e",
+        "usage": {
+          "input_tokens": 315,
+          "output_tokens": 80,
+          "reasoning_tokens": null,
+          "source": "reported"
+        },
+        "latency_ms": 2068,
+        "completion": "complete",
+        "reported_model_id": null,
+        "roles": {
+          "risk": {
+            "outcome": "insufficient_evidence",
+            "hard_validation": "partially_validated",
+            "finding_count": 0
+          },
+          "governance": {
+            "outcome": "insufficient_evidence",
+            "hard_validation": "partially_validated",
+            "finding_count": 0
+          },
+          "agile_coach": {
+            "outcome": "insufficient_evidence",
+            "hard_validation": "partially_validated",
+            "finding_count": 0
+          }
+        }
+      },
+      "output": {
+        "risk": {
+          "state": "insufficient_evidence",
+          "gaps": [
+            {
+              "item": "e1",
+              "code": "missing_evidence"
+            }
+          ]
+        },
+        "governance": {
+          "state": "insufficient_evidence",
+          "gaps": [
+            {
+              "item": "e1",
+              "code": "missing_evidence"
+            }
+          ]
+        },
+        "agile_coach": {
+          "state": "insufficient_evidence",
+          "gaps": [
+            {
+              "item": "e1",
+              "code": "missing_evidence"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "report": "gemini-repair-assurance-positive.json",
+      "report_sha256": "8ba2e3f5a0d157b1ff60764372cc26790de0aeae4ccc50fc5c028e7457c234d9",
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "cases": [
+        "risk_05",
+        "governance_03",
+        "agile_coach_05"
+      ],
+      "prompt_sha256": "675975a850b055c85ee01f25109e19ba6ab88fcc5ea59798d636cdbbec478801",
+      "attempt": {
+        "attempt_id": "e6cfa807-2343-46d2-9862-853f365eec67",
+        "cases": [
+          "risk_05",
+          "governance_03",
+          "agile_coach_05"
+        ],
+        "request_sha256": "f5536992250d4e5109d2a7ca8b36a810f0c6f5cf0cb7bddc5f97475a37618b6b",
+        "native_sha256": "0a89bbd319b270ec742f0588d83fe77217005529121c18f6ef3ce303003bdeb1",
+        "candidate_sha256": "e88707084ea5d9b352ad10730b76c79d0fa50b47d505ac5cfb676cd1170ec420",
+        "usage": {
+          "input_tokens": 306,
+          "output_tokens": 190,
+          "reasoning_tokens": null,
+          "source": "reported"
+        },
+        "latency_ms": 1732,
+        "completion": "complete",
+        "reported_model_id": null,
+        "roles": {
+          "risk": {
+            "outcome": "supported",
+            "hard_validation": "validated",
+            "finding_count": 1
+          },
+          "governance": {
+            "outcome": "supported",
+            "hard_validation": "validated",
+            "finding_count": 1
+          },
+          "agile_coach": {
+            "outcome": "supported",
+            "hard_validation": "validated",
+            "finding_count": 1
+          }
+        }
+      },
+      "output": {
+        "risk": {
+          "state": "supported",
+          "cites": [
+            "e1"
+          ],
+          "covered": [
+            "e1"
+          ],
+          "claim": "Integration uses an unsupported library.",
+          "advice": "Upgrade the library now.",
+          "epistemic": "interpretation",
+          "predicate": "risk_present",
+          "signal": "adverse",
+          "kind": "risk",
+          "severity": "high"
+        },
+        "governance": {
+          "state": "supported",
+          "cites": [
+            "e1"
+          ],
+          "covered": [
+            "e1"
+          ],
+          "claim": "Access review lacks completion evidence.",
+          "advice": "Provide completion documentation.",
+          "epistemic": "interpretation",
+          "predicate": "policy_gap",
+          "signal": "adverse",
+          "kind": "compliance_gap",
+          "severity": "high"
+        },
+        "agile_coach": {
+          "state": "supported",
+          "cites": [
+            "e1"
+          ],
+          "covered": [
+            "e1"
+          ],
+          "claim": "Acceptance is disputed without completion policy.",
+          "advice": "Define a shared completion policy.",
+          "epistemic": "interpretation",
+          "predicate": "practice_gap",
+          "signal": "adverse",
+          "kind": "maturity_evidence",
+          "severity": "medium"
+        }
+      }
+    },
+    {
+      "report": "gemini-repair-delivery-absent.json",
+      "report_sha256": "6ffcd6411a82ba0a9453d0f0d023e1fb9cfc828fe41ac48efabbfff44796585f",
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "cases": [
+        "financial_07",
+        "schedule_07",
+        "resource_07"
+      ],
+      "prompt_sha256": "21e41c414ca312ce0dde9e6be9d6ff298ed8f902e3ba5b66b16e38274600ed36",
+      "attempt": {
+        "attempt_id": "af3dbb85-0a07-4a23-ae0b-b7ed2188ed19",
+        "cases": [
+          "financial_07",
+          "schedule_07",
+          "resource_07"
+        ],
+        "request_sha256": "439d72fc1a27ad6edc4be4478b4a9275f39af993f62b983dfb33cd85341cf4f0",
+        "native_sha256": "8212fc28461d202883db105d8da98ffb058a2358c5c5ccc564173c24459cdc46",
+        "candidate_sha256": "6dfcca88e8f68436f98fafd15dd8ce38af0fdd9190fd5e3d2e934762b5a76602",
+        "usage": {
+          "input_tokens": 386,
+          "output_tokens": 168,
+          "reasoning_tokens": null,
+          "source": "reported"
+        },
+        "latency_ms": 2064,
+        "completion": "complete",
+        "reported_model_id": null,
+        "roles": {
+          "financial": {
+            "outcome": "insufficient_evidence",
+            "hard_validation": "partially_validated",
+            "finding_count": 0
+          },
+          "schedule": {
+            "outcome": "insufficient_evidence",
+            "hard_validation": "partially_validated",
+            "finding_count": 0
+          },
+          "resource": {
+            "outcome": "insufficient_evidence",
+            "hard_validation": "partially_validated",
+            "finding_count": 0
+          }
+        }
+      },
+      "output": {
+        "financial": {
+          "state": "insufficient_evidence",
+          "gaps": [
+            {
+              "item": "e1",
+              "code": "missing_evidence"
+            }
+          ]
+        },
+        "schedule": {
+          "state": "insufficient_evidence",
+          "gaps": [
+            {
+              "item": "e1",
+              "code": "missing_evidence"
+            }
+          ]
+        },
+        "resource": {
+          "state": "insufficient_evidence",
+          "gaps": [
+            {
+              "item": "e1",
+              "code": "missing_evidence"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "report": "gemini-repair-delivery-positive.json",
+      "report_sha256": "cd6baa8d58ab919ddf37bbb426ac8fdade7681d35aa994a2a73d47edbcb878f6",
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "cases": [
+        "financial_05",
+        "schedule_05",
+        "resource_05"
+      ],
+      "prompt_sha256": "b7058c07afd3577af1a8b846c21f99cd02e9609066a901a9dae9cc2ac4b8c733",
+      "attempt": {
+        "attempt_id": "4ebeb99f-dabf-46db-93a7-b61e1929312f",
+        "cases": [
+          "financial_05",
+          "schedule_05",
+          "resource_05"
+        ],
+        "request_sha256": "d070d4696a505fa9ac846ddf16c2a49cbf0d95f4081e2eba88b7548d4c48096c",
+        "native_sha256": "eb1697f060be916ab117b2972b48fc551ed8bd4b294843207e3a9de22dfb0187",
+        "candidate_sha256": "500c44937c2539a1de6a34c1ed617c331679ae161b11ea3eee2061831c81fca2",
+        "usage": {
+          "input_tokens": 405,
+          "output_tokens": 322,
+          "reasoning_tokens": null,
+          "source": "reported"
+        },
+        "latency_ms": 2210,
+        "completion": "complete",
+        "reported_model_id": null,
+        "roles": {
+          "financial": {
+            "outcome": "supported",
+            "hard_validation": "validated",
+            "finding_count": 1
+          },
+          "schedule": {
+            "outcome": "supported",
+            "hard_validation": "validated",
+            "finding_count": 1
+          },
+          "resource": {
+            "outcome": "supported",
+            "hard_validation": "validated",
+            "finding_count": 1
+          }
+        }
+      },
+      "output": {
+        "financial": {
+          "state": "supported",
+          "cites": [
+            "e1"
+          ],
+          "covered": [
+            "e1"
+          ],
+          "claim": "Rejected components drive unexpected replacement costs.",
+          "advice": "Review component quality standards.",
+          "epistemic": "interpretation",
+          "predicate": "budget_overrun",
+          "signal": "adverse",
+          "kind": "risk",
+          "severity": "high"
+        },
+        "schedule": {
+          "state": "supported",
+          "cites": [
+            "e1"
+          ],
+          "covered": [
+            "e1"
+          ],
+          "claim": "Permit absence blocks site preparation tasks.",
+          "advice": "Obtain permits promptly.",
+          "epistemic": "interpretation",
+          "predicate": "delivery_blocked",
+          "signal": "adverse",
+          "kind": "blocker",
+          "severity": "high"
+        },
+        "resource": {
+          "state": "supported",
+          "cites": [
+            "e1"
+          ],
+          "covered": [
+            "e1"
+          ],
+          "claim": "Capacity risk amber status indicates aggregate strain.",
+          "advice": "Monitor aggregate capacity.",
+          "epistemic": "interpretation",
+          "predicate": "capacity_exceeded",
+          "signal": "adverse",
+          "kind": "risk",
+          "severity": "medium"
+        }
+      }
+    },
+    {
+      "report": "gemini-repair-synthesis-absent.json",
+      "report_sha256": "bd931a6f89a077ee3fc9834d9b5803d1a3aa23fd6b135a5ee71a435adf6be304",
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "cases": [
+        "sentiment_07",
+        "pmo_07",
+        "executive_07"
+      ],
+      "prompt_sha256": "30c1e634ee5a6a8c8a29094ab039eaba2630c8d2dd2fa06328b57b767bacb858",
+      "attempt": {
+        "attempt_id": "b2e3cf07-3d81-4e12-8b98-a6814455548f",
+        "cases": [
+          "sentiment_07",
+          "pmo_07",
+          "executive_07"
+        ],
+        "request_sha256": "19e532fd285f3c185588fc9766c963f79d59924ab14151a93bb293c381c252de",
+        "native_sha256": "7dfe70a168a2e8ab74c2829c0804059d5ac43958b93ee1ce208d2664dc773d8e",
+        "candidate_sha256": "d333f10b77615cdd0c3017a92d129d788ed4996a4753913bc20e4ceb4bdde458",
+        "usage": {
+          "input_tokens": 477,
+          "output_tokens": 233,
+          "reasoning_tokens": null,
+          "source": "reported"
+        },
+        "latency_ms": 1859,
+        "completion": "complete",
+        "reported_model_id": null,
+        "roles": {
+          "sentiment": {
+            "outcome": "supported",
+            "hard_validation": "validated",
+            "finding_count": 1
+          },
+          "pmo": {
+            "outcome": "supported",
+            "hard_validation": "validated",
+            "finding_count": 1
+          },
+          "executive": {
+            "outcome": "supported",
+            "hard_validation": "validated",
+            "finding_count": 1
+          }
+        }
+      },
+      "output": {
+        "sentiment": {
+          "state": "supported",
+          "cites": [
+            "e1"
+          ],
+          "covered": [
+            "b1"
+          ],
+          "claim": "Delivery concern lacks provided evidence.",
+          "advice": "Provide delivery evidence.",
+          "epistemic": "interpretation",
+          "basis": [
+            "b1"
+          ]
+        },
+        "pmo": {
+          "state": "supported",
+          "cites": [
+            "e1"
+          ],
+          "covered": [
+            "f1"
+          ],
+          "claim": "Unreviewed evidence blocks delivery.",
+          "advice": "Inspect scope.",
+          "epistemic": "interpretation",
+          "basis": [
+            "f1"
+          ]
+        },
+        "executive": {
+          "state": "supported",
+          "cites": [
+            "e1"
+          ],
+          "covered": [
+            "f1"
+          ],
+          "claim": "Unreviewed evidence creates blockers.",
+          "advice": "Inspect scope.",
+          "epistemic": "interpretation",
+          "basis": [
+            "f1"
+          ]
+        }
+      }
+    },
+    {
+      "report": "gemini-repair-synthesis-positive.json",
+      "report_sha256": "56af2d9db3c196d51c414ae8d3d63eda2f884054b04c4901faffd790a506d06c",
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "cases": [
+        "sentiment_05",
+        "pmo_05",
+        "executive_05"
+      ],
+      "prompt_sha256": "1e955cf194ec5d784b2d3e1fbb5262625df0e7f14f30db06f45b471d2e9363de",
+      "attempt": {
+        "attempt_id": "22713a49-c4ea-4db1-924a-6a3f1a674802",
+        "cases": [
+          "sentiment_05",
+          "pmo_05",
+          "executive_05"
+        ],
+        "request_sha256": "6682684d125e39ed1528c8344a76a16eb54a2df4d495160fc9f0b87ef04f4bd8",
+        "native_sha256": "11539de2b426f507e073d57952605404fae264b84760cfb4b00460f8ac6a6053",
+        "candidate_sha256": "e35c16f0134367e46d64d3655e5fb04155c2b872590d9429e1841b317a6b7624",
+        "usage": {
+          "input_tokens": 468,
+          "output_tokens": 232,
+          "reasoning_tokens": null,
+          "source": "reported"
+        },
+        "latency_ms": 1523,
+        "completion": "complete",
+        "reported_model_id": null,
+        "roles": {
+          "sentiment": {
+            "outcome": "supported",
+            "hard_validation": "validated",
+            "finding_count": 1
+          },
+          "pmo": {
+            "outcome": "supported",
+            "hard_validation": "validated",
+            "finding_count": 1
+          },
+          "executive": {
+            "outcome": "supported",
+            "hard_validation": "validated",
+            "finding_count": 1
+          }
+        }
+      },
+      "output": {
+        "sentiment": {
+          "state": "supported",
+          "cites": [
+            "e1"
+          ],
+          "covered": [
+            "b1"
+          ],
+          "claim": "Five open project blockers exist.",
+          "advice": "Review blockers.",
+          "epistemic": "interpretation",
+          "basis": [
+            "b1"
+          ]
+        },
+        "pmo": {
+          "state": "supported",
+          "cites": [
+            "e1"
+          ],
+          "covered": [
+            "f1"
+          ],
+          "claim": "Security approval is outstanding.",
+          "advice": "Inspect approval status.",
+          "epistemic": "interpretation",
+          "basis": [
+            "f1"
+          ]
+        },
+        "executive": {
+          "state": "supported",
+          "cites": [
+            "e1"
+          ],
+          "covered": [
+            "f1"
+          ],
+          "claim": "Revised scope remains disputed.",
+          "advice": "Inspect authorized evidence.",
+          "epistemic": "interpretation",
+          "basis": [
+            "f1"
+          ]
+        }
+      }
+    },
+    {
+      "report": "groq-repair-assurance-positive.json",
+      "report_sha256": "fba56a9ffb8d74a02c888192380bf5f2f64ab21157c7e8bc13128bb498f2d066",
+      "provider": "groq",
+      "model": "openai/gpt-oss-20b",
+      "cases": [
+        "risk_05",
+        "governance_03",
+        "agile_coach_05"
+      ],
+      "prompt_sha256": "675975a850b055c85ee01f25109e19ba6ab88fcc5ea59798d636cdbbec478801",
+      "attempt": {
+        "attempt_id": "98e64cd4-01d7-4637-8b50-a5fd640e7da9",
+        "cases": [
+          "risk_05",
+          "governance_03",
+          "agile_coach_05"
+        ],
+        "request_sha256": "f5536992250d4e5109d2a7ca8b36a810f0c6f5cf0cb7bddc5f97475a37618b6b",
+        "native_sha256": "dcc8d2fcdb072a1b49fa56cc0ffd9b70079e0a6c3e23d09038a5b8adeef457db",
+        "code": "CONFIGURATION"
+      },
+      "output": null
+    },
+    {
+      "report": "groq-repair-delivery-positive-final.json",
+      "report_sha256": "c8a4b7d3bd2e761389193f8dadc5aed17fad4a8082a9618bd39f404ed5f01b50",
+      "provider": "groq",
+      "model": "openai/gpt-oss-20b",
+      "cases": [
+        "financial_05",
+        "schedule_05",
+        "resource_05"
+      ],
+      "prompt_sha256": "a87dbb4c9fabcbcae4106b3235a9de2afd596007fe4f92a42cb374e9ca92f937",
+      "attempt": {
+        "attempt_id": "2a483fac-6c70-4842-afb6-35398fc4833e",
+        "cases": [
+          "financial_05",
+          "schedule_05",
+          "resource_05"
+        ],
+        "request_sha256": "e515e6d30dbe9c7abd5c0198189a4f436b71e6ae5406ee98ef7047568f5357bb",
+        "native_sha256": "f507e6d2ef2a18efe54048d64f6141e1b4014f67dd9012dd88c7f0b949757070",
+        "code": "CONFIGURATION"
+      },
+      "output": null
+    },
+    {
+      "report": "groq-repair-delivery-positive.json",
+      "report_sha256": "b2fafb02fd244a507065bbf330ad3ac1e873320c10c7b3d4d78eb6c81721af8a",
+      "provider": "groq",
+      "model": "openai/gpt-oss-20b",
+      "cases": [
+        "financial_05",
+        "schedule_05",
+        "resource_05"
+      ],
+      "prompt_sha256": "b7058c07afd3577af1a8b846c21f99cd02e9609066a901a9dae9cc2ac4b8c733",
+      "attempt": {
+        "attempt_id": "0fb45beb-b653-4ad8-be41-55951b279385",
+        "cases": [
+          "financial_05",
+          "schedule_05",
+          "resource_05"
+        ],
+        "request_sha256": "d070d4696a505fa9ac846ddf16c2a49cbf0d95f4081e2eba88b7548d4c48096c",
+        "code": "CONFIGURATION"
+      },
+      "output": null
+    },
+    {
+      "report": "groq-repair-executive-positive.json",
+      "report_sha256": "fdfeb645d87afe97a55e97f5b4840e1e8d198c8cf2aeb4b307b25a899bda2375",
+      "provider": "groq",
+      "model": "openai/gpt-oss-20b",
+      "cases": [
+        "executive_05"
+      ],
+      "prompt_sha256": "6794a902c9e448bd3796c6f0434f9735d5312cbaa859772e265b79c81002914f",
+      "attempt": {
+        "attempt_id": "fd5d6099-7c80-438d-9397-21b129262d78",
+        "cases": [
+          "executive_05"
+        ],
+        "request_sha256": "1e968d8594be97f2d1ed640a6a71b4fbd878d017529d77599c05e30845270fa4",
+        "native_sha256": "74d4538f19c6a92a774bc9dd8756d9caf9af95c70e2dfc230835b1fc90254ced",
+        "candidate_sha256": "83edae418e1b30be976076c0c2c283abbb4e032eea218fc032645a7d6a609d81",
+        "usage": {
+          "input_tokens": 741,
+          "output_tokens": 197,
+          "reasoning_tokens": 121,
+          "source": "reported"
+        },
+        "latency_ms": 663,
+        "completion": "complete",
+        "reported_model_id": null,
+        "roles": {
+          "executive": {
+            "outcome": "supported",
+            "hard_validation": "validated",
+            "finding_count": 1
+          }
+        }
+      },
+      "output": {
+        "executive": {
+          "state": "supported",
+          "claim": "Scope dispute remains unresolved, posing medium‑severity risk.",
+          "advice": "Verify scope acceptance, document decisions, and address gaps promptly.",
+          "basis": [
+            "f1"
+          ],
+          "cites": [
+            "e1"
+          ],
+          "covered": [
+            "f1"
+          ],
+          "epistemic": "interpretation"
+        }
+      }
+    },
+    {
+      "report": "groq-repair-portfolio-positive.json",
+      "report_sha256": "06e26b88c9c2159dcbe7a93ede008ec1ed5decfa49249ae32aa9fef32f48d581",
+      "provider": "groq",
+      "model": "openai/gpt-oss-20b",
+      "cases": [
+        "sentiment_05",
+        "pmo_05"
+      ],
+      "prompt_sha256": "fed6f4b4f15f0bc366ee183f4a558d127c4734484487306f3dd41328f3599656",
+      "attempt": {
+        "attempt_id": "dd802337-f96d-43c4-b18e-9876a9d87be0",
+        "cases": [
+          "sentiment_05",
+          "pmo_05"
+        ],
+        "request_sha256": "2a629d82b713050d5a52988015688154233712364455915a51bdddb54440ab62",
+        "native_sha256": "855690046d816accbb21ae61bc61e46347c15413b82f2a9ba18a659fe53569eb",
+        "candidate_sha256": "7e8fc8b9222a1cdadf573557ca3774118141d91d4f18c7b5b9d069772cf5cf9e",
+        "usage": {
+          "input_tokens": 1182,
+          "output_tokens": 183,
+          "reasoning_tokens": 56,
+          "source": "reported"
+        },
+        "latency_ms": 694,
+        "completion": "complete",
+        "reported_model_id": null,
+        "roles": {
+          "sentiment": {
+            "outcome": "supported",
+            "hard_validation": "validated",
+            "finding_count": 1
+          },
+          "pmo": {
+            "outcome": "supported",
+            "hard_validation": "validated",
+            "finding_count": 1
+          }
+        }
+      },
+      "output": {
+        "sentiment": {
+          "state": "supported",
+          "advice": "Address blockers promptly to maintain project momentum",
+          "basis": [
+            "b1"
+          ],
+          "cites": [
+            "e1"
+          ],
+          "covered": [
+            "b1"
+          ],
+          "claim": "Five open blockers identified; no emotional impact noted",
+          "epistemic": "interpretation"
+        },
+        "pmo": {
+          "state": "supported",
+          "advice": "Inspect evidence, resolve limitations, and document findings",
+          "basis": [
+            "f1"
+          ],
+          "cites": [
+            "e1"
+          ],
+          "covered": [
+            "f1"
+          ],
+          "claim": "Security approval pending across selected projects, posing medium severity blocker",
+          "epistemic": "interpretation"
+        }
+      }
+    },
+    {
+      "report": "groq-repair-synthesis-absent.json",
+      "report_sha256": "aea3f2278632f5f3a99a1983d1b2391ab269577b491d3184e922cfd2f8f19500",
+      "provider": "groq",
+      "model": "openai/gpt-oss-20b",
+      "cases": [
+        "sentiment_07",
+        "pmo_07",
+        "executive_07"
+      ],
+      "prompt_sha256": "30c1e634ee5a6a8c8a29094ab039eaba2630c8d2dd2fa06328b57b767bacb858",
+      "attempt": {
+        "attempt_id": "a29bfa03-beb0-437d-8e9c-ec08305d3a5c",
+        "cases": [
+          "sentiment_07",
+          "pmo_07",
+          "executive_07"
+        ],
+        "request_sha256": "19e532fd285f3c185588fc9766c963f79d59924ab14151a93bb293c381c252de",
+        "native_sha256": "bf31c0477572e439780e9e6a82e6fc6d89f6ef4d400d3755517ce5c8feda976b",
+        "candidate_sha256": "8f98544b17636cbcb60fc1ddbe527b2d154d8bec65387590a5c0e7178b80f91c",
+        "usage": {
+          "input_tokens": 1670,
+          "output_tokens": 120,
+          "reasoning_tokens": 29,
+          "source": "reported"
+        },
+        "latency_ms": 740,
+        "completion": "complete",
+        "reported_model_id": null,
+        "roles": {
+          "sentiment": {
+            "outcome": "insufficient_evidence",
+            "hard_validation": "partially_validated",
+            "finding_count": 0
+          },
+          "pmo": {
+            "outcome": "insufficient_evidence",
+            "hard_validation": "partially_validated",
+            "finding_count": 0
+          },
+          "executive": {
+            "outcome": "insufficient_evidence",
+            "hard_validation": "partially_validated",
+            "finding_count": 0
+          }
+        }
+      },
+      "output": {
+        "sentiment": {
+          "state": "insufficient_evidence",
+          "gaps": [
+            {
+              "item": "b1",
+              "code": "missing_evidence"
+            }
+          ]
+        },
+        "pmo": {
+          "state": "insufficient_evidence",
+          "gaps": [
+            {
+              "item": "f1",
+              "code": "missing_evidence"
+            }
+          ]
+        },
+        "executive": {
+          "state": "insufficient_evidence",
+          "gaps": [
+            {
+              "item": "f1",
+              "code": "missing_evidence"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "report": "puter-repair-assurance-absent.json",
+      "report_sha256": "dd089942a47ac238f4c85d16729974d11fdbce169e95193933689b1dec2a761e",
+      "provider": "puter",
+      "model": "gpt-4.1-mini-2025-04-14",
+      "cases": [
+        "risk_07",
+        "governance_07",
+        "agile_coach_07"
+      ],
+      "prompt_sha256": "6c3af985b6164c90f75f98587462eab9f5cad99e0783f7b6c527a720c956fa6a",
+      "attempt": {
+        "attempt_id": "63818692-4373-440b-be51-36a6ed16ecff",
+        "cases": [
+          "risk_07",
+          "governance_07",
+          "agile_coach_07"
+        ],
+        "request_sha256": "aa941803f92df4009644109ff2758ee67c3076aa6c3c19f33e981feb4591e6b4",
+        "native_sha256": "c4b7a2da25838f80d694682cb482fcf08339f1a4bba5b652c8a77b890e78c681",
+        "candidate_sha256": "f36d67f32e0ed9c2f55f8edfdd18d7b1092767b834989cfdb3aebe630b694696",
+        "usage": {
+          "input_tokens": 1201,
+          "output_tokens": 84,
+          "reasoning_tokens": null,
+          "source": "reported"
+        },
+        "latency_ms": 1661,
+        "completion": "complete",
+        "reported_model_id": "gpt-4.1-mini",
+        "roles": {
+          "risk": {
+            "outcome": "insufficient_evidence",
+            "hard_validation": "partially_validated",
+            "finding_count": 0
+          },
+          "governance": {
+            "outcome": "insufficient_evidence",
+            "hard_validation": "partially_validated",
+            "finding_count": 0
+          },
+          "agile_coach": {
+            "outcome": "insufficient_evidence",
+            "hard_validation": "partially_validated",
+            "finding_count": 0
+          }
+        }
+      },
+      "output": {
+        "risk": {
+          "state": "insufficient_evidence",
+          "gaps": [
+            {
+              "item": "e1",
+              "code": "missing_evidence"
+            }
+          ]
+        },
+        "governance": {
+          "state": "insufficient_evidence",
+          "gaps": [
+            {
+              "item": "e1",
+              "code": "missing_evidence"
+            }
+          ]
+        },
+        "agile_coach": {
+          "state": "insufficient_evidence",
+          "gaps": [
+            {
+              "item": "e1",
+              "code": "missing_evidence"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "report": "puter-repair-assurance-positive.json",
+      "report_sha256": "c75190e72e200badff9f7fa93bd85b9937122d7fe6d3e23c3915d3417fc7e528",
+      "provider": "puter",
+      "model": "gpt-4.1-mini-2025-04-14",
+      "cases": [
+        "risk_05",
+        "governance_03",
+        "agile_coach_05"
+      ],
+      "prompt_sha256": "675975a850b055c85ee01f25109e19ba6ab88fcc5ea59798d636cdbbec478801",
+      "attempt": {
+        "attempt_id": "463e70b2-6787-4d97-ba20-401e73535667",
+        "cases": [
+          "risk_05",
+          "governance_03",
+          "agile_coach_05"
+        ],
+        "request_sha256": "f5536992250d4e5109d2a7ca8b36a810f0c6f5cf0cb7bddc5f97475a37618b6b",
+        "native_sha256": "91954651f9b36c8639d28c14b03eb079b503be7c1db930a756f8f03aa07fe092",
+        "candidate_sha256": "bb58aedd80d1d3cce231c59b11b1eb1eebb8b181093f560da860c0cf0ce424d0",
+        "usage": {
+          "input_tokens": 1195,
+          "output_tokens": 206,
+          "reasoning_tokens": null,
+          "source": "reported"
+        },
+        "latency_ms": 2803,
+        "completion": "complete",
+        "reported_model_id": "gpt-4.1-mini",
+        "roles": {
+          "risk": {
+            "outcome": "supported",
+            "hard_validation": "validated",
+            "finding_count": 1
+          },
+          "governance": {
+            "outcome": "supported",
+            "hard_validation": "validated",
+            "finding_count": 1
+          },
+          "agile_coach": {
+            "outcome": "supported",
+            "hard_validation": "validated",
+            "finding_count": 1
+          }
+        }
+      },
+      "output": {
+        "risk": {
+          "state": "supported",
+          "cites": [
+            "e1"
+          ],
+          "covered": [
+            "e1"
+          ],
+          "claim": "Critical integration depends on unsupported library causing delivery risk.",
+          "advice": "Replace unsupported library promptly.",
+          "epistemic": "interpretation",
+          "predicate": "delivery_blocked",
+          "signal": "adverse",
+          "kind": "risk",
+          "severity": "high"
+        },
+        "governance": {
+          "state": "supported",
+          "cites": [
+            "e1"
+          ],
+          "covered": [
+            "e1"
+          ],
+          "claim": "Mandatory access review lacks documented completion evidence.",
+          "advice": "Document completion evidence for access review.",
+          "epistemic": "interpretation",
+          "predicate": "practice_gap",
+          "signal": "adverse",
+          "kind": "compliance_gap",
+          "severity": "medium"
+        },
+        "agile_coach": {
+          "state": "supported",
+          "cites": [
+            "e1"
+          ],
+          "covered": [
+            "e1"
+          ],
+          "claim": "No shared completion policy causes repeated acceptance disputes.",
+          "advice": "Establish and enforce a shared completion policy.",
+          "epistemic": "interpretation",
+          "predicate": "practice_gap",
+          "signal": "adverse",
+          "kind": "risk",
+          "severity": "medium"
+        }
+      }
+    },
+    {
+      "report": "puter-repair-delivery-absent.json",
+      "report_sha256": "71fa568064166e72427b9cce497fc8941ac6afce95a1f09b26e92ada17d7a901",
+      "provider": "puter",
+      "model": "gpt-4.1-mini-2025-04-14",
+      "cases": [
+        "financial_07",
+        "schedule_07",
+        "resource_07"
+      ],
+      "prompt_sha256": "21e41c414ca312ce0dde9e6be9d6ff298ed8f902e3ba5b66b16e38274600ed36",
+      "attempt": {
+        "attempt_id": "f79ea987-c2f7-4db7-b012-63b2a6c841d9",
+        "cases": [
+          "financial_07",
+          "schedule_07",
+          "resource_07"
+        ],
+        "request_sha256": "439d72fc1a27ad6edc4be4478b4a9275f39af993f62b983dfb33cd85341cf4f0",
+        "native_sha256": "5f604c17a7af557f6569b2fd41517b0bcaf29dcf396952d6d4d0f1434575a484",
+        "candidate_sha256": "5c0d3e99dfa56b5e2b2d2e9e36b8b1d6f85124fff808f999178d346ac287b799",
+        "usage": {
+          "input_tokens": 1262,
+          "output_tokens": 79,
+          "reasoning_tokens": null,
+          "source": "reported"
+        },
+        "latency_ms": 1758,
+        "completion": "complete",
+        "reported_model_id": "gpt-4.1-mini",
+        "roles": {
+          "financial": {
+            "outcome": "insufficient_evidence",
+            "hard_validation": "partially_validated",
+            "finding_count": 0
+          },
+          "schedule": {
+            "outcome": "insufficient_evidence",
+            "hard_validation": "partially_validated",
+            "finding_count": 0
+          },
+          "resource": {
+            "outcome": "insufficient_evidence",
+            "hard_validation": "partially_validated",
+            "finding_count": 0
+          }
+        }
+      },
+      "output": {
+        "financial": {
+          "state": "insufficient_evidence",
+          "gaps": [
+            {
+              "item": "e1",
+              "code": "missing_evidence"
+            }
+          ]
+        },
+        "schedule": {
+          "state": "insufficient_evidence",
+          "gaps": [
+            {
+              "item": "e1",
+              "code": "missing_evidence"
+            }
+          ]
+        },
+        "resource": {
+          "state": "insufficient_evidence",
+          "gaps": [
+            {
+              "item": "e1",
+              "code": "missing_evidence"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "report": "puter-repair-delivery-positive.json",
+      "report_sha256": "faf59d1c7aaea33c61c3f1d804d65d82b7bbed529d91bb2f596b8ef0b4efc359",
+      "provider": "puter",
+      "model": "gpt-4.1-mini-2025-04-14",
+      "cases": [
+        "financial_05",
+        "schedule_05",
+        "resource_05"
+      ],
+      "prompt_sha256": "b7058c07afd3577af1a8b846c21f99cd02e9609066a901a9dae9cc2ac4b8c733",
+      "attempt": {
+        "attempt_id": "39ba66c5-5111-45e1-bb54-488561abec56",
+        "cases": [
+          "financial_05",
+          "schedule_05",
+          "resource_05"
+        ],
+        "request_sha256": "d070d4696a505fa9ac846ddf16c2a49cbf0d95f4081e2eba88b7548d4c48096c",
+        "native_sha256": "66cec26de3a9d74f6690a0d6bfa6e78dae1a7ac187e4b51ff421a0f08d72ef6e",
+        "candidate_sha256": "ffa1b31a96034bf9314a3c4d519e917caa5e0ef29e0e55dba76db3fd5ab6d061",
+        "usage": {
+          "input_tokens": 1280,
+          "output_tokens": 204,
+          "reasoning_tokens": null,
+          "source": "reported"
+        },
+        "latency_ms": 2341,
+        "completion": "complete",
+        "reported_model_id": "gpt-4.1-mini",
+        "roles": {
+          "financial": {
+            "outcome": "supported",
+            "hard_validation": "validated",
+            "finding_count": 1
+          },
+          "schedule": {
+            "outcome": "supported",
+            "hard_validation": "validated",
+            "finding_count": 1
+          },
+          "resource": {
+            "outcome": "supported",
+            "hard_validation": "validated",
+            "finding_count": 1
+          }
+        }
+      },
+      "output": {
+        "financial": {
+          "state": "supported",
+          "cites": [
+            "e1"
+          ],
+          "covered": [
+            "e1"
+          ],
+          "claim": "Rejected components cause extra purchase costs beyond allowance.",
+          "advice": "Control component quality to avoid extra costs.",
+          "epistemic": "interpretation",
+          "predicate": "budget_overrun",
+          "signal": "adverse",
+          "kind": "risk",
+          "severity": "medium"
+        },
+        "schedule": {
+          "state": "supported",
+          "cites": [
+            "e1"
+          ],
+          "covered": [
+            "e1"
+          ],
+          "claim": "Permit absence blocks site preparation progress.",
+          "advice": "Obtain permit promptly to continue work.",
+          "epistemic": "interpretation",
+          "predicate": "delivery_blocked",
+          "signal": "adverse",
+          "kind": "blocker",
+          "severity": "high"
+        },
+        "resource": {
+          "state": "supported",
+          "cites": [
+            "e1"
+          ],
+          "covered": [
+            "e1"
+          ],
+          "claim": "Current capacity risk is moderate with some exceptions.",
+          "advice": "Increase capacity or manage workload to reduce risk.",
+          "epistemic": "interpretation",
+          "predicate": "capacity_exceeded",
+          "signal": "adverse",
+          "kind": "risk",
+          "severity": "medium"
+        }
+      }
+    },
+    {
+      "report": "puter-repair-synthesis-absent.json",
+      "report_sha256": "5c35c46587579803b3b40c3c1d3121fee3a7bf5faa3097fa2e372c709f06db56",
+      "provider": "puter",
+      "model": "gpt-4.1-mini-2025-04-14",
+      "cases": [
+        "sentiment_07",
+        "pmo_07",
+        "executive_07"
+      ],
+      "prompt_sha256": "30c1e634ee5a6a8c8a29094ab039eaba2630c8d2dd2fa06328b57b767bacb858",
+      "attempt": {
+        "attempt_id": "f757cc9d-f174-429b-b7b8-ce0d859c176a",
+        "cases": [
+          "sentiment_07",
+          "pmo_07",
+          "executive_07"
+        ],
+        "request_sha256": "19e532fd285f3c185588fc9766c963f79d59924ab14151a93bb293c381c252de",
+        "native_sha256": "d4dd25ce88a3cb755591fd393a70bd5c849bba462f1931051eca7a3377e9a682",
+        "candidate_sha256": "e7f765d739a4f9fd339e73c4e8bd0e26a5103fa0c2e881a242f07802e33342b9",
+        "usage": {
+          "input_tokens": 1188,
+          "output_tokens": 70,
+          "reasoning_tokens": null,
+          "source": "reported"
+        },
+        "latency_ms": 1714,
+        "completion": "complete",
+        "reported_model_id": "gpt-4.1-mini",
+        "roles": {
+          "sentiment": {
+            "outcome": "no_findings",
+            "hard_validation": "validated",
+            "finding_count": 0
+          },
+          "pmo": {
+            "outcome": "insufficient_evidence",
+            "hard_validation": "partially_validated",
+            "finding_count": 0
+          },
+          "executive": {
+            "outcome": "insufficient_evidence",
+            "hard_validation": "partially_validated",
+            "finding_count": 0
+          }
+        }
+      },
+      "output": {
+        "sentiment": {
+          "state": "no_findings",
+          "covered": [
+            "b1"
+          ]
+        },
+        "pmo": {
+          "state": "insufficient_evidence",
+          "gaps": [
+            {
+              "item": "f1",
+              "code": "missing_evidence"
+            }
+          ]
+        },
+        "executive": {
+          "state": "insufficient_evidence",
+          "gaps": [
+            {
+              "item": "f1",
+              "code": "missing_evidence"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "report": "puter-repair-synthesis-positive.json",
+      "report_sha256": "fe098a0e6f85bd56052fb6ac51cb432736ef52b501c70bf940270614e7614aa4",
+      "provider": "puter",
+      "model": "gpt-4.1-mini-2025-04-14",
+      "cases": [
+        "sentiment_05",
+        "pmo_05",
+        "executive_05"
+      ],
+      "prompt_sha256": "1e955cf194ec5d784b2d3e1fbb5262625df0e7f14f30db06f45b471d2e9363de",
+      "attempt": {
+        "attempt_id": "7a5ace0a-a388-4246-8cf3-242adaac0a19",
+        "cases": [
+          "sentiment_05",
+          "pmo_05",
+          "executive_05"
+        ],
+        "request_sha256": "6682684d125e39ed1528c8344a76a16eb54a2df4d495160fc9f0b87ef04f4bd8",
+        "native_sha256": "740d160eeab68c39cdca95c389aad4a75a34ab7d85345c9efb58dd790763e22d",
+        "candidate_sha256": "e6f2b229f8699eb7ed69d2e39a489a6976ba45d3082c36be5ce63342a9cc008d",
+        "usage": {
+          "input_tokens": 1180,
+          "output_tokens": 170,
+          "reasoning_tokens": null,
+          "source": "reported"
+        },
+        "latency_ms": 2518,
+        "completion": "complete",
+        "reported_model_id": "gpt-4.1-mini",
+        "roles": {
+          "sentiment": {
+            "outcome": "supported",
+            "hard_validation": "validated",
+            "finding_count": 1
+          },
+          "pmo": {
+            "outcome": "supported",
+            "hard_validation": "validated",
+            "finding_count": 1
+          },
+          "executive": {
+            "outcome": "supported",
+            "hard_validation": "validated",
+            "finding_count": 1
+          }
+        }
+      },
+      "output": {
+        "sentiment": {
+          "state": "supported",
+          "cites": [
+            "e1"
+          ],
+          "covered": [
+            "b1"
+          ],
+          "claim": "Five open project blockers remain in privacy-safe team delivery.",
+          "advice": "Prioritize resolving these blockers promptly.",
+          "epistemic": "interpretation",
+          "basis": [
+            "b1"
+          ]
+        },
+        "pmo": {
+          "state": "supported",
+          "cites": [
+            "e1"
+          ],
+          "covered": [
+            "f1"
+          ],
+          "claim": "A common security approval is still outstanding across selected projects.",
+          "advice": "Obtain security approval to proceed safely.",
+          "epistemic": "interpretation",
+          "basis": [
+            "f1"
+          ]
+        },
+        "executive": {
+          "state": "supported",
+          "cites": [
+            "e1"
+          ],
+          "covered": [
+            "f1"
+          ],
+          "claim": "The revised scope is disputed and lacks business acceptance.",
+          "advice": "Resolve scope disputes and secure business acceptance.",
+          "epistemic": "interpretation",
+          "basis": [
+            "f1"
+          ]
+        }
+      }
+    }
+  ]
+}

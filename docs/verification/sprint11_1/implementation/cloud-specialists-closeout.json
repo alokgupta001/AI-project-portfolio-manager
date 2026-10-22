@@ -1,0 +1,79 @@
+{
+  "schema_version": "cloud-specialist-closeout-v1",
+  "checked_at": "2026-10-17T14:23:31.334334+00:00",
+  "source_fingerprints_verified": 65,
+  "frozen_files_verified": 24,
+  "model_requests": 26,
+  "provider_requests": {
+    "groq": 9,
+    "gemini": 9,
+    "puter": 8
+  },
+  "current_prompt_supported_roles": 9,
+  "absent_cases": 9,
+  "absent_hard_checks_passed": 7,
+  "absent_rejected": 2,
+  "calibration_failures": [
+    {
+      "provider": "gemini",
+      "case": "governance_01",
+      "code": "INVALID_OUTPUT",
+      "receipt": "cloud-gemini-governance-v2.json"
+    },
+    {
+      "provider": "groq",
+      "case": "financial_07",
+      "code": "INVALID_OUTPUT",
+      "receipt": "cloud-groq-financial-absent.json"
+    },
+    {
+      "provider": "groq",
+      "case": "financial_03",
+      "code": "INVALID_OUTPUT",
+      "receipt": "cloud-groq-financial-v2-measured.json"
+    },
+    {
+      "provider": "groq",
+      "case": "resource_07",
+      "code": "INVALID_OUTPUT",
+      "receipt": "cloud-groq-resource-absent.json"
+    },
+    {
+      "provider": "puter",
+      "case": "pmo_01",
+      "code": "INVALID_OUTPUT",
+      "receipt": "cloud-puter-pmo-measured.json"
+    },
+    {
+      "provider": "puter",
+      "case": "sentiment_01",
+      "code": "INVALID_OUTPUT",
+      "receipt": "cloud-puter-team-first.json"
+    }
+  ],
+  "all_outcomes_known": true,
+  "prior_groq_probe_admissions_retained": 3,
+  "prior_local_project_attempts_retained": 2,
+  "disabled_profiles": 7,
+  "qualified_classes": [],
+  "weight_training_performed": false,
+  "independent_review": "pending",
+  "normal_activation": false,
+  "normal_revision": "0012_ai_runtime",
+  "normal_http": 200,
+  "preservation_disposition": "69 table hashes unchanged; all original refresh-token rows retained, two added and one used flag consumed; five objects/24 frozen files unchanged",
+  "tests": {
+    "focused_offline": 198,
+    "full_backend_passed": 446,
+    "full_backend_fixture_failures": 3,
+    "final_database_provider_scope": 101,
+    "final_prompt_fence_scope": 37,
+    "source_modules_mypy": 64
+  },
+  "qualification": "BLOCKED: incomplete independently reviewed per-class/held-out evidence; Groq negative cases rejected",
+  "observed_supported_latency_ms": {
+    "min": 679,
+    "max": 2258
+  },
+  "credential_bindings_verified": 3
+}

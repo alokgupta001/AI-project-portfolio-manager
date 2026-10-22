@@ -1,0 +1,28 @@
+E501 Line too long (111 > 100)
+   --> tests\test_agent_batches.py:206:101
+    |
+204 |     original=(folder / "groq-specialist-authorization.json").read_bytes()
+205 |     def forbid(req):raise AssertionError("No HTTP")
+206 |     r=await B.run("groq",["financial_05","schedule_05","resource_05"],False,folder,httpx.MockTransport(forbid))
+    |                                                                                                     ^^^^^^^^^^^
+207 |     assert r["status"]=="prepared_no_requests" and not r["attempts"]
+208 |     assert json.loads((folder / "groq-specialist-ledger.json").read_bytes())==[]
+    |
+
+E701 Multiple statements on one line (colon)
+   --> tests\test_agent_batches.py:210:35
+    |
+208 |     assert json.loads((folder / "groq-specialist-ledger.json").read_bytes())==[]
+209 |     assert (folder / "groq-specialist-authorization.json").read_bytes()==original
+210 |     with pytest.raises(ValueError):await B.run("groq",["risk_02"],True,folder,httpx.MockTransport(forbid))
+    |                                   ^
+
+E501 Line too long (106 > 100)
+   --> tests\test_agent_batches.py:210:101
+    |
+208 |     assert json.loads((folder / "groq-specialist-ledger.json").read_bytes())==[]
+209 |     assert (folder / "groq-specialist-authorization.json").read_bytes()==original
+210 |     with pytest.raises(ValueError):await B.run("groq",["risk_02"],True,folder,httpx.MockTransport(forbid))
+    |                                                                                                     ^^^^^^
+
+Found 4 errors (1 fixed, 3 remaining).

@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "<stdin>", line 8, in <module>
+  File "C:\Users\alokg\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\subprocess.py", line 571, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['docker', 'compose', 'exec', '-T', 'postgres', 'pg_restore', '--data-only', '--table=identity_refresh_tokens']' returned non-zero exit status 1.

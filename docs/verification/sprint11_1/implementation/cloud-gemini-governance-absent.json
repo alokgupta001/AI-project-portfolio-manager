@@ -1,0 +1,45 @@
+{
+  "schema_version": "cloud-specialist-calibration-v1",
+  "provider": "gemini",
+  "model": "gemini-3.5-flash-lite",
+  "corpus_sha256": "f626c0b210daf73110cfc98d0aa6f7a974842bab0bf3e98f52e177e8ab516a24",
+  "selected_cases": [
+    "governance_07"
+  ],
+  "qualified_classes": [],
+  "profile_activated": false,
+  "weight_training": false,
+  "max_output_tokens": 512,
+  "independent_semantic_review": "pending",
+  "attempts": [
+    {
+      "case": "governance_07",
+      "agent": "governance",
+      "attempt_id": "f21a505a-90a1-4f7f-87fa-d48cb44f1967",
+      "prompt_sha256": "1bcc660295d4145007757826c681a6fd4a00fc4da6f55e07a6c5dd413b092fb4",
+      "request_sha256": "bebfb5ede1f87403bb84aa8695ecc69cbacad0a2633867b9a738cadbc0bc89dd",
+      "native_sha256": "770d3cc5773b8a464eb83a248d1b3e2d1874365efa15cde55055cdb19787a485",
+      "candidate_sha256": "205916ef58e19c939c3e1be0929361fb7c10a5af776ca3c916d1cf72e7ddf2a9",
+      "completion": "complete",
+      "usage": {
+        "input_tokens": 446,
+        "output_tokens": 48,
+        "reasoning_tokens": null,
+        "source": "reported"
+      },
+      "latency_ms": 1646,
+      "validation_stage": "finished",
+      "hard_validation": "partially_validated",
+      "finding_count": 0,
+      "semantic_review": "pending"
+    }
+  ],
+  "limits": {
+    "attempts_per_case": 2,
+    "attempts_per_batch": 3,
+    "batch_seconds": 90,
+    "attempt_seconds": 22,
+    "authorization_calls": 9
+  },
+  "status": "completed_pending_review"
+}

@@ -1808,6 +1808,8 @@ export interface components {
         };
         /** AIRunInput */
         AIRunInput: {
+            /** Analysis Mode */
+            analysis_mode?: ("auto" | "metrics" | "domain" | "assessment" | "portfolio" | "executive" | "all_specialists") | null;
             /** Assessment Id */
             assessment_id?: string | null;
             /**
@@ -1816,6 +1818,8 @@ export interface components {
              * @enum {string}
              */
             operation: "query" | "index" | "agents";
+            /** Prior Run Id */
+            prior_run_id?: string | null;
             /**
              * Project Id
              * Format: uuid
@@ -1826,6 +1830,12 @@ export interface components {
              * @default
              */
             query: string;
+            /** Question Ids */
+            question_ids?: string[] | null;
+            /** Requested Agents */
+            requested_agents?: ("financial" | "schedule" | "sentiment" | "risk" | "resource" | "governance" | "agile_coach" | "pmo" | "executive")[] | null;
+            /** Runtime Version */
+            runtime_version?: "v2" | null;
             /** Version Id */
             version_id?: string | null;
             /** Version Ids */
@@ -1995,15 +2005,21 @@ export interface components {
              *     ]
              */
             evaluation_cases: string[];
+            /** Execution Policy */
+            execution_policy?: string | null;
             /** Fallback */
             fallback: string;
             /** Inputs */
             inputs: string[];
+            /** Modes */
+            modes?: string[];
             /**
              * Output Schema
              * @default SpecialistOutput
              */
             output_schema: string;
+            /** Task Class */
+            task_class?: string | null;
             /** Timeout Seconds */
             timeout_seconds: number;
             /** Tools */
@@ -2176,13 +2192,23 @@ export interface components {
         };
         /** AnalysisInput */
         AnalysisInput: {
+            /** Analysis Mode */
+            analysis_mode?: ("auto" | "metrics" | "domain" | "assessment" | "portfolio" | "executive" | "all_specialists") | null;
             /** Assessment Id */
             assessment_id?: string | null;
+            /** Prior Run Id */
+            prior_run_id?: string | null;
             /**
              * Project Id
              * Format: uuid
              */
             project_id: string;
+            /** Question Ids */
+            question_ids?: string[] | null;
+            /** Requested Agents */
+            requested_agents?: ("financial" | "schedule" | "sentiment" | "risk" | "resource" | "governance" | "agile_coach" | "pmo" | "executive")[] | null;
+            /** Runtime Version */
+            runtime_version?: "v2" | null;
             /** Version Ids */
             version_ids?: string[];
         };
@@ -2211,12 +2237,20 @@ export interface components {
         AnalysisView: {
             /** Agents */
             agents: components["schemas"]["AgentState"][];
+            /** Analysis Mode */
+            analysis_mode?: ("auto" | "metrics" | "domain" | "assessment" | "portfolio" | "executive" | "all_specialists") | null;
             /** Assessment Id */
             assessment_id: string | null;
             /** Assessment Revision */
             assessment_revision: number | null;
+            /** Blocked Reason */
+            blocked_reason?: string | null;
+            /** Briefing */
+            briefing?: components["schemas"]["FindingView"][];
             /** Can Review */
             can_review: boolean;
+            /** Capability Details */
+            capability_details?: components["schemas"]["CapabilityDetail"][];
             /** Evidence */
             evidence: components["schemas"]["EvidenceView"][];
             /** Findings */
@@ -2238,12 +2272,18 @@ export interface components {
              * @default specialists-rubric-v1
              */
             prompt_version: string;
+            /** Route Summary */
+            route_summary?: {
+                [key: string]: unknown;
+            }[];
             /**
              * Rule Version
              * @default specialist-support-v1
              */
             rule_version: string;
             run: components["schemas"]["AIRunView"];
+            /** Runtime Version */
+            runtime_version?: string | null;
             /** Semantic Status */
             semantic_status: string;
             /** Source Snapshot Sha256 */
@@ -2252,6 +2292,14 @@ export interface components {
             stages: components["schemas"]["StageView"][];
             /** Suggestions */
             suggestions: components["schemas"]["SuggestionView"][];
+            /** Task Summary */
+            task_summary?: {
+                [key: string]: unknown;
+            }[];
+            /** Validation Summary */
+            validation_summary?: {
+                [key: string]: unknown;
+            };
         };
         /** AnswerBatchInput */
         AnswerBatchInput: {
@@ -2773,6 +2821,50 @@ export interface components {
             tuesday: string;
             /** Wednesday */
             wednesday: string;
+        };
+        /** CapabilityDetail */
+        CapabilityDetail: {
+            /**
+             * Agent
+             * @enum {string}
+             */
+            agent: "financial" | "schedule" | "sentiment" | "risk" | "resource" | "governance" | "agile_coach" | "pmo" | "executive";
+            /** Base Covered Ids */
+            base_covered_ids?: string[];
+            /**
+             * Base Outcome
+             * @default insufficient_evidence
+             * @enum {string}
+             */
+            base_outcome: "supported" | "no_findings" | "insufficient_evidence";
+            /** Base Required Ids */
+            base_required_ids?: string[];
+            /** Code */
+            code?: string | null;
+            /**
+             * Execution Method
+             * @default deterministic
+             * @enum {string}
+             */
+            execution_method: "deterministic" | "semantic" | "hybrid";
+            /**
+             * Interpretation Reason
+             * @default none
+             * @enum {string}
+             */
+            interpretation_reason: "explicit_request" | "explanatory_text" | "conflicting_evidence" | "cross_domain_synthesis" | "none";
+            /** Semantic Covered Ids */
+            semantic_covered_ids?: string[];
+            /** Semantic Deferred Ids */
+            semantic_deferred_ids?: string[];
+            /**
+             * Semantic Outcome
+             * @default not_requested
+             * @enum {string}
+             */
+            semantic_outcome: "not_requested" | "not_needed" | "completed" | "deferred" | "unavailable" | "failed";
+            /** Semantic Required Ids */
+            semantic_required_ids?: string[];
         };
         /** CapacityDay */
         CapacityDay: {
@@ -3629,12 +3721,20 @@ export interface components {
             agents: ("financial" | "schedule" | "sentiment" | "risk" | "resource" | "governance" | "agile_coach" | "pmo" | "executive")[];
             /** Available */
             available: boolean;
+            /** Basis */
+            basis?: string[];
             /** Confidence */
-            confidence: string;
+            confidence: string | null;
             /** Conflicts */
             conflicts: string[];
             /** Discrepancy */
             discrepancy: boolean;
+            /**
+             * Epistemic
+             * @default deterministic
+             * @enum {string}
+             */
+            epistemic: "deterministic" | "interpretation" | "hypothesis";
             /** Improvement */
             improvement: string;
             /** Key */
@@ -3644,10 +3744,17 @@ export interface components {
              * @enum {string}
              */
             kind: "risk" | "blocker" | "dependency" | "compliance_gap" | "maturity_evidence";
+            /** Predicate */
+            predicate?: string | null;
             /** Review Revision */
             review_revision: number;
             /** Reviews */
             reviews: components["schemas"]["ReviewView"][];
+            /**
+             * Semantic Status
+             * @default not_assessed
+             */
+            semantic_status: string;
             /**
              * Severity
              * @enum {string}
@@ -3682,10 +3789,10 @@ export interface components {
             instance_id: string;
             /**
              * Schema Revision
-             * @default 0014_specialist_reviewer
+             * @default 0015_agent_task_runtime
              * @constant
              */
-            schema_revision: "0014_specialist_reviewer";
+            schema_revision: "0015_agent_task_runtime";
         };
         /** FrameworkInput */
         "FrameworkInput-Input": {

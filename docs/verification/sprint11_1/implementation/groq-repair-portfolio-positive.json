@@ -1,0 +1,53 @@
+{
+  "schema_version": "cloud-batch-calibration-v1",
+  "provider": "groq",
+  "model": "openai/gpt-oss-20b",
+  "corpus_sha256": "f626c0b210daf73110cfc98d0aa6f7a974842bab0bf3e98f52e177e8ab516a24",
+  "policy_sha256": "143f5442bdd2294d8e95f0f023dd61726139b4a5be9aed7155f30437ec434f8e",
+  "selected_cases": [
+    "sentiment_05",
+    "pmo_05"
+  ],
+  "prompt_sha256": "fed6f4b4f15f0bc366ee183f4a558d127c4734484487306f3dd41328f3599656",
+  "request_sha256": "2a629d82b713050d5a52988015688154233712364455915a51bdddb54440ab62",
+  "max_output_tokens": 512,
+  "context_tokens": 8192,
+  "qualified_classes": [],
+  "profile_activated": false,
+  "weight_training": false,
+  "independent_semantic_review": "pending",
+  "attempts": [
+    {
+      "attempt_id": "dd802337-f96d-43c4-b18e-9876a9d87be0",
+      "cases": [
+        "sentiment_05",
+        "pmo_05"
+      ],
+      "request_sha256": "2a629d82b713050d5a52988015688154233712364455915a51bdddb54440ab62",
+      "native_sha256": "855690046d816accbb21ae61bc61e46347c15413b82f2a9ba18a659fe53569eb",
+      "candidate_sha256": "7e8fc8b9222a1cdadf573557ca3774118141d91d4f18c7b5b9d069772cf5cf9e",
+      "usage": {
+        "input_tokens": 1182,
+        "output_tokens": 183,
+        "reasoning_tokens": 56,
+        "source": "reported"
+      },
+      "latency_ms": 694,
+      "completion": "complete",
+      "reported_model_id": null,
+      "roles": {
+        "sentiment": {
+          "outcome": "supported",
+          "hard_validation": "validated",
+          "finding_count": 1
+        },
+        "pmo": {
+          "outcome": "supported",
+          "hard_validation": "validated",
+          "finding_count": 1
+        }
+      }
+    }
+  ],
+  "status": "completed_pending_review"
+}

@@ -1,0 +1,206 @@
+{
+  "schema_version": "qwen06-local-trial-v1",
+  "model": "qwen3:0.6b",
+  "model_digest": "7df6b6e09427a769808717c0a93cadc4ae99ed4eb8bf5ca557c90846becea435",
+  "context_tokens": 2048,
+  "output_limit": 128,
+  "keep_alive_seconds": 0,
+  "deadline_seconds": 22,
+  "headroom_floor_mib": 2048,
+  "inference_requests": 1,
+  "production_activated": false,
+  "semantic_qualification": false,
+  "project_stack": "running; not stopped",
+  "samples": [
+    {
+      "available_mib": 4294,
+      "ollama_rss_mib": 88
+    },
+    {
+      "available_mib": 4297,
+      "ollama_rss_mib": 88
+    },
+    {
+      "available_mib": 4279,
+      "ollama_rss_mib": 88
+    },
+    {
+      "available_mib": 4277,
+      "ollama_rss_mib": 88
+    },
+    {
+      "available_mib": 4260,
+      "ollama_rss_mib": 88
+    },
+    {
+      "available_mib": 4255,
+      "ollama_rss_mib": 88
+    },
+    {
+      "available_mib": 4254,
+      "ollama_rss_mib": 88
+    },
+    {
+      "available_mib": 4265,
+      "ollama_rss_mib": 88
+    },
+    {
+      "available_mib": 4268,
+      "ollama_rss_mib": 88
+    },
+    {
+      "available_mib": 4270,
+      "ollama_rss_mib": 88
+    },
+    {
+      "available_mib": 4271,
+      "ollama_rss_mib": 88
+    },
+    {
+      "available_mib": 4274,
+      "ollama_rss_mib": 88
+    },
+    {
+      "available_mib": 4274,
+      "ollama_rss_mib": 88
+    },
+    {
+      "available_mib": 4257,
+      "ollama_rss_mib": 88
+    },
+    {
+      "available_mib": 4256,
+      "ollama_rss_mib": 88
+    },
+    {
+      "available_mib": 4257,
+      "ollama_rss_mib": 88
+    },
+    {
+      "available_mib": 4257,
+      "ollama_rss_mib": 88
+    },
+    {
+      "available_mib": 4258,
+      "ollama_rss_mib": 88
+    },
+    {
+      "available_mib": 4247,
+      "ollama_rss_mib": 88
+    },
+    {
+      "available_mib": 4209,
+      "ollama_rss_mib": 88
+    },
+    {
+      "available_mib": 4228,
+      "ollama_rss_mib": 88
+    },
+    {
+      "available_mib": 4217,
+      "ollama_rss_mib": 88
+    },
+    {
+      "available_mib": 4198,
+      "ollama_rss_mib": 88
+    },
+    {
+      "available_mib": 4080,
+      "ollama_rss_mib": 88
+    },
+    {
+      "available_mib": 3773,
+      "ollama_rss_mib": 88
+    },
+    {
+      "available_mib": 3495,
+      "ollama_rss_mib": 88
+    },
+    {
+      "available_mib": 3495,
+      "ollama_rss_mib": 88
+    },
+    {
+      "available_mib": 3495,
+      "ollama_rss_mib": 88
+    },
+    {
+      "available_mib": 3485,
+      "ollama_rss_mib": 88
+    },
+    {
+      "available_mib": 3482,
+      "ollama_rss_mib": 88
+    },
+    {
+      "available_mib": 3475,
+      "ollama_rss_mib": 88
+    },
+    {
+      "available_mib": 3476,
+      "ollama_rss_mib": 88
+    },
+    {
+      "available_mib": 3494,
+      "ollama_rss_mib": 88
+    },
+    {
+      "available_mib": 3494,
+      "ollama_rss_mib": 88
+    }
+  ],
+  "preflight": {
+    "schema_version": "local-readiness-v1",
+    "hardware": {
+      "os": "Windows",
+      "os_version": "10.0.26300",
+      "architecture": "AMD64",
+      "memory": {
+        "total_mb": 15931,
+        "available_mb": 4298
+      }
+    },
+    "hardware_record_sha256": "a4b71475597dbe08300f48db0a24850705c8e0434b185baa3a05f96817b87fbb",
+    "model": "qwen3:0.6b",
+    "model_digest": "7df6b6e09427a769808717c0a93cadc4ae99ed4eb8bf5ca557c90846becea435",
+    "reservation_mb": 1024,
+    "headroom_mb": 2048,
+    "inference_requests": 0,
+    "qualified": false,
+    "blocked": [],
+    "ollama_version": "0.40.5",
+    "model_details": {
+      "parent_model": "",
+      "format": "gguf",
+      "family": "qwen3",
+      "families": [
+        "qwen3"
+      ],
+      "parameter_size": "751.63M",
+      "quantization_level": "Q4_K_M",
+      "context_length": 40960,
+      "embedding_length": 1024,
+      "runner": "ggml"
+    }
+  },
+  "attempt_id": "afa7b70b-c38f-45c4-8cd3-c9c97e9db209",
+  "request_sha256": "271614a2a22df4d2a5852a4aa3eb914bb66c043bcf85c19a0763684d3ddb3159",
+  "candidate_sha256": "2777c6782bb32f5680208f13b5dc1be15c03b464c0d2e161072bfed9b3267735",
+  "status": "passed_fixed_fact_control",
+  "completion": "complete",
+  "native_finish_reason": "stop",
+  "usage": {
+    "input_tokens": 62,
+    "output_tokens": 22,
+    "reasoning_tokens": null,
+    "source": "reported"
+  },
+  "latency_ms": 3808,
+  "load_ms": 3125,
+  "generation_ms": 460.957,
+  "fixed_fact_control_passed": true,
+  "wall_seconds": 3.8087,
+  "models_resident_after_response": 0,
+  "minimum_available_mib": 3475,
+  "peak_sampled_ollama_rss_mib": 88
+}

@@ -1,0 +1,2 @@
+PASS: 7 preserved sources/prompts match SHA256 manifest
+Stale documentation inventories: docs/01-architecture/DATABASE-DICTIONARY.md, docs/10-reference/CODE-AND-TEST-INDEX.md

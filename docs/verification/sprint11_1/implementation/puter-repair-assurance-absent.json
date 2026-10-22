@@ -1,0 +1,60 @@
+{
+  "schema_version": "cloud-batch-calibration-v1",
+  "provider": "puter",
+  "model": "gpt-4.1-mini-2025-04-14",
+  "corpus_sha256": "f626c0b210daf73110cfc98d0aa6f7a974842bab0bf3e98f52e177e8ab516a24",
+  "policy_sha256": "143f5442bdd2294d8e95f0f023dd61726139b4a5be9aed7155f30437ec434f8e",
+  "selected_cases": [
+    "risk_07",
+    "governance_07",
+    "agile_coach_07"
+  ],
+  "prompt_sha256": "6c3af985b6164c90f75f98587462eab9f5cad99e0783f7b6c527a720c956fa6a",
+  "request_sha256": "aa941803f92df4009644109ff2758ee67c3076aa6c3c19f33e981feb4591e6b4",
+  "max_output_tokens": 512,
+  "context_tokens": 8192,
+  "qualified_classes": [],
+  "profile_activated": false,
+  "weight_training": false,
+  "independent_semantic_review": "pending",
+  "attempts": [
+    {
+      "attempt_id": "63818692-4373-440b-be51-36a6ed16ecff",
+      "cases": [
+        "risk_07",
+        "governance_07",
+        "agile_coach_07"
+      ],
+      "request_sha256": "aa941803f92df4009644109ff2758ee67c3076aa6c3c19f33e981feb4591e6b4",
+      "native_sha256": "c4b7a2da25838f80d694682cb482fcf08339f1a4bba5b652c8a77b890e78c681",
+      "candidate_sha256": "f36d67f32e0ed9c2f55f8edfdd18d7b1092767b834989cfdb3aebe630b694696",
+      "usage": {
+        "input_tokens": 1201,
+        "output_tokens": 84,
+        "reasoning_tokens": null,
+        "source": "reported"
+      },
+      "latency_ms": 1661,
+      "completion": "complete",
+      "reported_model_id": "gpt-4.1-mini",
+      "roles": {
+        "risk": {
+          "outcome": "insufficient_evidence",
+          "hard_validation": "partially_validated",
+          "finding_count": 0
+        },
+        "governance": {
+          "outcome": "insufficient_evidence",
+          "hard_validation": "partially_validated",
+          "finding_count": 0
+        },
+        "agile_coach": {
+          "outcome": "insufficient_evidence",
+          "hard_validation": "partially_validated",
+          "finding_count": 0
+        }
+      }
+    }
+  ],
+  "status": "completed_pending_review"
+}

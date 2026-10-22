@@ -1,0 +1,5 @@
+# Experimental native chat defaults. Project qualification remains separate.
+FROM qwen3:0.6b
+PARAMETER num_ctx 2048
+PARAMETER num_predict 512
+PARAMETER temperature 0

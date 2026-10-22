@@ -1,0 +1,5 @@
+PASS: 334 Markdown files; 5003 local links/anchors; zero missing
+PASS: catalogue/mapping each retain 156 requirements and 36 gaps
+PASS: Sprint 09 hubs and accepted/partial requirement status boundaries
+PASS: Sprint 10 hubs, verified-smoke/open-quality distinction and Sprint 11 boundary
+External URLs, plain-text paths and archived Word layout are outside this check

@@ -51,6 +51,27 @@ class Settings(BaseSettings):
     ai_gemini_free_tier_confirmed_at: datetime | None = None
     ai_gemini_free_tier_key_sha256: str = Field(default="", max_length=64)
     ai_gemini_daily_call_limit: int = Field(default=20, ge=1, le=100)
+    ai_runtime_v2_enabled: bool = False
+    ai_execution_mode: Literal["local_only", "hybrid", "disabled"] = "local_only"
+    ai_cloud_enabled: bool = False
+    ai_model_registry_path: Path | None = None
+    ai_egress_policy_path: Path | None = None
+    ai_ollama_enabled: bool = False
+    ai_ollama_base_url: str = "http://127.0.0.1:11434"
+    ai_ollama_model: str = "qwen3:4b"
+    ai_ollama_model_digest: str = ""
+    ai_ollama_num_ctx: Literal[2048, 4096] = 4096
+    ai_ollama_keep_alive: int = Field(default=60, ge=0, le=60)
+    ai_local_concurrency: Literal[1] = 1
+    ai_local_memory_reservation_mb: int = Field(default=4096, ge=1024, le=12000)
+    ai_local_available_memory_mb: int | None = Field(default=None, ge=0)
+    ai_run_deadline_seconds: int = Field(default=90, ge=10, le=90)
+    ai_max_attempts_per_run: int = Field(default=4, ge=1, le=4)
+    ai_max_output_tokens: int = Field(default=512, ge=64, le=512)
+    ai_max_attempts_per_section: int = Field(default=2, ge=1, le=2)
+    ai_max_tasks_per_run: int = Field(default=24, ge=12, le=24)
+    ai_local_completion_timeout_seconds: int = Field(default=22, ge=1, le=22)
+    ai_local_embedding_model: str = ""
 
     @model_validator(mode="after")
     def validate_mail(self) -> "Settings":

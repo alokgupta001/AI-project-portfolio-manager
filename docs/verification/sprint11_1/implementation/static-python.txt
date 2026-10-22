@@ -1,0 +1,4 @@
+All checks passed!
+154 files already formatted
+services\api\ppm_api\model_adapters.py:202: error: Argument 1 to "ModelFailure" has incompatible type "str"; expected "Literal['TRUNCATED', 'INVALID_OUTPUT', 'CONTEXT_LIMIT', 'TIMEOUT', 'UNAVAILABLE', 'RATE_LIMIT', 'QUOTA_EXHAUSTED', 'AUTHENTICATION', 'UNSUPPORTED_CAPABILITY', 'MODEL_NOT_INSTALLED', 'LOCAL_RESOURCE', 'CONFIGURATION', 'SPENDING_NOT_AUTHORIZED', 'REFUSED', 'CANCELLED', 'AUTHORITY_REVOKED', 'UNKNOWN', 'OUTCOME_UNKNOWN', 'DEADLINE_EXCEEDED']"  [arg-type]
+Found 1 error in 1 file (checked 61 source files)

@@ -1,0 +1,7 @@
+{
+  "schema_version": "ollama-shutdown-v1",
+  "ollama_processes_remaining": 0,
+  "model_generations": 0,
+  "models_deleted": false,
+  "startup_configuration_changed": false
+}

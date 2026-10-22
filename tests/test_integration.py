@@ -26,7 +26,7 @@ def test_real_readiness_and_persisted_checkpoint():
         second = restarted_client.get("/api/v1/foundation").json()
     assert first["instance_id"] == second["instance_id"]
     assert first["environment"] == "test"
-    assert first["schema_revision"] == "0014_specialist_reviewer"
+    assert first["schema_revision"] == "0015_agent_task_runtime"
 
 
 async def test_real_database_write_commit_read_roundtrip():

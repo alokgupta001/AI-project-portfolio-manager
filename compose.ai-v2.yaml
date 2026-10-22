@@ -1,0 +1,12 @@
+# Optional operator overlay. All inference remains disabled until privately configured.
+x-hybrid: &hybrid
+  env_file:
+    - path: ./artifacts/local/ai-v2.env
+      required: false
+  volumes:
+    - ./artifacts/local/ai-v2:/etc/ppm-ai:ro
+services:
+  api:
+    <<: *hybrid
+  worker:
+    <<: *hybrid
