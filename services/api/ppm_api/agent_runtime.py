@@ -371,52 +371,54 @@ async def complete_task(runtime: Any, task: dict, node: dict, context: dict, pol
             cancellation = exc
         except Exception:
             failure = ModelFailure("UNKNOWN", "unknown")
-        async with runtime.engine.begin() as conn:
-            # Reestablish context even when cancellation/revocation prevents publication.
-            from ppm_api.ai import worker_context
+        try:
+            async with runtime.engine.begin() as conn:
+                # Reestablish context even when cancellation/revocation prevents publication.
+                from ppm_api.ai import worker_context
 
-            await worker_context(conn, runtime.job_id, runtime.tenant, runtime.actor)
-            usage = response.usage if response else None
-            category = (
-                "unknown"
-                if failure and failure.certainty == "unknown"
-                else "failed"
-                if failure
-                else "complete"
-            )
-            await conn.execute(
-                sa.text("SELECT public.ppm_model_settle(:id,:category,:code,:i,:o,:cooldown)"),
-                dict(
-                    id=aid,
-                    category=category,
-                    code=failure.code if failure else None,
-                    i=usage.input_tokens if usage else None,
-                    o=(usage.output_tokens + (usage.reasoning_tokens or 0))
-                    if usage and usage.output_tokens is not None
-                    else None,
-                    cooldown=failure.retry_after if failure else None,
-                ),
-            )
-            await conn.execute(
-                A.calls.update()
-                .where(A.calls.c.id == aid)
-                .values(
-                    status="failed" if failure else "succeeded",
-                    code=failure.code if failure else None,
-                    completed_at=now(),
-                    finish_category=response.completion if response else "unknown",
-                    input_tokens=usage.input_tokens if usage else None,
-                    output_tokens=usage.output_tokens if usage else None,
-                    reasoning_tokens=usage.reasoning_tokens if usage else None,
-                    usage_source=usage.source if usage else "unknown",
-                    send_state="returned" if response else "unknown",
-                    native_reason=response.native_finish_reason if response else None,
-                    latency_ms=response.latency_ms if response else 0,
-                    response_hash=digest(response.text) if response else None,
+                await worker_context(conn, runtime.job_id, runtime.tenant, runtime.actor)
+                usage = response.usage if response else None
+                category = (
+                    "unknown"
+                    if failure and failure.certainty == "unknown"
+                    else "failed"
+                    if failure
+                    else "complete"
                 )
-            )
-        if cancellation is not None:
-            raise cancellation
+                await conn.execute(
+                    sa.text("SELECT public.ppm_model_settle(:id,:category,:code,:i,:o,:cooldown)"),
+                    dict(
+                        id=aid,
+                        category=category,
+                        code=failure.code if failure else None,
+                        i=usage.input_tokens if usage else None,
+                        o=(usage.output_tokens + (usage.reasoning_tokens or 0))
+                        if usage and usage.output_tokens is not None
+                        else None,
+                        cooldown=failure.retry_after if failure else None,
+                    ),
+                )
+                await conn.execute(
+                    A.calls.update()
+                    .where(A.calls.c.id == aid)
+                    .values(
+                        status="succeeded" if category == "complete" else category,
+                        code=failure.code if failure else None,
+                        completed_at=now(),
+                        finish_category=response.completion if response else "unknown",
+                        input_tokens=usage.input_tokens if usage else None,
+                        output_tokens=usage.output_tokens if usage else None,
+                        reasoning_tokens=usage.reasoning_tokens if usage else None,
+                        usage_source=usage.source if usage else "unknown",
+                        send_state="returned" if response else "unknown",
+                        native_reason=response.native_finish_reason if response else None,
+                        latency_ms=response.latency_ms if response else 0,
+                        response_hash=digest(response.text) if response else None,
+                    )
+                )
+        finally:
+            if cancellation is not None:
+                raise cancellation
         if not failure and output is not None and result is not None:
             candidate = output if isinstance(output, dict) else output.model_dump(mode="json")
             await task_update(

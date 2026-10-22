@@ -1,21 +1,21 @@
 # Independent cloud acceptance review
 
-Current follow-up: 23 October 2026. The user asked the implementation agent to
-arrange the review instead of nominating a person. A separate CodeRabbit label
-audit was requested on [PR #5](https://github.com/alokgupta001/AI-project-portfolio-manager/pull/5#issuecomment-6353350329).
-Its findings will be recorded as AI
-review; they are not human approval or model accuracy measurements. No label or
-model has been approved. The [current request](review-closeout/review-request.json)
-binds the updated strategy; older packet strategy hashes remain historical.
+Current follow-up: 23 October 2026. The user asked us to arrange the review.
+CodeRabbit independently audited all 108 labels and [declined approval](review-closeout/label-audit-round-1.json):
+18 ambiguous cases, duplicated governance evidence across splits, and a CRLF/LF
+fingerprint mismatch. Those drafts are corrected and immutable exports now use LF.
+A fresh independent audit must bind the [current request](review-closeout/review-request.json).
+This is AI review, not human approval or model accuracy measurement. No label or
+model has been approved; older exported labels and strategy hashes are historical.
 
-1. Review [fresh labels and inputs](reviewer-packet/labels.json) first. There are
+1. Review [current labels and inputs](../../../tests/fixtures/agent_v2_cloud_quality.json) first. There are
    108 original synthetic cases, twelve per role, with 54 held out. Correct ambiguous
    expected claims, missing-evidence decisions and rubric levels in the source
    [cloud corpus](../../../tests/fixtures/agent_v2_cloud_quality.json) before freezing
    approval. These are author drafts, not established ground truth. They contain no
    real tenant/personnel information or copied external dataset rows.
 2. Record your identity, independent review ID and approval time in a copy of the
-   [label approval template](reviewer-packet/label-approval-template.json). Independence
+   [current label approval template](review-closeout/label-approval-template.json). Independence
    means that the reviewer did not author the labels. Approval must bind the final
    corpus and strategy hashes and precede held-out inference. A changed corpus or
    strategy requires deliberate review; the runner will reject stale bindings.

@@ -135,13 +135,15 @@ def draft() -> dict:
                     )
                     + topic,
                     "privacy": (
-                        "Only this aggregate scope is available; no person-level evidence "
-                        "is supplied. Do not diagnose individuals for this requested concern: "
+                        "Only an anonymized aggregate placeholder is available. "
+                        "No records establish whether this condition occurred. "
+                        "The following is an unverified question, not an observed fact; "
+                        "no person-level evidence is supplied: "
                     )
                     + topic,
                     "causal_overreach": (
-                        "The available scope gives no evidence of a cause "
-                        "or delivery effect for the requested concern: "
+                        "No records establish this condition, its cause or a delivery effect. "
+                        "The following concern is hypothetical, not an observed fact: "
                     )
                     + topic,
                 }[scenario]
@@ -228,6 +230,18 @@ def draft() -> dict:
                 cases[-1]["labels"]["required_support"] = [
                     "Independent review is documented and the audit log records its exercise."
                 ]
+                if i == 5:
+                    cases[-1]["rubric"]["text"] = (
+                        "Is independent access-control exception review documented and exercised?"
+                    )
+                    cases[-1]["sources"][0]["text"] = (
+                        "The access-control procedure documents independent exception review. "
+                        "No completed exception review or evidence of its exercise is recorded."
+                    )
+                    cases[-1]["labels"]["expected_rubric_level"] = 1
+                    cases[-1]["labels"]["required_support"] = [
+                        "Independent exception review is documented, with no evidence of exercise."
+                    ]
     return dict(
         schema_version="agent-quality-corpus-v1",
         label_status="draft_requires_independent_review",

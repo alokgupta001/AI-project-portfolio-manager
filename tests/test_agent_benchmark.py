@@ -114,6 +114,16 @@ async def test_dry_run_cannot_make_http_and_does_not_create_ledger(tmp_path):
     assert not list(tmp_path.iterdir())
 
 
+def test_new_artifact_hash_survives_lf_checkout(tmp_path):
+    path = tmp_path / "bound-review.json"
+    B.write_new(path, {"evidence": "Original Unicode evidence: café."})
+    original = path.read_bytes()
+    assert original == original.replace(b"\r\n", b"\n")
+    with pytest.raises(FileExistsError):
+        B.write_new(path, {"evidence": "replacement"})
+    assert path.read_bytes() == original
+
+
 async def test_memory_failure_never_generates_or_forges_latency(monkeypatch, tmp_path):
     data, corpus_hash = corpus()
     monkeypatch.setattr(
@@ -198,10 +208,28 @@ async def test_logical_attempts_survive_output_corpus_and_case_name_changes(
     assert len(ledger) == 2 and ledger[0]["root"] == ledger[1]["root"]
 
 
-async def test_legacy_opaque_roots_fail_closed_without_rewriting_history(monkeypatch, tmp_path):
+async def test_reordered_sources_cannot_renew_quality_attempts(missing_benchmark, tmp_path):
+    case, transport, posts = missing_benchmark
+    assert len(case["sources"]) == 2
+    for _ in range(2):
+        result = await B.run([case], "a" * 64, profile(), tmp_path, True, 4096, 512, 0, transport)
+        assert result["status"] == "completed_pending_review"
+    reordered = deepcopy(case)
+    reordered["sources"].reverse()
+    result = await B.run([reordered], "b" * 64, profile(), tmp_path, True, 4096, 512, 0, transport)
+    assert result["status"] == "logical_attempt_limit" and len(posts) == 2
+
+
+@pytest.mark.parametrize("root_version", [None, 2])
+async def test_legacy_opaque_roots_fail_closed_without_rewriting_history(
+    monkeypatch, tmp_path, root_version
+):
     data, corpus_hash = corpus()
     path = tmp_path / "local-benchmark-ledger.json"
-    B.save_ledger(path, [dict(root="old-format-root", state="completed")])
+    row = dict(root="old-format-root", state="completed")
+    if root_version is not None:
+        row["root_version"] = root_version
+    B.save_ledger(path, [row])
     before = path.read_bytes()
     monkeypatch.setattr(B, "readiness", lambda *a, **k: pytest.fail("Admitted legacy history"))
     with pytest.raises(ValueError, match="Legacy benchmark ledger"):

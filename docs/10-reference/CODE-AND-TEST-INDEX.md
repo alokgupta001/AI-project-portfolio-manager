@@ -147,8 +147,8 @@ Source-derived AST inventory. Search symbols instead of relying on line numbers;
 [Source](../../scripts/prepare_cloud_acceptance.py)
 
 - `draft` — line 97
-- `approval` — line 259
-- `prepare_authorization` — line 280
+- `approval` — line 273
+- `prepare_authorization` — line 294
 
 ## scripts/prepare_cloud_review.py
 
@@ -572,10 +572,10 @@ Source-derived AST inventory. Search symbols instead of relying on line numbers;
 - `heartbeat` — line 181
 - `batch_window_delay` — line 199
 - `complete_task` — line 215
-- `execute` — line 457
-- `live_sections` — line 629
-- `reviewed_findings` — line 671
-- `assemble` — line 702
+- `execute` — line 459
+- `live_sections` — line 631
+- `reviewed_findings` — line 673
+- `assemble` — line 704
 
 ## services/api/ppm_api/agent_schemas.py
 
@@ -1498,20 +1498,22 @@ Source-derived AST inventory. Search symbols instead of relying on line numbers;
 - `test_each_role_baseline_and_control_cases` — line 61
 - `test_dry_run_cannot_make_http_and_does_not_create_ledger` — line 96
 - `refuse` — line 99
-- `test_memory_failure_never_generates_or_forges_latency` — line 117
-- `test_unknown_attempt_survives_restart` — line 133
-- `missing_benchmark` — line 142
-- `respond` — line 156
-- `test_logical_attempts_survive_output_corpus_and_case_name_changes` — line 183
-- `test_legacy_opaque_roots_fail_closed_without_rewriting_history` — line 201
-- `test_warm_timing_does_not_consume_or_replace_quality_attempts` — line 212
-- `test_explicit_budget_and_context_fail_before_inference` — line 224
-- `test_draft_review_and_empty_measurements_cannot_qualify` — line 238
-- `test_every_fixture_fits_bounded_context_without_expected_answers` — line 245
-- `test_memory_inventory_includes_runner_descendants_without_unrelated_processes` — line 252
-- `test_review_must_match_candidate_and_can_reject_real_citation` — line 264
-- `test_transport_complete_is_still_pending_independent_review` — line 360
-- `respond` — line 384
+- `test_new_artifact_hash_survives_lf_checkout` — line 117
+- `test_memory_failure_never_generates_or_forges_latency` — line 127
+- `test_unknown_attempt_survives_restart` — line 143
+- `missing_benchmark` — line 152
+- `respond` — line 166
+- `test_logical_attempts_survive_output_corpus_and_case_name_changes` — line 193
+- `test_reordered_sources_cannot_renew_quality_attempts` — line 211
+- `test_legacy_opaque_roots_fail_closed_without_rewriting_history` — line 224
+- `test_warm_timing_does_not_consume_or_replace_quality_attempts` — line 240
+- `test_explicit_budget_and_context_fail_before_inference` — line 252
+- `test_draft_review_and_empty_measurements_cannot_qualify` — line 266
+- `test_every_fixture_fits_bounded_context_without_expected_answers` — line 273
+- `test_memory_inventory_includes_runner_descendants_without_unrelated_processes` — line 280
+- `test_review_must_match_candidate_and_can_reject_real_citation` — line 292
+- `test_transport_complete_is_still_pending_independent_review` — line 388
+- `respond` — line 412
 
 ## tests/test_agent_critique.py
 
@@ -1549,36 +1551,37 @@ Source-derived AST inventory. Search symbols instead of relying on line numbers;
 
 [Source](../../tests/test_agent_v2_runtime.py)
 
-- `configure` — line 33
-- `execute` — line 120
-- `test_nine_roles_use_four_durable_admissions_and_never_hide_a_fifth` — line 158
-- `synthetic_capture` — line 189
-- `batch_execute` — line 222
-- `ProcessLost` — line 261
-- `lose_candidate` — line 267
-- `test_new_cloud_provider_uses_real_shared_admission_and_daily_cap` — line 315
-- `test_metrics_runs_persist_tasks_and_never_call_model` — line 356
-- `test_real_admission_checkpoint_replay_and_immutable_result` — line 403
-- `test_no_profile_preserves_baseline_but_cannot_claim_ai_complete` — line 439
-- `test_v2_flag_does_not_enable_itself` — line 458
-- `test_truncation_uses_one_smaller_replacement_and_retains_usage` — line 472
-- `truncated` — line 483
-- `test_unknown_outcome_is_not_replayed_and_quarantines_local_host` — line 514
-- `unknown` — line 522
-- `test_exhausted_daily_scope_makes_no_external_call` — line 567
-- `test_two_workers_share_one_local_generation` — line 588
-- `paused` — line 597
-- `test_crash_after_candidate_resumes_without_second_inference` — line 630
-- `ProcessLost` — line 638
-- `checkpoint` — line 644
-- `test_worker_cancellation_settles_and_propagates` — line 676
-- `interrupted` — line 683
-- `test_failed_heartbeat_does_not_replace_completed_result` — line 748
-- `failed` — line 762
-- `test_oversized_bound_context_keeps_baseline_and_reports_partial` — line 775
-- `oversized` — line 792
-- `test_v2_late_output_is_fenced` — line 828
-- `paused` — line 839
+- `configure` — line 34
+- `execute` — line 121
+- `test_nine_roles_use_four_durable_admissions_and_never_hide_a_fifth` — line 159
+- `synthetic_capture` — line 190
+- `batch_execute` — line 223
+- `ProcessLost` — line 262
+- `lose_candidate` — line 268
+- `test_new_cloud_provider_uses_real_shared_admission_and_daily_cap` — line 316
+- `test_metrics_runs_persist_tasks_and_never_call_model` — line 357
+- `test_real_admission_checkpoint_replay_and_immutable_result` — line 404
+- `test_no_profile_preserves_baseline_but_cannot_claim_ai_complete` — line 440
+- `test_v2_flag_does_not_enable_itself` — line 459
+- `test_truncation_uses_one_smaller_replacement_and_retains_usage` — line 473
+- `truncated` — line 484
+- `test_unknown_outcome_is_not_replayed_and_quarantines_local_host` — line 515
+- `unknown` — line 523
+- `test_exhausted_daily_scope_makes_no_external_call` — line 568
+- `test_two_workers_share_one_local_generation` — line 589
+- `paused` — line 598
+- `test_crash_after_candidate_resumes_without_second_inference` — line 631
+- `ProcessLost` — line 639
+- `checkpoint` — line 645
+- `test_worker_cancellation_settles_and_propagates` — line 679
+- `interrupted` — line 690
+- `unavailable` — line 713
+- `test_failed_heartbeat_does_not_replace_completed_result` — line 775
+- `failed` — line 789
+- `test_oversized_bound_context_keeps_baseline_and_reports_partial` — line 802
+- `oversized` — line 819
+- `test_v2_late_output_is_fenced` — line 855
+- `paused` — line 866
 
 ## tests/test_agents.py
 

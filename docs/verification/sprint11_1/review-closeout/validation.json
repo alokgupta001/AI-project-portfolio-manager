@@ -39,5 +39,21 @@
   "held_out_inference_requests": 0,
   "independent_label_approval": false,
   "hosted_ci": "in_progress_at_local_receipt",
-  "coderabbit_review": "in_progress_at_local_receipt"
+  "coderabbit_review": "in_progress_at_local_receipt",
+  "followup": {
+    "runtime_regressions": 8,
+    "benchmark_file": 53,
+    "benchmark_acceptance_specialist_scope": 94,
+    "scopes_overlap": true,
+    "full_backend": "rerunning after final corpus/export fixes; previous 487-pass receipt above is historical",
+    "intermediate_full_run": "intentionally stopped to replace the obsolete corpus/export snapshot; retained private log, not reported as a pass",
+    "source_sha256": {
+      "scripts/benchmark_agent_runtime.py": "d2acef0c9bceb9a3614a4be275f79b3247a302f6e513e07b38594bf749a94dfa",
+      "scripts/prepare_cloud_acceptance.py": "0274d6efffed5732e46cf615a047fa50b562a468475d31c30b05fca6f040896c",
+      "services/api/ppm_api/agent_runtime.py": "a2141ba4f60134b217a4ec4d5b9052a826307dfc5c63e8950e90811e997cc7a2",
+      "services/api/ppm_api/model_adapters.py": "6395fa25780d6dffaae5a1fa8a3a289a775ebb7b4fbf85578a3d1d040b8e7271",
+      "services/api/ppm_api/model_registry.py": "e3f8cf3a9a3b3476770de13621c59a772212d213f718be4037a6abf8430fd746",
+      "tests/fixtures/agent_v2_cloud_quality.json": "c13f5ad5526df7d6ec2bb50c2a40952a30bead042ab6a0d4a454e47bfa39e6be"
+    }
+  }
 }

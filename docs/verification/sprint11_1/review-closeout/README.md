@@ -1,5 +1,32 @@
 # Sprint 11.1 review closeout — 23 October 2026
 
+## Follow-up after independent AI review
+
+CodeRabbit's first code review passed docstring coverage at **92.35%** and found
+four further issues. Source order is now normalized in version 3 evidence roots;
+earlier ledger versions remain blocked without resetting their history. Unknown
+call outcomes retain `unknown` ledger status. The pre-existing unconditional
+RUNNING-task replay guard already prevented a new send; explicit Groq/Ollama
+cancellation/resume tests now verify it. Cancellation also propagates if settlement
+itself fails. Two origin/storage-path docstrings now match their actual checks.
+Current focused scopes pass: **53 benchmark tests**, **8 runtime database cases**,
+and **94 benchmark/acceptance/specialist tests** (overlapping scopes).
+
+The [separate label audit](label-audit-round-1.json) examined all 108 cases and
+declined approval: 18 negative cases were ambiguous, one governance scenario was
+duplicated across splits, and Windows CRLF exports did not match Git's LF hash.
+The 18 evidence drafts now explicitly state the condition is unestablished; the
+held-out governance case uses a distinct documented-only exception review (level 1).
+New immutable exports use LF, covered by a Windows regression. The fresh request
+and empty approval template bind the revised corpus and strategy. Historical
+packets remain unchanged. A new independent audit is required before inference.
+
+The final full suite is rerunning with these changes; the 487-pass checkpoint
+below is retained history. One obsolete intermediate run was deliberately stopped
+and retained rather than reported as a pass.
+
+## Initial verified fixes
+
 PR #4 merged at `72e0b8e` after both hosted foundation checks passed. The following
 four CodeRabbit findings were verified against that merged code and reproduced
 before the fix:
@@ -22,8 +49,8 @@ No real provider calls were made.
 [Documentation audit](documentation-audit.json) records 186/186 documented
 production Python functions across the original sprint's non-migration files,
 up from 7. Executable ASTs match the merged base in all files changed only for
-documentation. The two runtime/benchmark fix files contain the intentional logic
-changes above. Applied migration files are unchanged. OpenAPI descriptions and
+documentation. Runtime, benchmark and draft-authoring files contain the intentional
+changes described above. Applied migration files are unchanged. OpenAPI descriptions and
 source inventories were regenerated. This is local Python coverage, not a claim
 about CodeRabbit's independent cross-language metric.
 

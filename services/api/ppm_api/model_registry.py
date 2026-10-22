@@ -110,7 +110,7 @@ class ModelPolicy(Strict):
 
 
 def trusted_json(path: Path, settings: Settings) -> dict:
-    """Read bounded operator JSON only from the configured trusted filesystem root."""
+    """Read a bounded operator JSON object, rejecting paths inside tenant storage_root."""
     resolved = path.resolve()
     if resolved.is_relative_to(settings.storage_root.resolve()):
         raise ModelFailure("CONFIGURATION")

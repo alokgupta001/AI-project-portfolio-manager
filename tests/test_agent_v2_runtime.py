@@ -4,6 +4,7 @@ import asyncio
 import hashlib
 import json
 import os
+from contextlib import suppress
 from datetime import timedelta
 from uuid import UUID, uuid4
 
@@ -673,9 +674,15 @@ async def test_crash_after_candidate_resumes_without_second_inference(
     )
 
 
-async def test_worker_cancellation_settles_and_propagates(identity, monkeypatch, tmp_path):
+@pytest.mark.parametrize("settlement_fails", [False, True])
+@pytest.mark.parametrize("provider", ["ollama", "groq"])
+async def test_worker_cancellation_settles_and_propagates(
+    identity, monkeypatch, tmp_path, settlement_fails, provider
+):
+    from ppm_api.ai import worker_context
+
     c, app, owner, ids, project, accepted, _ = await configure(
-        identity, monkeypatch, tmp_path, True
+        identity, monkeypatch, tmp_path, True, provider
     )
     entered = asyncio.Event()
     attempts = []
@@ -701,6 +708,12 @@ async def test_worker_cancellation_settles_and_propagates(identity, monkeypatch,
     )
     try:
         await asyncio.wait_for(entered.wait(), 10)
+        if settlement_fails:
+
+            async def unavailable(*args):
+                raise RuntimeError("synthetic settlement failure")
+
+            monkeypatch.setattr("ppm_api.ai.worker_context", unavailable)
         worker.cancel("synthetic shutdown")
         with pytest.raises(asyncio.CancelledError):
             await asyncio.wait_for(worker, 10)
@@ -720,15 +733,29 @@ async def test_worker_cancellation_settles_and_propagates(identity, monkeypatch,
                 .mappings()
                 .one()
             )
-        assert call["code"] == "CANCELLED" and call["completed_at"] is not None
-        assert quota["outcome"] == "unknown"
+        assert call["status"] == "unknown"
+        if settlement_fails:
+            assert call["completed_at"] is None
+            assert quota["outcome"] == "admitted"
+        else:
+            assert call["code"] == "CANCELLED" and call["completed_at"] is not None
+            assert quota["outcome"] == "unknown"
+        monkeypatch.setattr("ppm_api.ai.worker_context", worker_context)
+        async with owner.begin() as conn:
+            await conn.execute(
+                J.jobs.update()
+                .where(J.jobs.c.id == job)
+                .values(lease_until=now() - timedelta(seconds=1))
+            )
+        result, _ = await work(c, app, owner, ids, created.json())
+        assert len(attempts) == 1
+        task = next(t for t in result["task_summary"] if t["task_key"] == "risk-01")
+        assert task["state"] == "BLOCKED" and task["diagnostic"] == "OUTCOME_UNKNOWN"
     finally:
         if not worker.done():
             worker.cancel()
-        try:
+        with suppress(asyncio.CancelledError, Exception):
             await worker
-        except asyncio.CancelledError:
-            pass
         # This intercepted call has stopped; retain its usage history while
         # releasing the synthetic host quarantine for subsequent tests.
         async with owner.begin() as conn:

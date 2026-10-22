@@ -232,7 +232,7 @@ def ollama_rss_mb() -> int:
 def write_new(path: Path, value: dict) -> None:
     """Create an immutable JSON artifact; fail if the destination already exists."""
     path.parent.mkdir(parents=True, exist_ok=True)
-    with path.open("x", encoding="utf-8") as stream:
+    with path.open("x", encoding="utf-8", newline="\n") as stream:
         stream.write(json.dumps(value, ensure_ascii=False, indent=2) + "\n")
 
 
@@ -297,7 +297,7 @@ async def run(
         ledger = json.loads(ledger_path.read_text()) if ledger_path.exists() else []
         if any(r["state"] == "unknown" for r in ledger):
             raise ModelFailure("OUTCOME_UNKNOWN")
-        if any(r.get("root_version") != 2 for r in ledger):
+        if any(r.get("root_version") != 3 for r in ledger):
             raise ValueError(
                 "Legacy benchmark ledger needs operator review; existing attempts cannot be reset"
             )
@@ -357,7 +357,7 @@ async def run(
                     [
                         profile.installed_digest,
                         case["agent"],
-                        case["sources"],
+                        sorted({canonical(source) for source in case["sources"]}),
                         case.get("rubric"),
                         "warm" if repeat else "quality",
                     ]
@@ -377,7 +377,7 @@ async def run(
                 row = dict(
                     attempt_id=str(attempt_id),
                     root=root,
-                    root_version=2,
+                    root_version=3,
                     state="unknown",
                     admitted_at=datetime.now(UTC).isoformat(),
                 )

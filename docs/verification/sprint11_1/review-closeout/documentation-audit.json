@@ -50,7 +50,7 @@
     },
     {
       "path": "scripts/prepare_cloud_acceptance.py",
-      "documentation_only": true,
+      "documentation_only": false,
       "functions": 3,
       "documented": 3
     },

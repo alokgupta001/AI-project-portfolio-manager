@@ -102,7 +102,7 @@ class NativeAdapter:
             raise ModelFailure("SPENDING_NOT_AUTHORIZED")
 
     def origin(self) -> str:
-        """Choose only the approved fixed provider origin or private loopback Ollama."""
+        """Choose a fixed cloud origin or Ollama on loopback, ollama or host.docker.internal."""
         if self.profile.provider == "ollama":
             parsed = urlparse(self.settings.ai_ollama_base_url)
             if (
