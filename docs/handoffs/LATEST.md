@@ -1,5 +1,14 @@
 # Latest technical handoff
 
+**Current — 23 October 2026, PR #4 CI repair:** the hosted failure at `ec1f350`
+was `npm audit` for Next.js advisories GHSA-2464-fhr4-w9xw and
+GHSA-p3m5-59mp-jv5r, followed by cleanup before bootstrap. Pin Next.js 16.4.2 and
+its compiler/environment lock entries; only run CI Compose cleanup when `.env`
+exists. Local production build, lint, typecheck, formatting and audit pass (zero
+vulnerabilities); fake-Docker checks cover cleanup with and without `.env`.
+The fix is ready for hosted verification. No normal runtime/data/provider changes.
+Independent AT17 acceptance and cloud activation remain blocked.
+
 **Current — PR #4 response-parsing review fix:** verified that malformed completed
 responses could leak `AttributeError` from the result parsers. The shared `execute`
 handler now maps it to `ModelFailure("INVALID_OUTPUT", "completed")`. Three new

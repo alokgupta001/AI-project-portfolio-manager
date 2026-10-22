@@ -1,5 +1,14 @@
 # Sprint 11.1 implementation handoff
 
+## PR #4 CI repair — 23 October 2026
+
+Hosted `ec1f350` failed the newly reported Next.js security audit; cleanup then
+failed because bootstrap had not run. Next.js and the lockfile now pin 16.4.2.
+CI cleanup checks for `.env` before invoking Compose. Production build, lint,
+typecheck, formatting and zero-vulnerability npm audit pass locally; intercepted
+cleanup cases pass with and without an environment file. Hosted verification is
+pending. No normal runtime/data/provider changes; AT17 remains blocked.
+
 ## PR #4 response-parsing review fix
 
 The `execute` handler now includes `AttributeError` in completed `INVALID_OUTPUT`

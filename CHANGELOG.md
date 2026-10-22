@@ -1,5 +1,11 @@
 # Changelog
 
+## 23 October 2026 — GitHub CI security audit repair
+
+Pinned Next.js 16.4.2 to resolve the newly reported image optimization and Server
+Actions advisories. CI cleanup now skips Compose before environment initialization.
+Local production build, frontend checks, zero-vulnerability audit and cleanup cases pass.
+
 ## 22 October 2026 — nine-role batching and cloud acceptance preparation
 
 Added explicit all-specialists analysis in four bounded calls, with primary-scope

@@ -58,4 +58,7 @@ jobs:
             test-results/
       - name: Stop this CI stack
         if: always()
-        run: docker compose -f compose.yaml -f compose.documents.yaml down
+        run: |
+          if [ -f .env ]; then
+            docker compose -f compose.yaml -f compose.documents.yaml down
+          fi
