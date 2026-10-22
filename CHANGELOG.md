@@ -5,6 +5,9 @@
 Pinned Next.js 16.4.2 to resolve the newly reported image optimization and Server
 Actions advisories. CI cleanup now skips Compose before environment initialization.
 Local production build, frontend checks, zero-vulnerability audit and cleanup cases pass.
+The subsequent Python audit identified three affected packages; updated certifi to
+2026.10.19, opentelemetry-api to 1.45.1 and pypdf to 6.21.1. Exported-lock audit and
+350 offline backend tests pass; hosted full-stack checks are pending.
 
 ## 22 October 2026 — nine-role batching and cloud acceptance preparation
 
@@ -95,13 +98,11 @@ Source head 0012 follows frozen 0011. Local gates and actual normal rollout are 
 contracts/ADR, traceability, inventories, indexes and closure matrix are maintained.
 No Sprint 11 agents, plan edits, paid calls, commit/push or external deployment.
 
-
 ## 2026-10-15 Sprint 09 local acceptance
 
 - Added scanner-gated versioned document library, bounded extraction/OCR, scoped keyword/citations and signed originals, with additive migration 0011.
 - Added private assessment references, policy metadata and guarded retention/hold/purge/orphan controls, including held archived-project protection and scratch recovery evidence.
 - Preserved 62 quiesced table hashes/counts, five object hashes and all prior applied migrations. Backend 123 plus focused 24/final security 9; fourteen browser regressions and final source flow passed. Reports/checks/coverage/handoff updated; semantic/hybrid remain later work. Stop before Sprint 10.
-
 
 ## 2026-10-09 Sprint 8.1 local implementation
 

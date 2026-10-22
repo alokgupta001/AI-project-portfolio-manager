@@ -1,5 +1,14 @@
 # Sprint 11.1 implementation handoff
 
+## Python audit follow-up — 23 October 2026
+
+Hosted `bb05047` passed the npm and cleanup fixes, then found six advisories in
+three locked Python packages. Updated certifi 2026.10.19, opentelemetry-api 1.45.1
+and pypdf 6.21.1 only. Exported-lock audit: no known vulnerabilities. Offline backend:
+350 passed, one OCR-runtime skip, 128 integration deselections and one inherited
+Starlette warning. Lock consistency passes. Hosted full-stack verification is next;
+normal runtime/data/providers remain unchanged and AT17 stays blocked.
+
 ## PR #4 CI repair — 23 October 2026
 
 Hosted `ec1f350` failed the newly reported Next.js security audit; cleanup then

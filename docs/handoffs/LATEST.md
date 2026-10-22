@@ -1,5 +1,13 @@
 # Latest technical handoff
 
+**Current — 23 October 2026, Python audit follow-up:** hosted `bb05047` passed npm
+audit and cleanup, then reached six Python advisories in three locked packages.
+Update only `certifi` to 2026.10.19, `opentelemetry-api` to 1.45.1 and `pypdf` to
+6.21.1. The same exported-lock Python audit now reports no known vulnerabilities;
+350 offline backend tests pass, one OCR-runtime test skipped, 128 integration tests
+deselected. One inherited Starlette warning remains. Lock consistency passes.
+Hosted full-stack verification is next; no normal runtime/data/provider changes.
+
 **Current — 23 October 2026, PR #4 CI repair:** the hosted failure at `ec1f350`
 was `npm audit` for Next.js advisories GHSA-2464-fhr4-w9xw and
 GHSA-p3m5-59mp-jv5r, followed by cleanup before bootstrap. Pin Next.js 16.4.2 and
