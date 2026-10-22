@@ -2,7 +2,8 @@
 
 Current follow-up: 23 October 2026. The user asked the implementation agent to
 arrange the review instead of nominating a person. A separate CodeRabbit label
-audit is being requested on the follow-up PR. Its findings will be recorded as AI
+audit was requested on [PR #5](https://github.com/alokgupta001/AI-project-portfolio-manager/pull/5#issuecomment-6353350329).
+Its findings will be recorded as AI
 review; they are not human approval or model accuracy measurements. No label or
 model has been approved. The [current request](review-closeout/review-request.json)
 binds the updated strategy; older packet strategy hashes remain historical.

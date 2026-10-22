@@ -10,10 +10,13 @@ now have eight new regression cases. Focused benchmark (50) and database regress
 (five) scopes pass. All 186 production functions in the original non-migration
 Python diff are documented; generated API descriptions and source indexes match.
 Ruff/format/mypy, contracts and frontend static checks pass. Full disposable DB
-verification is running; see the [closeout receipt](../../../verification/sprint11_1/review-closeout/README.md).
+lifecycle/drift and **487 backend tests pass** with one inherited Starlette warning.
+[PR #5](https://github.com/alokgupta001/AI-project-portfolio-manager/pull/5) is published;
+hosted CI and CodeRabbit review are in progress. See the
+[closeout receipt](../../../verification/sprint11_1/review-closeout/README.md).
 
 The user asked us to arrange the independent review. A separate CodeRabbit AI
-label audit will use the updated strategy hash and existing 108-case draft. Its
+label audit was requested using the updated strategy hash and existing 108-case draft. Its
 findings are AI review, not human approval or model accuracy measurements. No
 approval fields have been filled, no fresh acceptance inference has run, and AT17
 remains blocked. Retain prior calibration and exhausted attempts. Normal 0012,

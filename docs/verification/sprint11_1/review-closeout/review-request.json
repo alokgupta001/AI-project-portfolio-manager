@@ -1,6 +1,7 @@
 {
   "schema_version": "independent-ai-label-review-request-v1",
-  "status": "prepared_not_approved",
+  "status": "requested_not_approved",
+  "request_url": "https://github.com/alokgupta001/AI-project-portfolio-manager/pull/5#issuecomment-6353350329",
   "reviewer": "CodeRabbit (requested AI review)",
   "review_type": "independent AI audit; not human approval or measured model accuracy",
   "corpus": "tests/fixtures/agent_v2_cloud_quality.json",

@@ -9,9 +9,12 @@ cleanup errors. Eight new regressions reproduced the old behavior; focused 50
 benchmark and five DB cases pass. Production function contracts cover 186/186
 non-migration functions in the original diff; AST checks prove documentation-only
 files retain executable behavior. Static/contracts/frontend checks pass; full
-disposable DB verification is running. [Evidence](../verification/sprint11_1/review-closeout/README.md).
-The user declined reviewer nomination and asked us to arrange it. Request a
-separate CodeRabbit AI label audit with the new corpus/strategy binding; no invented
+disposable DB lifecycle/drift and **487 backend tests pass** with one inherited
+Starlette warning. [PR #5](https://github.com/alokgupta001/AI-project-portfolio-manager/pull/5)
+is published; hosted CI and CodeRabbit review are in progress.
+[Evidence](../verification/sprint11_1/review-closeout/README.md).
+The user declined reviewer nomination and asked us to arrange it. A
+separate CodeRabbit AI label audit was requested with the new corpus/strategy binding; no invented
 approval or accuracy claim. Normal 0012, disabled profiles, $0, historical quotas,
 private files and 21 older artifact modifications are preserved. Stop before 12.
 Earlier entries below retain their recorded checkpoint status.

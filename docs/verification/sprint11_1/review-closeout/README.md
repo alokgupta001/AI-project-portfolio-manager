@@ -14,8 +14,10 @@ before the fix:
 The focused checks pass: **50 benchmark tests** and **5 database regressions**.
 These scopes overlap the full suite. Ruff, formatting, mypy (65 modules), generated
 contract drift, frontend lint/typecheck/format and seven preserved source hashes
-pass. Full disposable database lifecycle/backend verification is running; its final
-result will be recorded before closeout. No real provider calls were made.
+pass. Full disposable database lifecycle and schema-drift checks passed, with
+**487 backend tests passing in 466.83 seconds** and one inherited Starlette
+deprecation warning. See the [validation receipt](validation.json).
+No real provider calls were made.
 
 [Documentation audit](documentation-audit.json) records 186/186 documented
 production Python functions across the original sprint's non-migration files,
@@ -25,10 +27,13 @@ changes above. Applied migration files are unchanged. OpenAPI descriptions and
 source inventories were regenerated. This is local Python coverage, not a claim
 about CodeRabbit's independent cross-language metric.
 
-The user asked us to arrange review rather than nominate a reviewer. The
+The fixes are published in [PR #5](https://github.com/alokgupta001/AI-project-portfolio-manager/pull/5).
+Hosted CI and CodeRabbit code review are in progress. The user asked us to arrange
+evaluation review rather than nominate a reviewer. The
 [separate AI review request](review-request.json) binds the current 108-case corpus
 and revised source strategy. The [approval template](label-approval-template.json)
-is intentionally empty. The audit must identify ambiguity by case ID and declare
+is intentionally empty. The [CodeRabbit request](https://github.com/alokgupta001/AI-project-portfolio-manager/pull/5#issuecomment-6353350329)
+asks the audit to identify ambiguity by case ID and declare
 any unreviewed scope before any approval is considered. AI review is recorded as
 AI review, not human approval. No held-out inference, qualification or activation
 has occurred. Earlier calibration receipts, exhausted budgets and strategy hashes
