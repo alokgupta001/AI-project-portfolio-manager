@@ -1,5 +1,15 @@
 # Latest technical handoff
 
+**Current — PR #4 response-parsing review fix:** verified that malformed completed
+responses could leak `AttributeError` from the result parsers. The shared `execute`
+handler now maps it to `ModelFailure("INVALID_OUTPUT", "completed")`. Three new
+mocked-response cases failed before the fix; all 88 focused adapter/cloud/specialist
+tests now pass, with Ruff/format and targeted mypy passing. See the
+[fix receipt](../verification/sprint11_1/response-parsing-review-fix.json) for the two
+changed-file hashes. Earlier 72-file manifests remain historical. No live calls or
+normal environment changes. AT17 remains blocked. The separately diagnosed hosted
+Next.js audit failure is outside this fix.
+
 **Current — 22 October 2026, PR published:** [PR #4](https://github.com/alokgupta001/AI-project-portfolio-manager/pull/4)
 targets `main` from `sprint-11-1-cloud-specialists`. Implementation commit `a17e72f`
 contains 356 files; publication scan checked 1,379 indexed files with no configured

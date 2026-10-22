@@ -1,5 +1,15 @@
 # Sprint 11.1 implementation handoff
 
+## PR #4 response-parsing review fix
+
+The `execute` handler now includes `AttributeError` in completed `INVALID_OUTPUT`
+mapping. Three malformed-message regressions reproduced the leak before the fix;
+88 focused mocked-HTTP tests, Ruff/format and targeted mypy pass. The
+[receipt](../../../verification/sprint11_1/response-parsing-review-fix.json) records
+the current adapter/test hashes; earlier 72-file manifests remain historical.
+No live calls or normal changes; AT17 stays blocked. The known hosted Next.js audit
+failure is separate and remains unresolved by this focused change.
+
 ## PR published — 22 October 2026
 
 [PR #4](https://github.com/alokgupta001/AI-project-portfolio-manager/pull/4) targets

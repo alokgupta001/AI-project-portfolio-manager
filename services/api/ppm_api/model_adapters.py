@@ -188,7 +188,7 @@ class NativeAdapter:
                 raise ModelFailure("UNAVAILABLE", "not_sent") from None
             except (httpx.TimeoutException, TimeoutError, httpx.ReadError):
                 raise ModelFailure("TIMEOUT", "unknown") from None
-            except (KeyError, TypeError, ValueError, IndexError):
+            except (AttributeError, KeyError, TypeError, ValueError, IndexError):
                 raise ModelFailure("INVALID_OUTPUT", "completed") from None
 
     async def gemini_chat(

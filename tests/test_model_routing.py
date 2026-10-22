@@ -136,6 +136,26 @@ async def test_ollama_finish_usage_and_bounded_payload(configured, finish, expec
     assert seen[0]["stream"] is False
 
 
+@pytest.mark.parametrize("message", [None, [], "malformed"])
+async def test_malformed_completed_message_is_invalid_output(configured, message):
+    settings, profile, _, request = configured
+    paths = []
+
+    def handler(req):
+        paths.append(req.url.path)
+        if req.url.path == "/api/tags":
+            return httpx.Response(
+                200, json={"models": [{"name": profile.model, "digest": profile.installed_digest}]}
+            )
+        return httpx.Response(200, json=dict(done=True, done_reason="stop", message=message))
+
+    with pytest.raises(ModelFailure) as raised:
+        await NativeAdapter(settings, profile, httpx.MockTransport(handler)).execute(request)
+    assert raised.value.code == "INVALID_OUTPUT"
+    assert raised.value.certainty == "completed"
+    assert paths == ["/api/tags", "/api/chat"]
+
+
 async def test_missing_model_does_not_download(configured):
     settings, profile, _, request = configured
     paths = []
