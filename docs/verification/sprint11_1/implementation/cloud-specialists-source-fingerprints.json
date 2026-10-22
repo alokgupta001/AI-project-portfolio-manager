@@ -1,0 +1,265 @@
+{
+  "baseline": "d0ebe32e691a3d63166ced669450911c63151127",
+  "files": [
+    {
+      "path": "apps/web/components/agents.tsx",
+      "sha256": "44b6a00a915246107ad675b6a70286fe0aae6c1165ccfd4155f1e28e1e98b091"
+    },
+    {
+      "path": "compose.ai-v2-test.yaml",
+      "sha256": "2288c11e13ebebb6fbf8be52b4df7a1e758fd7251b14b50a50a21c2bb4e9fbfb"
+    },
+    {
+      "path": "compose.ai-v2.yaml",
+      "sha256": "24795778e19e10f0efe6440909c5ad6f589f8413b94e57efa102803250e83245"
+    },
+    {
+      "path": "config/model-policy.cloud.example.json",
+      "sha256": "a9da2b7c0be4a62b518a613cb1e1fed0e95c8562cf1f07dca5e13c3dcede29e8"
+    },
+    {
+      "path": "config/model-policy.example.json",
+      "sha256": "9ce0e13ee1de385065a9d1fd399a8c89b011d0ad9c0a714956a52b7fce2bd870"
+    },
+    {
+      "path": "config/ollama-small.Modelfile",
+      "sha256": "df494999d60f8ee8824969ea44d7d665aeb7feb8de6374d740ccbff381069dc6"
+    },
+    {
+      "path": "infra/api.Dockerfile",
+      "sha256": "b3c7b816c1bc9ad59550d4c853aede65d2c45a7b2c79b262c45a96c44747e3a7"
+    },
+    {
+      "path": "packages/contracts/openapi.json",
+      "sha256": "127fba6079a5405beef338e375d6f250b833901a007c23eb3eb308a01b4c364f"
+    },
+    {
+      "path": "packages/contracts/src/schema.d.ts",
+      "sha256": "6af5b597ea7e70524b1f649e7aab943bd7454ef8c1429064035b03b1f9af1ef1"
+    },
+    {
+      "path": "pyproject.toml",
+      "sha256": "d8d80c736ad33bcc75829c973c5bed28f419b9681977587a1451323a121492b1"
+    },
+    {
+      "path": "scripts/benchmark_agent_runtime.py",
+      "sha256": "0918f3125903c98ae04983612aa05ae32d75021eca5da3d4e42a02090adb9c1b"
+    },
+    {
+      "path": "scripts/benchmark_cloud_specialists.py",
+      "sha256": "f271df1924771cde0fd3a431a283c04b5417b249a4ce50179d9dcaf5eb5e1a1d"
+    },
+    {
+      "path": "scripts/check-identity-browser.mjs",
+      "sha256": "39c25bce7538fef943cd3629989d79dd7e689d809ca834a982d321ef554fa0a0"
+    },
+    {
+      "path": "scripts/check_local_model.py",
+      "sha256": "8b6ac864f884a5d05d0ea0d4c4b031f8b2297146839e0a62ffd549826ce43d4c"
+    },
+    {
+      "path": "scripts/check_model_qualification.py",
+      "sha256": "a5a57cf5df40c5f7178e6a4c3089a0e6cee6aac92e1d83ef1eeed7ff20905e35"
+    },
+    {
+      "path": "scripts/check_provider_setup.py",
+      "sha256": "b5cb1c27b81701b6779811185a04125f8c30cf09c894c9720b631ca89bc04bf5"
+    },
+    {
+      "path": "scripts/prepare_agent_training.py",
+      "sha256": "3f9e0f60cc42541df796fec0500c4df90e6e339764575046e221bdab101d836f"
+    },
+    {
+      "path": "scripts/prepare_cloud_specialists.py",
+      "sha256": "ddfd538e904ab2a277841370dc9e29b349dbd575b4b3fb9824d8cd160c2473f5"
+    },
+    {
+      "path": "scripts/score_agent_benchmark.py",
+      "sha256": "07cf045912fee71d85446e01567db21e839852758317ba227ecc9a24fb59bd48"
+    },
+    {
+      "path": "scripts/smoke_groq_provider.py",
+      "sha256": "b260f1ef6b5a213968d4d8b4dbb036e780f394a0f7a831dcb80eb46780e0775e"
+    },
+    {
+      "path": "scripts/start-ollama-small.ps1",
+      "sha256": "0e7ac01344ffb3779d3c60980060bd23fb781e5fdbdbb132e9f029522256e6fa"
+    },
+    {
+      "path": "scripts/sync_model_policy.py",
+      "sha256": "52c70aed1b8d7f4dbbc72603e6310fda9a65f7a2d76c2b8d0fe285738e749880"
+    },
+    {
+      "path": "services/api/migrations/env.py",
+      "sha256": "b884e23e81fa0f70cb2adb97563d68cf14e50777b522070ec0a5dccd0048f779"
+    },
+    {
+      "path": "services/api/migrations/versions/0015_agent_task_runtime.py",
+      "sha256": "818d193910e6b5b1a1380bbca24c906a60ebe6df32daa70a85c1072a42f8d26b"
+    },
+    {
+      "path": "services/api/ppm_api/agent_context.py",
+      "sha256": "5035056dde1ecd2da0a1f7d0b56be2ed48a7107274461762e6f2248714ba7edc"
+    },
+    {
+      "path": "services/api/ppm_api/agent_critique.py",
+      "sha256": "98f85c23d4ec32b1779c7b3c0d3b76f52f9f7c43f8a05ea8ce9cab0d18dd51f2"
+    },
+    {
+      "path": "services/api/ppm_api/agent_examples.py",
+      "sha256": "428c231f6659532b6e63f4bd0816dd0c3731717ff3d69db179552dd9f556f962"
+    },
+    {
+      "path": "services/api/ppm_api/agent_planner.py",
+      "sha256": "7e9af834091ad73a91010d6f50f29a5b7d8e69a108f37683f23c47b945ad642e"
+    },
+    {
+      "path": "services/api/ppm_api/agent_prompts.py",
+      "sha256": "4569b5f46b2dab58530c7122a7e26d9030a5ad4739315efd461a9594fe8344a0"
+    },
+    {
+      "path": "services/api/ppm_api/agent_recovery.py",
+      "sha256": "50979ebb7215eff082431eb49e0c5da8a6149311ef3327d9397ddc26cb9b28e1"
+    },
+    {
+      "path": "services/api/ppm_api/agent_registry.py",
+      "sha256": "ac1286366812d1edb7d160f8840315c7d1589b65d126023a645ec54320dcfee0"
+    },
+    {
+      "path": "services/api/ppm_api/agent_runtime.py",
+      "sha256": "ba6421d564039e0ea2d5210ccd085da71df92d660a633f58921fbe99295427f9"
+    },
+    {
+      "path": "services/api/ppm_api/agent_schemas.py",
+      "sha256": "2caea3f30a937749b6854245446ce5bee1d8b27754654fdaca7d36cf80d97c41"
+    },
+    {
+      "path": "services/api/ppm_api/agent_task_tables.py",
+      "sha256": "66916bacd92ce6a18bd8c1ae18bfa9bc72470ce687d33ed6a53f1ff247ae3bf1"
+    },
+    {
+      "path": "services/api/ppm_api/agent_validation.py",
+      "sha256": "461308e051481f2be306f83f3fbf4509dd40e8bd6c5ac1330e16e97fde4e6168"
+    },
+    {
+      "path": "services/api/ppm_api/agents.py",
+      "sha256": "5b021ae6590c67c02f27ada2b63f3163ddee399f8ada98486c9415e680840030"
+    },
+    {
+      "path": "services/api/ppm_api/ai.py",
+      "sha256": "dc16132ebcc43e16befca6bf8951be5cf5adab1e27defca6beb67169d8cddde8"
+    },
+    {
+      "path": "services/api/ppm_api/ai_schemas.py",
+      "sha256": "c1ecfa89744f8ddb6904b463a2116585ee03ade51f2487b7e6dbb41c3cb1c79f"
+    },
+    {
+      "path": "services/api/ppm_api/ai_tables.py",
+      "sha256": "5a1b338af5842eac556087dcad29fc3b8d86fec9dfe20538cc77cffd36337e3d"
+    },
+    {
+      "path": "services/api/ppm_api/config.py",
+      "sha256": "d0b353e41ff97fd40307b52a654b166feffa9d5d05bf795eb0fac20c68b1c773"
+    },
+    {
+      "path": "services/api/ppm_api/local_model_readiness.py",
+      "sha256": "d9c0977a300a25f197551671ba68729fa9155cebf7cd7b210b33e9cf44e51aeb"
+    },
+    {
+      "path": "services/api/ppm_api/main.py",
+      "sha256": "30eec333614c8894f44ca43eeb4ffd5ff5a3515229f37e6d844c31568e3e6827"
+    },
+    {
+      "path": "services/api/ppm_api/model_adapters.py",
+      "sha256": "31cfedc095468a1450fe46bc35849ef8f0b48b125f75b1ab9c7dd433f1534842"
+    },
+    {
+      "path": "services/api/ppm_api/model_contracts.py",
+      "sha256": "31854e542fef9317d3f969475638989519c807d0d08476fb905273bfb62fc54f"
+    },
+    {
+      "path": "services/api/ppm_api/model_qualification.py",
+      "sha256": "081828c85a7196fc8caa05877e28a84362d7dd5c6ac183e1cd343b5992888df3"
+    },
+    {
+      "path": "services/api/ppm_api/model_registry.py",
+      "sha256": "9e3c88a536992fabe6af5168e1eb24832ea66b1a8d83243ae031fc3b9341ae71"
+    },
+    {
+      "path": "services/api/ppm_api/model_router.py",
+      "sha256": "78790a406be3638a5e61e2245faf07afc63447cbe78b9d9c205547f4b5657158"
+    },
+    {
+      "path": "services/api/ppm_api/ollama_provider.py",
+      "sha256": "d82b58cf83be49516bc0d734b1b19b600720c1ee87f8d9de66101083c3533fd1"
+    },
+    {
+      "path": "services/api/ppm_api/schemas.py",
+      "sha256": "d168be05f24299e99ba743b3d451ae0eeab4e91376ff96d3d05686be34faaf41"
+    },
+    {
+      "path": "tests/browser/agents-v2.spec.ts",
+      "sha256": "36b8d3962bc7ede90f0fdb3907e1cdb720765eb158a71ff6ea7658e2c0413077"
+    },
+    {
+      "path": "tests/fixtures/agent_v2_quality.json",
+      "sha256": "f626c0b210daf73110cfc98d0aa6f7a974842bab0bf3e98f52e177e8ab516a24"
+    },
+    {
+      "path": "tests/fixtures/agent_v2_training.json",
+      "sha256": "89ac71677d23066644b79290141471135ea7047800a498bd60234259b22350a5"
+    },
+    {
+      "path": "tests/test_agent_benchmark.py",
+      "sha256": "459a383e5edd517171812ab473cf94d5fdaad77499a376597314ffe406229d22"
+    },
+    {
+      "path": "tests/test_agent_critique.py",
+      "sha256": "d9b504b2efcab54ca0443bbfff691373d88651d26e67733681f8dba804bb9210"
+    },
+    {
+      "path": "tests/test_agent_planner.py",
+      "sha256": "aa51b79cba70127b24706b8209155e4d17daacfecc3a3909685d434234f38d8e"
+    },
+    {
+      "path": "tests/test_agent_v2_contracts.py",
+      "sha256": "e87b36fb62bf49da34bdf401cadc66edb3be6bf964f5c94e9357f46ec3f03642"
+    },
+    {
+      "path": "tests/test_agent_v2_runtime.py",
+      "sha256": "ea68f5c435c498d1be2db665dae69a2ab102e9651f62500e38b1de47d56129a5"
+    },
+    {
+      "path": "tests/test_cloud_chat_providers.py",
+      "sha256": "39e877ce0782ae0cfa70c52f2f7c3ad8458d348192c23c697b15833bd6d75a09"
+    },
+    {
+      "path": "tests/test_cloud_specialists.py",
+      "sha256": "6e779e7126d5d46d2a555f8e2711ea1ddda438a98fc93d72ebbf989f8b31fc19"
+    },
+    {
+      "path": "tests/test_groq_smoke.py",
+      "sha256": "9d10e3d2b3e56b37e1add7a778d0e09e3da638600bab5b61ac8c10b0e6d23418"
+    },
+    {
+      "path": "tests/test_integration.py",
+      "sha256": "a1d853adccc7f7257cf5be04a130940d6ee5df6ecd9d291320624715d8fa9c83"
+    },
+    {
+      "path": "tests/test_model_qualification.py",
+      "sha256": "427c12acfd841d067d07956e2bd4ed0fb1b60e88d69a6c1df2d971282ee0435c"
+    },
+    {
+      "path": "tests/test_model_routing.py",
+      "sha256": "541d67cc8ff226986024dc6cafbd2f4d6c0fb72c50284f0d374fa3bf8d4801e2"
+    },
+    {
+      "path": "tests/test_provider_setup.py",
+      "sha256": "3ba947a94e48376530a56f4f5469353df74e2c5a724bf1bb09264ea6679d2f4b"
+    },
+    {
+      "path": "uv.lock",
+      "sha256": "a6d1ec9cd687bced5c022dce66f820ae7f706f8a14e54ea511f73e550810fffc"
+    }
+  ]
+}

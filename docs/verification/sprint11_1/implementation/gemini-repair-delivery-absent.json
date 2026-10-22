@@ -1,0 +1,60 @@
+{
+  "schema_version": "cloud-batch-calibration-v1",
+  "provider": "gemini",
+  "model": "gemini-3.5-flash-lite",
+  "corpus_sha256": "f626c0b210daf73110cfc98d0aa6f7a974842bab0bf3e98f52e177e8ab516a24",
+  "policy_sha256": "143f5442bdd2294d8e95f0f023dd61726139b4a5be9aed7155f30437ec434f8e",
+  "selected_cases": [
+    "financial_07",
+    "schedule_07",
+    "resource_07"
+  ],
+  "prompt_sha256": "21e41c414ca312ce0dde9e6be9d6ff298ed8f902e3ba5b66b16e38274600ed36",
+  "request_sha256": "439d72fc1a27ad6edc4be4478b4a9275f39af993f62b983dfb33cd85341cf4f0",
+  "max_output_tokens": 512,
+  "context_tokens": 8192,
+  "qualified_classes": [],
+  "profile_activated": false,
+  "weight_training": false,
+  "independent_semantic_review": "pending",
+  "attempts": [
+    {
+      "attempt_id": "af3dbb85-0a07-4a23-ae0b-b7ed2188ed19",
+      "cases": [
+        "financial_07",
+        "schedule_07",
+        "resource_07"
+      ],
+      "request_sha256": "439d72fc1a27ad6edc4be4478b4a9275f39af993f62b983dfb33cd85341cf4f0",
+      "native_sha256": "8212fc28461d202883db105d8da98ffb058a2358c5c5ccc564173c24459cdc46",
+      "candidate_sha256": "6dfcca88e8f68436f98fafd15dd8ce38af0fdd9190fd5e3d2e934762b5a76602",
+      "usage": {
+        "input_tokens": 386,
+        "output_tokens": 168,
+        "reasoning_tokens": null,
+        "source": "reported"
+      },
+      "latency_ms": 2064,
+      "completion": "complete",
+      "reported_model_id": null,
+      "roles": {
+        "financial": {
+          "outcome": "insufficient_evidence",
+          "hard_validation": "partially_validated",
+          "finding_count": 0
+        },
+        "schedule": {
+          "outcome": "insufficient_evidence",
+          "hard_validation": "partially_validated",
+          "finding_count": 0
+        },
+        "resource": {
+          "outcome": "insufficient_evidence",
+          "hard_validation": "partially_validated",
+          "finding_count": 0
+        }
+      }
+    }
+  ],
+  "status": "completed_pending_review"
+}

@@ -1,0 +1,238 @@
+{
+  "schema_version": "agent-benchmark-v1",
+  "mode": "local-only",
+  "model": "qwen3:0.6b",
+  "model_digest": "7df6b6e09427a769808717c0a93cadc4ae99ed4eb8bf5ca557c90846becea435",
+  "corpus_sha256": "f626c0b210daf73110cfc98d0aa6f7a974842bab0bf3e98f52e177e8ab516a24",
+  "prompt_sha256": "79b889d9acb91950a3a6ce46b69c71ad775338256172bf9ad1f02d1119ee0c2c",
+  "context_tokens": 4096,
+  "output_tokens": 512,
+  "selected_cases": [
+    "risk_01"
+  ],
+  "maximum_calls": 1,
+  "warm_repeats_requested": 0,
+  "keep_alive_seconds": 0,
+  "profile_activated": false,
+  "qualified_classes": [],
+  "independent_semantic_review": "pending",
+  "attempts": [
+    {
+      "case": "risk_01",
+      "task_class": "risk_extraction",
+      "split": "calibration",
+      "attempt_id": "1c7937bf-998e-4500-a050-c2cf29286f0a",
+      "timing_only": false,
+      "cold": true,
+      "samples": [
+        {
+          "available_mb": 4268,
+          "ollama_rss_mb": 97
+        },
+        {
+          "available_mb": 4265,
+          "ollama_rss_mb": 116
+        },
+        {
+          "available_mb": 4250,
+          "ollama_rss_mb": 128
+        },
+        {
+          "available_mb": 4220,
+          "ollama_rss_mb": 159
+        },
+        {
+          "available_mb": 4241,
+          "ollama_rss_mb": 130
+        },
+        {
+          "available_mb": 4214,
+          "ollama_rss_mb": 160
+        },
+        {
+          "available_mb": 4195,
+          "ollama_rss_mb": 186
+        },
+        {
+          "available_mb": 4063,
+          "ollama_rss_mb": 312
+        },
+        {
+          "available_mb": 3779,
+          "ollama_rss_mb": 577
+        },
+        {
+          "available_mb": 3277,
+          "ollama_rss_mb": 1103
+        },
+        {
+          "available_mb": 3276,
+          "ollama_rss_mb": 1105
+        },
+        {
+          "available_mb": 3275,
+          "ollama_rss_mb": 1105
+        },
+        {
+          "available_mb": 3261,
+          "ollama_rss_mb": 1118
+        },
+        {
+          "available_mb": 3261,
+          "ollama_rss_mb": 1118
+        },
+        {
+          "available_mb": 3261,
+          "ollama_rss_mb": 1118
+        },
+        {
+          "available_mb": 3261,
+          "ollama_rss_mb": 1118
+        },
+        {
+          "available_mb": 3261,
+          "ollama_rss_mb": 1118
+        },
+        {
+          "available_mb": 3247,
+          "ollama_rss_mb": 1120
+        },
+        {
+          "available_mb": 3254,
+          "ollama_rss_mb": 1120
+        },
+        {
+          "available_mb": 3244,
+          "ollama_rss_mb": 1120
+        },
+        {
+          "available_mb": 3247,
+          "ollama_rss_mb": 1120
+        },
+        {
+          "available_mb": 3251,
+          "ollama_rss_mb": 1121
+        },
+        {
+          "available_mb": 3243,
+          "ollama_rss_mb": 1121
+        },
+        {
+          "available_mb": 3240,
+          "ollama_rss_mb": 1138
+        },
+        {
+          "available_mb": 3244,
+          "ollama_rss_mb": 1121
+        },
+        {
+          "available_mb": 3247,
+          "ollama_rss_mb": 1121
+        },
+        {
+          "available_mb": 3242,
+          "ollama_rss_mb": 1135
+        },
+        {
+          "available_mb": 3246,
+          "ollama_rss_mb": 1126
+        },
+        {
+          "available_mb": 3246,
+          "ollama_rss_mb": 1125
+        },
+        {
+          "available_mb": 3246,
+          "ollama_rss_mb": 1121
+        },
+        {
+          "available_mb": 3246,
+          "ollama_rss_mb": 1121
+        },
+        {
+          "available_mb": 3246,
+          "ollama_rss_mb": 1121
+        }
+      ],
+      "candidate_sha256": "948485baf3d7ebfa56aba30ffbcf16403dd98510c3b848de58fee4848b26f30e",
+      "completion": "complete",
+      "usage": {
+        "input_tokens": 174,
+        "output_tokens": 65,
+        "reasoning_tokens": null,
+        "source": "reported"
+      },
+      "latency_ms": 3568,
+      "load_ms": 1306,
+      "generation_ns": 1745549000,
+      "code": "INVALID_OUTPUT",
+      "end_to_end_seconds": 3.5697
+    }
+  ],
+  "status": "stopped_on_failure",
+  "limits": {
+    "attempt_seconds": 22,
+    "run_seconds": 90,
+    "attempts_per_run": 4,
+    "attempts_per_root": 2
+  },
+  "readiness": {
+    "schema_version": "local-readiness-v1",
+    "hardware": {
+      "os": "Windows",
+      "os_version": "10.0.26300",
+      "architecture": "AMD64",
+      "memory": {
+        "total_mb": 15931,
+        "available_mb": 4285
+      }
+    },
+    "hardware_record_sha256": "26b6d9d592dfd568777b7307dc8297cd31df0e8f9e4370582e120e7fc4a75a1d",
+    "model": "qwen3:0.6b",
+    "model_digest": "7df6b6e09427a769808717c0a93cadc4ae99ed4eb8bf5ca557c90846becea435",
+    "reservation_mb": 1024,
+    "headroom_mb": 2048,
+    "inference_requests": 0,
+    "qualified": false,
+    "blocked": [],
+    "ollama_version": "0.40.5",
+    "model_details": {
+      "parent_model": "",
+      "format": "gguf",
+      "family": "qwen3",
+      "families": [
+        "qwen3"
+      ],
+      "parameter_size": "751.63M",
+      "quantization_level": "Q4_K_M",
+      "context_length": 40960,
+      "embedding_length": 1024,
+      "runner": "ggml"
+    }
+  },
+  "hardware": {
+    "os": "Windows",
+    "os_version": "10.0.26300",
+    "architecture": "AMD64",
+    "memory": {
+      "total_mb": 15931
+    },
+    "cpu": "Intel64 Family 6 Model 140 Stepping 1, GenuineIntel",
+    "logical_cpus": 8,
+    "ollama_version": "0.40.5",
+    "model_details": {
+      "parent_model": "",
+      "format": "gguf",
+      "family": "qwen3",
+      "families": [
+        "qwen3"
+      ],
+      "parameter_size": "751.63M",
+      "quantization_level": "Q4_K_M",
+      "context_length": 40960,
+      "embedding_length": 1024,
+      "runner": "ggml"
+    }
+  },
+  "hardware_record_sha256": "90e812d7ccf3d6b7a8e00769ee32294f037b6ef312e195b42c7ce6aaca493eec"
+}

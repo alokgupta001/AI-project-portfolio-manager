@@ -1,0 +1,60 @@
+{
+  "schema_version": "cloud-batch-calibration-v1",
+  "provider": "puter",
+  "model": "gpt-4.1-mini-2025-04-14",
+  "corpus_sha256": "f626c0b210daf73110cfc98d0aa6f7a974842bab0bf3e98f52e177e8ab516a24",
+  "policy_sha256": "143f5442bdd2294d8e95f0f023dd61726139b4a5be9aed7155f30437ec434f8e",
+  "selected_cases": [
+    "risk_05",
+    "governance_03",
+    "agile_coach_05"
+  ],
+  "prompt_sha256": "675975a850b055c85ee01f25109e19ba6ab88fcc5ea59798d636cdbbec478801",
+  "request_sha256": "f5536992250d4e5109d2a7ca8b36a810f0c6f5cf0cb7bddc5f97475a37618b6b",
+  "max_output_tokens": 512,
+  "context_tokens": 8192,
+  "qualified_classes": [],
+  "profile_activated": false,
+  "weight_training": false,
+  "independent_semantic_review": "pending",
+  "attempts": [
+    {
+      "attempt_id": "463e70b2-6787-4d97-ba20-401e73535667",
+      "cases": [
+        "risk_05",
+        "governance_03",
+        "agile_coach_05"
+      ],
+      "request_sha256": "f5536992250d4e5109d2a7ca8b36a810f0c6f5cf0cb7bddc5f97475a37618b6b",
+      "native_sha256": "91954651f9b36c8639d28c14b03eb079b503be7c1db930a756f8f03aa07fe092",
+      "candidate_sha256": "bb58aedd80d1d3cce231c59b11b1eb1eebb8b181093f560da860c0cf0ce424d0",
+      "usage": {
+        "input_tokens": 1195,
+        "output_tokens": 206,
+        "reasoning_tokens": null,
+        "source": "reported"
+      },
+      "latency_ms": 2803,
+      "completion": "complete",
+      "reported_model_id": "gpt-4.1-mini",
+      "roles": {
+        "risk": {
+          "outcome": "supported",
+          "hard_validation": "validated",
+          "finding_count": 1
+        },
+        "governance": {
+          "outcome": "supported",
+          "hard_validation": "validated",
+          "finding_count": 1
+        },
+        "agile_coach": {
+          "outcome": "supported",
+          "hard_validation": "validated",
+          "finding_count": 1
+        }
+      }
+    }
+  ],
+  "status": "completed_pending_review"
+}

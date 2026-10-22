@@ -1,5 +1,9 @@
 # Sprint history and future work
 
+Current: [Sprint 11.1 implementation](active/sprint-11.1/README.md), authorized after the architecture revision. Core v2 is locally verified behind a default-off flag; final controls/regression/browser receipts are linked. Normal 0012 and prior history remain preserved. Real-model qualification and rollout are open.
+
+[Sprint 11.1 architecture initialization](../09-planning/sprint-11.1/README.md), 17 October 2026: planning package and fresh offline baseline; no application implementation or deployment. It extends the Sprint 11 checkpoint before future implementation, without starting Sprint 12.
+
 Current: [Sprint 11](completed/sprint-11/README.md) implements nine typed agents, semantic suggestions and independent reviewed recommendations. [Validation](../04-testing/sprint-based/sprint-11/TESTING_REPORT.md) separates local deterministic acceptance from blocked real-model quality. Sprint 12 remains planned and unstarted.
 
 ## Historical checkpoints before Sprint 11

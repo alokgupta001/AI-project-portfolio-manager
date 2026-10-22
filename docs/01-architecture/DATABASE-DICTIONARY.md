@@ -6,7 +6,7 @@ Generated from SQLAlchemy `Base.metadata` without a database connection. Source 
 
 Live organization membership → transaction-local principal/RLS → scoped domain facts. Published assessment history remains immutable. `source_documents` owns scope/retention; `source_versions` owns immutable byte identity and mutable processing status; `source_chunks` is replaceable derived text; `source_evidence_links` references separately authorized released attachments. `durable_jobs` references exactly one integration, document version or AI run according to job kind. AI run provenance/budgets, attempt accounting and rebuildable vectors follow the [AI contract](../contracts/ai.md). Originals remain private objects; logical deletion revokes reads, guarded purge removes bytes/text/links but retains tombstones. `ai_embeddings` stores the bounded exact JSONB projection; no pgvector/ANN or semantic-finding table is activated.
 
-**Inventory:** 72 metadata tables (Alembic's runtime version table is separate).
+**Inventory:** 76 metadata tables (Alembic's runtime version table is separate).
 
 ## agent_analyses
 
@@ -58,6 +58,79 @@ Live organization membership → transaction-local principal/RLS → scoped doma
 - UniqueConstraint (unnamed): organization_id, actor_id, key
 - UniqueConstraint (unnamed): organization_id, id
 
+## agent_sections
+
+| Column | SQL type | Nullable | Primary key | Foreign reference |
+| --- | --- | --- | --- | --- |
+| `id` | `CHAR(32)` | False | True | — |
+| `organization_id` | `CHAR(32)` | False | False | agent_tasks.organization_id, organizations.id |
+| `run_id` | `CHAR(32)` | False | False | agent_tasks.run_id |
+| `task_id` | `CHAR(32)` | False | False | agent_tasks.id |
+| `section_id` | `VARCHAR(64)` | False | False | — |
+| `logical_section_id` | `VARCHAR(64)` | False | False | — |
+| `result` | `JSONB` | False | False | — |
+| `validation` | `JSONB` | False | False | — |
+| `content_sha256` | `VARCHAR(64)` | False | False | — |
+| `schema_version` | `VARCHAR(48)` | False | False | — |
+| `created_at` | `DATETIME` | False | False | — |
+
+- CheckConstraint (unnamed): octet_length(result::text)<=64000 AND octet_length(validation::text)<=64000
+- ForeignKeyConstraint (unnamed): organization_id
+- ForeignKeyConstraint (unnamed): organization_id, run_id, task_id
+- PrimaryKeyConstraint (unnamed): id
+- UniqueConstraint (unnamed): organization_id, id
+- UniqueConstraint (unnamed): task_id, section_id
+- Index `ix_agent_sections_run` (unique=False): agent_sections.organization_id, agent_sections.run_id
+
+## agent_tasks
+
+| Column | SQL type | Nullable | Primary key | Foreign reference |
+| --- | --- | --- | --- | --- |
+| `id` | `CHAR(32)` | False | True | — |
+| `organization_id` | `CHAR(32)` | False | False | agent_tasks.organization_id, ai_runs.organization_id, organizations.id |
+| `run_id` | `CHAR(32)` | False | False | agent_tasks.run_id, ai_runs.id |
+| `task_key` | `VARCHAR(64)` | False | False | — |
+| `agent` | `VARCHAR(20)` | False | False | — |
+| `kind` | `VARCHAR(16)` | False | False | — |
+| `logical_section_id` | `VARCHAR(64)` | False | False | — |
+| `section_id` | `VARCHAR(64)` | False | False | — |
+| `parent_task_id` | `CHAR(32)` | True | False | agent_tasks.id |
+| `dependencies` | `JSONB` | False | False | — |
+| `input_manifest` | `JSONB` | False | False | — |
+| `input_hash` | `VARCHAR(64)` | False | False | — |
+| `schema_hash` | `VARCHAR(64)` | False | False | — |
+| `prompt_hash` | `VARCHAR(64)` | False | False | — |
+| `policy_hash` | `VARCHAR(64)` | False | False | — |
+| `state` | `VARCHAR(16)` | False | False | — |
+| `outcome` | `VARCHAR(24)` | True | False | — |
+| `required` | `BOOLEAN` | False | False | — |
+| `revision` | `INTEGER` | False | False | — |
+| `attempt_count` | `INTEGER` | False | False | — |
+| `next_attempt_at` | `DATETIME` | True | False | — |
+| `lease_token` | `CHAR(32)` | True | False | — |
+| `created_at` | `DATETIME` | False | False | — |
+| `updated_at` | `DATETIME` | False | False | — |
+| `diagnostic` | `VARCHAR(48)` | True | False | — |
+| `candidate_payload` | `JSONB` | True | False | — |
+| `candidate_hash` | `VARCHAR(64)` | True | False | — |
+| `candidate_attempt_id` | `CHAR(32)` | True | False | — |
+| `resolved_context_manifest` | `JSONB` | True | False | — |
+| `resolved_input_hash` | `VARCHAR(64)` | True | False | — |
+| `bound_at` | `DATETIME` | True | False | — |
+
+- CheckConstraint (unnamed): jsonb_array_length(dependencies)<=24 AND octet_length(input_manifest::text)<=90000
+- CheckConstraint (unnamed): kind IN ('deterministic','semantic','evaluator','reconcile')
+- CheckConstraint (unnamed): revision>0 AND attempt_count BETWEEN 0 AND 2
+- CheckConstraint (unnamed): state IN ('WAITING','READY','RUNNING','VALIDATING','RETRY_WAIT','SUCCEEDED','FAILED','BLOCKED','SKIPPED','CANCELLED')
+- ForeignKeyConstraint (unnamed): organization_id
+- ForeignKeyConstraint (unnamed): organization_id, run_id
+- ForeignKeyConstraint (unnamed): organization_id, run_id, parent_task_id
+- PrimaryKeyConstraint (unnamed): id
+- UniqueConstraint (unnamed): organization_id, id
+- UniqueConstraint (unnamed): organization_id, run_id, id
+- UniqueConstraint (unnamed): run_id, task_key
+- Index `ix_agent_tasks_due` (unique=False): agent_tasks.run_id, agent_tasks.state, agent_tasks.next_attempt_at
+
 ## ai_budgets
 
 | Column | SQL type | Nullable | Primary key | Foreign reference |
@@ -84,8 +157,8 @@ Live organization membership → transaction-local principal/RLS → scoped doma
 | Column | SQL type | Nullable | Primary key | Foreign reference |
 | --- | --- | --- | --- | --- |
 | `id` | `CHAR(32)` | False | True | — |
-| `organization_id` | `CHAR(32)` | False | False | ai_runs.organization_id, organizations.id |
-| `run_id` | `CHAR(32)` | False | False | ai_runs.id |
+| `organization_id` | `CHAR(32)` | False | False | agent_tasks.organization_id, ai_runs.organization_id, organizations.id |
+| `run_id` | `CHAR(32)` | False | False | agent_tasks.run_id, ai_runs.id |
 | `operation` | `VARCHAR(24)` | False | False | — |
 | `attempt` | `INTEGER` | False | False | — |
 | `status` | `VARCHAR(16)` | False | False | — |
@@ -94,12 +167,35 @@ Live organization membership → transaction-local principal/RLS → scoped doma
 | `input_tokens` | `INTEGER` | True | False | — |
 | `output_tokens` | `INTEGER` | True | False | — |
 | `latency_ms` | `INTEGER` | False | False | — |
+| `task_id` | `CHAR(32)` | True | False | agent_tasks.id |
+| `attempt_id` | `CHAR(32)` | True | False | — |
+| `run_attempt_no` | `INTEGER` | True | False | — |
+| `provider_id` | `VARCHAR(32)` | True | False | — |
+| `model_id` | `VARCHAR(160)` | True | False | — |
+| `quota_scope_hash` | `VARCHAR(64)` | True | False | — |
+| `policy_hash` | `VARCHAR(64)` | True | False | — |
+| `request_hash` | `VARCHAR(64)` | True | False | — |
+| `started_at` | `DATETIME` | True | False | — |
+| `completed_at` | `DATETIME` | True | False | — |
+| `finish_category` | `VARCHAR(32)` | True | False | — |
+| `native_reason` | `VARCHAR(48)` | True | False | — |
+| `usage_source` | `VARCHAR(16)` | True | False | — |
+| `reserved_input_tokens` | `INTEGER` | True | False | — |
+| `reserved_output_tokens` | `INTEGER` | True | False | — |
+| `reasoning_tokens` | `INTEGER` | True | False | — |
+| `provider_request_id` | `VARCHAR(160)` | True | False | — |
+| `send_state` | `VARCHAR(16)` | True | False | — |
+| `response_hash` | `VARCHAR(64)` | True | False | — |
 
+- CheckConstraint (ck_ai_attempt): run_attempt_no IS NULL OR run_attempt_no BETWEEN 1 AND 4
+- ForeignKeyConstraint (fk_ai_call_task): organization_id, run_id, task_id
 - ForeignKeyConstraint (unnamed): organization_id
 - ForeignKeyConstraint (unnamed): organization_id, run_id
 - PrimaryKeyConstraint (unnamed): id
 - UniqueConstraint (unnamed): organization_id, id
 - UniqueConstraint (unnamed): run_id, operation, attempt
+- UniqueConstraint (uq_ai_call_attempt_id): attempt_id
+- UniqueConstraint (uq_ai_run_attempt_no): run_id, run_attempt_no
 
 ## ai_embeddings
 
@@ -121,6 +217,57 @@ Live organization membership → transaction-local principal/RLS → scoped doma
 - PrimaryKeyConstraint (unnamed): id
 - UniqueConstraint (unnamed): chunk_id
 - UniqueConstraint (unnamed): organization_id, id
+
+## ai_provider_scopes
+
+| Column | SQL type | Nullable | Primary key | Foreign reference |
+| --- | --- | --- | --- | --- |
+| `id` | `VARCHAR(160)` | False | True | — |
+| `provider_id` | `VARCHAR(32)` | False | False | — |
+| `policy_hash` | `VARCHAR(64)` | False | False | — |
+| `billing_class` | `VARCHAR(24)` | False | False | — |
+| `enabled` | `BOOLEAN` | False | False | — |
+| `allowed_tenants` | `JSONB` | False | False | — |
+| `allowed_models` | `JSONB` | False | False | — |
+| `concurrency_slots` | `INTEGER` | False | False | — |
+| `requests_per_minute` | `INTEGER` | False | False | — |
+| `requests_per_day` | `INTEGER` | False | False | — |
+| `tenant_requests_per_day` | `INTEGER` | False | False | — |
+| `tokens_per_minute` | `INTEGER` | False | False | — |
+| `circuit_until` | `DATETIME` | True | False | — |
+| `failure_count` | `INTEGER` | False | False | — |
+| `disabled_reason` | `VARCHAR(48)` | True | False | — |
+| `quarantined_attempt_id` | `CHAR(32)` | True | False | — |
+| `quarantine_reason` | `VARCHAR(48)` | True | False | — |
+| `revision` | `INTEGER` | False | False | — |
+
+- CheckConstraint (unnamed): concurrency_slots BETWEEN 1 AND 4 AND requests_per_minute>0 AND requests_per_day>0 AND tokens_per_minute>0 AND revision>0
+- PrimaryKeyConstraint (unnamed): id
+
+## ai_quota_reservations
+
+| Column | SQL type | Nullable | Primary key | Foreign reference |
+| --- | --- | --- | --- | --- |
+| `attempt_id` | `CHAR(32)` | False | True | — |
+| `organization_id` | `CHAR(32)` | False | False | agent_tasks.organization_id |
+| `run_id` | `CHAR(32)` | False | False | agent_tasks.run_id |
+| `task_id` | `CHAR(32)` | False | False | agent_tasks.id |
+| `quota_scope_id` | `VARCHAR(160)` | False | False | ai_provider_scopes.id |
+| `admitted_at` | `DATETIME` | False | False | — |
+| `window_expires_at` | `DATETIME` | False | False | — |
+| `slot_expires_at` | `DATETIME` | False | False | — |
+| `request_count` | `INTEGER` | False | False | — |
+| `reserved_input` | `INTEGER` | False | False | — |
+| `reserved_output` | `INTEGER` | False | False | — |
+| `reported_input` | `INTEGER` | True | False | — |
+| `reported_output` | `INTEGER` | True | False | — |
+| `outcome` | `VARCHAR(16)` | False | False | — |
+
+- ForeignKeyConstraint (unnamed): organization_id, run_id, task_id
+- ForeignKeyConstraint (unnamed): quota_scope_id
+- PrimaryKeyConstraint (unnamed): attempt_id
+- Index `ix_model_quota_slots` (unique=False): ai_quota_reservations.quota_scope_id, ai_quota_reservations.slot_expires_at
+- Index `ix_model_quota_time` (unique=False): ai_quota_reservations.quota_scope_id, ai_quota_reservations.admitted_at
 
 ## ai_runs
 

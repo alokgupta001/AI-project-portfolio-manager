@@ -8,6 +8,7 @@ from uuid import UUID
 from pydantic import Field
 
 from ppm_api.document_schemas import Strict
+from ppm_api.model_contracts import HybridSelection
 
 PROMPT_VERSION = "source-excerpts-v1"
 SCHEMA_VERSION = "ai-evidence-v1"
@@ -15,7 +16,7 @@ TOOL_VERSION = "source-read-v1"
 GRAPH_VERSION = "evidence-graph-v1"
 
 
-class AIRunInput(Strict):
+class AIRunInput(HybridSelection):
     project_id: UUID
     operation: Literal["query", "index", "agents"] = "query"
     query: str = Field(default="", max_length=160)

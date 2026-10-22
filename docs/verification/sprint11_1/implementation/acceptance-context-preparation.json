@@ -1,0 +1,47 @@
+{
+  "singletons_prepared": 108,
+  "largest_batch_reservation": 8133,
+  "context_or_minute_blocked": [
+    {
+      "cases": [
+        "cloud_financial_08",
+        "cloud_schedule_08",
+        "cloud_resource_08"
+      ],
+      "reserved_tokens": 8013
+    },
+    {
+      "cases": [
+        "cloud_financial_09",
+        "cloud_schedule_09",
+        "cloud_resource_09"
+      ],
+      "reserved_tokens": 7979
+    },
+    {
+      "cases": [
+        "cloud_financial_10",
+        "cloud_schedule_10",
+        "cloud_resource_10"
+      ],
+      "reserved_tokens": 8114
+    },
+    {
+      "cases": [
+        "cloud_financial_11",
+        "cloud_schedule_11",
+        "cloud_resource_11"
+      ],
+      "reserved_tokens": 8133
+    },
+    {
+      "cases": [
+        "cloud_financial_12",
+        "cloud_schedule_12",
+        "cloud_resource_12"
+      ],
+      "reserved_tokens": 8019
+    }
+  ],
+  "model_requests": 0
+}

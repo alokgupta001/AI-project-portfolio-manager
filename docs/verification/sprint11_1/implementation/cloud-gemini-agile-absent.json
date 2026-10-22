@@ -1,0 +1,45 @@
+{
+  "schema_version": "cloud-specialist-calibration-v1",
+  "provider": "gemini",
+  "model": "gemini-3.5-flash-lite",
+  "corpus_sha256": "f626c0b210daf73110cfc98d0aa6f7a974842bab0bf3e98f52e177e8ab516a24",
+  "selected_cases": [
+    "agile_coach_07"
+  ],
+  "qualified_classes": [],
+  "profile_activated": false,
+  "weight_training": false,
+  "max_output_tokens": 512,
+  "independent_semantic_review": "pending",
+  "attempts": [
+    {
+      "case": "agile_coach_07",
+      "agent": "agile_coach",
+      "attempt_id": "69409f81-738c-4e13-bea2-4fb0c93e1818",
+      "prompt_sha256": "a6b446a9e52eed19405bc570e167ff7247f40825eedc89de213e1a3a995aeebc",
+      "request_sha256": "5fa14e6caa50cff742f494702c8796b742baf55b19453a93e9df3f5c037c43e7",
+      "native_sha256": "a459e788f579c6022112a4bc4f49177063bbb528b108f2ea9a39d2ec013dd71d",
+      "candidate_sha256": "4a2a1116c54497bac08583b9236a3b3ef1718a78241892a66d1cb4718b072362",
+      "completion": "complete",
+      "usage": {
+        "input_tokens": 447,
+        "output_tokens": 50,
+        "reasoning_tokens": null,
+        "source": "reported"
+      },
+      "latency_ms": 1520,
+      "validation_stage": "finished",
+      "hard_validation": "partially_validated",
+      "finding_count": 0,
+      "semantic_review": "pending"
+    }
+  ],
+  "limits": {
+    "attempts_per_case": 2,
+    "attempts_per_batch": 3,
+    "batch_seconds": 90,
+    "attempt_seconds": 22,
+    "authorization_calls": 9
+  },
+  "status": "completed_pending_review"
+}

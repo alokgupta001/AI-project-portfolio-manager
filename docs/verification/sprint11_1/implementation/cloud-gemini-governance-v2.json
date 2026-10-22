@@ -1,0 +1,42 @@
+{
+  "schema_version": "cloud-specialist-calibration-v1",
+  "provider": "gemini",
+  "model": "gemini-3.5-flash-lite",
+  "corpus_sha256": "f626c0b210daf73110cfc98d0aa6f7a974842bab0bf3e98f52e177e8ab516a24",
+  "selected_cases": [
+    "governance_01"
+  ],
+  "qualified_classes": [],
+  "profile_activated": false,
+  "weight_training": false,
+  "max_output_tokens": 512,
+  "independent_semantic_review": "pending",
+  "attempts": [
+    {
+      "case": "governance_01",
+      "agent": "governance",
+      "attempt_id": "22688e8b-9efb-4bb7-9b2f-3e383ae69ad3",
+      "prompt_sha256": "1bcc660295d4145007757826c681a6fd4a00fc4da6f55e07a6c5dd413b092fb4",
+      "request_sha256": "f9dead1b164b4bfe1f029738331bf69d914fdd6eac21ace55c94d20c1109e546",
+      "native_sha256": "25d7dbee21ccceee18361c34879056ce77af373807348584d25b2de07415d2d2",
+      "candidate_sha256": "14265f23b7606bf60ce144617b49cc7fc581522181f02f7c1109a0bb341c856f",
+      "completion": "complete",
+      "usage": {
+        "input_tokens": 449,
+        "output_tokens": 26,
+        "reasoning_tokens": null,
+        "source": "reported"
+      },
+      "latency_ms": 3770,
+      "code": "INVALID_OUTPUT"
+    }
+  ],
+  "limits": {
+    "attempts_per_case": 2,
+    "attempts_per_batch": 3,
+    "batch_seconds": 90,
+    "attempt_seconds": 22,
+    "authorization_calls": 9
+  },
+  "status": "stopped_on_failure"
+}

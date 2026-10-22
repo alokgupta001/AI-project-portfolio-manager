@@ -1,0 +1,34 @@
+{
+  "schema_version": "cloud-batch-calibration-v1",
+  "provider": "groq",
+  "model": "openai/gpt-oss-20b",
+  "corpus_sha256": "f626c0b210daf73110cfc98d0aa6f7a974842bab0bf3e98f52e177e8ab516a24",
+  "policy_sha256": "143f5442bdd2294d8e95f0f023dd61726139b4a5be9aed7155f30437ec434f8e",
+  "selected_cases": [
+    "risk_05",
+    "governance_03",
+    "agile_coach_05"
+  ],
+  "prompt_sha256": "675975a850b055c85ee01f25109e19ba6ab88fcc5ea59798d636cdbbec478801",
+  "request_sha256": "f5536992250d4e5109d2a7ca8b36a810f0c6f5cf0cb7bddc5f97475a37618b6b",
+  "max_output_tokens": 512,
+  "context_tokens": 8192,
+  "qualified_classes": [],
+  "profile_activated": false,
+  "weight_training": false,
+  "independent_semantic_review": "pending",
+  "attempts": [
+    {
+      "attempt_id": "98e64cd4-01d7-4637-8b50-a5fd640e7da9",
+      "cases": [
+        "risk_05",
+        "governance_03",
+        "agile_coach_05"
+      ],
+      "request_sha256": "f5536992250d4e5109d2a7ca8b36a810f0c6f5cf0cb7bddc5f97475a37618b6b",
+      "native_sha256": "dcc8d2fcdb072a1b49fa56cc0ffd9b70079e0a6c3e23d09038a5b8adeef457db",
+      "code": "CONFIGURATION"
+    }
+  ],
+  "status": "stopped_on_failure"
+}

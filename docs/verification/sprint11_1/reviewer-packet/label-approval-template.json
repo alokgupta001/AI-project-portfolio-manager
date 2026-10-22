@@ -1,0 +1,11 @@
+{
+  "corpus_sha256": "3117baf059c27c86728e35dc4b4375f02068891d5db7be9626bcd5c64cdec6af",
+  "strategy_sha256": "72d4a6f4bf4d803f7ac663cbeb6a4a8dc71ab42ec8d715d852f1b067ada8cd17",
+  "label_review": {
+    "id": null,
+    "reviewer": null,
+    "independent": false,
+    "approved_at": null,
+    "reviewed_before_held_out_inference": false
+  }
+}

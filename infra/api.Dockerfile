@@ -9,6 +9,8 @@ RUN uv sync --frozen --no-managed-python
 COPY services ./services
 COPY scripts ./scripts
 COPY tests ./tests
+COPY config/model-policy.example.json ./config/model-policy.example.json
+COPY config/model-policy.cloud.example.json ./config/model-policy.cloud.example.json
 COPY alembic.ini ./
 COPY infra/document-packages.lock ./infra/document-packages.lock
 RUN python scripts/verify_document_runtime.py

@@ -1,0 +1,46 @@
+{
+  "schema_version": "cloud-batch-calibration-v1",
+  "provider": "groq",
+  "model": "openai/gpt-oss-20b",
+  "corpus_sha256": "f626c0b210daf73110cfc98d0aa6f7a974842bab0bf3e98f52e177e8ab516a24",
+  "policy_sha256": "143f5442bdd2294d8e95f0f023dd61726139b4a5be9aed7155f30437ec434f8e",
+  "selected_cases": [
+    "executive_05"
+  ],
+  "prompt_sha256": "6794a902c9e448bd3796c6f0434f9735d5312cbaa859772e265b79c81002914f",
+  "request_sha256": "1e968d8594be97f2d1ed640a6a71b4fbd878d017529d77599c05e30845270fa4",
+  "max_output_tokens": 512,
+  "context_tokens": 8192,
+  "qualified_classes": [],
+  "profile_activated": false,
+  "weight_training": false,
+  "independent_semantic_review": "pending",
+  "attempts": [
+    {
+      "attempt_id": "fd5d6099-7c80-438d-9397-21b129262d78",
+      "cases": [
+        "executive_05"
+      ],
+      "request_sha256": "1e968d8594be97f2d1ed640a6a71b4fbd878d017529d77599c05e30845270fa4",
+      "native_sha256": "74d4538f19c6a92a774bc9dd8756d9caf9af95c70e2dfc230835b1fc90254ced",
+      "candidate_sha256": "83edae418e1b30be976076c0c2c283abbb4e032eea218fc032645a7d6a609d81",
+      "usage": {
+        "input_tokens": 741,
+        "output_tokens": 197,
+        "reasoning_tokens": 121,
+        "source": "reported"
+      },
+      "latency_ms": 663,
+      "completion": "complete",
+      "reported_model_id": null,
+      "roles": {
+        "executive": {
+          "outcome": "supported",
+          "hard_validation": "validated",
+          "finding_count": 1
+        }
+      }
+    }
+  ],
+  "status": "completed_pending_review"
+}

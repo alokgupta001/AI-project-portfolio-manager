@@ -1,5 +1,73 @@
 # Changelog
 
+## 22 October 2026 — nine-role batching and cloud acceptance preparation
+
+Added explicit all-specialists analysis in four bounded calls, with primary-scope
+financial/resource gates, all-member qualification checks and durable batch resume/
+revocation. Measured format fit assigns Gemini delivery, native Puter assurance and
+Groq synthesis. Eighteen bounded repair calls retain three failures and 42 hard-valid
+role results. Fresh synthetic acceptance labels, held-out review gates and a separate
+cloud scorer are ready for the user's nominated reviewer. Normal activation and
+semantic acceptance remain blocked; no weight training or quota reset.
+
+## 17 October 2026 — three cloud providers across nine roles
+
+Stopped Ollama at the user's request. Added disabled Groq/Gemini/Puter role assignments,
+native Puter Free-allowance transport, verified native catalogue identity mapping,
+versioned prompt examples, strict Gemini fields and prompt-resume fencing. 36 original
+reference-informed examples/export; current free integrations cannot be weight-tuned.
+26 synthetic calls: each role has a supported hard-valid result; seven/nine absence
+cases pass, financial/resource rejected. No independent qualification or activation.
+Final 198 offline/101 DB-provider/37 prompt-fence checks pass (overlap); full backend
+446 passes/three corrected fixture failures retained. Normal 0012, five objects and
+24 frozen files preserved; refresh-token-only snapshot exception documented.
+[Current guide](docs/03-sprints/active/sprint-11.1/CLOUD_SPECIALISTS.md).
+
+## 17 October 2026 — authorized small local Ollama trial
+
+Installed Qwen3 0.6B/native `ppm-small` preset, 2K context/512 output defaults and a
+memory-checked launcher with thinking off/immediate unload. Four local synthetic
+requests completed alongside the project: two basic controls passed, while the
+initial/project one-item repair failed strict validation. No class promoted. Fixed
+Windows runner-descendant memory sampling, reserved measured peak +25%, and separated
+cold from warm timing. Final 53 offline tests passed. [Results](docs/03-sprints/active/sprint-11.1/OLLAMA_SMALL.md).
+
+## 17 October 2026 — Sprint 11.1 benchmark implementation
+
+Added the missing bounded local benchmark runner, 108 synthetic cases across all nine
+task classes, six held-out cases per class, persistent attempt/unknown fencing, sampled
+Windows memory/timing records and independent review/scoring with report/candidate
+fingerprints. All cases prepare offline; 45 focused corpus/control/review tests pass.
+Expected labels remain draft. No local generation, provider activation or model-quality
+approval occurred. [Benchmark workflow](docs/03-sprints/active/sprint-11.1/BENCHMARK.md).
+
+Integration: migration lifecycle/drift passed; 422 backend passes and six image-template
+fixture errors were followed by a corrected 58-pass packaged scope. Final corpus
+scope: 51 passed. Browser: 18 full-suite passes plus separate hybrid pass; final hybrid
+text correction passed again. Normal database/object/frozen hashes preserved. Corrected
+unavailable-role limitation text so it cannot imply cited support. Real-model acceptance
+remains BLOCKED; no new live calls or normal activation.
+
+## 17 October 2026 — cloud credentials and decoder boundaries
+
+Verified saved Groq/Puter/DeepInfra credentials using read-only endpoints; DeepInfra reports a balance blocker and Puter still needs native free-driver integration. Added an operator-only three-call synthetic Groq probe with durable account/case limits and no activation. Live checks rejected configuration/evidence faults; runtime JSON schemas now bind valid aliases/section/mode and strict empty arrays have typed items. 110 offline checks pass; no successful live retest or qualification is claimed. Normal 0012 preserved; local testing deferred by user. [Current status](docs/03-sprints/active/sprint-11.1/CLOUD_PROVIDER_STATUS.md).
+
+## 17 October 2026 — provider and local runtime setup
+
+Added bounded Groq/OpenRouter/Mistral transports, private key metadata checks and fresh Windows/Ollama readiness checks. Installed Ollama 0.40.5/Qwen3 4B and verified Docker-to-loopback inventory reachability. 103 focused offline and 16 isolated DB cases passed. Keys, sufficient host RAM and real per-class model qualification remain pending. Normal 0012 and default-off v2 preserved; no inference, cloud request, spend or rollout. [Setup record](docs/03-sprints/active/sprint-11.1/PROVIDER_SETUP.md).
+
+## 17 October 2026 — Sprint 11.1 bounded hybrid implementation
+
+Implemented goal-aware hybrid execution for all nine role IDs, separate baseline/semantic coverage, immutable task/section checkpoints, provider-independent routing, zero-spend eligibility, global local-host/quota admission, bounded replacement/optional critique and live evidence-dependent assembly. Added source-free metric checkpoint coverage, nullable semantic confidence, role/goal controls and safe attempt diagnostics. New 0015 remains isolated-test-only; normal 0012 is preserved. [Current report](docs/03-sprints/active/sprint-11.1/README.md) records checks and blocked real-model qualification. No real inference, normal rollout, commit/push or Sprint 12.
+
+## 17 October 2026 — Sprint 11.1 hybrid specialist revision
+
+Updated the [blueprint](docs/09-planning/sprint-11.1/README.md) so all nine roles combine deterministic services with optional qualified AI interpretation. Added goal-aware call allocation, requested synthesis slot reservations, separate baseline/semantic coverage, synthesis provenance and qualification/tests for each role. ADR 11.1-11 supersedes the initial fixed role split. Existing output/call/deadline/spend/privacy boundaries remain; this is a documentation revision, with no application implementation or new runtime test claim.
+
+## 17 October 2026 — Sprint 11.1 architecture planning
+
+Added [implementation blueprint](docs/09-planning/sprint-11.1/README.md): repository discovery, alternatives/decisions, nine capability contracts, provider-independent local/hybrid routing, zero-spend controls, durable task state, validation/recovery, API/schema contracts, ordered tasks, benchmarks and traceability. The initial fixed role split was superseded by the hybrid revision above. Fresh offline baseline 148 passed, one skipped, 108 deselected; focused 85 passes overlap. Application code, dependencies, migrations, data and provider configuration remain unchanged. Model quality, hardware benchmarks and live integration remain unverified in this planning sprint.
+
 ## 16 October 2026 — Sprint 11 specialists and independent review
 
 Implemented nine bounded read-only agents, evidence aggregation/conflicts, separate semantic maturity suggestions and independent append-only reviews at `/agents`. Shared metrics/scoring/jobs/budgets/provider controls remain. Added 0013 after verified 0012; validated only in disposable databases. Normal data, objects and configuration preserved. Fixed atomic run/job reads for polling. [Report](docs/03-sprints/completed/sprint-11/SPRINT_REPORT.md) · [actual tests](docs/04-testing/sprint-based/sprint-11/TESTING_REPORT.md). Real-model quality UNVERIFIED/BLOCKED; USD 0; no commit/deployment or Sprint 12 work.

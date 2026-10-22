@@ -1,0 +1,63 @@
+{
+  "schema_version": "qwen06-installation-v1",
+  "model": "qwen3:0.6b",
+  "model_digest": "7df6b6e09427a769808717c0a93cadc4ae99ed4eb8bf5ca557c90846becea435",
+  "download_bytes": 522653767,
+  "details": {
+    "parent_model": "",
+    "format": "gguf",
+    "family": "qwen3",
+    "families": [
+      "qwen3"
+    ],
+    "parameter_size": "751.63M",
+    "quantization_level": "Q4_K_M",
+    "context_length": 40960,
+    "embedding_length": 1024,
+    "runner": "ggml"
+  },
+  "readiness": {
+    "schema_version": "local-readiness-v1",
+    "hardware": {
+      "os": "Windows",
+      "os_version": "10.0.26300",
+      "architecture": "AMD64",
+      "memory": {
+        "total_mb": 15931,
+        "available_mb": 4319
+      }
+    },
+    "hardware_record_sha256": "8af913445432d3f2e84d25f0b56b76bfbd4d20ec33b571799502f38f02806d80",
+    "model": "qwen3:0.6b",
+    "model_digest": "7df6b6e09427a769808717c0a93cadc4ae99ed4eb8bf5ca557c90846becea435",
+    "reservation_mb": 1024,
+    "headroom_mb": 2048,
+    "inference_requests": 0,
+    "qualified": false,
+    "blocked": [],
+    "ollama_version": "0.40.5",
+    "model_details": {
+      "parent_model": "",
+      "format": "gguf",
+      "family": "qwen3",
+      "families": [
+        "qwen3"
+      ],
+      "parameter_size": "751.63M",
+      "quantization_level": "Q4_K_M",
+      "context_length": 40960,
+      "embedding_length": 1024,
+      "runner": "ggml"
+    }
+  },
+  "local_candidate_added": true,
+  "candidate_context_tokens": 4096,
+  "standalone_context_tokens": 2048,
+  "max_output_tokens": 512,
+  "minimum_host_headroom_mib": 2048,
+  "memory_reservation_mib": 1024,
+  "keep_alive_seconds": 0,
+  "production_activated": false,
+  "qualified_classes": [],
+  "ollama_binary_sha256": "ec9f3325f134597c7188b735dcc4e79a9eca4bf53f6b958ddf22aa04bf5ce57a"
+}

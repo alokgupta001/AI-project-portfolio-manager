@@ -49,6 +49,7 @@ from ppm_api.config import Settings
 from ppm_api.document_retrieval import EmbeddingRequest
 from ppm_api.identity import Auth, Principal, now, record
 from ppm_api.jobs import TERMINAL, StageView, stage, worker_principal
+from ppm_api.model_contracts import V2_FIELDS
 
 router = APIRouter(prefix="/api/v1/ai", tags=["AI runtime"])
 VERSIONS = dict(
@@ -306,6 +307,10 @@ async def create(body: AIRunInput, request: Request, p: Auth) -> dict:
     await delivery.lock(p, request)
     admin(p)  # PM has no explicit costly-analysis grant in the current permission model.
     await delivery.get(p, "projects", body.project_id, True)
+    if body.uses_v2() and (
+        body.operation != "agents" or not request.app.state.settings.ai_runtime_v2_enabled
+    ):
+        delivery.fail(422, "Hybrid runtime is unavailable for this request")
     if (
         (body.operation == "query" and (not body.query.strip() or body.version_id))
         or (body.operation == "index" and (not body.version_id or body.query))
@@ -315,9 +320,11 @@ async def create(body: AIRunInput, request: Request, p: Auth) -> dict:
         delivery.fail(422, "Choose a query or one ready source version to index")
     # Preserve Sprint 10 request hashes for query/index replays after additive fields.
     identity_body = (
-        body.model_dump(exclude={"version_ids", "assessment_id"})
+        body.model_dump(exclude={"version_ids", "assessment_id"} | V2_FIELDS)
         if body.operation != "agents"
         else body
+        if body.uses_v2()
+        else body.model_dump(exclude=V2_FIELDS)
     )
     key, fingerprint = documents.request_identity(request, identity_body)
     if body.operation == "agents":
@@ -346,11 +353,24 @@ async def create(body: AIRunInput, request: Request, p: Auth) -> dict:
         from ppm_api.agents import capture
 
         analysis_snapshot = await capture(p, body)
+    hybrid = body.uses_v2()
+    if hybrid and body.prior_run_id:
+        prior, _ = await access(p, body.prior_run_id)
+        if prior["project_id"] != body.project_id or prior["snapshot"].get("assessment_id") != (
+            str(body.assessment_id) if body.assessment_id else None
+        ):
+            delivery.fail(404, "Prior run unavailable")
     refs = []
     if body.version_id:
         _, rows = await index_chunks(p, body.project_id, body.version_id)
         refs = [snapshot(row) for row in rows]
     config = request.app.state.settings
+    if (
+        hybrid
+        and analysis_snapshot
+        and len(analysis_snapshot["hybrid_plan"]["nodes"]) > config.ai_max_tasks_per_run
+    ):
+        delivery.fail(422, "Requested plan exceeds the configured task limit; narrow the selection")
     b = await budget(p, True)
     active = await p.conn.scalar(
         sa.select(sa.func.count())
@@ -359,7 +379,7 @@ async def create(body: AIRunInput, request: Request, p: Auth) -> dict:
     )
     if active >= b["concurrency"]:
         delivery.fail(429, "AI concurrency limit reached; wait or cancel the active run")
-    reservation = call_cap(config) * 4 if P.enabled(config) else ZERO
+    reservation = call_cap(config) * 4 if P.enabled(config) and not hybrid else ZERO
     if config.ai_provider != "gemini" and b["spent_usd"] + b["reserved_usd"] + reservation > min(
         b["limit_usd"], config.ai_spend_limit_usd
     ):
@@ -380,6 +400,23 @@ async def create(body: AIRunInput, request: Request, p: Auth) -> dict:
         embedding_usd_per_million=str(config.ai_embedding_usd_per_million),
         provider_policy=P.policy_snapshot(config),
     )
+    if hybrid:
+        from ppm_api.model_registry import load_policy
+
+        versions.update(
+            runtime_version="v2",
+            graph_version="specialist-dag-v2",
+            schema_version="capability-result-v2",
+            model_policy_hash=load_policy(config).policy_hash,
+            execution_mode=config.ai_execution_mode,
+            cloud_specialist_prompts=(
+                config.ai_execution_mode == "hybrid" and config.ai_cloud_enabled
+            ),
+            provider="hybrid",
+            completion_model=None,
+            embedding_model=None,
+            call_cap_usd="0",
+        )
     run = dict(
         id=run_id,
         organization_id=oid(p),
@@ -397,7 +434,7 @@ async def create(body: AIRunInput, request: Request, p: Auth) -> dict:
         reservation=reservation,
         charged_usd=ZERO,
         settled=False,
-        deadline=now() + timedelta(seconds=90),
+        deadline=now() + timedelta(seconds=config.ai_run_deadline_seconds if hybrid else 90),
         created_at=now(),
     )
     await p.conn.execute(T.runs.insert().values(**run))
@@ -416,6 +453,13 @@ async def create(body: AIRunInput, request: Request, p: Auth) -> dict:
                 output=None,
             )
         )
+    if hybrid:
+        from ppm_api.agent_runtime import initialize
+
+        assert analysis_snapshot is not None
+        # Task dependency checks use the same live analysis RLS as reads.
+        # Publish its parent first within this transaction.
+        await initialize(p.conn, run, analysis_snapshot)
     await p.conn.execute(
         T.budgets.update()
         .where(T.budgets.c.id == b["id"])
@@ -910,7 +954,8 @@ async def ai_worker(engine: Any, id_: UUID, tenant: UUID, actor: UUID, settings:
             return True
         if job["status"] == "running" and job["lease_until"] and job["lease_until"] > now():
             return True
-        if job["attempt"]:
+        hybrid = run["versions"].get("runtime_version") == "v2"
+        if job["attempt"] and not hybrid:
             # A worker crash has an ambiguous external outcome; never silently spend again.
             await settle(
                 p,
@@ -931,7 +976,7 @@ async def ai_worker(engine: Any, id_: UUID, tenant: UUID, actor: UUID, settings:
                 status="running",
                 attempt=1,
                 lease_token=token,
-                lease_until=now() + timedelta(seconds=75),
+                lease_until=min(now() + timedelta(seconds=30 if hybrid else 75), run["deadline"]),
             )
         )
         await conn.execute(
@@ -947,7 +992,9 @@ async def ai_worker(engine: Any, id_: UUID, tenant: UUID, actor: UUID, settings:
             from ppm_api.agents import execute
 
             agent_output, code = await execute(runtime, run)
-            if code or any(s["status"] != "supported" for s in agent_output["agents"]):
+            if hybrid:
+                final_status = agent_output["completion_status"]
+            elif code or any(s["status"] != "supported" for s in agent_output["agents"]):
                 final_status = "partially_succeeded"
             limitations.append(
                 "Specialists propose review candidates only; real model quality UNVERIFIED/BLOCKED"

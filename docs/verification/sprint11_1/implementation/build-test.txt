@@ -1,0 +1,155 @@
+ Image enterprise-ppm-test Building 
+#1 [internal] load local bake definitions
+#1 reading from stdin 590B done
+#1 DONE 0.0s
+
+#2 [internal] load build definition from api.Dockerfile
+#2 transferring dockerfile: 1.03kB 0.0s done
+#2 DONE 0.0s
+
+#3 [internal] load metadata for docker.io/library/python:3.12-slim-bookworm@sha256:54c85f3c47607a77f32adec749d3c81d1348bf25833671f512b26a9b6d778cb3
+#3 DONE 0.1s
+
+#4 [internal] load .dockerignore
+#4 transferring context: 205B done
+#4 DONE 0.0s
+
+#5 [internal] load build context
+#5 DONE 0.0s
+
+#6 [ 1/13] FROM docker.io/library/python:3.12-slim-bookworm@sha256:54c85f3c47607a77f32adec749d3c81d1348bf25833671f512b26a9b6d778cb3
+#6 resolve docker.io/library/python:3.12-slim-bookworm@sha256:54c85f3c47607a77f32adec749d3c81d1348bf25833671f512b26a9b6d778cb3 0.1s done
+#6 DONE 0.1s
+
+#5 [internal] load build context
+#5 transferring context: 272.74kB 0.1s done
+#5 DONE 0.1s
+
+#7 [ 2/13] WORKDIR /app
+#7 CACHED
+
+#8 [ 3/13] RUN pip install --no-cache-dir uv==0.11.15
+#8 CACHED
+
+#9 [ 4/13] RUN apt-get update && apt-get install -y --no-install-recommends poppler-utils tesseract-ocr tesseract-ocr-eng && rm -rf /var/lib/apt/lists/*
+#9 CACHED
+
+#10 [ 5/13] COPY pyproject.toml uv.lock ./
+#10 DONE 0.1s
+
+#11 [ 6/13] RUN uv sync --frozen --no-managed-python
+#11 0.571 Using CPython 3.12.15 interpreter at: /usr/local/bin/python3
+#11 0.571 Creating virtual environment at: .venv
+#11 0.756 Downloading pydantic-core (2.0MiB)
+#11 0.761 Downloading mypy (14.1MiB)
+#11 0.762 Downloading pygments (1.2MiB)
+#11 0.763 Downloading ruff (9.9MiB)
+#11 0.767 Downloading asyncpg (3.4MiB)
+#11 0.767 Downloading sqlalchemy (3.3MiB)
+#11 2.623  Downloaded pygments
+#11 3.007  Downloaded pydantic-core
+#11 3.519  Downloaded sqlalchemy
+#11 3.599  Downloaded asyncpg
+#11 5.265  Downloaded ruff
+#11 5.922  Downloaded mypy
+#11 5.923 Prepared 57 packages in 5.34s
+#11 6.000 Installed 57 packages in 76ms
+#11 8.140 Bytecode compiled 2551 files in 2.14s
+#11 8.140  + alembic==1.20.0
+#11 8.140  + amqp==5.4.0
+#11 8.140  + annotated-doc==0.0.5
+#11 8.140  + annotated-types==0.8.0
+#11 8.140  + anyio==4.15.1
+#11 8.140  + asyncpg==0.31.0
+#11 8.140  + bcrypt==5.0.0
+#11 8.140  + billiard==4.3.1
+#11 8.140  + celery==5.6.3
+#11 8.140  + certifi==2026.7.22
+#11 8.140  + click==8.5.0
+#11 8.140  + click-didyoumean==0.3.1
+#11 8.140  + click-plugins==1.1.1.2
+#11 8.140  + click-repl==0.4.1
+#11 8.140  + dnspython==2.8.0
+#11 8.140  + email-validator==2.3.0
+#11 8.140  + fastapi==0.142.2
+#11 8.140  + greenlet==3.5.6
+#11 8.140  + h11==0.16.0
+#11 8.140  + httpcore==1.0.9
+#11 8.140  + httpx==0.28.1
+#11 8.140  + idna==3.20
+#11 8.140  + iniconfig==2.3.0
+#11 8.140  + kombu==5.6.2
+#11 8.140  + librt==0.16.0
+#11 8.140  + mako==1.4.3
+#11 8.140  + markupsafe==3.0.4
+#11 8.140  + mypy==1.20.2
+#11 8.140  + mypy-extensions==1.1.0
+#11 8.140  + opentelemetry-api==1.45.0
+#11 8.140  + packaging==26.3
+#11 8.140  + pathspec==1.1.1
+#11 8.140  + pluggy==1.6.0
+#11 8.140  + prompt-toolkit==3.0.53
+#11 8.140  + pydantic==2.13.5
+#11 8.140  + pydantic-core==2.46.5
+#11 8.140  + pydantic-settings==2.15.0
+#11 8.140  + pygments==2.21.0
+#11 8.140  + pyjwt==2.15.0
+#11 8.140  + pypdf==6.20.1
+#11 8.140  + pytest==9.1.1
+#11 8.140  + pytest-asyncio==1.4.0
+#11 8.140  + python-dateutil==2.9.0.post0
+#11 8.140  + python-dotenv==1.2.4
+#11 8.140  + pyyaml==6.0.3
+#11 8.140  + redis==6.4.0
+#11 8.140  + ruff==0.16.10
+#11 8.140  + six==1.17.0
+#11 8.140  + sqlalchemy==2.0.54
+#11 8.140  + starlette==1.7.0
+#11 8.140  + typing-extensions==4.16.0
+#11 8.140  + typing-inspection==0.4.4
+#11 8.140  + tzdata==2026.5
+#11 8.140  + tzlocal==5.4.4
+#11 8.140  + uvicorn==0.54.0
+#11 8.140  + vine==5.1.0
+#11 8.141  + wcwidth==0.9.2
+#11 DONE 11.4s
+
+#12 [ 7/13] COPY services ./services
+#12 DONE 0.2s
+
+#13 [ 8/13] COPY scripts ./scripts
+#13 DONE 0.2s
+
+#14 [ 9/13] COPY tests ./tests
+#14 DONE 0.1s
+
+#15 [10/13] COPY alembic.ini ./
+#15 DONE 0.1s
+
+#16 [11/13] COPY infra/document-packages.lock ./infra/document-packages.lock
+#16 DONE 0.1s
+
+#17 [12/13] RUN python scripts/verify_document_runtime.py
+#17 0.372 PASS exact parser/OCR package versions match document-packages.lock
+#17 DONE 0.4s
+
+#18 [13/13] RUN useradd --uid 10001 --create-home ppm && mkdir -p /var/ppm/objects && chown -R ppm:ppm /var/ppm && chown ppm:ppm /app
+#18 DONE 0.5s
+
+#19 exporting to image
+#19 exporting layers
+#19 exporting layers 7.7s done
+#19 exporting manifest sha256:30557ed9eb137401011ca98ae369cbb7d89a209f3783fcb85c1700de5c5c1570 0.0s done
+#19 exporting config sha256:e6b0efa2e98b75f90d1b684d1d1ef381c1e024cc8cdc3443aef386848086660e 0.0s done
+#19 exporting attestation manifest sha256:0a043c6c6d63913f316d7b6f654bfeb765c6f71e1f039334b5e70f3419da0da5
+#19 exporting attestation manifest sha256:0a043c6c6d63913f316d7b6f654bfeb765c6f71e1f039334b5e70f3419da0da5 0.0s done
+#19 exporting manifest list sha256:30ddb3253067cb654190d1b4021189e49368312d7f6e1ecfeff1251de74b003d 0.1s done
+#19 naming to docker.io/library/enterprise-ppm-test:latest
+#19 naming to docker.io/library/enterprise-ppm-test:latest done
+#19 unpacking to docker.io/library/enterprise-ppm-test:latest
+#19 unpacking to docker.io/library/enterprise-ppm-test:latest 2.7s done
+#19 DONE 10.7s
+
+#20 resolving provenance for metadata file
+#20 DONE 0.1s
+ Image enterprise-ppm-test Built 

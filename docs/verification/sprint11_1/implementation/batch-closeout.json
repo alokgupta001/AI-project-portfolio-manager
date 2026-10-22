@@ -1,0 +1,50 @@
+{
+  "schema_version": "cloud-batch-closeout-v1",
+  "checked_at": "2026-10-22T17:38:06.416356+00:00",
+  "source_fingerprints": 72,
+  "frozen_files": 24,
+  "normal_revision": "0012_ai_runtime",
+  "unchanged_normal_tables": 70,
+  "original_objects": 5,
+  "readiness": 200,
+  "ollama_processes": 0,
+  "disabled_profiles": 7,
+  "qualified_classes": [],
+  "provider_specialist_calls": {
+    "groq": 15,
+    "gemini": 15,
+    "puter": 14
+  },
+  "repair_requests": 18,
+  "retained_repair_failures": 3,
+  "hard_valid_role_results": 42,
+  "supported_role_results": 24,
+  "insufficient_evidence_role_results": 17,
+  "no_findings_role_results": 1,
+  "draft_absence_non_abstaining_results": 3,
+  "all_outcomes_known": true,
+  "original_groq_probes_retained": 3,
+  "local_exhausted_attempts_retained": 2,
+  "fresh_acceptance_inference": 0,
+  "independent_review": "pending_user_nomination",
+  "normal_rollout": false,
+  "backend_checkpoint_passes": 475,
+  "final_offline_acceptance_passes": 48,
+  "counts_overlap": true,
+  "normal_egress_granted": false,
+  "weight_training": false,
+  "browser_focused_passes": 1,
+  "browser_seconds": 38.6,
+  "browser_viewports": [
+    1440,
+    768,
+    360
+  ],
+  "browser_accessibility_violations": 0,
+  "screenshots_visually_inspected": [
+    1440,
+    360
+  ],
+  "browser_receipt_sha256": "8751414cb52a8cd05b2ff29696ba2289b19d044c05c619e779dc5760cda6103b",
+  "npm_audit_vulnerabilities": 0
+}

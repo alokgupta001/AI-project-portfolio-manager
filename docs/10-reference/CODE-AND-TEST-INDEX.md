@@ -9,6 +9,44 @@ Source-derived AST inventory. Search symbols instead of relying on line numbers;
 - `set_status` — line 19
 - `run` — line 66
 
+## scripts/benchmark_agent_runtime.py
+
+[Source](../../scripts/benchmark_agent_runtime.py)
+
+- `load_corpus` — line 48
+- `fixture_context` — line 70
+- `ollama_process_ids` — line 132
+- `ollama_rss_mb` — line 146
+- `ProcessEntry` — line 152
+- `Counters` — line 166
+- `write_new` — line 230
+- `save_ledger` — line 236
+- `run` — line 242
+- `monitor` — line 388
+- `main` — line 494
+
+## scripts/benchmark_cloud_batches.py
+
+[Source](../../scripts/benchmark_cloud_batches.py)
+
+- `strategy_hash` — line 58
+- `fixture_batch` — line 77
+- `prepare_phase` — line 105
+- `run` — line 137
+- `checkpoint` — line 332
+- `main` — line 402
+
+## scripts/benchmark_cloud_specialists.py
+
+[Source](../../scripts/benchmark_cloud_specialists.py)
+
+- `legacy_gemini_calls` — line 50
+- `retained_history` — line 79
+- `check_admission` — line 103
+- `run` — line 142
+- `checkpoint` — line 325
+- `main` — line 399
+
 ## scripts/bootstrap_identity.py
 
 [Source](../../scripts/bootstrap_identity.py)
@@ -43,11 +81,31 @@ Source-derived AST inventory. Search symbols instead of relying on line numbers;
 - `anchors` — line 16
 - `main` — line 28
 
+## scripts/check_local_model.py
+
+[Source](../../scripts/check_local_model.py)
+
+- `main` — line 13
+
+## scripts/check_model_qualification.py
+
+[Source](../../scripts/check_model_qualification.py)
+
+- `main` — line 13
+
 ## scripts/check_previous_sprint_docs.py
 
 [Source](../../scripts/check_previous_sprint_docs.py)
 
 - `main` — line 8
+
+## scripts/check_provider_setup.py
+
+[Source](../../scripts/check_provider_setup.py)
+
+- `read_keys` — line 22
+- `inspect` — line 46
+- `main` — line 169
 
 ## scripts/check_walkthrough.py
 
@@ -77,6 +135,34 @@ Source-derived AST inventory. Search symbols instead of relying on line numbers;
 - `add` — line 163
 - `child` — line 181
 
+## scripts/prepare_agent_training.py
+
+[Source](../../scripts/prepare_agent_training.py)
+
+- `examples` — line 22
+- `main` — line 68
+
+## scripts/prepare_cloud_acceptance.py
+
+[Source](../../scripts/prepare_cloud_acceptance.py)
+
+- `draft` — line 97
+- `approval` — line 258
+- `prepare_authorization` — line 278
+
+## scripts/prepare_cloud_review.py
+
+[Source](../../scripts/prepare_cloud_review.py)
+
+- `prepare` — line 23
+
+## scripts/prepare_cloud_specialists.py
+
+[Source](../../scripts/prepare_cloud_specialists.py)
+
+- `gemini_settings` — line 20
+- `prepare` — line 31
+
 ## scripts/repair_hement_access.py
 
 [Source](../../scripts/repair_hement_access.py)
@@ -88,6 +174,22 @@ Source-derived AST inventory. Search symbols instead of relying on line numbers;
 [Source](../../scripts/repair_preserve.py)
 
 - `sql` — line 17
+
+## scripts/score_agent_benchmark.py
+
+[Source](../../scripts/score_agent_benchmark.py)
+
+- `sha` — line 30
+- `review_template` — line 34
+- `score` — line 67
+- `total` — line 171
+- `main` — line 226
+
+## scripts/score_cloud_benchmark.py
+
+[Source](../../scripts/score_cloud_benchmark.py)
+
+- `score` — line 30
 
 ## scripts/seed_delivery_demo.py
 
@@ -111,6 +213,16 @@ Source-derived AST inventory. Search symbols instead of relying on line numbers;
 [Source](../../scripts/smoke_gemini_free_tier.py)
 
 - `main` — line 17
+
+## scripts/smoke_groq_provider.py
+
+[Source](../../scripts/smoke_groq_provider.py)
+
+- `fixture_context` — line 58
+- `authorize` — line 78
+- `run` — line 120
+- `safe_error_hint` — line 191
+- `main` — line 362
 
 ## scripts/sprint08_preserve.py
 
@@ -199,6 +311,14 @@ Source-derived AST inventory. Search symbols instead of relying on line numbers;
 
 - `sql` — line 15
 
+## scripts/sync_model_policy.py
+
+[Source](../../scripts/sync_model_policy.py)
+
+- `scope_rows` — line 15
+- `sync` — line 41
+- `main` — line 67
+
 ## scripts/verify_gemini_runtime.py
 
 [Source](../../scripts/verify_gemini_runtime.py)
@@ -210,8 +330,8 @@ Source-derived AST inventory. Search symbols instead of relying on line numbers;
 
 [Source](../../services/api/migrations/env.py)
 
-- `run_sync` — line 23
-- `run_async` — line 29
+- `run_sync` — line 24
+- `run_async` — line 30
 
 ## services/api/migrations/versions/0001_foundation.py
 
@@ -345,6 +465,13 @@ Source-derived AST inventory. Search symbols instead of relying on line numbers;
 - `upgrade` — line 23
 - `downgrade` — line 27
 
+## services/api/migrations/versions/0015_agent_task_runtime.py
+
+[Source](../../services/api/migrations/versions/0015_agent_task_runtime.py)
+
+- `upgrade` — line 49
+- `downgrade` — line 214
+
 ## services/api/ppm_api/account_mail.py
 
 [Source](../../services/api/ppm_api/account_mail.py)
@@ -354,6 +481,36 @@ Source-derived AST inventory. Search symbols instead of relying on line numbers;
 - `smtp_delivery` — line 94
 - `enqueue` — line 107
 - `deliver_due` — line 132
+
+## services/api/ppm_api/agent_batch.py
+
+[Source](../../services/api/ppm_api/agent_batch.py)
+
+- `batch_prompt` — line 12
+- `strings` — line 31
+- `obj` — line 40
+- `compact_payload` — line 46
+- `compact_schema` — line 70
+- `pack_batch` — line 139
+- `normalize` — line 184
+- `validate_batch` — line 249
+
+## services/api/ppm_api/agent_context.py
+
+[Source](../../services/api/ppm_api/agent_context.py)
+
+- `section_schema` — line 10
+- `visit` — line 19
+- `pack` — line 39
+
+## services/api/ppm_api/agent_critique.py
+
+[Source](../../services/api/ppm_api/agent_critique.py)
+
+- `Decision` — line 20
+- `Critique` — line 27
+- `pack_review` — line 32
+- `validate_review` — line 77
 
 ## services/api/ppm_api/agent_engine.py
 
@@ -367,6 +524,21 @@ Source-derived AST inventory. Search symbols instead of relying on line numbers;
 - `semantic_suggestions` — line 171
 - `evaluate` — line 235
 
+## services/api/ppm_api/agent_planner.py
+
+[Source](../../services/api/ppm_api/agent_planner.py)
+
+- `build_plan` — line 18
+- `batch_plan` — line 175
+- `base` — line 179
+- `group` — line 192
+
+## services/api/ppm_api/agent_prompts.py
+
+[Source](../../services/api/ppm_api/agent_prompts.py)
+
+- `cloud_prompt` — line 35
+
 ## services/api/ppm_api/agent_provider.py
 
 [Source](../../services/api/ppm_api/agent_provider.py)
@@ -376,26 +548,65 @@ Source-derived AST inventory. Search symbols instead of relying on line numbers;
 - `embed` — line 16
 - `complete` — line 19
 
+## services/api/ppm_api/agent_recovery.py
+
+[Source](../../services/api/ppm_api/agent_recovery.py)
+
+- `recovery` — line 6
+
+## services/api/ppm_api/agent_registry.py
+
+[Source](../../services/api/ppm_api/agent_registry.py)
+
+- `Capability` — line 9
+- `definitions` — line 106
+
+## services/api/ppm_api/agent_runtime.py
+
+[Source](../../services/api/ppm_api/agent_runtime.py)
+
+- `initialize` — line 41
+- `task_update` — line 86
+- `commit_section` — line 106
+- `baseline` — line 142
+- `heartbeat` — line 176
+- `batch_window_delay` — line 193
+- `complete_task` — line 209
+- `execute` — line 446
+- `live_sections` — line 611
+- `reviewed_findings` — line 652
+- `assemble` — line 682
+
 ## services/api/ppm_api/agent_schemas.py
 
 [Source](../../services/api/ppm_api/agent_schemas.py)
 
-- `AnalysisInput` — line 41
-- `Span` — line 47
-- `Candidate` — line 53
-- `SpecialistOutput` — line 61
-- `RubricMatch` — line 67
-- `AgentBatch` — line 74
-- `AgentDefinition` — line 79
-- `EvidenceView` — line 89
-- `AgentState` — line 97
-- `ReviewInput` — line 103
-- `ReviewView` — line 109
-- `FindingView` — line 117
-- `SuggestionView` — line 134
-- `AnalysisRunSummary` — line 150
-- `AnalysisSummary` — line 156
-- `AnalysisView` — line 161
+- `AnalysisInput` — line 42
+- `Span` — line 48
+- `Candidate` — line 54
+- `SpecialistOutput` — line 62
+- `RubricMatch` — line 68
+- `AgentBatch` — line 75
+- `AgentDefinition` — line 80
+- `EvidenceView` — line 93
+- `AgentState` — line 101
+- `ReviewInput` — line 107
+- `ReviewView` — line 113
+- `FindingView` — line 121
+- `SuggestionView` — line 142
+- `AnalysisRunSummary` — line 158
+- `AnalysisSummary` — line 164
+- `AnalysisView` — line 169
+
+## services/api/ppm_api/agent_validation.py
+
+[Source](../../services/api/ppm_api/agent_validation.py)
+
+- `numbers` — line 20
+- `validate_section` — line 24
+- `spans` — line 36
+- `item` — line 45
+- `reconcile` — line 199
 
 ## services/api/ppm_api/agents.py
 
@@ -405,52 +616,52 @@ Source-derived AST inventory. Search symbols instead of relying on line numbers;
 - `private_access` — line 41
 - `capture` — line 49
 - `add` — line 57
-- `get_analysis` — line 279
-- `current_sources` — line 292
-- `can_review` — line 312
-- `definitions` — line 326
-- `create` — line 331
-- `listing` — line 337
-- `detail` — line 367
-- `item` — line 383
-- `review` — line 457
-- `execute` — line 521
-- `publish` — line 560
+- `get_analysis` — line 303
+- `current_sources` — line 316
+- `can_review` — line 347
+- `definitions` — line 361
+- `create` — line 370
+- `listing` — line 376
+- `detail` — line 406
+- `item` — line 439
+- `review` — line 562
+- `execute` — line 626
+- `publish` — line 669
 
 ## services/api/ppm_api/ai.py
 
 [Source](../../services/api/ppm_api/ai.py)
 
-- `oid` — line 63
-- `admin` — line 67
-- `call_cap` — line 72
-- `provider_status` — line 85
-- `status` — line 105
-- `budget` — line 109
-- `access` — line 137
-- `view` — line 160
-- `tokens` — line 189
-- `listing` — line 234
-- `detail` — line 248
-- `evaluation` — line 253
-- `operations` — line 261
-- `configure` — line 283
-- `create` — line 305
-- `cancel` — line 480
-- `progress` — line 502
-- `stages` — line 510
-- `diagnostics` — line 526
-- `worker_context` — line 564
-- `settle` — line 588
-- `Branch` — line 636
-- `Runtime` — line 642
-- `__init__` — line 643
-- `state` — line 656
-- `call` — line 671
-- `keyword_branch` — line 822
-- `hybrid_branch` — line 830
-- `index` — line 869
-- `ai_worker` — line 900
+- `oid` — line 64
+- `admin` — line 68
+- `call_cap` — line 73
+- `provider_status` — line 86
+- `status` — line 106
+- `budget` — line 110
+- `access` — line 138
+- `view` — line 161
+- `tokens` — line 190
+- `listing` — line 235
+- `detail` — line 249
+- `evaluation` — line 254
+- `operations` — line 262
+- `configure` — line 284
+- `create` — line 306
+- `cancel` — line 524
+- `progress` — line 546
+- `stages` — line 554
+- `diagnostics` — line 570
+- `worker_context` — line 608
+- `settle` — line 632
+- `Branch` — line 680
+- `Runtime` — line 686
+- `__init__` — line 687
+- `state` — line 700
+- `call` — line 715
+- `keyword_branch` — line 866
+- `hybrid_branch` — line 874
+- `index` — line 913
+- `ai_worker` — line 944
 
 ## services/api/ppm_api/ai_evaluation.py
 
@@ -510,17 +721,17 @@ Source-derived AST inventory. Search symbols instead of relying on line numbers;
 
 [Source](../../services/api/ppm_api/ai_schemas.py)
 
-- `AIRunInput` — line 18
-- `AIExcerpt` — line 27
-- `AIOutput` — line 32
-- `AIEvidence` — line 37
-- `AIRunView` — line 46
-- `AIBudgetInput` — line 77
-- `AIProviderStatus` — line 82
-- `AIOperations` — line 91
-- `AICallView` — line 104
-- `AIDiagnostics` — line 116
-- `AIEvaluation` — line 127
+- `AIRunInput` — line 19
+- `AIExcerpt` — line 28
+- `AIOutput` — line 33
+- `AIEvidence` — line 38
+- `AIRunView` — line 47
+- `AIBudgetInput` — line 78
+- `AIProviderStatus` — line 83
+- `AIOperations` — line 92
+- `AICallView` — line 105
+- `AIDiagnostics` — line 117
+- `AIEvaluation` — line 128
 
 ## services/api/ppm_api/assessment.py
 
@@ -691,12 +902,12 @@ Source-derived AST inventory. Search symbols instead of relying on line numbers;
 [Source](../../services/api/ppm_api/config.py)
 
 - `Settings` — line 21
-- `validate_mail` — line 56
-- `validate_key` — line 79
-- `validate_origin` — line 86
-- `validate_database` — line 100
-- `validate_redis` — line 111
-- `load_settings` — line 120
+- `validate_mail` — line 77
+- `validate_key` — line 100
+- `validate_origin` — line 107
+- `validate_database` — line 121
+- `validate_redis` — line 132
+- `load_settings` — line 141
 
 ## services/api/ppm_api/database.py
 
@@ -969,23 +1180,32 @@ Source-derived AST inventory. Search symbols instead of relying on line numbers;
 - `run_job` — line 697
 - `github_hook` — line 894
 
+## services/api/ppm_api/local_model_readiness.py
+
+[Source](../../services/api/ppm_api/local_model_readiness.py)
+
+- `windows_memory` — line 14
+- `MemoryStatus` — line 18
+- `readiness` — line 39
+- `read` — line 81
+
 ## services/api/ppm_api/main.py
 
 [Source](../../services/api/ppm_api/main.py)
 
-- `error_response` — line 56
-- `create_app` — line 67
-- `lifespan` — line 69
-- `request_context` — line 97
-- `http_error` — line 158
-- `validation_error` — line 193
-- `live` — line 206
-- `ready` — line 215
-- `database_probe` — line 216
-- `redis_probe` — line 225
-- `storage_probe` — line 228
-- `probe` — line 232
-- `foundation` — line 256
+- `error_response` — line 57
+- `create_app` — line 68
+- `lifespan` — line 70
+- `request_context` — line 98
+- `http_error` — line 159
+- `validation_error` — line 194
+- `live` — line 207
+- `ready` — line 216
+- `database_probe` — line 217
+- `redis_probe` — line 226
+- `storage_probe` — line 229
+- `probe` — line 233
+- `foundation` — line 257
 
 ## services/api/ppm_api/metric_math.py
 
@@ -993,6 +1213,89 @@ Source-derived AST inventory. Search symbols instead of relying on line numbers;
 
 - `budget_usage` — line 7
 - `alignment_score` — line 11
+
+## services/api/ppm_api/model_adapters.py
+
+[Source](../../services/api/ppm_api/model_adapters.py)
+
+- `strict_schema` — line 28
+- `visit` — line 32
+- `NativeAdapter` — line 56
+- `__init__` — line 57
+- `permit` — line 67
+- `origin` — line 101
+- `execute` — line 124
+- `gemini_chat` — line 194
+- `puter_chat` — line 220
+- `puter_result` — line 274
+- `read` — line 306
+- `cloud_chat` — line 389
+- `check_openrouter_price` — line 439
+- `chat_result` — line 463
+- `ollama_result` — line 536
+- `gemini_result` — line 562
+
+## services/api/ppm_api/model_contracts.py
+
+[Source](../../services/api/ppm_api/model_contracts.py)
+
+- `HybridSelection` — line 57
+- `distinct_selection` — line 65
+- `uses_v2` — line 88
+- `CompactSpan` — line 92
+- `nonempty` — line 98
+- `SectionFinding` — line 104
+- `SectionMatch` — line 116
+- `NarrativeItem` — line 122
+- `SectionGap` — line 132
+- `SectionOutput` — line 137
+- `consistent` — line 148
+- `CapabilityDetail` — line 167
+- `honest_coverage` — line 189
+- `ModelUsage` — line 198
+- `ModelResult` — line 205
+- `ModelFailure` — line 242
+- `__init__` — line 243
+- `ExecutionPermit` — line 254
+- `ModelRequest` — line 265
+- `ModelAdapter` — line 280
+- `execute` — line 281
+
+## services/api/ppm_api/model_qualification.py
+
+[Source](../../services/api/ppm_api/model_qualification.py)
+
+- `ClassMeasurement` — line 11
+- `denominators` — line 29
+- `qualifies` — line 43
+- `QualificationReport` — line 62
+- `distinct_classes` — line 80
+- `qualified_classes` — line 85
+- `CloudQualificationReport` — line 98
+- `distinct` — line 119
+- `qualified_classes` — line 124
+
+## services/api/ppm_api/model_registry.py
+
+[Source](../../services/api/ppm_api/model_registry.py)
+
+- `canonical` — line 16
+- `digest` — line 20
+- `ModelProfile` — line 24
+- `bounded_local` — line 58
+- `ModelPolicy` — line 69
+- `distinct` — line 74
+- `policy_hash` — line 103
+- `trusted_json` — line 107
+- `load_policy` — line 123
+
+## services/api/ppm_api/model_router.py
+
+[Source](../../services/api/ppm_api/model_router.py)
+
+- `RouteRequirements` — line 17
+- `eligibility` — line 27
+- `candidates` — line 108
 
 ## services/api/ppm_api/pilot.py
 
@@ -1159,6 +1462,113 @@ Source-derived AST inventory. Search symbols instead of relying on line numbers;
 - `test_profile_persistence_admin_relationship_validation_and_noop` — line 175
 - `test_hement_sprint_requires_project_grant_and_planned_initial_state` — line 244
 
+## tests/test_agent_batches.py
+
+[Source](../../tests/test_agent_batches.py)
+
+- `cases` — line 33
+- `compact` — line 38
+- `test_all_nine_plan_has_four_calls_and_real_synthesis_dependencies` — line 59
+- `test_batch_roles_cannot_cover_or_cite_each_others_aliases` — line 74
+- `test_invalid_member_rejects_whole_batch` — line 91
+- `test_batch_eligibility_requires_every_member_class` — line 110
+- `test_batch_wait_respects_one_minute_and_deadline` — line 138
+- `test_batch_revocation_withholds_all_members_including_no_findings` — line 155
+- `test_batched_and_individual_attempts_share_case_exhaustion` — line 175
+- `test_real_packer_isolated_and_private_answers_rejected` — line 197
+- `repair` — line 213
+- `test_repair_dry_run_keeps_original_authorization_and_rejects_holdout` — line 223
+- `forbid` — line 227
+- `test_batch_unknown_blocks_replay_and_retains_each_case_root` — line 244
+- `lose` — line 248
+- `test_groq_schema_errors_are_repairable_but_counted` — line 270
+- `test_cloud_review_cannot_approve_itself_or_ignore_frozen_strategy` — line 287
+- `test_fresh_acceptance_cases_are_unseen_distinct_and_prepare_offline` — line 299
+- `test_independent_approval_is_required_before_heldout_cloud_prepare` — line 314
+- `forbid` — line 346
+- `test_cloud_score_binds_approval_candidate_and_complete_ledger_without_qualifying` — line 366
+
+## tests/test_agent_benchmark.py
+
+[Source](../../tests/test_agent_benchmark.py)
+
+- `profile` — line 21
+- `corpus` — line 35
+- `test_corpus_has_all_classes_and_holdouts_and_never_packs_labels` — line 39
+- `test_each_role_baseline_and_control_cases` — line 61
+- `test_dry_run_cannot_make_http_and_does_not_create_ledger` — line 96
+- `refuse` — line 99
+- `test_memory_failure_never_generates_or_forges_latency` — line 117
+- `test_unknown_attempt_survives_restart` — line 133
+- `test_explicit_budget_and_context_fail_before_inference` — line 141
+- `test_draft_review_and_empty_measurements_cannot_qualify` — line 155
+- `test_every_fixture_fits_bounded_context_without_expected_answers` — line 162
+- `test_memory_inventory_includes_runner_descendants_without_unrelated_processes` — line 169
+- `test_review_must_match_candidate_and_can_reject_real_citation` — line 181
+- `test_transport_complete_is_still_pending_independent_review` — line 277
+- `respond` — line 301
+
+## tests/test_agent_critique.py
+
+[Source](../../tests/test_agent_critique.py)
+
+- `finding` — line 12
+- `test_python_baseline_does_not_count_uninterpreted_documents_as_covered` — line 32
+- `test_critique_withdraws_transitive_synthesis_but_preserves_original_sections` — line 44
+- `test_distinct_claims_preserved_and_source_overlap_is_not_proven_opposition` — line 93
+
+## tests/test_agent_planner.py
+
+[Source](../../tests/test_agent_planner.py)
+
+- `snapshot` — line 16
+- `test_any_roles_can_receive_initial_calls_and_dag_is_topological` — line 37
+- `test_metrics_no_calls_executive_reserved_and_no_hidden_dependency_inference` — line 55
+- `test_nine_requested_roles_do_not_falsely_fit_in_three_slots` — line 77
+- `test_context_isolated_spans_numerics_and_schema_modes` — line 85
+- `test_recovery_never_resets_section_run_or_deadline` — line 137
+
+## tests/test_agent_v2_contracts.py
+
+[Source](../../tests/test_agent_v2_contracts.py)
+
+- `test_nine_hybrid_roles_and_legacy_fingerprint_shape` — line 13
+- `test_invalid_or_scope_expanding_requests_rejected` — line 39
+- `test_requested_priority_is_preserved` — line 44
+- `test_strict_section_modes_spans_and_coverage` — line 51
+- `test_synthesis_requires_known_alias_shape_and_evidence` — line 70
+- `test_baseline_cannot_manufacture_semantic_completion` — line 92
+- `test_v2_settings_are_default_off_and_bounded` — line 100
+
+## tests/test_agent_v2_runtime.py
+
+[Source](../../tests/test_agent_v2_runtime.py)
+
+- `configure` — line 33
+- `execute` — line 120
+- `test_nine_roles_use_four_durable_admissions_and_never_hide_a_fifth` — line 158
+- `synthetic_capture` — line 189
+- `batch_execute` — line 222
+- `ProcessLost` — line 261
+- `lose_candidate` — line 267
+- `test_new_cloud_provider_uses_real_shared_admission_and_daily_cap` — line 315
+- `test_metrics_runs_persist_tasks_and_never_call_model` — line 356
+- `test_real_admission_checkpoint_replay_and_immutable_result` — line 403
+- `test_no_profile_preserves_baseline_but_cannot_claim_ai_complete` — line 439
+- `test_v2_flag_does_not_enable_itself` — line 458
+- `test_truncation_uses_one_smaller_replacement_and_retains_usage` — line 472
+- `truncated` — line 483
+- `test_unknown_outcome_is_not_replayed_and_quarantines_local_host` — line 514
+- `unknown` — line 522
+- `test_exhausted_daily_scope_makes_no_external_call` — line 567
+- `test_two_workers_share_one_local_generation` — line 588
+- `paused` — line 597
+- `test_crash_after_candidate_resumes_without_second_inference` — line 630
+- `ProcessLost` — line 638
+- `checkpoint` — line 644
+- `test_v2_late_output_is_fenced` — line 677
+- `paused` — line 688
+
 ## tests/test_agents.py
 
 [Source](../../tests/test_agents.py)
@@ -1275,6 +1685,46 @@ Source-derived AST inventory. Search symbols instead of relying on line numbers;
 - `test_allocation_concurrency_retry_and_database_isolation` — line 259
 - `test_team_privacy_skills_and_sustained_overload` — line 311
 
+## tests/test_cloud_chat_providers.py
+
+[Source](../../tests/test_cloud_chat_providers.py)
+
+- `cloud` — line 17
+- `reply` — line 68
+- `test_bounded_cloud_requests_preserve_completion_and_usage` — line 85
+- `handler` — line 89
+- `test_policy_denial_precedes_any_cloud_http` — line 121
+- `forbidden` — line 139
+- `test_tools_and_reasoning_never_become_output` — line 154
+- `test_provider_specific_free_and_version_guards` — line 161
+- `test_openrouter_nonzero_catalog_price_prevents_generation` — line 178
+- `handler` — line 184
+- `test_missing_usage_stays_unknown_and_provider_error_is_sanitized` — line 195
+- `fail` — line 208
+
+## tests/test_cloud_specialists.py
+
+[Source](../../tests/test_cloud_specialists.py)
+
+- `test_assignment_covers_nine_roles_without_granting_qualification` — line 27
+- `test_assigned_role_cannot_be_bypassed_by_qualification` — line 42
+- `test_pending_task_cannot_resume_with_changed_prompt` — line 53
+- `puter` — line 68
+- `test_native_puter_preserves_actual_completion_and_bounds` — line 116
+- `respond` — line 120
+- `test_native_puter_rejects_unsafe_or_unbound_responses` — line 150
+- `respond` — line 153
+- `test_puter_native_catalogue_identity_is_preserved` — line 181
+- `test_training_examples_are_separate_and_hard_validated` — line 196
+- `test_history_unknown_budget_and_root_limits_are_preserved` — line 209
+- `calibration` — line 230
+- `test_cloud_calibration_dry_run_never_calls_or_promotes` — line 273
+- `forbid` — line 276
+- `test_cloud_unknown_is_checkpointed_and_cannot_be_replayed` — line 289
+- `lose` — line 293
+- `test_cloud_success_retains_raw_and_semantic_review_is_pending` — line 310
+- `respond` — line 313
+
 ## tests/test_command.py
 
 [Source](../../tests/test_command.py)
@@ -1369,6 +1819,24 @@ Source-derived AST inventory. Search symbols instead of relying on line numbers;
 - `test_input_path_bounds_redirects_and_revocation` — line 210
 - `redirect` — line 217
 
+## tests/test_groq_smoke.py
+
+[Source](../../tests/test_groq_smoke.py)
+
+- `prepared` — line 17
+- `response` — line 48
+- `test_default_is_dry_run_without_network_or_promotion` — line 76
+- `forbidden` — line 79
+- `test_three_calls_are_durable_and_cannot_be_repeated_same_day` — line 88
+- `test_changed_key_and_changed_corpus_are_denied_before_http` — line 101
+- `test_ambiguous_failure_stops_and_blocks_replay` — line 110
+- `timeout` — line 114
+- `test_cooldown_stops_subsequent_requests` — line 125
+- `quota` — line 128
+- `test_logical_section_attempt_limit_survives_a_new_invocation` — line 137
+- `forbidden` — line 150
+- `test_runtime_schema_binds_identity_before_external_decoding` — line 157
+
 ## tests/test_identity.py
 
 [Source](../../tests/test_identity.py)
@@ -1426,6 +1894,36 @@ Source-derived AST inventory. Search symbols instead of relying on line numbers;
 - `test_signed_webhook_replay_cancellation_and_tenant_rls` — line 522
 - `test_github_jira_contract_fixtures_and_sprint_ingestion` — line 582
 
+## tests/test_model_qualification.py
+
+[Source](../../tests/test_model_qualification.py)
+
+- `report` — line 11
+- `test_failed_hardware_or_latency_never_qualifies` — line 58
+- `test_per_class_denominators_and_canonical_safety` — line 62
+- `test_cloud_acceptance_has_real_identity_and_no_fabricated_local_measurements` — line 76
+
+## tests/test_model_routing.py
+
+[Source](../../tests/test_model_routing.py)
+
+- `configured` — line 20
+- `test_rank_only_eligible_and_task_class_specific` — line 53
+- `test_retry_after_is_normalized_without_internal_retry` — line 72
+- `respond` — line 76
+- `test_cloud_is_fail_closed` — line 92
+- `test_ollama_finish_usage_and_bounded_payload` — line 112
+- `handler` — line 116
+- `test_missing_model_does_not_download` — line 139
+- `handler` — line 143
+- `test_transport_errors_are_codes_without_provider_body` — line 162
+- `handler` — line 165
+- `test_direct_adapter_rechecks_policy_and_url` — line 173
+- `forbidden` — line 176
+- `test_shared_host_cannot_duplicate_quota_through_profile_alias` — line 188
+- `test_authorized_native_gemini_preserves_finish_usage_and_egress` — line 201
+- `respond` — line 243
+
 ## tests/test_pilot.py
 
 [Source](../../tests/test_pilot.py)
@@ -1446,6 +1944,24 @@ Source-derived AST inventory. Search symbols instead of relying on line numbers;
 - `ConnectedRequest` — line 511
 - `is_disconnected` — line 512
 - `response` — line 515
+
+## tests/test_provider_setup.py
+
+[Source](../../tests/test_provider_setup.py)
+
+- `test_metadata_verification_has_only_fixed_gets_and_no_secrets_in_output` — line 12
+- `handler` — line 16
+- `test_unconfirmed_or_missing_credentials_do_not_leave_the_machine` — line 50
+- `forbidden` — line 51
+- `test_authentication_error_cannot_echo_key_or_follow_redirect` — line 59
+- `handler` — line 60
+- `test_low_memory_stays_blocked_and_ollama_probe_cannot_load_a_model` — line 75
+- `handler` — line 79
+- `test_unknown_host_memory_and_external_origin_are_denied` — line 90
+- `unavailable` — line 91
+- `handler` — line 96
+- `test_other_resident_model_does_not_silently_get_replaced` — line 107
+- `handler` — line 110
 
 ## tests/test_sprint11_preserve.py
 

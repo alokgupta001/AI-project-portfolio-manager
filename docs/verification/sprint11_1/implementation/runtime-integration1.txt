@@ -1,0 +1,49 @@
+time="2026-10-17T09:54:07+05:30" level=warning msg="Found orphan containers (enterprise-ppm-pgadmin-1) for this project. If you removed or renamed this service in your compose file, you can run this command with the --remove-orphans flag to clean it up."
+ Container enterprise-ppm-test-run-7d57423fcc47 Creating 
+ Container enterprise-ppm-test-run-7d57423fcc47 Created 
+F
+=================================== FAILURES ===================================
+_____________ test_metrics_runs_persist_tasks_and_never_call_model _____________
+
+identity = (<httpx.AsyncClient object at 0x717d185ec8c0>, <fastapi.applications.FastAPI object at 0x717d185ec140>, <sqlalchemy.ex... '17b51c6e-f2d0-4129-95f0-f6b5193386a6@example.com', 'other': 'f3b84c28-bfb5-47aa-be48-c58566eaf105@example.com', ...})
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x717d1853d250>
+tmp_path = PosixPath('/tmp/pytest-of-ppm/pytest-0/test_metrics_runs_persist_task0')
+
+    async def test_metrics_runs_persist_tasks_and_never_call_model(identity, monkeypatch, tmp_path):
+        c, app, owner, ids, project, accepted, seen = await configure(identity, monkeypatch, tmp_path)
+        response = await start(
+            c,
+            project,
+            runtime_version="v2",
+            analysis_mode="metrics",
+            version_ids=[accepted["version_id"]],
+        )
+>       assert response.status_code == 202, response.text
+E       AssertionError: {"error":{"code":"INTERNAL_ERROR","message":"An internal error occurred.","request_id":"a1409641-935a-475d-b5dc-0461be7d4f6e","details":[]}}
+E       assert 500 == 202
+E        +  where 500 = <Response [500 Internal Server Error]>.status_code
+
+tests/test_agent_v2_runtime.py:118: AssertionError
+----------------------------- Captured stderr call -----------------------------
+{"event": "http_request", "request_id": "538b4550-15bb-4f6c-abb3-eedb9fdce440", "method": "GET", "route": "/api/v1/auth/csrf", "status": 200, "duration_ms": 97.37}
+{"event": "http_request", "request_id": "baf88ac4-6086-4f0b-bf58-9b06d9494a84", "method": "POST", "route": "/api/v1/auth/login", "status": 200, "duration_ms": 276.83}
+{"event": "http_request", "request_id": "fd593d2a-2b55-4e02-ba69-893e5b241701", "method": "POST", "route": "/api/v1/auth/switch", "status": 200, "duration_ms": 20.89}
+{"event": "http_request", "request_id": "6923645b-64b9-4e48-8671-23e7d5dfaf42", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 59.12}
+{"event": "http_request", "request_id": "39754d14-fdb4-4a58-9dca-10a033a9c1d5", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 23.51}
+{"event": "http_request", "request_id": "55036223-1070-4cca-bb55-a24a2a5d6d4d", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 26.55}
+{"event": "http_request", "request_id": "37b5f14d-ed9c-4ef1-a5a5-c07808ca363e", "method": "POST", "route": "/api/v1/documents", "status": 202, "duration_ms": 276.98}
+{"event": "http_request", "request_id": "a1409641-935a-475d-b5dc-0461be7d4f6e", "method": "POST", "route": "/api/v1/agents/runs", "status": 500, "duration_ms": 330.54}
+------------------------------ Captured log call -------------------------------
+INFO     ppm.requests:main.py:144 {"event": "http_request", "request_id": "538b4550-15bb-4f6c-abb3-eedb9fdce440", "method": "GET", "route": "/api/v1/auth/csrf", "status": 200, "duration_ms": 97.37}
+INFO     ppm.requests:main.py:144 {"event": "http_request", "request_id": "baf88ac4-6086-4f0b-bf58-9b06d9494a84", "method": "POST", "route": "/api/v1/auth/login", "status": 200, "duration_ms": 276.83}
+INFO     ppm.requests:main.py:144 {"event": "http_request", "request_id": "fd593d2a-2b55-4e02-ba69-893e5b241701", "method": "POST", "route": "/api/v1/auth/switch", "status": 200, "duration_ms": 20.89}
+INFO     ppm.requests:main.py:144 {"event": "http_request", "request_id": "6923645b-64b9-4e48-8671-23e7d5dfaf42", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 59.12}
+INFO     ppm.requests:main.py:144 {"event": "http_request", "request_id": "39754d14-fdb4-4a58-9dca-10a033a9c1d5", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 23.51}
+INFO     ppm.requests:main.py:144 {"event": "http_request", "request_id": "55036223-1070-4cca-bb55-a24a2a5d6d4d", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 26.55}
+INFO     ppm.requests:main.py:144 {"event": "http_request", "request_id": "37b5f14d-ed9c-4ef1-a5a5-c07808ca363e", "method": "POST", "route": "/api/v1/documents", "status": 202, "duration_ms": 276.98}
+INFO     ppm.requests:main.py:144 {"event": "http_request", "request_id": "a1409641-935a-475d-b5dc-0461be7d4f6e", "method": "POST", "route": "/api/v1/agents/runs", "status": 500, "duration_ms": 330.54}
+=========================== short test summary info ============================
+FAILED tests/test_agent_v2_runtime.py::test_metrics_runs_persist_tasks_and_never_call_model
+!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!
+1 failed in 4.43s
+

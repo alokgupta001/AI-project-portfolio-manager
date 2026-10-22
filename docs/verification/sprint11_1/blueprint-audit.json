@@ -1,0 +1,332 @@
+{
+  "date": "2026-10-17",
+  "scope": "documentation structure; not implementation verification",
+  "source_baseline": "d0ebe32e691a3d63166ced669450911c63151127",
+  "planning_revision": "hybrid-roles-adr-11.1-11",
+  "documents": [
+    {
+      "file": "README.md",
+      "bytes": 3106,
+      "sha256": "6c802e1f3ad1dffc5ad449296e6838c3b35bc72bafd2bbd21bf95bf99707982e",
+      "headings": [
+        "Sprint 11.1 — AI architecture implementation blueprint",
+        "Reading order and artifacts"
+      ]
+    },
+    {
+      "file": "SPRINT_11_1_AGENT_CATALOG.md",
+      "bytes": 25075,
+      "sha256": "736d70db47f179128ba613c29b821f0f56fc868beb8813a99d9b3aa46572b8f3",
+      "headings": [
+        "Nine capability contracts",
+        "Common contract: applies to every capability",
+        "financial — financial exposure (F-046)",
+        "schedule — schedule and dependency exposure (F-047)",
+        "sentiment — team delivery support signal (F-048)",
+        "risk — evidence-based risk extraction (F-041/066/067/070/071)",
+        "resource — aggregate capacity interpretation (F-045)",
+        "governance — policy gaps and rubric interpretation (F-042/023–025/072)",
+        "agile_coach — practice recommendations (F-043/025)",
+        "pmo — authorized portfolio roll-up (F-040/049)",
+        "executive — concise final briefing (F-044)"
+      ]
+    },
+    {
+      "file": "SPRINT_11_1_ARCHITECTURE.md",
+      "bytes": 8865,
+      "sha256": "0450f56d0788c6d2bdbe3e975a28d273f460ec1708820f6eb3755c9790f60f61",
+      "headings": [
+        "Target architecture",
+        "Responsibilities and boundaries",
+        "Deployment and request flow",
+        "Agent execution graph",
+        "Key behavior"
+      ]
+    },
+    {
+      "file": "SPRINT_11_1_DECISION_LOG.md",
+      "bytes": 13596,
+      "sha256": "72253ff1de000a3966567d05e2c62732a0f68f1be0b4c1e658cd21533f97f51f",
+      "headings": [
+        "Architecture decisions",
+        "ADR 11.1-12 — implementation refinements under unchanged limits",
+        "Serious alternatives",
+        "ADR 11.1-01 — Extend existing durable native execution",
+        "ADR 11.1-02 — Nine capabilities with shared deterministic services",
+        "ADR 11.1-03 — Deterministic planner and policy router",
+        "ADR 11.1-04 — Preserve ceilings; split work rather than silently enlarge",
+        "ADR 11.1-05 — Validation layers and epistemic labels",
+        "ADR 11.1-06 — Fail-closed zero spend and provider scope",
+        "ADR 11.1-07 — Local model is runtime, not control plane",
+        "ADR 11.1-08 — Immutable results and compatibility",
+        "ADR 11.1-09 — Explicit uncertainty and deferred capabilities",
+        "ADR 11.1-10 — Async v2 transport using already locked HTTPX",
+        "ADR 11.1-11 — On-demand AI interpretation across all nine roles"
+      ]
+    },
+    {
+      "file": "SPRINT_11_1_DISCOVERY.md",
+      "bytes": 11259,
+      "sha256": "251b9a5dbe7aeb9b1097a8dc46f56c2dc26283d77821d5c76ed10edb5463e9a8",
+      "headings": [
+        "Repository discovery",
+        "Verified code facts",
+        "Existing agents: functional scope versus gaps",
+        "Tests and environment",
+        "Documentation discrepancies and unresolved facts"
+      ]
+    },
+    {
+      "file": "SPRINT_11_1_HANDOVER.md",
+      "bytes": 7523,
+      "sha256": "b897a43e8963ec3a241cf3216b6d0f5f19fb73b77ddf29cce090b672e78c033b",
+      "headings": [
+        "Handover to GPT-6.1 Sol",
+        "Read in this order",
+        "Selected design",
+        "Decisions not to silently change",
+        "First implementation task and baseline",
+        "Tracker and context-loss protocol",
+        "Remaining qualification decisions"
+      ]
+    },
+    {
+      "file": "SPRINT_11_1_IMPLEMENTATION_GUIDE.md",
+      "bytes": 25671,
+      "sha256": "f4ced6236efc921491bc7af9a3e06a3807e6d1ba4dc5d4cf5211c39f48343a3c",
+      "headings": [
+        "Implementation guide for GPT-6.1 Sol",
+        "Rules and reusable verification commands",
+        "T01 — Establish implementation baseline and preservation",
+        "T02 — Versioned capability and execution contracts",
+        "T03 — Durable task and provider-scope admission persistence",
+        "T04 — Normalize existing cloud adapters without activating calls",
+        "T05 — Ollama adapter and host resource gate",
+        "T06 — Deterministic eligible-first router and zero-spend policy",
+        "T07 — Deterministic planner and scoped context packing",
+        "T08 — Checkpointed orchestrator, leases and restart",
+        "T09 — Capability services and deterministic validation",
+        "T10 — Bounded semantic review and output recovery",
+        "T11 — API and frontend truthful progress/review",
+        "T12 — Local hardware and semantic qualification",
+        "T13 — Optional second free provider and local embeddings",
+        "T14 — End-to-end regression, preservation and handover"
+      ]
+    },
+    {
+      "file": "SPRINT_11_1_ORCHESTRATION.md",
+      "bytes": 16924,
+      "sha256": "519ac3ebc6189a348e53377c240adc56d1eb8d1eed4a989a7003cd3dc10529bb",
+      "headings": [
+        "Orchestration, lifecycle and recovery",
+        "Plan and bounds",
+        "Interpretation selection and priority",
+        "Existing run lifecycle retained",
+        "Task lifecycle",
+        "Persistence, transactions and idempotency",
+        "Lease, cancellation and restart",
+        "Partial success and synthesis"
+      ]
+    },
+    {
+      "file": "SPRINT_11_1_PLAN.md",
+      "bytes": 5085,
+      "sha256": "daf471a5b97abc6556dd18ea075913f133d60ba689306d802a7d90ad51801dfd",
+      "headings": [
+        "Sprint 11.1 plan",
+        "Problem and outcome",
+        "Goals, scope and non-goals",
+        "Constraints and dependencies",
+        "Phases",
+        "Acceptance and definition of done",
+        "Risks and scope control"
+      ]
+    },
+    {
+      "file": "SPRINT_11_1_PROVIDER_ROUTING.md",
+      "bytes": 15280,
+      "sha256": "79fd7389885b644851118ed3d5a4be5df1b36e5a2a528ffedc960909097e5f58",
+      "headings": [
+        "Provider-independent execution and routing",
+        "Execution interface",
+        "Registry and eligibility",
+        "Error taxonomy and actions",
+        "Provider translation",
+        "Quota, cost and admission correctness",
+        "Proposed configuration example"
+      ]
+    },
+    {
+      "file": "SPRINT_11_1_RISKS.md",
+      "bytes": 7393,
+      "sha256": "c392adf7aa3578605bba325b425c282ea328d1a22bedb9b75ddd139ebcef50a0",
+      "headings": [
+        "Risk register and explicit unknowns",
+        "Intentionally configurable decisions",
+        "Explicitly deferred work",
+        "Qualification and access limitations"
+      ]
+    },
+    {
+      "file": "SPRINT_11_1_SETUP.md",
+      "bytes": 13659,
+      "sha256": "e42843ed6eec043631b71841ccc2c8612e2c103d9f8cf20be7226fa81913c516",
+      "headings": [
+        "Configuration and setup guide",
+        "Implemented configuration entry points",
+        "Existing environment to preserve",
+        "Implemented settings (T02–T06)",
+        "Local Ollama setup after implementation",
+        "Safe profiles",
+        "Migration and testing order",
+        "Troubleshooting"
+      ]
+    },
+    {
+      "file": "SPRINT_11_1_SOURCES.md",
+      "bytes": 4414,
+      "sha256": "ff3e97b8baf4e3a5dc0bc309447c7df67f2ed875ebe2c1c3b3f56ac76ea50a4d",
+      "headings": [
+        "External technical verification"
+      ]
+    },
+    {
+      "file": "SPRINT_11_1_TASK_TRACKER.md",
+      "bytes": 7156,
+      "sha256": "a65ebe6f067985c850c4c5dc68bfa754d954c39f7c517ae075ce8c9aab149cdf",
+      "headings": [
+        "Implementation tracker and planning checkpoint",
+        "Planning work",
+        "Future implementation",
+        "Resumption checkpoint"
+      ]
+    },
+    {
+      "file": "SPRINT_11_1_TECHNICAL_CONTRACTS.md",
+      "bytes": 19067,
+      "sha256": "4b4242972c26d18f58009c5239f924caaab122e7900140dbaf1870a7d042ff6a",
+      "headings": [
+        "API, schema and persistence contracts",
+        "Module seams",
+        "Domain DTOs (proposed v2)",
+        "Public API compatibility",
+        "Database expand migration (proposed 0015_agent_task_runtime)",
+        "Embeddings migration boundary",
+        "Expand/activate/rollback sequence"
+      ]
+    },
+    {
+      "file": "SPRINT_11_1_TEST_PLAN.md",
+      "bytes": 15089,
+      "sha256": "91cf49fa538f3f7667bdd856b6964733c0f44235e24816a84efc2f3d340e8be7",
+      "headings": [
+        "Testing and local benchmark plan",
+        "Fresh baseline versus future gates",
+        "Command groups",
+        "Acceptance matrix (future tests)",
+        "Benchmark protocol and thresholds"
+      ]
+    },
+    {
+      "file": "SPRINT_11_1_TRACEABILITY.md",
+      "bytes": 5382,
+      "sha256": "840b2dfe9f08cdfa04d15d878821dfbdeb94efa137c86ceff1c0715003df33a8",
+      "headings": [
+        "Problem → requirement → component → task → acceptance traceability",
+        "User request section coverage"
+      ]
+    },
+    {
+      "file": "SPRINT_11_1_VALIDATION_RECOVERY.md",
+      "bytes": 12382,
+      "sha256": "02eb27539fe3c55fad739491bf675327f358e8806042897d11f12892cc8f4004",
+      "headings": [
+        "Validation, quantification and bounded recovery",
+        "Pipeline and report",
+        "Semantic reviewer",
+        "Claim identity and reconciliation",
+        "Recovery decision table",
+        "Worked examples"
+      ]
+    }
+  ],
+  "capabilities": [
+    "financial",
+    "schedule",
+    "sentiment",
+    "risk",
+    "resource",
+    "governance",
+    "agile_coach",
+    "pmo",
+    "executive"
+  ],
+  "interpretation_task_classes": [
+    "financial_interpretation",
+    "schedule_interpretation",
+    "team_support_advice",
+    "risk_extraction",
+    "resource_interpretation",
+    "governance_interpretation",
+    "agile_advice",
+    "portfolio_synthesis",
+    "executive_synthesis"
+  ],
+  "implementation_tasks": [
+    "T01",
+    "T02",
+    "T03",
+    "T04",
+    "T05",
+    "T06",
+    "T07",
+    "T08",
+    "T09",
+    "T10",
+    "T11",
+    "T12",
+    "T13",
+    "T14"
+  ],
+  "acceptance_tests": [
+    "AT01",
+    "AT02",
+    "AT03",
+    "AT04",
+    "AT05",
+    "AT06",
+    "AT07",
+    "AT08",
+    "AT09",
+    "AT10",
+    "AT11",
+    "AT12",
+    "AT13",
+    "AT14",
+    "AT15",
+    "AT16",
+    "AT17",
+    "AT18",
+    "AT19",
+    "AT20"
+  ],
+  "requirements": [
+    "R01",
+    "R02",
+    "R03",
+    "R04",
+    "R05",
+    "R06",
+    "R07",
+    "R08",
+    "R09",
+    "R10",
+    "R11",
+    "R12",
+    "R13",
+    "R14",
+    "R15",
+    "R16"
+  ],
+  "result": "PASS"
+}

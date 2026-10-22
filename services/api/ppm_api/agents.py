@@ -64,7 +64,13 @@ async def capture(p: Principal, body: AIRunInput, period: dict | None = None) ->
         fresh: bool = True,
         **extra: Any,
     ) -> None:
-        allowed = [agent for agent in AGENTS if category in E.INPUTS[agent]]
+        from ppm_api.agent_registry import REGISTRY
+
+        allowed = (
+            [c.agent for c in REGISTRY if category in c.categories]
+            if body.uses_v2()
+            else [agent for agent in AGENTS if category in E.INPUTS[agent]]
+        )
         if allowed and len(text) <= 20000:
             sources.append(
                 dict(
@@ -76,6 +82,7 @@ async def capture(p: Principal, body: AIRunInput, period: dict | None = None) ->
                     location=location,
                     fresh=fresh,
                     permitted_agents=allowed,
+                    **({"category": category} if body.uses_v2() else {}),
                     **extra,
                 )
             )
@@ -271,6 +278,23 @@ async def capture(p: Principal, body: AIRunInput, period: dict | None = None) ->
         schema_sha256=digest(E.canonical(AgentBatch.model_json_schema())),
         rule_version=RULE,
     )
+    if body.uses_v2():
+        from ppm_api.agent_planner import PROMPT as HYBRID_PROMPT
+        from ppm_api.agent_planner import build_plan
+        from ppm_api.model_contracts import SectionOutput
+
+        if body.question_ids and (
+            not framework
+            or not {str(q) for q in body.question_ids} <= set(assessment.questions(framework))
+        ):
+            delivery.fail(422, "Choose published assessment questions")
+        snapshot.update(
+            prompt_version="hybrid-specialists-v2",
+            rule_version="hybrid-support-v2",
+            prompt_sha256=digest(HYBRID_PROMPT),
+            schema_sha256=digest(E.canonical(SectionOutput.model_json_schema())),
+        )
+        snapshot["hybrid_plan"] = build_plan(snapshot, body)
     if len(E.canonical(snapshot).encode()) > 90000:
         delivery.fail(422, "Complete analysis snapshot exceeds 90 KB")
     return snapshot
@@ -291,7 +315,18 @@ async def get_analysis(p: Principal, id_: UUID) -> dict:
 
 async def current_sources(p: Principal, row: dict, run: dict) -> dict:
     try:
-        current = await capture(p, AIRunInput(**run["snapshot"]), row["snapshot"])
+        selection = AIRunInput(**run["snapshot"])
+        if selection.uses_v2():
+            available = []
+            for vid in selection.version_ids:
+                try:
+                    version, _ = await documents.version(p, vid)
+                    if version["status"] == "ready":
+                        available.append(vid)
+                except delivery.DomainError:
+                    continue
+            selection = selection.model_copy(update={"version_ids": available})
+        current = await capture(p, selection, row["snapshot"])
         old = {s["source"]: s for s in row["snapshot"]["sources"]}
         # Any assessment revision change invalidates semantic input, including numeric edits.
         changed_assessment = (
@@ -323,7 +358,11 @@ async def can_review(p: Principal, row: dict) -> bool:
 
 
 @router.get("/definitions", response_model=list[AgentDefinition])
-async def definitions(p: Auth) -> list[dict]:
+async def definitions(request: Request, p: Auth) -> list[dict]:
+    if request.app.state.settings.ai_runtime_v2_enabled:
+        from ppm_api.agent_registry import definitions as hybrid_definitions
+
+        return hybrid_definitions()
     return E.definitions()
 
 
@@ -369,6 +408,23 @@ async def detail(id_: UUID, p: Auth) -> dict:
     run, job = await ai.access(p, id_)
     current = await current_sources(p, row, run)
     output = row["output"] or E.evaluate(row["snapshot"], None, "NOT_REQUESTED")
+    if row["output"] and run["versions"].get("runtime_version") == "v2":
+        from ppm_api import agent_task_tables as tasks
+        from ppm_api.agent_runtime import assemble
+
+        sections = list(
+            (
+                await p.conn.execute(
+                    sa.select(tasks.sections).where(tasks.sections.c.run_id == id_)
+                )
+            ).mappings()
+        )
+        task_rows = list(
+            (
+                await p.conn.execute(sa.select(tasks.tasks).where(tasks.tasks.c.run_id == id_))
+            ).mappings()
+        )
+        output = assemble(row["snapshot"], sections, task_rows, current)
     history = [
         dict(r)
         for r in (
@@ -414,12 +470,61 @@ async def detail(id_: UUID, p: Auth) -> dict:
         suggestions.append(s)
     states = [dict(s) for s in output["agents"]]
     for state in states:
-        if state["status"] == "supported" and not any(
-            f["available"] and state["agent"] in f["agents"] for f in findings
+        if (
+            output.get("runtime_version") != "v2"
+            and state["status"] == "supported"
+            and not any(f["available"] and state["agent"] in f["agents"] for f in findings)
         ):
             state.update(status="unavailable", code="EVIDENCE_UNAVAILABLE")
     missing = [s["agent"] for s in states if s["status"] != "supported"]
+    if output.get("runtime_version") == "v2":
+        missing = [
+            d["agent"]
+            for d in output["capability_details"]
+            if d["semantic_outcome"] in ("deferred", "unavailable", "failed")
+        ]
+    routes = []
+    if run["versions"].get("runtime_version") == "v2":
+        calls = (
+            await p.conn.execute(
+                sa.select(ai.T.calls)
+                .where(ai.T.calls.c.run_id == id_)
+                .order_by(ai.T.calls.c.run_attempt_no)
+            )
+        ).mappings()
+        routes = [
+            {
+                k: r[k]
+                for k in (
+                    "provider_id",
+                    "model_id",
+                    "run_attempt_no",
+                    "finish_category",
+                    "code",
+                    "input_tokens",
+                    "output_tokens",
+                    "reasoning_tokens",
+                    "usage_source",
+                    "latency_ms",
+                )
+            }
+            for r in calls
+        ]
     return dict(
+        route_summary=routes,
+        blocked_reason="; ".join(output.get("blocked", [])) or None,
+        **{
+            k: output[k]
+            for k in (
+                "runtime_version",
+                "analysis_mode",
+                "capability_details",
+                "task_summary",
+                "validation_summary",
+            )
+            if k in output
+        },
+        briefing=[item(f) for f in output["findings"] if "executive" in f["agents"]][:20],
         run=await ai.view(p, run, job),
         prompt_version=row["snapshot"]["prompt_version"],
         rule_version=row["snapshot"]["rule_version"],
@@ -519,6 +624,10 @@ async def review(id_: UUID, item_key: str, body: ReviewInput, request: Request, 
 
 
 async def execute(runtime: ai.Runtime, run: dict) -> tuple[dict, str | None]:
+    if run["versions"].get("runtime_version") == "v2":
+        from ppm_api.agent_runtime import execute as hybrid_execute
+
+        return await hybrid_execute(runtime, run)
     from ppm_api.agent_provider import AgentProvider
 
     async with runtime.engine.begin() as conn:
@@ -560,7 +669,9 @@ async def execute(runtime: ai.Runtime, run: dict) -> tuple[dict, str | None]:
 async def publish(p: Principal, run: dict, output: dict) -> None:
     row = await get_analysis(p, run["id"])
     live = await current_sources(p, row, run)
-    if any(s["source"] not in live for s in row["snapshot"]["sources"] if s["fresh"]):
+    if output.get("runtime_version") != "v2" and any(
+        s["source"] not in live for s in row["snapshot"]["sources"] if s["fresh"]
+    ):
         raise ProviderError("EVIDENCE_CHANGED")
     await p.conn.execute(
         T.analyses.update()

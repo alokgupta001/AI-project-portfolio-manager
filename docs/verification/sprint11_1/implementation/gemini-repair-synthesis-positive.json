@@ -1,0 +1,60 @@
+{
+  "schema_version": "cloud-batch-calibration-v1",
+  "provider": "gemini",
+  "model": "gemini-3.5-flash-lite",
+  "corpus_sha256": "f626c0b210daf73110cfc98d0aa6f7a974842bab0bf3e98f52e177e8ab516a24",
+  "policy_sha256": "143f5442bdd2294d8e95f0f023dd61726139b4a5be9aed7155f30437ec434f8e",
+  "selected_cases": [
+    "sentiment_05",
+    "pmo_05",
+    "executive_05"
+  ],
+  "prompt_sha256": "1e955cf194ec5d784b2d3e1fbb5262625df0e7f14f30db06f45b471d2e9363de",
+  "request_sha256": "6682684d125e39ed1528c8344a76a16eb54a2df4d495160fc9f0b87ef04f4bd8",
+  "max_output_tokens": 512,
+  "context_tokens": 8192,
+  "qualified_classes": [],
+  "profile_activated": false,
+  "weight_training": false,
+  "independent_semantic_review": "pending",
+  "attempts": [
+    {
+      "attempt_id": "22713a49-c4ea-4db1-924a-6a3f1a674802",
+      "cases": [
+        "sentiment_05",
+        "pmo_05",
+        "executive_05"
+      ],
+      "request_sha256": "6682684d125e39ed1528c8344a76a16eb54a2df4d495160fc9f0b87ef04f4bd8",
+      "native_sha256": "11539de2b426f507e073d57952605404fae264b84760cfb4b00460f8ac6a6053",
+      "candidate_sha256": "e35c16f0134367e46d64d3655e5fb04155c2b872590d9429e1841b317a6b7624",
+      "usage": {
+        "input_tokens": 468,
+        "output_tokens": 232,
+        "reasoning_tokens": null,
+        "source": "reported"
+      },
+      "latency_ms": 1523,
+      "completion": "complete",
+      "reported_model_id": null,
+      "roles": {
+        "sentiment": {
+          "outcome": "supported",
+          "hard_validation": "validated",
+          "finding_count": 1
+        },
+        "pmo": {
+          "outcome": "supported",
+          "hard_validation": "validated",
+          "finding_count": 1
+        },
+        "executive": {
+          "outcome": "supported",
+          "hard_validation": "validated",
+          "finding_count": 1
+        }
+      }
+    }
+  ],
+  "status": "completed_pending_review"
+}

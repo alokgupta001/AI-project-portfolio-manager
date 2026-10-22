@@ -1,0 +1,67 @@
+time="2026-10-17T10:33:56+05:30" level=warning msg="Found orphan containers (enterprise-ppm-pgadmin-1) for this project. If you removed or renamed this service in your compose file, you can run this command with the --remove-orphans flag to clean it up."
+ Container enterprise-ppm-test-run-a9caf2add29a Creating 
+ Container enterprise-ppm-test-run-a9caf2add29a Created 
+.....F
+=================================== FAILURES ===================================
+_______ test_unknown_outcome_is_not_replayed_and_quarantines_local_host ________
+
+identity = (<httpx.AsyncClient object at 0x72a17a852570>, <fastapi.applications.FastAPI object at 0x72a17c3b7a70>, <sqlalchemy.ex... 'cdf9f53f-9a07-4a23-ab07-f2247f242ded@example.com', 'other': '392e2e23-9e11-4ece-8c3f-af6d42434aa4@example.com', ...})
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x72a17c3b4050>
+tmp_path = PosixPath('/tmp/pytest-of-ppm/pytest-0/test_unknown_outcome_is_not_re0')
+
+    async def test_unknown_outcome_is_not_replayed_and_quarantines_local_host(
+        identity, monkeypatch, tmp_path
+    ):
+        c, app, owner, ids, project, accepted, _ = await configure(
+            identity, monkeypatch, tmp_path, True
+        )
+        attempts = []
+    
+        async def unknown(self, request):
+            attempts.append(request.permit.attempt_id)
+            raise ModelFailure("OUTCOME_UNKNOWN", "unknown")
+    
+        monkeypatch.setattr("ppm_api.agent_runtime.NativeAdapter.execute", unknown)
+        response = await start(
+            c,
+            project,
+            analysis_mode="domain",
+            requested_agents=["risk"],
+            version_ids=[accepted["version_id"]],
+        )
+        assert response.status_code == 202, response.text
+        result, _ = await work(c, app, owner, ids, response.json())
+>       assert len(attempts) == 1 and result["run"]["status"] == "partially_succeeded", result
+E       AssertionError: {'run': {'id': '9fcd27cc-fd8d-4ac7-a28b-be50daeda929', 'organization_id': 'dd0fd64a-d71e-40e6-8209-9c91eb824f72', 'inp.....}, 'prompt_version': 'hybrid-specialists-v2', 'rule_version': 'hybrid-support-v2', 'framework_version_id': None, ...}
+E       assert (1 == 1 and 'failed' == 'partially_succeeded'
+E        +  where 1 = len([UUID('18bca57c-a92e-493a-b544-2ed2bb3fbad1')])
+E         
+E         - partially_succeeded
+E         + failed)
+
+tests/test_agent_v2_runtime.py:296: AssertionError
+----------------------------- Captured stderr call -----------------------------
+{"event": "http_request", "request_id": "dd13693b-e6d1-491b-96cc-8f7e1c36385e", "method": "GET", "route": "/api/v1/auth/csrf", "status": 200, "duration_ms": 93.98}
+{"event": "http_request", "request_id": "efd4d3a2-a094-4770-bfb6-0899d7c0f869", "method": "POST", "route": "/api/v1/auth/login", "status": 200, "duration_ms": 296.61}
+{"event": "http_request", "request_id": "fd74d722-e431-405d-8869-4efe669ebb3d", "method": "POST", "route": "/api/v1/auth/switch", "status": 200, "duration_ms": 18.18}
+{"event": "http_request", "request_id": "8d998afe-4623-4be1-bb78-e1f88f0d6e48", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 49.63}
+{"event": "http_request", "request_id": "131f913c-aea2-4cc0-ab48-4480f55ff375", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 18.96}
+{"event": "http_request", "request_id": "8ca6254e-d476-4f24-9307-815f351187c7", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 27.61}
+{"event": "http_request", "request_id": "f1aac065-831f-4f75-9d3f-d4f45e214b76", "method": "POST", "route": "/api/v1/documents", "status": 202, "duration_ms": 256.42}
+{"event": "http_request", "request_id": "9bf0c089-330d-45b0-b7a5-8f80fb9d54a9", "method": "POST", "route": "/api/v1/agents/runs", "status": 202, "duration_ms": 570.59}
+{"event": "http_request", "request_id": "cc2d2e7e-eae7-4657-9532-77073df7f434", "method": "GET", "route": "/api/v1/agents/runs/{id_}", "status": 200, "duration_ms": 92.72}
+------------------------------ Captured log call -------------------------------
+INFO     ppm.requests:main.py:144 {"event": "http_request", "request_id": "dd13693b-e6d1-491b-96cc-8f7e1c36385e", "method": "GET", "route": "/api/v1/auth/csrf", "status": 200, "duration_ms": 93.98}
+INFO     ppm.requests:main.py:144 {"event": "http_request", "request_id": "efd4d3a2-a094-4770-bfb6-0899d7c0f869", "method": "POST", "route": "/api/v1/auth/login", "status": 200, "duration_ms": 296.61}
+INFO     ppm.requests:main.py:144 {"event": "http_request", "request_id": "fd74d722-e431-405d-8869-4efe669ebb3d", "method": "POST", "route": "/api/v1/auth/switch", "status": 200, "duration_ms": 18.18}
+INFO     ppm.requests:main.py:144 {"event": "http_request", "request_id": "8d998afe-4623-4be1-bb78-e1f88f0d6e48", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 49.63}
+INFO     ppm.requests:main.py:144 {"event": "http_request", "request_id": "131f913c-aea2-4cc0-ab48-4480f55ff375", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 18.96}
+INFO     ppm.requests:main.py:144 {"event": "http_request", "request_id": "8ca6254e-d476-4f24-9307-815f351187c7", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 27.61}
+INFO     ppm.requests:main.py:144 {"event": "http_request", "request_id": "f1aac065-831f-4f75-9d3f-d4f45e214b76", "method": "POST", "route": "/api/v1/documents", "status": 202, "duration_ms": 256.42}
+INFO     ppm.requests:main.py:144 {"event": "http_request", "request_id": "9bf0c089-330d-45b0-b7a5-8f80fb9d54a9", "method": "POST", "route": "/api/v1/agents/runs", "status": 202, "duration_ms": 570.59}
+INFO     ppm.requests:main.py:144 {"event": "http_request", "request_id": "cc2d2e7e-eae7-4657-9532-77073df7f434", "method": "GET", "route": "/api/v1/agents/runs/{id_}", "status": 200, "duration_ms": 92.72}
+=========================== short test summary info ============================
+FAILED tests/test_agent_v2_runtime.py::test_unknown_outcome_is_not_replayed_and_quarantines_local_host
+!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!
+1 failed, 5 passed in 28.36s
+

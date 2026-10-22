@@ -1,0 +1,42 @@
+{
+  "schema_version": "cloud-specialist-calibration-v1",
+  "provider": "groq",
+  "model": "openai/gpt-oss-20b",
+  "corpus_sha256": "f626c0b210daf73110cfc98d0aa6f7a974842bab0bf3e98f52e177e8ab516a24",
+  "selected_cases": [
+    "financial_03"
+  ],
+  "qualified_classes": [],
+  "profile_activated": false,
+  "weight_training": false,
+  "max_output_tokens": 512,
+  "independent_semantic_review": "pending",
+  "attempts": [
+    {
+      "case": "financial_03",
+      "agent": "financial",
+      "attempt_id": "458d7dcd-ca00-483a-92d1-a5977222807c",
+      "prompt_sha256": "1f394063ffffbe00963058ebfdef57ceecb13c9a515aafd2b533de549e34fdb3",
+      "request_sha256": "1e0fc26f3cc0a816558ddef52b34f8b4440e9acf37fc0c558819e59c705bff7f",
+      "native_sha256": "f8cde0e084ca464ed87af7df846b4288c247e89382edf273da69af58a60ba4e5",
+      "candidate_sha256": "f66a38e7b0e45bf46b44407fba7632e57312d762824d79e59ab80213a46d3649",
+      "completion": "complete",
+      "usage": {
+        "input_tokens": 1098,
+        "output_tokens": 195,
+        "reasoning_tokens": 48,
+        "source": "reported"
+      },
+      "latency_ms": 732,
+      "code": "INVALID_OUTPUT"
+    }
+  ],
+  "limits": {
+    "attempts_per_case": 2,
+    "attempts_per_batch": 3,
+    "batch_seconds": 90,
+    "attempt_seconds": 22,
+    "authorization_calls": 9
+  },
+  "status": "stopped_on_failure"
+}

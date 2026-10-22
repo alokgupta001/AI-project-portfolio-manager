@@ -1,0 +1,62 @@
+time="2026-10-17T20:33:00+05:30" level=warning msg="Found orphan containers (enterprise-ppm-pgadmin-1) for this project. If you removed or renamed this service in your compose file, you can run this command with the --remove-orphans flag to clean it up."
+ Container enterprise-ppm-test-run-61e7f998e2e0 Creating 
+ Container enterprise-ppm-test-run-61e7f998e2e0 Created 
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+__ test_nine_roles_use_four_durable_admissions_and_never_hide_a_fifth[False] ___
+tests/test_agent_v2_runtime.py:261: in test_nine_roles_use_four_durable_admissions_and_never_hide_a_fifth
+    assert len(seen) == 4, result
+E   AssertionError: {'run': {'id': 'f8c3319d-9abd-4430-8d00-fd29929ed813', 'organization_id': '056b9465-f3fa-4bec-b854-1916af2a9ac2', 'inp.....}, 'prompt_version': 'hybrid-specialists-v2', 'rule_version': 'hybrid-support-v2', 'framework_version_id': None, ...}
+E   assert 2 == 4
+E    +  where 2 = len([ModelRequest(permit=ExecutionPermit(attempt_id=UUID('537e557e-30fd-43f0-9c48-ab927bf05711'), provider_id='groq', mode...sprints'), num_ctx=8192, max_output_tokens=512, additional_task_classes=('governance_interpretation', 'agile_advice'))])
+----------------------------- Captured stderr call -----------------------------
+{"event": "http_request", "request_id": "432731df-cadb-43c5-b839-7fda68ea811d", "method": "GET", "route": "/api/v1/auth/csrf", "status": 200, "duration_ms": 103.79}
+{"event": "http_request", "request_id": "ef598dc4-0c90-4658-abfa-afca6a77406d", "method": "POST", "route": "/api/v1/auth/login", "status": 200, "duration_ms": 275.0}
+{"event": "http_request", "request_id": "3cc751ee-5d58-414c-90c8-58a0310a7316", "method": "POST", "route": "/api/v1/auth/switch", "status": 200, "duration_ms": 18.64}
+{"event": "http_request", "request_id": "a8d54a71-6528-4b55-a85b-e1a265f69c28", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 49.78}
+{"event": "http_request", "request_id": "a4cade1f-93f6-4f25-be0a-864110c3b1a2", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 20.94}
+{"event": "http_request", "request_id": "38ae6940-1439-4eb2-9f36-e6e5602d664a", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 26.02}
+{"event": "http_request", "request_id": "d9058f9e-526a-41ed-a6ec-584f78d2c9cc", "method": "POST", "route": "/api/v1/documents", "status": 202, "duration_ms": 263.07}
+{"event": "http_request", "request_id": "05bc9059-5f66-4341-94e1-82a0a80f6231", "method": "POST", "route": "/api/v1/agents/runs", "status": 202, "duration_ms": 518.83}
+{"event": "http_request", "request_id": "eb92af28-0aa1-4a17-b346-75bcc7583bdf", "method": "GET", "route": "/api/v1/agents/runs/{id_}", "status": 200, "duration_ms": 78.42}
+------------------------------ Captured log call -------------------------------
+INFO     ppm.requests:main.py:144 {"event": "http_request", "request_id": "432731df-cadb-43c5-b839-7fda68ea811d", "method": "GET", "route": "/api/v1/auth/csrf", "status": 200, "duration_ms": 103.79}
+INFO     ppm.requests:main.py:144 {"event": "http_request", "request_id": "ef598dc4-0c90-4658-abfa-afca6a77406d", "method": "POST", "route": "/api/v1/auth/login", "status": 200, "duration_ms": 275.0}
+INFO     ppm.requests:main.py:144 {"event": "http_request", "request_id": "3cc751ee-5d58-414c-90c8-58a0310a7316", "method": "POST", "route": "/api/v1/auth/switch", "status": 200, "duration_ms": 18.64}
+INFO     ppm.requests:main.py:144 {"event": "http_request", "request_id": "a8d54a71-6528-4b55-a85b-e1a265f69c28", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 49.78}
+INFO     ppm.requests:main.py:144 {"event": "http_request", "request_id": "a4cade1f-93f6-4f25-be0a-864110c3b1a2", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 20.94}
+INFO     ppm.requests:main.py:144 {"event": "http_request", "request_id": "38ae6940-1439-4eb2-9f36-e6e5602d664a", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 26.02}
+INFO     ppm.requests:main.py:144 {"event": "http_request", "request_id": "d9058f9e-526a-41ed-a6ec-584f78d2c9cc", "method": "POST", "route": "/api/v1/documents", "status": 202, "duration_ms": 263.07}
+INFO     ppm.requests:main.py:144 {"event": "http_request", "request_id": "05bc9059-5f66-4341-94e1-82a0a80f6231", "method": "POST", "route": "/api/v1/agents/runs", "status": 202, "duration_ms": 518.83}
+INFO     ppm.requests:main.py:144 {"event": "http_request", "request_id": "eb92af28-0aa1-4a17-b346-75bcc7583bdf", "method": "GET", "route": "/api/v1/agents/runs/{id_}", "status": 200, "duration_ms": 78.42}
+___ test_nine_roles_use_four_durable_admissions_and_never_hide_a_fifth[True] ___
+tests/test_agent_v2_runtime.py:261: in test_nine_roles_use_four_durable_admissions_and_never_hide_a_fifth
+    assert len(seen) == 4, result
+E   AssertionError: {'run': {'id': '747b5344-99e1-4213-a850-efabe78d3b9f', 'organization_id': 'a1e67a09-fa60-4b2a-b499-da3d65f22f03', 'inp.....}, 'prompt_version': 'hybrid-specialists-v2', 'rule_version': 'hybrid-support-v2', 'framework_version_id': None, ...}
+E   assert 3 == 4
+E    +  where 3 = len([ModelRequest(permit=ExecutionPermit(attempt_id=UUID('29a1a792-2cd1-4c9f-bf6a-e09b98e2c151'), provider_id='groq', mode...sprints'), num_ctx=8192, max_output_tokens=512, additional_task_classes=('governance_interpretation', 'agile_advice'))])
+----------------------------- Captured stderr call -----------------------------
+{"event": "http_request", "request_id": "83359493-4eef-48c0-b949-b83aeab75671", "method": "GET", "route": "/api/v1/auth/csrf", "status": 200, "duration_ms": 94.45}
+{"event": "http_request", "request_id": "4f99a11a-089d-45c2-a39f-d964514d5b30", "method": "POST", "route": "/api/v1/auth/login", "status": 200, "duration_ms": 294.15}
+{"event": "http_request", "request_id": "7cfecddd-80ee-4789-b330-82a9c686768b", "method": "POST", "route": "/api/v1/auth/switch", "status": 200, "duration_ms": 14.87}
+{"event": "http_request", "request_id": "8e19bd71-9e39-4a44-87e4-8184c3e3bc2d", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 40.38}
+{"event": "http_request", "request_id": "e5ad4d96-8ad1-4a1d-86e9-6f3a64c077b3", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 18.83}
+{"event": "http_request", "request_id": "31acb4a8-ba96-46ba-a004-774263274e5f", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 22.13}
+{"event": "http_request", "request_id": "33ed0ff8-577c-4366-8ce3-5d2ee46f3e0e", "method": "POST", "route": "/api/v1/documents", "status": 202, "duration_ms": 273.67}
+{"event": "http_request", "request_id": "bfd43f48-26fa-43e5-b791-439cc0404976", "method": "POST", "route": "/api/v1/agents/runs", "status": 202, "duration_ms": 571.4}
+{"event": "http_request", "request_id": "3f720d87-d684-482b-92c2-23e2892aedf8", "method": "GET", "route": "/api/v1/agents/runs/{id_}", "status": 200, "duration_ms": 71.35}
+------------------------------ Captured log call -------------------------------
+INFO     ppm.requests:main.py:144 {"event": "http_request", "request_id": "83359493-4eef-48c0-b949-b83aeab75671", "method": "GET", "route": "/api/v1/auth/csrf", "status": 200, "duration_ms": 94.45}
+INFO     ppm.requests:main.py:144 {"event": "http_request", "request_id": "4f99a11a-089d-45c2-a39f-d964514d5b30", "method": "POST", "route": "/api/v1/auth/login", "status": 200, "duration_ms": 294.15}
+INFO     ppm.requests:main.py:144 {"event": "http_request", "request_id": "7cfecddd-80ee-4789-b330-82a9c686768b", "method": "POST", "route": "/api/v1/auth/switch", "status": 200, "duration_ms": 14.87}
+INFO     ppm.requests:main.py:144 {"event": "http_request", "request_id": "8e19bd71-9e39-4a44-87e4-8184c3e3bc2d", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 40.38}
+INFO     ppm.requests:main.py:144 {"event": "http_request", "request_id": "e5ad4d96-8ad1-4a1d-86e9-6f3a64c077b3", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 18.83}
+INFO     ppm.requests:main.py:144 {"event": "http_request", "request_id": "31acb4a8-ba96-46ba-a004-774263274e5f", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 22.13}
+INFO     ppm.requests:main.py:144 {"event": "http_request", "request_id": "33ed0ff8-577c-4366-8ce3-5d2ee46f3e0e", "method": "POST", "route": "/api/v1/documents", "status": 202, "duration_ms": 273.67}
+INFO     ppm.requests:main.py:144 {"event": "http_request", "request_id": "bfd43f48-26fa-43e5-b791-439cc0404976", "method": "POST", "route": "/api/v1/agents/runs", "status": 202, "duration_ms": 571.4}
+INFO     ppm.requests:main.py:144 {"event": "http_request", "request_id": "3f720d87-d684-482b-92c2-23e2892aedf8", "method": "GET", "route": "/api/v1/agents/runs/{id_}", "status": 200, "duration_ms": 71.35}
+=========================== short test summary info ============================
+FAILED tests/test_agent_v2_runtime.py::test_nine_roles_use_four_durable_admissions_and_never_hide_a_fifth[False]
+FAILED tests/test_agent_v2_runtime.py::test_nine_roles_use_four_durable_admissions_and_never_hide_a_fifth[True]
+2 failed, 17 deselected in 13.75s
+

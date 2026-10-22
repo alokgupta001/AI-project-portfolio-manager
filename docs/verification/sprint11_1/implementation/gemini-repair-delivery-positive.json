@@ -1,0 +1,60 @@
+{
+  "schema_version": "cloud-batch-calibration-v1",
+  "provider": "gemini",
+  "model": "gemini-3.5-flash-lite",
+  "corpus_sha256": "f626c0b210daf73110cfc98d0aa6f7a974842bab0bf3e98f52e177e8ab516a24",
+  "policy_sha256": "143f5442bdd2294d8e95f0f023dd61726139b4a5be9aed7155f30437ec434f8e",
+  "selected_cases": [
+    "financial_05",
+    "schedule_05",
+    "resource_05"
+  ],
+  "prompt_sha256": "b7058c07afd3577af1a8b846c21f99cd02e9609066a901a9dae9cc2ac4b8c733",
+  "request_sha256": "d070d4696a505fa9ac846ddf16c2a49cbf0d95f4081e2eba88b7548d4c48096c",
+  "max_output_tokens": 512,
+  "context_tokens": 8192,
+  "qualified_classes": [],
+  "profile_activated": false,
+  "weight_training": false,
+  "independent_semantic_review": "pending",
+  "attempts": [
+    {
+      "attempt_id": "4ebeb99f-dabf-46db-93a7-b61e1929312f",
+      "cases": [
+        "financial_05",
+        "schedule_05",
+        "resource_05"
+      ],
+      "request_sha256": "d070d4696a505fa9ac846ddf16c2a49cbf0d95f4081e2eba88b7548d4c48096c",
+      "native_sha256": "eb1697f060be916ab117b2972b48fc551ed8bd4b294843207e3a9de22dfb0187",
+      "candidate_sha256": "500c44937c2539a1de6a34c1ed617c331679ae161b11ea3eee2061831c81fca2",
+      "usage": {
+        "input_tokens": 405,
+        "output_tokens": 322,
+        "reasoning_tokens": null,
+        "source": "reported"
+      },
+      "latency_ms": 2210,
+      "completion": "complete",
+      "reported_model_id": null,
+      "roles": {
+        "financial": {
+          "outcome": "supported",
+          "hard_validation": "validated",
+          "finding_count": 1
+        },
+        "schedule": {
+          "outcome": "supported",
+          "hard_validation": "validated",
+          "finding_count": 1
+        },
+        "resource": {
+          "outcome": "supported",
+          "hard_validation": "validated",
+          "finding_count": 1
+        }
+      }
+    }
+  ],
+  "status": "completed_pending_review"
+}

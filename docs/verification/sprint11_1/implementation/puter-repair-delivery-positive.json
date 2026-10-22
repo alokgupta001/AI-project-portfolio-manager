@@ -1,0 +1,60 @@
+{
+  "schema_version": "cloud-batch-calibration-v1",
+  "provider": "puter",
+  "model": "gpt-4.1-mini-2025-04-14",
+  "corpus_sha256": "f626c0b210daf73110cfc98d0aa6f7a974842bab0bf3e98f52e177e8ab516a24",
+  "policy_sha256": "143f5442bdd2294d8e95f0f023dd61726139b4a5be9aed7155f30437ec434f8e",
+  "selected_cases": [
+    "financial_05",
+    "schedule_05",
+    "resource_05"
+  ],
+  "prompt_sha256": "b7058c07afd3577af1a8b846c21f99cd02e9609066a901a9dae9cc2ac4b8c733",
+  "request_sha256": "d070d4696a505fa9ac846ddf16c2a49cbf0d95f4081e2eba88b7548d4c48096c",
+  "max_output_tokens": 512,
+  "context_tokens": 8192,
+  "qualified_classes": [],
+  "profile_activated": false,
+  "weight_training": false,
+  "independent_semantic_review": "pending",
+  "attempts": [
+    {
+      "attempt_id": "39ba66c5-5111-45e1-bb54-488561abec56",
+      "cases": [
+        "financial_05",
+        "schedule_05",
+        "resource_05"
+      ],
+      "request_sha256": "d070d4696a505fa9ac846ddf16c2a49cbf0d95f4081e2eba88b7548d4c48096c",
+      "native_sha256": "66cec26de3a9d74f6690a0d6bfa6e78dae1a7ac187e4b51ff421a0f08d72ef6e",
+      "candidate_sha256": "ffa1b31a96034bf9314a3c4d519e917caa5e0ef29e0e55dba76db3fd5ab6d061",
+      "usage": {
+        "input_tokens": 1280,
+        "output_tokens": 204,
+        "reasoning_tokens": null,
+        "source": "reported"
+      },
+      "latency_ms": 2341,
+      "completion": "complete",
+      "reported_model_id": "gpt-4.1-mini",
+      "roles": {
+        "financial": {
+          "outcome": "supported",
+          "hard_validation": "validated",
+          "finding_count": 1
+        },
+        "schedule": {
+          "outcome": "supported",
+          "hard_validation": "validated",
+          "finding_count": 1
+        },
+        "resource": {
+          "outcome": "supported",
+          "hard_validation": "validated",
+          "finding_count": 1
+        }
+      }
+    }
+  ],
+  "status": "completed_pending_review"
+}

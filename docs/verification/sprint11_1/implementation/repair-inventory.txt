@@ -1,0 +1,2 @@
+usage: documentation_inventory.py [-h] [--check]
+documentation_inventory.py: error: unrecognized arguments: --write

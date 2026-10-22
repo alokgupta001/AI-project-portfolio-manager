@@ -1,0 +1,11 @@
+warning: in the working copy of 'apps/web/components/agents.tsx', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'docs/01-architecture/DATABASE-DICTIONARY.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'docs/10-reference/CODE-AND-TEST-INDEX.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'docs/contracts/agents.md', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'infra/api.Dockerfile', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'packages/contracts/src/schema.d.ts', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'pyproject.toml', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'scripts/check-identity-browser.mjs', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'services/api/migrations/env.py', CRLF will be replaced by LF the next time Git touches it
+warning: in the working copy of 'services/api/ppm_api/main.py', CRLF will be replaced by LF the next time Git touches it
+warning: in the working copy of 'services/api/ppm_api/schemas.py', CRLF will be replaced by LF the next time Git touches it

@@ -1,0 +1,205 @@
+{
+  "schema_version": "cloud-calibration-review-draft-v1",
+  "qualification": false,
+  "independent_label_review": null,
+  "cases": [
+    {
+      "agent": "resource",
+      "case": "resource_03",
+      "receipt": "cloud-groq-resource-v2.json",
+      "candidate_sha256": "f91139a11883d7f1fca32f8f08604f9e15b01c547f579515af792fdc5a423d85",
+      "reviewer": null,
+      "independent": false,
+      "support_rating": null,
+      "advice_relevance": null,
+      "material_omissions": null,
+      "added_interpretation": null,
+      "decision": "pending"
+    },
+    {
+      "agent": "financial",
+      "case": "financial_03",
+      "receipt": "cloud-groq-financial-v3.json",
+      "candidate_sha256": "7fd9d396de42016cc02f28b80918346c84b9ba50f213b45de35d4730cc24075a",
+      "reviewer": null,
+      "independent": false,
+      "support_rating": null,
+      "advice_relevance": null,
+      "material_omissions": null,
+      "added_interpretation": null,
+      "decision": "pending"
+    },
+    {
+      "agent": "schedule",
+      "case": "schedule_03",
+      "receipt": "cloud-groq-schedule-v2.json",
+      "candidate_sha256": "f6201c9d53fad327d624b0f4e073e2f46c6382c553623eaeef52baad1f1da5be",
+      "reviewer": null,
+      "independent": false,
+      "support_rating": null,
+      "advice_relevance": null,
+      "material_omissions": null,
+      "added_interpretation": null,
+      "decision": "pending"
+    },
+    {
+      "agent": "agile_coach",
+      "case": "agile_coach_03",
+      "receipt": "cloud-gemini-agile-v2.json",
+      "candidate_sha256": "579bc4378e28a3377e50aaf4d3af4bf75599441d63eb63683fe1af38d9e3ce0d",
+      "reviewer": null,
+      "independent": false,
+      "support_rating": null,
+      "advice_relevance": null,
+      "material_omissions": null,
+      "added_interpretation": null,
+      "decision": "pending"
+    },
+    {
+      "agent": "governance",
+      "case": "governance_03",
+      "receipt": "cloud-gemini-governance-v2-measured.json",
+      "candidate_sha256": "da195ddf96915b1176fb955b1c40800cfb9699200a4799c13ebd276b51f9f493",
+      "reviewer": null,
+      "independent": false,
+      "support_rating": null,
+      "advice_relevance": null,
+      "material_omissions": null,
+      "added_interpretation": null,
+      "decision": "pending"
+    },
+    {
+      "agent": "risk",
+      "case": "risk_03",
+      "receipt": "cloud-gemini-risk-v2.json",
+      "candidate_sha256": "2351465e8bb6f66713fdddb9e36d5f26aef748f76249019acd317910c2215db1",
+      "reviewer": null,
+      "independent": false,
+      "support_rating": null,
+      "advice_relevance": null,
+      "material_omissions": null,
+      "added_interpretation": null,
+      "decision": "pending"
+    },
+    {
+      "agent": "executive",
+      "case": "executive_03",
+      "receipt": "cloud-puter-executive-v2.json",
+      "candidate_sha256": "e87613a4ec71bc8a51fc99c5cc398e02322444f05cf3f5c657dc65a638e7afbd",
+      "reviewer": null,
+      "independent": false,
+      "support_rating": null,
+      "advice_relevance": null,
+      "material_omissions": null,
+      "added_interpretation": null,
+      "decision": "pending"
+    },
+    {
+      "agent": "sentiment",
+      "case": "sentiment_03",
+      "receipt": "cloud-puter-team-v2.json",
+      "candidate_sha256": "82bfe3ab8637f0dd277a516fc96c7a20127041e4bf5d3a794b2561a07e384724",
+      "reviewer": null,
+      "independent": false,
+      "support_rating": null,
+      "advice_relevance": null,
+      "material_omissions": null,
+      "added_interpretation": null,
+      "decision": "pending"
+    },
+    {
+      "agent": "pmo",
+      "case": "pmo_03",
+      "receipt": "cloud-puter-pmo-v2.json",
+      "candidate_sha256": "ecefe9948060cec2cc95e7453ed31e3f2f2c46d57f3de5debf06e4f36fc21568",
+      "reviewer": null,
+      "independent": false,
+      "support_rating": null,
+      "advice_relevance": null,
+      "material_omissions": null,
+      "added_interpretation": null,
+      "decision": "pending"
+    },
+    {
+      "agent": "financial",
+      "case": "financial_07",
+      "receipt": "cloud-groq-financial-absent.json",
+      "reviewer": null,
+      "independent": false,
+      "decision": "pending",
+      "hard_rejected": true
+    },
+    {
+      "agent": "schedule",
+      "case": "schedule_07",
+      "receipt": "cloud-groq-schedule-absent.json",
+      "reviewer": null,
+      "independent": false,
+      "decision": "pending",
+      "hard_rejected": false
+    },
+    {
+      "agent": "resource",
+      "case": "resource_07",
+      "receipt": "cloud-groq-resource-absent.json",
+      "reviewer": null,
+      "independent": false,
+      "decision": "pending",
+      "hard_rejected": true
+    },
+    {
+      "agent": "risk",
+      "case": "risk_07",
+      "receipt": "cloud-gemini-risk-absent.json",
+      "reviewer": null,
+      "independent": false,
+      "decision": "pending",
+      "hard_rejected": false
+    },
+    {
+      "agent": "governance",
+      "case": "governance_07",
+      "receipt": "cloud-gemini-governance-absent.json",
+      "reviewer": null,
+      "independent": false,
+      "decision": "pending",
+      "hard_rejected": false
+    },
+    {
+      "agent": "agile_coach",
+      "case": "agile_coach_07",
+      "receipt": "cloud-gemini-agile-absent.json",
+      "reviewer": null,
+      "independent": false,
+      "decision": "pending",
+      "hard_rejected": false
+    },
+    {
+      "agent": "sentiment",
+      "case": "sentiment_07",
+      "receipt": "cloud-puter-team-absent.json",
+      "reviewer": null,
+      "independent": false,
+      "decision": "pending",
+      "hard_rejected": false
+    },
+    {
+      "agent": "pmo",
+      "case": "pmo_07",
+      "receipt": "cloud-puter-pmo-absent.json",
+      "reviewer": null,
+      "independent": false,
+      "decision": "pending",
+      "hard_rejected": false
+    },
+    {
+      "agent": "executive",
+      "case": "executive_07",
+      "receipt": "cloud-puter-executive-absent.json",
+      "reviewer": null,
+      "independent": false,
+      "decision": "pending",
+      "hard_rejected": false
+    }
+  ]
+}

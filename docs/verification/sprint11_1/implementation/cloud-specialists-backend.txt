@@ -1,0 +1,185 @@
+time="2026-10-17T19:37:39+05:30" level=warning msg="Found orphan containers (enterprise-ppm-pgadmin-1) for this project. If you removed or renamed this service in your compose file, you can run this command with the --remove-orphans flag to clean it up."
+ Container enterprise-ppm-test-run-bdb5ceb8113c Creating 
+ Container enterprise-ppm-test-run-bdb5ceb8113c Created 
+Running: /app/.venv/bin/python -m alembic upgrade head
+Running: /app/.venv/bin/python -m alembic downgrade 0006_command_center
+Running: /app/.venv/bin/python -m alembic upgrade head
+Running: /app/.venv/bin/python -m alembic downgrade base
+Running: /app/.venv/bin/python -m alembic upgrade head
+Running: /app/.venv/bin/python -m alembic upgrade head
+Running: /app/.venv/bin/python -m alembic check
+No new upgrade operations detected.
+Running: /app/.venv/bin/python -m pytest -q
+........................................................................ [ 16%]
+........................FFF............................................. [ 32%]
+........................................................................ [ 48%]
+........................................................................ [ 64%]
+........................................................................ [ 80%]
+........................................................................ [ 96%]
+.................                                                        [100%]
+=================================== FAILURES ===================================
+____ test_new_cloud_provider_uses_real_shared_admission_and_daily_cap[groq] ____
+
+identity = (<httpx.AsyncClient object at 0x7d8eae6ca120>, <fastapi.applications.FastAPI object at 0x7d8eae667260>, <sqlalchemy.ex... '1c2de9bb-004c-4992-88ad-cf7948cb755e@example.com', 'other': '9c8a8177-b6e0-4858-b3da-2b0bb0454d89@example.com', ...})
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7d8eae33f9e0>
+tmp_path = PosixPath('/tmp/pytest-of-ppm/pytest-0/test_new_cloud_provider_uses_r0')
+provider = 'groq'
+
+    @pytest.mark.parametrize("provider", ["groq", "openrouter", "mistral"])
+    async def test_new_cloud_provider_uses_real_shared_admission_and_daily_cap(
+        identity, monkeypatch, tmp_path, provider
+    ):
+        c, app, owner, ids, project, accepted, seen = await configure(
+            identity, monkeypatch, tmp_path, True, provider
+        )
+        body = dict(
+            runtime_version="v2",
+            analysis_mode="domain",
+            requested_agents=["risk"],
+            version_ids=[accepted["version_id"]],
+        )
+        first = await start(c, project, **body)
+        assert first.status_code == 202, first.text
+        result, _ = await work(c, app, owner, ids, first.json())
+>       assert len(seen) == 1, result
+E       AssertionError: {'run': {'id': 'a9f83b08-57c5-42c5-be3b-7042f8f7fd9c', 'organization_id': '5230d36d-1c48-4ef7-a369-168bd6d8a7fc', 'inp.....}, 'prompt_version': 'hybrid-specialists-v2', 'rule_version': 'hybrid-support-v2', 'framework_version_id': None, ...}
+E       assert 0 == 1
+E        +  where 0 = len([])
+
+tests/test_agent_v2_runtime.py:167: AssertionError
+----------------------------- Captured stderr call -----------------------------
+{"event": "http_request", "request_id": "7636c5b3-a1e7-45d5-ad8c-553c4323200f", "method": "GET", "route": "/api/v1/auth/csrf", "status": 200, "duration_ms": 122.5}
+{"event": "http_request", "request_id": "2479e401-134c-4eea-b37a-53308cc3eed9", "method": "POST", "route": "/api/v1/auth/login", "status": 200, "duration_ms": 348.18}
+{"event": "http_request", "request_id": "4af36071-9aa5-4a8b-a518-4114cab18102", "method": "POST", "route": "/api/v1/auth/switch", "status": 200, "duration_ms": 17.2}
+{"event": "http_request", "request_id": "4b9867bd-8dd0-49a8-aef8-a12da37177df", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 56.21}
+{"event": "http_request", "request_id": "079e13b9-1f68-4ab2-8546-1a4d371e1042", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 24.57}
+{"event": "http_request", "request_id": "32578713-85c6-4515-a8e1-887d6f36c802", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 27.94}
+{"event": "http_request", "request_id": "3aed4914-4229-4a05-8cf0-e4be8724ad6f", "method": "POST", "route": "/api/v1/documents", "status": 202, "duration_ms": 305.05}
+{"event": "http_request", "request_id": "2e0ec438-6b4a-4562-b04e-407d12ef198c", "method": "POST", "route": "/api/v1/agents/runs", "status": 202, "duration_ms": 656.07}
+{"event": "http_request", "request_id": "3a5a40b2-8503-4bdf-b5ab-43c1ce629e6c", "method": "GET", "route": "/api/v1/agents/runs/{id_}", "status": 200, "duration_ms": 89.83}
+------------------------------ Captured log call -------------------------------
+INFO     ppm.requests:main.py:144 {"event": "http_request", "request_id": "7636c5b3-a1e7-45d5-ad8c-553c4323200f", "method": "GET", "route": "/api/v1/auth/csrf", "status": 200, "duration_ms": 122.5}
+INFO     ppm.requests:main.py:144 {"event": "http_request", "request_id": "2479e401-134c-4eea-b37a-53308cc3eed9", "method": "POST", "route": "/api/v1/auth/login", "status": 200, "duration_ms": 348.18}
+INFO     ppm.requests:main.py:144 {"event": "http_request", "request_id": "4af36071-9aa5-4a8b-a518-4114cab18102", "method": "POST", "route": "/api/v1/auth/switch", "status": 200, "duration_ms": 17.2}
+INFO     ppm.requests:main.py:144 {"event": "http_request", "request_id": "4b9867bd-8dd0-49a8-aef8-a12da37177df", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 56.21}
+INFO     ppm.requests:main.py:144 {"event": "http_request", "request_id": "079e13b9-1f68-4ab2-8546-1a4d371e1042", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 24.57}
+INFO     ppm.requests:main.py:144 {"event": "http_request", "request_id": "32578713-85c6-4515-a8e1-887d6f36c802", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 27.94}
+INFO     ppm.requests:main.py:144 {"event": "http_request", "request_id": "3aed4914-4229-4a05-8cf0-e4be8724ad6f", "method": "POST", "route": "/api/v1/documents", "status": 202, "duration_ms": 305.05}
+INFO     ppm.requests:main.py:144 {"event": "http_request", "request_id": "2e0ec438-6b4a-4562-b04e-407d12ef198c", "method": "POST", "route": "/api/v1/agents/runs", "status": 202, "duration_ms": 656.07}
+INFO     ppm.requests:main.py:144 {"event": "http_request", "request_id": "3a5a40b2-8503-4bdf-b5ab-43c1ce629e6c", "method": "GET", "route": "/api/v1/agents/runs/{id_}", "status": 200, "duration_ms": 89.83}
+_ test_new_cloud_provider_uses_real_shared_admission_and_daily_cap[openrouter] _
+
+identity = (<httpx.AsyncClient object at 0x7d8eaeb1f980>, <fastapi.applications.FastAPI object at 0x7d8eae5ab380>, <sqlalchemy.ex... 'a281237d-2dd3-4da7-a1cd-94f42923fdf2@example.com', 'other': '6636f4a9-251c-4e85-a93e-156d5bb5b8bd@example.com', ...})
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7d8eae5a86b0>
+tmp_path = PosixPath('/tmp/pytest-of-ppm/pytest-0/test_new_cloud_provider_uses_r1')
+provider = 'openrouter'
+
+    @pytest.mark.parametrize("provider", ["groq", "openrouter", "mistral"])
+    async def test_new_cloud_provider_uses_real_shared_admission_and_daily_cap(
+        identity, monkeypatch, tmp_path, provider
+    ):
+        c, app, owner, ids, project, accepted, seen = await configure(
+            identity, monkeypatch, tmp_path, True, provider
+        )
+        body = dict(
+            runtime_version="v2",
+            analysis_mode="domain",
+            requested_agents=["risk"],
+            version_ids=[accepted["version_id"]],
+        )
+        first = await start(c, project, **body)
+        assert first.status_code == 202, first.text
+        result, _ = await work(c, app, owner, ids, first.json())
+>       assert len(seen) == 1, result
+E       AssertionError: {'run': {'id': '12340c39-a765-4d12-8aaf-96771088914c', 'organization_id': '622d6a23-e6b5-4fc8-bc4b-324a685fb7ea', 'inp.....}, 'prompt_version': 'hybrid-specialists-v2', 'rule_version': 'hybrid-support-v2', 'framework_version_id': None, ...}
+E       assert 0 == 1
+E        +  where 0 = len([])
+
+tests/test_agent_v2_runtime.py:167: AssertionError
+----------------------------- Captured stderr call -----------------------------
+{"event": "http_request", "request_id": "e73dbd1e-78aa-4a50-b1fa-bf7b97e2d59f", "method": "GET", "route": "/api/v1/auth/csrf", "status": 200, "duration_ms": 138.3}
+{"event": "http_request", "request_id": "04c58389-a150-42b4-884a-06e24bfad00a", "method": "POST", "route": "/api/v1/auth/login", "status": 200, "duration_ms": 415.0}
+{"event": "http_request", "request_id": "51e2242a-7563-4f9e-be95-b3714fe97994", "method": "POST", "route": "/api/v1/auth/switch", "status": 200, "duration_ms": 33.52}
+{"event": "http_request", "request_id": "0d755195-6c0e-45e6-bab2-7a8c0974ec99", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 92.46}
+{"event": "http_request", "request_id": "c4e66d1c-f52d-4ecd-8669-297089cc23de", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 29.99}
+{"event": "http_request", "request_id": "bee8ad72-3c78-4aee-94ea-fe3d991c8f46", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 31.26}
+{"event": "http_request", "request_id": "4d57c8e5-3052-44c4-b28a-aaed76366aa9", "method": "POST", "route": "/api/v1/documents", "status": 202, "duration_ms": 264.33}
+{"event": "http_request", "request_id": "b764120d-7342-4b85-b2dd-d0ccce4b60f6", "method": "POST", "route": "/api/v1/agents/runs", "status": 202, "duration_ms": 583.68}
+{"event": "http_request", "request_id": "720a7e39-de2d-493b-8b69-de3e3327f8f8", "method": "GET", "route": "/api/v1/agents/runs/{id_}", "status": 200, "duration_ms": 73.61}
+------------------------------ Captured log call -------------------------------
+INFO     ppm.requests:main.py:144 {"event": "http_request", "request_id": "e73dbd1e-78aa-4a50-b1fa-bf7b97e2d59f", "method": "GET", "route": "/api/v1/auth/csrf", "status": 200, "duration_ms": 138.3}
+INFO     ppm.requests:main.py:144 {"event": "http_request", "request_id": "04c58389-a150-42b4-884a-06e24bfad00a", "method": "POST", "route": "/api/v1/auth/login", "status": 200, "duration_ms": 415.0}
+INFO     ppm.requests:main.py:144 {"event": "http_request", "request_id": "51e2242a-7563-4f9e-be95-b3714fe97994", "method": "POST", "route": "/api/v1/auth/switch", "status": 200, "duration_ms": 33.52}
+INFO     ppm.requests:main.py:144 {"event": "http_request", "request_id": "0d755195-6c0e-45e6-bab2-7a8c0974ec99", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 92.46}
+INFO     ppm.requests:main.py:144 {"event": "http_request", "request_id": "c4e66d1c-f52d-4ecd-8669-297089cc23de", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 29.99}
+INFO     ppm.requests:main.py:144 {"event": "http_request", "request_id": "bee8ad72-3c78-4aee-94ea-fe3d991c8f46", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 31.26}
+INFO     ppm.requests:main.py:144 {"event": "http_request", "request_id": "4d57c8e5-3052-44c4-b28a-aaed76366aa9", "method": "POST", "route": "/api/v1/documents", "status": 202, "duration_ms": 264.33}
+INFO     ppm.requests:main.py:144 {"event": "http_request", "request_id": "b764120d-7342-4b85-b2dd-d0ccce4b60f6", "method": "POST", "route": "/api/v1/agents/runs", "status": 202, "duration_ms": 583.68}
+INFO     ppm.requests:main.py:144 {"event": "http_request", "request_id": "720a7e39-de2d-493b-8b69-de3e3327f8f8", "method": "GET", "route": "/api/v1/agents/runs/{id_}", "status": 200, "duration_ms": 73.61}
+__ test_new_cloud_provider_uses_real_shared_admission_and_daily_cap[mistral] ___
+
+identity = (<httpx.AsyncClient object at 0x7d8eae44c110>, <fastapi.applications.FastAPI object at 0x7d8eaeac16a0>, <sqlalchemy.ex... '18339bec-b9ca-4b06-9636-bcf459d6bd3f@example.com', 'other': 'dd3ae76a-297d-4709-85aa-4e4960e963d6@example.com', ...})
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7d8eae4c3320>
+tmp_path = PosixPath('/tmp/pytest-of-ppm/pytest-0/test_new_cloud_provider_uses_r2')
+provider = 'mistral'
+
+    @pytest.mark.parametrize("provider", ["groq", "openrouter", "mistral"])
+    async def test_new_cloud_provider_uses_real_shared_admission_and_daily_cap(
+        identity, monkeypatch, tmp_path, provider
+    ):
+        c, app, owner, ids, project, accepted, seen = await configure(
+            identity, monkeypatch, tmp_path, True, provider
+        )
+        body = dict(
+            runtime_version="v2",
+            analysis_mode="domain",
+            requested_agents=["risk"],
+            version_ids=[accepted["version_id"]],
+        )
+        first = await start(c, project, **body)
+        assert first.status_code == 202, first.text
+        result, _ = await work(c, app, owner, ids, first.json())
+>       assert len(seen) == 1, result
+E       AssertionError: {'run': {'id': 'cf03eb00-acc1-4c90-b8fa-b07861dfebb0', 'organization_id': '5ddb9aaf-9d8d-4f04-bcb0-de5fddba61d6', 'inp.....}, 'prompt_version': 'hybrid-specialists-v2', 'rule_version': 'hybrid-support-v2', 'framework_version_id': None, ...}
+E       assert 0 == 1
+E        +  where 0 = len([])
+
+tests/test_agent_v2_runtime.py:167: AssertionError
+----------------------------- Captured stderr call -----------------------------
+{"event": "http_request", "request_id": "ec65adc5-306b-40a0-834e-1d8783308ca0", "method": "GET", "route": "/api/v1/auth/csrf", "status": 200, "duration_ms": 101.8}
+{"event": "http_request", "request_id": "a9d23582-d33c-4c0e-b231-15859fdc21d6", "method": "POST", "route": "/api/v1/auth/login", "status": 200, "duration_ms": 256.21}
+{"event": "http_request", "request_id": "a5124c1c-7482-4f0b-814d-fe5707fa0bf5", "method": "POST", "route": "/api/v1/auth/switch", "status": 200, "duration_ms": 13.56}
+{"event": "http_request", "request_id": "a7c66c77-4632-4b74-be98-021d665857ae", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 35.02}
+{"event": "http_request", "request_id": "b9e432f0-efb6-4eec-a601-6c17c7c041a4", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 18.46}
+{"event": "http_request", "request_id": "ce5d6f3d-1502-4862-a389-8cd2d5c28bad", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 19.88}
+{"event": "http_request", "request_id": "c3ece708-b5ab-4ba9-90fa-1d6e307df616", "method": "POST", "route": "/api/v1/documents", "status": 202, "duration_ms": 232.84}
+{"event": "http_request", "request_id": "86dcc5fc-7491-4b9a-bb76-2d7e3869deb9", "method": "POST", "route": "/api/v1/agents/runs", "status": 202, "duration_ms": 521.32}
+{"event": "http_request", "request_id": "0086df7c-992a-49d3-88db-5bf6010a6fb3", "method": "GET", "route": "/api/v1/agents/runs/{id_}", "status": 200, "duration_ms": 76.72}
+------------------------------ Captured log call -------------------------------
+INFO     ppm.requests:main.py:144 {"event": "http_request", "request_id": "ec65adc5-306b-40a0-834e-1d8783308ca0", "method": "GET", "route": "/api/v1/auth/csrf", "status": 200, "duration_ms": 101.8}
+INFO     ppm.requests:main.py:144 {"event": "http_request", "request_id": "a9d23582-d33c-4c0e-b231-15859fdc21d6", "method": "POST", "route": "/api/v1/auth/login", "status": 200, "duration_ms": 256.21}
+INFO     ppm.requests:main.py:144 {"event": "http_request", "request_id": "a5124c1c-7482-4f0b-814d-fe5707fa0bf5", "method": "POST", "route": "/api/v1/auth/switch", "status": 200, "duration_ms": 13.56}
+INFO     ppm.requests:main.py:144 {"event": "http_request", "request_id": "a7c66c77-4632-4b74-be98-021d665857ae", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 35.02}
+INFO     ppm.requests:main.py:144 {"event": "http_request", "request_id": "b9e432f0-efb6-4eec-a601-6c17c7c041a4", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 18.46}
+INFO     ppm.requests:main.py:144 {"event": "http_request", "request_id": "ce5d6f3d-1502-4862-a389-8cd2d5c28bad", "method": "POST", "route": "/api/v1/delivery/{kind}", "status": 201, "duration_ms": 19.88}
+INFO     ppm.requests:main.py:144 {"event": "http_request", "request_id": "c3ece708-b5ab-4ba9-90fa-1d6e307df616", "method": "POST", "route": "/api/v1/documents", "status": 202, "duration_ms": 232.84}
+INFO     ppm.requests:main.py:144 {"event": "http_request", "request_id": "86dcc5fc-7491-4b9a-bb76-2d7e3869deb9", "method": "POST", "route": "/api/v1/agents/runs", "status": 202, "duration_ms": 521.32}
+INFO     ppm.requests:main.py:144 {"event": "http_request", "request_id": "0086df7c-992a-49d3-88db-5bf6010a6fb3", "method": "GET", "route": "/api/v1/agents/runs/{id_}", "status": 200, "duration_ms": 76.72}
+=============================== warnings summary ===============================
+.venv/lib/python3.12/site-packages/fastapi/testclient.py:1
+  /app/.venv/lib/python3.12/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED tests/test_agent_v2_runtime.py::test_new_cloud_provider_uses_real_shared_admission_and_daily_cap[groq]
+FAILED tests/test_agent_v2_runtime.py::test_new_cloud_provider_uses_real_shared_admission_and_daily_cap[openrouter]
+FAILED tests/test_agent_v2_runtime.py::test_new_cloud_provider_uses_real_shared_admission_and_daily_cap[mistral]
+3 failed, 446 passed, 1 warning in 413.64s (0:06:53)
+Traceback (most recent call last):
+  File "/app/scripts/test_backend.py", line 28, in <module>
+    subprocess.run(command, check=True, env=env)
+  File "/usr/local/lib/python3.12/subprocess.py", line 571, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['/app/.venv/bin/python', '-m', 'pytest', '-q']' returned non-zero exit status 1.
+

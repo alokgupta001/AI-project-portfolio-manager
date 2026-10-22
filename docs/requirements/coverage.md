@@ -1,5 +1,7 @@
 # Requirement coverage matrix
 
+Sprint 11.1 implementation supplements the existing Sprint 11 scope: [active report](../03-sprints/active/sprint-11.1/README.md), [local acceptance receipts](../verification/sprint11_1/IMPLEMENTATION.md) and [R01–R16 / AT01–AT20 traceability](../09-planning/sprint-11.1/SPRINT_11_1_TRACEABILITY.md). Nine hybrid role paths, checkpointed execution and separate baseline/semantic coverage are implemented behind a default-off flag. Broad semantic accuracy, model/hardware qualification, optional second provider/embedding work and normal rollout remain open; original scoring/privacy/review requirements are unchanged.
+
 Sprint 11 current evidence: [report](../03-sprints/completed/sprint-11/SPRINT_REPORT.md) and [tests](../04-testing/sprint-based/sprint-11/TESTING_REPORT.md). All three packages cover local controls; real-provider interpretation quality remains UNVERIFIED/BLOCKED. Dated notes below retain their historical scope.
 
 Source keys resolve to exact headings in [source index](../source/INDEX.md). Each row names an independently reviewable capability or constraint. Type: F required feature; N nonfunctional/control requirement; E proposed enhancement; T technology choice; P planning deliverable. Owners are sprint numbers. Dependencies are prerequisite sprint checkpoints, not claims of current completion. `Planned` means not implemented; evidence is deliberately absent until verified. Technical alternatives are resolved in ADRs rather than silently classified as completed product features.

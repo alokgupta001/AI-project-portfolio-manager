@@ -1,0 +1,6 @@
+time="2026-10-17T10:18:08+05:30" level=warning msg="Found orphan containers (enterprise-ppm-clamav-1, enterprise-ppm-pgadmin-1) for this project. If you removed or renamed this service in your compose file, you can run this command with the --remove-orphans flag to clean it up."
+ Container enterprise-ppm-api-run-fa2bf4e1da36 Creating 
+ Container enterprise-ppm-api-run-fa2bf4e1da36 Created 
+PASS 24 preserved .env/source/prompt/migration hashes
+PASS after: 0012_ai_runtime; 70 established table counts/hashes unchanged
+PASS 5 original object keys/byte hashes unchanged

@@ -1,0 +1,44 @@
+{
+  "schema_version": "cloud-specialist-calibration-v1",
+  "provider": "groq",
+  "model": "openai/gpt-oss-20b",
+  "corpus_sha256": "f626c0b210daf73110cfc98d0aa6f7a974842bab0bf3e98f52e177e8ab516a24",
+  "selected_cases": [
+    "resource_03"
+  ],
+  "qualified_classes": [],
+  "profile_activated": false,
+  "weight_training": false,
+  "max_output_tokens": 512,
+  "independent_semantic_review": "pending",
+  "attempts": [
+    {
+      "case": "resource_03",
+      "agent": "resource",
+      "attempt_id": "28c35355-df58-42ad-9927-c86b64cf66b6",
+      "prompt_sha256": "c48259683f185eeaf44ab4fbb7bb691622093e25803b1688f916dc377286720d",
+      "request_sha256": "482c02227fca7d0c27aac56961a74959a7cb6603bc44f6828c5296eee67a9e25",
+      "native_sha256": "d63cc9d11e943fe8838dfe76934a58e73eb126ecf3bf49c2e926e3e0b75e1b3b",
+      "candidate_sha256": "f91139a11883d7f1fca32f8f08604f9e15b01c547f579515af792fdc5a423d85",
+      "completion": "complete",
+      "usage": {
+        "input_tokens": 1102,
+        "output_tokens": 209,
+        "reasoning_tokens": 79,
+        "source": "reported"
+      },
+      "latency_ms": 888,
+      "hard_validation": "validated",
+      "finding_count": 1,
+      "semantic_review": "pending"
+    }
+  ],
+  "limits": {
+    "attempts_per_case": 2,
+    "attempts_per_batch": 3,
+    "batch_seconds": 90,
+    "attempt_seconds": 22,
+    "authorization_calls": 9
+  },
+  "status": "completed_pending_review"
+}

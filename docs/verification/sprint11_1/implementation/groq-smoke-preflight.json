@@ -1,0 +1,16 @@
+{
+  "schema_version": "groq-synthetic-smoke-v1",
+  "provider": "groq",
+  "model": "openai/gpt-oss-20b",
+  "corpus_sha256": "4d9f54f9add381bd909d9947785f3bddbff4a62c0643ecd335f2d05f1beb5e60",
+  "purpose": "transport_schema_only",
+  "independent_quality_qualification": false,
+  "profile_activated": false,
+  "max_calls": 3,
+  "max_output_tokens": 512,
+  "per_attempt_timeout_seconds": 22,
+  "run_deadline_seconds": 90,
+  "billing_basis": "user_confirmed_free_account",
+  "attempts": [],
+  "status": "prepared_no_requests"
+}

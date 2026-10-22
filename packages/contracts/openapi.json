@@ -397,6 +397,26 @@
       "AIRunInput": {
         "additionalProperties": false,
         "properties": {
+          "analysis_mode": {
+            "anyOf": [
+              {
+                "enum": [
+                  "auto",
+                  "metrics",
+                  "domain",
+                  "assessment",
+                  "portfolio",
+                  "executive",
+                  "all_specialists"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Analysis Mode"
+          },
           "assessment_id": {
             "anyOf": [
               {
@@ -419,6 +439,18 @@
             "title": "Operation",
             "type": "string"
           },
+          "prior_run_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Prior Run Id"
+          },
           "project_id": {
             "format": "uuid",
             "title": "Project Id",
@@ -429,6 +461,61 @@
             "maxLength": 160,
             "title": "Query",
             "type": "string"
+          },
+          "question_ids": {
+            "anyOf": [
+              {
+                "items": {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                "maxItems": 50,
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Question Ids"
+          },
+          "requested_agents": {
+            "anyOf": [
+              {
+                "items": {
+                  "enum": [
+                    "financial",
+                    "schedule",
+                    "sentiment",
+                    "risk",
+                    "resource",
+                    "governance",
+                    "agile_coach",
+                    "pmo",
+                    "executive"
+                  ],
+                  "type": "string"
+                },
+                "maxItems": 9,
+                "minItems": 1,
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Requested Agents"
+          },
+          "runtime_version": {
+            "anyOf": [
+              {
+                "const": "v2",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Runtime Version"
           },
           "version_id": {
             "anyOf": [
@@ -881,6 +968,17 @@
             "title": "Evaluation Cases",
             "type": "array"
           },
+          "execution_policy": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Execution Policy"
+          },
           "fallback": {
             "title": "Fallback",
             "type": "string"
@@ -892,10 +990,28 @@
             "title": "Inputs",
             "type": "array"
           },
+          "modes": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Modes",
+            "type": "array"
+          },
           "output_schema": {
             "default": "SpecialistOutput",
             "title": "Output Schema",
             "type": "string"
+          },
+          "task_class": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Task Class"
           },
           "timeout_seconds": {
             "title": "Timeout Seconds",
@@ -1272,6 +1388,26 @@
       "AnalysisInput": {
         "additionalProperties": false,
         "properties": {
+          "analysis_mode": {
+            "anyOf": [
+              {
+                "enum": [
+                  "auto",
+                  "metrics",
+                  "domain",
+                  "assessment",
+                  "portfolio",
+                  "executive",
+                  "all_specialists"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Analysis Mode"
+          },
           "assessment_id": {
             "anyOf": [
               {
@@ -1284,10 +1420,77 @@
             ],
             "title": "Assessment Id"
           },
+          "prior_run_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Prior Run Id"
+          },
           "project_id": {
             "format": "uuid",
             "title": "Project Id",
             "type": "string"
+          },
+          "question_ids": {
+            "anyOf": [
+              {
+                "items": {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                "maxItems": 50,
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Question Ids"
+          },
+          "requested_agents": {
+            "anyOf": [
+              {
+                "items": {
+                  "enum": [
+                    "financial",
+                    "schedule",
+                    "sentiment",
+                    "risk",
+                    "resource",
+                    "governance",
+                    "agile_coach",
+                    "pmo",
+                    "executive"
+                  ],
+                  "type": "string"
+                },
+                "maxItems": 9,
+                "minItems": 1,
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Requested Agents"
+          },
+          "runtime_version": {
+            "anyOf": [
+              {
+                "const": "v2",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Runtime Version"
           },
           "version_ids": {
             "items": {
@@ -1359,6 +1562,26 @@
             "title": "Agents",
             "type": "array"
           },
+          "analysis_mode": {
+            "anyOf": [
+              {
+                "enum": [
+                  "auto",
+                  "metrics",
+                  "domain",
+                  "assessment",
+                  "portfolio",
+                  "executive",
+                  "all_specialists"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Analysis Mode"
+          },
           "assessment_id": {
             "anyOf": [
               {
@@ -1382,9 +1605,36 @@
             ],
             "title": "Assessment Revision"
           },
+          "blocked_reason": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Blocked Reason"
+          },
+          "briefing": {
+            "items": {
+              "$ref": "#/components/schemas/FindingView"
+            },
+            "maxItems": 20,
+            "title": "Briefing",
+            "type": "array"
+          },
           "can_review": {
             "title": "Can Review",
             "type": "boolean"
+          },
+          "capability_details": {
+            "items": {
+              "$ref": "#/components/schemas/CapabilityDetail"
+            },
+            "maxItems": 9,
+            "title": "Capability Details",
+            "type": "array"
           },
           "evidence": {
             "items": {
@@ -1448,6 +1698,15 @@
             "title": "Prompt Version",
             "type": "string"
           },
+          "route_summary": {
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "maxItems": 4,
+            "title": "Route Summary",
+            "type": "array"
+          },
           "rule_version": {
             "default": "specialist-support-v1",
             "title": "Rule Version",
@@ -1455,6 +1714,17 @@
           },
           "run": {
             "$ref": "#/components/schemas/AIRunView"
+          },
+          "runtime_version": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Runtime Version"
           },
           "semantic_status": {
             "title": "Semantic Status",
@@ -1477,6 +1747,20 @@
             },
             "title": "Suggestions",
             "type": "array"
+          },
+          "task_summary": {
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "maxItems": 24,
+            "title": "Task Summary",
+            "type": "array"
+          },
+          "validation_summary": {
+            "additionalProperties": true,
+            "title": "Validation Summary",
+            "type": "object"
           }
         },
         "required": [
@@ -2640,6 +2924,128 @@
           "sunday"
         ],
         "title": "CalendarInput",
+        "type": "object"
+      },
+      "CapabilityDetail": {
+        "additionalProperties": false,
+        "properties": {
+          "agent": {
+            "enum": [
+              "financial",
+              "schedule",
+              "sentiment",
+              "risk",
+              "resource",
+              "governance",
+              "agile_coach",
+              "pmo",
+              "executive"
+            ],
+            "title": "Agent",
+            "type": "string"
+          },
+          "base_covered_ids": {
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 1000,
+            "title": "Base Covered Ids",
+            "type": "array"
+          },
+          "base_outcome": {
+            "default": "insufficient_evidence",
+            "enum": [
+              "supported",
+              "no_findings",
+              "insufficient_evidence"
+            ],
+            "title": "Base Outcome",
+            "type": "string"
+          },
+          "base_required_ids": {
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 1000,
+            "title": "Base Required Ids",
+            "type": "array"
+          },
+          "code": {
+            "anyOf": [
+              {
+                "maxLength": 48,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Code"
+          },
+          "execution_method": {
+            "default": "deterministic",
+            "enum": [
+              "deterministic",
+              "semantic",
+              "hybrid"
+            ],
+            "title": "Execution Method",
+            "type": "string"
+          },
+          "interpretation_reason": {
+            "default": "none",
+            "enum": [
+              "explicit_request",
+              "explanatory_text",
+              "conflicting_evidence",
+              "cross_domain_synthesis",
+              "none"
+            ],
+            "title": "Interpretation Reason",
+            "type": "string"
+          },
+          "semantic_covered_ids": {
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 1000,
+            "title": "Semantic Covered Ids",
+            "type": "array"
+          },
+          "semantic_deferred_ids": {
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 1000,
+            "title": "Semantic Deferred Ids",
+            "type": "array"
+          },
+          "semantic_outcome": {
+            "default": "not_requested",
+            "enum": [
+              "not_requested",
+              "not_needed",
+              "completed",
+              "deferred",
+              "unavailable",
+              "failed"
+            ],
+            "title": "Semantic Outcome",
+            "type": "string"
+          },
+          "semantic_required_ids": {
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 1000,
+            "title": "Semantic Required Ids",
+            "type": "array"
+          }
+        },
+        "required": [
+          "agent"
+        ],
+        "title": "CapabilityDetail",
         "type": "object"
       },
       "CapacityDay": {
@@ -4563,10 +4969,24 @@
             "title": "Available",
             "type": "boolean"
           },
+          "basis": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Basis",
+            "type": "array"
+          },
           "confidence": {
-            "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
-            "title": "Confidence",
-            "type": "string"
+            "anyOf": [
+              {
+                "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Confidence"
           },
           "conflicts": {
             "items": {
@@ -4578,6 +4998,16 @@
           "discrepancy": {
             "title": "Discrepancy",
             "type": "boolean"
+          },
+          "epistemic": {
+            "default": "deterministic",
+            "enum": [
+              "deterministic",
+              "interpretation",
+              "hypothesis"
+            ],
+            "title": "Epistemic",
+            "type": "string"
           },
           "improvement": {
             "title": "Improvement",
@@ -4598,6 +5028,17 @@
             "title": "Kind",
             "type": "string"
           },
+          "predicate": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Predicate"
+          },
           "review_revision": {
             "title": "Review Revision",
             "type": "integer"
@@ -4608,6 +5049,11 @@
             },
             "title": "Reviews",
             "type": "array"
+          },
+          "semantic_status": {
+            "default": "not_assessed",
+            "title": "Semantic Status",
+            "type": "string"
           },
           "severity": {
             "enum": [
@@ -4680,8 +5126,8 @@
             "type": "string"
           },
           "schema_revision": {
-            "const": "0014_specialist_reviewer",
-            "default": "0014_specialist_reviewer",
+            "const": "0015_agent_task_runtime",
+            "default": "0015_agent_task_runtime",
             "title": "Schema Revision",
             "type": "string"
           }

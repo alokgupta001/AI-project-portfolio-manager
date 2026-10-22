@@ -1,0 +1,5 @@
+services\api\ppm_api\agent_validation.py:128: error: "Strict" has no attribute "spans"  [attr-defined]
+services\api\ppm_api\agent_validation.py:156: error: Need type annotation for "merged" (hint: "merged: dict[<type>, <type>] = ...")  [var-annotated]
+services\api\ppm_api\ai.py:433: error: Argument 3 to "initialize" has incompatible type "dict[Any, Any] | None"; expected "dict[Any, Any]"  [arg-type]
+services\api\ppm_api\agent_runtime.py:492: error: Need type annotation for "base"  [var-annotated]
+Found 4 errors in 3 files (checked 59 source files)

@@ -1,0 +1,40 @@
+..........................................F............................. [ 42%]
+........................................................................ [ 84%]
+...........................                                              [100%]
+================================== FAILURES ===================================
+___________ test_cloud_calibration_dry_run_never_calls_or_promotes ____________
+
+calibration = (WindowsPath('C:/Users/alokg/OneDrive/Documents/Codex/enterprise-ppm/artifacts/local/sprint111/repair-offline-final/te...4e65371f7', free_tier_confirmed=True, data_policy_confirmed=False, upstream_provider=None, memory_reservation_mb=4096))
+
+    async def test_cloud_calibration_dry_run_never_calls_or_promotes(calibration):
+        folder, _ = calibration
+    
+        def forbid(req):
+            raise AssertionError("No HTTP in dry run")
+    
+        report = await cloud_benchmark.run(
+            "groq", ["financial_01"], False, folder, httpx.MockTransport(forbid)
+        )
+        assert report["status"] == "prepared_no_requests" and not report["profile_activated"]
+        assert not (folder / "groq-specialist-ledger.json").exists()
+        for ids in (["financial_02"], ["risk_01"], ["financial_01"] * 4):
+            with pytest.raises(ValueError):
+>               await cloud_benchmark.run("groq", ids, True, folder, httpx.MockTransport(forbid))
+
+tests\test_cloud_specialists.py:286: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+scripts\benchmark_cloud_specialists.py:154: in run
+    if any(c["split"] != "calibration" or ROLE_PROVIDERS[c["agent"]] != provider for c in cases):
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+.0 = <list_iterator object at 0x00000000058BB010>
+
+>   if any(c["split"] != "calibration" or ROLE_PROVIDERS[c["agent"]] != provider for c in cases):
+                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   KeyError: 'risk'
+
+scripts\benchmark_cloud_specialists.py:154: KeyError
+=========================== short test summary info ===========================
+FAILED tests/test_cloud_specialists.py::test_cloud_calibration_dry_run_never_calls_or_promotes
+1 failed, 170 passed in 4.04s

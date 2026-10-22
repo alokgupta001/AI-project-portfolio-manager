@@ -1,0 +1,43 @@
+{
+  "schema_version": "agent-benchmark-v1",
+  "mode": "local-only",
+  "model": "qwen3:4b",
+  "model_digest": "359d7dd4bcdab3d86b87d73ac27966f4dbb9f5efdfcc75d34a8764a09474fae7",
+  "corpus_sha256": "f626c0b210daf73110cfc98d0aa6f7a974842bab0bf3e98f52e177e8ab516a24",
+  "prompt_sha256": "79b889d9acb91950a3a6ce46b69c71ad775338256172bf9ad1f02d1119ee0c2c",
+  "context_tokens": 4096,
+  "output_tokens": 512,
+  "selected_cases": [
+    "pmo_07",
+    "pmo_08",
+    "pmo_09",
+    "pmo_10",
+    "pmo_11",
+    "pmo_12",
+    "executive_01",
+    "executive_02",
+    "executive_03",
+    "executive_04",
+    "executive_05",
+    "executive_06",
+    "executive_07",
+    "executive_08",
+    "executive_09",
+    "executive_10",
+    "executive_11",
+    "executive_12"
+  ],
+  "maximum_calls": 18,
+  "warm_repeats_requested": 0,
+  "profile_activated": false,
+  "qualified_classes": [],
+  "independent_semantic_review": "pending",
+  "attempts": [],
+  "status": "prepared_no_requests",
+  "limits": {
+    "attempt_seconds": 22,
+    "run_seconds": 90,
+    "attempts_per_run": 4,
+    "attempts_per_root": 2
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "schema_version": "normal-preservation-disposition-v1",
+  "normal_revision": "0012_ai_runtime",
+  "table_count": 70,
+  "unchanged_table_hashes": 69,
+  "changed_table": "identity_refresh_tokens",
+  "original_refresh_token_rows_retained": 65,
+  "added_refresh_token_rows": 2,
+  "used_false_to_true": 1,
+  "removed_rows": 0,
+  "session_binding_changes": 0,
+  "interpretation": "Changes are confined to refresh-token additions/consumption and are consistent with ordinary session refresh; no attribution to a particular client is claimed.",
+  "initial_strict_snapshot_failure_retained": true
+}

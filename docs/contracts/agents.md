@@ -1,5 +1,16 @@
 # Specialist analysis and independent review — specialists-rubric-v1
 
+The additive v2 goal `all_specialists` requests nine roles in four batches with
+separate role coverage, unchanged 512/4/2/90 bounds and honest partial outcomes.
+It accepts all nine requested IDs or the default full selection. Multi-role batches
+reject private assessment answers. [Current batching and acceptance contract](../verification/sprint11_1/CLOUD_BATCH_REPAIR.md)
+and [independent reviewer packet](../verification/sprint11_1/REVIEWER_GUIDE.md) describe
+the disabled candidate allocation; adding this goal does not activate cloud egress.
+
+Additive v2 implementation: [typed/persistence contracts](../09-planning/sprint-11.1/SPRINT_11_1_TECHNICAL_CONTRACTS.md), [ADR 11.1-12](../09-planning/sprint-11.1/SPRINT_11_1_DECISION_LOG.md#adr-111-12--implementation-refinements-under-unchanged-limits), [current report](../03-sprints/active/sprint-11.1/README.md). Requests with v2 selection fields require the default-off feature flag. Baseline and AI coverage, safe task/route summaries and nullable semantic confidence are additive. Legacy request fingerprints/review keys and the contract below remain compatible. Real-model qualification and normal 0015 rollout remain open.
+
+Provider setup adds guarded Groq/OpenRouter/Mistral adapters without changing this public API or scoring. The same SQL account admission and strict output gates apply. OpenRouter additionally requires a pinned free model/upstream and zero-price/data controls. [Setup and remaining qualification gates](../03-sprints/active/sprint-11.1/PROVIDER_SETUP.md) are explicit; no model is enabled by adding credentials.
+
 Sprint 11 implements PPM-11-001/002/003 at `/agents` and `/api/v1/agents`.
 OpenAPI/generated TypeScript is authoritative. Real-provider semantic quality is
 **UNVERIFIED/BLOCKED**. Deterministic doubles establish control behavior only.

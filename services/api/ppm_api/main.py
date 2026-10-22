@@ -16,6 +16,7 @@ from redis.asyncio import Redis
 from sqlalchemy import select, text
 from starlette.exceptions import HTTPException
 
+import ppm_api.agent_task_tables  # noqa: F401
 import ppm_api.assessment_tables  # noqa: F401 — registers assessment tables into TABLES
 import ppm_api.command_tables  # noqa: F401
 import ppm_api.job_tables  # noqa: F401

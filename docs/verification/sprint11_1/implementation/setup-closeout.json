@@ -1,0 +1,15 @@
+{
+  "source_fingerprints_match": 48,
+  "frozen_files_match": 24,
+  "disabled_candidate_profiles": 4,
+  "normal_database_revision_observed": "0012_ai_runtime",
+  "model_inference_requests": 0,
+  "cloud_authentication_requests": 0,
+  "scope_sync_performed": false,
+  "ruff_files": 159,
+  "mypy_modules": 62,
+  "contracts_match": true,
+  "documentation_files": 342,
+  "local_links_verified": 5100,
+  "prior_sprint_artifacts": 115
+}

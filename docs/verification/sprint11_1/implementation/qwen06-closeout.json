@@ -1,0 +1,42 @@
+{
+  "schema_version": "qwen06-closeout-v1",
+  "source_fingerprints_verified": 57,
+  "frozen_files_verified": 24,
+  "native_preset": "ppm-small:latest",
+  "context_tokens": 2048,
+  "output_default": 512,
+  "launcher_controls": {
+    "thinking": false,
+    "keep_alive_seconds": 0,
+    "initial_available_mib": 3584
+  },
+  "launcher_controls_apply_to": "launcher/API requests, not intrinsic Modelfile thinking/residency defaults",
+  "local_requests": 4,
+  "simple_controls_passed": 2,
+  "project_shape_failures": 2,
+  "exhausted_risk_root_preserved": true,
+  "groq_original_admissions": 3,
+  "new_cloud_calls": 0,
+  "sampled_native_preset_server_runner_mib": 890,
+  "sampled_project_server_runner_peak_mib": 1138,
+  "minimum_host_headroom_mib": 3215,
+  "memory_reservation_mib": 1536,
+  "current_available_mib": 4240,
+  "local_models_resident": 0,
+  "normal_revision": "0012_ai_runtime",
+  "normal_http": 200,
+  "docker_interrupted": false,
+  "existing_profiles_unchanged": true,
+  "disabled_profiles": 5,
+  "qualified_classes": [],
+  "normal_activation": false,
+  "scope_sync": false,
+  "tests": {
+    "offline_passed": 53,
+    "seconds": 1.82,
+    "ps_launcher_syntax": "pass",
+    "ruff_changed_scope": "pass"
+  },
+  "first_server_only_peak": "invalid for model footprint; use later descendant-aware measurements",
+  "full_backend_browser_rerun": false
+}

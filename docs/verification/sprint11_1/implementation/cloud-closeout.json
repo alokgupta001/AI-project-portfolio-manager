@@ -1,0 +1,11 @@
+{
+  "source_fingerprints_match": 50,
+  "frozen_files_match": 24,
+  "disabled_candidate_profiles": 4,
+  "groq_synthetic_admissions": 3,
+  "normal_scope_sync": false,
+  "normal_activation": false,
+  "local_generation_requests": 0,
+  "puter_inference_requests": 0,
+  "deepinfra_inference_requests": 0
+}
