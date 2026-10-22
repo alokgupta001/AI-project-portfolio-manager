@@ -9789,6 +9789,7 @@
   "paths": {
     "/api/v1/agents/definitions": {
       "get": {
+        "description": "List the available typed specialist definitions for the current runtime.",
         "operationId": "definitions_api_v1_agents_definitions_get",
         "parameters": [
           {
@@ -9843,6 +9844,7 @@
     },
     "/api/v1/agents/runs": {
       "get": {
+        "description": "List visible specialist analyses for the requested project and page.",
         "operationId": "listing_api_v1_agents_runs_get",
         "parameters": [
           {
@@ -9907,6 +9909,7 @@
         ]
       },
       "post": {
+        "description": "Queue an authorized specialist analysis using the existing budget and job controls.",
         "operationId": "create_api_v1_agents_runs_post",
         "parameters": [
           {
@@ -9967,6 +9970,7 @@
     },
     "/api/v1/agents/runs/{id_}": {
       "get": {
+        "description": "Return an analysis with evidence filtered through current access checks.",
         "operationId": "detail_api_v1_agents_runs__id___get",
         "parameters": [
           {
@@ -10027,6 +10031,7 @@
     },
     "/api/v1/agents/runs/{id_}/reviews/{item_key}": {
       "post": {
+        "description": "Record an authorized suggestion decision with revision and idempotency checks.",
         "operationId": "review_api_v1_agents_runs__id___reviews__item_key__post",
         "parameters": [
           {
@@ -10106,6 +10111,7 @@
     },
     "/api/v1/ai/budget": {
       "patch": {
+        "description": "Update the tenant budget within the operator limit using optimistic concurrency.",
         "operationId": "configure_api_v1_ai_budget_patch",
         "parameters": [
           {
@@ -10166,6 +10172,7 @@
     },
     "/api/v1/ai/evaluation": {
       "get": {
+        "description": "Run the deterministic offline evaluation suite for an administrator.",
         "operationId": "evaluation_api_v1_ai_evaluation_get",
         "parameters": [
           {
@@ -10216,6 +10223,7 @@
     },
     "/api/v1/ai/operations": {
       "get": {
+        "description": "Return tenant budget, circuit and provider operations data for an administrator.",
         "operationId": "operations_api_v1_ai_operations_get",
         "parameters": [
           {
@@ -10266,6 +10274,7 @@
     },
     "/api/v1/ai/runs": {
       "get": {
+        "description": "List visible AI runs in a bounded page, optionally scoped to a project.",
         "operationId": "listing_api_v1_ai_runs_get",
         "parameters": [
           {
@@ -10347,6 +10356,7 @@
         ]
       },
       "post": {
+        "description": "Queue an idempotent authorized run after reserving its budget and frozen inputs.",
         "operationId": "create_api_v1_ai_runs_post",
         "parameters": [
           {
@@ -10407,6 +10417,7 @@
     },
     "/api/v1/ai/runs/{id_}": {
       "get": {
+        "description": "Return a run after current tenant, project and private evidence checks.",
         "operationId": "detail_api_v1_ai_runs__id___get",
         "parameters": [
           {
@@ -10467,6 +10478,7 @@
     },
     "/api/v1/ai/runs/{id_}/cancel": {
       "post": {
+        "description": "Cancel a visible run with revision checks and settle its remaining reservation.",
         "operationId": "cancel_api_v1_ai_runs__id___cancel_post",
         "parameters": [
           {
@@ -10527,6 +10539,7 @@
     },
     "/api/v1/ai/runs/{id_}/diagnostics": {
       "get": {
+        "description": "Expose sanitized run diagnostics to an authorized administrator.",
         "operationId": "diagnostics_api_v1_ai_runs__id___diagnostics_get",
         "parameters": [
           {
@@ -10587,6 +10600,7 @@
     },
     "/api/v1/ai/runs/{id_}/events": {
       "get": {
+        "description": "Stream bounded run progress while repeatedly checking the caller's authority.",
         "operationId": "progress_api_v1_ai_runs__id___events_get",
         "parameters": [
           {
@@ -10640,6 +10654,7 @@
     },
     "/api/v1/ai/runs/{id_}/stages": {
       "get": {
+        "description": "Return the visible run's ordered durable stage history.",
         "operationId": "stages_api_v1_ai_runs__id___stages_get",
         "parameters": [
           {
@@ -10704,6 +10719,7 @@
     },
     "/api/v1/ai/status": {
       "get": {
+        "description": "Return the configured AI provider status without exposing credentials.",
         "operationId": "status_api_v1_ai_status_get",
         "parameters": [
           {
@@ -15363,6 +15379,7 @@
     },
     "/api/v1/foundation": {
       "get": {
+        "description": "Return the persisted foundation identity for the current installation.",
         "operationId": "getFoundation",
         "responses": {
           "200": {
@@ -15391,6 +15408,7 @@
     },
     "/api/v1/health/live": {
       "get": {
+        "description": "Report that the API process can handle a liveness request.",
         "operationId": "getLiveness",
         "responses": {
           "200": {
@@ -15409,6 +15427,7 @@
     },
     "/api/v1/health/ready": {
       "get": {
+        "description": "Probe database, Redis and storage readiness under bounded dependency timeouts.",
         "operationId": "getReadiness",
         "responses": {
           "200": {

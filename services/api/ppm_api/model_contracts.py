@@ -63,6 +63,7 @@ class HybridSelection(Strict):
 
     @model_validator(mode="after")
     def distinct_selection(self) -> "HybridSelection":
+        """Reject duplicate role and question selections and invalid prior-run modes."""
         for values in (self.requested_agents, self.question_ids):
             if values is not None and len(values) != len(set(values)):
                 raise ValueError("Selections must be distinct")
@@ -86,6 +87,7 @@ class HybridSelection(Strict):
         return self
 
     def uses_v2(self) -> bool:
+        """Detect an explicit hybrid selection while preserving legacy request behavior."""
         return any(getattr(self, key) is not None for key in V2_FIELDS)
 
 
@@ -96,6 +98,7 @@ class CompactSpan(Strict):
 
     @model_validator(mode="after")
     def nonempty(self) -> "CompactSpan":
+        """Reject reversed or empty Unicode evidence spans."""
         if self.start >= self.end:
             raise ValueError("Span must be nonempty")
         return self
@@ -146,6 +149,7 @@ class SectionOutput(Strict):
 
     @model_validator(mode="after")
     def consistent(self) -> "SectionOutput":
+        """Require mode-consistent items, explicit gaps and nonoverlapping coverage."""
         payloads = {"findings": self.findings, "rubric": self.matches, "synthesis": self.narrative}
         if any(rows for mode, rows in payloads.items() if mode != self.mode):
             raise ValueError("Section mode and payload disagree")
@@ -187,6 +191,7 @@ class CapabilityDetail(Strict):
 
     @model_validator(mode="after")
     def honest_coverage(self) -> "CapabilityDetail":
+        """Reject foreign or deferred covered IDs and false complete-coverage claims."""
         required, covered = set(self.semantic_required_ids), set(self.semantic_covered_ids)
         if not covered <= required or set(self.semantic_deferred_ids) & covered:
             raise ValueError("Invalid interpretation coverage")
@@ -246,6 +251,7 @@ class ModelFailure(Exception):
         certainty: Literal["not_sent", "completed", "unknown"] = "not_sent",
         retry_after: int | None = None,
     ) -> None:
+        """Retain a sanitized failure code, send certainty and optional retry cooldown."""
         self.code, self.certainty, self.retry_after = code, certainty, retry_after
         super().__init__(code)
 
@@ -278,4 +284,6 @@ class ModelRequest:
 
 
 class ModelAdapter(Protocol):
-    async def execute(self, request: ModelRequest) -> ModelResult: ...
+    async def execute(self, request: ModelRequest) -> ModelResult:
+        """Return one normalized result or raise a classified failure for an admitted request."""
+        ...

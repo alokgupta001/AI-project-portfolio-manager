@@ -7,7 +7,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Definitions */
+        /**
+         * Definitions
+         * @description List the available typed specialist definitions for the current runtime.
+         */
         get: operations["definitions_api_v1_agents_definitions_get"];
         put?: never;
         post?: never;
@@ -24,10 +27,16 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Listing */
+        /**
+         * Listing
+         * @description List visible specialist analyses for the requested project and page.
+         */
         get: operations["listing_api_v1_agents_runs_get"];
         put?: never;
-        /** Create */
+        /**
+         * Create
+         * @description Queue an authorized specialist analysis using the existing budget and job controls.
+         */
         post: operations["create_api_v1_agents_runs_post"];
         delete?: never;
         options?: never;
@@ -42,7 +51,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Detail */
+        /**
+         * Detail
+         * @description Return an analysis with evidence filtered through current access checks.
+         */
         get: operations["detail_api_v1_agents_runs__id___get"];
         put?: never;
         post?: never;
@@ -61,7 +73,10 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        /** Review */
+        /**
+         * Review
+         * @description Record an authorized suggestion decision with revision and idempotency checks.
+         */
         post: operations["review_api_v1_agents_runs__id___reviews__item_key__post"];
         delete?: never;
         options?: never;
@@ -82,7 +97,10 @@ export interface paths {
         delete?: never;
         options?: never;
         head?: never;
-        /** Configure */
+        /**
+         * Configure
+         * @description Update the tenant budget within the operator limit using optimistic concurrency.
+         */
         patch: operations["configure_api_v1_ai_budget_patch"];
         trace?: never;
     };
@@ -93,7 +111,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Evaluation */
+        /**
+         * Evaluation
+         * @description Run the deterministic offline evaluation suite for an administrator.
+         */
         get: operations["evaluation_api_v1_ai_evaluation_get"];
         put?: never;
         post?: never;
@@ -110,7 +131,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Operations */
+        /**
+         * Operations
+         * @description Return tenant budget, circuit and provider operations data for an administrator.
+         */
         get: operations["operations_api_v1_ai_operations_get"];
         put?: never;
         post?: never;
@@ -127,10 +151,16 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Listing */
+        /**
+         * Listing
+         * @description List visible AI runs in a bounded page, optionally scoped to a project.
+         */
         get: operations["listing_api_v1_ai_runs_get"];
         put?: never;
-        /** Create */
+        /**
+         * Create
+         * @description Queue an idempotent authorized run after reserving its budget and frozen inputs.
+         */
         post: operations["create_api_v1_ai_runs_post"];
         delete?: never;
         options?: never;
@@ -145,7 +175,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Detail */
+        /**
+         * Detail
+         * @description Return a run after current tenant, project and private evidence checks.
+         */
         get: operations["detail_api_v1_ai_runs__id___get"];
         put?: never;
         post?: never;
@@ -164,7 +197,10 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        /** Cancel */
+        /**
+         * Cancel
+         * @description Cancel a visible run with revision checks and settle its remaining reservation.
+         */
         post: operations["cancel_api_v1_ai_runs__id___cancel_post"];
         delete?: never;
         options?: never;
@@ -179,7 +215,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Diagnostics */
+        /**
+         * Diagnostics
+         * @description Expose sanitized run diagnostics to an authorized administrator.
+         */
         get: operations["diagnostics_api_v1_ai_runs__id___diagnostics_get"];
         put?: never;
         post?: never;
@@ -196,7 +235,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Progress */
+        /**
+         * Progress
+         * @description Stream bounded run progress while repeatedly checking the caller's authority.
+         */
         get: operations["progress_api_v1_ai_runs__id___events_get"];
         put?: never;
         post?: never;
@@ -213,7 +255,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Stages */
+        /**
+         * Stages
+         * @description Return the visible run's ordered durable stage history.
+         */
         get: operations["stages_api_v1_ai_runs__id___stages_get"];
         put?: never;
         post?: never;
@@ -230,7 +275,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Status */
+        /**
+         * Status
+         * @description Return the configured AI provider status without exposing credentials.
+         */
         get: operations["status_api_v1_ai_status_get"];
         put?: never;
         post?: never;
@@ -1174,7 +1222,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Foundation */
+        /**
+         * Foundation
+         * @description Return the persisted foundation identity for the current installation.
+         */
         get: operations["getFoundation"];
         put?: never;
         post?: never;
@@ -1191,7 +1242,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Live */
+        /**
+         * Live
+         * @description Report that the API process can handle a liveness request.
+         */
         get: operations["getLiveness"];
         put?: never;
         post?: never;
@@ -1208,7 +1262,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Ready */
+        /**
+         * Ready
+         * @description Probe database, Redis and storage readiness under bounded dependency timeouts.
+         */
         get: operations["getReadiness"];
         put?: never;
         post?: never;

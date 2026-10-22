@@ -1,5 +1,15 @@
 # Sprint 11.1 implementation
 
+**23 October review closeout:** PR #4 is merged after both hosted CI runs passed.
+The follow-up fixes four remaining verified CodeRabbit findings: stable local
+attempt roots, cancellation propagation after settlement, bounded context binding,
+and heartbeat cleanup that preserves the run outcome. Function contracts now cover
+all 186 production Python functions in the original sprint diff, excluding applied
+migrations. The user asked us to arrange the independent review; a separate AI
+label audit is being requested. Labels and model accuracy remain unapproved.
+See the [closeout evidence](../../../verification/sprint11_1/review-closeout/README.md).
+Earlier checkpoints below retain their original review and verification status.
+
 **Current repair:** [four-call/nine-role batching](../../../verification/sprint11_1/CLOUD_BATCH_REPAIR.md)
 adds the explicit all-specialists UI goal and separate cloud acceptance tooling.
 Measured fit changes the candidate assignment to Gemini delivery, Puter assurance,

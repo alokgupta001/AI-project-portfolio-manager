@@ -138,6 +138,89 @@ async def test_unknown_attempt_survives_restart(monkeypatch, tmp_path):
         await B.run(data["cases"][:1], corpus_hash, profile(), tmp_path, True, 4096, 512, 0)
 
 
+@pytest.fixture
+def missing_benchmark(monkeypatch):
+    data, _ = corpus()
+    case = data["cases"][6]
+    posts = []
+    monkeypatch.setattr(
+        B,
+        "readiness",
+        lambda *a, **k: dict(
+            blocked=[], model_digest="a" * 64, hardware=dict(memory=dict(total_mb=16000))
+        ),
+    )
+    monkeypatch.setattr(B, "windows_memory", lambda: dict(available_mb=10000, total_mb=16000))
+    monkeypatch.setattr(B, "ollama_rss_mb", lambda: 4000)
+
+    def respond(request):
+        if request.url.path == "/api/ps":
+            return httpx.Response(200, json=dict(models=[]))
+        if request.url.path == "/api/tags":
+            return httpx.Response(200, json=dict(models=[dict(name="qwen3:4b", digest="a" * 64)]))
+        body = json.loads(request.content)
+        posts.append(body)
+        payload = json.loads(body["messages"][-1]["content"])
+        output = dict(
+            section=payload["section"],
+            mode=payload["mode"],
+            outcome="insufficient_evidence",
+            gaps=[dict(item=payload["required"][0], code="missing_evidence")],
+        )
+        return httpx.Response(
+            200,
+            json=dict(
+                done=True,
+                done_reason="stop",
+                message=dict(content=json.dumps(output)),
+                eval_count=32,
+            ),
+        )
+
+    return case, httpx.MockTransport(respond), posts
+
+
+async def test_logical_attempts_survive_output_corpus_and_case_name_changes(
+    missing_benchmark, tmp_path
+):
+    case, transport, posts = missing_benchmark
+    for output in (512, 256):
+        result = await B.run(
+            [case], "a" * 64, profile(), tmp_path, True, 4096, output, 0, transport
+        )
+        assert result["status"] == "completed_pending_review"
+    renamed = deepcopy(case)
+    renamed["id"] = "renamed-without-new-evidence"
+    result = await B.run([renamed], "b" * 64, profile(), tmp_path, True, 4096, 512, 0, transport)
+    assert result["status"] == "logical_attempt_limit"
+    assert len(posts) == 2
+    ledger = json.loads((tmp_path / "local-benchmark-ledger.json").read_text())
+    assert len(ledger) == 2 and ledger[0]["root"] == ledger[1]["root"]
+
+
+async def test_legacy_opaque_roots_fail_closed_without_rewriting_history(monkeypatch, tmp_path):
+    data, corpus_hash = corpus()
+    path = tmp_path / "local-benchmark-ledger.json"
+    B.save_ledger(path, [dict(root="old-format-root", state="completed")])
+    before = path.read_bytes()
+    monkeypatch.setattr(B, "readiness", lambda *a, **k: pytest.fail("Admitted legacy history"))
+    with pytest.raises(ValueError, match="Legacy benchmark ledger"):
+        await B.run(data["cases"][:1], corpus_hash, profile(), tmp_path, True, 4096, 512, 0)
+    assert path.read_bytes() == before
+
+
+async def test_warm_timing_does_not_consume_or_replace_quality_attempts(
+    missing_benchmark, tmp_path
+):
+    case, transport, posts = missing_benchmark
+    first = await B.run([case], "a" * 64, profile(), tmp_path, True, 4096, 512, 1, transport)
+    assert [r["timing_only"] for r in first["attempts"]] == [False, True]
+    second = await B.run([case], "a" * 64, profile(), tmp_path, True, 4096, 256, 0, transport)
+    assert second["status"] == "completed_pending_review"
+    final = await B.run([case], "b" * 64, profile(), tmp_path, True, 4096, 512, 0, transport)
+    assert final["status"] == "logical_attempt_limit" and len(posts) == 3
+
+
 async def test_explicit_budget_and_context_fail_before_inference(tmp_path):
     data, corpus_hash = corpus()
     with pytest.raises(ValueError, match="Warm measurements"):

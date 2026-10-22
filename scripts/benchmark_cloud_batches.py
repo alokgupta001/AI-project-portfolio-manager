@@ -56,6 +56,7 @@ PROVIDERS = ("groq", "gemini", "puter")
 
 
 def strategy_hash() -> str:
+    """Fingerprint the runtime sources that bind a cloud measurement strategy."""
     return digest(
         [
             hashlib.sha256((ROOT / path).read_bytes()).hexdigest()
@@ -75,6 +76,7 @@ def strategy_hash() -> str:
 
 
 def fixture_batch(cases: list) -> tuple[dict, dict]:
+    """Pack assigned synthetic role cases using the production batch contract."""
     if not 1 <= len(cases) <= 3 or len({c["agent"] for c in cases}) != len(cases):
         raise ValueError("One to three distinct roles required")
     members, contexts, payloads, schemas, evidence = [], {}, {}, {}, {}
@@ -144,6 +146,7 @@ async def run(
     acceptance_review: Path | None = None,
     corpus_path: Path = CORPUS,
 ) -> dict:
+    """Measure authorized synthetic batches while retaining account and case history."""
     corpus, corpus_hash = load_corpus(corpus_path)
     acceptance = acceptance_review is not None
     if acceptance:
@@ -330,6 +333,7 @@ async def run(
         )
 
         def checkpoint(value: dict) -> None:
+            """Persist the current batch report without discarding earlier attempts."""
             path = folder / ("cloud-native-" + str(aid) + ".json")
             write_new(path, value)
             receipt["native_sha256"] = hashlib.sha256(path.read_bytes()).hexdigest()
@@ -400,6 +404,7 @@ async def run(
 
 
 def main() -> None:
+    """Parse explicit batch authorization and write bounded measurement artifacts."""
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("--provider", choices=PROVIDERS, required=True)
     p.add_argument("--case-id", nargs="+")

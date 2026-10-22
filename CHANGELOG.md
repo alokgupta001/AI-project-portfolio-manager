@@ -1,5 +1,15 @@
 # Changelog
 
+## 23 October 2026 — Sprint 11.1 review closeout
+
+Bound local benchmark attempts to logical evidence across case/corpus/output
+changes, preserving legacy history by failing closed on opaque roots. Propagate
+worker cancellation after attempt settlement, reject oversized context before
+database binding, and keep heartbeat cleanup failures from replacing run outcomes.
+Add eight regression cases and document production function contracts with refreshed
+API descriptions and source indexes. Independent AI label review is being arranged;
+no model quality approval, provider activation or Sprint 12 advancement.
+
 ## 23 October 2026 — GitHub CI security audit repair
 
 Pinned Next.js 16.4.2 to resolve the newly reported image optimization and Server

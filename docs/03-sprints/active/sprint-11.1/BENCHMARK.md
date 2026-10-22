@@ -63,6 +63,13 @@ corpus hash is superseded after aligning resource/team inputs to the actual cont
 
 ## Local execution
 
+The revised local ledger binds quality attempts to the installed model digest,
+role, source content and rubric. Changing a case name, corpus hash, context size or
+output limit does not renew the two-attempt evidence budget. Warm timing repeats
+have a separate root and cannot supply quality votes. Old opaque ledger roots fail
+closed pending operator reconciliation; retain their records rather than creating
+a new ledger to retry exhausted evidence. Ollama remains stopped and unqualified.
+
 Run commands from the repository root. The runner defaults to dry-run. It accepts only
 the bundled synthetic corpus, a disabled installed local benchmark profile and a
 fresh output filename. It rejects cloud mode and enabled local production profiles.

@@ -1,5 +1,21 @@
 # Latest technical handoff
 
+**Current — 23 October 2026, review closeout:** PR #4 merged at `72e0b8e` after
+both hosted foundation checks passed at `d341605`. Branch
+`sprint-11-1-review-closeout` fixes all four remaining verified CodeRabbit findings:
+stable local evidence roots/legacy fail-closed history, propagated cancellation
+after settlement, pre-binding context size rejection, and contained heartbeat
+cleanup errors. Eight new regressions reproduced the old behavior; focused 50
+benchmark and five DB cases pass. Production function contracts cover 186/186
+non-migration functions in the original diff; AST checks prove documentation-only
+files retain executable behavior. Static/contracts/frontend checks pass; full
+disposable DB verification is running. [Evidence](../verification/sprint11_1/review-closeout/README.md).
+The user declined reviewer nomination and asked us to arrange it. Request a
+separate CodeRabbit AI label audit with the new corpus/strategy binding; no invented
+approval or accuracy claim. Normal 0012, disabled profiles, $0, historical quotas,
+private files and 21 older artifact modifications are preserved. Stop before 12.
+Earlier entries below retain their recorded checkpoint status.
+
 **Current — 23 October 2026, Python audit follow-up:** hosted `bb05047` passed npm
 audit and cleanup, then reached six Python advisories in three locked packages.
 Update only `certifi` to 2026.10.19, `opentelemetry-api` to 1.45.1 and `pypdf` to

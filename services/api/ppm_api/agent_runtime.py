@@ -36,9 +36,11 @@ from ppm_api.model_registry import canonical, digest, load_policy
 from ppm_api.model_router import RouteRequirements, candidates
 
 TERMINAL = {"SUCCEEDED", "FAILED", "BLOCKED", "SKIPPED", "CANCELLED"}
+MAX_BOUND_CONTEXT_BYTES = 80000
 
 
 async def initialize(conn: Any, run: dict, snapshot: dict) -> None:
+    """Persist the run's frozen plan as durable tasks under its existing transaction."""
     plan = snapshot["hybrid_plan"]
     ids = {node["key"]: uuid5(run["id"], node["key"]) for node in plan["nodes"]}
     for node in plan["nodes"]:
@@ -84,6 +86,7 @@ async def initialize(conn: Any, run: dict, snapshot: dict) -> None:
 
 
 async def task_update(runtime: Any, task_id: UUID, **values: Any) -> dict:
+    """Fence a durable task update through the current worker authority and lease."""
     async with runtime.engine.begin() as conn:
         await runtime.state(conn)
         row = dict(
@@ -106,6 +109,7 @@ async def task_update(runtime: Any, task_id: UUID, **values: Any) -> dict:
 async def commit_section(runtime: Any, task: dict, result: dict) -> None:
     # Canonical metric helpers return Decimal. Persist their exact string value
     # through the same JSON boundary as legacy analysis publication.
+    """Commit a validated section only while its task and worker remain authorized."""
     result = json.loads(canonical(result))
     task = await task_update(runtime, task["id"], state="VALIDATING")
     async with runtime.engine.begin() as conn:
@@ -140,6 +144,7 @@ async def commit_section(runtime: Any, task: dict, result: dict) -> None:
 
 
 def baseline(snapshot: dict, agent: str, prior: list[dict], current: dict) -> dict:
+    """Compute canonical role findings from currently permitted snapshot evidence."""
     items = [
         f
         for f in E.deterministic(snapshot)
@@ -174,6 +179,7 @@ def baseline(snapshot: dict, agent: str, prior: list[dict], current: dict) -> di
 
 
 async def heartbeat(runtime: Any, stop: asyncio.Event) -> None:
+    """Renew the worker lease until stopped, checking run authority each time."""
     while not stop.is_set():
         try:
             await asyncio.wait_for(stop.wait(), timeout=10)
@@ -207,6 +213,7 @@ def batch_window_delay(
 
 
 async def complete_task(runtime: Any, task: dict, node: dict, context: dict, policy: Any) -> dict:
+    """Admit, execute and settle bounded model attempts; propagate worker cancellation."""
     from ppm_api.agent_registry import BY_AGENT
 
     spec = BY_AGENT[node["agent"]]
@@ -320,6 +327,7 @@ async def complete_task(runtime: Any, task: dict, node: dict, context: dict, pol
             min(run["deadline"], now() + timedelta(seconds=timeout)),
         )
         response, failure = None, None
+        cancellation: asyncio.CancelledError | None = None
         output: SectionOutput | Critique | dict | None = None
         result: dict | None = None
         try:
@@ -358,8 +366,9 @@ async def complete_task(runtime: Any, task: dict, node: dict, context: dict, pol
             failure = exc
         except (ValueError, KeyError, TypeError, IndexError):
             failure = ModelFailure("INVALID_OUTPUT", "completed")
-        except asyncio.CancelledError:
+        except asyncio.CancelledError as exc:
             failure = ModelFailure("CANCELLED", "unknown")
+            cancellation = exc
         except Exception:
             failure = ModelFailure("UNKNOWN", "unknown")
         async with runtime.engine.begin() as conn:
@@ -406,6 +415,8 @@ async def complete_task(runtime: Any, task: dict, node: dict, context: dict, pol
                     response_hash=digest(response.text) if response else None,
                 )
             )
+        if cancellation is not None:
+            raise cancellation
         if not failure and output is not None and result is not None:
             candidate = output if isinstance(output, dict) else output.model_dump(mode="json")
             await task_update(
@@ -444,6 +455,7 @@ async def complete_task(runtime: Any, task: dict, node: dict, context: dict, pol
 
 
 async def execute(runtime: Any, run: dict) -> tuple[dict, str | None]:
+    """Resume the frozen DAG and assemble authorized committed results within run limits."""
     from ppm_api.agents import current_sources, get_analysis
 
     policy = load_policy(runtime.settings)
@@ -549,6 +561,12 @@ async def execute(runtime: Any, run: dict) -> tuple[dict, str | None]:
                         )
                     )
                     if task["bound_at"] is None:
+                        # Spaced JSON plus a margin stays below PostgreSQL's 90 KB bound.
+                        if (
+                            len(json.dumps(context, ensure_ascii=False, default=str).encode())
+                            > MAX_BOUND_CONTEXT_BYTES
+                        ):
+                            raise ModelFailure("CONTEXT_LIMIT")
                         task = await task_update(
                             runtime,
                             task["id"],
@@ -604,11 +622,12 @@ async def execute(runtime: Any, run: dict) -> tuple[dict, str | None]:
     finally:
         stop.set()
         pulse.cancel()
-        with suppress(asyncio.CancelledError):
+        with suppress(asyncio.CancelledError, Exception):
             await pulse
 
 
 def live_sections(snapshot: dict, sections: list, tasks: list | None, current: dict) -> list:
+    """Filter committed sections by current sources, hashes and dependency authority."""
     original = {s["source"]: s for s in snapshot["sources"]}
     valid: list[dict] = []
     for section in sections:
@@ -650,6 +669,7 @@ def live_sections(snapshot: dict, sections: list, tasks: list | None, current: d
 
 
 def reviewed_findings(sections: list, current: dict) -> tuple[list, set]:
+    """Apply bounded critique decisions and withdraw unsupported dependent findings."""
     decisions = {
         d["key"]: d["disposition"] for s in sections for d in s["result"].get("decisions", [])
     }
@@ -680,6 +700,7 @@ def reviewed_findings(sections: list, current: dict) -> tuple[list, set]:
 
 
 def assemble(snapshot: dict, sections: list, tasks: list, current: dict) -> dict:
+    """Report actual baseline and semantic coverage, including partial or failed outcomes."""
     plan = snapshot["hybrid_plan"]
     sections = live_sections(snapshot, sections, tasks, current)
     findings, withdrawn = reviewed_findings(sections, current)

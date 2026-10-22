@@ -30,6 +30,7 @@ class Critique(Strict):
 
 
 def pack_review(items: list[dict], current: dict) -> dict:
+    """Select at most two provisional claims and their currently authorized evidence."""
     chosen = [
         i
         for i in items
@@ -75,6 +76,7 @@ def pack_review(items: list[dict], current: dict) -> dict:
 
 
 def validate_review(context: dict, output: Critique) -> dict:
+    """Validate critique identities and spans without treating agreement as proof."""
     decisions, seen = [], set()
     for decision in output.decisions:
         item = context["claims"].get(decision.claim)

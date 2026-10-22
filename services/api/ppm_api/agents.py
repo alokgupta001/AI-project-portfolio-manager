@@ -35,10 +35,12 @@ router = APIRouter(prefix="/api/v1/agents", tags=["Specialists and recommendatio
 
 
 def internal_request(p: Principal) -> Request:
+    """Copy the authenticated request scope for reuse of the existing AI endpoints."""
     return Request({"type": "http", "headers": [(b"x-organization-id", str(ai.oid(p)).encode())]})
 
 
 async def private_access(p: Principal, aid: UUID | None) -> dict | None:
+    """Require current assessment authority before accessing private analysis inputs."""
     if not aid:
         return None
     row = dict(await assessment.get(p, A.assessments, aid))
@@ -47,6 +49,7 @@ async def private_access(p: Principal, aid: UUID | None) -> dict | None:
 
 
 async def capture(p: Principal, body: AIRunInput, period: dict | None = None) -> dict:
+    """Freeze the selected authorized metrics, records, documents and assessment evidence."""
     project = await delivery.get(p, "projects", body.project_id, True)
     a = await private_access(p, body.assessment_id)
     start = date.fromisoformat(period["start"]) if period else now().date()
@@ -64,6 +67,7 @@ async def capture(p: Principal, body: AIRunInput, period: dict | None = None) ->
         fresh: bool = True,
         **extra: Any,
     ) -> None:
+        """Append one scoped source with its immutable text fingerprint and role permissions."""
         from ppm_api.agent_registry import REGISTRY
 
         allowed = (
@@ -301,6 +305,7 @@ async def capture(p: Principal, body: AIRunInput, period: dict | None = None) ->
 
 
 async def get_analysis(p: Principal, id_: UUID) -> dict:
+    """Load a visible analysis and recheck its private assessment access."""
     row = (
         (await p.conn.execute(sa.select(T.analyses).where(T.analyses.c.run_id == id_)))
         .mappings()
@@ -314,6 +319,7 @@ async def get_analysis(p: Principal, id_: UUID) -> dict:
 
 
 async def current_sources(p: Principal, row: dict, run: dict) -> dict:
+    """Resolve snapshot sources against the caller's current permissions and content."""
     try:
         selection = AIRunInput(**run["snapshot"])
         if selection.uses_v2():
@@ -345,6 +351,7 @@ async def current_sources(p: Principal, row: dict, run: dict) -> dict:
 
 
 async def can_review(p: Principal, row: dict) -> bool:
+    """Determine whether the principal may review this analysis's suggestions."""
     if p.role == "Viewer" or p.user["id"] == row["actor_id"]:
         return False
     if row["assessment_id"]:
@@ -359,6 +366,7 @@ async def can_review(p: Principal, row: dict) -> bool:
 
 @router.get("/definitions", response_model=list[AgentDefinition])
 async def definitions(request: Request, p: Auth) -> list[dict]:
+    """List the available typed specialist definitions for the current runtime."""
     if request.app.state.settings.ai_runtime_v2_enabled:
         from ppm_api.agent_registry import definitions as hybrid_definitions
 
@@ -368,6 +376,7 @@ async def definitions(request: Request, p: Auth) -> list[dict]:
 
 @router.post("/runs", response_model=AnalysisView, status_code=202)
 async def create(body: AnalysisInput, request: Request, p: Auth) -> dict:
+    """Queue an authorized specialist analysis using the existing budget and job controls."""
     run = await ai.create(AIRunInput(**body.model_dump(), operation="agents"), request, p)
     return await detail(run["id"], p)
 
@@ -376,6 +385,7 @@ async def create(body: AnalysisInput, request: Request, p: Auth) -> dict:
 async def listing(p: Auth, offset: int = Query(0, ge=0, le=10000)) -> list[dict]:
     # RLS filters current project/assessment scope. Listing never resolves source
     # text or saved review comments; those remain exclusive to the detail route.
+    """List visible specialist analyses for the requested project and page."""
     rows = (
         await p.conn.execute(
             sa.select(
@@ -404,6 +414,7 @@ async def listing(p: Auth, offset: int = Query(0, ge=0, le=10000)) -> list[dict]
 
 @router.get("/runs/{id_}", response_model=AnalysisView)
 async def detail(id_: UUID, p: Auth) -> dict:
+    """Return an analysis with evidence filtered through current access checks."""
     row = await get_analysis(p, id_)
     run, job = await ai.access(p, id_)
     current = await current_sources(p, row, run)
@@ -437,6 +448,7 @@ async def detail(id_: UUID, p: Auth) -> dict:
     ]
 
     def item(value: dict) -> dict:
+        """Resolve a saved finding against the currently authorized evidence sources."""
         available = bool(value["spans"]) and all(s["source"] in current for s in value["spans"])
         reviews = [r for r in history if r["item_key"] == value["key"]]
         reviews = [
@@ -560,6 +572,7 @@ async def detail(id_: UUID, p: Auth) -> dict:
 
 @router.post("/runs/{id_}/reviews/{item_key}", response_model=AnalysisView)
 async def review(id_: UUID, item_key: str, body: ReviewInput, request: Request, p: Auth) -> dict:
+    """Record an authorized suggestion decision with revision and idempotency checks."""
     await delivery.lock(p, request)
     row = await get_analysis(p, id_)
     if not await can_review(p, row):
@@ -624,6 +637,7 @@ async def review(id_: UUID, item_key: str, body: ReviewInput, request: Request, 
 
 
 async def execute(runtime: ai.Runtime, run: dict) -> tuple[dict, str | None]:
+    """Run the legacy specialist analysis using its frozen authorized snapshot."""
     if run["versions"].get("runtime_version") == "v2":
         from ppm_api.agent_runtime import execute as hybrid_execute
 
@@ -667,6 +681,7 @@ async def execute(runtime: ai.Runtime, run: dict) -> tuple[dict, str | None]:
 
 
 async def publish(p: Principal, run: dict, output: dict) -> None:
+    """Persist fenced specialist output and its reviewable suggestions."""
     row = await get_analysis(p, run["id"])
     live = await current_sources(p, row, run)
     if output.get("runtime_version") != "v2" and any(

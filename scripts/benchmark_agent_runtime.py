@@ -46,6 +46,7 @@ MODES = {"sentiment": "synthesis", "pmo": "synthesis", "executive": "synthesis"}
 
 
 def load_corpus(path: Path) -> tuple[dict, str]:
+    """Validate the bounded synthetic corpus and return it with its content hash."""
     if (
         path.resolve() not in {CORPUS.resolve(), CLOUD_CORPUS.resolve()}
         or path.stat().st_size > 500000
@@ -68,6 +69,7 @@ def load_corpus(path: Path) -> tuple[dict, str]:
 
 
 def fixture_context(case: dict) -> tuple[dict, dict]:
+    """Build one role-scoped request from synthetic evidence, without tenant data."""
     agent, case_id = case["agent"], case["id"]
     mode = "rubric" if case.get("rubric") else MODES.get(agent, "findings")
     sources = []
@@ -228,12 +230,14 @@ def ollama_rss_mb() -> int:
 
 
 def write_new(path: Path, value: dict) -> None:
+    """Create an immutable JSON artifact; fail if the destination already exists."""
     path.parent.mkdir(parents=True, exist_ok=True)
     with path.open("x", encoding="utf-8") as stream:
         stream.write(json.dumps(value, ensure_ascii=False, indent=2) + "\n")
 
 
 def save_ledger(path: Path, rows: list) -> None:
+    """Atomically persist retained attempt history before further generation."""
     temporary = path.with_suffix(".tmp")
     temporary.write_text(json.dumps(rows, indent=2) + "\n", encoding="utf-8")
     temporary.replace(path)
@@ -251,6 +255,7 @@ async def run(
     transport: httpx.AsyncBaseTransport | None = None,
     keep_alive: int = 60,
 ) -> dict:
+    """Measure explicit local trials under host, evidence-root and attempt limits."""
     if keep_alive not in (0, 60):
         raise ValueError("Bounded model residency required")
     if keep_alive == 0 and warm_repeats:
@@ -292,6 +297,10 @@ async def run(
         ledger = json.loads(ledger_path.read_text()) if ledger_path.exists() else []
         if any(r["state"] == "unknown" for r in ledger):
             raise ModelFailure("OUTCOME_UNKNOWN")
+        if any(r.get("root_version") != 2 for r in ledger):
+            raise ValueError(
+                "Legacy benchmark ledger needs operator review; existing attempts cannot be reset"
+            )
         observed = readiness(profile.model, reservation_mb=profile.memory_reservation_mb)
         report["readiness"] = observed
         if observed["blocked"] or observed["model_digest"] != profile.installed_digest:
@@ -346,11 +355,10 @@ async def run(
                     break
                 root = digest(
                     [
-                        corpus_hash,
                         profile.installed_digest,
-                        case["id"],
-                        context_tokens,
-                        max_output,
+                        case["agent"],
+                        case["sources"],
+                        case.get("rubric"),
                         "warm" if repeat else "quality",
                     ]
                 )
@@ -369,6 +377,7 @@ async def run(
                 row = dict(
                     attempt_id=str(attempt_id),
                     root=root,
+                    root_version=2,
                     state="unknown",
                     admitted_at=datetime.now(UTC).isoformat(),
                 )
@@ -386,6 +395,7 @@ async def run(
                 report["attempts"].append(receipt)
 
                 async def monitor(receipt: dict = receipt) -> None:
+                    """Sample host headroom and model residency until the trial stops."""
                     while True:
                         memory = windows_memory()
                         receipt["samples"].append(
@@ -492,6 +502,7 @@ async def run(
 
 
 def main() -> None:
+    """Parse bounded local trial options and report failures without private details."""
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--mode", choices=["local-only"], default="local-only")
     parser.add_argument("--cases", type=Path, default=CORPUS)

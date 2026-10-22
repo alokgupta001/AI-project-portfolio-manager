@@ -57,6 +57,7 @@ if not logger.handlers:
 def error_response(
     request: Request, status: int, code: str, message: str, details: list[ErrorDetail] | None = None
 ) -> JSONResponse:
+    """Build the sanitized API error envelope with the request's correlation identity."""
     body = ErrorResponse(
         error=ErrorBody(
             code=code, message=message, request_id=request.state.request_id, details=details or []
@@ -66,8 +67,11 @@ def error_response(
 
 
 def create_app(settings: Settings | None = None) -> FastAPI:
+    """Construct the API with validated settings, resource lifecycle and security middleware."""
+
     @asynccontextmanager
     async def lifespan(app: FastAPI) -> AsyncIterator[None]:
+        """Open application resources and close them when the API lifecycle ends."""
         config = settings or load_settings()
         app.state.settings = config
         app.state.engine = make_engine(config)
@@ -96,6 +100,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
 
     @app.middleware("http")
     async def request_context(request: Request, call_next: Callable[..., Awaitable[Any]]) -> Any:
+        """Enforce CSRF and response security headers while logging sanitized request metrics."""
         supplied = request.headers.get("x-request-id", "")
         try:
             request_id = str(UUID(supplied))
@@ -157,6 +162,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
 
     @app.exception_handler(HTTPException)
     async def http_error(request: Request, exc: HTTPException) -> JSONResponse:
+        """Map HTTP and domain failures to safe, consistent API error responses."""
         response = error_response(
             request,
             exc.status_code,
@@ -192,6 +198,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
 
     @app.exception_handler(RequestValidationError)
     async def validation_error(request: Request, exc: RequestValidationError) -> JSONResponse:
+        """Return structured field validation errors in the shared API envelope."""
         return error_response(
             request,
             422,
@@ -205,6 +212,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
 
     @app.get("/api/v1/health/live", response_model=HealthResponse, operation_id="getLiveness")
     async def live() -> HealthResponse:
+        """Report that the API process can handle a liveness request."""
         return HealthResponse()
 
     @app.get(
@@ -214,7 +222,10 @@ def create_app(settings: Settings | None = None) -> FastAPI:
         operation_id="getReadiness",
     )
     async def ready(request: Request) -> JSONResponse:
+        """Probe database, Redis and storage readiness under bounded dependency timeouts."""
+
         async def database_probe() -> None:
+            """Require the database foundation checkpoint and expected schema revision."""
             async with request.app.state.engine.connect() as conn:
                 result = await conn.execute(select(FoundationState.instance_id))
                 if result.scalar_one_or_none() is None:
@@ -224,13 +235,16 @@ def create_app(settings: Settings | None = None) -> FastAPI:
                     raise RuntimeError("Schema revision mismatch")
 
         async def redis_probe() -> None:
+            """Check that the configured Redis connection responds."""
             await request.app.state.redis.ping()
 
         async def storage_probe() -> None:
+            """Check storage readiness without blocking the asynchronous event loop."""
             if not await asyncio.to_thread(request.app.state.storage.ready):
                 raise RuntimeError("Storage unavailable")
 
         async def probe(name: Any, action: Callable[[], Awaitable[None]]) -> DependencyStatus:
+            """Convert a bounded dependency check into a sanitized readiness status."""
             try:
                 await asyncio.wait_for(
                     action(), request.app.state.settings.dependency_timeout_seconds
@@ -255,6 +269,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
         operation_id="getFoundation",
     )
     async def foundation(request: Request) -> Any:
+        """Return the persisted foundation identity for the current installation."""
         try:
             async with request.app.state.engine.connect() as conn:
                 row = (await conn.execute(select(FoundationState))).mappings().one()

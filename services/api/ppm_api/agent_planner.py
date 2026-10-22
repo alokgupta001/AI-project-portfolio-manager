@@ -16,6 +16,7 @@ PROMPT = (
 
 
 def build_plan(snapshot: dict, selection: HybridSelection) -> dict:
+    """Plan requested baseline and semantic sections within the bounded specialist DAG."""
     mode = selection.analysis_mode or "auto"
     requested = list(selection.requested_agents or [r.agent for r in REGISTRY])
     explicit = selection.requested_agents is not None or mode == "all_specialists"
@@ -177,6 +178,7 @@ def batch_plan(mode: str, requested: list, details: dict, eligible: dict) -> dic
     nodes: list[dict] = []
 
     def base(agent: str, dependencies: list) -> None:
+        """Append a deterministic role node with explicit dependency identities."""
         nodes.append(
             dict(
                 key=agent + "-base",
@@ -190,6 +192,7 @@ def batch_plan(mode: str, requested: list, details: dict, eligible: dict) -> dic
         )
 
     def group(key: str, roles: list[str], dependencies: list) -> None:
+        """Append an eligible role batch with bounded member coverage and dependencies."""
         members = [
             eligible[a] | dict(key=a + "-01", required_ids=eligible[a]["required_ids"][:2])
             for a in roles

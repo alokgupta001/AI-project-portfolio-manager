@@ -95,6 +95,7 @@ CONCERNS = {
 
 
 def draft() -> dict:
+    """Construct 108 synthetic label drafts with explicit calibration and held-out splits."""
     cases = []
     for role, texts in CONCERNS.items():
         for i in range(12):
@@ -256,6 +257,7 @@ def draft() -> dict:
 
 
 def approval(path: Path, corpus_hash: str, strategy: str) -> dict:
+    """Validate dated independent label approval against the corpus and strategy hashes."""
     value = json.loads(path.read_bytes())
     label = value["label_review"]
     if (
@@ -278,6 +280,7 @@ def approval(path: Path, corpus_hash: str, strategy: str) -> dict:
 def prepare_authorization(
     provider: str, review_path: Path, corpus_hash: str, strategy: str, folder: Path = PRIVATE
 ) -> dict:
+    """Create a bounded acceptance authorization only after frozen label approval."""
     review = approval(review_path, corpus_hash, strategy)
     original = folder / (provider + "-specialist-authorization.json")
     binding = json.loads(original.read_bytes())

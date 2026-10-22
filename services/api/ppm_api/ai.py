@@ -62,15 +62,18 @@ ZERO = Decimal("0")
 
 
 def oid(p: Principal) -> UUID:
+    """Return the authenticated principal's selected organization identity."""
     return p.session["organization_id"]
 
 
 def admin(p: Principal) -> None:
+    """Require Admin authority for AI operations and budget changes."""
     if p.role != "Admin":
         delivery.fail(403, "AI operations require Admin")
 
 
 def call_cap(settings: Settings) -> Decimal:
+    """Calculate the conservative per-call reservation under the configured spending policy."""
     if settings.ai_provider == "gemini":
         return ZERO
     # UTF-8 bytes bound tokens conservatively. Input <= 110k bytes; output <= 512 tokens.
@@ -84,6 +87,7 @@ def call_cap(settings: Settings) -> Decimal:
 
 
 def provider_status(settings: Settings) -> dict:
+    """Describe configured provider availability without making a verification call."""
     active = P.enabled(settings)
     return dict(
         provider=settings.ai_provider,
@@ -104,10 +108,12 @@ def provider_status(settings: Settings) -> dict:
 
 @router.get("/status", response_model=AIProviderStatus)
 async def status(request: Request, p: Auth) -> dict:
+    """Return the configured AI provider status without exposing credentials."""
     return provider_status(request.app.state.settings)
 
 
 async def budget(p: Principal, create: bool = False) -> dict:
+    """Lock and return the tenant budget, optionally creating its zero-limit defaults."""
     row = (
         (
             await p.conn.execute(
@@ -139,6 +145,7 @@ async def access(p: Principal, id_: UUID) -> tuple[dict, dict]:
     # One statement observes the run and its job at the same PostgreSQL snapshot.
     # Separate READ COMMITTED reads could pair old evidence with a new terminal job,
     # causing a polling client to stop before receiving the final diagnostic/result.
+    """Read a visible run and job at one snapshot and recheck project and private access."""
     pair = (
         await p.conn.execute(
             sa.select(T.runs, J.jobs)
@@ -159,6 +166,7 @@ async def access(p: Principal, id_: UUID) -> tuple[dict, dict]:
 
 
 async def view(p: Principal, run: dict, job: dict) -> dict:
+    """Render run status with current authorized evidence and honest token-usage totals."""
     evidence = []
     limitations = list(run["limitations"])
     # No saved provider text is served. Every excerpt is resolved from current authorized bytes.
@@ -188,6 +196,7 @@ async def view(p: Principal, run: dict, job: dict) -> dict:
     )
 
     def tokens(field: str) -> int | None:
+        """Sum reported token usage only when every call supplies the requested field."""
         return (
             sum(r[field] for r in call_rows)
             if call_rows and all(r[field] is not None for r in call_rows)
@@ -235,6 +244,7 @@ async def view(p: Principal, run: dict, job: dict) -> dict:
 async def listing(
     p: Auth, project_id: UUID | None = None, offset: int = Query(default=0, ge=0, le=10000)
 ) -> list[dict]:
+    """List visible AI runs in a bounded page, optionally scoped to a project."""
     query = (
         sa.select(T.runs).order_by(T.runs.c.created_at.desc(), T.runs.c.id).offset(offset).limit(25)
     )
@@ -247,11 +257,13 @@ async def listing(
 
 @router.get("/runs/{id_}", response_model=AIRunView)
 async def detail(id_: UUID, p: Auth) -> dict:
+    """Return a run after current tenant, project and private evidence checks."""
     return await view(p, *await access(p, id_))
 
 
 @router.get("/evaluation", response_model=AIEvaluation)
 async def evaluation(p: Auth) -> dict:
+    """Run the deterministic offline evaluation suite for an administrator."""
     from ppm_api.ai_evaluation import run_evaluation
 
     admin(p)
@@ -260,6 +272,7 @@ async def evaluation(p: Auth) -> dict:
 
 @router.get("/operations", response_model=AIOperations)
 async def operations(request: Request, p: Auth) -> dict:
+    """Return tenant budget, circuit and provider operations data for an administrator."""
     admin(p)
     b = await budget(p)
     return {
@@ -282,6 +295,7 @@ async def operations(request: Request, p: Auth) -> dict:
 
 @router.patch("/budget", response_model=AIOperations)
 async def configure(body: AIBudgetInput, request: Request, p: Auth) -> dict:
+    """Update the tenant budget within the operator limit using optimistic concurrency."""
     await delivery.lock(p, request)
     admin(p)
     b = await budget(p, True)
@@ -304,6 +318,7 @@ async def configure(body: AIBudgetInput, request: Request, p: Auth) -> dict:
 
 @router.post("/runs", response_model=AIRunView, status_code=202)
 async def create(body: AIRunInput, request: Request, p: Auth) -> dict:
+    """Queue an idempotent authorized run after reserving its budget and frozen inputs."""
     await delivery.lock(p, request)
     admin(p)  # PM has no explicit costly-analysis grant in the current permission model.
     await delivery.get(p, "projects", body.project_id, True)
@@ -522,6 +537,7 @@ async def create(body: AIRunInput, request: Request, p: Auth) -> dict:
 
 @router.post("/runs/{id_}/cancel", response_model=AIRunView)
 async def cancel(id_: UUID, request: Request, p: Auth) -> dict:
+    """Cancel a visible run with revision checks and settle its remaining reservation."""
     await delivery.lock(p, request)
     admin(p)
     run, job = await access(p, id_)
@@ -544,6 +560,7 @@ async def cancel(id_: UUID, request: Request, p: Auth) -> dict:
 
 @router.get("/runs/{id_}/events", response_class=StreamingResponse)
 async def progress(id_: UUID, request: Request, p: Auth) -> StreamingResponse:
+    """Stream bounded run progress while repeatedly checking the caller's authority."""
     from ppm_api.jobs import stream
 
     _, job = await access(p, id_)
@@ -552,6 +569,7 @@ async def progress(id_: UUID, request: Request, p: Auth) -> StreamingResponse:
 
 @router.get("/runs/{id_}/stages", response_model=list[StageView])
 async def stages(id_: UUID, p: Auth) -> list[dict]:
+    """Return the visible run's ordered durable stage history."""
     _, job = await access(p, id_)
     return [
         dict(row)
@@ -568,6 +586,7 @@ async def stages(id_: UUID, p: Auth) -> list[dict]:
 
 @router.get("/runs/{id_}/diagnostics", response_model=AIDiagnostics)
 async def diagnostics(id_: UUID, p: Auth) -> dict:
+    """Expose sanitized run diagnostics to an authorized administrator."""
     admin(p)
     run, job = await access(p, id_)
     calls = list(
@@ -608,6 +627,7 @@ async def diagnostics(id_: UUID, p: Auth) -> dict:
 async def worker_context(
     conn: Any, job_id: UUID, tenant: UUID, actor: UUID
 ) -> tuple[Principal | None, dict | None, dict | None]:
+    """Rebuild the worker principal and retrieve its tenant-scoped run and job."""
     ref = (
         (
             await conn.execute(
@@ -640,6 +660,7 @@ async def settle(
     retrieval: str,
     limitations: list[str],
 ) -> None:
+    """Finalize the fenced run outcome and release its unused budget reservation."""
     if run["settled"]:
         return
     b = await budget(p)
@@ -694,10 +715,12 @@ class Runtime:
         adapter: P.Provider,
         token: UUID,
     ):
+        """Bind execution to one job, tenant, actor, provider and worker lease token."""
         self.engine, self.job_id, self.tenant, self.actor = engine, job_id, tenant, actor
         self.settings, self.adapter, self.token = settings, adapter, token
 
     async def state(self, conn: Any) -> tuple[Principal, dict, dict]:
+        """Require current authority, an active run and an unexpired matching worker lease."""
         p, run, job = await worker_context(conn, self.job_id, self.tenant, self.actor)
         if (
             not p
@@ -720,6 +743,7 @@ class Runtime:
         rows: list[dict] | None = None,
         output_schema: type[BaseModel] = AIOutput,
     ) -> P.ProviderResult:
+        """Reserve and persist each provider attempt before sending, with bounded recovery."""
         p: Principal | None
         run: dict | None
         job: dict | None
@@ -864,6 +888,7 @@ class Runtime:
         raise P.ProviderError("PROVIDER_FAILED")
 
     async def keyword_branch(self, project: UUID, query: str) -> Branch:
+        """Retrieve authorized keyword evidence and record its durable progress."""
         try:
             async with self.engine.begin() as conn:
                 p, _, _ = await self.state(conn)
@@ -872,6 +897,7 @@ class Runtime:
             return Branch("keyword", [], "KEYWORD_UNAVAILABLE")
 
     async def hybrid_branch(self, project: UUID, query: str) -> Branch:
+        """Retrieve authorized semantic evidence, falling back within provider limits."""
         try:
             response = await self.call("query_embedding", [query])
             async with self.engine.begin() as conn:
@@ -912,6 +938,7 @@ class Runtime:
 
     async def index(self, request: EmbeddingRequest) -> None:
         # Implements Sprint 09 EmbeddingBackend.index; source identity is independently verified.
+        """Index the selected document's authorized chunks under the existing call budget."""
         async with self.engine.begin() as conn:
             p, run, _ = await self.state(conn)
             expected, rows = await index_chunks(p, run["project_id"], request.version_id)
@@ -942,6 +969,7 @@ class Runtime:
 
 
 async def ai_worker(engine: Any, id_: UUID, tenant: UUID, actor: UUID, settings: Settings) -> bool:
+    """Claim one durable AI job and execute it with lease, authority and budget fencing."""
     p: Principal | None
     job: dict | None
     current: dict | None

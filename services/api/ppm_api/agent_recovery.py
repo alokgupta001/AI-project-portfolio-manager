@@ -6,6 +6,7 @@ from ppm_api.model_contracts import ModelFailure
 def recovery(
     error: ModelFailure, section_attempts: int, run_attempts: int, remaining: float
 ) -> str:
+    """Choose a bounded retry action from failure certainty, attempts and time remaining."""
     if error.certainty == "unknown":
         return "stop"
     if section_attempts >= 2 or run_attempts >= 4 or remaining < 27:

@@ -33,6 +33,7 @@ ROLE_GUIDANCE = {
 
 
 def cloud_prompt(agent: str, mode: str) -> str:
+    """Return the pinned role instructions and examples for a cloud section."""
     if agent not in BY_AGENT or mode not in ("findings", "rubric", "synthesis"):
         raise ValueError("Unknown specialist mode")
     rules = (

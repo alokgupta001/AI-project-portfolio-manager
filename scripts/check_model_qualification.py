@@ -11,6 +11,7 @@ from ppm_api.model_qualification import CloudQualificationReport, QualificationR
 
 
 def main() -> None:
+    """Validate a measured qualification report without promoting any profile."""
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("report", type=Path)
     args = parser.parse_args()

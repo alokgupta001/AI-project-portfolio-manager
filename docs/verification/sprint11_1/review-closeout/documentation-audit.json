@@ -1,0 +1,250 @@
+{
+  "base": "72e0b8efb00d8e9d2dcd650ed1800caf1d5bdf05",
+  "production_python_files": 40,
+  "functions": 186,
+  "documented_before": 7,
+  "documented_after": 186,
+  "applied_migrations_unchanged": true,
+  "files": [
+    {
+      "path": "scripts/benchmark_agent_runtime.py",
+      "documentation_only": false,
+      "functions": 9,
+      "documented": 9
+    },
+    {
+      "path": "scripts/benchmark_cloud_batches.py",
+      "documentation_only": true,
+      "functions": 6,
+      "documented": 6
+    },
+    {
+      "path": "scripts/benchmark_cloud_specialists.py",
+      "documentation_only": true,
+      "functions": 6,
+      "documented": 6
+    },
+    {
+      "path": "scripts/check_local_model.py",
+      "documentation_only": true,
+      "functions": 1,
+      "documented": 1
+    },
+    {
+      "path": "scripts/check_model_qualification.py",
+      "documentation_only": true,
+      "functions": 1,
+      "documented": 1
+    },
+    {
+      "path": "scripts/check_provider_setup.py",
+      "documentation_only": true,
+      "functions": 3,
+      "documented": 3
+    },
+    {
+      "path": "scripts/prepare_agent_training.py",
+      "documentation_only": true,
+      "functions": 2,
+      "documented": 2
+    },
+    {
+      "path": "scripts/prepare_cloud_acceptance.py",
+      "documentation_only": true,
+      "functions": 3,
+      "documented": 3
+    },
+    {
+      "path": "scripts/prepare_cloud_review.py",
+      "documentation_only": true,
+      "functions": 1,
+      "documented": 1
+    },
+    {
+      "path": "scripts/prepare_cloud_specialists.py",
+      "documentation_only": true,
+      "functions": 2,
+      "documented": 2
+    },
+    {
+      "path": "scripts/score_agent_benchmark.py",
+      "documentation_only": true,
+      "functions": 5,
+      "documented": 5
+    },
+    {
+      "path": "scripts/score_cloud_benchmark.py",
+      "documentation_only": true,
+      "functions": 1,
+      "documented": 1
+    },
+    {
+      "path": "scripts/smoke_groq_provider.py",
+      "documentation_only": true,
+      "functions": 5,
+      "documented": 5
+    },
+    {
+      "path": "scripts/sync_model_policy.py",
+      "documentation_only": true,
+      "functions": 3,
+      "documented": 3
+    },
+    {
+      "path": "services/api/ppm_api/agent_batch.py",
+      "documentation_only": true,
+      "functions": 8,
+      "documented": 8
+    },
+    {
+      "path": "services/api/ppm_api/agent_context.py",
+      "documentation_only": true,
+      "functions": 3,
+      "documented": 3
+    },
+    {
+      "path": "services/api/ppm_api/agent_critique.py",
+      "documentation_only": true,
+      "functions": 2,
+      "documented": 2
+    },
+    {
+      "path": "services/api/ppm_api/agent_examples.py",
+      "documentation_only": true,
+      "functions": 0,
+      "documented": 0
+    },
+    {
+      "path": "services/api/ppm_api/agent_planner.py",
+      "documentation_only": true,
+      "functions": 4,
+      "documented": 4
+    },
+    {
+      "path": "services/api/ppm_api/agent_prompts.py",
+      "documentation_only": true,
+      "functions": 1,
+      "documented": 1
+    },
+    {
+      "path": "services/api/ppm_api/agent_recovery.py",
+      "documentation_only": true,
+      "functions": 1,
+      "documented": 1
+    },
+    {
+      "path": "services/api/ppm_api/agent_registry.py",
+      "documentation_only": true,
+      "functions": 1,
+      "documented": 1
+    },
+    {
+      "path": "services/api/ppm_api/agent_runtime.py",
+      "documentation_only": false,
+      "functions": 11,
+      "documented": 11
+    },
+    {
+      "path": "services/api/ppm_api/agent_schemas.py",
+      "documentation_only": true,
+      "functions": 0,
+      "documented": 0
+    },
+    {
+      "path": "services/api/ppm_api/agent_task_tables.py",
+      "documentation_only": true,
+      "functions": 0,
+      "documented": 0
+    },
+    {
+      "path": "services/api/ppm_api/agent_validation.py",
+      "documentation_only": true,
+      "functions": 5,
+      "documented": 5
+    },
+    {
+      "path": "services/api/ppm_api/agents.py",
+      "documentation_only": true,
+      "functions": 15,
+      "documented": 15
+    },
+    {
+      "path": "services/api/ppm_api/ai.py",
+      "documentation_only": true,
+      "functions": 28,
+      "documented": 28
+    },
+    {
+      "path": "services/api/ppm_api/ai_schemas.py",
+      "documentation_only": true,
+      "functions": 0,
+      "documented": 0
+    },
+    {
+      "path": "services/api/ppm_api/ai_tables.py",
+      "documentation_only": true,
+      "functions": 0,
+      "documented": 0
+    },
+    {
+      "path": "services/api/ppm_api/config.py",
+      "documentation_only": true,
+      "functions": 6,
+      "documented": 6
+    },
+    {
+      "path": "services/api/ppm_api/local_model_readiness.py",
+      "documentation_only": true,
+      "functions": 3,
+      "documented": 3
+    },
+    {
+      "path": "services/api/ppm_api/main.py",
+      "documentation_only": true,
+      "functions": 13,
+      "documented": 13
+    },
+    {
+      "path": "services/api/ppm_api/model_adapters.py",
+      "documentation_only": true,
+      "functions": 15,
+      "documented": 15
+    },
+    {
+      "path": "services/api/ppm_api/model_contracts.py",
+      "documentation_only": true,
+      "functions": 7,
+      "documented": 7
+    },
+    {
+      "path": "services/api/ppm_api/model_qualification.py",
+      "documentation_only": true,
+      "functions": 6,
+      "documented": 6
+    },
+    {
+      "path": "services/api/ppm_api/model_registry.py",
+      "documentation_only": true,
+      "functions": 7,
+      "documented": 7
+    },
+    {
+      "path": "services/api/ppm_api/model_router.py",
+      "documentation_only": true,
+      "functions": 2,
+      "documented": 2
+    },
+    {
+      "path": "services/api/ppm_api/ollama_provider.py",
+      "documentation_only": true,
+      "functions": 0,
+      "documented": 0
+    },
+    {
+      "path": "services/api/ppm_api/schemas.py",
+      "documentation_only": true,
+      "functions": 0,
+      "documented": 0
+    }
+  ]
+}

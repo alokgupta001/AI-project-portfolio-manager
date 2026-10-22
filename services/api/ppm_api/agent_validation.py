@@ -18,10 +18,12 @@ PREDICATES = {
 
 
 def numbers(text: str) -> set[Decimal]:
+    """Extract normalized numerical tokens used to reject unsupported quantities."""
     return {Decimal(n) for n in re.findall(r"(?<![a-zA-Z])[-+]?\d+(?:\.\d+)?", text)}
 
 
 def validate_section(node: dict, context: dict, output: SectionOutput) -> dict:
+    """Check role scope, aliases, spans, quantities and coverage before acceptance."""
     if output.section != node["key"] or output.mode != node["mode"]:
         raise ModelFailure("INVALID_OUTPUT", "completed")
     known = set(context["evidence"]) | set(context["questions"]) | set(context["basis"])
@@ -34,6 +36,7 @@ def validate_section(node: dict, context: dict, output: SectionOutput) -> dict:
     findings, matches = [], []
 
     def spans(refs: list) -> list[dict]:
+        """Resolve evidence aliases and reject out-of-range or unauthorized spans."""
         result = []
         for ref in refs:
             source = context["evidence"].get(ref.e)
@@ -43,6 +46,7 @@ def validate_section(node: dict, context: dict, output: SectionOutput) -> dict:
         return result
 
     def item(claim: str, advice: str, refs: list, **extra: object) -> dict:
+        """Validate a finding's role predicate, source support and numerical claims."""
         if not (numbers(claim) | numbers(advice)) <= allowed_numbers:
             raise ModelFailure("INVALID_OUTPUT", "completed")
         # Equal digits elsewhere cannot prove matching units, periods or causality.
@@ -197,6 +201,7 @@ def validate_section(node: dict, context: dict, output: SectionOutput) -> dict:
 
 
 def reconcile(items: list[dict]) -> list[dict]:
+    """Merge equivalent findings while retaining unresolved interpretation conflicts."""
     merged: dict[str, dict] = {}
     for raw in items:
         value = dict(raw)

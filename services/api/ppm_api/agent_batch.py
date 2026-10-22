@@ -10,6 +10,7 @@ from ppm_api.model_registry import canonical
 
 
 def batch_prompt(node: dict) -> str:
+    """Join the assigned role instructions for one bounded structured batch."""
     roles = [m["agent"] for m in node["members"]]
     return (
         "Return only schema JSON, one result per role. Use each role's own evidence/aliases/basis. "
@@ -29,6 +30,7 @@ def batch_prompt(node: dict) -> str:
 
 
 def strings(values: list[str], minimum: int = 0) -> dict:
+    """Build a bounded array schema restricted to the supplied identity aliases."""
     return dict(
         type="array",
         items=dict(type="string", enum=values),
@@ -38,6 +40,7 @@ def strings(values: list[str], minimum: int = 0) -> dict:
 
 
 def obj(properties: dict) -> dict:
+    """Build a strict object schema requiring every declared property."""
     return dict(
         type="object", properties=properties, required=list(properties), additionalProperties=False
     )
@@ -68,6 +71,7 @@ def compact_payload(context: dict) -> dict:
 
 
 def compact_schema(node: dict, context: dict) -> dict:
+    """Constrain one role's compact result to its evidence, coverage and rubric."""
     role, mode = node["agent"], node["mode"]
     required = context["required_aliases"]
     evidence = list(context["evidence"])
@@ -139,6 +143,7 @@ def compact_schema(node: dict, context: dict) -> dict:
 def pack_batch(
     snapshot: dict, node: dict, current: dict, prior: list, covered_ids: set | None = None
 ) -> dict:
+    """Pack up to three distinct roles while retaining each member's authority."""
     if not 1 <= len(node["members"]) <= 3:
         raise ModelFailure("CONFIGURATION")
     contexts, payloads, schemas, evidence = {}, {}, {}, {}
@@ -182,6 +187,7 @@ def pack_batch(
 
 
 def normalize(member: dict, context: dict, value: dict) -> SectionOutput:
+    """Expand a compact role result into typed output, rejecting foreign aliases."""
     if not isinstance(value, dict):
         raise ModelFailure("INVALID_OUTPUT", "completed")
     state = value.get("state")
@@ -247,6 +253,7 @@ def normalize(member: dict, context: dict, value: dict) -> SectionOutput:
 
 
 def validate_batch(node: dict, context: dict, values: dict) -> dict:
+    """Validate every batch member before returning any publishable role results."""
     if not isinstance(values, dict) or set(values) != set(context["members"]):
         raise ModelFailure("INVALID_OUTPUT", "completed")
     results = {}

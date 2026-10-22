@@ -14,10 +14,12 @@ from ppm_api.model_contracts import ModelFailure, TaskClass
 
 
 def canonical(value: object) -> str:
+    """Serialize deterministic UTF-8 JSON content for policy and request fingerprints."""
     return json.dumps(value, sort_keys=True, ensure_ascii=False, separators=(",", ":"), default=str)
 
 
 def digest(value: object) -> str:
+    """Fingerprint the canonical JSON representation with SHA-256."""
     return hashlib.sha256(canonical(value).encode()).hexdigest()
 
 
@@ -56,6 +58,7 @@ class ModelProfile(Strict):
 
     @model_validator(mode="after")
     def bounded_local(self) -> "ModelProfile":
+        """Validate profile identity, credentials, limits and provider-specific local bounds."""
         if self.provider == "ollama" and (
             self.concurrency != 1
             or self.context_tokens not in (2048, 4096)
@@ -72,6 +75,7 @@ class ModelPolicy(Strict):
 
     @model_validator(mode="after")
     def distinct(self) -> "ModelPolicy":
+        """Reject duplicate profiles and inconsistent settings within a shared account scope."""
         if len({p.id for p in self.profiles}) != len(self.profiles):
             raise ValueError("Duplicate model profile")
         if len({p.quota_scope for p in self.profiles if p.provider == "ollama"}) > 1:
@@ -101,10 +105,12 @@ class ModelPolicy(Strict):
 
     @property
     def policy_hash(self) -> str:
+        """Fingerprint the validated policy used to fence admission and replay."""
         return digest(self.model_dump(mode="json"))
 
 
 def trusted_json(path: Path, settings: Settings) -> dict:
+    """Read bounded operator JSON only from the configured trusted filesystem root."""
     resolved = path.resolve()
     if resolved.is_relative_to(settings.storage_root.resolve()):
         raise ModelFailure("CONFIGURATION")
@@ -121,6 +127,7 @@ def trusted_json(path: Path, settings: Settings) -> dict:
 
 
 def load_policy(settings: Settings) -> ModelPolicy:
+    """Load the validated private model policy, defaulting to no enabled profiles."""
     if settings.ai_model_registry_path is None:
         return ModelPolicy()
     try:

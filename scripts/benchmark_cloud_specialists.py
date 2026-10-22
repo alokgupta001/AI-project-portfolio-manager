@@ -48,6 +48,7 @@ from scripts.prepare_cloud_specialists import gemini_settings  # noqa: E402
 
 
 def legacy_gemini_calls() -> int:
+    """Count legacy Gemini usage so calibration cannot bypass its account cap."""
     query = (
         "SELECT count(*) FROM ai_calls c JOIN ai_runs r ON r.id=c.run_id "
         "WHERE r.created_at > now()-interval '24 hours 90 seconds' "
@@ -77,6 +78,7 @@ def legacy_gemini_calls() -> int:
 
 
 def retained_history(provider: str, folder: Path, now: datetime) -> list[dict]:
+    """Load prior provider attempts, including failures and ambiguous outcomes."""
     rows: list[dict] = []
     if provider == "groq":
         path = folder / "groq-smoke-ledger.json"
@@ -110,6 +112,7 @@ def check_admission(
     external_calls: int,
     now: datetime,
 ) -> None:
+    """Reject calls exceeding the authorization, account or logical-case limits."""
     if any(r["state"] == "unknown" for r in rows + history):
         raise ModelFailure("OUTCOME_UNKNOWN")
     if (
@@ -147,6 +150,7 @@ async def run(
     transport=None,
     external_calls=None,
 ) -> dict:
+    """Run authorized synthetic specialist calibration without qualifying profiles."""
     corpus, corpus_hash = load_corpus(CORPUS)
     cases = [next(c for c in corpus["cases"] if c["id"] == cid) for cid in case_ids]
     if not 1 <= len(cases) <= 3 or len(set(case_ids)) != len(case_ids):
@@ -323,6 +327,7 @@ async def run(
                 raw_candidate = folder / ("cloud-native-" + str(aid) + ".json")
 
                 def checkpoint(value: dict, target=raw_candidate, item=receipt) -> None:
+                    """Save the calibration report after each durable attempt transition."""
                     write_new(target, value)
                     item["native_sha256"] = hashlib.sha256(target.read_bytes()).hexdigest()
 
@@ -397,6 +402,7 @@ async def run(
 
 
 def main() -> None:
+    """Parse specialist calibration options and retain a sanitized execution receipt."""
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--provider", required=True, choices=["groq", "gemini", "puter"])
     parser.add_argument("--case-id", nargs="+", required=True)

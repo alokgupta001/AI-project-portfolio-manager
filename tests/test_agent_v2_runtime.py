@@ -673,6 +673,157 @@ async def test_crash_after_candidate_resumes_without_second_inference(
     )
 
 
+async def test_worker_cancellation_settles_and_propagates(identity, monkeypatch, tmp_path):
+    c, app, owner, ids, project, accepted, _ = await configure(
+        identity, monkeypatch, tmp_path, True
+    )
+    entered = asyncio.Event()
+    attempts = []
+
+    async def interrupted(self, request):
+        attempts.append(request.permit.attempt_id)
+        entered.set()
+        await asyncio.Event().wait()
+
+    monkeypatch.setattr("ppm_api.agent_runtime.NativeAdapter.execute", interrupted)
+    created = await start(
+        c,
+        project,
+        analysis_mode="domain",
+        requested_agents=["risk"],
+        version_ids=[accepted["version_id"]],
+    )
+    rid = UUID(created.json()["run"]["id"])
+    async with owner.connect() as conn:
+        job = await conn.scalar(sa.select(J.jobs.c.id).where(J.jobs.c.ai_run_id == rid))
+    worker = asyncio.create_task(
+        ai_worker(app.state.engine, job, ids["a"], ids["admin"], app.state.settings)
+    )
+    try:
+        await asyncio.wait_for(entered.wait(), 10)
+        worker.cancel("synthetic shutdown")
+        with pytest.raises(asyncio.CancelledError):
+            await asyncio.wait_for(worker, 10)
+        assert worker.cancelled() and len(attempts) == 1
+        async with owner.connect() as conn:
+            call = (
+                (await conn.execute(sa.select(A.calls).where(A.calls.c.id == attempts[0])))
+                .mappings()
+                .one()
+            )
+            quota = (
+                (
+                    await conn.execute(
+                        sa.select(T.quotas).where(T.quotas.c.attempt_id == attempts[0])
+                    )
+                )
+                .mappings()
+                .one()
+            )
+        assert call["code"] == "CANCELLED" and call["completed_at"] is not None
+        assert quota["outcome"] == "unknown"
+    finally:
+        if not worker.done():
+            worker.cancel()
+        try:
+            await worker
+        except asyncio.CancelledError:
+            pass
+        # This intercepted call has stopped; retain its usage history while
+        # releasing the synthetic host quarantine for subsequent tests.
+        async with owner.begin() as conn:
+            await conn.execute(
+                T.quotas.update()
+                .where(T.quotas.c.attempt_id.in_(attempts))
+                .values(outcome="released_unknown")
+            )
+            await conn.execute(
+                T.scopes.update()
+                .where(T.scopes.c.quarantined_attempt_id.in_(attempts))
+                .values(quarantined_attempt_id=None, quarantine_reason=None)
+            )
+
+
+@pytest.mark.parametrize("failure", ["database", "RUN_CANCELLED", "DEADLINE_EXCEEDED"])
+async def test_failed_heartbeat_does_not_replace_completed_result(
+    identity, monkeypatch, tmp_path, failure
+):
+    from ppm_api import ai_provider
+
+    c, app, owner, ids, project, _, _ = await configure(identity, monkeypatch, tmp_path)
+    await create(
+        c,
+        "milestones",
+        project_id=project["id"],
+        due_date=(now().date() - timedelta(days=1)).isoformat(),
+        critical=True,
+    )
+
+    async def failed(runtime, stop):
+        if failure == "database":
+            raise RuntimeError("synthetic heartbeat failure")
+        raise ai_provider.ProviderError(failure)
+
+    monkeypatch.setattr("ppm_api.agent_runtime.heartbeat", failed)
+    created = await start(c, project, analysis_mode="metrics")
+    result, _ = await work(c, app, owner, ids, created.json())
+    assert result["run"]["status"] == "succeeded", result
+    assert result["capability_details"]
+    assert any(d["base_covered_ids"] for d in result["capability_details"])
+
+
+async def test_oversized_bound_context_keeps_baseline_and_reports_partial(
+    identity, monkeypatch, tmp_path
+):
+    from ppm_api import agent_runtime
+
+    c, app, owner, ids, project, accepted, seen = await configure(
+        identity, monkeypatch, tmp_path, True
+    )
+    original = agent_runtime.pack
+    await create(
+        c,
+        "milestones",
+        project_id=project["id"],
+        due_date=(now().date() - timedelta(days=1)).isoformat(),
+        critical=True,
+    )
+
+    def oversized(*args, **kwargs):
+        context = original(*args, **kwargs)
+        context["payload"] += " " * 95000
+        return context
+
+    monkeypatch.setattr(agent_runtime, "pack", oversized)
+    created = await start(
+        c,
+        project,
+        analysis_mode="domain",
+        requested_agents=["risk", "schedule"],
+        version_ids=[accepted["version_id"]],
+    )
+    result, _ = await work(c, app, owner, ids, created.json())
+    assert not seen
+    assert result["run"]["status"] == "partially_succeeded", result
+    assert any(d["base_covered_ids"] for d in result["capability_details"])
+    async with owner.connect() as conn:
+        task = (
+            (
+                await conn.execute(
+                    sa.select(T.tasks).where(
+                        T.tasks.c.run_id == UUID(created.json()["run"]["id"]),
+                        T.tasks.c.kind == "semantic",
+                        T.tasks.c.agent == "risk",
+                    )
+                )
+            )
+            .mappings()
+            .one()
+        )
+    assert task["state"] == "BLOCKED" and task["diagnostic"] == "CONTEXT_LIMIT"
+    assert task["bound_at"] is None and task["resolved_context_manifest"] is None
+
+
 @pytest.mark.parametrize("mode", ["cancel", "lease", "revoke", "source"])
 async def test_v2_late_output_is_fenced(identity, monkeypatch, tmp_path, mode):
     c, app, owner, ids, project, accepted, seen = await configure(

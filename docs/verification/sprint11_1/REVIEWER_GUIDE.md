@@ -1,7 +1,11 @@
 # Independent cloud acceptance review
 
-Current follow-up: 22 October 2026. The user will nominate the reviewer. No reviewer
-has been recorded, and no label or model has been approved by this implementation.
+Current follow-up: 23 October 2026. The user asked the implementation agent to
+arrange the review instead of nominating a person. A separate CodeRabbit label
+audit is being requested on the follow-up PR. Its findings will be recorded as AI
+review; they are not human approval or model accuracy measurements. No label or
+model has been approved. The [current request](review-closeout/review-request.json)
+binds the updated strategy; older packet strategy hashes remain historical.
 
 1. Review [fresh labels and inputs](reviewer-packet/labels.json) first. There are
    108 original synthetic cases, twelve per role, with 54 held out. Correct ambiguous

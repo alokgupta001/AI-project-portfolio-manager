@@ -1,5 +1,25 @@
 # Sprint 11.1 implementation handoff
 
+## Review closeout — 23 October 2026
+
+PR #4 merged at `72e0b8e`; both hosted checks passed at `d341605` with 479 backend
+tests and 18 browser journeys. Branch `sprint-11-1-review-closeout` addresses the
+remaining four verified CodeRabbit findings. Evidence-root retry accounting,
+cancellation settlement/propagation, pre-binding context size and heartbeat cleanup
+now have eight new regression cases. Focused benchmark (50) and database regression
+(five) scopes pass. All 186 production functions in the original non-migration
+Python diff are documented; generated API descriptions and source indexes match.
+Ruff/format/mypy, contracts and frontend static checks pass. Full disposable DB
+verification is running; see the [closeout receipt](../../../verification/sprint11_1/review-closeout/README.md).
+
+The user asked us to arrange the independent review. A separate CodeRabbit AI
+label audit will use the updated strategy hash and existing 108-case draft. Its
+findings are AI review, not human approval or model accuracy measurements. No
+approval fields have been filled, no fresh acceptance inference has run, and AT17
+remains blocked. Retain prior calibration and exhausted attempts. Normal 0012,
+seven disabled profiles, $0 limits, private files and 21 unrelated artifact changes
+remain preserved. Do not start Sprint 12. Earlier sections are historical.
+
 ## Python audit follow-up — 23 October 2026
 
 Hosted `bb05047` passed the npm and cleanup fixes, then found six advisories in
