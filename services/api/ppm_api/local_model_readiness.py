@@ -12,6 +12,7 @@ from ppm_api.model_registry import digest
 
 
 def windows_memory() -> dict:
+    """Read physical host RAM through Windows without estimating container memory."""
     if platform.system() != "Windows":
         raise OSError("Windows host memory measurement required")
 
@@ -42,6 +43,7 @@ def readiness(
     reservation_mb: int = 4096,
     transport: httpx.BaseTransport | None = None,
 ) -> dict:
+    """Inspect private Ollama inventory and host headroom without loading any model."""
     parsed = urlparse(origin)
     if (
         parsed.scheme != "http"
@@ -79,6 +81,7 @@ def readiness(
     )
 
     def read(client: httpx.Client, path: str) -> dict:
+        """Read a bounded JSON object from a fixed local inventory endpoint."""
         with client.stream("GET", origin.rstrip("/") + path) as response:
             response.raise_for_status()
             raw = bytearray()

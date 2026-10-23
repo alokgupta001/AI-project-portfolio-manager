@@ -20,6 +20,7 @@ DATA = ROOT / "tests/fixtures/agent_v2_training.json"
 
 
 def examples() -> tuple[list[dict], dict]:
+    """Build original role examples from the declared reference-informed templates."""
     corpus = json.loads(DATA.read_bytes())
     refs = {r["id"] for r in corpus["references"] if r.get("admitted") is not False}
     if corpus["schema_version"] != "agent-training-examples-v1":
@@ -66,6 +67,7 @@ def examples() -> tuple[list[dict], dict]:
 
 
 def main() -> None:
+    """Export training examples and provenance without uploading or training weights."""
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output", type=Path)
     args = parser.parse_args()

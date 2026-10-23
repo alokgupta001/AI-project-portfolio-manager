@@ -13,6 +13,7 @@ from sqlalchemy.ext.asyncio import create_async_engine
 
 
 def scope_rows(policy: ModelPolicy) -> list[dict]:
+    """Derive shared provider admission rows from the validated operator policy."""
     rows = []
     for sid in sorted({p.quota_scope for p in policy.profiles}):
         profiles = [p for p in policy.profiles if p.quota_scope == sid]
@@ -40,6 +41,7 @@ def scope_rows(policy: ModelPolicy) -> list[dict]:
 
 async def sync(policy: ModelPolicy) -> None:
     # Keep the DSN out of argv, errors and output. Application credentials cannot write scopes.
+    """Upsert owner-authorized scopes while preserving failure and quarantine history."""
     url = os.environ.get("PPM_MIGRATION_DATABASE_URL", "")
     if not url:
         raise ValueError
@@ -65,6 +67,7 @@ async def sync(policy: ModelPolicy) -> None:
 
 
 def main() -> None:
+    """Validate policy read-only, or synchronize it only with the explicit apply flag."""
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
         "--apply", action="store_true", help="Write scopes with migration-owner credentials"

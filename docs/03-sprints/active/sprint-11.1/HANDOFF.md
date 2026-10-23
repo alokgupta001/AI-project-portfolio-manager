@@ -1,5 +1,85 @@
 # Sprint 11.1 implementation handoff
 
+## Final review and qualification disposition
+
+495 full backend/lifecycle/drift tests pass in 470.08 seconds, with one inherited
+Starlette warning; focused 95 offline/nine runtime DB scopes overlap. Verified
+CodeRabbit fixes, cancellation during cleanup, and contradictory predicate/signal
+rejection are covered by regressions that failed before the fixes. All 186
+production functions in the original non-migration diff have contracts; CodeRabbit
+coverage passed at 92.35%. See PR #5 for hosted status and final code re-review.
+
+The independent AI label audit passed all 108 cases/54 held out, but the independent
+12-record output audit failed. The bounded sequence stopped at 20 new calibration
+calls/42 role outputs, with zero evaluated-provider held-out calls. Retain the
+Gemini absence failures, Groq executive abstention failure and other weak/unsupported
+sample interpretations. No accuracy/qualification pass is claimed. Measured
+strategy `f9c761cd` is historical; final guard/cleanup strategy `f5616c25` requires a
+new reviewed binding before any further inference. Do not renew/reset the existing
+authorization or usage history. [Evidence and fresh empty template](../../../verification/sprint11_1/review-closeout/README.md).
+AT17 remains BLOCKED. Normal 0012, seven disabled profiles, $0, stopped Ollama,
+private files and 21 older artifacts are preserved. Stop before Sprint 12.
+Earlier entries below are historical checkpoints.
+
+## Current evaluation checkpoint
+
+Final backend/lifecycle/drift: **493 tests pass**, 474.52 seconds, one inherited
+Starlette warning. CodeRabbit's independent AI label re-audit passed all 108
+revised cases/54 held out and both hashes at `880629d`; the frozen approval record
+explicitly excludes human approval and measured accuracy. Bounded acceptance is
+running with the same frozen source strategy, one request/minute and twenty/day
+account caps, stopping each provider on invalid/unknown output or its cap. First
+four calibration calls cover all nine roles and pass hard checks. No prompt tuning,
+qualification or activation. Independent output review remains required.
+Latest CodeRabbit code re-review is rate-limited; hosted CI is in progress. Read
+the [current receipt](../../../verification/sprint11_1/review-closeout/README.md)
+and PR #5 status before continuing. Normal 0012, seven disabled profiles, $0 and
+21 older artifacts remain preserved; stop before Sprint 12. Earlier entries below
+retain their historical status.
+
+## Independent AI review follow-up
+
+CodeRabbit code review passed docstring coverage at 92.35%. Verified follow-ups
+normalize source order with version 3 ledger roots, retain unknown call status,
+correct two origin/path docstrings, and preserve cancellation after settlement
+failure. Groq/Ollama replay tests exercise the existing unconditional RUNNING-task
+fence. Current 53 benchmark, eight DB runtime and 94 acceptance/specialist tests
+pass (overlap); the final full suite is rerunning. The obsolete intermediate full
+run was deliberately stopped and retained, not reported as a pass.
+
+The separate [108-case AI label audit](../../../verification/sprint11_1/review-closeout/label-audit-round-1.json)
+declined approval. Clarified 18 negative evidence drafts, made the held-out
+governance rubric distinct (documented-only level 1), and fixed Windows LF exports.
+Fresh corpus/strategy hashes require a new independent audit before inference.
+Old packets and budgets remain historical; no label approval, held-out requests,
+qualification or activation. Continue at [PR #5](https://github.com/alokgupta001/AI-project-portfolio-manager/pull/5)
+and the [current request](../../../verification/sprint11_1/review-closeout/review-request.json).
+Normal 0012, seven disabled profiles, $0 and 21 older artifacts are preserved.
+Do not start Sprint 12.
+
+## Review closeout — 23 October 2026
+
+PR #4 merged at `72e0b8e`; both hosted checks passed at `d341605` with 479 backend
+tests and 18 browser journeys. Branch `sprint-11-1-review-closeout` addresses the
+remaining four verified CodeRabbit findings. Evidence-root retry accounting,
+cancellation settlement/propagation, pre-binding context size and heartbeat cleanup
+now have eight new regression cases. Focused benchmark (50) and database regression
+(five) scopes pass. All 186 production functions in the original non-migration
+Python diff are documented; generated API descriptions and source indexes match.
+Ruff/format/mypy, contracts and frontend static checks pass. Full disposable DB
+lifecycle/drift and **487 backend tests pass** with one inherited Starlette warning.
+[PR #5](https://github.com/alokgupta001/AI-project-portfolio-manager/pull/5) is published;
+hosted CI and CodeRabbit review are in progress. See the
+[closeout receipt](../../../verification/sprint11_1/review-closeout/README.md).
+
+The user asked us to arrange the independent review. A separate CodeRabbit AI
+label audit was requested using the updated strategy hash and existing 108-case draft. Its
+findings are AI review, not human approval or model accuracy measurements. No
+approval fields have been filled, no fresh acceptance inference has run, and AT17
+remains blocked. Retain prior calibration and exhausted attempts. Normal 0012,
+seven disabled profiles, $0 limits, private files and 21 unrelated artifact changes
+remain preserved. Do not start Sprint 12. Earlier sections are historical.
+
 ## Python audit follow-up — 23 October 2026
 
 Hosted `bb05047` passed the npm and cleanup fixes, then found six advisories in

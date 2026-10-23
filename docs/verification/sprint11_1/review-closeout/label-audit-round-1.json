@@ -1,0 +1,37 @@
+{
+  "review_type": "independent AI label audit; no human approval or accuracy measurement",
+  "reviewer": "CodeRabbit",
+  "review_url": "https://github.com/alokgupta001/AI-project-portfolio-manager/pull/5#issuecomment-6353493991",
+  "reviewed_commit": "b36606a6d00d5e90c361a92b34d0bbdaf0da09b8",
+  "reviewed_cases": 108,
+  "held_out_cases": 54,
+  "approved": false,
+  "historical_candidates_reviewed": false,
+  "requested_corpus_sha256": "3117baf059c27c86728e35dc4b4375f02068891d5db7be9626bcd5c64cdec6af",
+  "reviewed_git_corpus_sha256": "dc978e39daff207cfcef679802830b1e4a86fab66fa057e0071b43d0462714fc",
+  "reviewed_strategy_sha256": "7b5b00472552955475fd58e23a8205b98ef2ec2b0fcc62d31078a363b33c483c",
+  "findings": [
+    {
+      "scope": "All nine roles: case suffix 11",
+      "issue": "A person-level privacy restriction did not establish whether aggregate evidence was absent.",
+      "correction": "Clarify that the named condition is an unverified question and no records establish it."
+    },
+    {
+      "scope": "All nine roles: case suffix 12",
+      "issue": "Unknown causes or effects did not establish whether the underlying condition was absent.",
+      "correction": "Clarify that the condition itself, its cause and its delivery effect are unestablished."
+    },
+    {
+      "scope": "cloud_governance_05 and cloud_governance_06",
+      "issue": "Equivalent answer evidence and rubrics appeared across calibration and held-out splits.",
+      "correction": "Use a distinct access-control exception-review scenario for the held-out case, with documented-only level 1 evidence."
+    },
+    {
+      "scope": "Corpus/export byte fingerprints",
+      "issue": "Windows generated CRLF bytes differed from the LF bytes stored by Git.",
+      "correction": "Write new immutable artifacts with explicit LF and regenerate the corrected draft as LF before binding it."
+    }
+  ],
+  "corrections_require_new_independent_review": true,
+  "held_out_inference_requests": 0
+}

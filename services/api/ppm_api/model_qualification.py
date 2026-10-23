@@ -27,6 +27,7 @@ class ClassMeasurement(Strict):
 
     @model_validator(mode="after")
     def denominators(self) -> "ClassMeasurement":
+        """Reject correctness counts larger than their measured denominators."""
         if any(
             a > b
             for a, b in (
@@ -41,6 +42,7 @@ class ClassMeasurement(Strict):
         return self
 
     def qualifies(self) -> bool:
+        """Apply per-class accuracy, abstention, interpretation and safety thresholds."""
         return (
             self.labeled_cases >= 12
             and self.held_out_cases >= 6
@@ -78,11 +80,13 @@ class QualificationReport(Strict):
 
     @model_validator(mode="after")
     def distinct_classes(self) -> "QualificationReport":
+        """Reject duplicate task classes in a local qualification report."""
         if len({m.task_class for m in self.classes}) != len(self.classes):
             raise ValueError("Duplicate qualification class")
         return self
 
     def qualified_classes(self) -> list[TaskClass]:
+        """Return passing classes only when local latency, RAM and residency gates pass."""
         if (
             self.warm_repeats < 5
             or self.p95_warm_seconds > 20
@@ -117,11 +121,13 @@ class CloudQualificationReport(Strict):
 
     @model_validator(mode="after")
     def distinct(self) -> "CloudQualificationReport":
+        """Reject duplicate task classes in a cloud qualification report."""
         if len({m.task_class for m in self.classes}) != len(self.classes):
             raise ValueError("Duplicate qualification class")
         return self
 
     def qualified_classes(self) -> list[TaskClass]:
+        """Return passing classes only after cloud latency and runtime batch coverage pass."""
         if (
             self.measured_calls < 5
             or self.p95_seconds > 20

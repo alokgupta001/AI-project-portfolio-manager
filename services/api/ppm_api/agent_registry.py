@@ -104,6 +104,7 @@ SYNTHESIS = ("pmo", "executive")
 
 
 def definitions() -> list[dict]:
+    """Expose typed specialist capabilities without granting model execution authority."""
     return [
         dict(
             agent=c.agent,

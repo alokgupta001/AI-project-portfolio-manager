@@ -1,0 +1,32 @@
+{
+  "review_type": "independent_ai_output_sample_audit",
+  "reviewer": "coderabbitai[bot]",
+  "review_url": "https://github.com/alokgupta001/AI-project-portfolio-manager/pull/5#issuecomment-6353908815",
+  "reviewed_commit": "e8add3dbc6d2262107e85ea43c7b9a4385f8a946",
+  "sample_sha256": "eac89570b0e0b84c8e96a094c5edcd56df92d8c127cb28f4d03e36873c49f35b",
+  "reviewed_records": 12,
+  "held_out_records": 0,
+  "verdict": "rejected",
+  "human_approval": false,
+  "full_benchmark_accuracy_claim": false,
+  "findings": {
+    "cloud_financial_01": "Claim restates the source; budget_overrun is not supported by the cited primary evidence.",
+    "cloud_schedule_01": "Blocker classification is supported, but the prose adds little and advice misses the sign-off distinction.",
+    "cloud_resource_01": "Capacity risk does not establish capacity_exceeded; the predicate and delivery interpretation overreach.",
+    "cloud_risk_01": "Supported delivery-continuity interpretation and relevant mitigation advice.",
+    "cloud_governance_01": "Policy-gap interpretation is supported, but no_adverse_evidence contradicts the adverse compliance-gap metadata.",
+    "cloud_agile_coach_01": "Relevant advice adds a supported benefit concerning review cycles.",
+    "cloud_sentiment_01": "Privacy-safe aggregate metadata does not establish a privacy-compliance threat; the interpretation and advice overreach.",
+    "cloud_pmo_01": "Source restatement and generic advice lack an added delivery interpretation.",
+    "cloud_executive_01": "Supported prerequisite/blocker interpretation and relevant advice; severity comes from supplied basis.",
+    "cloud_financial_07": "Incorrectly asserts the unevidenced permit-fee condition instead of abstaining.",
+    "cloud_schedule_07": "Incorrectly asserts an unsigned prerequisite when evidence is explicitly absent.",
+    "cloud_resource_07": "Incorrectly asserts the requested overlap condition when evidence is explicitly absent."
+  },
+  "scope_limits": [
+    "Canonical preservation in final merged output was not inspected; compact-output omission is not proof of baseline loss.",
+    "Embedded native candidate/report hashes were not independently checked against private originals.",
+    "No historical packet, held-out outputs or full qualification were reviewed."
+  ],
+  "deterministic_followup": "Reject no_adverse_evidence paired with an adverse signal; other semantic failures are not converted into passing results."
+}

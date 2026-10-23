@@ -1,0 +1,1221 @@
+{
+  "schema_version": "bounded-acceptance-stopped-v1",
+  "status": "stopped_after_calibration_rejection_before_evaluated_provider_held_out_inference",
+  "corpus_sha256": "c13f5ad5526df7d6ec2bb50c2a40952a30bead042ab6a0d4a454e47bfa39e6be",
+  "measured_strategy_sha256": "f9c761cd0be72169a8cd47b424bca666327eebf04b491ffd5453e17a0691adf2",
+  "current_strategy_sha256": "f5616c250a5fc6e465332e3db26cc6323c71af990129c4899c3aac452b87fa86",
+  "current_strategy_changed_after_measurement": true,
+  "strategy_change_reason": "Predicate consistency and cancellation-safe heartbeat cleanup were hardened after the rejected measurement snapshot.",
+  "label_review_kind": "independent_AI_only",
+  "human_approval": false,
+  "model_accuracy_approved": false,
+  "new_calls": 20,
+  "measured_case_records": 42,
+  "held_out_case_records": 0,
+  "providers": [
+    {
+      "provider": "groq",
+      "new_calls": 10,
+      "retained_total_calls": 25,
+      "measured_case_records": 15,
+      "held_out_case_records": 0,
+      "state_label_mismatches": ["cloud_executive_09"],
+      "profile_activated": false,
+      "qualified_classes": []
+    },
+    {
+      "provider": "gemini",
+      "new_calls": 4,
+      "retained_total_calls": 19,
+      "measured_case_records": 12,
+      "held_out_case_records": 0,
+      "state_label_mismatches": [
+        "cloud_financial_07",
+        "cloud_schedule_07",
+        "cloud_resource_07"
+      ],
+      "profile_activated": false,
+      "qualified_classes": []
+    },
+    {
+      "provider": "puter",
+      "new_calls": 6,
+      "retained_total_calls": 20,
+      "measured_case_records": 15,
+      "held_out_case_records": 0,
+      "state_label_mismatches": [],
+      "profile_activated": false,
+      "qualified_classes": []
+    }
+  ],
+  "pre_admission_blocks": [
+    "Puter mixed rubric batch not supported; measured rubric separately without changing the input contract.",
+    "Gemini conflicting-evidence triple exceeded the fixed context bound.",
+    "Puter privacy-case triple exceeded the fixed context bound."
+  ],
+  "caps_unchanged": {
+    "requests_per_minute": 1,
+    "requests_per_day": 20,
+    "max_output_tokens": 512,
+    "max_additional_allocation_per_provider": 36
+  },
+  "historical_attempts_reset": false,
+  "future_inference_requires_current_reviewed_binding": true,
+  "measurement_reports": [
+    {
+      "name": "acceptance-groq-executive-01.json",
+      "sha256": "a851477535f319d0c3fe9742b91639459415b1d5ca5475cb2e80308199023b21",
+      "report": {
+        "schema_version": "cloud-batch-calibration-v1",
+        "provider": "groq",
+        "model": "openai/gpt-oss-20b",
+        "corpus_sha256": "c13f5ad5526df7d6ec2bb50c2a40952a30bead042ab6a0d4a454e47bfa39e6be",
+        "strategy_sha256": "f9c761cd0be72169a8cd47b424bca666327eebf04b491ffd5453e17a0691adf2",
+        "policy_sha256": "96795a3be4e1bf82749db795039350d3903e933c35bac49f32c29fe6e9d6597d",
+        "selected_cases": ["cloud_executive_01"],
+        "prompt_sha256": "6794a902c9e448bd3796c6f0434f9735d5312cbaa859772e265b79c81002914f",
+        "request_sha256": "c5b819abb07fffde01206acb4da0bf78f1ce89753f2fa9950fad6cbae9d9542e",
+        "max_output_tokens": 512,
+        "context_tokens": 8192,
+        "qualified_classes": [],
+        "profile_activated": false,
+        "weight_training": false,
+        "independent_semantic_review": "pending",
+        "label_approval_sha256": "b17d715ad7a8450dfaa963a3aeb3a1a8b70dd58bbd2dbd9c54b5c9a9610ebc2a",
+        "attempts": [
+          {
+            "attempt_id": "659882e0-18c5-4994-86d1-109e55c9e75b",
+            "cases": ["cloud_executive_01"],
+            "request_sha256": "c5b819abb07fffde01206acb4da0bf78f1ce89753f2fa9950fad6cbae9d9542e",
+            "admitted_at": "2026-10-22T23:40:50.918612+00:00",
+            "native_sha256": "ef23501b4151c40a552c67600ae0967a1cd18f183aae2efa6d5d3d8dab02d278",
+            "candidate_sha256": "23da1209bdff4743c605a495bdfe13359e1240cdf18202d43a536f0908ca60dd",
+            "usage": {
+              "input_tokens": 740,
+              "output_tokens": 148,
+              "reasoning_tokens": 78,
+              "source": "reported"
+            },
+            "latency_ms": 529,
+            "completion": "complete",
+            "reported_model_id": null,
+            "roles": {
+              "executive": {
+                "outcome": "supported",
+                "hard_validation": "validated",
+                "finding_count": 1
+              }
+            }
+          }
+        ],
+        "status": "completed_pending_review"
+      }
+    },
+    {
+      "name": "acceptance-groq-executive-03.json",
+      "sha256": "f7ea29c004cd6f3f864328c3224b5b5483e0731d274a58a9d41c5eb81228b268",
+      "report": {
+        "schema_version": "cloud-batch-calibration-v1",
+        "provider": "groq",
+        "model": "openai/gpt-oss-20b",
+        "corpus_sha256": "c13f5ad5526df7d6ec2bb50c2a40952a30bead042ab6a0d4a454e47bfa39e6be",
+        "strategy_sha256": "f9c761cd0be72169a8cd47b424bca666327eebf04b491ffd5453e17a0691adf2",
+        "policy_sha256": "96795a3be4e1bf82749db795039350d3903e933c35bac49f32c29fe6e9d6597d",
+        "selected_cases": ["cloud_executive_03"],
+        "prompt_sha256": "6794a902c9e448bd3796c6f0434f9735d5312cbaa859772e265b79c81002914f",
+        "request_sha256": "812622d31ecb907bede3922069c62a8da4ec05ba2ad88d5edd2ada85a115b74e",
+        "max_output_tokens": 512,
+        "context_tokens": 8192,
+        "qualified_classes": [],
+        "profile_activated": false,
+        "weight_training": false,
+        "independent_semantic_review": "pending",
+        "label_approval_sha256": "b17d715ad7a8450dfaa963a3aeb3a1a8b70dd58bbd2dbd9c54b5c9a9610ebc2a",
+        "attempts": [
+          {
+            "attempt_id": "40b66b9c-e947-46c0-a473-da903d6a758c",
+            "cases": ["cloud_executive_03"],
+            "request_sha256": "812622d31ecb907bede3922069c62a8da4ec05ba2ad88d5edd2ada85a115b74e",
+            "admitted_at": "2026-10-22T23:44:35.470918+00:00",
+            "native_sha256": "46d7b1b9dd641cc5686583cfd5d18b349e337e290e6afd0c7b0cff9bb550670c",
+            "candidate_sha256": "4a7864f8dd2a4d7c5e4deb4b0d041f2bfe1be678b4859cc90b504d956ffa32ce",
+            "usage": {
+              "input_tokens": 740,
+              "output_tokens": 123,
+              "reasoning_tokens": 53,
+              "source": "reported"
+            },
+            "latency_ms": 519,
+            "completion": "complete",
+            "reported_model_id": null,
+            "roles": {
+              "executive": {
+                "outcome": "supported",
+                "hard_validation": "validated",
+                "finding_count": 1
+              }
+            }
+          }
+        ],
+        "status": "completed_pending_review"
+      }
+    },
+    {
+      "name": "acceptance-groq-executive-05.json",
+      "sha256": "3f79a796cc55506f875663961770175bc870e92df720891f4ad86bf6c10acde7",
+      "report": {
+        "schema_version": "cloud-batch-calibration-v1",
+        "provider": "groq",
+        "model": "openai/gpt-oss-20b",
+        "corpus_sha256": "c13f5ad5526df7d6ec2bb50c2a40952a30bead042ab6a0d4a454e47bfa39e6be",
+        "strategy_sha256": "f9c761cd0be72169a8cd47b424bca666327eebf04b491ffd5453e17a0691adf2",
+        "policy_sha256": "96795a3be4e1bf82749db795039350d3903e933c35bac49f32c29fe6e9d6597d",
+        "selected_cases": ["cloud_executive_05"],
+        "prompt_sha256": "6794a902c9e448bd3796c6f0434f9735d5312cbaa859772e265b79c81002914f",
+        "request_sha256": "948b27116c09f8db1d758577faee97de571cf79418fcf4495df99948ae5d83ec",
+        "max_output_tokens": 512,
+        "context_tokens": 8192,
+        "qualified_classes": [],
+        "profile_activated": false,
+        "weight_training": false,
+        "independent_semantic_review": "pending",
+        "label_approval_sha256": "b17d715ad7a8450dfaa963a3aeb3a1a8b70dd58bbd2dbd9c54b5c9a9610ebc2a",
+        "attempts": [
+          {
+            "attempt_id": "17c9454a-bbd2-48d9-9747-2ca3c717dace",
+            "cases": ["cloud_executive_05"],
+            "request_sha256": "948b27116c09f8db1d758577faee97de571cf79418fcf4495df99948ae5d83ec",
+            "admitted_at": "2026-10-22T23:46:44.058257+00:00",
+            "native_sha256": "bd8d1f59cedbd3c7f774ddef25132081ea590a96dc3ca83c7b13f4aa3e2d9e5e",
+            "candidate_sha256": "1d2f030238d2970edde44fd39ed30c9760729aacc1ed4dd07c4d0f8d1b9750d6",
+            "usage": {
+              "input_tokens": 742,
+              "output_tokens": 155,
+              "reasoning_tokens": 83,
+              "source": "reported"
+            },
+            "latency_ms": 759,
+            "completion": "complete",
+            "reported_model_id": null,
+            "roles": {
+              "executive": {
+                "outcome": "supported",
+                "hard_validation": "validated",
+                "finding_count": 1
+              }
+            }
+          }
+        ],
+        "status": "completed_pending_review"
+      }
+    },
+    {
+      "name": "acceptance-groq-executive-07.json",
+      "sha256": "50a9eecc003ef84bf278f485be54a669a3361b42be11f4dd3a25061fc0a345fd",
+      "report": {
+        "schema_version": "cloud-batch-calibration-v1",
+        "provider": "groq",
+        "model": "openai/gpt-oss-20b",
+        "corpus_sha256": "c13f5ad5526df7d6ec2bb50c2a40952a30bead042ab6a0d4a454e47bfa39e6be",
+        "strategy_sha256": "f9c761cd0be72169a8cd47b424bca666327eebf04b491ffd5453e17a0691adf2",
+        "policy_sha256": "96795a3be4e1bf82749db795039350d3903e933c35bac49f32c29fe6e9d6597d",
+        "selected_cases": ["cloud_executive_07"],
+        "prompt_sha256": "6794a902c9e448bd3796c6f0434f9735d5312cbaa859772e265b79c81002914f",
+        "request_sha256": "8fb60bff7c28c7c50e00567a284d08b27a2184340fec9f6dd84bc1196254e2a0",
+        "max_output_tokens": 512,
+        "context_tokens": 8192,
+        "qualified_classes": [],
+        "profile_activated": false,
+        "weight_training": false,
+        "independent_semantic_review": "pending",
+        "label_approval_sha256": "b17d715ad7a8450dfaa963a3aeb3a1a8b70dd58bbd2dbd9c54b5c9a9610ebc2a",
+        "attempts": [
+          {
+            "attempt_id": "6d86028c-70ad-4265-aa63-dded975df1d0",
+            "cases": ["cloud_executive_07"],
+            "request_sha256": "8fb60bff7c28c7c50e00567a284d08b27a2184340fec9f6dd84bc1196254e2a0",
+            "admitted_at": "2026-10-22T23:48:52.612638+00:00",
+            "native_sha256": "92ca46e884090aa5fe296e48cd9bbc76cd79b4b0f3d38c7bf2a1394d348d815e",
+            "candidate_sha256": "b685430b58e633170bb524bb75825a1867fee0833291e0a2815581101952563e",
+            "usage": {
+              "input_tokens": 753,
+              "output_tokens": 76,
+              "reasoning_tokens": 39,
+              "source": "reported"
+            },
+            "latency_ms": 696,
+            "completion": "complete",
+            "reported_model_id": null,
+            "roles": {
+              "executive": {
+                "outcome": "insufficient_evidence",
+                "hard_validation": "partially_validated",
+                "finding_count": 0
+              }
+            }
+          }
+        ],
+        "status": "completed_pending_review"
+      }
+    },
+    {
+      "name": "acceptance-groq-executive-09.json",
+      "sha256": "975af15bb27cbc0efe5864678a45723b3553f5abcd0d4198627fd5393f4128b2",
+      "report": {
+        "schema_version": "cloud-batch-calibration-v1",
+        "provider": "groq",
+        "model": "openai/gpt-oss-20b",
+        "corpus_sha256": "c13f5ad5526df7d6ec2bb50c2a40952a30bead042ab6a0d4a454e47bfa39e6be",
+        "strategy_sha256": "f9c761cd0be72169a8cd47b424bca666327eebf04b491ffd5453e17a0691adf2",
+        "policy_sha256": "96795a3be4e1bf82749db795039350d3903e933c35bac49f32c29fe6e9d6597d",
+        "selected_cases": ["cloud_executive_09"],
+        "prompt_sha256": "6794a902c9e448bd3796c6f0434f9735d5312cbaa859772e265b79c81002914f",
+        "request_sha256": "ec698198c29a9823a2af52d85f049b563cd9d11b4f60d0b10b7e7f64ee6075bf",
+        "max_output_tokens": 512,
+        "context_tokens": 8192,
+        "qualified_classes": [],
+        "profile_activated": false,
+        "weight_training": false,
+        "independent_semantic_review": "pending",
+        "label_approval_sha256": "b17d715ad7a8450dfaa963a3aeb3a1a8b70dd58bbd2dbd9c54b5c9a9610ebc2a",
+        "attempts": [
+          {
+            "attempt_id": "48eb093f-3484-430e-ad94-983de0e130e7",
+            "cases": ["cloud_executive_09"],
+            "request_sha256": "ec698198c29a9823a2af52d85f049b563cd9d11b4f60d0b10b7e7f64ee6075bf",
+            "admitted_at": "2026-10-22T23:51:01.336524+00:00",
+            "native_sha256": "06d85579c5a5ae7893dfa77d8899083144228d4862630a70a7680ffabe63b690",
+            "candidate_sha256": "5bff6b95fafa2a2990b66bd2091885edc8777ed4f11df2fcb0af5678b9d8dcd7",
+            "usage": {
+              "input_tokens": 755,
+              "output_tokens": 223,
+              "reasoning_tokens": 151,
+              "source": "reported"
+            },
+            "latency_ms": 815,
+            "completion": "complete",
+            "reported_model_id": null,
+            "roles": {
+              "executive": {
+                "outcome": "supported",
+                "hard_validation": "validated",
+                "finding_count": 1
+              }
+            }
+          }
+        ],
+        "status": "completed_pending_review"
+      }
+    },
+    {
+      "name": "acceptance-groq-sentiment-pmo-01.json",
+      "sha256": "63619d8641a1156d930f194aaea2f6a605facd2f023b99f8181d15687a76d1ab",
+      "report": {
+        "schema_version": "cloud-batch-calibration-v1",
+        "provider": "groq",
+        "model": "openai/gpt-oss-20b",
+        "corpus_sha256": "c13f5ad5526df7d6ec2bb50c2a40952a30bead042ab6a0d4a454e47bfa39e6be",
+        "strategy_sha256": "f9c761cd0be72169a8cd47b424bca666327eebf04b491ffd5453e17a0691adf2",
+        "policy_sha256": "96795a3be4e1bf82749db795039350d3903e933c35bac49f32c29fe6e9d6597d",
+        "selected_cases": ["cloud_sentiment_01", "cloud_pmo_01"],
+        "prompt_sha256": "fed6f4b4f15f0bc366ee183f4a558d127c4734484487306f3dd41328f3599656",
+        "request_sha256": "5e1352c8704eb27b537316e7d308b7109654822e5cd74af085f06817cc253151",
+        "max_output_tokens": 512,
+        "context_tokens": 8192,
+        "qualified_classes": [],
+        "profile_activated": false,
+        "weight_training": false,
+        "independent_semantic_review": "pending",
+        "label_approval_sha256": "b17d715ad7a8450dfaa963a3aeb3a1a8b70dd58bbd2dbd9c54b5c9a9610ebc2a",
+        "attempts": [
+          {
+            "attempt_id": "ede57a46-5354-44cf-b3cf-adfb2bb6085d",
+            "cases": ["cloud_sentiment_01", "cloud_pmo_01"],
+            "request_sha256": "5e1352c8704eb27b537316e7d308b7109654822e5cd74af085f06817cc253151",
+            "admitted_at": "2026-10-22T23:39:13.242468+00:00",
+            "native_sha256": "6fced8b3cd7694f4069dfd9b9b0b8c1e75da1ae033a08584ae8e559bccc558c3",
+            "candidate_sha256": "dd3ae8b548f4ed0eaffde68f0c581b348a1a4af257948fcf1c8546cbc1d9a2de",
+            "usage": {
+              "input_tokens": 1177,
+              "output_tokens": 223,
+              "reasoning_tokens": 101,
+              "source": "reported"
+            },
+            "latency_ms": 936,
+            "completion": "complete",
+            "reported_model_id": null,
+            "roles": {
+              "sentiment": {
+                "outcome": "supported",
+                "hard_validation": "validated",
+                "finding_count": 1
+              },
+              "pmo": {
+                "outcome": "supported",
+                "hard_validation": "validated",
+                "finding_count": 1
+              }
+            }
+          }
+        ],
+        "status": "completed_pending_review"
+      }
+    },
+    {
+      "name": "acceptance-groq-sentiment-pmo-03.json",
+      "sha256": "9d52dfcf5ed91cb8ff4f2d4c0f7092f3f34b618b83d0533840017891809cce08",
+      "report": {
+        "schema_version": "cloud-batch-calibration-v1",
+        "provider": "groq",
+        "model": "openai/gpt-oss-20b",
+        "corpus_sha256": "c13f5ad5526df7d6ec2bb50c2a40952a30bead042ab6a0d4a454e47bfa39e6be",
+        "strategy_sha256": "f9c761cd0be72169a8cd47b424bca666327eebf04b491ffd5453e17a0691adf2",
+        "policy_sha256": "96795a3be4e1bf82749db795039350d3903e933c35bac49f32c29fe6e9d6597d",
+        "selected_cases": ["cloud_sentiment_03", "cloud_pmo_03"],
+        "prompt_sha256": "fed6f4b4f15f0bc366ee183f4a558d127c4734484487306f3dd41328f3599656",
+        "request_sha256": "651a08da0ca6488c51213e1bff5f184514615ff436206722799088ab81ed7725",
+        "max_output_tokens": 512,
+        "context_tokens": 8192,
+        "qualified_classes": [],
+        "profile_activated": false,
+        "weight_training": false,
+        "independent_semantic_review": "pending",
+        "label_approval_sha256": "b17d715ad7a8450dfaa963a3aeb3a1a8b70dd58bbd2dbd9c54b5c9a9610ebc2a",
+        "attempts": [
+          {
+            "attempt_id": "ec75a7be-98c9-4eb9-a6a1-6625eac36f06",
+            "cases": ["cloud_sentiment_03", "cloud_pmo_03"],
+            "request_sha256": "651a08da0ca6488c51213e1bff5f184514615ff436206722799088ab81ed7725",
+            "admitted_at": "2026-10-22T23:43:30.928606+00:00",
+            "native_sha256": "f73cf2429c9062a9c2f5313a1e35cc13d951201ca8aa02edc79dce06ecc9f8b5",
+            "candidate_sha256": "dde15926f58e5f3631bfed9e983ce3bb05ef8b6d9d906f055cd5c825e5dafc30",
+            "usage": {
+              "input_tokens": 1174,
+              "output_tokens": 199,
+              "reasoning_tokens": 72,
+              "source": "reported"
+            },
+            "latency_ms": 799,
+            "completion": "complete",
+            "reported_model_id": null,
+            "roles": {
+              "sentiment": {
+                "outcome": "supported",
+                "hard_validation": "validated",
+                "finding_count": 1
+              },
+              "pmo": {
+                "outcome": "supported",
+                "hard_validation": "validated",
+                "finding_count": 1
+              }
+            }
+          }
+        ],
+        "status": "completed_pending_review"
+      }
+    },
+    {
+      "name": "acceptance-groq-sentiment-pmo-05.json",
+      "sha256": "1f4f51bb69e6c2ad27904d2289a42de2915da797a3c4d97195d593c196a6fdf8",
+      "report": {
+        "schema_version": "cloud-batch-calibration-v1",
+        "provider": "groq",
+        "model": "openai/gpt-oss-20b",
+        "corpus_sha256": "c13f5ad5526df7d6ec2bb50c2a40952a30bead042ab6a0d4a454e47bfa39e6be",
+        "strategy_sha256": "f9c761cd0be72169a8cd47b424bca666327eebf04b491ffd5453e17a0691adf2",
+        "policy_sha256": "96795a3be4e1bf82749db795039350d3903e933c35bac49f32c29fe6e9d6597d",
+        "selected_cases": ["cloud_sentiment_05", "cloud_pmo_05"],
+        "prompt_sha256": "fed6f4b4f15f0bc366ee183f4a558d127c4734484487306f3dd41328f3599656",
+        "request_sha256": "ff826c108ed8e29dbc32e22fe627c4d0123a74994cdf976894e9b686edd7162d",
+        "max_output_tokens": 512,
+        "context_tokens": 8192,
+        "qualified_classes": [],
+        "profile_activated": false,
+        "weight_training": false,
+        "independent_semantic_review": "pending",
+        "label_approval_sha256": "b17d715ad7a8450dfaa963a3aeb3a1a8b70dd58bbd2dbd9c54b5c9a9610ebc2a",
+        "attempts": [
+          {
+            "attempt_id": "ac37402e-c565-456c-9ae2-f49f4eb7f16d",
+            "cases": ["cloud_sentiment_05", "cloud_pmo_05"],
+            "request_sha256": "ff826c108ed8e29dbc32e22fe627c4d0123a74994cdf976894e9b686edd7162d",
+            "admitted_at": "2026-10-22T23:45:39.780602+00:00",
+            "native_sha256": "8658e9cdfd38ed0dac6f5bdc1b5addd659403328354054e04ee34810bb6b8de0",
+            "candidate_sha256": "48a5df51850d68dd32dea9d697cace447a140a2f7a8abebdef797c550d0d4899",
+            "usage": {
+              "input_tokens": 1178,
+              "output_tokens": 241,
+              "reasoning_tokens": 106,
+              "source": "reported"
+            },
+            "latency_ms": 817,
+            "completion": "complete",
+            "reported_model_id": null,
+            "roles": {
+              "sentiment": {
+                "outcome": "supported",
+                "hard_validation": "validated",
+                "finding_count": 1
+              },
+              "pmo": {
+                "outcome": "supported",
+                "hard_validation": "validated",
+                "finding_count": 1
+              }
+            }
+          }
+        ],
+        "status": "completed_pending_review"
+      }
+    },
+    {
+      "name": "acceptance-groq-sentiment-pmo-07.json",
+      "sha256": "ce6e949c324998a8bd0b6756548bf4c419ed71a99b1165ba855dc77469d21b0c",
+      "report": {
+        "schema_version": "cloud-batch-calibration-v1",
+        "provider": "groq",
+        "model": "openai/gpt-oss-20b",
+        "corpus_sha256": "c13f5ad5526df7d6ec2bb50c2a40952a30bead042ab6a0d4a454e47bfa39e6be",
+        "strategy_sha256": "f9c761cd0be72169a8cd47b424bca666327eebf04b491ffd5453e17a0691adf2",
+        "policy_sha256": "96795a3be4e1bf82749db795039350d3903e933c35bac49f32c29fe6e9d6597d",
+        "selected_cases": ["cloud_sentiment_07", "cloud_pmo_07"],
+        "prompt_sha256": "fed6f4b4f15f0bc366ee183f4a558d127c4734484487306f3dd41328f3599656",
+        "request_sha256": "f0bbf2a0623b63b8cade222b27d2832329fb2e2c08afde2b37e6c0765d1536d4",
+        "max_output_tokens": 512,
+        "context_tokens": 8192,
+        "qualified_classes": [],
+        "profile_activated": false,
+        "weight_training": false,
+        "independent_semantic_review": "pending",
+        "label_approval_sha256": "b17d715ad7a8450dfaa963a3aeb3a1a8b70dd58bbd2dbd9c54b5c9a9610ebc2a",
+        "attempts": [
+          {
+            "attempt_id": "3cb86821-df7a-497a-a9fb-b9d382b27f81",
+            "cases": ["cloud_sentiment_07", "cloud_pmo_07"],
+            "request_sha256": "f0bbf2a0623b63b8cade222b27d2832329fb2e2c08afde2b37e6c0765d1536d4",
+            "admitted_at": "2026-10-22T23:47:48.363824+00:00",
+            "native_sha256": "608541a2cd6d0b81361f710895dccdc2d4b82ae58e69039d680e0ea7f64a8a2b",
+            "candidate_sha256": "d2b5e0f8caf125dd17d778c847e706c57c182ae30d2895c40e829bb7c06342f2",
+            "usage": {
+              "input_tokens": 1199,
+              "output_tokens": 95,
+              "reasoning_tokens": 31,
+              "source": "reported"
+            },
+            "latency_ms": 728,
+            "completion": "complete",
+            "reported_model_id": null,
+            "roles": {
+              "sentiment": {
+                "outcome": "insufficient_evidence",
+                "hard_validation": "partially_validated",
+                "finding_count": 0
+              },
+              "pmo": {
+                "outcome": "insufficient_evidence",
+                "hard_validation": "partially_validated",
+                "finding_count": 0
+              }
+            }
+          }
+        ],
+        "status": "completed_pending_review"
+      }
+    },
+    {
+      "name": "acceptance-groq-sentiment-pmo-09.json",
+      "sha256": "277370e15c5cc311dc79b06800b34373d47693ce9b3308b74196b5d6dc13aa5a",
+      "report": {
+        "schema_version": "cloud-batch-calibration-v1",
+        "provider": "groq",
+        "model": "openai/gpt-oss-20b",
+        "corpus_sha256": "c13f5ad5526df7d6ec2bb50c2a40952a30bead042ab6a0d4a454e47bfa39e6be",
+        "strategy_sha256": "f9c761cd0be72169a8cd47b424bca666327eebf04b491ffd5453e17a0691adf2",
+        "policy_sha256": "96795a3be4e1bf82749db795039350d3903e933c35bac49f32c29fe6e9d6597d",
+        "selected_cases": ["cloud_sentiment_09", "cloud_pmo_09"],
+        "prompt_sha256": "fed6f4b4f15f0bc366ee183f4a558d127c4734484487306f3dd41328f3599656",
+        "request_sha256": "0e711cf658a3e71053159a43aef70c2ff7ac8cb20a5638c5a30badec0f69090d",
+        "max_output_tokens": 512,
+        "context_tokens": 8192,
+        "qualified_classes": [],
+        "profile_activated": false,
+        "weight_training": false,
+        "independent_semantic_review": "pending",
+        "label_approval_sha256": "b17d715ad7a8450dfaa963a3aeb3a1a8b70dd58bbd2dbd9c54b5c9a9610ebc2a",
+        "attempts": [
+          {
+            "attempt_id": "52581766-2567-418a-8599-c5e4af687954",
+            "cases": ["cloud_sentiment_09", "cloud_pmo_09"],
+            "request_sha256": "0e711cf658a3e71053159a43aef70c2ff7ac8cb20a5638c5a30badec0f69090d",
+            "admitted_at": "2026-10-22T23:49:56.883420+00:00",
+            "native_sha256": "76cc3bd352eb01d1294550cca1040b36b988e9cf1a93e6f92b6ec300e6485f0c",
+            "candidate_sha256": "dd8368fb9ab4b360813f7c7bc78751657d579a450912d07639a4999513fce2be",
+            "usage": {
+              "input_tokens": 1200,
+              "output_tokens": 116,
+              "reasoning_tokens": 50,
+              "source": "reported"
+            },
+            "latency_ms": 521,
+            "completion": "complete",
+            "reported_model_id": null,
+            "roles": {
+              "sentiment": {
+                "outcome": "insufficient_evidence",
+                "hard_validation": "partially_validated",
+                "finding_count": 0
+              },
+              "pmo": {
+                "outcome": "insufficient_evidence",
+                "hard_validation": "partially_validated",
+                "finding_count": 0
+              }
+            }
+          }
+        ],
+        "status": "completed_pending_review"
+      }
+    },
+    {
+      "name": "acceptance-gemini-financial-schedule-resource-01.json",
+      "sha256": "1e72947961156d455dbdcb4aa21e273e9425987338b5c73d8ed38ad7f4943abd",
+      "report": {
+        "schema_version": "cloud-batch-calibration-v1",
+        "provider": "gemini",
+        "model": "gemini-3.5-flash-lite",
+        "corpus_sha256": "c13f5ad5526df7d6ec2bb50c2a40952a30bead042ab6a0d4a454e47bfa39e6be",
+        "strategy_sha256": "f9c761cd0be72169a8cd47b424bca666327eebf04b491ffd5453e17a0691adf2",
+        "policy_sha256": "96795a3be4e1bf82749db795039350d3903e933c35bac49f32c29fe6e9d6597d",
+        "selected_cases": [
+          "cloud_financial_01",
+          "cloud_schedule_01",
+          "cloud_resource_01"
+        ],
+        "prompt_sha256": "21e41c414ca312ce0dde9e6be9d6ff298ed8f902e3ba5b66b16e38274600ed36",
+        "request_sha256": "d1a5de6e4a5cfcfa49d251d5bcfe026b6bb68476aebb596b739d3b39725f977f",
+        "max_output_tokens": 512,
+        "context_tokens": 8192,
+        "qualified_classes": [],
+        "profile_activated": false,
+        "weight_training": false,
+        "independent_semantic_review": "pending",
+        "label_approval_sha256": "b17d715ad7a8450dfaa963a3aeb3a1a8b70dd58bbd2dbd9c54b5c9a9610ebc2a",
+        "attempts": [
+          {
+            "attempt_id": "def512b4-39c6-4b3f-9ed4-d482f0b4350d",
+            "cases": [
+              "cloud_financial_01",
+              "cloud_schedule_01",
+              "cloud_resource_01"
+            ],
+            "request_sha256": "d1a5de6e4a5cfcfa49d251d5bcfe026b6bb68476aebb596b739d3b39725f977f",
+            "admitted_at": "2026-10-22T23:39:13.224025+00:00",
+            "native_sha256": "0e77a63da2397dbda47ffb1122cc9c876b2adfc06ec232a81073ab7b076c5970",
+            "candidate_sha256": "93202ff637ac03b9ace82a55d7f54a5fac70e351339177b1eb3cd24ed1cd5f44",
+            "usage": {
+              "input_tokens": 371,
+              "output_tokens": 364,
+              "reasoning_tokens": null,
+              "source": "reported"
+            },
+            "latency_ms": 7132,
+            "completion": "complete",
+            "reported_model_id": null,
+            "roles": {
+              "financial": {
+                "outcome": "supported",
+                "hard_validation": "validated",
+                "finding_count": 1
+              },
+              "schedule": {
+                "outcome": "supported",
+                "hard_validation": "validated",
+                "finding_count": 1
+              },
+              "resource": {
+                "outcome": "supported",
+                "hard_validation": "validated",
+                "finding_count": 1
+              }
+            }
+          }
+        ],
+        "status": "completed_pending_review"
+      }
+    },
+    {
+      "name": "acceptance-gemini-financial-schedule-resource-03.json",
+      "sha256": "6d3207cb17f7cbb0e921bb17e952112f224e421aa23b8a6ae827122600f00b7f",
+      "report": {
+        "schema_version": "cloud-batch-calibration-v1",
+        "provider": "gemini",
+        "model": "gemini-3.5-flash-lite",
+        "corpus_sha256": "c13f5ad5526df7d6ec2bb50c2a40952a30bead042ab6a0d4a454e47bfa39e6be",
+        "strategy_sha256": "f9c761cd0be72169a8cd47b424bca666327eebf04b491ffd5453e17a0691adf2",
+        "policy_sha256": "96795a3be4e1bf82749db795039350d3903e933c35bac49f32c29fe6e9d6597d",
+        "selected_cases": [
+          "cloud_financial_03",
+          "cloud_schedule_03",
+          "cloud_resource_03"
+        ],
+        "prompt_sha256": "21e41c414ca312ce0dde9e6be9d6ff298ed8f902e3ba5b66b16e38274600ed36",
+        "request_sha256": "300dc5aa71341473d6e2c1c1227e5c204b8a7f44927ec72f9c2d6f4ffaa5db00",
+        "max_output_tokens": 512,
+        "context_tokens": 8192,
+        "qualified_classes": [],
+        "profile_activated": false,
+        "weight_training": false,
+        "independent_semantic_review": "pending",
+        "label_approval_sha256": "b17d715ad7a8450dfaa963a3aeb3a1a8b70dd58bbd2dbd9c54b5c9a9610ebc2a",
+        "attempts": [
+          {
+            "attempt_id": "fe358ad1-ef60-4e37-9d9d-544ac1542e19",
+            "cases": [
+              "cloud_financial_03",
+              "cloud_schedule_03",
+              "cloud_resource_03"
+            ],
+            "request_sha256": "300dc5aa71341473d6e2c1c1227e5c204b8a7f44927ec72f9c2d6f4ffaa5db00",
+            "admitted_at": "2026-10-22T23:43:28.503694+00:00",
+            "native_sha256": "5dec18679e83afde07d9836e9baad864dd9c03a74ff7aa7d77f3a73e18d54918",
+            "candidate_sha256": "5d4f07f444f1b4817d17a2dfa802a19ba21ffca4bf5bad6fd8d54c913d4764c2",
+            "usage": {
+              "input_tokens": 363,
+              "output_tokens": 355,
+              "reasoning_tokens": null,
+              "source": "reported"
+            },
+            "latency_ms": 1527,
+            "completion": "complete",
+            "reported_model_id": null,
+            "roles": {
+              "financial": {
+                "outcome": "supported",
+                "hard_validation": "validated",
+                "finding_count": 1
+              },
+              "schedule": {
+                "outcome": "supported",
+                "hard_validation": "validated",
+                "finding_count": 1
+              },
+              "resource": {
+                "outcome": "supported",
+                "hard_validation": "validated",
+                "finding_count": 1
+              }
+            }
+          }
+        ],
+        "status": "completed_pending_review"
+      }
+    },
+    {
+      "name": "acceptance-gemini-financial-schedule-resource-05.json",
+      "sha256": "87dd69820e4263790ef5544d9b8c675ab6f23fd9da2351299c74f107dcdaccf0",
+      "report": {
+        "schema_version": "cloud-batch-calibration-v1",
+        "provider": "gemini",
+        "model": "gemini-3.5-flash-lite",
+        "corpus_sha256": "c13f5ad5526df7d6ec2bb50c2a40952a30bead042ab6a0d4a454e47bfa39e6be",
+        "strategy_sha256": "f9c761cd0be72169a8cd47b424bca666327eebf04b491ffd5453e17a0691adf2",
+        "policy_sha256": "96795a3be4e1bf82749db795039350d3903e933c35bac49f32c29fe6e9d6597d",
+        "selected_cases": [
+          "cloud_financial_05",
+          "cloud_schedule_05",
+          "cloud_resource_05"
+        ],
+        "prompt_sha256": "21e41c414ca312ce0dde9e6be9d6ff298ed8f902e3ba5b66b16e38274600ed36",
+        "request_sha256": "6d61b1cbf8eb7c8d14391413fa9efd65a85548c6055962f636e8b5f4ff31de86",
+        "max_output_tokens": 512,
+        "context_tokens": 8192,
+        "qualified_classes": [],
+        "profile_activated": false,
+        "weight_training": false,
+        "independent_semantic_review": "pending",
+        "label_approval_sha256": "b17d715ad7a8450dfaa963a3aeb3a1a8b70dd58bbd2dbd9c54b5c9a9610ebc2a",
+        "attempts": [
+          {
+            "attempt_id": "4b06f8fa-e558-4788-b54b-1d86aa361026",
+            "cases": [
+              "cloud_financial_05",
+              "cloud_schedule_05",
+              "cloud_resource_05"
+            ],
+            "request_sha256": "6d61b1cbf8eb7c8d14391413fa9efd65a85548c6055962f636e8b5f4ff31de86",
+            "admitted_at": "2026-10-22T23:44:33.521023+00:00",
+            "native_sha256": "ceba93f9f4345a737de0dad50a0d6d67dffa23b090c4b658b74fa8b8d12e33ec",
+            "candidate_sha256": "a9a3be5d580a788f52953f97d309ec559f33c6af3f4bd44d85e3f48a0e51f75c",
+            "usage": {
+              "input_tokens": 367,
+              "output_tokens": 322,
+              "reasoning_tokens": null,
+              "source": "reported"
+            },
+            "latency_ms": 1806,
+            "completion": "complete",
+            "reported_model_id": null,
+            "roles": {
+              "financial": {
+                "outcome": "supported",
+                "hard_validation": "validated",
+                "finding_count": 1
+              },
+              "schedule": {
+                "outcome": "supported",
+                "hard_validation": "validated",
+                "finding_count": 1
+              },
+              "resource": {
+                "outcome": "supported",
+                "hard_validation": "validated",
+                "finding_count": 1
+              }
+            }
+          }
+        ],
+        "status": "completed_pending_review"
+      }
+    },
+    {
+      "name": "acceptance-gemini-financial-schedule-resource-07.json",
+      "sha256": "7f47c65ee85e68c39642c1698ef6c70b5d8a71ddc5085747dc2d39e63ab96df2",
+      "report": {
+        "schema_version": "cloud-batch-calibration-v1",
+        "provider": "gemini",
+        "model": "gemini-3.5-flash-lite",
+        "corpus_sha256": "c13f5ad5526df7d6ec2bb50c2a40952a30bead042ab6a0d4a454e47bfa39e6be",
+        "strategy_sha256": "f9c761cd0be72169a8cd47b424bca666327eebf04b491ffd5453e17a0691adf2",
+        "policy_sha256": "96795a3be4e1bf82749db795039350d3903e933c35bac49f32c29fe6e9d6597d",
+        "selected_cases": [
+          "cloud_financial_07",
+          "cloud_schedule_07",
+          "cloud_resource_07"
+        ],
+        "prompt_sha256": "21e41c414ca312ce0dde9e6be9d6ff298ed8f902e3ba5b66b16e38274600ed36",
+        "request_sha256": "a7b83806c58f806850544990c7b1aa45c21a1d42332681d1709918333e61e49a",
+        "max_output_tokens": 512,
+        "context_tokens": 8192,
+        "qualified_classes": [],
+        "profile_activated": false,
+        "weight_training": false,
+        "independent_semantic_review": "pending",
+        "label_approval_sha256": "b17d715ad7a8450dfaa963a3aeb3a1a8b70dd58bbd2dbd9c54b5c9a9610ebc2a",
+        "attempts": [
+          {
+            "attempt_id": "da2e4c02-ff92-434e-a3df-66c5fae4b3b1",
+            "cases": [
+              "cloud_financial_07",
+              "cloud_schedule_07",
+              "cloud_resource_07"
+            ],
+            "request_sha256": "a7b83806c58f806850544990c7b1aa45c21a1d42332681d1709918333e61e49a",
+            "admitted_at": "2026-10-22T23:45:38.367547+00:00",
+            "native_sha256": "41fe91a098cf705a767c6519261cdae27f27bd0bfd462202f6cf418e9a2bbcb3",
+            "candidate_sha256": "6980ef18c5ff879de35077f05f60e9eaff61d6973138c6987fb225b039b778a6",
+            "usage": {
+              "input_tokens": 403,
+              "output_tokens": 364,
+              "reasoning_tokens": null,
+              "source": "reported"
+            },
+            "latency_ms": 1506,
+            "completion": "complete",
+            "reported_model_id": null,
+            "roles": {
+              "financial": {
+                "outcome": "supported",
+                "hard_validation": "validated",
+                "finding_count": 1
+              },
+              "schedule": {
+                "outcome": "supported",
+                "hard_validation": "validated",
+                "finding_count": 1
+              },
+              "resource": {
+                "outcome": "supported",
+                "hard_validation": "validated",
+                "finding_count": 1
+              }
+            }
+          }
+        ],
+        "status": "completed_pending_review"
+      }
+    },
+    {
+      "name": "acceptance-puter-governance-05.json",
+      "sha256": "5e74a3814ebc04e561e424246bf3d7eb5965d1d2eef344555471a02ae93574db",
+      "report": {
+        "schema_version": "cloud-batch-calibration-v1",
+        "provider": "puter",
+        "model": "gpt-4.1-mini-2025-04-14",
+        "corpus_sha256": "c13f5ad5526df7d6ec2bb50c2a40952a30bead042ab6a0d4a454e47bfa39e6be",
+        "strategy_sha256": "f9c761cd0be72169a8cd47b424bca666327eebf04b491ffd5453e17a0691adf2",
+        "policy_sha256": "96795a3be4e1bf82749db795039350d3903e933c35bac49f32c29fe6e9d6597d",
+        "selected_cases": ["cloud_governance_05"],
+        "prompt_sha256": "0663733debac75bc231e43b2b9ff622550224b174309ebf9e97f5da2932f625c",
+        "request_sha256": "a0119bf4632b15f5345f683b0f5506e94027bf44fb45e758d6dc7aa3dd59fd67",
+        "max_output_tokens": 512,
+        "context_tokens": 8192,
+        "qualified_classes": [],
+        "profile_activated": false,
+        "weight_training": false,
+        "independent_semantic_review": "pending",
+        "label_approval_sha256": "b17d715ad7a8450dfaa963a3aeb3a1a8b70dd58bbd2dbd9c54b5c9a9610ebc2a",
+        "attempts": [
+          {
+            "attempt_id": "e5c8f19a-7412-4ffd-b628-a43cef184e58",
+            "cases": ["cloud_governance_05"],
+            "request_sha256": "a0119bf4632b15f5345f683b0f5506e94027bf44fb45e758d6dc7aa3dd59fd67",
+            "admitted_at": "2026-10-22T23:49:22.954172+00:00",
+            "native_sha256": "fe1ed449ee029b223b6350ab175066d8c414836f40c2c9ca0e7a1b452b6df702",
+            "candidate_sha256": "994691d8e2ff862601d455ab46455f2515262565f29fa231c04165bb70755163",
+            "usage": {
+              "input_tokens": 518,
+              "output_tokens": 31,
+              "reasoning_tokens": null,
+              "source": "reported"
+            },
+            "latency_ms": 1965,
+            "completion": "complete",
+            "reported_model_id": "gpt-4.1-mini",
+            "roles": {
+              "governance": {
+                "outcome": "supported",
+                "hard_validation": "validated",
+                "finding_count": 0
+              }
+            }
+          }
+        ],
+        "status": "completed_pending_review"
+      }
+    },
+    {
+      "name": "acceptance-puter-risk-agile_coach-05.json",
+      "sha256": "c084dba02e3487186aa69e54b8ff57790807a9def6bc61e276e495df8e78a552",
+      "report": {
+        "schema_version": "cloud-batch-calibration-v1",
+        "provider": "puter",
+        "model": "gpt-4.1-mini-2025-04-14",
+        "corpus_sha256": "c13f5ad5526df7d6ec2bb50c2a40952a30bead042ab6a0d4a454e47bfa39e6be",
+        "strategy_sha256": "f9c761cd0be72169a8cd47b424bca666327eebf04b491ffd5453e17a0691adf2",
+        "policy_sha256": "96795a3be4e1bf82749db795039350d3903e933c35bac49f32c29fe6e9d6597d",
+        "selected_cases": ["cloud_risk_05", "cloud_agile_coach_05"],
+        "prompt_sha256": "096a09742c48526629fce86322d4bc56b1683263ca2d0202118600d55dc2eece",
+        "request_sha256": "57c1c3b1201477b996b1877c148a92044823ad6b63419f59a20e1b7bbee8cf2d",
+        "max_output_tokens": 512,
+        "context_tokens": 8192,
+        "qualified_classes": [],
+        "profile_activated": false,
+        "weight_training": false,
+        "independent_semantic_review": "pending",
+        "label_approval_sha256": "b17d715ad7a8450dfaa963a3aeb3a1a8b70dd58bbd2dbd9c54b5c9a9610ebc2a",
+        "attempts": [
+          {
+            "attempt_id": "eb118609-27b8-44ad-a0f3-cb68a50d52ed",
+            "cases": ["cloud_risk_05", "cloud_agile_coach_05"],
+            "request_sha256": "57c1c3b1201477b996b1877c148a92044823ad6b63419f59a20e1b7bbee8cf2d",
+            "admitted_at": "2026-10-22T23:48:18.718697+00:00",
+            "native_sha256": "82513f44da44d7fbc3f426a1446662436df5ffae285f7f43b8a0b890a185ae6d",
+            "candidate_sha256": "1f5cd8426bcff45e44257921d4e32cbac96ad4d9891e1aec3194e82ac729b44c",
+            "usage": {
+              "input_tokens": 851,
+              "output_tokens": 147,
+              "reasoning_tokens": null,
+              "source": "reported"
+            },
+            "latency_ms": 2353,
+            "completion": "complete",
+            "reported_model_id": "gpt-4.1-mini",
+            "roles": {
+              "risk": {
+                "outcome": "supported",
+                "hard_validation": "validated",
+                "finding_count": 1
+              },
+              "agile_coach": {
+                "outcome": "supported",
+                "hard_validation": "validated",
+                "finding_count": 1
+              }
+            }
+          }
+        ],
+        "status": "completed_pending_review"
+      }
+    },
+    {
+      "name": "acceptance-puter-risk-governance-agile_coach-01.json",
+      "sha256": "c3fb6a3360ca3b60844ef1e6ad4b6dc60c00044a693434b409cbadb85fc1d00d",
+      "report": {
+        "schema_version": "cloud-batch-calibration-v1",
+        "provider": "puter",
+        "model": "gpt-4.1-mini-2025-04-14",
+        "corpus_sha256": "c13f5ad5526df7d6ec2bb50c2a40952a30bead042ab6a0d4a454e47bfa39e6be",
+        "strategy_sha256": "f9c761cd0be72169a8cd47b424bca666327eebf04b491ffd5453e17a0691adf2",
+        "policy_sha256": "96795a3be4e1bf82749db795039350d3903e933c35bac49f32c29fe6e9d6597d",
+        "selected_cases": [
+          "cloud_risk_01",
+          "cloud_governance_01",
+          "cloud_agile_coach_01"
+        ],
+        "prompt_sha256": "6c3af985b6164c90f75f98587462eab9f5cad99e0783f7b6c527a720c956fa6a",
+        "request_sha256": "ae626856ef4c9821d15a21722830a2344c167009671018c92e50ba3b6d455710",
+        "max_output_tokens": 512,
+        "context_tokens": 8192,
+        "qualified_classes": [],
+        "profile_activated": false,
+        "weight_training": false,
+        "independent_semantic_review": "pending",
+        "label_approval_sha256": "b17d715ad7a8450dfaa963a3aeb3a1a8b70dd58bbd2dbd9c54b5c9a9610ebc2a",
+        "attempts": [
+          {
+            "attempt_id": "c6c8dc6b-bde0-44e7-9b45-feee7db80e39",
+            "cases": [
+              "cloud_risk_01",
+              "cloud_governance_01",
+              "cloud_agile_coach_01"
+            ],
+            "request_sha256": "ae626856ef4c9821d15a21722830a2344c167009671018c92e50ba3b6d455710",
+            "admitted_at": "2026-10-22T23:39:13.561970+00:00",
+            "native_sha256": "359f6cbca7d59a877ae46a04b7f21a421b117e658584b56a761d473ee4d23c64",
+            "candidate_sha256": "ab99dc52e85138a05aa8ff95368399ef2936f32e5a1c08e0b9f7f383db2df8bc",
+            "usage": {
+              "input_tokens": 1205,
+              "output_tokens": 219,
+              "reasoning_tokens": null,
+              "source": "reported"
+            },
+            "latency_ms": 2739,
+            "completion": "complete",
+            "reported_model_id": "gpt-4.1-mini",
+            "roles": {
+              "risk": {
+                "outcome": "supported",
+                "hard_validation": "validated",
+                "finding_count": 1
+              },
+              "governance": {
+                "outcome": "supported",
+                "hard_validation": "validated",
+                "finding_count": 1
+              },
+              "agile_coach": {
+                "outcome": "supported",
+                "hard_validation": "validated",
+                "finding_count": 1
+              }
+            }
+          }
+        ],
+        "status": "completed_pending_review"
+      }
+    },
+    {
+      "name": "acceptance-puter-risk-governance-agile_coach-03.json",
+      "sha256": "4e9bd1e8a399307be713ad9ec2a4b463663330e8bb8fa7ca3fbe361e5c989600",
+      "report": {
+        "schema_version": "cloud-batch-calibration-v1",
+        "provider": "puter",
+        "model": "gpt-4.1-mini-2025-04-14",
+        "corpus_sha256": "c13f5ad5526df7d6ec2bb50c2a40952a30bead042ab6a0d4a454e47bfa39e6be",
+        "strategy_sha256": "f9c761cd0be72169a8cd47b424bca666327eebf04b491ffd5453e17a0691adf2",
+        "policy_sha256": "96795a3be4e1bf82749db795039350d3903e933c35bac49f32c29fe6e9d6597d",
+        "selected_cases": [
+          "cloud_risk_03",
+          "cloud_governance_03",
+          "cloud_agile_coach_03"
+        ],
+        "prompt_sha256": "6c3af985b6164c90f75f98587462eab9f5cad99e0783f7b6c527a720c956fa6a",
+        "request_sha256": "c88d0c6065c3666f727bbb6ed4f51aac2b9b405f3ea534a35670577ec9c7a8f8",
+        "max_output_tokens": 512,
+        "context_tokens": 8192,
+        "qualified_classes": [],
+        "profile_activated": false,
+        "weight_training": false,
+        "independent_semantic_review": "pending",
+        "label_approval_sha256": "b17d715ad7a8450dfaa963a3aeb3a1a8b70dd58bbd2dbd9c54b5c9a9610ebc2a",
+        "attempts": [
+          {
+            "attempt_id": "1f41ac77-0f25-4c74-90c2-d312cd0f9bcd",
+            "cases": [
+              "cloud_risk_03",
+              "cloud_governance_03",
+              "cloud_agile_coach_03"
+            ],
+            "request_sha256": "c88d0c6065c3666f727bbb6ed4f51aac2b9b405f3ea534a35670577ec9c7a8f8",
+            "admitted_at": "2026-10-22T23:43:30.785928+00:00",
+            "native_sha256": "b69ff5069edf09fcb445f39e24b6fefc1ca94c1b8fa64e4439aa569486d31216",
+            "candidate_sha256": "851005d4a82bdb2625fbc189f544136a04f6366dca504db1aacfec5d4872020a",
+            "usage": {
+              "input_tokens": 1205,
+              "output_tokens": 207,
+              "reasoning_tokens": null,
+              "source": "reported"
+            },
+            "latency_ms": 2720,
+            "completion": "complete",
+            "reported_model_id": "gpt-4.1-mini",
+            "roles": {
+              "risk": {
+                "outcome": "supported",
+                "hard_validation": "validated",
+                "finding_count": 1
+              },
+              "governance": {
+                "outcome": "supported",
+                "hard_validation": "validated",
+                "finding_count": 1
+              },
+              "agile_coach": {
+                "outcome": "supported",
+                "hard_validation": "validated",
+                "finding_count": 1
+              }
+            }
+          }
+        ],
+        "status": "completed_pending_review"
+      }
+    },
+    {
+      "name": "acceptance-puter-risk-governance-agile_coach-07.json",
+      "sha256": "18ce760c6432643755ae21a3201d114c4a003ca7954be909671a7cdac25989da",
+      "report": {
+        "schema_version": "cloud-batch-calibration-v1",
+        "provider": "puter",
+        "model": "gpt-4.1-mini-2025-04-14",
+        "corpus_sha256": "c13f5ad5526df7d6ec2bb50c2a40952a30bead042ab6a0d4a454e47bfa39e6be",
+        "strategy_sha256": "f9c761cd0be72169a8cd47b424bca666327eebf04b491ffd5453e17a0691adf2",
+        "policy_sha256": "96795a3be4e1bf82749db795039350d3903e933c35bac49f32c29fe6e9d6597d",
+        "selected_cases": [
+          "cloud_risk_07",
+          "cloud_governance_07",
+          "cloud_agile_coach_07"
+        ],
+        "prompt_sha256": "6c3af985b6164c90f75f98587462eab9f5cad99e0783f7b6c527a720c956fa6a",
+        "request_sha256": "77d9f8ed9a1b4779baa1544161cfb4ddf85ec2ca23ad6f2d920454479d18f271",
+        "max_output_tokens": 512,
+        "context_tokens": 8192,
+        "qualified_classes": [],
+        "profile_activated": false,
+        "weight_training": false,
+        "independent_semantic_review": "pending",
+        "label_approval_sha256": "b17d715ad7a8450dfaa963a3aeb3a1a8b70dd58bbd2dbd9c54b5c9a9610ebc2a",
+        "attempts": [
+          {
+            "attempt_id": "0c113843-b77a-48e4-a8b8-d3f2d751927c",
+            "cases": [
+              "cloud_risk_07",
+              "cloud_governance_07",
+              "cloud_agile_coach_07"
+            ],
+            "request_sha256": "77d9f8ed9a1b4779baa1544161cfb4ddf85ec2ca23ad6f2d920454479d18f271",
+            "admitted_at": "2026-10-22T23:50:27.327820+00:00",
+            "native_sha256": "e3210a662c74c33c578a1e2ac5242b89d5a6acb8f4a0d2e92a0813b5c466ea88",
+            "candidate_sha256": "f5821ca0f5dd8ea25c11c8327fc3550fb8993d108a88349edf1ecee69597bd8d",
+            "usage": {
+              "input_tokens": 1235,
+              "output_tokens": 84,
+              "reasoning_tokens": null,
+              "source": "reported"
+            },
+            "latency_ms": 1755,
+            "completion": "complete",
+            "reported_model_id": "gpt-4.1-mini",
+            "roles": {
+              "risk": {
+                "outcome": "insufficient_evidence",
+                "hard_validation": "partially_validated",
+                "finding_count": 0
+              },
+              "governance": {
+                "outcome": "insufficient_evidence",
+                "hard_validation": "partially_validated",
+                "finding_count": 0
+              },
+              "agile_coach": {
+                "outcome": "insufficient_evidence",
+                "hard_validation": "partially_validated",
+                "finding_count": 0
+              }
+            }
+          }
+        ],
+        "status": "completed_pending_review"
+      }
+    },
+    {
+      "name": "acceptance-puter-risk-governance-agile_coach-09.json",
+      "sha256": "637fb6a3356047b38fc20f983beed490128d4a322d01447560e68170d9ec4231",
+      "report": {
+        "schema_version": "cloud-batch-calibration-v1",
+        "provider": "puter",
+        "model": "gpt-4.1-mini-2025-04-14",
+        "corpus_sha256": "c13f5ad5526df7d6ec2bb50c2a40952a30bead042ab6a0d4a454e47bfa39e6be",
+        "strategy_sha256": "f9c761cd0be72169a8cd47b424bca666327eebf04b491ffd5453e17a0691adf2",
+        "policy_sha256": "96795a3be4e1bf82749db795039350d3903e933c35bac49f32c29fe6e9d6597d",
+        "selected_cases": [
+          "cloud_risk_09",
+          "cloud_governance_09",
+          "cloud_agile_coach_09"
+        ],
+        "prompt_sha256": "6c3af985b6164c90f75f98587462eab9f5cad99e0783f7b6c527a720c956fa6a",
+        "request_sha256": "4df700df277da0e20b4411e129921b78fe1be67d81a3ecae74ea65b45e81ad11",
+        "max_output_tokens": 512,
+        "context_tokens": 8192,
+        "qualified_classes": [],
+        "profile_activated": false,
+        "weight_training": false,
+        "independent_semantic_review": "pending",
+        "label_approval_sha256": "b17d715ad7a8450dfaa963a3aeb3a1a8b70dd58bbd2dbd9c54b5c9a9610ebc2a",
+        "attempts": [
+          {
+            "attempt_id": "096e4276-20d0-4a4e-b13a-fd502849fc37",
+            "cases": [
+              "cloud_risk_09",
+              "cloud_governance_09",
+              "cloud_agile_coach_09"
+            ],
+            "request_sha256": "4df700df277da0e20b4411e129921b78fe1be67d81a3ecae74ea65b45e81ad11",
+            "admitted_at": "2026-10-22T23:51:31.574669+00:00",
+            "native_sha256": "8b75366108147cb56a736bc2f285576398ab001f56862e1674ad69f1cf5c5c96",
+            "candidate_sha256": "e1002c7af209a839643739d3ba90a14781c00eeabf688ace6021354a0047a40c",
+            "usage": {
+              "input_tokens": 1240,
+              "output_tokens": 87,
+              "reasoning_tokens": null,
+              "source": "reported"
+            },
+            "latency_ms": 1638,
+            "completion": "complete",
+            "reported_model_id": "gpt-4.1-mini",
+            "roles": {
+              "risk": {
+                "outcome": "insufficient_evidence",
+                "hard_validation": "partially_validated",
+                "finding_count": 0
+              },
+              "governance": {
+                "outcome": "insufficient_evidence",
+                "hard_validation": "partially_validated",
+                "finding_count": 0
+              },
+              "agile_coach": {
+                "outcome": "insufficient_evidence",
+                "hard_validation": "partially_validated",
+                "finding_count": 0
+              }
+            }
+          }
+        ],
+        "status": "completed_pending_review"
+      }
+    }
+  ],
+  "strategy_after_predicate_guard_sha256": "a3d567a72bb18c083351545848a28f047c044cfcf59307cf5a1fd6e366b547aa"
+}

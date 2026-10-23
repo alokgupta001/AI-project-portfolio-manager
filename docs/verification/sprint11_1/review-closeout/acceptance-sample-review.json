@@ -1,0 +1,1114 @@
+{
+  "schema_version": "cloud-acceptance-output-review-sample-v1",
+  "purpose": "Independent AI output review sample; never a qualification report",
+  "corpus_sha256": "c13f5ad5526df7d6ec2bb50c2a40952a30bead042ab6a0d4a454e47bfa39e6be",
+  "strategy_sha256": "f9c761cd0be72169a8cd47b424bca666327eebf04b491ffd5453e17a0691adf2",
+  "label_verdict_url": "https://github.com/alokgupta001/AI-project-portfolio-manager/pull/5#issuecomment-6353685644",
+  "measured_case_records": 12,
+  "held_out_case_records": 0,
+  "requested_ratings": [
+    "correct_claims",
+    "recalled_items",
+    "correct_abstention",
+    "canonical_preserved",
+    "supported_added_interpretations",
+    "citation_errors",
+    "unsupported_numbers",
+    "privacy_or_control_errors",
+    "advice_relevant",
+    "material_omissions",
+    "review_note"
+  ],
+  "model_requests_for_export": 0,
+  "human_approval": false,
+  "items": [
+    {
+      "case": {
+        "id": "cloud_financial_01",
+        "agent": "financial",
+        "task_class": "financial_interpretation",
+        "split": "calibration",
+        "scenario": "supported",
+        "sources": [
+          {
+            "text": "Permit fees are absent from the approved cost baseline.",
+            "category": "document:project"
+          },
+          {
+            "text": "Published aggregate budget usage is 105 percent.",
+            "category": "metric:usage",
+            "kind": "metric",
+            "metric": {
+              "key": "usage",
+              "value": "105"
+            }
+          }
+        ],
+        "baseline": {
+          "canonical": {
+            "usage": "105"
+          },
+          "summary": "Selected scope only; evidence has not been independently reviewed.",
+          "unresolved": []
+        },
+        "labels": {
+          "supported_items": 1,
+          "abstention_required": false,
+          "required_support": [
+            "Permit fees are absent from the approved cost baseline."
+          ],
+          "allowed_predicates": [],
+          "expected_rubric_level": null,
+          "advice_rubric": "Address the evidenced control, dependency or aggregate support need; no invented facts, numbers or approvals.",
+          "material_omissions": [
+            "Retain unresolved scope and canonical values."
+          ],
+          "interpretation_rubric": "Require a supported delivery implication and relevant advice beyond a source restatement; an evidence identity alone is insufficient."
+        }
+      },
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "attempt_id": "def512b4-39c6-4b3f-9ed4-d482f0b4350d",
+      "candidate_sha256": "93202ff637ac03b9ace82a55d7f54a5fac70e351339177b1eb3cd24ed1cd5f44",
+      "measurement_report_sha256": "1e72947961156d455dbdcb4aa21e273e9425987338b5c73d8ed38ad7f4943abd",
+      "input": {
+        "basis": {},
+        "evidence": {
+          "e1": {
+            "length": 55,
+            "text": "Permit fees are absent from the approved cost baseline."
+          },
+          "e2": {
+            "length": 48,
+            "text": "Published aggregate budget usage is 105 percent."
+          }
+        },
+        "mode": "findings",
+        "questions": {},
+        "required": [
+          "e1"
+        ],
+        "section": "cloud_financial_01",
+        "subjects": {
+          "s1": {
+            "agent": "financial",
+            "scope": "selected authorized project"
+          }
+        }
+      },
+      "output": {
+        "state": "supported",
+        "cites": [
+          "e1"
+        ],
+        "covered": [
+          "e1"
+        ],
+        "claim": "Permit fees are absent from the approved cost baseline.",
+        "advice": "Include permit fees.",
+        "epistemic": "interpretation",
+        "predicate": "budget_overrun",
+        "signal": "adverse",
+        "kind": "risk",
+        "severity": "medium"
+      },
+      "hard_validation": {
+        "outcome": "supported",
+        "hard_validation": "validated",
+        "finding_count": 1
+      },
+      "independent_output_rating": null
+    },
+    {
+      "case": {
+        "id": "cloud_schedule_01",
+        "agent": "schedule",
+        "task_class": "schedule_interpretation",
+        "split": "calibration",
+        "scenario": "supported",
+        "sources": [
+          {
+            "text": "Transformer inspection is a prerequisite for commissioning and remains unsigned.",
+            "category": "document:project"
+          }
+        ],
+        "baseline": {
+          "canonical": {},
+          "summary": "Selected scope only; evidence has not been independently reviewed.",
+          "unresolved": []
+        },
+        "labels": {
+          "supported_items": 1,
+          "abstention_required": false,
+          "required_support": [
+            "Transformer inspection is a prerequisite for commissioning and remains unsigned."
+          ],
+          "allowed_predicates": [],
+          "expected_rubric_level": null,
+          "advice_rubric": "Address the evidenced control, dependency or aggregate support need; no invented facts, numbers or approvals.",
+          "material_omissions": [
+            "Retain unresolved scope and canonical values."
+          ],
+          "interpretation_rubric": "Require a supported delivery implication and relevant advice beyond a source restatement; an evidence identity alone is insufficient."
+        }
+      },
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "attempt_id": "def512b4-39c6-4b3f-9ed4-d482f0b4350d",
+      "candidate_sha256": "93202ff637ac03b9ace82a55d7f54a5fac70e351339177b1eb3cd24ed1cd5f44",
+      "measurement_report_sha256": "1e72947961156d455dbdcb4aa21e273e9425987338b5c73d8ed38ad7f4943abd",
+      "input": {
+        "basis": {},
+        "evidence": {
+          "e1": {
+            "length": 80,
+            "text": "Transformer inspection is a prerequisite for commissioning and remains unsigned."
+          }
+        },
+        "mode": "findings",
+        "questions": {},
+        "required": [
+          "e1"
+        ],
+        "section": "cloud_schedule_01",
+        "subjects": {
+          "s1": {
+            "agent": "schedule",
+            "scope": "selected authorized project"
+          }
+        }
+      },
+      "output": {
+        "state": "supported",
+        "cites": [
+          "e1"
+        ],
+        "covered": [
+          "e1"
+        ],
+        "claim": "Transformer inspection is a prerequisite for commissioning and remains unsigned.",
+        "advice": "Complete inspection.",
+        "epistemic": "interpretation",
+        "predicate": "delivery_blocked",
+        "signal": "adverse",
+        "kind": "blocker",
+        "severity": "high"
+      },
+      "hard_validation": {
+        "outcome": "supported",
+        "hard_validation": "validated",
+        "finding_count": 1
+      },
+      "independent_output_rating": null
+    },
+    {
+      "case": {
+        "id": "cloud_resource_01",
+        "agent": "resource",
+        "task_class": "resource_interpretation",
+        "split": "calibration",
+        "scenario": "supported",
+        "sources": [
+          {
+            "text": "Aggregate capacity risk is elevated while overlapping work remains committed.",
+            "category": "metric:capacity_risk"
+          },
+          {
+            "text": "Published aggregate capacity risk is 1.",
+            "category": "metric:capacity_risk",
+            "kind": "metric",
+            "metric": {
+              "key": "capacity_risk",
+              "value": "1"
+            }
+          }
+        ],
+        "baseline": {
+          "canonical": {
+            "capacity_risk": "1"
+          },
+          "summary": "Selected scope only; evidence has not been independently reviewed.",
+          "unresolved": []
+        },
+        "labels": {
+          "supported_items": 1,
+          "abstention_required": false,
+          "required_support": [
+            "Aggregate capacity risk is elevated while overlapping work remains committed."
+          ],
+          "allowed_predicates": [],
+          "expected_rubric_level": null,
+          "advice_rubric": "Address the evidenced control, dependency or aggregate support need; no invented facts, numbers or approvals.",
+          "material_omissions": [
+            "Retain unresolved scope and canonical values."
+          ],
+          "interpretation_rubric": "Require a supported delivery implication and relevant advice beyond a source restatement; an evidence identity alone is insufficient."
+        }
+      },
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "attempt_id": "def512b4-39c6-4b3f-9ed4-d482f0b4350d",
+      "candidate_sha256": "93202ff637ac03b9ace82a55d7f54a5fac70e351339177b1eb3cd24ed1cd5f44",
+      "measurement_report_sha256": "1e72947961156d455dbdcb4aa21e273e9425987338b5c73d8ed38ad7f4943abd",
+      "input": {
+        "basis": {},
+        "evidence": {
+          "e1": {
+            "length": 77,
+            "text": "Aggregate capacity risk is elevated while overlapping work remains committed."
+          },
+          "e2": {
+            "length": 39,
+            "text": "Published aggregate capacity risk is 1."
+          }
+        },
+        "mode": "findings",
+        "questions": {},
+        "required": [
+          "e1"
+        ],
+        "section": "cloud_resource_01",
+        "subjects": {
+          "s1": {
+            "agent": "resource",
+            "scope": "selected authorized project"
+          }
+        }
+      },
+      "output": {
+        "state": "supported",
+        "cites": [
+          "e1"
+        ],
+        "covered": [
+          "e1"
+        ],
+        "claim": "Aggregate capacity risk is elevated while overlapping work remains committed.",
+        "advice": "Reduce overlap.",
+        "epistemic": "interpretation",
+        "predicate": "capacity_exceeded",
+        "signal": "adverse",
+        "kind": "risk",
+        "severity": "high"
+      },
+      "hard_validation": {
+        "outcome": "supported",
+        "hard_validation": "validated",
+        "finding_count": 1
+      },
+      "independent_output_rating": null
+    },
+    {
+      "case": {
+        "id": "cloud_risk_01",
+        "agent": "risk",
+        "task_class": "risk_extraction",
+        "split": "calibration",
+        "scenario": "supported",
+        "sources": [
+          {
+            "text": "A sole-source component has no qualified replacement supplier.",
+            "category": "document:project"
+          }
+        ],
+        "baseline": {
+          "canonical": {},
+          "summary": "Selected scope only; evidence has not been independently reviewed.",
+          "unresolved": []
+        },
+        "labels": {
+          "supported_items": 1,
+          "abstention_required": false,
+          "required_support": [
+            "A sole-source component has no qualified replacement supplier."
+          ],
+          "allowed_predicates": [],
+          "expected_rubric_level": null,
+          "advice_rubric": "Address the evidenced control, dependency or aggregate support need; no invented facts, numbers or approvals.",
+          "material_omissions": [
+            "Retain unresolved scope and canonical values."
+          ],
+          "interpretation_rubric": "Require a supported delivery implication and relevant advice beyond a source restatement; an evidence identity alone is insufficient."
+        }
+      },
+      "provider": "puter",
+      "model": "gpt-4.1-mini-2025-04-14",
+      "attempt_id": "c6c8dc6b-bde0-44e7-9b45-feee7db80e39",
+      "candidate_sha256": "ab99dc52e85138a05aa8ff95368399ef2936f32e5a1c08e0b9f7f383db2df8bc",
+      "measurement_report_sha256": "c3fb6a3360ca3b60844ef1e6ad4b6dc60c00044a693434b409cbadb85fc1d00d",
+      "input": {
+        "basis": {},
+        "evidence": {
+          "e1": {
+            "length": 62,
+            "text": "A sole-source component has no qualified replacement supplier."
+          }
+        },
+        "mode": "findings",
+        "questions": {},
+        "required": [
+          "e1"
+        ],
+        "section": "cloud_risk_01",
+        "subjects": {
+          "s1": {
+            "agent": "risk",
+            "scope": "selected authorized project"
+          }
+        }
+      },
+      "output": {
+        "state": "supported",
+        "cites": [
+          "e1"
+        ],
+        "covered": [
+          "e1"
+        ],
+        "claim": "Sole-source component supplier risk threatens delivery continuity.",
+        "advice": "Identify alternative suppliers or redesign to mitigate dependency.",
+        "epistemic": "interpretation",
+        "predicate": "risk_present",
+        "signal": "adverse",
+        "kind": "risk",
+        "severity": "high"
+      },
+      "hard_validation": {
+        "outcome": "supported",
+        "hard_validation": "validated",
+        "finding_count": 1
+      },
+      "independent_output_rating": null
+    },
+    {
+      "case": {
+        "id": "cloud_governance_01",
+        "agent": "governance",
+        "task_class": "governance_interpretation",
+        "split": "calibration",
+        "scenario": "supported",
+        "sources": [
+          {
+            "text": "Release policy requires an independent sign-off; the change record contains only author approval.",
+            "category": "document:policy"
+          }
+        ],
+        "baseline": {
+          "canonical": {},
+          "summary": "Selected scope only; evidence has not been independently reviewed.",
+          "unresolved": []
+        },
+        "labels": {
+          "supported_items": 1,
+          "abstention_required": false,
+          "required_support": [
+            "Release policy requires an independent sign-off; the change record contains only author approval."
+          ],
+          "allowed_predicates": [],
+          "expected_rubric_level": null,
+          "advice_rubric": "Address the evidenced control, dependency or aggregate support need; no invented facts, numbers or approvals.",
+          "material_omissions": [
+            "Retain unresolved scope and canonical values."
+          ],
+          "interpretation_rubric": "Require a supported delivery implication and relevant advice beyond a source restatement; an evidence identity alone is insufficient."
+        }
+      },
+      "provider": "puter",
+      "model": "gpt-4.1-mini-2025-04-14",
+      "attempt_id": "c6c8dc6b-bde0-44e7-9b45-feee7db80e39",
+      "candidate_sha256": "ab99dc52e85138a05aa8ff95368399ef2936f32e5a1c08e0b9f7f383db2df8bc",
+      "measurement_report_sha256": "c3fb6a3360ca3b60844ef1e6ad4b6dc60c00044a693434b409cbadb85fc1d00d",
+      "input": {
+        "basis": {},
+        "evidence": {
+          "e1": {
+            "length": 97,
+            "text": "Release policy requires an independent sign-off; the change record contains only author approval."
+          }
+        },
+        "mode": "findings",
+        "questions": {},
+        "required": [
+          "e1"
+        ],
+        "section": "cloud_governance_01",
+        "subjects": {
+          "s1": {
+            "agent": "governance",
+            "scope": "selected authorized project"
+          }
+        }
+      },
+      "output": {
+        "state": "supported",
+        "cites": [
+          "e1"
+        ],
+        "covered": [
+          "e1"
+        ],
+        "claim": "Release policy non-compliance due to missing independent sign-off.",
+        "advice": "Enforce independent approval to meet release policy requirements.",
+        "epistemic": "interpretation",
+        "predicate": "no_adverse_evidence",
+        "signal": "adverse",
+        "kind": "compliance_gap",
+        "severity": "high"
+      },
+      "hard_validation": {
+        "outcome": "supported",
+        "hard_validation": "validated",
+        "finding_count": 1
+      },
+      "independent_output_rating": null
+    },
+    {
+      "case": {
+        "id": "cloud_agile_coach_01",
+        "agent": "agile_coach",
+        "task_class": "agile_advice",
+        "split": "calibration",
+        "scenario": "supported",
+        "sources": [
+          {
+            "text": "Reviewers repeatedly return work because acceptance examples are missing.",
+            "category": "document:sprint_report"
+          }
+        ],
+        "baseline": {
+          "canonical": {},
+          "summary": "Selected scope only; evidence has not been independently reviewed.",
+          "unresolved": []
+        },
+        "labels": {
+          "supported_items": 1,
+          "abstention_required": false,
+          "required_support": [
+            "Reviewers repeatedly return work because acceptance examples are missing."
+          ],
+          "allowed_predicates": [],
+          "expected_rubric_level": null,
+          "advice_rubric": "Address the evidenced control, dependency or aggregate support need; no invented facts, numbers or approvals.",
+          "material_omissions": [
+            "Retain unresolved scope and canonical values."
+          ],
+          "interpretation_rubric": "Require a supported delivery implication and relevant advice beyond a source restatement; an evidence identity alone is insufficient."
+        }
+      },
+      "provider": "puter",
+      "model": "gpt-4.1-mini-2025-04-14",
+      "attempt_id": "c6c8dc6b-bde0-44e7-9b45-feee7db80e39",
+      "candidate_sha256": "ab99dc52e85138a05aa8ff95368399ef2936f32e5a1c08e0b9f7f383db2df8bc",
+      "measurement_report_sha256": "c3fb6a3360ca3b60844ef1e6ad4b6dc60c00044a693434b409cbadb85fc1d00d",
+      "input": {
+        "basis": {},
+        "evidence": {
+          "e1": {
+            "length": 73,
+            "text": "Reviewers repeatedly return work because acceptance examples are missing."
+          }
+        },
+        "mode": "findings",
+        "questions": {},
+        "required": [
+          "e1"
+        ],
+        "section": "cloud_agile_coach_01",
+        "subjects": {
+          "s1": {
+            "agent": "agile_coach",
+            "scope": "selected authorized project"
+          }
+        }
+      },
+      "output": {
+        "state": "supported",
+        "cites": [
+          "e1"
+        ],
+        "covered": [
+          "e1"
+        ],
+        "claim": "Missing acceptance examples cause repeated review rejections.",
+        "advice": "Include clear acceptance examples to reduce review cycles.",
+        "epistemic": "interpretation",
+        "predicate": "practice_gap",
+        "signal": "adverse",
+        "kind": "risk",
+        "severity": "medium"
+      },
+      "hard_validation": {
+        "outcome": "supported",
+        "hard_validation": "validated",
+        "finding_count": 1
+      },
+      "independent_output_rating": null
+    },
+    {
+      "case": {
+        "id": "cloud_sentiment_01",
+        "agent": "sentiment",
+        "task_class": "team_support_advice",
+        "split": "calibration",
+        "scenario": "supported",
+        "sources": [
+          {
+            "text": "The privacy-safe team aggregate records repeated review blockers.",
+            "category": "group:blockers"
+          }
+        ],
+        "baseline": {
+          "canonical": {},
+          "summary": "Selected scope only; evidence has not been independently reviewed.",
+          "unresolved": []
+        },
+        "labels": {
+          "supported_items": 1,
+          "abstention_required": false,
+          "required_support": [
+            "The privacy-safe team aggregate records repeated review blockers."
+          ],
+          "allowed_predicates": [],
+          "expected_rubric_level": null,
+          "advice_rubric": "Address the evidenced control, dependency or aggregate support need; no invented facts, numbers or approvals.",
+          "material_omissions": [
+            "Retain unresolved scope and canonical values."
+          ],
+          "interpretation_rubric": "Require a supported delivery implication and relevant advice beyond a source restatement; an evidence identity alone is insufficient."
+        }
+      },
+      "provider": "groq",
+      "model": "openai/gpt-oss-20b",
+      "attempt_id": "ede57a46-5354-44cf-b3cf-adfb2bb6085d",
+      "candidate_sha256": "dd3ae8b548f4ed0eaffde68f0c581b348a1a4af257948fcf1c8546cbc1d9a2de",
+      "measurement_report_sha256": "63619d8641a1156d930f194aaea2f6a605facd2f023b99f8181d15687a76d1ab",
+      "input": {
+        "basis": {
+          "b1": {
+            "key": "group:blockers",
+            "spans": [
+              {
+                "end": 65,
+                "source": "group:blockers",
+                "start": 0
+              }
+            ]
+          }
+        },
+        "evidence": {
+          "e1": {
+            "length": 65,
+            "text": "The privacy-safe team aggregate records repeated review blockers."
+          }
+        },
+        "mode": "synthesis",
+        "questions": {},
+        "required": [
+          "b1"
+        ],
+        "section": "cloud_sentiment_01",
+        "subjects": {
+          "s1": {
+            "agent": "sentiment",
+            "scope": "selected authorized project"
+          }
+        }
+      },
+      "output": {
+        "state": "supported",
+        "advice": "Address review blockers promptly to maintain compliance.",
+        "basis": [
+          "b1"
+        ],
+        "cites": [
+          "e1"
+        ],
+        "covered": [
+          "b1"
+        ],
+        "claim": "Repeated review blockers threaten privacy‑safe compliance.",
+        "epistemic": "interpretation"
+      },
+      "hard_validation": {
+        "outcome": "supported",
+        "hard_validation": "validated",
+        "finding_count": 1
+      },
+      "independent_output_rating": null
+    },
+    {
+      "case": {
+        "id": "cloud_pmo_01",
+        "agent": "pmo",
+        "task_class": "portfolio_synthesis",
+        "split": "calibration",
+        "scenario": "supported",
+        "sources": [
+          {
+            "text": "An unresolved certification dependency and a cost exception affect the selected rollout.",
+            "category": "metric:risk"
+          }
+        ],
+        "baseline": {
+          "canonical": {},
+          "summary": "Selected scope only; evidence has not been independently reviewed.",
+          "unresolved": []
+        },
+        "labels": {
+          "supported_items": 1,
+          "abstention_required": false,
+          "required_support": [
+            "An unresolved certification dependency and a cost exception affect the selected rollout."
+          ],
+          "allowed_predicates": [],
+          "expected_rubric_level": null,
+          "advice_rubric": "Address the evidenced control, dependency or aggregate support need; no invented facts, numbers or approvals.",
+          "material_omissions": [
+            "Retain unresolved scope and canonical values."
+          ],
+          "interpretation_rubric": "Require a supported delivery implication and relevant advice beyond a source restatement; an evidence identity alone is insufficient."
+        }
+      },
+      "provider": "groq",
+      "model": "openai/gpt-oss-20b",
+      "attempt_id": "ede57a46-5354-44cf-b3cf-adfb2bb6085d",
+      "candidate_sha256": "dd3ae8b548f4ed0eaffde68f0c581b348a1a4af257948fcf1c8546cbc1d9a2de",
+      "measurement_report_sha256": "63619d8641a1156d930f194aaea2f6a605facd2f023b99f8181d15687a76d1ab",
+      "input": {
+        "basis": {
+          "f1": {
+            "improvement": "Inspect the authorized evidence and retain unresolved limitations.",
+            "key": "baseline-cloud_pmo_01",
+            "kind": "blocker",
+            "severity": "medium",
+            "signal": "uncertain",
+            "spans": [
+              {
+                "end": 88,
+                "source": "fixture:cloud_pmo_01:0",
+                "start": 0
+              }
+            ],
+            "title": "Selected scope only; evidence has not been independently reviewed."
+          }
+        },
+        "evidence": {
+          "e1": {
+            "length": 88,
+            "text": "An unresolved certification dependency and a cost exception affect the selected rollout."
+          }
+        },
+        "mode": "synthesis",
+        "questions": {},
+        "required": [
+          "f1"
+        ],
+        "scope_limit": "Only these cited basis items are inspected; no whole-portfolio assurance.",
+        "section": "cloud_pmo_01",
+        "subjects": {
+          "s1": {
+            "agent": "pmo",
+            "scope": "selected authorized project"
+          }
+        },
+        "unresolved_interpretations": []
+      },
+      "output": {
+        "state": "supported",
+        "advice": "Inspect authorized evidence and retain unresolved limitations.",
+        "basis": [
+          "f1"
+        ],
+        "cites": [
+          "e1"
+        ],
+        "covered": [
+          "f1"
+        ],
+        "claim": "Unresolved certification dependency and cost exception affect rollout.",
+        "epistemic": "interpretation"
+      },
+      "hard_validation": {
+        "outcome": "supported",
+        "hard_validation": "validated",
+        "finding_count": 1
+      },
+      "independent_output_rating": null
+    },
+    {
+      "case": {
+        "id": "cloud_executive_01",
+        "agent": "executive",
+        "task_class": "executive_synthesis",
+        "split": "calibration",
+        "scenario": "supported",
+        "sources": [
+          {
+            "text": "The selected launch depends on an unresolved statutory review.",
+            "category": "metric:risk"
+          }
+        ],
+        "baseline": {
+          "canonical": {},
+          "summary": "Selected scope only; evidence has not been independently reviewed.",
+          "unresolved": []
+        },
+        "labels": {
+          "supported_items": 1,
+          "abstention_required": false,
+          "required_support": [
+            "The selected launch depends on an unresolved statutory review."
+          ],
+          "allowed_predicates": [],
+          "expected_rubric_level": null,
+          "advice_rubric": "Address the evidenced control, dependency or aggregate support need; no invented facts, numbers or approvals.",
+          "material_omissions": [
+            "Retain unresolved scope and canonical values."
+          ],
+          "interpretation_rubric": "Require a supported delivery implication and relevant advice beyond a source restatement; an evidence identity alone is insufficient."
+        }
+      },
+      "provider": "groq",
+      "model": "openai/gpt-oss-20b",
+      "attempt_id": "659882e0-18c5-4994-86d1-109e55c9e75b",
+      "candidate_sha256": "23da1209bdff4743c605a495bdfe13359e1240cdf18202d43a536f0908ca60dd",
+      "measurement_report_sha256": "a851477535f319d0c3fe9742b91639459415b1d5ca5475cb2e80308199023b21",
+      "input": {
+        "basis": {
+          "f1": {
+            "improvement": "Inspect the authorized evidence and retain unresolved limitations.",
+            "key": "baseline-cloud_executive_01",
+            "kind": "blocker",
+            "severity": "medium",
+            "signal": "uncertain",
+            "spans": [
+              {
+                "end": 62,
+                "source": "fixture:cloud_executive_01:0",
+                "start": 0
+              }
+            ],
+            "title": "Selected scope only; evidence has not been independently reviewed."
+          }
+        },
+        "evidence": {
+          "e1": {
+            "length": 62,
+            "text": "The selected launch depends on an unresolved statutory review."
+          }
+        },
+        "mode": "synthesis",
+        "questions": {},
+        "required": [
+          "f1"
+        ],
+        "scope_limit": "Only these cited basis items are inspected; no whole-portfolio assurance.",
+        "section": "cloud_executive_01",
+        "subjects": {
+          "s1": {
+            "agent": "executive",
+            "scope": "selected authorized project"
+          }
+        },
+        "unresolved_interpretations": []
+      },
+      "output": {
+        "state": "supported",
+        "advice": "Review statutory review, resolve limitations before launch.",
+        "basis": [
+          "f1"
+        ],
+        "cites": [
+          "e1"
+        ],
+        "claim": "Unresolved statutory review poses medium severity blocker.",
+        "covered": [
+          "f1"
+        ],
+        "epistemic": "interpretation"
+      },
+      "hard_validation": {
+        "outcome": "supported",
+        "hard_validation": "validated",
+        "finding_count": 1
+      },
+      "independent_output_rating": null
+    },
+    {
+      "case": {
+        "id": "cloud_financial_07",
+        "agent": "financial",
+        "task_class": "financial_interpretation",
+        "split": "calibration",
+        "scenario": "absent",
+        "sources": [
+          {
+            "text": "No evidence has been supplied for this requested issue: Permit fees are absent from the approved cost baseline.",
+            "category": "document:project"
+          },
+          {
+            "text": "Published aggregate budget usage is 105 percent.",
+            "category": "metric:usage",
+            "kind": "metric",
+            "metric": {
+              "key": "usage",
+              "value": "105"
+            }
+          }
+        ],
+        "baseline": {
+          "canonical": {
+            "usage": "105"
+          },
+          "summary": "Selected scope only; evidence has not been independently reviewed.",
+          "unresolved": [
+            "financial"
+          ]
+        },
+        "labels": {
+          "supported_items": 0,
+          "abstention_required": true,
+          "required_support": [],
+          "allowed_predicates": [],
+          "expected_rubric_level": null,
+          "advice_rubric": "Address the evidenced control, dependency or aggregate support need; no invented facts, numbers or approvals.",
+          "material_omissions": [
+            "Retain unresolved scope and canonical values."
+          ],
+          "interpretation_rubric": "Require a supported delivery implication and relevant advice beyond a source restatement; an evidence identity alone is insufficient."
+        }
+      },
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "attempt_id": "da2e4c02-ff92-434e-a3df-66c5fae4b3b1",
+      "candidate_sha256": "6980ef18c5ff879de35077f05f60e9eaff61d6973138c6987fb225b039b778a6",
+      "measurement_report_sha256": "7f47c65ee85e68c39642c1698ef6c70b5d8a71ddc5085747dc2d39e63ab96df2",
+      "input": {
+        "basis": {},
+        "evidence": {
+          "e1": {
+            "length": 111,
+            "text": "No evidence has been supplied for this requested issue: Permit fees are absent from the approved cost baseline."
+          },
+          "e2": {
+            "length": 48,
+            "text": "Published aggregate budget usage is 105 percent."
+          }
+        },
+        "mode": "findings",
+        "questions": {},
+        "required": [
+          "e1"
+        ],
+        "section": "cloud_financial_07",
+        "subjects": {
+          "s1": {
+            "agent": "financial",
+            "scope": "selected authorized project"
+          }
+        }
+      },
+      "output": {
+        "state": "supported",
+        "cites": [
+          "e1"
+        ],
+        "covered": [
+          "e1"
+        ],
+        "claim": "Cost baseline lacks necessary permit fees.",
+        "advice": "Review baseline.",
+        "epistemic": "interpretation",
+        "predicate": "budget_overrun",
+        "signal": "adverse",
+        "kind": "risk",
+        "severity": "medium"
+      },
+      "hard_validation": {
+        "outcome": "supported",
+        "hard_validation": "validated",
+        "finding_count": 1
+      },
+      "independent_output_rating": null
+    },
+    {
+      "case": {
+        "id": "cloud_schedule_07",
+        "agent": "schedule",
+        "task_class": "schedule_interpretation",
+        "split": "calibration",
+        "scenario": "absent",
+        "sources": [
+          {
+            "text": "No evidence has been supplied for this requested issue: Transformer inspection is a prerequisite for commissioning and remains unsigned.",
+            "category": "document:project"
+          }
+        ],
+        "baseline": {
+          "canonical": {},
+          "summary": "Selected scope only; evidence has not been independently reviewed.",
+          "unresolved": [
+            "schedule"
+          ]
+        },
+        "labels": {
+          "supported_items": 0,
+          "abstention_required": true,
+          "required_support": [],
+          "allowed_predicates": [],
+          "expected_rubric_level": null,
+          "advice_rubric": "Address the evidenced control, dependency or aggregate support need; no invented facts, numbers or approvals.",
+          "material_omissions": [
+            "Retain unresolved scope and canonical values."
+          ],
+          "interpretation_rubric": "Require a supported delivery implication and relevant advice beyond a source restatement; an evidence identity alone is insufficient."
+        }
+      },
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "attempt_id": "da2e4c02-ff92-434e-a3df-66c5fae4b3b1",
+      "candidate_sha256": "6980ef18c5ff879de35077f05f60e9eaff61d6973138c6987fb225b039b778a6",
+      "measurement_report_sha256": "7f47c65ee85e68c39642c1698ef6c70b5d8a71ddc5085747dc2d39e63ab96df2",
+      "input": {
+        "basis": {},
+        "evidence": {
+          "e1": {
+            "length": 136,
+            "text": "No evidence has been supplied for this requested issue: Transformer inspection is a prerequisite for commissioning and remains unsigned."
+          }
+        },
+        "mode": "findings",
+        "questions": {},
+        "required": [
+          "e1"
+        ],
+        "section": "cloud_schedule_07",
+        "subjects": {
+          "s1": {
+            "agent": "schedule",
+            "scope": "selected authorized project"
+          }
+        }
+      },
+      "output": {
+        "state": "supported",
+        "cites": [
+          "e1"
+        ],
+        "covered": [
+          "e1"
+        ],
+        "claim": "Transformer inspection is a prerequisite for commissioning and remains unsigned.",
+        "advice": "Obtain inspection sign-off promptly.",
+        "epistemic": "interpretation",
+        "predicate": "dependency_unresolved",
+        "signal": "adverse",
+        "kind": "dependency",
+        "severity": "high"
+      },
+      "hard_validation": {
+        "outcome": "supported",
+        "hard_validation": "validated",
+        "finding_count": 1
+      },
+      "independent_output_rating": null
+    },
+    {
+      "case": {
+        "id": "cloud_resource_07",
+        "agent": "resource",
+        "task_class": "resource_interpretation",
+        "split": "calibration",
+        "scenario": "absent",
+        "sources": [
+          {
+            "text": "No evidence has been supplied for this requested issue: Aggregate capacity risk is elevated while overlapping work remains committed.",
+            "category": "metric:capacity_risk"
+          },
+          {
+            "text": "Published aggregate capacity risk is 1.",
+            "category": "metric:capacity_risk",
+            "kind": "metric",
+            "metric": {
+              "key": "capacity_risk",
+              "value": "1"
+            }
+          }
+        ],
+        "baseline": {
+          "canonical": {
+            "capacity_risk": "1"
+          },
+          "summary": "Selected scope only; evidence has not been independently reviewed.",
+          "unresolved": [
+            "resource"
+          ]
+        },
+        "labels": {
+          "supported_items": 0,
+          "abstention_required": true,
+          "required_support": [],
+          "allowed_predicates": [],
+          "expected_rubric_level": null,
+          "advice_rubric": "Address the evidenced control, dependency or aggregate support need; no invented facts, numbers or approvals.",
+          "material_omissions": [
+            "Retain unresolved scope and canonical values."
+          ],
+          "interpretation_rubric": "Require a supported delivery implication and relevant advice beyond a source restatement; an evidence identity alone is insufficient."
+        }
+      },
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "attempt_id": "da2e4c02-ff92-434e-a3df-66c5fae4b3b1",
+      "candidate_sha256": "6980ef18c5ff879de35077f05f60e9eaff61d6973138c6987fb225b039b778a6",
+      "measurement_report_sha256": "7f47c65ee85e68c39642c1698ef6c70b5d8a71ddc5085747dc2d39e63ab96df2",
+      "input": {
+        "basis": {},
+        "evidence": {
+          "e1": {
+            "length": 133,
+            "text": "No evidence has been supplied for this requested issue: Aggregate capacity risk is elevated while overlapping work remains committed."
+          },
+          "e2": {
+            "length": 39,
+            "text": "Published aggregate capacity risk is 1."
+          }
+        },
+        "mode": "findings",
+        "questions": {},
+        "required": [
+          "e1"
+        ],
+        "section": "cloud_resource_07",
+        "subjects": {
+          "s1": {
+            "agent": "resource",
+            "scope": "selected authorized project"
+          }
+        }
+      },
+      "output": {
+        "state": "supported",
+        "cites": [
+          "e1"
+        ],
+        "covered": [
+          "e1"
+        ],
+        "claim": "Aggregate capacity risk is elevated while overlapping work remains committed.",
+        "advice": "Deconflict work.",
+        "epistemic": "interpretation",
+        "predicate": "risk_present",
+        "signal": "adverse",
+        "kind": "risk",
+        "severity": "high"
+      },
+      "hard_validation": {
+        "outcome": "supported",
+        "hard_validation": "validated",
+        "finding_count": 1
+      },
+      "independent_output_rating": null
+    }
+  ]
+}

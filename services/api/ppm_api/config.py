@@ -75,6 +75,7 @@ class Settings(BaseSettings):
 
     @model_validator(mode="after")
     def validate_mail(self) -> "Settings":
+        """Validate the selected mail backend and its required credentials and origins."""
         if self.mail_mode != "smtp":
             return self
         from email.utils import parseaddr
@@ -98,6 +99,7 @@ class Settings(BaseSettings):
     @field_validator("jwt_secret")
     @classmethod
     def validate_key(cls, value: SecretStr) -> SecretStr:
+        """Reject signing secrets shorter than the minimum byte length."""
         if len(value.get_secret_value().encode()) < 32:
             raise ValueError("must contain at least 32 bytes")
         return value
@@ -105,6 +107,7 @@ class Settings(BaseSettings):
     @field_validator("web_origin")
     @classmethod
     def validate_origin(cls, value: str) -> str:
+        """Require an HTTPS origin, allowing plain HTTP only on loopback."""
         from urllib.parse import urlparse
 
         url = urlparse(value)
@@ -119,6 +122,7 @@ class Settings(BaseSettings):
     @field_validator("database_url")
     @classmethod
     def validate_database(cls, value: SecretStr) -> SecretStr:
+        """Require a PostgreSQL asyncpg URL with a host and database."""
         try:
             url = make_url(value.get_secret_value())
             if url.drivername != "postgresql+asyncpg" or not url.database or not url.host:
@@ -130,6 +134,7 @@ class Settings(BaseSettings):
     @field_validator("redis_url")
     @classmethod
     def validate_redis(cls, value: SecretStr) -> SecretStr:
+        """Require a Redis or TLS Redis URL with a host."""
         from urllib.parse import urlparse
 
         url = urlparse(value.get_secret_value())
@@ -139,6 +144,7 @@ class Settings(BaseSettings):
 
 
 def load_settings() -> Settings:
+    """Load validated settings and report only invalid field names, never secret values."""
     try:
         return Settings()  # type: ignore[call-arg]
     except ValidationError as exc:

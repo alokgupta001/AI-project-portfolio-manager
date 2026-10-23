@@ -11,6 +11,7 @@ from ppm_api.local_model_readiness import readiness  # noqa: E402
 
 
 def main() -> None:
+    """Report read-only host and Ollama readiness without loading a model."""
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--model", default="qwen3:4b")
     parser.add_argument("--base-url", default="http://127.0.0.1:11434")

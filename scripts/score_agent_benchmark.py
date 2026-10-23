@@ -28,10 +28,12 @@ from scripts.benchmark_agent_runtime import (  # noqa: E402
 
 
 def sha(path: Path) -> str:
+    """Return the SHA-256 fingerprint of an artifact's exact bytes."""
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
 def review_template(corpus: dict, corpus_hash: str) -> dict:
+    """Create an unapproved per-case review template bound to the supplied corpus."""
     return dict(
         schema_version="benchmark-review-v1",
         corpus_sha256=corpus_hash,
@@ -67,6 +69,7 @@ def review_template(corpus: dict, corpus_hash: str) -> dict:
 def score(
     corpus: dict, corpus_hash: str, review: dict, reports: list[dict], folder: Path = PRIVATE
 ) -> QualificationReport:
+    """Combine bound measurements and independent ratings into a qualification report."""
     label = review["label_review"]
     if (
         review["schema_version"] != "benchmark-review-v1"
@@ -169,6 +172,7 @@ def score(
     for task_class, rated in grouped.items():
 
         def total(key: str, rated: list = rated) -> int:
+            """Sum a reviewed measurement field across the current task class."""
             return sum(r["rating"][key] for r in rated)
 
         measurements.append(
@@ -224,6 +228,7 @@ def score(
 
 
 def main() -> None:
+    """Validate review inputs and export scores without enabling a model."""
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--template", action="store_true")
     parser.add_argument("--review", type=Path)

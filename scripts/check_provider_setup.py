@@ -20,6 +20,7 @@ PRIVATE = Path(__file__).resolve().parents[1] / "artifacts/local"
 
 
 def read_keys(path: Path) -> dict[str, str]:
+    """Read known private credential fields, rejecting duplicates and malformed values."""
     if not path.resolve().is_relative_to(PRIVATE.resolve()):
         raise ValueError("Private path required")
     if path.stat().st_size > 64000:
@@ -49,6 +50,7 @@ async def inspect(
     verify: bool,
     transport: httpx.AsyncBaseTransport | None = None,
 ) -> tuple[dict, dict]:
+    """Inspect fixed provider metadata endpoints; return sanitized status and bindings."""
     public: dict = {"schema_version": "provider-setup-v1", "inference_requests": 0, "providers": {}}
     bindings: dict = {"confirmed_at": datetime.now(UTC).isoformat(), "providers": {}}
     async with httpx.AsyncClient(
@@ -167,6 +169,7 @@ async def inspect(
 
 
 def main() -> None:
+    """Check private setup and optionally record bindings, without inference requests."""
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--env-file", type=Path, default=PRIVATE / "ai-v2.env")
     parser.add_argument("--verify", action="store_true", help="Authenticated metadata GETs only")

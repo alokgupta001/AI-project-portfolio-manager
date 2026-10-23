@@ -50,7 +50,7 @@ jobs:
           node scripts/check-persistence.mjs
       - name: Upload browser evidence
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: foundation-browser-evidence
           path: |

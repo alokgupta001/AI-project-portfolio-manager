@@ -56,6 +56,7 @@ CORPUS_HASH = digest(FIXTURES)
 
 
 def fixture_context(case: str, text: str) -> tuple[dict, dict]:
+    """Pack a fixed synthetic risk case using production evidence boundaries."""
     source = dict(
         source="fixture:" + case,
         kind="document",
@@ -76,6 +77,7 @@ def fixture_context(case: str, text: str) -> tuple[dict, dict]:
 
 
 def authorize(root: Path, path: Path, keys: dict[str, str]) -> tuple[Settings, ModelProfile, dict]:
+    """Verify the private key, free-tier and three-case smoke authorization bindings."""
     if not path.resolve().is_relative_to(root.resolve()) or path.stat().st_size > 64000:
         raise ValueError
     record = json.loads(path.read_text(encoding="utf-8"))
@@ -125,6 +127,7 @@ async def run(
     transport: httpx.AsyncBaseTransport | None = None,
     selected_cases: tuple[str, ...] | None = None,
 ) -> dict:
+    """Perform explicitly authorized transport checks with a retained account ledger."""
     if not 1 <= max_calls <= 3:
         raise ValueError
     keys = read_keys(root / "ai-v2.env")
@@ -189,6 +192,7 @@ async def run(
         diagnostics: dict = {}
 
         async def safe_error_hint(response: httpx.Response) -> None:
+            """Classify a provider error without returning its private response body."""
             diagnostics.clear()
             if response.status_code == 400:
                 raw = bytearray()
@@ -360,6 +364,7 @@ async def run(
 
 
 def main() -> None:
+    """Parse the fixed-fixture smoke options and emit a sanitized transport report."""
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--authorization-record", type=Path, required=True)
     parser.add_argument("--max-calls", type=int, choices=(1, 2, 3), default=3)

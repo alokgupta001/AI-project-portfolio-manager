@@ -35,6 +35,7 @@ def score(
     folder: Path = PRIVATE,
     label_approval_path: Path | None = None,
 ) -> CloudQualificationReport:
+    """Require frozen labels and bound cloud results before calculating qualification."""
     label = review["label_review"]
     if (
         review.get("schema_version") != "cloud-review-v1"

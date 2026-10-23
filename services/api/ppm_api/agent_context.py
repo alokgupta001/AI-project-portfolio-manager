@@ -8,6 +8,7 @@ from ppm_api.model_registry import canonical
 
 
 def section_schema(mode: str) -> dict:
+    """Restrict section output to the selected mode and reachable schema definitions."""
     schema = SectionOutput.model_json_schema()
     chosen = {"findings": "findings", "rubric": "matches", "synthesis": "narrative"}[mode]
     for name in ("findings", "matches", "narrative"):
@@ -17,6 +18,7 @@ def section_schema(mode: str) -> dict:
     needed: set[str] = set()
 
     def visit(value: object) -> None:
+        """Remove schema titles and collect transitively referenced definitions."""
         if isinstance(value, dict):
             value.pop("title", None)
             if "$ref" in value:
@@ -43,6 +45,7 @@ def pack(
     basis: list[dict],
     unresolved: list[str] | None = None,
 ) -> dict:
+    """Bind current authorized evidence and dependency aliases to a bounded role request."""
     agent, mode = node["agent"], node["mode"]
     old = {s["source"]: s for s in snapshot["sources"]}
     selected = []

@@ -1,0 +1,39 @@
+{
+  "reviewed_commit": "b83e7260f438eb53abdc1dd27fa5bd2fe93f7f60",
+  "review_url": "https://github.com/alokgupta001/AI-project-portfolio-manager/pull/5#pullrequestreview-5622536518",
+  "latest_docstring_coverage_percent": 87.86,
+  "optional_nits_addressed": 2,
+  "changes": [
+    "Log only classified heartbeat error codes or exception types; never payloads.",
+    "Accept a coherent clear no-adverse finding as a positive batch control."
+  ],
+  "current_strategy_sha256": "f5616c250a5fc6e465332e3db26cc6323c71af990129c4899c3aac452b87fa86",
+  "source_sha256": {
+    "services/api/ppm_api/agent_runtime.py": "995b5a14c830fa22913bc31afe5df242bf84fa8db1c65b8cbb42397aa864ec5e",
+    "tests/test_agent_batches.py": "7e1445c33f42dc1fbc491055e52eb2989c2bacdc317452d45f022cd1e541d47e",
+    "tests/test_agent_v2_runtime.py": "1dd73627a45201a1db42c9434ce01d95817277cea402af603e5d4b7570921291"
+  },
+  "checks": {
+    "ruff": "passed",
+    "python_format": "passed",
+    "mypy_modules": 65,
+    "offline_scope": 95,
+    "runtime_scope": 9,
+    "private_payload_logged": false
+  },
+  "full_backend_base": {
+    "passed": 495,
+    "local_seconds": 470.08,
+    "hosted_runs_passed": [39877523414, 39877515881]
+  },
+  "full_ci_for_followup": "See PR #5 checks after publication",
+  "new_provider_calls": 0,
+  "accuracy_approved": false,
+  "ci_runtime_followup": {
+    "action": "actions/upload-artifact@v6",
+    "runtime": "Node.js 24",
+    "primary_source": "https://github.com/actions/upload-artifact/releases/tag/v6.0.0",
+    "workflow_sha256": "3c460cceb088977558fc5640c4a25e255a49cd9d8eccaff2be4e3d9796b33f19",
+    "yaml_parse": "passed"
+  }
+}

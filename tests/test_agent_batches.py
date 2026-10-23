@@ -48,7 +48,7 @@ def compact(role, context):
         value["basis"] = list(context["basis"])[:1]
     else:
         value.update(
-            predicate=sorted(PREDICATES[role])[0],
+            predicate=sorted(PREDICATES[role] - {"no_adverse_evidence"})[0],
             signal="adverse",
             kind="risk",
             severity="medium",
@@ -83,6 +83,27 @@ def test_batch_roles_cannot_cover_or_cite_each_others_aliases():
     values["financial"]["cites"] = ["e2"]
     with pytest.raises(ModelFailure):
         validate_batch(node, ctx, values)
+
+
+def test_no_adverse_predicate_cannot_report_an_adverse_signal():
+    node, ctx = fixture_batch(cases("governance_01"))
+    values = {"governance": compact("governance", ctx["members"]["governance"])}
+    assert validate_batch(node, ctx, values)["members"]["governance"]["findings"]
+    # Reproduces the contradictory metadata in the independently reviewed Puter output.
+    values["governance"]["predicate"] = "no_adverse_evidence"
+    with pytest.raises(ModelFailure, match="INVALID_OUTPUT"):
+        validate_batch(node, ctx, values)
+    clear = cases("governance_01")[0]
+    clear["sources"][0]["text"] = (
+        "Independent review is complete; no missing control approvals were found."
+    )
+    node, ctx = fixture_batch([clear])
+    values["governance"].update(
+        signal="clear",
+        claim="Inspected controls have no missing approvals.",
+        advice="Retain the signed review evidence.",
+    )
+    assert validate_batch(node, ctx, values)["members"]["governance"]["findings"]
 
 
 @pytest.mark.parametrize(

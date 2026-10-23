@@ -21,6 +21,7 @@ from scripts.score_agent_benchmark import review_template  # noqa: E402
 
 
 def prepare(folder: Path) -> dict:
+    """Export separate labels, historical candidates and unapproved review templates."""
     corpus, corpus_hash = load_corpus(CLOUD_CORPUS)
     folder.mkdir(parents=True, exist_ok=True)
     write_new(folder / "labels.json", corpus)

@@ -18,6 +18,7 @@ from scripts.check_provider_setup import PRIVATE, read_keys  # noqa: E402
 
 
 def gemini_settings() -> Settings:
+    """Load the private Gemini configuration needed to bind synthetic calibration."""
     return Settings(
         _env_file=PRIVATE / "ai-provider.env",
         app_env="test",
@@ -29,6 +30,7 @@ def gemini_settings() -> Settings:
 
 
 def prepare() -> dict:
+    """Prepare disabled assigned profiles and bounded synthetic calibration authorizations."""
     keys = read_keys(PRIVATE / "ai-v2.env")
     settings = gemini_settings()
     if gemini_block_reason(settings):

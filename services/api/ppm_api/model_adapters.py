@@ -30,6 +30,7 @@ def strict_schema(schema: dict) -> dict:
     result = json.loads(json.dumps(schema))
 
     def visit(value: object) -> None:
+        """Require all object properties and reject additional fields recursively."""
         if isinstance(value, dict):
             value.pop("default", None)
             if (
@@ -61,10 +62,12 @@ class NativeAdapter:
         transport: httpx.AsyncBaseTransport | None = None,
         checkpoint_response: Callable[[dict], None] | None = None,
     ) -> None:
+        """Bind native transport to one validated model profile and settings snapshot."""
         self.settings, self.profile, self.transport = settings, profile, transport
         self.checkpoint_response = checkpoint_response
 
     def permit(self, request: ModelRequest) -> None:
+        """Reject expired permits or provider and model identity mismatches."""
         p = request.permit
         if (
             p.expires_at.tzinfo is None
@@ -99,6 +102,7 @@ class NativeAdapter:
             raise ModelFailure("SPENDING_NOT_AUTHORIZED")
 
     def origin(self) -> str:
+        """Choose a fixed cloud origin or Ollama on loopback, ollama or host.docker.internal."""
         if self.profile.provider == "ollama":
             parsed = urlparse(self.settings.ai_ollama_base_url)
             if (
@@ -122,6 +126,7 @@ class NativeAdapter:
         raise ModelFailure("SPENDING_NOT_AUTHORIZED")
 
     async def execute(self, request: ModelRequest) -> ModelResult:
+        """Recheck eligibility and admission before one bounded native provider request."""
         self.permit(request)
         started = perf_counter()
         origin = self.origin()
@@ -194,6 +199,7 @@ class NativeAdapter:
     async def gemini_chat(
         self, client: httpx.AsyncClient, request: ModelRequest, started: float
     ) -> ModelResult:
+        """Send Gemini structured completion with pinned identity and bounded output."""
         key = os.environ.get(self.profile.credential_ref or "", "")
         if not key:
             raise ModelFailure("AUTHENTICATION")
@@ -220,6 +226,7 @@ class NativeAdapter:
     async def puter_chat(
         self, client: httpx.AsyncClient, request: ModelRequest, started: float
     ) -> ModelResult:
+        """Call Puter's native free-allowance driver using the bound model and schema."""
         if (
             self.profile.model != "gpt-4.1-mini-2025-04-14"
             or self.profile.upstream_provider != "openai-completion"
@@ -272,6 +279,7 @@ class NativeAdapter:
         return self.puter_result(request, data, int((perf_counter() - started) * 1000))
 
     def puter_result(self, request: ModelRequest, data: dict, latency: int) -> ModelResult:
+        """Normalize Puter's completion state, text and reported usage without inventing totals."""
         result = data.get("result", data)
         if not isinstance(result, dict):
             raise ModelFailure("INVALID_OUTPUT", "completed")
@@ -311,6 +319,7 @@ class NativeAdapter:
         body: dict | None = None,
         headers: dict | None = None,
     ) -> dict:
+        """Read bounded provider JSON and classify HTTP failures without exposing raw bodies."""
         if body is not None and len(json.dumps(body).encode()) > 110000:
             raise ModelFailure("CONTEXT_LIMIT")
         async with client.stream(method, url, json=body, headers=headers) as response:
@@ -391,6 +400,7 @@ class NativeAdapter:
     ) -> ModelResult:
         # execute()/permit() recheck qualification, key hash, free-account
         # confirmation and exact tenant/project/category egress before this point.
+        """Send a pinned compatible completion using the authorized provider credential."""
         key = os.environ.get(self.profile.credential_ref or "", "")
         if not key:
             raise ModelFailure("AUTHENTICATION")
@@ -437,6 +447,7 @@ class NativeAdapter:
         return self.chat_result(request, data, int((perf_counter() - started) * 1000))
 
     async def check_openrouter_price(self, client: httpx.AsyncClient, origin: str) -> None:
+        """Require the pinned free upstream and zero prices before OpenRouter generation."""
         model = self.profile.model
         if not model.endswith(":free") or not self.profile.upstream_provider:
             raise ModelFailure("SPENDING_NOT_AUTHORIZED")
@@ -461,6 +472,7 @@ class NativeAdapter:
                 raise ModelFailure("SPENDING_NOT_AUTHORIZED") from None
 
     def chat_result(self, request: ModelRequest, data: dict, latency: int) -> ModelResult:
+        """Normalize compatible chat output and usage into the shared model result."""
         rows = data.get("choices", [])
         if (
             not isinstance(rows, list)
@@ -534,6 +546,7 @@ class NativeAdapter:
         )
 
     def ollama_result(self, request: ModelRequest, data: dict, latency: int) -> ModelResult:
+        """Normalize local completion, timing and usage with explicit truncation status."""
         message = data.get("message", {})
         if message.get("tool_calls") or message.get("thinking"):
             raise ModelFailure("INVALID_OUTPUT", "completed")
@@ -560,6 +573,7 @@ class NativeAdapter:
         )
 
     def gemini_result(self, request: ModelRequest, data: dict, latency: int) -> ModelResult:
+        """Normalize Gemini candidates and finish reasons without accepting truncated output."""
         rows = data.get("candidates", [])
         if len(rows) != 1:
             raise ModelFailure("REFUSED", "completed")

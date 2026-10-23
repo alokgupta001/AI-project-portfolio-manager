@@ -25,6 +25,7 @@ class RouteRequirements:
 
 
 def eligibility(p: ModelProfile, r: RouteRequirements, s: Settings) -> str | None:
+    """Return the first unmet scope, quality, resource, credential or free-egress gate."""
     if not s.ai_runtime_v2_enabled or s.ai_execution_mode == "disabled" or not p.enabled:
         return "PROVIDER_DISABLED"
     if r.tenant not in p.allowed_tenants or (
@@ -108,6 +109,7 @@ def eligibility(p: ModelProfile, r: RouteRequirements, s: Settings) -> str | Non
 def candidates(
     policy: ModelPolicy, requirements: RouteRequirements, settings: Settings
 ) -> tuple[list[ModelProfile], dict[str, str]]:
+    """Filter profiles through eligibility and rank eligible choices deterministically."""
     eligible, reasons = [], {}
     for profile in policy.profiles:
         try:

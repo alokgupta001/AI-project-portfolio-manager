@@ -1,0 +1,22 @@
+{
+  "corpus_sha256": "c13f5ad5526df7d6ec2bb50c2a40952a30bead042ab6a0d4a454e47bfa39e6be",
+  "strategy_sha256": "f9c761cd0be72169a8cd47b424bca666327eebf04b491ffd5453e17a0691adf2",
+  "review_kind": "independent_ai_label_audit",
+  "reviewed_commit": "880629da4ae273bf8745feaa03bcefadb222ab63",
+  "review_url": "https://github.com/alokgupta001/AI-project-portfolio-manager/pull/5#issuecomment-6353685644",
+  "human_approval": false,
+  "reviewed_cases": 108,
+  "reviewed_held_out_cases": 54,
+  "limitations": [
+    "Synthetic shared templates and metrics",
+    "Scenario families differ across splits",
+    "No measured accuracy or human approval"
+  ],
+  "label_review": {
+    "id": "CodeRabbit-PR5-6353685644-AI-label-audit",
+    "reviewer": "coderabbitai[bot] (independent AI review)",
+    "independent": true,
+    "approved_at": "2026-10-22T23:35:08+00:00",
+    "reviewed_before_held_out_inference": true
+  }
+}
