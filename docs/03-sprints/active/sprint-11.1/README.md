@@ -1,5 +1,16 @@
 # Sprint 11.1 implementation
 
+**Final review disposition:** 495 full backend/lifecycle/drift tests pass. The
+independent AI label audit passed all 108 draft cases; the output sample audit
+failed. The bounded sequence stopped at 20 new calibration calls/42 role outputs,
+with no evaluated-provider held-out requests and no model qualification. New
+deterministic metadata and cancellation guards pass their regressions. Current
+strategy requires a fresh reviewed binding; no attempt/allocation is reset.
+[Final evidence](../../../verification/sprint11_1/review-closeout/README.md) and
+[PR #5](https://github.com/alokgupta001/AI-project-portfolio-manager/pull/5).
+AT17 remains BLOCKED; normal 0012 and seven disabled profiles are preserved.
+Earlier entries retain their original checkpoint status.
+
 **Current evaluation checkpoint:** 493 full backend/lifecycle/drift tests pass.
 CodeRabbit independently AI-reviewed all 108 revised labels/54 held out and
 verified their hashes. Its label verdict is recorded as AI review, not human

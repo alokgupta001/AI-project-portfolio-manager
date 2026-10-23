@@ -1,6 +1,37 @@
 # Sprint 11.1 review closeout — 23 October 2026
 
-## Current checkpoint
+## Final code and evaluation disposition
+
+**495 backend tests pass**, including the disposable database lifecycle/drift
+checks, in 470.08 seconds. One inherited Starlette warning remains. The final
+focused scopes are 95 offline acceptance/specialist checks and nine runtime DB
+regressions, overlapping the full suite. The last regressions reject contradictory
+`no_adverse_evidence`/adverse metadata and preserve worker cancellation arriving
+during heartbeat cleanup. Both reproduced failures before their fixes.
+
+Model qualification remains **BLOCKED**. All three evaluation workers stopped
+after **20 new calibration requests / 42 role outputs**, with **zero evaluated-provider
+held-out requests**. [Retained results](acceptance-stopped.json) reconcile every new
+attempt with account ledgers. Gemini emitted three unsupported conditions in
+absence cases; Groq executive synthesis also failed a required abstention. The
+[independent 12-record output audit](output-audit-rejected.json) additionally found
+unsupported privacy interpretation, weak restatements and contradictory metadata.
+Hard validation was never counted as semantic accuracy.
+
+The [108-case AI label pass](label-audit-pass.json) binds measured strategy `f9c761cd`.
+The later deterministic guard and cleanup fixes change the current strategy to
+`7c5b33bb`; earlier approvals/measurements cannot qualify that revised strategy.
+The [fresh empty template](label-approval-template-current.json) prepares deliberate
+review before future inference. Old approvals, attempts, failures and allocations
+remain immutable history. No authorization is renewed, no model is promoted, and
+no weight training or held-out prompt tuning occurred.
+
+Normal schema 0012, seven disabled/unqualified profiles, $0 limits, Ollama stopped
+and the 21 unrelated artifact changes are preserved. Required hosted checks and
+the latest CodeRabbit review are visible on [PR #5](https://github.com/alokgupta001/AI-project-portfolio-manager/pull/5).
+Sprint 12 is not started. Earlier entries below are point-in-time checkpoints.
+
+## Earlier 493-test checkpoint
 
 The final full backend/lifecycle/drift run passes **493 tests** in 474.52 seconds,
 with one inherited Starlette warning. CodeRabbit independently [passed all 108

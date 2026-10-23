@@ -1,10 +1,9 @@
 {
-  "code_commit": "880629da4ae273bf8745feaa03bcefadb222ab63",
   "base_commit": "72e0b8efb00d8e9d2dcd650ed1800caf1d5bdf05",
   "full_backend": {
-    "passed": 493,
+    "passed": 495,
     "failed": 0,
-    "seconds": 474.52,
+    "seconds": 470.08,
     "warnings": ["Inherited Starlette TestClient/httpx deprecation"],
     "database": "ppm_test",
     "migration_lifecycle": "passed",
@@ -12,8 +11,8 @@
   },
   "focused_scopes_overlap_full_backend": {
     "benchmark_file": 53,
-    "new_database_regressions": 8,
-    "benchmark_acceptance_specialist_scope": 94
+    "new_database_regressions": 9,
+    "benchmark_acceptance_specialist_scope": 95
   },
   "static_checks": {
     "ruff": "passed",
@@ -25,7 +24,7 @@
     "frontend_format": "passed",
     "source_inventories": "passed",
     "preserved_source_hashes": 7,
-    "local_links_checked": 289,
+    "local_links_checked": 305,
     "missing_links": 0
   },
   "normal_state_read_only": {
@@ -36,17 +35,17 @@
     "qualified_profiles": 0,
     "ollama_processes": 0
   },
-  "real_provider_requests": "acceptance calibration in progress; exact retained counts reported separately",
-  "held_out_inference_requests": "bounded sequence in progress; source strategy frozen",
-  "independent_label_approval": true,
-  "hosted_ci": "in_progress_at_local_receipt",
-  "coderabbit_review": "latest re-review rate-limited; not an approval",
+  "real_provider_requests": 20,
+  "held_out_inference_requests": 0,
+  "independent_label_approval": "AI-reviewed corpus at measured strategy; current strategy binding requires review",
+  "hosted_ci": "See required checks on PR #5 for the published head",
+  "coderabbit_review": "Re-review requested after free allowance reset; see PR #5",
   "followup": {
     "runtime_regressions": 8,
     "benchmark_file": 53,
     "benchmark_acceptance_specialist_scope": 94,
     "scopes_overlap": true,
-    "full_backend": "493 passed; migration lifecycle and schema drift passed",
+    "full_backend": "495 passed; migration lifecycle/drift passed",
     "intermediate_full_run": "intentionally stopped to replace the obsolete corpus/export snapshot; retained private log, not reported as a pass",
     "source_sha256": {
       "scripts/benchmark_agent_runtime.py": "d2acef0c9bceb9a3614a4be275f79b3247a302f6e513e07b38594bf749a94dfa",
@@ -56,19 +55,54 @@
       "services/api/ppm_api/model_registry.py": "e3f8cf3a9a3b3476770de13621c59a772212d213f718be4037a6abf8430fd746",
       "tests/fixtures/agent_v2_cloud_quality.json": "c13f5ad5526df7d6ec2bb50c2a40952a30bead042ab6a0d4a454e47bfa39e6be"
     },
-    "backend_log_sha256": "7a557bcfa4ea72df08e81b6c61eac936f975401b93e2ca757c9570255436f770"
-  },
-  "previous_full_backend": {
-    "code_commit": "40e3e9c8ac268d360295df7bc163f5929edeae79",
-    "passed": 487,
-    "failed": 0,
-    "seconds": 466.83,
-    "warnings": ["Inherited Starlette TestClient/httpx deprecation"],
-    "database": "ppm_test",
-    "migration_lifecycle": "passed",
-    "alembic_drift": "passed"
+    "backend_log_sha256": "657b08e4650a3c6ca80463187a804166ebe4925435f39674ddaf0272ed1826ad"
   },
   "label_review_kind": "independent_ai_only",
   "human_approval": false,
-  "provider_accuracy_approved": false
+  "provider_accuracy_approved": false,
+  "full_backend_history": [
+    {
+      "code_commit": "40e3e9c8ac268d360295df7bc163f5929edeae79",
+      "passed": 487,
+      "failed": 0,
+      "seconds": 466.83,
+      "warnings": ["Inherited Starlette TestClient/httpx deprecation"],
+      "database": "ppm_test",
+      "migration_lifecycle": "passed",
+      "alembic_drift": "passed"
+    },
+    {
+      "code_commit": "880629da4ae273bf8745feaa03bcefadb222ab63",
+      "passed": 493,
+      "failed": 0,
+      "seconds": 474.52,
+      "warnings": ["Inherited Starlette TestClient/httpx deprecation"],
+      "database": "ppm_test",
+      "migration_lifecycle": "passed",
+      "alembic_drift": "passed"
+    },
+    {
+      "passed": 494,
+      "seconds": 469.91,
+      "scope": "predicate guard before final heartbeat-cleanup cancellation regression"
+    }
+  ],
+  "validation_binding": {
+    "parent_commit": "e8add3dbc6d2262107e85ea43c7b9a4385f8a946",
+    "current_strategy_sha256": "7c5b33bbb68914498b051b49531f04154bce92f5ae7b14f17b08a490569c2b13",
+    "source_sha256": {
+      "scripts/benchmark_agent_runtime.py": "d2acef0c9bceb9a3614a4be275f79b3247a302f6e513e07b38594bf749a94dfa",
+      "scripts/prepare_cloud_acceptance.py": "0274d6efffed5732e46cf615a047fa50b562a468475d31c30b05fca6f040896c",
+      "services/api/ppm_api/agent_runtime.py": "15c0830ab382666d6f5ac8cae0eaac831f31a188be2afd83973e94d0ae1c5a81",
+      "services/api/ppm_api/agent_validation.py": "794e2c8a4be26acbdbd54aab8c13249b0cafbeb7b7ed54acf2b29c636d74ee35",
+      "services/api/ppm_api/model_adapters.py": "6395fa25780d6dffaae5a1fa8a3a289a775ebb7b4fbf85578a3d1d040b8e7271",
+      "services/api/ppm_api/model_registry.py": "e3f8cf3a9a3b3476770de13621c59a772212d213f718be4037a6abf8430fd746",
+      "tests/test_agent_v2_runtime.py": "004e60372ee4db116de6abc07e5a31e46dfa102908db0bb12986b6733190fd77",
+      "tests/test_agent_batches.py": "2c6dc57f4d93931a16684cfeda73f18cd366c06ddd4e78596f805903b52e884f",
+      "tests/test_agent_benchmark.py": "cb956c9af94b318d90d92852f005384fa5297c0c8de73bc95bf8eb3e68bd59b6",
+      "tests/fixtures/agent_v2_cloud_quality.json": "c13f5ad5526df7d6ec2bb50c2a40952a30bead042ab6a0d4a454e47bfa39e6be"
+    }
+  },
+  "current_strategy_has_approved_measurement_binding": false,
+  "acceptance_status": "rejected_before_held_out"
 }

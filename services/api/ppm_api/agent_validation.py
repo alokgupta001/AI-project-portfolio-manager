@@ -83,6 +83,8 @@ def validate_section(node: dict, context: dict, output: SectionOutput) -> dict:
             node["agent"], set()
         ):
             raise ModelFailure("INVALID_OUTPUT", "completed")
+        if finding.predicate == "no_adverse_evidence" and finding.signal == "adverse":
+            raise ModelFailure("INVALID_OUTPUT", "completed")
         metric_keys = {
             "budget_overrun": {"usage", "variance", "financial_risk"},
             "schedule_late": {"schedule_risk", "critical"},

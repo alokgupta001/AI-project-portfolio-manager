@@ -2,7 +2,6 @@
 
 import asyncio
 import json
-from contextlib import suppress
 from datetime import timedelta
 from typing import Any
 from uuid import UUID, uuid4, uuid5
@@ -624,8 +623,7 @@ async def execute(runtime: Any, run: dict) -> tuple[dict, str | None]:
     finally:
         stop.set()
         pulse.cancel()
-        with suppress(asyncio.CancelledError, Exception):
-            await pulse
+        await asyncio.gather(pulse, return_exceptions=True)
 
 
 def live_sections(snapshot: dict, sections: list, tasks: list | None, current: dict) -> list:

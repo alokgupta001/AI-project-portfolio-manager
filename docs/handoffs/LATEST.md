@@ -1,5 +1,27 @@
 # Latest technical handoff
 
+**Final — 23 October 2026, Sprint 11.1 review disposition:** 495 full backend tests
+and disposable lifecycle/drift checks pass (470.08 seconds, one inherited Starlette
+warning); focused 95 offline/nine runtime DB cases overlap. All verified review
+findings are fixed, including late cancellation during heartbeat cleanup and
+contradictory no-adverse/adverse metadata. Documentation covers 186/186 production
+functions in the original non-migration diff; CodeRabbit's first coverage gate
+passed at 92.35%. Follow [PR #5](https://github.com/alokgupta001/AI-project-portfolio-manager/pull/5)
+for current hosted checks/re-review.
+
+Independent AI label audit passed 108 cases/54 held out at measured strategy
+`f9c761cd`; independent output audit rejected the 12-record sample. Measurements
+stopped at 20 new calls/42 role outputs, zero evaluated-provider held-out calls.
+Gemini absence and Groq executive abstention failures, unsupported team privacy
+interpretation, weak added reasoning and contradictory metadata remain actual
+quality failures. All raw attempts/caps are retained; do not turn them into passes.
+Current strategy `7c5b33bb` includes the new guards and needs a deliberately reviewed
+binding before further inference. No authorization renewal, prompt tuning on held
+out data, model promotion or weight training. [Final evidence](../verification/sprint11_1/review-closeout/README.md).
+AT17 remains BLOCKED. Normal 0012, seven disabled profiles, $0, stopped Ollama,
+private files and 21 older artifacts are preserved. Stop before Sprint 12.
+Earlier entries below retain their point-in-time status.
+
 **Current — 23 October 2026, evaluation checkpoint:** final backend/lifecycle/drift
 passes **493 tests** (474.52 seconds), one inherited Starlette warning. CodeRabbit's
 independent labels-only AI audit passed all 108 revised cases/54 held out at

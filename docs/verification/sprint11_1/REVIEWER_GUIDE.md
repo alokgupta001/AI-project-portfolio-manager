@@ -1,5 +1,13 @@
 # Independent cloud acceptance review
 
+**Final disposition:** the [output sample audit failed](review-closeout/output-audit-rejected.json).
+The bounded sequence stopped at 20 new calibration calls/42 role outputs, with no
+evaluated-provider held-out calls and no qualification. The label-content pass
+below binds measured strategy `f9c761cd`; subsequent predicate/cleanup guards
+change the current strategy to `7c5b33bb`. Use the [fresh empty current template](review-closeout/label-approval-template-current.json)
+only after deliberate review of that binding. Existing approvals and measurements
+remain historical; they cannot authorize inference or qualify the revised strategy.
+
 **Current:** CodeRabbit's [labels-only re-audit passed](review-closeout/label-audit-pass.json)
 all 108 revised cases/54 held out, with both hashes verified. The actual
 [AI approval record](review-closeout/ai-label-approval.json) is frozen before
@@ -23,7 +31,7 @@ model has been approved; older exported labels and strategy hashes are historica
    approval. These are author drafts, not established ground truth. They contain no
    real tenant/personnel information or copied external dataset rows.
 2. Record your identity, independent review ID and approval time in a copy of the
-   [current label approval template](review-closeout/label-approval-template.json). Independence
+   [current label approval template](review-closeout/label-approval-template-current.json). Independence
    means that the reviewer did not author the labels. Approval must bind the final
    corpus and strategy hashes and precede held-out inference. A changed corpus or
    strategy requires deliberate review; the runner will reject stale bindings.

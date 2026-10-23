@@ -565,17 +565,17 @@ Source-derived AST inventory. Search symbols instead of relying on line numbers;
 
 [Source](../../services/api/ppm_api/agent_runtime.py)
 
-- `initialize` — line 42
-- `task_update` — line 88
-- `commit_section` — line 109
-- `baseline` — line 146
-- `heartbeat` — line 181
-- `batch_window_delay` — line 199
-- `complete_task` — line 215
-- `execute` — line 459
-- `live_sections` — line 631
-- `reviewed_findings` — line 673
-- `assemble` — line 704
+- `initialize` — line 41
+- `task_update` — line 87
+- `commit_section` — line 108
+- `baseline` — line 145
+- `heartbeat` — line 180
+- `batch_window_delay` — line 198
+- `complete_task` — line 214
+- `execute` — line 458
+- `live_sections` — line 629
+- `reviewed_findings` — line 671
+- `assemble` — line 702
 
 ## services/api/ppm_api/agent_schemas.py
 
@@ -606,7 +606,7 @@ Source-derived AST inventory. Search symbols instead of relying on line numbers;
 - `validate_section` — line 25
 - `spans` — line 38
 - `item` — line 48
-- `reconcile` — line 203
+- `reconcile` — line 205
 
 ## services/api/ppm_api/agents.py
 
@@ -1470,23 +1470,24 @@ Source-derived AST inventory. Search symbols instead of relying on line numbers;
 - `compact` — line 38
 - `test_all_nine_plan_has_four_calls_and_real_synthesis_dependencies` — line 59
 - `test_batch_roles_cannot_cover_or_cite_each_others_aliases` — line 74
-- `test_invalid_member_rejects_whole_batch` — line 91
-- `test_batch_eligibility_requires_every_member_class` — line 110
-- `test_batch_wait_respects_one_minute_and_deadline` — line 138
-- `test_batch_revocation_withholds_all_members_including_no_findings` — line 155
-- `test_batched_and_individual_attempts_share_case_exhaustion` — line 175
-- `test_real_packer_isolated_and_private_answers_rejected` — line 197
-- `repair` — line 213
-- `test_repair_dry_run_keeps_original_authorization_and_rejects_holdout` — line 223
-- `forbid` — line 227
-- `test_batch_unknown_blocks_replay_and_retains_each_case_root` — line 244
-- `lose` — line 248
-- `test_groq_schema_errors_are_repairable_but_counted` — line 270
-- `test_cloud_review_cannot_approve_itself_or_ignore_frozen_strategy` — line 287
-- `test_fresh_acceptance_cases_are_unseen_distinct_and_prepare_offline` — line 299
-- `test_independent_approval_is_required_before_heldout_cloud_prepare` — line 314
-- `forbid` — line 346
-- `test_cloud_score_binds_approval_candidate_and_complete_ledger_without_qualifying` — line 366
+- `test_no_adverse_predicate_cannot_report_an_adverse_signal` — line 88
+- `test_invalid_member_rejects_whole_batch` — line 101
+- `test_batch_eligibility_requires_every_member_class` — line 120
+- `test_batch_wait_respects_one_minute_and_deadline` — line 148
+- `test_batch_revocation_withholds_all_members_including_no_findings` — line 165
+- `test_batched_and_individual_attempts_share_case_exhaustion` — line 185
+- `test_real_packer_isolated_and_private_answers_rejected` — line 207
+- `repair` — line 223
+- `test_repair_dry_run_keeps_original_authorization_and_rejects_holdout` — line 233
+- `forbid` — line 237
+- `test_batch_unknown_blocks_replay_and_retains_each_case_root` — line 254
+- `lose` — line 258
+- `test_groq_schema_errors_are_repairable_but_counted` — line 280
+- `test_cloud_review_cannot_approve_itself_or_ignore_frozen_strategy` — line 297
+- `test_fresh_acceptance_cases_are_unseen_distinct_and_prepare_offline` — line 309
+- `test_independent_approval_is_required_before_heldout_cloud_prepare` — line 324
+- `forbid` — line 356
+- `test_cloud_score_binds_approval_candidate_and_complete_ledger_without_qualifying` — line 376
 
 ## tests/test_agent_benchmark.py
 
@@ -1578,10 +1579,12 @@ Source-derived AST inventory. Search symbols instead of relying on line numbers;
 - `unavailable` — line 713
 - `test_failed_heartbeat_does_not_replace_completed_result` — line 775
 - `failed` — line 789
-- `test_oversized_bound_context_keeps_baseline_and_reports_partial` — line 802
-- `oversized` — line 819
-- `test_v2_late_output_is_fenced` — line 855
-- `paused` — line 866
+- `test_worker_cancellation_during_heartbeat_cleanup_is_not_swallowed` — line 802
+- `lingering` — line 808
+- `test_oversized_bound_context_keeps_baseline_and_reports_partial` — line 837
+- `oversized` — line 854
+- `test_v2_late_output_is_fenced` — line 890
+- `paused` — line 901
 
 ## tests/test_agents.py
 

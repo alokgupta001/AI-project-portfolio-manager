@@ -1,6 +1,6 @@
 {
   "schema_version": "independent-ai-label-review-request-v1",
-  "status": "labels_pass_independent_ai_review",
+  "status": "measured_strategy_retired_after_output_rejection",
   "reviewer": "CodeRabbit (requested AI review)",
   "review_type": "independent AI audit; not human approval or measured model accuracy",
   "corpus": "tests/fixtures/agent_v2_cloud_quality.json",
@@ -20,7 +20,7 @@
     "Re-audit clarified privacy/causal cases and the distinct held-out governance rubric; prior audit did not approve labels."
   ],
   "independent_label_approval": true,
-  "held_out_inference_requests": "subsequent bounded acceptance sequence in progress",
+  "held_out_inference_requests": 0,
   "profile_activated": false,
   "prior_audit_url": "https://github.com/alokgupta001/AI-project-portfolio-manager/pull/5#issuecomment-6353493991",
   "prior_audit_approved": false,
@@ -31,5 +31,8 @@
   },
   "request_url": "https://github.com/alokgupta001/AI-project-portfolio-manager/pull/5#issuecomment-6353666014",
   "verdict_url": "https://github.com/alokgupta001/AI-project-portfolio-manager/pull/5#issuecomment-6353685644",
-  "human_approval": false
+  "human_approval": false,
+  "current_strategy_sha256": "7c5b33bbb68914498b051b49531f04154bce92f5ae7b14f17b08a490569c2b13",
+  "current_strategy_approval": false,
+  "further_inference_authorized_by_this_request": false
 }

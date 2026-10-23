@@ -799,6 +799,41 @@ async def test_failed_heartbeat_does_not_replace_completed_result(
     assert any(d["base_covered_ids"] for d in result["capability_details"])
 
 
+async def test_worker_cancellation_during_heartbeat_cleanup_is_not_swallowed(
+    identity, monkeypatch, tmp_path
+):
+    c, app, owner, ids, project, _, _ = await configure(identity, monkeypatch, tmp_path)
+    cleanup, release = asyncio.Event(), asyncio.Event()
+
+    async def lingering(runtime, stop):
+        try:
+            await asyncio.Event().wait()
+        finally:
+            cleanup.set()
+            await release.wait()
+
+    monkeypatch.setattr("ppm_api.agent_runtime.heartbeat", lingering)
+    created = await start(c, project, analysis_mode="metrics")
+    rid = UUID(created.json()["run"]["id"])
+    async with owner.connect() as conn:
+        job = await conn.scalar(sa.select(J.jobs.c.id).where(J.jobs.c.ai_run_id == rid))
+    worker = asyncio.create_task(
+        ai_worker(app.state.engine, job, ids["a"], ids["admin"], app.state.settings)
+    )
+    try:
+        await asyncio.wait_for(cleanup.wait(), 10)
+        worker.cancel("synthetic shutdown during heartbeat cleanup")
+        with pytest.raises(asyncio.CancelledError):
+            await asyncio.wait_for(worker, 10)
+        assert worker.cancelled()
+    finally:
+        release.set()
+        if not worker.done():
+            worker.cancel()
+        with suppress(asyncio.CancelledError, Exception):
+            await worker
+
+
 async def test_oversized_bound_context_keeps_baseline_and_reports_partial(
     identity, monkeypatch, tmp_path
 ):

@@ -158,7 +158,7 @@
     },
     {
       "path": "services/api/ppm_api/agent_validation.py",
-      "documentation_only": true,
+      "documentation_only": false,
       "functions": 5,
       "documented": 5
     },
