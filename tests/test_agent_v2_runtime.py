@@ -773,7 +773,7 @@ async def test_worker_cancellation_settles_and_propagates(
 
 @pytest.mark.parametrize("failure", ["database", "RUN_CANCELLED", "DEADLINE_EXCEEDED"])
 async def test_failed_heartbeat_does_not_replace_completed_result(
-    identity, monkeypatch, tmp_path, failure
+    identity, monkeypatch, tmp_path, failure, caplog
 ):
     from ppm_api import ai_provider
 
@@ -788,7 +788,7 @@ async def test_failed_heartbeat_does_not_replace_completed_result(
 
     async def failed(runtime, stop):
         if failure == "database":
-            raise RuntimeError("synthetic heartbeat failure")
+            raise RuntimeError("private-heartbeat-payload-must-stay-unlogged")
         raise ai_provider.ProviderError(failure)
 
     monkeypatch.setattr("ppm_api.agent_runtime.heartbeat", failed)
@@ -797,6 +797,18 @@ async def test_failed_heartbeat_does_not_replace_completed_result(
     assert result["run"]["status"] == "succeeded", result
     assert result["capability_details"]
     assert any(d["base_covered_ids"] for d in result["capability_details"])
+    diagnostics = [
+        json.loads(r.message)
+        for r in caplog.records
+        if r.name == "ppm_api.agent_runtime" and "agent_heartbeat_failed" in r.message
+    ]
+    assert diagnostics == [
+        dict(
+            event="agent_heartbeat_failed",
+            category="RuntimeError" if failure == "database" else failure,
+        )
+    ]
+    assert "private-heartbeat-payload-must-stay-unlogged" not in caplog.text
 
 
 async def test_worker_cancellation_during_heartbeat_cleanup_is_not_swallowed(

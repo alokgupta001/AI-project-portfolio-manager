@@ -2,6 +2,7 @@
 
 import asyncio
 import json
+import logging
 from datetime import timedelta
 from typing import Any
 from uuid import UUID, uuid4, uuid5
@@ -21,6 +22,7 @@ from ppm_api.agent_prompts import cloud_prompt
 from ppm_api.agent_recovery import recovery
 from ppm_api.agent_schemas import AGENTS
 from ppm_api.agent_validation import reconcile, validate_section
+from ppm_api.ai_provider import ProviderError
 from ppm_api.identity import now
 from ppm_api.jobs import stage
 from ppm_api.model_adapters import NativeAdapter
@@ -36,6 +38,7 @@ from ppm_api.model_router import RouteRequirements, candidates
 
 TERMINAL = {"SUCCEEDED", "FAILED", "BLOCKED", "SKIPPED", "CANCELLED"}
 MAX_BOUND_CONTEXT_BYTES = 80000
+logger = logging.getLogger(__name__)
 
 
 async def initialize(conn: Any, run: dict, snapshot: dict) -> None:
@@ -623,7 +626,14 @@ async def execute(runtime: Any, run: dict) -> tuple[dict, str | None]:
     finally:
         stop.set()
         pulse.cancel()
-        await asyncio.gather(pulse, return_exceptions=True)
+        (outcome,) = await asyncio.gather(pulse, return_exceptions=True)
+        if isinstance(outcome, Exception):
+            category = (
+                outcome.code
+                if isinstance(outcome, (ModelFailure, ProviderError))
+                else type(outcome).__name__
+            )
+            logger.warning(json.dumps(dict(event="agent_heartbeat_failed", category=category)))
 
 
 def live_sections(snapshot: dict, sections: list, tasks: list | None, current: dict) -> list:

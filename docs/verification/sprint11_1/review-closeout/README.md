@@ -2,6 +2,12 @@
 
 ## Final code and evaluation disposition
 
+CodeRabbit's final code review at `b83e726` completed with two optional nits.
+Both are [addressed and validated](nit-followup.json): payload-free heartbeat
+diagnostics and a coherent positive clear-finding control. The 95 offline/nine
+runtime scopes pass; both full hosted runs at that reviewed base passed. The
+latest coverage gate passed at **87.86%**. See PR #5 for checks on the nit follow-up.
+
 **495 backend tests pass**, including the disposable database lifecycle/drift
 checks, in 470.08 seconds. One inherited Starlette warning remains. The final
 focused scopes are 95 offline acceptance/specialist checks and nine runtime DB
@@ -20,7 +26,7 @@ Hard validation was never counted as semantic accuracy.
 
 The [108-case AI label pass](label-audit-pass.json) binds measured strategy `f9c761cd`.
 The later deterministic guard and cleanup fixes change the current strategy to
-`7c5b33bb`; earlier approvals/measurements cannot qualify that revised strategy.
+`f5616c25`; earlier approvals/measurements cannot qualify that revised strategy.
 The [fresh empty template](label-approval-template-current.json) prepares deliberate
 review before future inference. Old approvals, attempts, failures and allocations
 remain immutable history. No authorization is renewed, no model is promoted, and

@@ -15,7 +15,7 @@ stopped at 20 new calls/42 role outputs, zero evaluated-provider held-out calls.
 Gemini absence and Groq executive abstention failures, unsupported team privacy
 interpretation, weak added reasoning and contradictory metadata remain actual
 quality failures. All raw attempts/caps are retained; do not turn them into passes.
-Current strategy `7c5b33bb` includes the new guards and needs a deliberately reviewed
+Current strategy `f5616c25` includes the new guards and needs a deliberately reviewed
 binding before further inference. No authorization renewal, prompt tuning on held
 out data, model promotion or weight training. [Final evidence](../verification/sprint11_1/review-closeout/README.md).
 AT17 remains BLOCKED. Normal 0012, seven disabled profiles, $0, stopped Ollama,

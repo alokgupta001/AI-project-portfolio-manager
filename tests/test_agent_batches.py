@@ -93,6 +93,17 @@ def test_no_adverse_predicate_cannot_report_an_adverse_signal():
     values["governance"]["predicate"] = "no_adverse_evidence"
     with pytest.raises(ModelFailure, match="INVALID_OUTPUT"):
         validate_batch(node, ctx, values)
+    clear = cases("governance_01")[0]
+    clear["sources"][0]["text"] = (
+        "Independent review is complete; no missing control approvals were found."
+    )
+    node, ctx = fixture_batch([clear])
+    values["governance"].update(
+        signal="clear",
+        claim="Inspected controls have no missing approvals.",
+        advice="Retain the signed review evidence.",
+    )
+    assert validate_batch(node, ctx, values)["members"]["governance"]["findings"]
 
 
 @pytest.mark.parametrize(

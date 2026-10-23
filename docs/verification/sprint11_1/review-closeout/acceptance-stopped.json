@@ -3,7 +3,7 @@
   "status": "stopped_after_calibration_rejection_before_evaluated_provider_held_out_inference",
   "corpus_sha256": "c13f5ad5526df7d6ec2bb50c2a40952a30bead042ab6a0d4a454e47bfa39e6be",
   "measured_strategy_sha256": "f9c761cd0be72169a8cd47b424bca666327eebf04b491ffd5453e17a0691adf2",
-  "current_strategy_sha256": "7c5b33bbb68914498b051b49531f04154bce92f5ae7b14f17b08a490569c2b13",
+  "current_strategy_sha256": "f5616c250a5fc6e465332e3db26cc6323c71af990129c4899c3aac452b87fa86",
   "current_strategy_changed_after_measurement": true,
   "strategy_change_reason": "Predicate consistency and cancellation-safe heartbeat cleanup were hardened after the rejected measurement snapshot.",
   "label_review_kind": "independent_AI_only",

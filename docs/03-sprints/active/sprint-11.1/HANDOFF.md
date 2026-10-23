@@ -14,7 +14,7 @@ The independent AI label audit passed all 108 cases/54 held out, but the indepen
 calls/42 role outputs, with zero evaluated-provider held-out calls. Retain the
 Gemini absence failures, Groq executive abstention failure and other weak/unsupported
 sample interpretations. No accuracy/qualification pass is claimed. Measured
-strategy `f9c761cd` is historical; final guard/cleanup strategy `7c5b33bb` requires a
+strategy `f9c761cd` is historical; final guard/cleanup strategy `f5616c25` requires a
 new reviewed binding before any further inference. Do not renew/reset the existing
 authorization or usage history. [Evidence and fresh empty template](../../../verification/sprint11_1/review-closeout/README.md).
 AT17 remains BLOCKED. Normal 0012, seven disabled profiles, $0, stopped Ollama,

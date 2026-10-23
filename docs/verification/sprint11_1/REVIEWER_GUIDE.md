@@ -4,7 +4,7 @@
 The bounded sequence stopped at 20 new calibration calls/42 role outputs, with no
 evaluated-provider held-out calls and no qualification. The label-content pass
 below binds measured strategy `f9c761cd`; subsequent predicate/cleanup guards
-change the current strategy to `7c5b33bb`. Use the [fresh empty current template](review-closeout/label-approval-template-current.json)
+change the current strategy to `f5616c25`. Use the [fresh empty current template](review-closeout/label-approval-template-current.json)
 only after deliberate review of that binding. Existing approvals and measurements
 remain historical; they cannot authorize inference or qualify the revised strategy.
 

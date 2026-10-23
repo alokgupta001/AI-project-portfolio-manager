@@ -39,7 +39,7 @@
   "held_out_inference_requests": 0,
   "independent_label_approval": "AI-reviewed corpus at measured strategy; current strategy binding requires review",
   "hosted_ci": "See required checks on PR #5 for the published head",
-  "coderabbit_review": "Re-review requested after free allowance reset; see PR #5",
+  "coderabbit_review": "Completed at b83e726; two optional nits addressed and validated separately.",
   "followup": {
     "runtime_regressions": 8,
     "benchmark_file": 53,
@@ -104,5 +104,12 @@
     }
   },
   "current_strategy_has_approved_measurement_binding": false,
-  "acceptance_status": "rejected_before_held_out"
+  "acceptance_status": "rejected_before_held_out",
+  "current_nit_followup": "nit-followup.json",
+  "current_strategy_sha256": "f5616c250a5fc6e465332e3db26cc6323c71af990129c4899c3aac452b87fa86",
+  "hosted_ci_base": {
+    "commit": "b83e7260f438eb53abdc1dd27fa5bd2fe93f7f60",
+    "runs": [39877523414, 39877515881],
+    "status": "passed"
+  }
 }
