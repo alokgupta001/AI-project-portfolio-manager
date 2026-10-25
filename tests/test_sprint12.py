@@ -2,20 +2,23 @@
 
 from copy import deepcopy
 from datetime import timedelta
+from importlib import import_module
 from uuid import UUID, uuid4
 
 import pytest
 import sqlalchemy as sa
+from alembic.migration import MigrationContext
+from alembic.operations import Operations
 from ppm_api.connectors import logical_key
 from ppm_api.identity import context, now
 from ppm_api.identity_tables import sessions
 from ppm_api.ingestion import ConnectorConfig
-from ppm_api.job_tables import jobs, sources
+from ppm_api.job_tables import integrations, jobs, sources
 from ppm_api.jobs import run_job
 from ppm_api.ml import fixture
 from ppm_api.ml_pipeline import build_dataset, evaluate
 from ppm_api.ml_schemas import DatasetInput, HistoryInput
-from ppm_api.ml_tables import principals
+from ppm_api.ml_tables import principals, runs
 from test_delivery import change, setup
 from test_identity import identity as identity
 from test_identity import login, send
@@ -249,6 +252,8 @@ async def test_connector_schedule_survives_session_and_stops_after_revoke(identi
             .values(next_due=now() - timedelta(minutes=1))
         )
     await schedule_connectors(app.state.engine)
+    # next_due is now in the future; a second dispatch must not duplicate work.
+    await schedule_connectors(app.state.engine)
     async with owner.connect() as conn:
         job = (
             (
@@ -270,6 +275,210 @@ async def test_connector_schedule_survives_session_and_stops_after_revoke(identi
     async with owner.connect() as conn:
         assert (
             await conn.scalar(sa.select(jobs.c.status).where(jobs.c.id == job["id"])) == "succeeded"
+        )
+    await login(c, emails, org=ids["a"])
+    revoked = await approve(
+        c, integration, 1, active=False, secret_ref=integration["config"]["secret_ref"]
+    )
+    assert revoked.status_code == 200, revoked.text
+    async with owner.begin() as conn:
+        await conn.execute(
+            principals.update()
+            .where(principals.c.integration_id == UUID(integration["id"]))
+            .values(next_due=now() - timedelta(minutes=1))
+        )
+    await schedule_connectors(app.state.engine)
+    async with owner.connect() as conn:
+        assert (
+            await conn.scalar(
+                sa.select(sa.func.count())
+                .select_from(jobs)
+                .where(jobs.c.integration_id == UUID(integration["id"]))
+            )
+            == 1
+        )
+
+
+@pytest.mark.integration
+@pytest.mark.parametrize("failure", ["recheck", "get_integration", "enqueue"])
+async def test_connector_schedule_failure_backs_off_and_continues(identity, monkeypatch, failure):
+    from ppm_api import connectors, delivery
+    from ppm_api import jobs as job_service
+
+    c, app, owner, ids, emails, portfolio, project = await setup(identity)
+    connections = []
+    for name in ("Failing source", "Healthy source"):
+        integration = await connection(
+            c,
+            project,
+            name=name,
+            provider="github",
+            resource="example/repo",
+            mode="live",
+            secret_ref=f"PPM_CONNECTOR_{ids['a'].hex.upper()}_GITHUB_TOKEN",
+        )
+        assert (
+            await approve(
+                c, integration, interval_minutes=5, secret_ref=integration["config"]["secret_ref"]
+            )
+        ).status_code == 200
+        connections.append(UUID(integration["id"]))
+    async with owner.begin() as conn:
+        for index, integration_id in enumerate(connections):
+            await conn.execute(
+                principals.update()
+                .where(principals.c.integration_id == integration_id)
+                .values(next_due=now() - timedelta(minutes=2 - index))
+            )
+    module = connectors if failure == "recheck" else job_service
+    original = getattr(module, failure)
+
+    async def unreliable(*args, **kwargs):
+        result = await original(*args, **kwargs)
+        integration_id = args[0].connector_id
+        if integration_id == connections[0]:
+            delivery.fail(409, "Synthetic isolated scheduling failure")
+        return result
+
+    monkeypatch.setattr(module, failure, unreliable)
+    await connectors.schedule_connectors(app.state.engine)
+    async with owner.connect() as conn:
+        assert (
+            await conn.scalar(
+                sa.select(principals.c.next_due).where(
+                    principals.c.integration_id == connections[0]
+                )
+            )
+            > now()
+        )
+        scheduled = list(
+            (
+                await conn.execute(
+                    sa.select(jobs.c.integration_id).where(jobs.c.integration_id.in_(connections))
+                )
+            ).scalars()
+        )
+        assert scheduled == [connections[1]]
+        due = list((await conn.execute(sa.text("SELECT * FROM public.ppm_due_jobs()"))).mappings())
+        assert any(row["organization_id"] == ids["a"] for row in due)
+
+
+@pytest.mark.integration
+async def test_csv_namespace_backfill_preserves_explicit_namespaces_and_source_targets(identity):
+    c, app, owner, ids, emails, portfolio, project = await setup(identity)
+    legacy = await connection(c, project)
+    distinct = await connection(c, project, source_namespace="distinct-csv")
+    explicit = await connection(c, project, source_namespace="manual")
+    first = await submit(c, legacy, CSV)
+    await execute(app, first, ids)
+    async with owner.begin() as conn:
+        # Simulate pre-0017 integration and queued job snapshots lacking the field.
+        legacy_config = {k: v for k, v in legacy["config"].items() if k != "source_namespace"}
+        await conn.execute(
+            integrations.update()
+            .where(integrations.c.id == UUID(legacy["id"]))
+            .values(config=legacy_config)
+        )
+        original_targets = set(
+            (
+                await conn.execute(
+                    sa.select(sources.c.target_id).where(
+                        sources.c.integration_id == UUID(legacy["id"])
+                    )
+                )
+            ).scalars()
+        )
+    queued = await submit(c, legacy, CSV)
+    migration = import_module("services.api.migrations.versions.0018_csv_source_namespaces")
+
+    def backfill(sync_conn):
+        with Operations.context(MigrationContext.configure(sync_conn)):
+            migration.upgrade()
+
+    async with owner.begin() as conn:
+        await conn.run_sync(backfill)
+        await conn.run_sync(backfill)  # Idempotent data upgrade.
+        configs = dict(
+            (
+                await conn.execute(
+                    sa.select(integrations.c.id, integrations.c.config).where(
+                        integrations.c.id.in_([UUID(i["id"]) for i in (legacy, distinct, explicit)])
+                    )
+                )
+            ).all()
+        )
+        assert configs[UUID(legacy["id"])]["source_namespace"] == f"integration-{legacy['id']}"
+        assert configs[UUID(distinct["id"])]["source_namespace"] == "distinct-csv"
+        assert configs[UUID(explicit["id"])]["source_namespace"] == "manual"
+        assert (
+            await conn.scalar(
+                sa.select(jobs.c.config).where(jobs.c.id == UUID(queued.json()["id"]))
+            )
+        ) == legacy_config
+    await execute(app, queued, ids)
+    await execute(app, await submit(c, distinct, CSV), ids)
+    async with owner.connect() as conn:
+        records = list(
+            (
+                await conn.execute(
+                    sa.select(sources).where(sources.c.project_id == UUID(project["id"]))
+                )
+            ).mappings()
+        )
+        assert len(records) == 4 and len({r["logical_key"] for r in records}) == 4
+        assert {
+            r["target_id"] for r in records if str(r["integration_id"]) == legacy["id"]
+        } == original_targets
+    work = (
+        await c.get("/api/v1/delivery/work_items", params={"project_id": project["id"]})
+    ).json()["items"]
+    assert len(work) == 4
+
+
+@pytest.mark.integration
+@pytest.mark.parametrize("cancel", [False, True])
+async def test_ml_archived_project_blocks_lookup_even_when_cancelling(identity, cancel):
+    c, app, owner, ids, emails, portfolio, project = await setup(identity)
+    example = fixture(UUID(project["id"]))
+    imported = await send(
+        c,
+        "POST",
+        "/ml/histories",
+        headers={"idempotency-key": str(uuid4())},
+        json=example["history"],
+    )
+    dataset = await send(
+        c,
+        "POST",
+        "/ml/datasets",
+        headers={"idempotency-key": str(uuid4())},
+        json=example["dataset"] | {"history_id": imported.json()["id"]},
+    )
+    response = await send(
+        c,
+        "POST",
+        "/ml/runs",
+        headers={"idempotency-key": str(uuid4())},
+        json={"dataset_id": dataset.json()["id"]},
+    )
+    run_id = UUID(response.json()["id"])
+    assert (await change(c, project, archived=True)).status_code == 200
+    async with owner.begin() as conn:
+        job_id = await conn.scalar(sa.select(jobs.c.id).where(jobs.c.ml_run_id == run_id))
+        await conn.execute(jobs.update().where(jobs.c.id == job_id).values(cancel_requested=cancel))
+    await run_job(app.state.engine, job_id, ids["a"], ids["admin"])
+    async with owner.connect() as conn:
+        card = (await conn.execute(sa.select(runs).where(runs.c.id == run_id))).mappings().one()
+        assert card["status"] == "blocked" and card["card"]["eligibility"] == "source_unavailable"
+        assert await conn.scalar(sa.select(jobs.c.status).where(jobs.c.id == job_id)) == "cancelled"
+        assert (
+            await conn.scalar(
+                sa.text(
+                    "SELECT stage FROM job_events WHERE job_id=:id ORDER BY sequence DESC LIMIT 1"
+                ),
+                {"id": job_id},
+            )
+            == "access_revoked"
         )
 
 

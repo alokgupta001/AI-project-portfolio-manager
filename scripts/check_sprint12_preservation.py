@@ -1,4 +1,4 @@
-"""Verify the captured local baseline after additive 0017, without printing private data."""
+"""Verify the captured local baseline after Sprint 12, without printing private data."""
 
 import hashlib
 import json
@@ -59,12 +59,12 @@ def verify() -> None:
         )
     )
     (FOLDER / "database-after.json").write_text(json.dumps(result, indent=2), encoding="utf-8")
-    assert result["revision"] == "0017_local_ml_foundations", "Unexpected normal schema"
+    assert result["revision"] == "0018_csv_source_namespaces", "Unexpected normal schema"
     changed = [name for name, data in baseline["tables"].items() if result["tables"][name] != data]
     assert not changed, f"Established rows changed in: {changed}"
     print(
         f"PASS {len(frozen)} frozen input hashes; all {len(queries)} established table "
-        "counts/hashes unchanged; normal 0016 -> 0017"
+        "counts/hashes unchanged; normal 0016 -> 0018"
     )
 
 

@@ -1,5 +1,13 @@
 # Changelog
 
+## 2026-10-26 — Sprint 12 PR review fixes
+
+- Correct authority loading, saved-card clearing, stale polling and the ML breadcrumb.
+- Isolate connector scheduling failures and terminalize revoked ML lookup access.
+- Add forward 0018 legacy CSV namespace backfill, preserving explicit namespaces,
+  source targets, local edits and historical job configurations.
+- [Review evidence and validation](docs/verification/sprint12/REVIEW_FIXES.md).
+
 ## 2026-10-25 — Sprint 12 local foundations
 
 - Scoped organization connector principals with generation rotation/revocation, existing-beat schedules, canonical source identity and current local/source conflict review.

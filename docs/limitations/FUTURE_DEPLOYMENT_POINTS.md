@@ -4,6 +4,9 @@
 
 Before deployment, move connector environment references into a chosen secret manager, test provider-side credential rotation/revocation and exact authorized live-source equality, and define connector approval/expiry ownership. Review immutable history/export retention, permanent withdrawal, erasure/backups and copies downloaded before withdrawal. Validate provenance and independent genuine outcome labels for each target. Establish production-sized CPU/memory limits, queue monitoring, model review and native MLflow tracking/import if required. XGBoost/text candidates need justified data/resources; no hosted fine-tuning is implied. Forecast promotion/serving is Sprint 13 and remains blocked. These items do not prevent the bounded local fixture/manual-import sample; no deployment is authorized.
 
+Before deployment, add operator alerts for repeated connector schedule/backoff failures;
+the local dispatcher isolates failures and logs only sanitized connector identifiers.
+
 **Decision recorded: 25 October 2026.** The owner is building and checking a local
 sample now. Production preparation below is deferred until deployment is planned;
 it is not additional work required to continue using the current local sample.

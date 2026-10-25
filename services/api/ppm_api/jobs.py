@@ -649,7 +649,12 @@ async def apply_source(p: Principal, row: dict, item: dict) -> bool:
     from ppm_api.connectors import logical_key, record_conflict
     from ppm_api.ml_tables import conflicts
 
-    config = ConnectorConfig(**row["config"])
+    config_values = row["config"]
+    if config_values.get("provider") == "csv" and "source_namespace" not in config_values:
+        # Queued pre-0017 snapshots remain immutable; use the same namespace as
+        # forward migration 0018 without rewriting historical job configurations.
+        config_values = config_values | {"source_namespace": f"integration-{row['integration_id']}"}
+    config = ConnectorConfig(**config_values)
     external, stamp, payload = normalize(config, item)
     digest = fingerprint(payload.model_dump(mode="json"))
     identity = logical_key(config, external)

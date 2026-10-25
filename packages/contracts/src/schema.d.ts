@@ -4251,10 +4251,10 @@ export interface components {
             instance_id: string;
             /**
              * Schema Revision
-             * @default 0017_local_ml_foundations
+             * @default 0018_csv_source_namespaces
              * @constant
              */
-            schema_revision: "0017_local_ml_foundations";
+            schema_revision: "0018_csv_source_namespaces";
         };
         /** FrameworkInput */
         "FrameworkInput-Input": {

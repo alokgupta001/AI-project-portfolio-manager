@@ -1,7 +1,7 @@
 # Sprint 12 final local handoff
 
 25 October 2026. **Local sample complete; full original live/model acceptance OPEN.**
-Normal schema **0017_local_ml_foundations**; API/web/worker/dispatcher are healthy.
+Normal schema **0018_csv_source_namespaces**; API/web/worker/dispatcher are healthy.
 Open http://localhost:3000/ml as Admin in the existing synthetic demo organization.
 Use [the walkthrough](USER_GUIDE.md), [report/tracker](SPRINT_REPORT.md),
 [actual checks](../../../04-testing/sprint-based/sprint-12/TESTING_REPORT.md) and
@@ -40,3 +40,17 @@ The owner subsequently authorized a new branch and PR for this completed local s
 Publish `sprint-12-local-foundations` from the current main tree, excluding all 21
 pre-existing artifact edits. Prior no-push statements describe the implementation
 checkpoint. No merge, production deployment or Sprint 13 work is authorized.
+
+## PR review follow-up — 26 October 2026
+
+[PR 7](https://github.com/alokgupta001/AI-project-portfolio-manager/pull/7) is open
+on `sprint-12-local-foundations`. The owner authorized checking/fixing its CodeRabbit
+findings and pushing corrections. [Review evidence](../../../verification/sprint12/REVIEW_FIXES.md)
+records all seven valid inline findings and the test nitpick. Forward 0018 isolates
+implicit legacy CSV namespaces; applied 0001–0017 remain unchanged. Normal services
+are healthy, all 77 established table hashes/counts and 26 frozen input hashes match,
+and the 21 pre-existing artifact edits remain byte-identical. Fresh validation:
+535 backend tests passed/one skipped (one inherited warning), lifecycle/drift,
+ten focused integration cases, five Sprint 12 browser cases and nine static gates pass.
+The earlier implementation passed both hosted CI runs; fresh review/CI follows the
+fix push. AT17 remains BLOCKED; stop before 13.

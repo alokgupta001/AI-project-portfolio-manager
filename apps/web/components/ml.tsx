@@ -74,12 +74,20 @@ export function ML({
   }, [admin, refresh]);
   useEffect(() => {
     if (!active || !["queued", "running"].includes(active.status)) return;
+    let current = true;
     const id = setTimeout(() => {
       void api<Run>(`/runs/${active.id}`)
-        .then(setActive)
-        .catch((e) => setError(e.message));
+        .then((run) => {
+          if (current) setActive(run);
+        })
+        .catch((e) => {
+          if (current) setError(e.message);
+        });
     }, 1500);
-    return () => clearTimeout(id);
+    return () => {
+      current = false;
+      clearTimeout(id);
+    };
   }, [active, api]);
   async function action(work: () => Promise<void>) {
     setBusy(true);
@@ -410,11 +418,16 @@ export function ML({
               Saved model card
               <select
                 value={active?.id || ""}
-                onChange={(e) =>
+                onChange={(e) => {
+                  const id = e.target.value;
+                  if (!id) {
+                    setActive(null);
+                    return;
+                  }
                   void action(async () =>
-                    setActive(await api<Run>(`/runs/${e.target.value}`)),
-                  )
-                }
+                    setActive(await api<Run>(`/runs/${id}`)),
+                  );
+                }}
               >
                 <option value="">Select run</option>
                 {runs.map((r) => (

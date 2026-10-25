@@ -22,6 +22,9 @@ test("Sprint 12 import history, freeze dataset, reproduce CPU baseline and withd
   await expect(
     page.getByRole("heading", { name: "History & baseline lab" }),
   ).toBeVisible();
+  await expect(page.locator('.breadcrumbs [aria-current="page"]')).toHaveText(
+    "History & baselines",
+  );
   await page
     .getByRole("combobox", { name: "History project", exact: true })
     .selectOption(f.agent_project);
@@ -68,6 +71,18 @@ test("Sprint 12 import history, freeze dataset, reproduce CPU baseline and withd
     .click();
   expect((await downloadPromise).suggestedFilename()).toMatch(
     /^baseline-.+\.json$/,
+  );
+  const selector = page.getByRole("combobox", {
+    name: "Saved model card",
+    exact: true,
+  });
+  const selectedRun = await selector.inputValue();
+  await selector.selectOption("");
+  await expect(card).toHaveCount(0);
+  await expect(page.locator(".ml-workspace").getByRole("alert")).toHaveCount(0);
+  await selector.selectOption(selectedRun);
+  await expect(card).toContainText(
+    "Reproduction matches previous result: true",
   );
   for (const width of [1440, 768, 360]) {
     await page.setViewportSize({ width, height: 1000 });
@@ -231,3 +246,162 @@ test("connector authority, local edit conflict and reviewed resolution are usabl
     page.getByRole("status").filter({ hasText: "Connector revoked" }),
   ).toBeVisible();
 });
+
+test("connector authority form waits for persisted polling settings", async ({
+  page,
+}) => {
+  test.skip(!process.env.PPM_IDENTITY_FIXTURE, "Use isolated browser runner");
+  const f = JSON.parse(readFileSync(process.env.PPM_IDENTITY_FIXTURE!, "utf8"));
+  await page.goto("/login");
+  await page.getByLabel("Email address", { exact: true }).fill(f.agent_email);
+  await page.getByLabel("Password", { exact: true }).fill(f.password);
+  await page.getByRole("button", { name: "Sign in", exact: true }).click();
+  await expect(
+    page.getByRole("button", { name: "Sign out", exact: true }),
+  ).toBeVisible();
+  const account = await (await page.request.get("/api/v1/auth/me")).json();
+  const csrf = (await page.context().cookies()).find(
+    (c) => c.name === "ppm_csrf",
+  )!.value;
+  const headers = {
+    origin: process.env.PPM_WEB_URL!,
+    "x-csrf-token": csrf,
+    "x-organization-id": account.organization_id,
+    "idempotency-key": crypto.randomUUID(),
+  };
+  const response = await page.request.post("/api/v1/integrations", {
+    headers,
+    data: {
+      name: "Persisted authority settings",
+      provider: "github",
+      mode: "live",
+      resource: "example/repo",
+      project_id: f.agent_project,
+      secret_ref: `PPM_CONNECTOR_${account.organization_id.replaceAll("-", "").toUpperCase()}_GITHUB_TOKEN`,
+    },
+  });
+  expect(response.status(), await response.text()).toBe(201);
+  const integration = await response.json();
+  const approved = await page.request.put(
+    `/api/v1/integrations/${integration.id}/authority`,
+    {
+      headers: { ...headers, "if-match": "0" },
+      data: {
+        active: true,
+        interval_minutes: 7,
+        secret_ref: integration.config.secret_ref,
+      },
+    },
+  );
+  expect(approved.status(), await approved.text()).toBe(200);
+  let release!: () => void;
+  const gate = new Promise<void>((resolve) => {
+    release = resolve;
+  });
+  await page.route(
+    `**/api/v1/integrations/${integration.id}/authority`,
+    async (route) => {
+      const result = await route.fetch();
+      await gate;
+      await route.fulfill({ response: result });
+    },
+  );
+  await page.goto("/integrations");
+  await page
+    .getByRole("combobox", { name: "Connection", exact: true })
+    .selectOption(integration.id);
+  await expect(
+    page.getByRole("status").filter({ hasText: "Loading connector authority" }),
+  ).toBeVisible();
+  await expect(
+    page.getByLabel("Polling interval (minutes; 0 disables schedule)"),
+  ).toHaveCount(0);
+  release();
+  await expect(
+    page.getByLabel("Polling interval (minutes; 0 disables schedule)"),
+  ).toHaveValue("7");
+  await page
+    .getByRole("button", { name: "Revoke connector authority", exact: true })
+    .click();
+  await expect(
+    page.getByRole("status").filter({ hasText: "Connector revoked" }),
+  ).toBeVisible();
+});
+
+for (const staleResult of ["success", "error"] as const) {
+  test(`old baseline poll ${staleResult} cannot replace the selected card`, async ({
+    page,
+  }) => {
+    test.skip(!process.env.PPM_IDENTITY_FIXTURE, "Use isolated browser runner");
+    const f = JSON.parse(
+      readFileSync(process.env.PPM_IDENTITY_FIXTURE!, "utf8"),
+    );
+    await page.goto("/login");
+    await page.getByLabel("Email address", { exact: true }).fill(f.agent_email);
+    await page.getByLabel("Password", { exact: true }).fill(f.password);
+    await page.getByRole("button", { name: "Sign in", exact: true }).click();
+    await expect(
+      page.getByRole("button", { name: "Sign out", exact: true }),
+    ).toBeVisible();
+    const old = { id: crypto.randomUUID(), status: "queued", card: {} };
+    const current = {
+      id: crypto.randomUUID(),
+      status: "succeeded",
+      card: { eligibility: "demo_only" },
+    };
+    let reads = 0;
+    let release!: () => void;
+    const gate = new Promise<void>((resolve) => {
+      release = resolve;
+    });
+    await page.route("**/api/v1/ml/runs", (route) =>
+      route.fulfill({ json: [old, current] }),
+    );
+    await page.route(`**/api/v1/ml/runs/${current.id}`, (route) =>
+      route.fulfill({ json: current }),
+    );
+    await page.route(`**/api/v1/ml/runs/${old.id}`, async (route) => {
+      reads += 1;
+      if (reads === 1) {
+        await route.fulfill({ json: old });
+        return;
+      }
+      await gate;
+      await route.fulfill(
+        staleResult === "success"
+          ? {
+              json: {
+                ...old,
+                status: "failed",
+                card: { eligibility: "stale_poll" },
+              },
+            }
+          : { status: 409, json: { message: "Stale poll error" } },
+      );
+    });
+    await page.goto("/ml");
+    const selector = page.getByRole("combobox", {
+      name: "Saved model card",
+      exact: true,
+    });
+    await selector.selectOption(old.id);
+    await expect.poll(() => reads).toBe(2);
+    await selector.selectOption(current.id);
+    const card = page.getByRole("region", { name: "Model card", exact: true });
+    await expect(card).toContainText("Eligibility: demo_only");
+    const finished = page.waitForResponse(`**/api/v1/ml/runs/${old.id}`);
+    release();
+    await (await finished).finished();
+    await page.evaluate(
+      () =>
+        new Promise<void>((resolve) => {
+          requestAnimationFrame(() => requestAnimationFrame(() => resolve()));
+        }),
+    );
+    await expect(selector).toHaveValue(current.id);
+    await expect(card).toContainText("Eligibility: demo_only");
+    await expect(page.locator(".ml-workspace").getByRole("alert")).toHaveCount(
+      0,
+    );
+  });
+}

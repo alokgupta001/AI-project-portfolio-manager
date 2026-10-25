@@ -5,6 +5,11 @@ Starting HEAD `c192d69a49c55240876d22c641360d44522d1eba` plus uncommitted work.
 Raw receipts/starting diff/dump/hashes are private in `artifacts/local/sprint12`.
 [Public evidence](../../../verification/sprint12/README.md).
 
+26 October PR follow-up: [review findings and fresh checks](../../../verification/sprint12/REVIEW_FIXES.md)
+supersede the original 0017 validation checkpoint below. Normal schema is now 0018;
+all established data hashes and frozen inputs remain unchanged. The original tests
+remain evidence for their recorded commit, not a claim about subsequent fixes.
+
 | Command / environment | Actual result |
 | --- | --- |
 | `docker compose --profile test run --rm -T test` (guarded ppm_test/test) | **528 passed, 1 skipped**, 832.89 seconds; one inherited Starlette deprecation warning |

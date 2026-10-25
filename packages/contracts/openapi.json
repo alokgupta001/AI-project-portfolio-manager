@@ -5566,8 +5566,8 @@
             "type": "string"
           },
           "schema_revision": {
-            "const": "0017_local_ml_foundations",
-            "default": "0017_local_ml_foundations",
+            "const": "0018_csv_source_namespaces",
+            "default": "0018_csv_source_namespaces",
             "title": "Schema Revision",
             "type": "string"
           }

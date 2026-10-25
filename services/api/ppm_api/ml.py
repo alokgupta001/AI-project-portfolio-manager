@@ -421,16 +421,16 @@ async def ml_worker(engine: Any, id_: UUID, oid: UUID, uid: UUID) -> bool:
         )
         if job["status"] in TERMINAL:
             return True
-        run = await get(p, runs, ref["run_id"])
-        if job["cancel_requested"]:
-            await conn.execute(jobs.update().where(jobs.c.id == id_).values(status="cancelled"))
-            await conn.execute(
-                runs.update().where(runs.c.id == run["id"]).values(status="cancelled")
-            )
-            await stage(conn, job, "cancelled")
-            return True
-        await stage(conn, job, "training_baseline")
         try:
+            run = await get(p, runs, ref["run_id"])
+            if job["cancel_requested"]:
+                await conn.execute(jobs.update().where(jobs.c.id == id_).values(status="cancelled"))
+                await conn.execute(
+                    runs.update().where(runs.c.id == run["id"]).values(status="cancelled")
+                )
+                await stage(conn, job, "cancelled")
+                return True
+            await stage(conn, job, "training_baseline")
             dataset = await active_dataset(p, run["dataset_id"])
             card, output = await asyncio.to_thread(
                 evaluate, dataset["manifest"], dataset["records"], dataset["digest"]
@@ -467,7 +467,7 @@ async def ml_worker(engine: Any, id_: UUID, oid: UUID, uid: UUID) -> bool:
         except delivery.DomainError:
             await conn.execute(
                 runs.update()
-                .where(runs.c.id == run["id"])
+                .where(runs.c.id == ref["run_id"])
                 .values(
                     status="blocked",
                     card={"eligibility": "source_unavailable", "promotion": "BLOCKED"},
@@ -480,7 +480,7 @@ async def ml_worker(engine: Any, id_: UUID, oid: UUID, uid: UUID) -> bool:
         except Exception:
             await conn.execute(
                 runs.update()
-                .where(runs.c.id == run["id"])
+                .where(runs.c.id == ref["run_id"])
                 .values(
                     status="failed",
                     card={

@@ -7,6 +7,8 @@ are preserved; research administration does not grant access to another organiza
 1. Open **Integrations & jobs**. Create a CSV fixture connection for an accessible
    project. The namespace identifies the source: share it for two connections to the
    same source; change it for unrelated CSVs whose IDs overlap. Preview and start sync.
+   Older CSV connections without an explicit namespace receive their own integration
+   namespace on upgrade. Explicit `manual` namespaces remain shared as configured.
 2. Under **Organization connector authority**, approve the connection. It can now
    complete queued work after logout. Rotate to invalidate earlier queued generations;
    submit new work afterward. Revoke to stop scheduled/queued work. Live polling needs

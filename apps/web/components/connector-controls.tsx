@@ -17,6 +17,7 @@ export function ConnectorControls({
   const [error, setError] = useState("");
   const [notice, setNotice] = useState("");
   const [busy, setBusy] = useState(false);
+  const [loading, setLoading] = useState(true);
   const api = useCallback(
     async <T,>(
       path: string,
@@ -56,7 +57,9 @@ export function ConnectorControls({
     setConflicts(c);
   }, [api]);
   useEffect(() => {
-    void load().catch((e) => setError(e.message));
+    void load()
+      .catch((e) => setError(e.message))
+      .finally(() => setLoading(false));
   }, [load]);
   async function act(work: () => Promise<void>) {
     setBusy(true);
@@ -79,9 +82,11 @@ export function ConnectorControls({
     >
       <h3>Organization connector authority</h3>
       <p>
-        {authority
-          ? `${authority.active ? "Active" : "Revoked"} · generation ${authority.generation} · revision ${authority.revision}`
-          : "Session-delegated legacy connection. Approve a narrow connector principal for work after logout."}
+        {loading
+          ? "Loading connector authority…"
+          : authority
+            ? `${authority.active ? "Active" : "Revoked"} · generation ${authority.generation} · revision ${authority.revision}`
+            : "Session-delegated legacy connection. Approve a narrow connector principal for work after logout."}
       </p>
       <p>
         Approval permits only this connection’s project work/sprints. Rotation
@@ -90,59 +95,62 @@ export function ConnectorControls({
       </p>
       {error && <p role="alert">{error}</p>}
       {notice && <p role="status">{notice}</p>}
-      <form
-        className="identity-form"
-        key={integration.revision}
-        onSubmit={(e) => {
-          e.preventDefault();
-          const form = new FormData(e.currentTarget);
-          void act(async () => {
-            await api(
-              "/authority",
-              "PUT",
-              {
-                active: true,
-                interval_minutes: Number(form.get("interval")),
-                secret_ref: form.get("secret_ref") || "",
-                webhook_secret_ref: form.get("webhook_secret_ref") || "",
-              },
-              authority?.revision || 0,
-            );
-            setNotice(
-              "Connector authority approved/rotated independently of your session.",
-            );
-          });
-        }}
-      >
-        <label>
-          Credential reference
-          <input
-            name="secret_ref"
-            defaultValue={integration.config.secret_ref}
-            maxLength={80}
-          />
-        </label>
-        <label>
-          Webhook credential reference
-          <input
-            name="webhook_secret_ref"
-            defaultValue={integration.config.webhook_secret_ref}
-            maxLength={80}
-          />
-        </label>
-        <label>
-          Polling interval (minutes; 0 disables schedule)
-          <input
-            name="interval"
-            type="number"
-            min={0}
-            max={10080}
-            defaultValue={authority?.interval_minutes || 0}
-            disabled={integration.config.mode !== "live"}
-          />
-        </label>
-        <button disabled={busy}>Approve / rotate connector authority</button>
-      </form>
+      {loading && <p role="status">Loading connector authority…</p>}
+      {!loading && (
+        <form
+          className="identity-form"
+          key={`${integration.revision}:${authority?.revision || 0}`}
+          onSubmit={(e) => {
+            e.preventDefault();
+            const form = new FormData(e.currentTarget);
+            void act(async () => {
+              await api(
+                "/authority",
+                "PUT",
+                {
+                  active: true,
+                  interval_minutes: Number(form.get("interval")),
+                  secret_ref: form.get("secret_ref") || "",
+                  webhook_secret_ref: form.get("webhook_secret_ref") || "",
+                },
+                authority?.revision || 0,
+              );
+              setNotice(
+                "Connector authority approved/rotated independently of your session.",
+              );
+            });
+          }}
+        >
+          <label>
+            Credential reference
+            <input
+              name="secret_ref"
+              defaultValue={integration.config.secret_ref}
+              maxLength={80}
+            />
+          </label>
+          <label>
+            Webhook credential reference
+            <input
+              name="webhook_secret_ref"
+              defaultValue={integration.config.webhook_secret_ref}
+              maxLength={80}
+            />
+          </label>
+          <label>
+            Polling interval (minutes; 0 disables schedule)
+            <input
+              name="interval"
+              type="number"
+              min={0}
+              max={10080}
+              defaultValue={authority?.interval_minutes || 0}
+              disabled={integration.config.mode !== "live"}
+            />
+          </label>
+          <button disabled={busy}>Approve / rotate connector authority</button>
+        </form>
+      )}
       <button
         disabled={busy || !authority?.active}
         onClick={() =>

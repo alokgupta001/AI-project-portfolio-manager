@@ -1,6 +1,8 @@
 # Sprint 12 local evidence
 
 Starting HEAD: `c192d69a49c55240876d22c641360d44522d1eba`; implementation is uncommitted.
+This describes the original acceptance checkpoint. [PR 7 review follow-up](REVIEW_FIXES.md)
+records the later publication, forward 0018 and fresh checks; [static receipt](review-static.json).
 [Actual test report](../../04-testing/sprint-based/sprint-12/TESTING_REPORT.md) records
 commands, final results and earlier failures/fixes. Original artifact edits are retained.
 

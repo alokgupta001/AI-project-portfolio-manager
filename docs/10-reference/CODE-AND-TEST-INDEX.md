@@ -338,7 +338,7 @@ Source-derived AST inventory. Search symbols instead of relying on line numbers;
 
 - `scope_rows` — line 15
 - `sync` — line 45
-- `main` — line 76
+- `main` — line 77
 
 ## scripts/verify_gemini_runtime.py
 
@@ -510,6 +510,13 @@ Source-derived AST inventory. Search symbols instead of relying on line numbers;
 - `project_table` — line 70
 - `upgrade` — line 127
 - `downgrade` — line 311
+
+## services/api/migrations/versions/0018_csv_source_namespaces.py
+
+[Source](../../services/api/migrations/versions/0018_csv_source_namespaces.py)
+
+- `upgrade` — line 12
+- `downgrade` — line 31
 
 ## services/api/ppm_api/account_mail.py
 
@@ -952,19 +959,19 @@ Source-derived AST inventory. Search symbols instead of relying on line numbers;
 
 [Source](../../services/api/ppm_api/connectors.py)
 
-- `AuthorityInput` — line 21
-- `AuthorityView` — line 31
-- `ConflictView` — line 42
-- `Resolution` — line 55
-- `authority` — line 63
-- `approve` — line 76
-- `connector_principal` — line 123
-- `recheck` — line 155
-- `logical_key` — line 167
-- `record_conflict` — line 183
-- `review` — line 231
-- `resolve` — line 258
-- `schedule_connectors` — line 330
+- `AuthorityInput` — line 23
+- `AuthorityView` — line 33
+- `ConflictView` — line 44
+- `Resolution` — line 57
+- `authority` — line 65
+- `approve` — line 78
+- `connector_principal` — line 125
+- `recheck` — line 157
+- `logical_key` — line 169
+- `record_conflict` — line 185
+- `review` — line 233
+- `resolve` — line 260
+- `schedule_connectors` — line 332
 
 ## services/api/ppm_api/database.py
 
@@ -1253,8 +1260,8 @@ Source-derived AST inventory. Search symbols instead of relying on line numbers;
 - `worker_principal` — line 556
 - `worker_transaction` — line 594
 - `apply_source` — line 648
-- `run_job` — line 804
-- `github_hook` — line 1014
+- `run_job` — line 809
+- `github_hook` — line 1019
 
 ## services/api/ppm_api/local_model_readiness.py
 
@@ -2156,16 +2163,21 @@ Source-derived AST inventory. Search symbols instead of relying on line numbers;
 
 [Source](../../tests/test_sprint12.py)
 
-- `test_provider_identity_ignores_connection_names_and_manual_namespaces` — line 25
-- `test_cpu_reproduction_and_split_contract` — line 37
-- `test_history_rejects_leakage_unsuitable_labels_privacy_and_license` — line 75
-- `test_entity_purge_late_label_incompatible_target_and_missing_behavior` — line 96
-- `approve` — line 113
-- `test_connector_logout_dedup_conflict_rotation_revocation_and_tenant` — line 124
-- `test_connector_schedule_survives_session_and_stops_after_revoke` — line 228
-- `remote` — line 263
-- `test_history_dataset_baseline_card_reproduction_withdrawal_and_access` — line 277
-- `test_unlabeled_real_history_insufficient_card_and_session_revocation` — line 361
+- `test_provider_identity_ignores_connection_names_and_manual_namespaces` — line 28
+- `test_cpu_reproduction_and_split_contract` — line 40
+- `test_history_rejects_leakage_unsuitable_labels_privacy_and_license` — line 78
+- `test_entity_purge_late_label_incompatible_target_and_missing_behavior` — line 99
+- `approve` — line 116
+- `test_connector_logout_dedup_conflict_rotation_revocation_and_tenant` — line 127
+- `test_connector_schedule_survives_session_and_stops_after_revoke` — line 231
+- `remote` — line 268
+- `test_connector_schedule_failure_backs_off_and_continues` — line 304
+- `unreliable` — line 336
+- `test_csv_namespace_backfill_preserves_explicit_namespaces_and_source_targets` — line 367
+- `backfill` — line 394
+- `test_ml_archived_project_blocks_lookup_even_when_cancelling` — line 440
+- `test_history_dataset_baseline_card_reproduction_withdrawal_and_access` — line 486
+- `test_unlabeled_real_history_insufficient_card_and_session_revocation` — line 570
 
 ## tests/test_transaction_boundary.py
 

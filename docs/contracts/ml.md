@@ -4,6 +4,10 @@ Owning modules: `connectors.py`, existing `jobs.py`/`ingestion.py`/`delivery.py`
 `ml_schemas.py`, `ml_pipeline.py`, `ml.py`, `ml_tables.py`. Schema 0017 adds five
 scoped tables and two durable-job columns plus canonical source keys. See the
 [generated database dictionary](../01-architecture/DATABASE-DICTIONARY.md).
+Forward data migration 0018 assigns an integration-specific namespace only to legacy
+CSV configurations without one. Explicit namespaces (including `manual`) stay unchanged;
+affected derived source keys are rebuilt in place on sync, preserving local targets.
+Queued legacy job snapshots use the same fallback without rewriting their history.
 
 ## Connector authority
 
@@ -21,6 +25,9 @@ Optional live polling uses the existing beat/dispatcher every ten seconds; confi
 interval is 1–10080 minutes (0 off), no overlap with pending jobs, at most 20 due
 connections per dispatch. Existing page/rate/retry/lease/cursor limits apply. Revocation,
 rotation, connection disable and project archival are rechecked at every source effect.
+Scheduling errors roll back only that connector and attempt a five-minute backoff in a
+separate scoped transaction; later connectors and due job dispatch continue. Revoked or
+disabled connectors cannot regain authority through this recovery path.
 
 Canonical identity hashes provider/mode/normalized resource/Jira project/board/entity/
 CSV namespace/external ID within tenant+project. Remote providers ignore the manual namespace. Unique database constraint plus the

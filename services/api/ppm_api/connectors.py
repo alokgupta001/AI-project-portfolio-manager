@@ -1,5 +1,6 @@
 """Organization-approved connector authority and version-checked source review."""
 
+import logging
 from datetime import datetime, timedelta
 from types import SimpleNamespace
 from typing import Any, Literal, cast
@@ -16,6 +17,7 @@ from ppm_api.job_tables import integrations, sources
 from ppm_api.ml_tables import conflicts, principals
 
 router = APIRouter(prefix="/api/v1/integrations", tags=["Connector authority and conflicts"])
+logger = logging.getLogger(__name__)
 
 
 class AuthorityInput(BaseModel):
@@ -336,37 +338,57 @@ async def schedule_connectors(engine: Any) -> None:
             (await conn.execute(sa.text("SELECT * FROM public.ppm_due_connectors()"))).mappings()
         )
     for ref in due:
-        async with engine.begin() as conn:  # type: ignore[attr-defined]
-            p = await connector_principal(
-                conn, ref["organization_id"], ref["actor_id"], ref["integration_id"]
-            )
-            if not p:
-                continue
-            await recheck(p)
-            authority_row = (
-                (
-                    await conn.execute(
-                        sa.select(principals)
-                        .where(principals.c.integration_id == p.connector_id)
-                        .with_for_update()
-                    )
+        try:
+            async with engine.begin() as conn:  # type: ignore[attr-defined]
+                p = await connector_principal(
+                    conn, ref["organization_id"], ref["actor_id"], ref["integration_id"]
                 )
-                .mappings()
-                .one()
-            )
-            if authority_row["next_due"] > now():
-                continue
-            integration = await get_integration(p, ref["integration_id"])
-            request = cast(Request, SimpleNamespace(state=SimpleNamespace(request_id=str(uuid4()))))
-            await enqueue(
-                p,
-                request,
-                integration,
-                ImportInput(),
-                f"schedule:{p.connector_id}:{authority_row['next_due'].isoformat()}",
-            )
-            await conn.execute(
-                principals.update()
-                .where(principals.c.id == authority_row["id"])
-                .values(next_due=now() + timedelta(minutes=authority_row["interval_minutes"]))
-            )
+                if not p:
+                    continue
+                await recheck(p)
+                authority_row = (
+                    (
+                        await conn.execute(
+                            sa.select(principals)
+                            .where(principals.c.integration_id == p.connector_id)
+                            .with_for_update()
+                        )
+                    )
+                    .mappings()
+                    .one()
+                )
+                if authority_row["next_due"] > now():
+                    continue
+                integration = await get_integration(p, ref["integration_id"])
+                request = cast(
+                    Request, SimpleNamespace(state=SimpleNamespace(request_id=str(uuid4())))
+                )
+                await enqueue(
+                    p,
+                    request,
+                    integration,
+                    ImportInput(),
+                    f"schedule:{p.connector_id}:{authority_row['next_due'].isoformat()}",
+                )
+                await conn.execute(
+                    principals.update()
+                    .where(principals.c.id == authority_row["id"])
+                    .values(next_due=now() + timedelta(minutes=authority_row["interval_minutes"]))
+                )
+        except Exception:
+            # Roll back this connector before opening a separate, narrowly scoped backoff.
+            # Never log exception text: configurations may contain credential references.
+            logger.warning("Connector schedule failed: %s", ref["integration_id"])
+            try:
+                async with engine.begin() as conn:  # type: ignore[attr-defined]
+                    p = await connector_principal(
+                        conn, ref["organization_id"], ref["actor_id"], ref["integration_id"]
+                    )
+                    if p:
+                        await conn.execute(
+                            principals.update()
+                            .where(principals.c.integration_id == p.connector_id)
+                            .values(next_due=now() + timedelta(minutes=5))
+                        )
+            except Exception:
+                logger.warning("Connector schedule backoff failed: %s", ref["integration_id"])

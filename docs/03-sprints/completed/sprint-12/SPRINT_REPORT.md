@@ -6,6 +6,12 @@ captured at the local acceptance checkpoint. The owner subsequently authorized a
 `sprint-12-local-foundations` branch and PR; local validation below predates publication.
 No fresh hosted CI or independent acceptance is claimed.
 
+26 October follow-up: [PR 7](https://github.com/alokgupta001/AI-project-portfolio-manager/pull/7)
+is published; the original implementation passed both hosted Foundation runs.
+[Review corrections and fresh validation](../../../verification/sprint12/REVIEW_FIXES.md)
+track seven verified findings plus the scheduling-test nitpick. Normal schema is 0018
+with all established data preserved. Later fixes require their own validation evidence.
+
 ## Scope and tracker
 
 | Package | Implemented local behavior | Acceptance |
