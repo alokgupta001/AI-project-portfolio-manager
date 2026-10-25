@@ -126,7 +126,7 @@ async def approve(c, integration, revision=0, active=True, **values):
 @pytest.mark.integration
 async def test_connector_logout_dedup_conflict_rotation_revocation_and_tenant(identity):
     c, app, owner, ids, emails, portfolio, project = await setup(identity)
-    integration = await connection(c, project)
+    integration = await connection(c, project, source_namespace="shared-source")
     authorization = await approve(c, integration)
     assert authorization.status_code == 200, authorization.text
     first = await submit(c, integration, CSV)
@@ -145,7 +145,9 @@ async def test_connector_logout_dedup_conflict_rotation_revocation_and_tenant(id
             .where(sources.c.project_id == UUID(project["id"]))
             .values(logical_key=None)
         )
-    second_connection = await connection(c, project, name="Same source through another connection")
+    second_connection = await connection(
+        c, project, name="Same source through another connection", source_namespace="shared-source"
+    )
     duplicate = await submit(c, second_connection, CSV)
     await execute(app, duplicate, ids)
     work = (
@@ -433,6 +435,87 @@ async def test_csv_namespace_backfill_preserves_explicit_namespaces_and_source_t
         await c.get("/api/v1/delivery/work_items", params={"project_id": project["id"]})
     ).json()["items"]
     assert len(work) == 4
+
+
+@pytest.mark.integration
+async def test_csv_omitted_namespace_is_unique_explicit_manual_and_replays_are_preserved(identity):
+    c, app, owner, ids, emails, portfolio, project = await setup(identity)
+    body = dict(name="Omitted CSV namespace", provider="csv", project_id=project["id"])
+    key = str(uuid4())
+    first = await send(c, "POST", "/integrations", headers={"idempotency-key": key}, json=body)
+    again = await send(c, "POST", "/integrations", headers={"idempotency-key": key}, json=body)
+    assert first.status_code == again.status_code == 201
+    a = first.json()
+    assert again.json()["id"] == a["id"]
+    assert a["config"]["source_namespace"] == f"integration-{a['id']}"
+    b = await connection(c, project)
+    assert b["config"]["source_namespace"] != a["config"]["source_namespace"]
+    explicit = await connection(c, project, source_namespace="manual")
+    assert explicit["config"]["source_namespace"] == "manual"
+    changed = await send(
+        c,
+        "POST",
+        "/integrations",
+        headers={"idempotency-key": key},
+        json=body | {"source_namespace": "manual"},
+    )
+    assert changed.status_code == 409
+    remote = await connection(c, project, provider="github", resource="example/repo")
+    assert remote["config"]["source_namespace"] == "manual"
+    for integration in (a, b):
+        await execute(app, await submit(c, integration, CSV), ids)
+    work = (
+        await c.get("/api/v1/delivery/work_items", params={"project_id": project["id"]})
+    ).json()["items"]
+    assert len(work) == 4
+
+
+@pytest.mark.integration
+async def test_canonical_source_wins_over_legacy_null_key_without_rewriting_targets(identity):
+    c, app, owner, ids, emails, portfolio, project = await setup(identity)
+    legacy = await connection(c, project, source_namespace="legacy-separate")
+    await execute(app, await submit(c, legacy, CSV), ids)
+    async with owner.begin() as conn:
+        await conn.execute(
+            sources.update()
+            .where(sources.c.integration_id == UUID(legacy["id"]))
+            .values(logical_key=None)
+        )
+    canonical = await connection(c, project, source_namespace="shared-canonical")
+    await execute(app, await submit(c, canonical, CSV), ids)
+    async with owner.begin() as conn:
+        original_targets = set(
+            (
+                await conn.execute(
+                    sa.select(sources.c.target_id).where(
+                        sources.c.project_id == UUID(project["id"])
+                    )
+                )
+            ).scalars()
+        )
+        await conn.execute(
+            integrations.update()
+            .where(integrations.c.id == UUID(legacy["id"]))
+            .values(config=legacy["config"] | {"source_namespace": "shared-canonical"})
+        )
+    replay = await submit(c, legacy, CSV)
+    await execute(app, replay, ids)
+    async with owner.connect() as conn:
+        job = (
+            (await conn.execute(sa.select(jobs).where(jobs.c.id == UUID(replay.json()["id"]))))
+            .mappings()
+            .one()
+        )
+        assert job["status"] == "succeeded" and not job["errors"]
+        records = list(
+            (
+                await conn.execute(
+                    sa.select(sources).where(sources.c.project_id == UUID(project["id"]))
+                )
+            ).mappings()
+        )
+        assert len(records) == 4 and {r["target_id"] for r in records} == original_targets
+        assert sum(r["logical_key"] is None for r in records) == 2
 
 
 @pytest.mark.integration

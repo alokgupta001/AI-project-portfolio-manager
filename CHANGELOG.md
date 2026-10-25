@@ -6,6 +6,8 @@
 - Isolate connector scheduling failures and terminalize revoked ML lookup access.
 - Add forward 0018 legacy CSV namespace backfill, preserving explicit namespaces,
   source targets, local edits and historical job configurations.
+- Isolate new CSV connections when namespaces are omitted; prefer canonical keys
+  when keyed and legacy sources coexist. Preserve explicit shared namespaces.
 - [Review evidence and validation](docs/verification/sprint12/REVIEW_FIXES.md).
 
 ## 2026-10-25 — Sprint 12 local foundations

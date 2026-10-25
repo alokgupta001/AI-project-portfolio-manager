@@ -1,5 +1,19 @@
 # Latest technical handoff
 
+**26 October 2026 — second PR review corrections:** both hosted CI runs passed for
+`faf1668`. CodeRabbit then identified two additional valid CSV identity issues;
+new omitted namespaces are isolated and canonical keys take precedence over legacy
+NULL keys. Current affected checks: **36 backend cases**, one strengthened keyed/legacy
+case and **six browser journeys** pass, plus static/contracts/inventories. These
+supplement the preceding 535-case full gate; fresh head CI and a further included
+review are pending. [Evidence](../verification/sprint12/REVIEW_FIXES.md). Normal 0018
+is healthy with all preservation checks passing; applied 0017/0018 are unchanged.
+The included CodeRabbit allowance is one review/hour, last completed 25 October
+21:19:46 UTC. An hourly persistent follow-up was rejected by automatic approval
+review and was not created; explicit authorization is pending. Finish only the
+existing PR loop, preserve the 21 original artifact edits and all provider/user/data
+controls, and stop before Sprint 13. AT17 stays BLOCKED; no merge/deployment.
+
 **26 October 2026 — Sprint 12 PR review follow-up:** normal schema is **0018**, local services healthy. [PR 7](https://github.com/alokgupta001/AI-project-portfolio-manager/pull/7) is open on `sprint-12-local-foundations`; the owner authorized correcting CodeRabbit findings and pushing fixes. All seven inline findings and the scheduling-test nitpick were verified as valid and corrected. Fresh checks: **535 backend tests passed, one skipped**, migration lifecycle/drift, ten focused integration cases, five Sprint 12 browser cases and nine static/contract gates pass. [Review evidence](../verification/sprint12/REVIEW_FIXES.md) is the live checkpoint. All 77 established table hashes/counts, 26 frozen inputs and 21 original artifact edits remain unchanged; applied 0001–0017 are preserved. Read [the handoff](../03-sprints/completed/sprint-12/HANDOFF.md) and [actual checks](../04-testing/sprint-based/sprint-12/TESTING_REPORT.md). Live connectors/genuine model quality remain unavailable; AT17 remains BLOCKED. Gemini/Puter/Groq, 50/day shared, one/minute, $0, scopes and four-user access remain unchanged. No merge or production deployment is authorized. Stop before Sprint 13.
 
 **Earlier checkpoint before Sprint 12 (25 October 2026; superseded):** Sprint 11/11.1 is complete for the

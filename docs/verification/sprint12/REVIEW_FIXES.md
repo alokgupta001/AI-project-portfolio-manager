@@ -54,3 +54,36 @@ Focused sets overlap the full gate. [Browser receipt](review-browser.txt),
 The original implementation commit passed both hosted Foundation runs; that evidence
 does not establish success for these subsequent fixes. The PR remains open. No merge,
 deployment, real-label accuracy, AT17 acceptance or Sprint 13 work is claimed.
+
+## Second review — 26 October 2026
+
+CodeRabbit reviewed pushed commit `faf1668` after an owner-authorized manual request.
+All seven original inline threads are resolved. Two additional outside-diff findings
+were verified as valid: new API-created CSV connections still serialized omitted
+namespaces as `manual`, and an unordered lookup could prefer an own legacy NULL-key
+source over a canonical keyed source. The narrow corrections use Pydantic field-set
+information at creation and explicitly prioritize the canonical match. Explicit manual
+and custom namespaces are preserved; the shared-source dedup test now declares sharing.
+New integration cases cover isolated omitted namespaces, idempotent creation, explicit
+manual/custom values, unchanged remote defaults, and mixed keyed/legacy records without
+rewriting target IDs. Current-source ingestion/Sprint 12 regressions: **36 passed**,
+175.55 seconds. The strengthened keyed/legacy fixture passed separately (1 case,
+6.27 seconds). Final browser suite: **6 passed**, 1.2 minutes. An in-flight delayed
+authority test route initially survived into the next test; waiting for the action and
+route cleanup fixed that test race. Ruff/format, mypy, contracts/inventory, TypeScript,
+ESLint and Prettier checks pass. [Round-two receipt](review2-validation.txt).
+Applied 0017 and 0018 are unchanged; no additional migration is needed. Normal
+API/workers were rebuilt and remain healthy; 77 established table hashes/counts,
+26 frozen input hashes and all 21 original artifact edits remain unchanged.
+
+Both [push CI](https://github.com/alokgupta001/AI-project-portfolio-manager/actions/runs/40234033712)
+and [PR CI](https://github.com/alokgupta001/AI-project-portfolio-manager/actions/runs/40234038047)
+passed for `faf1668`, including the full stack, browser and persistence stages. These
+results cover the first corrections; round-two source changes require a fresh hosted
+run. The local full 535-case gate also predates the two final source corrections;
+the current 36-case and browser sets cover their affected paths without claiming a
+second full local run.
+
+The review reported one included review per hour with none remaining after this run.
+Do not purchase or trigger a paid follow-up; a subsequent included review must wait for
+the allowance to reset. This is distinct from the application's unchanged AI budgets.

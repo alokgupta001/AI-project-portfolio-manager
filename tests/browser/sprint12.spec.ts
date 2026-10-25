@@ -326,6 +326,10 @@ test("connector authority form waits for persisted polling settings", async ({
   await expect(
     page.getByRole("status").filter({ hasText: "Connector revoked" }),
   ).toBeVisible();
+  await expect(
+    page.getByRole("button", { name: "Refresh source conflicts", exact: true }),
+  ).toBeEnabled();
+  await page.unrouteAll({ behavior: "wait" });
 });
 
 for (const staleResult of ["success", "error"] as const) {

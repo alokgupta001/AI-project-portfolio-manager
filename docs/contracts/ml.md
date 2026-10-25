@@ -8,6 +8,10 @@ Forward data migration 0018 assigns an integration-specific namespace only to le
 CSV configurations without one. Explicit namespaces (including `manual`) stay unchanged;
 affected derived source keys are rebuilt in place on sync, preserving local targets.
 Queued legacy job snapshots use the same fallback without rewriting their history.
+New CSV connections created through the API also receive an integration-specific
+namespace when omitted; explicit `manual` or custom namespaces remain shared as supplied.
+When keyed and legacy unkeyed sources coexist, the canonical keyed match takes priority;
+unkeyed duplicate targets are retained for review rather than silently rewritten.
 
 ## Connector authority
 

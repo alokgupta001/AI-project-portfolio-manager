@@ -1245,23 +1245,23 @@ Source-derived AST inventory. Search symbols instead of relying on line numbers;
 - `stage` — line 153
 - `list_integrations` — line 178
 - `create_integration` — line 188
-- `enable_integration` — line 229
-- `preview` — line 259
-- `enqueue` — line 288
-- `sync` — line 405
-- `webhook` — line 413
-- `activity` — line 433
-- `job_detail` — line 451
-- `stage_history` — line 456
-- `cancel` — line 472
-- `event_batch` — line 483
-- `stream` — line 507
-- `generate` — line 516
-- `worker_principal` — line 556
-- `worker_transaction` — line 594
-- `apply_source` — line 648
-- `run_job` — line 809
-- `github_hook` — line 1019
+- `enable_integration` — line 231
+- `preview` — line 261
+- `enqueue` — line 290
+- `sync` — line 407
+- `webhook` — line 415
+- `activity` — line 435
+- `job_detail` — line 453
+- `stage_history` — line 458
+- `cancel` — line 474
+- `event_batch` — line 485
+- `stream` — line 509
+- `generate` — line 518
+- `worker_principal` — line 558
+- `worker_transaction` — line 596
+- `apply_source` — line 650
+- `run_job` — line 814
+- `github_hook` — line 1024
 
 ## services/api/ppm_api/local_model_readiness.py
 
@@ -2169,15 +2169,17 @@ Source-derived AST inventory. Search symbols instead of relying on line numbers;
 - `test_entity_purge_late_label_incompatible_target_and_missing_behavior` — line 99
 - `approve` — line 116
 - `test_connector_logout_dedup_conflict_rotation_revocation_and_tenant` — line 127
-- `test_connector_schedule_survives_session_and_stops_after_revoke` — line 231
-- `remote` — line 268
-- `test_connector_schedule_failure_backs_off_and_continues` — line 304
-- `unreliable` — line 336
-- `test_csv_namespace_backfill_preserves_explicit_namespaces_and_source_targets` — line 367
-- `backfill` — line 394
-- `test_ml_archived_project_blocks_lookup_even_when_cancelling` — line 440
-- `test_history_dataset_baseline_card_reproduction_withdrawal_and_access` — line 486
-- `test_unlabeled_real_history_insufficient_card_and_session_revocation` — line 570
+- `test_connector_schedule_survives_session_and_stops_after_revoke` — line 233
+- `remote` — line 270
+- `test_connector_schedule_failure_backs_off_and_continues` — line 306
+- `unreliable` — line 338
+- `test_csv_namespace_backfill_preserves_explicit_namespaces_and_source_targets` — line 369
+- `backfill` — line 396
+- `test_csv_omitted_namespace_is_unique_explicit_manual_and_replays_are_preserved` — line 441
+- `test_canonical_source_wins_over_legacy_null_key_without_rewriting_targets` — line 474
+- `test_ml_archived_project_blocks_lookup_even_when_cancelling` — line 523
+- `test_history_dataset_baseline_card_reproduction_withdrawal_and_access` — line 569
+- `test_unlabeled_real_history_insufficient_card_and_session_revocation` — line 653
 
 ## tests/test_transaction_boundary.py
 

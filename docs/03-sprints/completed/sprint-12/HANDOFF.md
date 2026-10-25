@@ -52,5 +52,14 @@ are healthy, all 77 established table hashes/counts and 26 frozen input hashes m
 and the 21 pre-existing artifact edits remain byte-identical. Fresh validation:
 535 backend tests passed/one skipped (one inherited warning), lifecycle/drift,
 ten focused integration cases, five Sprint 12 browser cases and nine static gates pass.
-The earlier implementation passed both hosted CI runs; fresh review/CI follows the
-fix push. AT17 remains BLOCKED; stop before 13.
+Both hosted CI runs passed for first-fix commit `faf1668`. CodeRabbit's second review
+found two more valid source-identity issues; omitted CSV namespaces now isolate new
+connections and canonical keys win over legacy NULL keys. Current affected checks:
+36 backend cases, the strengthened keyed/legacy case, six browser journeys and static
+checks pass. These supplement the preceding full gate, not a new full local run.
+Fresh head CI and the next included CodeRabbit review are pending. CodeRabbit permits
+one included review/hour; its last completed review was 25 October 21:19:46 UTC.
+An hourly persistent follow-up was rejected by automatic approval review and is NOT
+created; explicit authorization for recurring writes/pushes/review comments is pending.
+Keep the current review loop within the included allowance. AT17 remains BLOCKED;
+stop before 13 and never merge/deploy.

@@ -198,12 +198,14 @@ async def create_integration(body: ConnectorConfig, request: Request, p: Auth) -
     from uuid import uuid5
 
     id_ = uuid5(p.session["organization_id"], str(p.user["id"]) + ":integration:" + key)
+    config = body.model_dump(mode="json")
+    if body.provider == "csv" and "source_namespace" not in body.model_fields_set:
+        config["source_namespace"] = f"integration-{id_}"
     old = (
         (await p.conn.execute(sa.select(integrations).where(integrations.c.id == id_)))
         .mappings()
         .first()
     )
-    config = body.model_dump(mode="json")
     if old:
         if old["config"] != config:
             delivery.fail(409, "Idempotency key has different input")
@@ -661,7 +663,8 @@ async def apply_source(p: Principal, row: dict, item: dict) -> bool:
     prior = (
         (
             await p.conn.execute(
-                sa.select(sources).where(
+                sa.select(sources)
+                .where(
                     sources.c.project_id == config.project_id,
                     sa.or_(
                         sources.c.logical_key == identity,
@@ -672,6 +675,8 @@ async def apply_source(p: Principal, row: dict, item: dict) -> bool:
                         ),
                     ),
                 )
+                .order_by(sa.case((sources.c.logical_key == identity, 0), else_=1))
+                .limit(1)
             )
         )
         .mappings()
