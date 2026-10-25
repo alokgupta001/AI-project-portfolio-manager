@@ -1,5 +1,12 @@
 # Changelog
 
+## 25 October 2026 — PR 6 dependency audit fix
+
+Pin pypdf 6.21.2 and regenerate its lockfile entry to address the three advisories
+reported by Foundation's dependency audit. Frozen dependency sync and the same
+pip-audit check pass with no known vulnerabilities; local non-integration tests
+pass (367 passed, one skipped). Hosted checks must rerun for this correction.
+
 ## 25 October 2026 — local closeout and Sprint 12 planning
 
 Reconcile project planning with the delivered Sprint 11/11.1 local guided sample,
