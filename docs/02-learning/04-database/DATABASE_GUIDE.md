@@ -130,3 +130,14 @@ The email update uses existing `identity_users`, `memberships`, `identity_challe
 0012_ai_runtime adds ai_budgets, ai_runs, ai_calls and ai_embeddings. durable_jobs has an exclusive third ai_run_id reference. JSONB vectors are a bounded rebuildable projection; pgvector is not installed.
 
 Read [the practical trace](../06-ai-and-analytics/AI_GATEWAY.md) for actual symbols, flow, failures and debugging. No Sprint 11 semantic agents or automatic changes are implemented.
+
+## Current Sprint 12 additions
+
+Normal schema is 0018. Migration 0017 added connector authority, source conflicts and
+immutable ML history/dataset/run lineage plus durable-job/source references. Forward
+0018 isolates legacy CSV configurations lacking an explicit namespace and clears only
+their derived keys for in-place re-keying. Existing target IDs/local revisions and
+historical job snapshots are preserved. Applied migrations remain frozen. Use the
+[generated schema](../../01-architecture/DATABASE-DICTIONARY.md),
+[behavior/RLS contract](../../contracts/ml.md) and [closeout](../../10-reference/SPRINT-12-LOCAL-CLOSEOUT.md);
+model metadata alone does not describe security-definer functions or policies.

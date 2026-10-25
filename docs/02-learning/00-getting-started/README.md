@@ -1,10 +1,20 @@
 # Start here: learn AI-PPM one request at a time
 
+26 October 2026. Current local sample: Sprint 12 at normal schema **0018**. [Reviewed closeout](../../10-reference/SPRINT-12-LOCAL-CLOSEOUT.md) records application commit `f93a596`, both passing hosted CI runs and CodeRabbit's final review with no actionable comments. Live connectors/genuine model quality remain unverified and AT17 remains BLOCKED. Earlier dated checkpoints below retain their original scope; stop before Sprint 13.
+
+Use the local history/dataset/baseline walkthrough linked from the closeout and
+`/integrations` for authority/conflict review. Synthetic results are not real accuracy;
+existing guided-provider quotas, access and $0 controls remain unchanged.
+
 Current closeout: Sprints 8.1 and 10 are completed for development scope; hosted CI and the current pilot Word guide are verified. Broad agent/model quality, production and scale remain successor/release gates. See [acceptance disposition](../../10-reference/SPRINT-8.1-AND-10-CLOSEOUT.md). Earlier dated evidence below retains its historical scope.
 
-AI-PPM helps an organization keep project plans, spending, staffing and assessment results in one place. A manager can compare a person's reported project status with the facts behind it. Through Sprint 8.1, these calculations use ordinary Python formulas. AI features are still planned.
+AI-PPM helps an organization keep project plans, spending, staffing and assessment results in one place. A manager can compare a person's reported project status with the facts behind it. Deterministic calculations remain authoritative. Bounded guided specialist review
+and the local history/CPU baseline lab now exist; unrestricted AI quality and forecast
+serving remain unqualified/planned.
 
-This guide explains the existing application. It describes base `9056440` plus preserved uncommitted Sprint 08/8.1 code, source-reviewed on 9 October 2026. It does not require you to change code or create new data just to learn.
+The original request walkthrough was source-reviewed on 9 October 2026 at base
+`9056440`; its dated examples remain valid for that domain. Current Sprint 12 learning
+is [From source conflicts to honest local baselines](../06-ai-and-analytics/LOCAL_BASELINES.md). It does not require you to change code or create new data just to learn.
 
 Start with this flow:
 

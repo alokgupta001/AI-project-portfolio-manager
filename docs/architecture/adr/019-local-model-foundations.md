@@ -27,3 +27,11 @@ XGBoost/DistilBERT require suitable genuine labels and a later resource comparis
 No serving/promotion before Sprint 13. No hosted training, paid services or new AI
 scopes. Existing Gemini/Puter/Groq ceilings, pacing, users, keys, ledgers and AT17
 status are unchanged. Deployment controls are recorded separately.
+
+## Implementation and review closeout — 26 October 2026
+
+Normal 0018 and [the reviewed application](../../10-reference/SPRINT-12-LOCAL-CLOSEOUT.md)
+implement this local decision. Explicit CSV namespaces preserve intended sharing;
+omission is isolated at creation/backfill, and canonical keys precede legacy rows.
+All nine review findings were corrected; full live/model acceptance remains open.
+The decision does not authorize paid services, new scopes, serving or Sprint 13.

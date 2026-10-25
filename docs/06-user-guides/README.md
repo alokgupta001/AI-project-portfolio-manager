@@ -1,5 +1,11 @@
 # User Guides
 
+26 October 2026. Current local sample: Sprint 12 at normal schema **0018**. [Reviewed closeout](../10-reference/SPRINT-12-LOCAL-CLOSEOUT.md) records application commit `f93a596`, both passing hosted CI runs and CodeRabbit's final review with no actionable comments. Live connectors/genuine model quality remain unverified and AT17 remains BLOCKED. Earlier dated checkpoints below retain their original scope; stop before Sprint 13.
+
+Use the local history/dataset/baseline walkthrough linked from the closeout and
+`/integrations` for authority/conflict review. Synthetic results are not real accuracy;
+existing guided-provider quotas, access and $0 controls remain unchanged.
+
 [Current user steps and recovery](USER_GUIDE.md). Future product scenarios belong to the roadmap/vision and are PLANNED.
 
 - [Complete website walkthrough](WEBSITE_WALKTHROUGH.md): signup, organization setup, project/staffing setup, a complete assessment framework, evidence and independent review.

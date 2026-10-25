@@ -1,6 +1,6 @@
 # Sprint history and future work
 
-**Sprint 12 current implementation:** [local report](../03-sprints/completed/sprint-12/SPRINT_REPORT.md) and [actual checks](../04-testing/sprint-based/sprint-12/TESTING_REPORT.md) supersede earlier unstarted statements below. Local sample acceptance is complete at schema 0017 with healthy local services. Live source/model quality and AT17 remain blocked; stop before 13.
+26 October 2026. Current local sample: Sprint 12 at normal schema **0018**. [Reviewed closeout](../10-reference/SPRINT-12-LOCAL-CLOSEOUT.md) records application commit `f93a596`, both passing hosted CI runs and CodeRabbit's final review with no actionable comments. Live connectors/genuine model quality remain unverified and AT17 remains BLOCKED. Earlier dated checkpoints below retain their original scope; stop before Sprint 13.
 
 **Earlier checkpoint before Sprint 12 (25 October 2026; superseded):** Sprint 11/11.1 is complete for the
 local guided-sample scope; Sprint 12 local foundations are ready to start, not yet
@@ -11,7 +11,7 @@ Gemini/Puter/Groq guided access covers the two approved projects with shared
 This supersedes older runtime/rollout/stop statements below; dated test results
 and original full-product acceptance requirements remain unchanged.
 
-Current: [Sprint 11.1 implementation](active/sprint-11.1/README.md), authorized after the architecture revision. Core v2 is locally verified behind a default-off flag; final controls/regression/browser receipts are linked. Normal 0012 and prior history remain preserved. Real-model qualification and rollout are open.
+Historical Sprint 11.1 checkpoint: [Sprint 11.1 implementation](active/sprint-11.1/README.md), authorized after the architecture revision. Core v2 is locally verified behind a default-off flag; final controls/regression/browser receipts are linked. Normal 0012 and prior history remain preserved. Real-model qualification and rollout are open.
 
 [Sprint 11.1 architecture initialization](../09-planning/sprint-11.1/README.md), 17 October 2026: planning package and fresh offline baseline; no application implementation or deployment. It extends the Sprint 11 checkpoint before future implementation, without starting Sprint 12.
 

@@ -1,5 +1,10 @@
 # Getting access and checking features
 
+Current local sample: [Sprint 12 history and baselines](completed/SPRINT-12.md),
+normal schema 0018. [Reviewed closeout](../10-reference/SPRINT-12-LOCAL-CLOSEOUT.md) separates passing local/CI
+checks from unverified live integration/model quality. AT17 remains BLOCKED. Earlier
+Sprint 11 and pilot narratives below are retained historical scope.
+
 Use this once before following an individual sprint report.
 
 ## 1. Open the application
@@ -9,7 +14,7 @@ Open [the local website](http://localhost:3000). Sign in with your own activated
 If the website is unavailable, the person operating the local installation can start it from the `enterprise-ppm` project folder in PowerShell:
 
 ```powershell
-docker compose up -d --build --wait
+docker compose -f compose.yaml -f compose.guided.yaml -f artifacts/local/guided-review/cloud.compose.yaml up -d --wait api worker dispatcher web
 ```
 
 For document uploads and the document-based AI examples, use the scanner-enabled startup instead:

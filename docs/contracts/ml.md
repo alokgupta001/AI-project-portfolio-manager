@@ -117,3 +117,8 @@ Eligibility is `insufficient_data`, `demo_only`, `research_only`, `source_unavai
 Sprint 13. Synthetic metrics never establish real accuracy. Native MLflow tracking/import,
 XGBoost and text model comparisons remain explicitly deferred; an MLflow-compatible
 JSON record preserves local tracking provenance without a new service.
+
+26 October 2026: [reviewed application closeout](../10-reference/SPRINT-12-LOCAL-CLOSEOUT.md)
+records normal 0018, all nine corrected findings, both passing hosted CI runs and
+CodeRabbit's final no-actionable-comments result. This validates local contracts and
+controls; live integration/model quality and AT17 remain open/BLOCKED.

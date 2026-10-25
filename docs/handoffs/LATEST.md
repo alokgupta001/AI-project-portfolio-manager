@@ -1,20 +1,35 @@
 # Latest technical handoff
 
-**26 October 2026 — second PR review corrections:** both hosted CI runs passed for
-`faf1668`. CodeRabbit then identified two additional valid CSV identity issues;
-new omitted namespaces are isolated and canonical keys take precedence over legacy
-NULL keys. Current affected checks: **36 backend cases**, one strengthened keyed/legacy
-case and **six browser journeys** pass, plus static/contracts/inventories. These
-supplement the preceding 535-case full gate; fresh head CI and a further included
-review are pending. [Evidence](../verification/sprint12/REVIEW_FIXES.md). Normal 0018
-is healthy with all preservation checks passing; applied 0017/0018 are unchanged.
-The included CodeRabbit allowance is one review/hour, last completed 25 October
-21:19:46 UTC. An hourly persistent follow-up was rejected by automatic approval
-review and was not created; explicit authorization is pending. Finish only the
-existing PR loop, preserve the 21 original artifact edits and all provider/user/data
-controls, and stop before Sprint 13. AT17 stays BLOCKED; no merge/deployment.
+**26 October 2026 — Sprint 12 local sample and review closed:** normal schema is
+**0018_csv_source_namespaces**. Application commit `f93a596` is pushed to
+[PR 7](https://github.com/alokgupta001/AI-project-portfolio-manager/pull/7) on
+`sprint-12-local-foundations`. Both hosted CI runs passed for that commit; CodeRabbit
+reviewed `faf1668..f93a596` and completed with **no actionable comments** at
+03:58:46 IST. Nine findings plus the test nitpick are corrected; seven original
+inline threads are resolved. [Closeout](../10-reference/SPRINT-12-LOCAL-CLOSEOUT.md),
+[handoff](../03-sprints/completed/sprint-12/HANDOFF.md) and
+[actual checks](../04-testing/sprint-based/sprint-12/TESTING_REPORT.md) are current.
 
-**26 October 2026 — Sprint 12 PR review follow-up:** normal schema is **0018**, local services healthy. [PR 7](https://github.com/alokgupta001/AI-project-portfolio-manager/pull/7) is open on `sprint-12-local-foundations`; the owner authorized correcting CodeRabbit findings and pushing fixes. All seven inline findings and the scheduling-test nitpick were verified as valid and corrected. Fresh checks: **535 backend tests passed, one skipped**, migration lifecycle/drift, ten focused integration cases, five Sprint 12 browser cases and nine static/contract gates pass. [Review evidence](../verification/sprint12/REVIEW_FIXES.md) is the live checkpoint. All 77 established table hashes/counts, 26 frozen inputs and 21 original artifact edits remain unchanged; applied 0001–0017 are preserved. Read [the handoff](../03-sprints/completed/sprint-12/HANDOFF.md) and [actual checks](../04-testing/sprint-based/sprint-12/TESTING_REPORT.md). Live connectors/genuine model quality remain unavailable; AT17 remains BLOCKED. Gemini/Puter/Groq, 50/day shared, one/minute, $0, scopes and four-user access remain unchanged. No merge or production deployment is authorized. Stop before Sprint 13.
+Final affected checks: **36 backend cases**, one strengthened keyed/legacy case and
+**six browser journeys** pass. The preceding full local gate passed **535 tests,
+one skipped**, plus lifecycle/drift; sets overlap. Current-head hosted CI covers the
+two final source fixes. All 77 established table hashes/counts, 26 frozen original
+inputs and 21 original artifact edits are preserved; applied 0001–0018 are frozen.
+
+The owner approved the hourly follow-up after its initial approval rejection. It
+was created, then **paused when review and CI were clean**. The first immediate
+request was rate-limited; only the subsequent completed review is acceptance evidence.
+The owner now authorized updating maintained documents and pushing to the same PR.
+This documentation refresh follows the reviewed application checkpoint; its newly
+triggered CI must be verified separately. Do not claim that it already passed.
+
+Gemini/Puter/Groq, 50/day shared ceilings, one/minute pacing, $0 policy, approved
+project scopes and four-user access remain unchanged; Ollama stays off. Live connector
+acceptance and genuine model quality remain unavailable; **AT17 stays BLOCKED**.
+No merge, deployment or Sprint 13 execution. Preserve historical sources/prompts,
+Word archives and dated results. New requested runtime work needs its own scope.
+
+## Historical checkpoints
 
 **Earlier checkpoint before Sprint 12 (25 October 2026; superseded):** Sprint 11/11.1 is complete for the
 local guided-sample scope; Sprint 12 local foundations are ready to start, not yet

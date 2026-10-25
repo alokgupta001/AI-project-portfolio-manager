@@ -1,65 +1,54 @@
 # Sprint 12 final local handoff
 
-25 October 2026. **Local sample complete; full original live/model acceptance OPEN.**
-Normal schema **0018_csv_source_namespaces**; API/web/worker/dispatcher are healthy.
-Open http://localhost:3000/ml as Admin in the existing synthetic demo organization.
-Use [the walkthrough](USER_GUIDE.md), [report/tracker](SPRINT_REPORT.md),
+26 October 2026. **Local sample complete; full live/model acceptance OPEN.**
+Normal schema is **0018_csv_source_namespaces**; the local runtime was verified
+healthy after the final source fixes. [PR 7](https://github.com/alokgupta001/AI-project-portfolio-manager/pull/7)
+contains application commit `f93a596`. Both hosted CI runs passed, and CodeRabbit's
+final review of that commit reported **no actionable comments**. See
+[the closeout](../../../10-reference/SPRINT-12-LOCAL-CLOSEOUT.md),
+[review evidence](../../../verification/sprint12/REVIEW_FIXES.md),
 [actual checks](../../../04-testing/sprint-based/sprint-12/TESTING_REPORT.md) and
-[contract](../../../contracts/ml.md).
+[report](SPRINT_REPORT.md).
 
-- 528 full backend tests passed/one skipped, migration lifecycle/drift pass; 27 focused
-  cases and 14 current offline cases pass; five final browser journeys pass. Sets overlap.
-- API import/dataset/baseline/card/repeat/download and withdrawal flow is verified.
-  Four final current-tree DB cases passed; the receipt is recorded in the test report.
-- Normal 0016 → 0017 preserved all 77 established table hashes/counts, 26 frozen
-  file hashes, five objects and eight original job/AI associations. Private dump,
-  objects, starting diff and artifacts are in artifacts/local/sprint12. Never reset them.
-- Gemini/Puter/Groq remain enabled for only the existing approved project scopes,
-  shared 50/day, one/minute, concurrency one and $0; Ollama remains off. All original
-  four users' memberships/grants and usage ledgers match the starting capture.
-- No source credentials or complete genuine outcomes were available. Fixtures are
-  explicitly synthetic; real imports are organization-attested. AT17 stays BLOCKED.
-  Native MLflow tracking/import and larger/text candidates remain deferred.
+## Use and recover the local sample
 
-The old migration image initially kept 0016; rebuilding it applied 0017 and all
-preservation/readiness checks passed. Applied 0001–0017 are now frozen. Recover
-routine app failures with retained data and a reviewed forward fix, never normal
-lifecycle downgrade/reset. Existing local restart uses:
+Open http://localhost:3000/ml as Admin in an existing authorized organization.
+[User steps](USER_GUIDE.md) cover history → dataset → baseline → repeated model card
+→ download → withdrawal. `/integrations` owns connector approval, rotation/revocation
+and source conflict review. CSV omission isolates identities; explicit namespaces
+remain shareable. Canonical keys win over legacy unkeyed rows without deleting targets.
+
+Existing local restart, with the approved private configuration retained:
 
 ```powershell
 docker compose -f compose.yaml -f compose.guided.yaml -f artifacts/local/guided-review/cloud.compose.yaml up -d --wait api worker dispatcher web
 ```
 
-**Stop before Sprint 13.** No model serving/promotion, PR, commit/push/merge or
-production deployment was performed. [Future deployment concerns](../../../limitations/FUTURE_DEPLOYMENT_POINTS.md)
-are recorded separately; they do not block bounded local sample use.
+Rebuild the owning images before a future code/schema change, including `migrate`
+for a new forward migration. Never bootstrap/reset an established installation or
+downgrade normal data. Applied **0001–0018 are frozen**; earlier image/retry failures
+remain documented in the testing report.
 
-## Publication follow-up
+## Evidence and preserved boundaries
 
-The owner subsequently authorized a new branch and PR for this completed local scope.
-Publish `sprint-12-local-foundations` from the current main tree, excluding all 21
-pre-existing artifact edits. Prior no-push statements describe the implementation
-checkpoint. No merge, production deployment or Sprint 13 work is authorized.
+- Final affected checks: 36 backend cases, the strengthened keyed/legacy case and
+  six browser journeys pass; static/contracts/inventories pass. The preceding full
+  local run passed 535 tests/one skipped with one inherited warning and lifecycle/drift.
+  These sets overlap; the full local run predates the last two fixes, which subsequently
+  passed full hosted CI on `f93a596`.
+- Forward 0016 → 0017 → 0018 preserved 77 established table hashes/counts and 26
+  original frozen inputs; original five objects/eight job links were verified at the
+  implementation checkpoint. All 21 original artifact edits remain byte-identical,
+  local and excluded from the PR. Private diffs/backups/receipts are in
+  `artifacts/local/sprint12`.
+- Gemini/Puter/Groq retain approved scopes/four-user access, shared 50/day ceilings,
+  one/minute pacing, concurrency one and $0. Ollama is off; no Sprint 12 inference.
+- Genuine outcomes/live connector credentials were absent. Synthetic metrics are
+  demo evidence only; AT17 stays BLOCKED. Native MLflow/larger text candidates,
+  deployment and real quality remain separate gates. [Deployment concerns](../../../limitations/FUTURE_DEPLOYMENT_POINTS.md)
+  do not prevent local use.
 
-## PR review follow-up — 26 October 2026
-
-[PR 7](https://github.com/alokgupta001/AI-project-portfolio-manager/pull/7) is open
-on `sprint-12-local-foundations`. The owner authorized checking/fixing its CodeRabbit
-findings and pushing corrections. [Review evidence](../../../verification/sprint12/REVIEW_FIXES.md)
-records all seven valid inline findings and the test nitpick. Forward 0018 isolates
-implicit legacy CSV namespaces; applied 0001–0017 remain unchanged. Normal services
-are healthy, all 77 established table hashes/counts and 26 frozen input hashes match,
-and the 21 pre-existing artifact edits remain byte-identical. Fresh validation:
-535 backend tests passed/one skipped (one inherited warning), lifecycle/drift,
-ten focused integration cases, five Sprint 12 browser cases and nine static gates pass.
-Both hosted CI runs passed for first-fix commit `faf1668`. CodeRabbit's second review
-found two more valid source-identity issues; omitted CSV namespaces now isolate new
-connections and canonical keys win over legacy NULL keys. Current affected checks:
-36 backend cases, the strengthened keyed/legacy case, six browser journeys and static
-checks pass. These supplement the preceding full gate, not a new full local run.
-Fresh head CI and the next included CodeRabbit review are pending. CodeRabbit permits
-one included review/hour; its last completed review was 25 October 21:19:46 UTC.
-An hourly persistent follow-up was rejected by automatic approval review and is NOT
-created; explicit authorization for recurring writes/pushes/review comments is pending.
-Keep the current review loop within the included allowance. AT17 remains BLOCKED;
-stop before 13 and never merge/deploy.
+The hourly review follow-up was explicitly approved, created and then paused when
+review and CI were clean. Earlier pending-authorization/rate-limited states are history.
+The owner authorized this documentation refresh and push to the existing PR; its
+new CI status is separate from application `f93a596`. No merge/deployment or Sprint 13.

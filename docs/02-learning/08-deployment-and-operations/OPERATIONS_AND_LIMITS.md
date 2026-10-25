@@ -2,10 +2,7 @@
 
 [Learning roadmap](../00-getting-started/README.md)
 
-Current Sprint 10 source checkpoint: uncommitted over b98110e, additive 0012_ai_runtime.
-Normal rollout/evidence are recorded in the [active handoff](../../03-sprints/completed/sprint-10/HANDOFF.md).
-The shared runtime and no-key evidence preview are implemented; Gemini free-tier smoke verified; broader quality unverified.
-Earlier Sprint 8.1 Word/CI and production gates remain open.
+26 October 2026. Current local sample: Sprint 12 at normal schema **0018**. [Reviewed closeout](../../10-reference/SPRINT-12-LOCAL-CLOSEOUT.md) records application commit `f93a596`, both passing hosted CI runs and CodeRabbit's final review with no actionable comments. Live connectors/genuine model quality remain unverified and AT17 remains BLOCKED. Earlier dated checkpoints below retain their original scope; stop before Sprint 13.
 
 ## Complete slices, partial features and plans
 
@@ -17,7 +14,7 @@ Earlier Sprint 8.1 Word/CI and production gates remain open.
 | Browser administration | Scoped assessment access | `assessment.set_access` and browser Framework/Assessment Access panels now exist |
 | Implemented within local bounds | Durable jobs/outbox, CSV and labelled Jira/GitHub fixtures, live progress/SSE | Sprint 08 report and jobs contract; real provider authentication and deployed webhooks remain unverified |
 | Implemented, local verification | Shared gateway/budgeted hybrid/disabled fallback | Gemini free-tier smoke verified; bounded JSONB vectors, broad quality/scale unverified |
-| Planned | Agents, predictive models/copilot and cloud release | Sprint 11 onward requires separate authorization |
+| Implemented locally; broad acceptance open | Bounded guided roles plus reproducible CPU baseline research | `/agents`, `/integrations`, `/ml`; real quality, forecast serving/copilot and cloud release remain unverified/planned |
 | Not established | Production readiness, real-world throughput, full accessibility/security certification, off-host recovery | Existing local/CI checks do not prove these outcomes |
 
 Implementation means a connected code path exists and has the recorded acceptance described here. It does not mean every broad requirement or future sprint is complete.
@@ -30,7 +27,8 @@ Cooperating writes and snapshots serialize by organization. This favors straight
 
 Dashboard dates filter selected facts; they do not reconstruct all historical state. Source age can be stale even after reload. Missing inputs remain Unknown, and insufficient resource scope prevents whole-resource claims.
 
-Evidence is plain text, manually released. File bytes and database metadata are not one atomic transaction; orphan cleanup/retention is not automated. App-role append-only history is not tamper-proof against the migration owner.
+Assessment attachments remain bounded text with manual release; the separate
+document library has its own format/scanner/retention contract. File bytes and database metadata are not one atomic transaction; orphan cleanup/retention is not automated. App-role append-only history is not tamper-proof against the migration owner.
 
 Current deployment settings target local/test/demo. Development Gmail SMTP account delivery is verified. No live cloud release, passkey rollout or scheduled business-report pipeline is established. Old source requirements or gallery illustrations should not be read as implemented features.
 

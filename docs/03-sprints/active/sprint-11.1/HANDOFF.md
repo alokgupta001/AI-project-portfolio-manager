@@ -1,5 +1,7 @@
 # Sprint 11.1 implementation handoff
 
+26 October 2026: this page retains its Sprint 11/11.1 checkpoint and measured outcomes. The subsequent [Sprint 12 local closeout](../../../10-reference/SPRINT-12-LOCAL-CLOSEOUT.md) is current at schema 0018, with pushed application fixes and passing review/CI. Broad model quality and AT17 remain BLOCKED; no production or Sprint 13 acceptance follows.
+
 **Current disposition — 25 October 2026:** Sprint 11/11.1 is complete for the
 local guided-sample scope; Sprint 12 local foundations are ready to start, not yet
 implemented. Broad AI accuracy **AT17 remains BLOCKED**. Normal schema is 0016;

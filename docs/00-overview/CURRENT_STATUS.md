@@ -1,6 +1,6 @@
 # Current implementation and acceptance
 
-**Sprint 12 current implementation:** [local report](../03-sprints/completed/sprint-12/SPRINT_REPORT.md) and [actual checks](../04-testing/sprint-based/sprint-12/TESTING_REPORT.md) supersede earlier unstarted statements below. Local sample acceptance is complete at schema 0018 with healthy local services. [PR review corrections](../verification/sprint12/REVIEW_FIXES.md) preserve existing data and applied migrations. Live source/model quality and AT17 remain blocked; stop before 13.
+26 October 2026. Current local sample: Sprint 12 at normal schema **0018**. [Reviewed closeout](../10-reference/SPRINT-12-LOCAL-CLOSEOUT.md) records application commit `f93a596`, both passing hosted CI runs and CodeRabbit's final review with no actionable comments. Live connectors/genuine model quality remain unverified and AT17 remains BLOCKED. Earlier dated checkpoints below retain their original scope; stop before Sprint 13.
 
 **Earlier checkpoint before Sprint 12 (25 October 2026; superseded):** Sprint 11/11.1 is complete for the
 local guided-sample scope; Sprint 12 local foundations are ready to start, not yet
@@ -40,7 +40,7 @@ are on `sprint-11-specialist-review`. Forward 0014 preserves existing migrations
 normal database remains 0012. The requested output-budget increase is deferred
 under the unchanged-limits constraint. Earlier checkpoint statements follow.
 
-Current — 16 October 2026: Sprint 11 specialists, separate semantic maturity suggestions and recommendation review are implemented for deterministic local acceptance. [Report](../03-sprints/completed/sprint-11/SPRINT_REPORT.md) and [fresh validation](../04-testing/sprint-based/sprint-11/TESTING_REPORT.md) are authoritative. Real-provider semantic quality UNVERIFIED/BLOCKED; production/scale remain open. Normal database 0012 preserved, additive 0013 tested in disposable databases. No deployment/commit; stop before Sprint 12.
+Historical checkpoint — 16 October 2026: Sprint 11 specialists, separate semantic maturity suggestions and recommendation review are implemented for deterministic local acceptance. [Report](../03-sprints/completed/sprint-11/SPRINT_REPORT.md) and [fresh validation](../04-testing/sprint-based/sprint-11/TESTING_REPORT.md) are authoritative. Real-provider semantic quality UNVERIFIED/BLOCKED; production/scale remain open. Normal database 0012 preserved, additive 0013 tested in disposable databases. No deployment/commit; stop before Sprint 12.
 
 ## Historical checkpoints before Sprint 11
 
@@ -50,7 +50,7 @@ A real synthetic exact-excerpt completion and 256-dimension embedding smoke pass
 This supersedes the authorization restriction in the original checkpoint below;
 general model-quality and production acceptance remain open. No new migration.
 
-Current checkpoint — 16 October 2026: Sprints 8.1 and 10 are COMPLETED for their implemented development scope at `0012_ai_runtime`. Reviewed application checkpoint `631c149` passed hosted CI; 201 backend tests and the document browser regression passed. A current pilot Word guide is rendered and visually verified. Gemini bounded completion/embedding smoke passed at maximum spend $0; confirmation does not expire daily. Production deployment, scale and broad agent/model quality remain OPEN release/successor gates. Sprint 11 is not started. Stop before 11.
+Historical checkpoint — 16 October 2026: Sprints 8.1 and 10 are COMPLETED for their implemented development scope at `0012_ai_runtime`. Reviewed application checkpoint `631c149` passed hosted CI; 201 backend tests and the document browser regression passed. A current pilot Word guide is rendered and visually verified. Gemini bounded completion/embedding smoke passed at maximum spend $0; confirmation does not expire daily. Production deployment, scale and broad agent/model quality remain OPEN release/successor gates. Sprint 11 is not started. Stop before 11.
 
 | Capability | Status | Evidence and limits |
 | --- | --- | --- |

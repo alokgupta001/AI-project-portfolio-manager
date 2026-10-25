@@ -1,5 +1,19 @@
 # Changelog
 
+## 2026-10-26 — Sprint 12 documentation and reviewed closeout
+
+- Reconcile maintained root/status/planning/coverage, architecture/contracts/schema,
+  setup/user/presentation/demo/learning, report/tracker/handoff and evidence pages
+  with normal 0018 and reviewed application commit `f93a596`.
+- Record both passing hosted workflows, all nine corrected findings, the final
+  CodeRabbit review with no actionable comments and the follow-up paused at closure.
+- Regenerate the database guide using the current schema revision and PostgreSQL
+  type rendering; add the plain-language Sprint 12 report and canonical closeout.
+- Preserve source/prompts, applied migrations, raw historical evidence, Word archives
+  and all 21 original artifact edits. Live/model gates and AT17 remain open/BLOCKED.
+- This documentation refresh has its own checks and CI; it does not claim that a
+  newly pushed documentation revision has already passed the application review.
+
 ## 2026-10-26 — Sprint 12 PR review fixes
 
 - Correct authority loading, saved-card clearing, stale polling and the ML breadcrumb.

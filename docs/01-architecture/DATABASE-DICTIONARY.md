@@ -1,10 +1,10 @@
 # Current source-derived database dictionary
 
-Generated from SQLAlchemy `Base.metadata` without a database connection. Source chain ends at `0012_ai_runtime`; the normal local applied head is independently recorded in the [Sprint 10 handoff](../03-sprints/completed/sprint-10/HANDOFF.md). Run `python scripts/documentation_inventory.py --check` for drift. SQL-only RLS, triggers, privileges and security-definer functions require reading [the migrations](../../services/api/migrations/versions) and [document contract](../contracts/documents.md); metadata is not a complete policy inventory.
+Generated from SQLAlchemy `Base.metadata` without a database connection; SQL types use the PostgreSQL dialect. Source chain ends at `0018_csv_source_namespaces`; the normal applied head and preservation evidence are independently recorded in the [latest handoff](../handoffs/LATEST.md). Run `python scripts/documentation_inventory.py --check` for drift. SQL-only RLS, triggers, privileges and security-definer functions require reading [the migrations](../../services/api/migrations/versions) and [document contract](../contracts/documents.md); metadata is not a complete policy inventory.
 
 ## Important data flows
 
-Live organization membership → transaction-local principal/RLS → scoped domain facts. Published assessment history remains immutable. `source_documents` owns scope/retention; `source_versions` owns immutable byte identity and mutable processing status; `source_chunks` is replaceable derived text; `source_evidence_links` references separately authorized released attachments. `durable_jobs` references exactly one integration, document version or AI run according to job kind. AI run provenance/budgets, attempt accounting and rebuildable vectors follow the [AI contract](../contracts/ai.md). Originals remain private objects; logical deletion revokes reads, guarded purge removes bytes/text/links but retains tombstones. `ai_embeddings` stores the bounded exact JSONB projection; no pgvector/ANN or semantic-finding table is activated.
+Live organization membership → transaction-local principal/RLS → scoped domain facts. Published assessment history remains immutable. `source_documents` owns scope/retention; `source_versions` owns immutable byte identity and mutable processing status; `source_chunks` is replaceable derived text; `source_evidence_links` references separately authorized released attachments. `durable_jobs` references exactly one integration, document version, AI run or local ML run according to job kind. Connector principals, source conflicts, immutable histories/datasets and CPU run lineage follow the [local baseline contract](../contracts/ml.md). AI run provenance/budgets, attempt accounting and rebuildable vectors follow the [AI contract](../contracts/ai.md). Originals remain private objects; logical deletion revokes reads, guarded purge removes bytes/text/links but retains tombstones. `ai_embeddings` stores the bounded exact JSONB projection; no pgvector/ANN or semantic-finding table is activated.
 
 **Inventory:** 82 metadata tables (Alembic's runtime version table is separate).
 
@@ -12,12 +12,12 @@ Live organization membership → transaction-local principal/RLS → scoped doma
 
 | Column | SQL type | Nullable | Primary key | Foreign reference |
 | --- | --- | --- | --- | --- |
-| `id` | `CHAR(32)` | False | True | — |
-| `organization_id` | `CHAR(32)` | False | False | ai_runs.organization_id, memberships.organization_id, organizations.id, ppm_assessments.organization_id, ppm_projects.organization_id |
-| `run_id` | `CHAR(32)` | False | False | ai_runs.id |
-| `project_id` | `CHAR(32)` | False | False | ppm_projects.id |
-| `assessment_id` | `CHAR(32)` | True | False | ppm_assessments.id |
-| `actor_id` | `CHAR(32)` | False | False | memberships.user_id |
+| `id` | `UUID` | False | True | — |
+| `organization_id` | `UUID` | False | False | ai_runs.organization_id, memberships.organization_id, organizations.id, ppm_assessments.organization_id, ppm_projects.organization_id |
+| `run_id` | `UUID` | False | False | ai_runs.id |
+| `project_id` | `UUID` | False | False | ppm_projects.id |
+| `assessment_id` | `UUID` | True | False | ppm_assessments.id |
+| `actor_id` | `UUID` | False | False | memberships.user_id |
 | `snapshot` | `JSONB` | False | False | — |
 | `output` | `JSONB` | True | False | — |
 
@@ -34,18 +34,18 @@ Live organization membership → transaction-local principal/RLS → scoped doma
 
 | Column | SQL type | Nullable | Primary key | Foreign reference |
 | --- | --- | --- | --- | --- |
-| `id` | `CHAR(32)` | False | True | — |
-| `organization_id` | `CHAR(32)` | False | False | agent_analyses.organization_id, memberships.organization_id, organizations.id |
-| `analysis_id` | `CHAR(32)` | False | False | agent_analyses.id |
+| `id` | `UUID` | False | True | — |
+| `organization_id` | `UUID` | False | False | agent_analyses.organization_id, memberships.organization_id, organizations.id |
+| `analysis_id` | `UUID` | False | False | agent_analyses.id |
 | `item_key` | `VARCHAR(96)` | False | False | — |
-| `actor_id` | `CHAR(32)` | False | False | memberships.user_id |
+| `actor_id` | `UUID` | False | False | memberships.user_id |
 | `decision` | `VARCHAR(16)` | False | False | — |
 | `reason` | `VARCHAR(1000)` | False | False | — |
 | `approved_score` | `NUMERIC(7, 4)` | True | False | — |
 | `revision` | `INTEGER` | False | False | — |
-| `key` | `CHAR(32)` | False | False | — |
+| `key` | `UUID` | False | False | — |
 | `fingerprint` | `VARCHAR(64)` | False | False | — |
-| `created_at` | `DATETIME` | False | False | — |
+| `created_at` | `TIMESTAMP WITH TIME ZONE` | False | False | — |
 
 - CheckConstraint (unnamed): approved_score IS NULL OR approved_score BETWEEN 0 AND 100
 - CheckConstraint (unnamed): decision IN ('accepted','rejected')
@@ -62,17 +62,17 @@ Live organization membership → transaction-local principal/RLS → scoped doma
 
 | Column | SQL type | Nullable | Primary key | Foreign reference |
 | --- | --- | --- | --- | --- |
-| `id` | `CHAR(32)` | False | True | — |
-| `organization_id` | `CHAR(32)` | False | False | agent_tasks.organization_id, organizations.id |
-| `run_id` | `CHAR(32)` | False | False | agent_tasks.run_id |
-| `task_id` | `CHAR(32)` | False | False | agent_tasks.id |
+| `id` | `UUID` | False | True | — |
+| `organization_id` | `UUID` | False | False | agent_tasks.organization_id, organizations.id |
+| `run_id` | `UUID` | False | False | agent_tasks.run_id |
+| `task_id` | `UUID` | False | False | agent_tasks.id |
 | `section_id` | `VARCHAR(64)` | False | False | — |
 | `logical_section_id` | `VARCHAR(64)` | False | False | — |
 | `result` | `JSONB` | False | False | — |
 | `validation` | `JSONB` | False | False | — |
 | `content_sha256` | `VARCHAR(64)` | False | False | — |
 | `schema_version` | `VARCHAR(48)` | False | False | — |
-| `created_at` | `DATETIME` | False | False | — |
+| `created_at` | `TIMESTAMP WITH TIME ZONE` | False | False | — |
 
 - CheckConstraint (unnamed): octet_length(result::text)<=64000 AND octet_length(validation::text)<=64000
 - ForeignKeyConstraint (unnamed): organization_id
@@ -86,15 +86,15 @@ Live organization membership → transaction-local principal/RLS → scoped doma
 
 | Column | SQL type | Nullable | Primary key | Foreign reference |
 | --- | --- | --- | --- | --- |
-| `id` | `CHAR(32)` | False | True | — |
-| `organization_id` | `CHAR(32)` | False | False | agent_tasks.organization_id, ai_runs.organization_id, organizations.id |
-| `run_id` | `CHAR(32)` | False | False | agent_tasks.run_id, ai_runs.id |
+| `id` | `UUID` | False | True | — |
+| `organization_id` | `UUID` | False | False | agent_tasks.organization_id, ai_runs.organization_id, organizations.id |
+| `run_id` | `UUID` | False | False | agent_tasks.run_id, ai_runs.id |
 | `task_key` | `VARCHAR(64)` | False | False | — |
 | `agent` | `VARCHAR(20)` | False | False | — |
 | `kind` | `VARCHAR(16)` | False | False | — |
 | `logical_section_id` | `VARCHAR(64)` | False | False | — |
 | `section_id` | `VARCHAR(64)` | False | False | — |
-| `parent_task_id` | `CHAR(32)` | True | False | agent_tasks.id |
+| `parent_task_id` | `UUID` | True | False | agent_tasks.id |
 | `dependencies` | `JSONB` | False | False | — |
 | `input_manifest` | `JSONB` | False | False | — |
 | `input_hash` | `VARCHAR(64)` | False | False | — |
@@ -106,17 +106,17 @@ Live organization membership → transaction-local principal/RLS → scoped doma
 | `required` | `BOOLEAN` | False | False | — |
 | `revision` | `INTEGER` | False | False | — |
 | `attempt_count` | `INTEGER` | False | False | — |
-| `next_attempt_at` | `DATETIME` | True | False | — |
-| `lease_token` | `CHAR(32)` | True | False | — |
-| `created_at` | `DATETIME` | False | False | — |
-| `updated_at` | `DATETIME` | False | False | — |
+| `next_attempt_at` | `TIMESTAMP WITH TIME ZONE` | True | False | — |
+| `lease_token` | `UUID` | True | False | — |
+| `created_at` | `TIMESTAMP WITH TIME ZONE` | False | False | — |
+| `updated_at` | `TIMESTAMP WITH TIME ZONE` | False | False | — |
 | `diagnostic` | `VARCHAR(48)` | True | False | — |
 | `candidate_payload` | `JSONB` | True | False | — |
 | `candidate_hash` | `VARCHAR(64)` | True | False | — |
-| `candidate_attempt_id` | `CHAR(32)` | True | False | — |
+| `candidate_attempt_id` | `UUID` | True | False | — |
 | `resolved_context_manifest` | `JSONB` | True | False | — |
 | `resolved_input_hash` | `VARCHAR(64)` | True | False | — |
-| `bound_at` | `DATETIME` | True | False | — |
+| `bound_at` | `TIMESTAMP WITH TIME ZONE` | True | False | — |
 
 - CheckConstraint (unnamed): jsonb_array_length(dependencies)<=24 AND octet_length(input_manifest::text)<=90000
 - CheckConstraint (unnamed): kind IN ('deterministic','semantic','evaluator','reconcile')
@@ -135,15 +135,15 @@ Live organization membership → transaction-local principal/RLS → scoped doma
 
 | Column | SQL type | Nullable | Primary key | Foreign reference |
 | --- | --- | --- | --- | --- |
-| `id` | `CHAR(32)` | False | True | — |
-| `organization_id` | `CHAR(32)` | False | False | organizations.id |
+| `id` | `UUID` | False | True | — |
+| `organization_id` | `UUID` | False | False | organizations.id |
 | `limit_usd` | `NUMERIC(12, 6)` | False | False | — |
 | `spent_usd` | `NUMERIC(12, 6)` | False | False | — |
 | `reserved_usd` | `NUMERIC(12, 6)` | False | False | — |
 | `concurrency` | `INTEGER` | False | False | — |
 | `revision` | `INTEGER` | False | False | — |
 | `failures` | `INTEGER` | False | False | — |
-| `circuit_until` | `DATETIME` | True | False | — |
+| `circuit_until` | `TIMESTAMP WITH TIME ZONE` | True | False | — |
 
 - CheckConstraint (unnamed): concurrency BETWEEN 1 AND 4
 - CheckConstraint (unnamed): limit_usd>=0 AND spent_usd>=0 AND reserved_usd>=0
@@ -156,9 +156,9 @@ Live organization membership → transaction-local principal/RLS → scoped doma
 
 | Column | SQL type | Nullable | Primary key | Foreign reference |
 | --- | --- | --- | --- | --- |
-| `id` | `CHAR(32)` | False | True | — |
-| `organization_id` | `CHAR(32)` | False | False | agent_tasks.organization_id, ai_runs.organization_id, organizations.id |
-| `run_id` | `CHAR(32)` | False | False | agent_tasks.run_id, ai_runs.id |
+| `id` | `UUID` | False | True | — |
+| `organization_id` | `UUID` | False | False | agent_tasks.organization_id, ai_runs.organization_id, organizations.id |
+| `run_id` | `UUID` | False | False | agent_tasks.run_id, ai_runs.id |
 | `operation` | `VARCHAR(24)` | False | False | — |
 | `attempt` | `INTEGER` | False | False | — |
 | `status` | `VARCHAR(16)` | False | False | — |
@@ -167,16 +167,16 @@ Live organization membership → transaction-local principal/RLS → scoped doma
 | `input_tokens` | `INTEGER` | True | False | — |
 | `output_tokens` | `INTEGER` | True | False | — |
 | `latency_ms` | `INTEGER` | False | False | — |
-| `task_id` | `CHAR(32)` | True | False | agent_tasks.id |
-| `attempt_id` | `CHAR(32)` | True | False | — |
+| `task_id` | `UUID` | True | False | agent_tasks.id |
+| `attempt_id` | `UUID` | True | False | — |
 | `run_attempt_no` | `INTEGER` | True | False | — |
 | `provider_id` | `VARCHAR(32)` | True | False | — |
 | `model_id` | `VARCHAR(160)` | True | False | — |
 | `quota_scope_hash` | `VARCHAR(64)` | True | False | — |
 | `policy_hash` | `VARCHAR(64)` | True | False | — |
 | `request_hash` | `VARCHAR(64)` | True | False | — |
-| `started_at` | `DATETIME` | True | False | — |
-| `completed_at` | `DATETIME` | True | False | — |
+| `started_at` | `TIMESTAMP WITH TIME ZONE` | True | False | — |
+| `completed_at` | `TIMESTAMP WITH TIME ZONE` | True | False | — |
 | `finish_category` | `VARCHAR(32)` | True | False | — |
 | `native_reason` | `VARCHAR(48)` | True | False | — |
 | `usage_source` | `VARCHAR(16)` | True | False | — |
@@ -201,15 +201,15 @@ Live organization membership → transaction-local principal/RLS → scoped doma
 
 | Column | SQL type | Nullable | Primary key | Foreign reference |
 | --- | --- | --- | --- | --- |
-| `id` | `CHAR(32)` | False | True | — |
-| `organization_id` | `CHAR(32)` | False | False | ai_runs.organization_id, organizations.id, source_chunks.organization_id |
-| `chunk_id` | `CHAR(32)` | False | False | source_chunks.id |
+| `id` | `UUID` | False | True | — |
+| `organization_id` | `UUID` | False | False | ai_runs.organization_id, organizations.id, source_chunks.organization_id |
+| `chunk_id` | `UUID` | False | False | source_chunks.id |
 | `source_sha256` | `VARCHAR(64)` | False | False | — |
 | `text_sha256` | `VARCHAR(64)` | False | False | — |
 | `model` | `VARCHAR(160)` | False | False | — |
 | `chunk_version` | `VARCHAR(48)` | False | False | — |
 | `vector` | `JSONB` | False | False | — |
-| `run_id` | `CHAR(32)` | False | False | ai_runs.id |
+| `run_id` | `UUID` | False | False | ai_runs.id |
 
 - ForeignKeyConstraint (unnamed): organization_id
 - ForeignKeyConstraint (unnamed): organization_id, chunk_id
@@ -222,11 +222,11 @@ Live organization membership → transaction-local principal/RLS → scoped doma
 
 | Column | SQL type | Nullable | Primary key | Foreign reference |
 | --- | --- | --- | --- | --- |
-| `organization_id` | `CHAR(32)` | False | True | memberships.organization_id, ppm_projects.organization_id |
-| `user_id` | `CHAR(32)` | False | True | memberships.user_id |
-| `project_id` | `CHAR(32)` | False | True | ppm_projects.id |
+| `organization_id` | `UUID` | False | True | memberships.organization_id, ppm_projects.organization_id |
+| `user_id` | `UUID` | False | True | memberships.user_id |
+| `project_id` | `UUID` | False | True | ppm_projects.id |
 | `enabled` | `BOOLEAN` | False | False | — |
-| `created_at` | `DATETIME` | False | False | — |
+| `created_at` | `TIMESTAMP WITH TIME ZONE` | False | False | — |
 
 - ForeignKeyConstraint (unnamed): organization_id, project_id
 - ForeignKeyConstraint (unnamed): organization_id, user_id
@@ -248,10 +248,10 @@ Live organization membership → transaction-local principal/RLS → scoped doma
 | `requests_per_day` | `INTEGER` | False | False | — |
 | `tenant_requests_per_day` | `INTEGER` | False | False | — |
 | `tokens_per_minute` | `INTEGER` | False | False | — |
-| `circuit_until` | `DATETIME` | True | False | — |
+| `circuit_until` | `TIMESTAMP WITH TIME ZONE` | True | False | — |
 | `failure_count` | `INTEGER` | False | False | — |
 | `disabled_reason` | `VARCHAR(48)` | True | False | — |
-| `quarantined_attempt_id` | `CHAR(32)` | True | False | — |
+| `quarantined_attempt_id` | `UUID` | True | False | — |
 | `quarantine_reason` | `VARCHAR(48)` | True | False | — |
 | `revision` | `INTEGER` | False | False | — |
 
@@ -262,14 +262,14 @@ Live organization membership → transaction-local principal/RLS → scoped doma
 
 | Column | SQL type | Nullable | Primary key | Foreign reference |
 | --- | --- | --- | --- | --- |
-| `attempt_id` | `CHAR(32)` | False | True | — |
-| `organization_id` | `CHAR(32)` | False | False | agent_tasks.organization_id |
-| `run_id` | `CHAR(32)` | False | False | agent_tasks.run_id |
-| `task_id` | `CHAR(32)` | False | False | agent_tasks.id |
+| `attempt_id` | `UUID` | False | True | — |
+| `organization_id` | `UUID` | False | False | agent_tasks.organization_id |
+| `run_id` | `UUID` | False | False | agent_tasks.run_id |
+| `task_id` | `UUID` | False | False | agent_tasks.id |
 | `quota_scope_id` | `VARCHAR(160)` | False | False | ai_provider_scopes.id |
-| `admitted_at` | `DATETIME` | False | False | — |
-| `window_expires_at` | `DATETIME` | False | False | — |
-| `slot_expires_at` | `DATETIME` | False | False | — |
+| `admitted_at` | `TIMESTAMP WITH TIME ZONE` | False | False | — |
+| `window_expires_at` | `TIMESTAMP WITH TIME ZONE` | False | False | — |
+| `slot_expires_at` | `TIMESTAMP WITH TIME ZONE` | False | False | — |
 | `request_count` | `INTEGER` | False | False | — |
 | `reserved_input` | `INTEGER` | False | False | — |
 | `reserved_output` | `INTEGER` | False | False | — |
@@ -287,11 +287,11 @@ Live organization membership → transaction-local principal/RLS → scoped doma
 
 | Column | SQL type | Nullable | Primary key | Foreign reference |
 | --- | --- | --- | --- | --- |
-| `id` | `CHAR(32)` | False | True | — |
-| `organization_id` | `CHAR(32)` | False | False | memberships.organization_id, organizations.id, ppm_projects.organization_id |
-| `project_id` | `CHAR(32)` | False | False | ppm_projects.id |
-| `actor_id` | `CHAR(32)` | False | False | memberships.user_id |
-| `session_id` | `CHAR(32)` | False | False | identity_sessions.id |
+| `id` | `UUID` | False | True | — |
+| `organization_id` | `UUID` | False | False | memberships.organization_id, organizations.id, ppm_projects.organization_id |
+| `project_id` | `UUID` | False | False | ppm_projects.id |
+| `actor_id` | `UUID` | False | False | memberships.user_id |
+| `session_id` | `UUID` | False | False | identity_sessions.id |
 | `snapshot` | `JSONB` | False | False | — |
 | `input_sha256` | `VARCHAR(64)` | False | False | — |
 | `versions` | `JSONB` | False | False | — |
@@ -303,8 +303,8 @@ Live organization membership → transaction-local principal/RLS → scoped doma
 | `reservation` | `NUMERIC(12, 6)` | False | False | — |
 | `charged_usd` | `NUMERIC(12, 6)` | False | False | — |
 | `settled` | `BOOLEAN` | False | False | — |
-| `deadline` | `DATETIME` | False | False | — |
-| `created_at` | `DATETIME` | False | False | — |
+| `deadline` | `TIMESTAMP WITH TIME ZONE` | False | False | — |
+| `created_at` | `TIMESTAMP WITH TIME ZONE` | False | False | — |
 
 - CheckConstraint (unnamed): reservation>=0 AND charged_usd>=0 AND charged_usd<=reservation
 - ForeignKeyConstraint (unnamed): organization_id
@@ -318,16 +318,16 @@ Live organization membership → transaction-local principal/RLS → scoped doma
 
 | Column | SQL type | Nullable | Primary key | Foreign reference |
 | --- | --- | --- | --- | --- |
-| `id` | `CHAR(32)` | False | True | — |
-| `organization_id` | `CHAR(32)` | False | False | job_integrations.organization_id, memberships.organization_id, organizations.id |
-| `integration_id` | `CHAR(32)` | False | False | job_integrations.id |
+| `id` | `UUID` | False | True | — |
+| `organization_id` | `UUID` | False | False | job_integrations.organization_id, memberships.organization_id, organizations.id |
+| `integration_id` | `UUID` | False | False | job_integrations.id |
 | `active` | `BOOLEAN` | False | False | — |
 | `generation` | `INTEGER` | False | False | — |
 | `revision` | `INTEGER` | False | False | — |
 | `interval_minutes` | `INTEGER` | False | False | — |
-| `next_due` | `DATETIME` | False | False | — |
-| `approved_by` | `CHAR(32)` | False | False | memberships.user_id |
-| `updated_at` | `DATETIME` | False | False | — |
+| `next_due` | `TIMESTAMP WITH TIME ZONE` | False | False | — |
+| `approved_by` | `UUID` | False | False | memberships.user_id |
+| `updated_at` | `TIMESTAMP WITH TIME ZONE` | False | False | — |
 
 - ForeignKeyConstraint (unnamed): organization_id
 - ForeignKeyConstraint (unnamed): organization_id, approved_by
@@ -340,15 +340,15 @@ Live organization membership → transaction-local principal/RLS → scoped doma
 
 | Column | SQL type | Nullable | Primary key | Foreign reference |
 | --- | --- | --- | --- | --- |
-| `id` | `CHAR(32)` | False | True | — |
-| `organization_id` | `CHAR(32)` | False | False | ai_runs.organization_id, job_integrations.organization_id, memberships.organization_id, ml_runs.organization_id, organizations.id, source_versions.organization_id |
-| `integration_id` | `CHAR(32)` | True | False | job_integrations.id |
-| `document_version_id` | `CHAR(32)` | True | False | source_versions.id |
-| `ai_run_id` | `CHAR(32)` | True | False | ai_runs.id |
-| `ml_run_id` | `CHAR(32)` | True | False | ml_runs.id |
+| `id` | `UUID` | False | True | — |
+| `organization_id` | `UUID` | False | False | ai_runs.organization_id, job_integrations.organization_id, memberships.organization_id, ml_runs.organization_id, organizations.id, source_versions.organization_id |
+| `integration_id` | `UUID` | True | False | job_integrations.id |
+| `document_version_id` | `UUID` | True | False | source_versions.id |
+| `ai_run_id` | `UUID` | True | False | ai_runs.id |
+| `ml_run_id` | `UUID` | True | False | ml_runs.id |
 | `connector_generation` | `INTEGER` | True | False | — |
-| `actor_id` | `CHAR(32)` | False | False | memberships.user_id |
-| `session_id` | `CHAR(32)` | False | False | identity_sessions.id |
+| `actor_id` | `UUID` | False | False | memberships.user_id |
+| `session_id` | `UUID` | False | False | identity_sessions.id |
 | `key` | `VARCHAR(160)` | False | False | — |
 | `request_hash` | `VARCHAR(64)` | False | False | — |
 | `config` | `JSONB` | False | False | — |
@@ -359,12 +359,12 @@ Live organization membership → transaction-local principal/RLS → scoped doma
 | `accepted` | `INTEGER` | False | False | — |
 | `errors` | `JSONB` | False | False | — |
 | `cancel_requested` | `BOOLEAN` | False | False | — |
-| `lease_token` | `CHAR(32)` | True | False | — |
-| `heartbeat_at` | `DATETIME` | True | False | — |
-| `lease_until` | `DATETIME` | True | False | — |
-| `available_at` | `DATETIME` | False | False | — |
-| `created_at` | `DATETIME` | False | False | — |
-| `updated_at` | `DATETIME` | False | False | — |
+| `lease_token` | `UUID` | True | False | — |
+| `heartbeat_at` | `TIMESTAMP WITH TIME ZONE` | True | False | — |
+| `lease_until` | `TIMESTAMP WITH TIME ZONE` | True | False | — |
+| `available_at` | `TIMESTAMP WITH TIME ZONE` | False | False | — |
+| `created_at` | `TIMESTAMP WITH TIME ZONE` | False | False | — |
+| `updated_at` | `TIMESTAMP WITH TIME ZONE` | False | False | — |
 | `sequence` | `INTEGER` | False | False | — |
 
 - CheckConstraint (ck_job_source_kind): num_nonnulls(integration_id,document_version_id,ai_run_id,ml_run_id)=1
@@ -385,8 +385,8 @@ Live organization membership → transaction-local principal/RLS → scoped doma
 | Column | SQL type | Nullable | Primary key | Foreign reference |
 | --- | --- | --- | --- | --- |
 | `id` | `INTEGER` | False | True | — |
-| `instance_id` | `CHAR(32)` | False | False | — |
-| `created_at` | `DATETIME` | False | False | — |
+| `instance_id` | `UUID` | False | False | — |
+| `created_at` | `TIMESTAMP WITH TIME ZONE` | False | False | — |
 
 - CheckConstraint (ck_foundation_singleton): id = 1
 - PrimaryKeyConstraint (unnamed): id
@@ -396,13 +396,13 @@ Live organization membership → transaction-local principal/RLS → scoped doma
 
 | Column | SQL type | Nullable | Primary key | Foreign reference |
 | --- | --- | --- | --- | --- |
-| `id` | `CHAR(32)` | False | True | — |
-| `organization_id` | `CHAR(32)` | False | False | memberships.organization_id |
-| `actor_id` | `CHAR(32)` | False | False | memberships.user_id |
+| `id` | `UUID` | False | True | — |
+| `organization_id` | `UUID` | False | False | memberships.organization_id |
+| `actor_id` | `UUID` | False | False | memberships.user_id |
 | `action` | `VARCHAR(60)` | False | False | — |
-| `target_id` | `CHAR(32)` | True | False | — |
-| `request_id` | `CHAR(32)` | False | False | — |
-| `created_at` | `DATETIME` | False | False | — |
+| `target_id` | `UUID` | True | False | — |
+| `request_id` | `UUID` | False | False | — |
+| `created_at` | `TIMESTAMP WITH TIME ZONE` | False | False | — |
 
 - ForeignKeyConstraint (unnamed): organization_id, actor_id
 - PrimaryKeyConstraint (unnamed): id
@@ -415,12 +415,12 @@ Live organization membership → transaction-local principal/RLS → scoped doma
 | `token_hash` | `VARCHAR(64)` | False | True | — |
 | `kind` | `VARCHAR(12)` | False | False | — |
 | `email` | `VARCHAR(254)` | False | False | — |
-| `organization_id` | `CHAR(32)` | True | False | memberships.organization_id, organizations.id |
-| `inviter_id` | `CHAR(32)` | True | False | memberships.user_id |
+| `organization_id` | `UUID` | True | False | memberships.organization_id, organizations.id |
+| `inviter_id` | `UUID` | True | False | memberships.user_id |
 | `role` | `VARCHAR(20)` | True | False | — |
-| `expires_at` | `DATETIME` | False | False | — |
+| `expires_at` | `TIMESTAMP WITH TIME ZONE` | False | False | — |
 | `used` | `BOOLEAN` | False | False | — |
-| `invitation_id` | `CHAR(32)` | True | False | — |
+| `invitation_id` | `UUID` | True | False | — |
 | `organization_name` | `VARCHAR(120)` | True | False | — |
 
 - CheckConstraint (ck_challenge_kind): kind IN ('activate','reset','invite','register')
@@ -433,13 +433,13 @@ Live organization membership → transaction-local principal/RLS → scoped doma
 
 | Column | SQL type | Nullable | Primary key | Foreign reference |
 | --- | --- | --- | --- | --- |
-| `id` | `CHAR(32)` | False | True | — |
+| `id` | `UUID` | False | True | — |
 | `token_hash` | `VARCHAR(64)` | False | False | identity_challenges.token_hash |
 | `payload` | `JSONB` | False | False | — |
 | `status` | `VARCHAR(20)` | False | False | — |
 | `attempts` | `INTEGER` | False | False | — |
-| `available_at` | `DATETIME` | False | False | — |
-| `created_at` | `DATETIME` | False | False | — |
+| `available_at` | `TIMESTAMP WITH TIME ZONE` | False | False | — |
+| `created_at` | `TIMESTAMP WITH TIME ZONE` | False | False | — |
 | `error_code` | `VARCHAR(30)` | True | False | — |
 
 - ForeignKeyConstraint (unnamed): token_hash
@@ -450,7 +450,7 @@ Live organization membership → transaction-local principal/RLS → scoped doma
 | Column | SQL type | Nullable | Primary key | Foreign reference |
 | --- | --- | --- | --- | --- |
 | `token_hash` | `VARCHAR(64)` | False | True | — |
-| `session_id` | `CHAR(32)` | False | False | identity_sessions.id |
+| `session_id` | `UUID` | False | False | identity_sessions.id |
 | `used` | `BOOLEAN` | False | False | — |
 
 - ForeignKeyConstraint (unnamed): session_id
@@ -460,12 +460,12 @@ Live organization membership → transaction-local principal/RLS → scoped doma
 
 | Column | SQL type | Nullable | Primary key | Foreign reference |
 | --- | --- | --- | --- | --- |
-| `id` | `CHAR(32)` | False | True | — |
-| `user_id` | `CHAR(32)` | False | False | identity_users.id, memberships.user_id |
-| `organization_id` | `CHAR(32)` | True | False | memberships.organization_id |
+| `id` | `UUID` | False | True | — |
+| `user_id` | `UUID` | False | False | identity_users.id, memberships.user_id |
+| `organization_id` | `UUID` | True | False | memberships.organization_id |
 | `csrf_hash` | `VARCHAR(64)` | False | False | — |
-| `expires_at` | `DATETIME` | False | False | — |
-| `created_at` | `DATETIME` | False | False | — |
+| `expires_at` | `TIMESTAMP WITH TIME ZONE` | False | False | — |
+| `created_at` | `TIMESTAMP WITH TIME ZONE` | False | False | — |
 | `revoked` | `BOOLEAN` | False | False | — |
 
 - ForeignKeyConstraint (unnamed): organization_id, user_id
@@ -477,13 +477,13 @@ Live organization membership → transaction-local principal/RLS → scoped doma
 
 | Column | SQL type | Nullable | Primary key | Foreign reference |
 | --- | --- | --- | --- | --- |
-| `id` | `CHAR(32)` | False | True | — |
+| `id` | `UUID` | False | True | — |
 | `email` | `VARCHAR(254)` | False | False | — |
 | `name` | `VARCHAR(120)` | False | False | — |
 | `password_hash` | `VARCHAR(128)` | True | False | — |
 | `verified` | `BOOLEAN` | False | False | — |
 | `active` | `BOOLEAN` | False | False | — |
-| `created_at` | `DATETIME` | False | False | — |
+| `created_at` | `TIMESTAMP WITH TIME ZONE` | False | False | — |
 
 - PrimaryKeyConstraint (unnamed): id
 - UniqueConstraint (unnamed): email
@@ -492,18 +492,18 @@ Live organization membership → transaction-local principal/RLS → scoped doma
 
 | Column | SQL type | Nullable | Primary key | Foreign reference |
 | --- | --- | --- | --- | --- |
-| `id` | `CHAR(32)` | False | True | — |
-| `organization_id` | `CHAR(32)` | False | False | durable_jobs.organization_id, ingestion_sources.organization_id, organizations.id, ppm_projects.organization_id |
-| `source_id` | `CHAR(32)` | False | False | ingestion_sources.id |
-| `project_id` | `CHAR(32)` | False | False | ppm_projects.id |
+| `id` | `UUID` | False | True | — |
+| `organization_id` | `UUID` | False | False | durable_jobs.organization_id, ingestion_sources.organization_id, organizations.id, ppm_projects.organization_id |
+| `source_id` | `UUID` | False | False | ingestion_sources.id |
+| `project_id` | `UUID` | False | False | ppm_projects.id |
 | `revision` | `INTEGER` | False | False | — |
 | `status` | `VARCHAR(24)` | False | False | — |
 | `candidate` | `JSONB` | False | False | — |
 | `local` | `JSONB` | False | False | — |
-| `source_updated_at` | `DATETIME` | True | False | — |
-| `source_observed_at` | `DATETIME` | False | False | — |
+| `source_updated_at` | `TIMESTAMP WITH TIME ZONE` | True | False | — |
+| `source_observed_at` | `TIMESTAMP WITH TIME ZONE` | False | False | — |
 | `fingerprint` | `VARCHAR(64)` | False | False | — |
-| `job_id` | `CHAR(32)` | False | False | durable_jobs.id |
+| `job_id` | `UUID` | False | False | durable_jobs.id |
 
 - ForeignKeyConstraint (unnamed): organization_id
 - ForeignKeyConstraint (unnamed): organization_id, job_id
@@ -517,21 +517,21 @@ Live organization membership → transaction-local principal/RLS → scoped doma
 
 | Column | SQL type | Nullable | Primary key | Foreign reference |
 | --- | --- | --- | --- | --- |
-| `id` | `CHAR(32)` | False | True | — |
-| `organization_id` | `CHAR(32)` | False | False | durable_jobs.organization_id, job_integrations.organization_id, job_integrations.organization_id, organizations.id, ppm_sprints.organization_id, ppm_work_items.organization_id |
-| `integration_id` | `CHAR(32)` | False | False | job_integrations.id, job_integrations.id |
-| `project_id` | `CHAR(32)` | False | False | job_integrations.project_id, ppm_sprints.project_id, ppm_work_items.project_id |
-| `work_item_id` | `CHAR(32)` | True | False | ppm_work_items.id |
-| `sprint_id` | `CHAR(32)` | True | False | ppm_sprints.id |
+| `id` | `UUID` | False | True | — |
+| `organization_id` | `UUID` | False | False | durable_jobs.organization_id, job_integrations.organization_id, job_integrations.organization_id, organizations.id, ppm_sprints.organization_id, ppm_work_items.organization_id |
+| `integration_id` | `UUID` | False | False | job_integrations.id, job_integrations.id |
+| `project_id` | `UUID` | False | False | job_integrations.project_id, ppm_sprints.project_id, ppm_work_items.project_id |
+| `work_item_id` | `UUID` | True | False | ppm_work_items.id |
+| `sprint_id` | `UUID` | True | False | ppm_sprints.id |
 | `external_id` | `VARCHAR(160)` | False | False | — |
 | `logical_key` | `VARCHAR(64)` | True | False | — |
-| `source_updated_at` | `DATETIME` | True | False | — |
-| `source_observed_at` | `DATETIME` | False | False | — |
+| `source_updated_at` | `TIMESTAMP WITH TIME ZONE` | True | False | — |
+| `source_observed_at` | `TIMESTAMP WITH TIME ZONE` | False | False | — |
 | `fingerprint` | `VARCHAR(64)` | False | False | — |
-| `target_id` | `CHAR(32)` | False | False | — |
+| `target_id` | `UUID` | False | False | — |
 | `target_kind` | `VARCHAR(20)` | False | False | — |
 | `target_revision` | `INTEGER` | False | False | — |
-| `job_id` | `CHAR(32)` | False | False | durable_jobs.id |
+| `job_id` | `UUID` | False | False | durable_jobs.id |
 
 - CheckConstraint (unnamed): (target_kind='work_items' AND target_id=work_item_id AND work_item_id IS NOT NULL AND sprint_id IS NULL) OR (target_kind='sprints' AND target_id=sprint_id AND sprint_id IS NOT NULL AND work_item_id IS NULL)
 - ForeignKeyConstraint (unnamed): organization_id
@@ -549,12 +549,12 @@ Live organization membership → transaction-local principal/RLS → scoped doma
 
 | Column | SQL type | Nullable | Primary key | Foreign reference |
 | --- | --- | --- | --- | --- |
-| `id` | `CHAR(32)` | False | True | — |
-| `organization_id` | `CHAR(32)` | False | False | durable_jobs.organization_id, organizations.id |
-| `job_id` | `CHAR(32)` | False | False | durable_jobs.id |
+| `id` | `UUID` | False | True | — |
+| `organization_id` | `UUID` | False | False | durable_jobs.organization_id, organizations.id |
+| `job_id` | `UUID` | False | False | durable_jobs.id |
 | `sequence` | `INTEGER` | False | False | — |
 | `stage` | `VARCHAR(40)` | False | False | — |
-| `occurred_at` | `DATETIME` | False | False | — |
+| `occurred_at` | `TIMESTAMP WITH TIME ZONE` | False | False | — |
 
 - ForeignKeyConstraint (unnamed): organization_id
 - ForeignKeyConstraint (unnamed): organization_id, job_id
@@ -566,16 +566,16 @@ Live organization membership → transaction-local principal/RLS → scoped doma
 
 | Column | SQL type | Nullable | Primary key | Foreign reference |
 | --- | --- | --- | --- | --- |
-| `id` | `CHAR(32)` | False | True | — |
-| `organization_id` | `CHAR(32)` | False | False | memberships.organization_id, organizations.id, ppm_projects.organization_id |
-| `actor_id` | `CHAR(32)` | False | False | memberships.user_id |
-| `session_id` | `CHAR(32)` | False | False | identity_sessions.id |
-| `project_id` | `CHAR(32)` | False | False | ppm_projects.id |
+| `id` | `UUID` | False | True | — |
+| `organization_id` | `UUID` | False | False | memberships.organization_id, organizations.id, ppm_projects.organization_id |
+| `actor_id` | `UUID` | False | False | memberships.user_id |
+| `session_id` | `UUID` | False | False | identity_sessions.id |
+| `project_id` | `UUID` | False | False | ppm_projects.id |
 | `config` | `JSONB` | False | False | — |
 | `revision` | `INTEGER` | False | False | — |
 | `enabled` | `BOOLEAN` | False | False | — |
 | `cursor` | `VARCHAR(200)` | True | False | — |
-| `updated_at` | `DATETIME` | False | False | — |
+| `updated_at` | `TIMESTAMP WITH TIME ZONE` | False | False | — |
 
 - ForeignKeyConstraint (unnamed): organization_id
 - ForeignKeyConstraint (unnamed): organization_id, actor_id
@@ -589,11 +589,11 @@ Live organization membership → transaction-local principal/RLS → scoped doma
 
 | Column | SQL type | Nullable | Primary key | Foreign reference |
 | --- | --- | --- | --- | --- |
-| `id` | `CHAR(32)` | False | True | — |
-| `organization_id` | `CHAR(32)` | False | False | durable_jobs.organization_id, organizations.id |
-| `job_id` | `CHAR(32)` | False | False | durable_jobs.id |
+| `id` | `UUID` | False | True | — |
+| `organization_id` | `UUID` | False | False | durable_jobs.organization_id, organizations.id |
+| `job_id` | `UUID` | False | False | durable_jobs.id |
 | `envelope` | `JSONB` | False | False | — |
-| `dispatched_at` | `DATETIME` | True | False | — |
+| `dispatched_at` | `TIMESTAMP WITH TIME ZONE` | True | False | — |
 
 - ForeignKeyConstraint (unnamed): organization_id
 - ForeignKeyConstraint (unnamed): organization_id, job_id
@@ -605,8 +605,8 @@ Live organization membership → transaction-local principal/RLS → scoped doma
 
 | Column | SQL type | Nullable | Primary key | Foreign reference |
 | --- | --- | --- | --- | --- |
-| `organization_id` | `CHAR(32)` | False | True | organizations.id |
-| `user_id` | `CHAR(32)` | False | True | identity_users.id |
+| `organization_id` | `UUID` | False | True | organizations.id |
+| `user_id` | `UUID` | False | True | identity_users.id |
 | `role` | `VARCHAR(20)` | False | False | — |
 | `active` | `BOOLEAN` | False | False | — |
 | `revision` | `INTEGER` | False | False | — |
@@ -620,11 +620,11 @@ Live organization membership → transaction-local principal/RLS → scoped doma
 
 | Column | SQL type | Nullable | Primary key | Foreign reference |
 | --- | --- | --- | --- | --- |
-| `id` | `CHAR(32)` | False | True | — |
-| `organization_id` | `CHAR(32)` | False | False | ml_histories.organization_id, organizations.id, ppm_projects.organization_id |
-| `project_id` | `CHAR(32)` | False | False | ml_histories.project_id, ppm_projects.id |
-| `created_at` | `DATETIME` | False | False | — |
-| `history_id` | `CHAR(32)` | False | False | ml_histories.id |
+| `id` | `UUID` | False | True | — |
+| `organization_id` | `UUID` | False | False | ml_histories.organization_id, organizations.id, ppm_projects.organization_id |
+| `project_id` | `UUID` | False | False | ml_histories.project_id, ppm_projects.id |
+| `created_at` | `TIMESTAMP WITH TIME ZONE` | False | False | — |
+| `history_id` | `UUID` | False | False | ml_histories.id |
 | `digest` | `VARCHAR(64)` | False | False | — |
 | `manifest` | `JSONB` | False | False | — |
 | `records` | `JSONB` | False | False | — |
@@ -640,10 +640,10 @@ Live organization membership → transaction-local principal/RLS → scoped doma
 
 | Column | SQL type | Nullable | Primary key | Foreign reference |
 | --- | --- | --- | --- | --- |
-| `id` | `CHAR(32)` | False | True | — |
-| `organization_id` | `CHAR(32)` | False | False | organizations.id, ppm_projects.organization_id |
-| `project_id` | `CHAR(32)` | False | False | ppm_projects.id |
-| `created_at` | `DATETIME` | False | False | — |
+| `id` | `UUID` | False | True | — |
+| `organization_id` | `UUID` | False | False | organizations.id, ppm_projects.organization_id |
+| `project_id` | `UUID` | False | False | ppm_projects.id |
+| `created_at` | `TIMESTAMP WITH TIME ZONE` | False | False | — |
 | `name` | `VARCHAR(160)` | False | False | — |
 | `version` | `INTEGER` | False | False | — |
 | `digest` | `VARCHAR(64)` | False | False | — |
@@ -662,12 +662,12 @@ Live organization membership → transaction-local principal/RLS → scoped doma
 
 | Column | SQL type | Nullable | Primary key | Foreign reference |
 | --- | --- | --- | --- | --- |
-| `id` | `CHAR(32)` | False | True | — |
-| `organization_id` | `CHAR(32)` | False | False | memberships.organization_id, ml_datasets.organization_id, organizations.id, ppm_projects.organization_id |
-| `project_id` | `CHAR(32)` | False | False | ml_datasets.project_id, ppm_projects.id |
-| `created_at` | `DATETIME` | False | False | — |
-| `dataset_id` | `CHAR(32)` | False | False | ml_datasets.id |
-| `actor_id` | `CHAR(32)` | False | False | memberships.user_id |
+| `id` | `UUID` | False | True | — |
+| `organization_id` | `UUID` | False | False | memberships.organization_id, ml_datasets.organization_id, organizations.id, ppm_projects.organization_id |
+| `project_id` | `UUID` | False | False | ml_datasets.project_id, ppm_projects.id |
+| `created_at` | `TIMESTAMP WITH TIME ZONE` | False | False | — |
+| `dataset_id` | `UUID` | False | False | ml_datasets.id |
+| `actor_id` | `UUID` | False | False | memberships.user_id |
 | `status` | `VARCHAR(32)` | False | False | — |
 | `card` | `JSONB` | False | False | — |
 | `artifacts` | `JSONB` | False | False | — |
@@ -684,8 +684,8 @@ Live organization membership → transaction-local principal/RLS → scoped doma
 
 | Column | SQL type | Nullable | Primary key | Foreign reference |
 | --- | --- | --- | --- | --- |
-| `organization_id` | `CHAR(32)` | False | True | memberships.organization_id |
-| `user_id` | `CHAR(32)` | False | True | memberships.user_id |
+| `organization_id` | `UUID` | False | True | memberships.organization_id |
+| `user_id` | `UUID` | False | True | memberships.user_id |
 | `enabled` | `BOOLEAN` | False | False | — |
 
 - ForeignKeyConstraint (unnamed): organization_id, user_id
@@ -695,9 +695,9 @@ Live organization membership → transaction-local principal/RLS → scoped doma
 
 | Column | SQL type | Nullable | Primary key | Foreign reference |
 | --- | --- | --- | --- | --- |
-| `id` | `CHAR(32)` | False | True | — |
+| `id` | `UUID` | False | True | — |
 | `name` | `VARCHAR(120)` | False | False | — |
-| `created_at` | `DATETIME` | False | False | — |
+| `created_at` | `TIMESTAMP WITH TIME ZONE` | False | False | — |
 | `revision` | `INTEGER` | False | False | — |
 | `description` | `VARCHAR(1000)` | True | False | — |
 | `industry` | `VARCHAR(120)` | True | False | — |
@@ -709,13 +709,13 @@ Live organization membership → transaction-local principal/RLS → scoped doma
 
 | Column | SQL type | Nullable | Primary key | Foreign reference |
 | --- | --- | --- | --- | --- |
-| `id` | `CHAR(32)` | False | True | — |
-| `organization_id` | `CHAR(32)` | False | False | memberships.organization_id, organizations.id |
-| `user_id` | `CHAR(32)` | False | False | memberships.user_id |
+| `id` | `UUID` | False | True | — |
+| `organization_id` | `UUID` | False | False | memberships.organization_id, organizations.id |
+| `user_id` | `UUID` | False | False | memberships.user_id |
 | `kind` | `VARCHAR(30)` | False | False | — |
-| `target_id` | `CHAR(32)` | False | False | — |
+| `target_id` | `UUID` | False | False | — |
 | `event_key` | `VARCHAR(160)` | False | False | — |
-| `created_at` | `DATETIME` | False | False | — |
+| `created_at` | `TIMESTAMP WITH TIME ZONE` | False | False | — |
 | `read` | `BOOLEAN` | False | False | — |
 
 - ForeignKeyConstraint (unnamed): organization_id
@@ -727,17 +727,17 @@ Live organization membership → transaction-local principal/RLS → scoped doma
 
 | Column | SQL type | Nullable | Primary key | Foreign reference |
 | --- | --- | --- | --- | --- |
-| `id` | `CHAR(32)` | False | True | — |
-| `organization_id` | `CHAR(32)` | False | False | organizations.id, ppm_goals.organization_id, ppm_portfolios.organization_id, ppm_projects.organization_id |
+| `id` | `UUID` | False | True | — |
+| `organization_id` | `UUID` | False | False | organizations.id, ppm_goals.organization_id, ppm_portfolios.organization_id, ppm_projects.organization_id |
 | `name` | `VARCHAR(160)` | False | False | — |
 | `description` | `TEXT` | False | False | — |
 | `revision` | `INTEGER` | False | False | — |
 | `archived` | `BOOLEAN` | False | False | — |
-| `created_at` | `DATETIME` | False | False | — |
-| `updated_at` | `DATETIME` | False | False | — |
-| `project_id` | `CHAR(32)` | True | False | ppm_projects.id |
-| `portfolio_id` | `CHAR(32)` | True | False | ppm_portfolios.id |
-| `goal_id` | `CHAR(32)` | False | False | ppm_goals.id |
+| `created_at` | `TIMESTAMP WITH TIME ZONE` | False | False | — |
+| `updated_at` | `TIMESTAMP WITH TIME ZONE` | False | False | — |
+| `project_id` | `UUID` | True | False | ppm_projects.id |
+| `portfolio_id` | `UUID` | True | False | ppm_portfolios.id |
+| `goal_id` | `UUID` | False | False | ppm_goals.id |
 | `weight` | `NUMERIC(6, 5)` | False | False | — |
 | `contribution` | `NUMERIC(6, 5)` | False | False | — |
 
@@ -756,16 +756,16 @@ Live organization membership → transaction-local principal/RLS → scoped doma
 
 | Column | SQL type | Nullable | Primary key | Foreign reference |
 | --- | --- | --- | --- | --- |
-| `id` | `CHAR(32)` | False | True | — |
-| `organization_id` | `CHAR(32)` | False | False | organizations.id, ppm_projects.organization_id, ppm_resources.organization_id |
+| `id` | `UUID` | False | True | — |
+| `organization_id` | `UUID` | False | False | organizations.id, ppm_projects.organization_id, ppm_resources.organization_id |
 | `name` | `VARCHAR(160)` | False | False | — |
 | `description` | `TEXT` | False | False | — |
 | `revision` | `INTEGER` | False | False | — |
 | `archived` | `BOOLEAN` | False | False | — |
-| `created_at` | `DATETIME` | False | False | — |
-| `updated_at` | `DATETIME` | False | False | — |
-| `resource_id` | `CHAR(32)` | False | False | ppm_resources.id |
-| `project_id` | `CHAR(32)` | False | False | ppm_projects.id |
+| `created_at` | `TIMESTAMP WITH TIME ZONE` | False | False | — |
+| `updated_at` | `TIMESTAMP WITH TIME ZONE` | False | False | — |
+| `resource_id` | `UUID` | False | False | ppm_resources.id |
+| `project_id` | `UUID` | False | False | ppm_projects.id |
 | `start_date` | `DATE` | False | False | — |
 | `end_date` | `DATE` | False | False | — |
 | `hours_per_day` | `NUMERIC(4, 2)` | False | False | — |
@@ -785,11 +785,11 @@ Live organization membership → transaction-local principal/RLS → scoped doma
 
 | Column | SQL type | Nullable | Primary key | Foreign reference |
 | --- | --- | --- | --- | --- |
-| `id` | `CHAR(32)` | False | True | — |
-| `organization_id` | `CHAR(32)` | False | False | organizations.id, ppm_assessments.organization_id |
-| `created_at` | `DATETIME` | False | False | — |
-| `assessment_id` | `CHAR(32)` | False | False | ppm_assessments.id |
-| `question_id` | `CHAR(32)` | False | False | — |
+| `id` | `UUID` | False | True | — |
+| `organization_id` | `UUID` | False | False | organizations.id, ppm_assessments.organization_id |
+| `created_at` | `TIMESTAMP WITH TIME ZONE` | False | False | — |
+| `assessment_id` | `UUID` | False | False | ppm_assessments.id |
+| `question_id` | `UUID` | False | False | — |
 | `value` | `TEXT` | True | False | — |
 | `evidence_text` | `TEXT` | False | False | — |
 | `reviewer_score` | `NUMERIC(7, 4)` | True | False | — |
@@ -807,12 +807,12 @@ Live organization membership → transaction-local principal/RLS → scoped doma
 
 | Column | SQL type | Nullable | Primary key | Foreign reference |
 | --- | --- | --- | --- | --- |
-| `id` | `CHAR(32)` | False | True | — |
-| `organization_id` | `CHAR(32)` | False | False | memberships.organization_id, organizations.id, ppm_assessments.organization_id, ppm_frameworks.organization_id |
-| `created_at` | `DATETIME` | False | False | — |
-| `user_id` | `CHAR(32)` | False | False | memberships.user_id |
-| `framework_id` | `CHAR(32)` | True | False | ppm_frameworks.id |
-| `assessment_id` | `CHAR(32)` | True | False | ppm_assessments.id |
+| `id` | `UUID` | False | True | — |
+| `organization_id` | `UUID` | False | False | memberships.organization_id, organizations.id, ppm_assessments.organization_id, ppm_frameworks.organization_id |
+| `created_at` | `TIMESTAMP WITH TIME ZONE` | False | False | — |
+| `user_id` | `UUID` | False | False | memberships.user_id |
+| `framework_id` | `UUID` | True | False | ppm_frameworks.id |
+| `assessment_id` | `UUID` | True | False | ppm_assessments.id |
 | `active` | `BOOLEAN` | False | False | — |
 
 - CheckConstraint (unnamed): (framework_id IS NULL) <> (assessment_id IS NULL)
@@ -828,11 +828,11 @@ Live organization membership → transaction-local principal/RLS → scoped doma
 
 | Column | SQL type | Nullable | Primary key | Foreign reference |
 | --- | --- | --- | --- | --- |
-| `id` | `CHAR(32)` | False | True | — |
-| `organization_id` | `CHAR(32)` | False | False | memberships.organization_id, organizations.id, ppm_assessments.organization_id |
-| `created_at` | `DATETIME` | False | False | — |
-| `assessment_id` | `CHAR(32)` | False | False | ppm_assessments.id |
-| `actor_id` | `CHAR(32)` | False | False | memberships.user_id |
+| `id` | `UUID` | False | True | — |
+| `organization_id` | `UUID` | False | False | memberships.organization_id, organizations.id, ppm_assessments.organization_id |
+| `created_at` | `TIMESTAMP WITH TIME ZONE` | False | False | — |
+| `assessment_id` | `UUID` | False | False | ppm_assessments.id |
+| `actor_id` | `UUID` | False | False | memberships.user_id |
 | `event` | `VARCHAR(30)` | False | False | — |
 | `note` | `TEXT` | False | False | — |
 | `details` | `JSONB` | False | False | — |
@@ -848,11 +848,11 @@ Live organization membership → transaction-local principal/RLS → scoped doma
 
 | Column | SQL type | Nullable | Primary key | Foreign reference |
 | --- | --- | --- | --- | --- |
-| `id` | `CHAR(32)` | False | True | — |
-| `organization_id` | `CHAR(32)` | False | False | memberships.organization_id, organizations.id |
-| `created_at` | `DATETIME` | False | False | — |
-| `user_id` | `CHAR(32)` | False | False | memberships.user_id |
-| `key` | `CHAR(32)` | False | False | — |
+| `id` | `UUID` | False | True | — |
+| `organization_id` | `UUID` | False | False | memberships.organization_id, organizations.id |
+| `created_at` | `TIMESTAMP WITH TIME ZONE` | False | False | — |
+| `user_id` | `UUID` | False | False | memberships.user_id |
+| `key` | `UUID` | False | False | — |
 | `fingerprint` | `VARCHAR(64)` | False | False | — |
 | `response` | `JSONB` | False | False | — |
 
@@ -867,16 +867,16 @@ Live organization membership → transaction-local principal/RLS → scoped doma
 
 | Column | SQL type | Nullable | Primary key | Foreign reference |
 | --- | --- | --- | --- | --- |
-| `id` | `CHAR(32)` | False | True | — |
-| `organization_id` | `CHAR(32)` | False | False | memberships.organization_id, memberships.organization_id, memberships.organization_id, organizations.id, ppm_departments.organization_id, ppm_framework_versions.organization_id, ppm_teams.organization_id |
-| `created_at` | `DATETIME` | False | False | — |
-| `framework_version_id` | `CHAR(32)` | False | False | ppm_framework_versions.id |
+| `id` | `UUID` | False | True | — |
+| `organization_id` | `UUID` | False | False | memberships.organization_id, memberships.organization_id, memberships.organization_id, organizations.id, ppm_departments.organization_id, ppm_framework_versions.organization_id, ppm_teams.organization_id |
+| `created_at` | `TIMESTAMP WITH TIME ZONE` | False | False | — |
+| `framework_version_id` | `UUID` | False | False | ppm_framework_versions.id |
 | `name` | `VARCHAR(160)` | False | False | — |
-| `department_id` | `CHAR(32)` | True | False | ppm_departments.id |
-| `team_id` | `CHAR(32)` | True | False | ppm_teams.id |
-| `assigned_to` | `CHAR(32)` | False | False | memberships.user_id |
-| `reviewer_id` | `CHAR(32)` | False | False | memberships.user_id |
-| `submitted_by` | `CHAR(32)` | True | False | memberships.user_id |
+| `department_id` | `UUID` | True | False | ppm_departments.id |
+| `team_id` | `UUID` | True | False | ppm_teams.id |
+| `assigned_to` | `UUID` | False | False | memberships.user_id |
+| `reviewer_id` | `UUID` | False | False | memberships.user_id |
+| `submitted_by` | `UUID` | True | False | memberships.user_id |
 | `status` | `VARCHAR(20)` | False | False | — |
 | `results` | `JSONB` | True | False | — |
 | `revision` | `INTEGER` | False | False | — |
@@ -899,16 +899,16 @@ Live organization membership → transaction-local principal/RLS → scoped doma
 
 | Column | SQL type | Nullable | Primary key | Foreign reference |
 | --- | --- | --- | --- | --- |
-| `id` | `CHAR(32)` | False | True | — |
-| `organization_id` | `CHAR(32)` | False | False | memberships.organization_id, ppm_projects.organization_id |
-| `project_id` | `CHAR(32)` | True | False | ppm_projects.id |
-| `actor_id` | `CHAR(32)` | False | False | memberships.user_id |
+| `id` | `UUID` | False | True | — |
+| `organization_id` | `UUID` | False | False | memberships.organization_id, ppm_projects.organization_id |
+| `project_id` | `UUID` | True | False | ppm_projects.id |
+| `actor_id` | `UUID` | False | False | memberships.user_id |
 | `resource` | `VARCHAR(30)` | False | False | — |
-| `target_id` | `CHAR(32)` | False | False | — |
+| `target_id` | `UUID` | False | False | — |
 | `before` | `JSONB` | True | False | — |
 | `after` | `JSONB` | False | False | — |
-| `request_id` | `CHAR(32)` | False | False | — |
-| `created_at` | `DATETIME` | False | False | — |
+| `request_id` | `UUID` | False | False | — |
+| `created_at` | `TIMESTAMP WITH TIME ZONE` | False | False | — |
 
 - ForeignKeyConstraint (unnamed): organization_id, actor_id
 - ForeignKeyConstraint (unnamed): organization_id, project_id
@@ -918,18 +918,18 @@ Live organization membership → transaction-local principal/RLS → scoped doma
 
 | Column | SQL type | Nullable | Primary key | Foreign reference |
 | --- | --- | --- | --- | --- |
-| `id` | `CHAR(32)` | False | True | — |
-| `organization_id` | `CHAR(32)` | False | False | organizations.id, ppm_calendars.organization_id, ppm_resources.organization_id |
+| `id` | `UUID` | False | True | — |
+| `organization_id` | `UUID` | False | False | organizations.id, ppm_calendars.organization_id, ppm_resources.organization_id |
 | `name` | `VARCHAR(160)` | False | False | — |
 | `description` | `TEXT` | False | False | — |
 | `revision` | `INTEGER` | False | False | — |
 | `archived` | `BOOLEAN` | False | False | — |
-| `created_at` | `DATETIME` | False | False | — |
-| `updated_at` | `DATETIME` | False | False | — |
-| `resource_id` | `CHAR(32)` | False | False | ppm_resources.id |
+| `created_at` | `TIMESTAMP WITH TIME ZONE` | False | False | — |
+| `updated_at` | `TIMESTAMP WITH TIME ZONE` | False | False | — |
+| `resource_id` | `UUID` | False | False | ppm_resources.id |
 | `start_date` | `DATE` | False | False | — |
 | `end_date` | `DATE` | False | False | — |
-| `calendar_id` | `CHAR(32)` | False | False | ppm_calendars.id |
+| `calendar_id` | `UUID` | False | False | ppm_calendars.id |
 
 - CheckConstraint (unnamed): end_date > start_date
 - CheckConstraint (unnamed): revision > 0
@@ -944,15 +944,15 @@ Live organization membership → transaction-local principal/RLS → scoped doma
 
 | Column | SQL type | Nullable | Primary key | Foreign reference |
 | --- | --- | --- | --- | --- |
-| `id` | `CHAR(32)` | False | True | — |
-| `organization_id` | `CHAR(32)` | False | False | organizations.id, ppm_projects.organization_id |
+| `id` | `UUID` | False | True | — |
+| `organization_id` | `UUID` | False | False | organizations.id, ppm_projects.organization_id |
 | `name` | `VARCHAR(160)` | False | False | — |
 | `description` | `TEXT` | False | False | — |
 | `revision` | `INTEGER` | False | False | — |
 | `archived` | `BOOLEAN` | False | False | — |
-| `created_at` | `DATETIME` | False | False | — |
-| `updated_at` | `DATETIME` | False | False | — |
-| `project_id` | `CHAR(32)` | False | False | ppm_projects.id |
+| `created_at` | `TIMESTAMP WITH TIME ZONE` | False | False | — |
+| `updated_at` | `TIMESTAMP WITH TIME ZONE` | False | False | — |
+| `project_id` | `UUID` | False | False | ppm_projects.id |
 | `version` | `INTEGER` | False | False | — |
 | `snapshot` | `JSONB` | False | False | — |
 
@@ -969,15 +969,15 @@ Live organization membership → transaction-local principal/RLS → scoped doma
 
 | Column | SQL type | Nullable | Primary key | Foreign reference |
 | --- | --- | --- | --- | --- |
-| `id` | `CHAR(32)` | False | True | — |
-| `organization_id` | `CHAR(32)` | False | False | organizations.id, ppm_projects.organization_id |
+| `id` | `UUID` | False | True | — |
+| `organization_id` | `UUID` | False | False | organizations.id, ppm_projects.organization_id |
 | `name` | `VARCHAR(160)` | False | False | — |
 | `description` | `TEXT` | False | False | — |
 | `revision` | `INTEGER` | False | False | — |
 | `archived` | `BOOLEAN` | False | False | — |
-| `created_at` | `DATETIME` | False | False | — |
-| `updated_at` | `DATETIME` | False | False | — |
-| `project_id` | `CHAR(32)` | False | False | ppm_projects.id |
+| `created_at` | `TIMESTAMP WITH TIME ZONE` | False | False | — |
+| `updated_at` | `TIMESTAMP WITH TIME ZONE` | False | False | — |
+| `project_id` | `UUID` | False | False | ppm_projects.id |
 | `unit` | `VARCHAR(40)` | False | False | — |
 | `target` | `NUMERIC(18, 2)` | False | False | — |
 | `realized` | `NUMERIC(18, 2)` | True | False | — |
@@ -997,17 +997,17 @@ Live organization membership → transaction-local principal/RLS → scoped doma
 
 | Column | SQL type | Nullable | Primary key | Foreign reference |
 | --- | --- | --- | --- | --- |
-| `id` | `CHAR(32)` | False | True | — |
-| `organization_id` | `CHAR(32)` | False | False | memberships.organization_id, organizations.id, ppm_projects.organization_id, ppm_work_items.organization_id |
+| `id` | `UUID` | False | True | — |
+| `organization_id` | `UUID` | False | False | memberships.organization_id, organizations.id, ppm_projects.organization_id, ppm_work_items.organization_id |
 | `name` | `VARCHAR(160)` | False | False | — |
 | `description` | `TEXT` | False | False | — |
 | `revision` | `INTEGER` | False | False | — |
 | `archived` | `BOOLEAN` | False | False | — |
-| `created_at` | `DATETIME` | False | False | — |
-| `updated_at` | `DATETIME` | False | False | — |
-| `project_id` | `CHAR(32)` | False | False | ppm_projects.id, ppm_work_items.project_id |
-| `work_item_id` | `CHAR(32)` | True | False | ppm_work_items.id |
-| `owner_id` | `CHAR(32)` | True | False | memberships.user_id |
+| `created_at` | `TIMESTAMP WITH TIME ZONE` | False | False | — |
+| `updated_at` | `TIMESTAMP WITH TIME ZONE` | False | False | — |
+| `project_id` | `UUID` | False | False | ppm_projects.id, ppm_work_items.project_id |
+| `work_item_id` | `UUID` | True | False | ppm_work_items.id |
+| `owner_id` | `UUID` | True | False | memberships.user_id |
 | `status` | `VARCHAR(10)` | False | False | — |
 
 - CheckConstraint (unnamed): revision > 0
@@ -1025,15 +1025,15 @@ Live organization membership → transaction-local principal/RLS → scoped doma
 
 | Column | SQL type | Nullable | Primary key | Foreign reference |
 | --- | --- | --- | --- | --- |
-| `id` | `CHAR(32)` | False | True | — |
-| `organization_id` | `CHAR(32)` | False | False | organizations.id, ppm_projects.organization_id |
+| `id` | `UUID` | False | True | — |
+| `organization_id` | `UUID` | False | False | organizations.id, ppm_projects.organization_id |
 | `name` | `VARCHAR(160)` | False | False | — |
 | `description` | `TEXT` | False | False | — |
 | `revision` | `INTEGER` | False | False | — |
 | `archived` | `BOOLEAN` | False | False | — |
-| `created_at` | `DATETIME` | False | False | — |
-| `updated_at` | `DATETIME` | False | False | — |
-| `project_id` | `CHAR(32)` | False | False | ppm_projects.id |
+| `created_at` | `TIMESTAMP WITH TIME ZONE` | False | False | — |
+| `updated_at` | `TIMESTAMP WITH TIME ZONE` | False | False | — |
+| `project_id` | `UUID` | False | False | ppm_projects.id |
 | `amount` | `NUMERIC(18, 2)` | False | False | — |
 | `currency` | `VARCHAR(3)` | False | False | — |
 | `approved` | `BOOLEAN` | False | False | — |
@@ -1051,14 +1051,14 @@ Live organization membership → transaction-local principal/RLS → scoped doma
 
 | Column | SQL type | Nullable | Primary key | Foreign reference |
 | --- | --- | --- | --- | --- |
-| `id` | `CHAR(32)` | False | True | — |
-| `organization_id` | `CHAR(32)` | False | False | organizations.id |
+| `id` | `UUID` | False | True | — |
+| `organization_id` | `UUID` | False | False | organizations.id |
 | `name` | `VARCHAR(160)` | False | False | — |
 | `description` | `TEXT` | False | False | — |
 | `revision` | `INTEGER` | False | False | — |
 | `archived` | `BOOLEAN` | False | False | — |
-| `created_at` | `DATETIME` | False | False | — |
-| `updated_at` | `DATETIME` | False | False | — |
+| `created_at` | `TIMESTAMP WITH TIME ZONE` | False | False | — |
+| `updated_at` | `TIMESTAMP WITH TIME ZONE` | False | False | — |
 | `timezone` | `VARCHAR(80)` | False | False | — |
 | `holidays` | `TEXT` | False | False | — |
 | `monday` | `NUMERIC(4, 2)` | False | False | — |
@@ -1086,15 +1086,15 @@ Live organization membership → transaction-local principal/RLS → scoped doma
 
 | Column | SQL type | Nullable | Primary key | Foreign reference |
 | --- | --- | --- | --- | --- |
-| `id` | `CHAR(32)` | False | True | — |
-| `organization_id` | `CHAR(32)` | False | False | organizations.id, ppm_resources.organization_id |
+| `id` | `UUID` | False | True | — |
+| `organization_id` | `UUID` | False | False | organizations.id, ppm_resources.organization_id |
 | `name` | `VARCHAR(160)` | False | False | — |
 | `description` | `TEXT` | False | False | — |
 | `revision` | `INTEGER` | False | False | — |
 | `archived` | `BOOLEAN` | False | False | — |
-| `created_at` | `DATETIME` | False | False | — |
-| `updated_at` | `DATETIME` | False | False | — |
-| `resource_id` | `CHAR(32)` | False | False | ppm_resources.id |
+| `created_at` | `TIMESTAMP WITH TIME ZONE` | False | False | — |
+| `updated_at` | `TIMESTAMP WITH TIME ZONE` | False | False | — |
+| `resource_id` | `UUID` | False | False | ppm_resources.id |
 | `start_date` | `DATE` | False | False | — |
 | `end_date` | `DATE` | False | False | — |
 | `snapshot` | `JSONB` | False | False | — |
@@ -1111,15 +1111,15 @@ Live organization membership → transaction-local principal/RLS → scoped doma
 
 | Column | SQL type | Nullable | Primary key | Foreign reference |
 | --- | --- | --- | --- | --- |
-| `id` | `CHAR(32)` | False | True | — |
-| `organization_id` | `CHAR(32)` | False | False | memberships.organization_id, organizations.id |
+| `id` | `UUID` | False | True | — |
+| `organization_id` | `UUID` | False | False | memberships.organization_id, organizations.id |
 | `name` | `VARCHAR(160)` | False | False | — |
 | `description` | `TEXT` | False | False | — |
 | `revision` | `INTEGER` | False | False | — |
 | `archived` | `BOOLEAN` | False | False | — |
-| `created_at` | `DATETIME` | False | False | — |
-| `updated_at` | `DATETIME` | False | False | — |
-| `owner_id` | `CHAR(32)` | True | False | memberships.user_id |
+| `created_at` | `TIMESTAMP WITH TIME ZONE` | False | False | — |
+| `updated_at` | `TIMESTAMP WITH TIME ZONE` | False | False | — |
+| `owner_id` | `UUID` | True | False | memberships.user_id |
 
 - CheckConstraint (unnamed): revision > 0
 - ForeignKeyConstraint (unnamed): organization_id
@@ -1132,20 +1132,20 @@ Live organization membership → transaction-local principal/RLS → scoped doma
 
 | Column | SQL type | Nullable | Primary key | Foreign reference |
 | --- | --- | --- | --- | --- |
-| `id` | `CHAR(32)` | False | True | — |
-| `organization_id` | `CHAR(32)` | False | False | organizations.id, ppm_milestones.organization_id, ppm_milestones.organization_id, ppm_projects.organization_id, ppm_projects.organization_id, ppm_work_items.organization_id, ppm_work_items.organization_id |
+| `id` | `UUID` | False | True | — |
+| `organization_id` | `UUID` | False | False | organizations.id, ppm_milestones.organization_id, ppm_milestones.organization_id, ppm_projects.organization_id, ppm_projects.organization_id, ppm_work_items.organization_id, ppm_work_items.organization_id |
 | `name` | `VARCHAR(160)` | False | False | — |
 | `description` | `TEXT` | False | False | — |
 | `revision` | `INTEGER` | False | False | — |
 | `archived` | `BOOLEAN` | False | False | — |
-| `created_at` | `DATETIME` | False | False | — |
-| `updated_at` | `DATETIME` | False | False | — |
-| `project_id` | `CHAR(32)` | False | False | ppm_milestones.project_id, ppm_projects.id, ppm_work_items.project_id |
-| `target_project_id` | `CHAR(32)` | False | False | ppm_milestones.project_id, ppm_projects.id, ppm_work_items.project_id |
-| `source_milestone_id` | `CHAR(32)` | True | False | ppm_milestones.id |
-| `source_work_item_id` | `CHAR(32)` | True | False | ppm_work_items.id |
-| `target_milestone_id` | `CHAR(32)` | True | False | ppm_milestones.id |
-| `target_work_item_id` | `CHAR(32)` | True | False | ppm_work_items.id |
+| `created_at` | `TIMESTAMP WITH TIME ZONE` | False | False | — |
+| `updated_at` | `TIMESTAMP WITH TIME ZONE` | False | False | — |
+| `project_id` | `UUID` | False | False | ppm_milestones.project_id, ppm_projects.id, ppm_work_items.project_id |
+| `target_project_id` | `UUID` | False | False | ppm_milestones.project_id, ppm_projects.id, ppm_work_items.project_id |
+| `source_milestone_id` | `UUID` | True | False | ppm_milestones.id |
+| `source_work_item_id` | `UUID` | True | False | ppm_work_items.id |
+| `target_milestone_id` | `UUID` | True | False | ppm_milestones.id |
+| `target_work_item_id` | `UUID` | True | False | ppm_work_items.id |
 
 - CheckConstraint (unnamed): revision > 0
 - CheckConstraint (unnamed): source_milestone_id IS NULL OR source_work_item_id IS NULL
@@ -1166,16 +1166,16 @@ Live organization membership → transaction-local principal/RLS → scoped doma
 
 | Column | SQL type | Nullable | Primary key | Foreign reference |
 | --- | --- | --- | --- | --- |
-| `id` | `CHAR(32)` | False | True | — |
-| `organization_id` | `CHAR(32)` | False | False | organizations.id, ppm_projects.organization_id, ppm_resources.organization_id |
+| `id` | `UUID` | False | True | — |
+| `organization_id` | `UUID` | False | False | organizations.id, ppm_projects.organization_id, ppm_resources.organization_id |
 | `name` | `VARCHAR(160)` | False | False | — |
 | `description` | `TEXT` | False | False | — |
 | `revision` | `INTEGER` | False | False | — |
 | `archived` | `BOOLEAN` | False | False | — |
-| `created_at` | `DATETIME` | False | False | — |
-| `updated_at` | `DATETIME` | False | False | — |
-| `resource_id` | `CHAR(32)` | False | False | ppm_resources.id |
-| `project_id` | `CHAR(32)` | False | False | ppm_projects.id |
+| `created_at` | `TIMESTAMP WITH TIME ZONE` | False | False | — |
+| `updated_at` | `TIMESTAMP WITH TIME ZONE` | False | False | — |
+| `resource_id` | `UUID` | False | False | ppm_resources.id |
+| `project_id` | `UUID` | False | False | ppm_projects.id |
 | `worked_on` | `DATE` | False | False | — |
 | `hours` | `NUMERIC(4, 2)` | False | False | — |
 | `overtime_hours` | `NUMERIC(4, 2)` | False | False | — |
@@ -1195,15 +1195,15 @@ Live organization membership → transaction-local principal/RLS → scoped doma
 
 | Column | SQL type | Nullable | Primary key | Foreign reference |
 | --- | --- | --- | --- | --- |
-| `id` | `CHAR(32)` | False | True | — |
-| `organization_id` | `CHAR(32)` | False | False | organizations.id, ppm_resources.organization_id |
+| `id` | `UUID` | False | True | — |
+| `organization_id` | `UUID` | False | False | organizations.id, ppm_resources.organization_id |
 | `name` | `VARCHAR(160)` | False | False | — |
 | `description` | `TEXT` | False | False | — |
 | `revision` | `INTEGER` | False | False | — |
 | `archived` | `BOOLEAN` | False | False | — |
-| `created_at` | `DATETIME` | False | False | — |
-| `updated_at` | `DATETIME` | False | False | — |
-| `resource_id` | `CHAR(32)` | False | False | ppm_resources.id |
+| `created_at` | `TIMESTAMP WITH TIME ZONE` | False | False | — |
+| `updated_at` | `TIMESTAMP WITH TIME ZONE` | False | False | — |
+| `resource_id` | `UUID` | False | False | ppm_resources.id |
 | `worked_on` | `DATE` | False | False | — |
 | `complete` | `BOOLEAN` | False | False | — |
 
@@ -1219,17 +1219,17 @@ Live organization membership → transaction-local principal/RLS → scoped doma
 
 | Column | SQL type | Nullable | Primary key | Foreign reference |
 | --- | --- | --- | --- | --- |
-| `id` | `CHAR(32)` | False | True | — |
-| `organization_id` | `CHAR(32)` | False | False | memberships.organization_id, organizations.id, ppm_assessments.organization_id |
-| `created_at` | `DATETIME` | False | False | — |
-| `assessment_id` | `CHAR(32)` | False | False | ppm_assessments.id |
-| `question_id` | `CHAR(32)` | False | False | — |
+| `id` | `UUID` | False | True | — |
+| `organization_id` | `UUID` | False | False | memberships.organization_id, organizations.id, ppm_assessments.organization_id |
+| `created_at` | `TIMESTAMP WITH TIME ZONE` | False | False | — |
+| `assessment_id` | `UUID` | False | False | ppm_assessments.id |
+| `question_id` | `UUID` | False | False | — |
 | `file_name` | `VARCHAR(160)` | False | False | — |
 | `file_size` | `INTEGER` | False | False | — |
 | `sha256` | `VARCHAR(64)` | False | False | — |
 | `released` | `BOOLEAN` | False | False | — |
 | `storage_path` | `TEXT` | False | False | — |
-| `uploaded_by` | `CHAR(32)` | False | False | memberships.user_id |
+| `uploaded_by` | `UUID` | False | False | memberships.user_id |
 
 - CheckConstraint (unnamed): file_size > 0 AND file_size <= 524288
 - ForeignKeyConstraint (unnamed): organization_id
@@ -1243,19 +1243,19 @@ Live organization membership → transaction-local principal/RLS → scoped doma
 
 | Column | SQL type | Nullable | Primary key | Foreign reference |
 | --- | --- | --- | --- | --- |
-| `id` | `CHAR(32)` | False | True | — |
-| `organization_id` | `CHAR(32)` | False | False | organizations.id, ppm_expenditures.organization_id, ppm_projects.organization_id |
+| `id` | `UUID` | False | True | — |
+| `organization_id` | `UUID` | False | False | organizations.id, ppm_expenditures.organization_id, ppm_projects.organization_id |
 | `name` | `VARCHAR(160)` | False | False | — |
 | `description` | `TEXT` | False | False | — |
 | `revision` | `INTEGER` | False | False | — |
 | `archived` | `BOOLEAN` | False | False | — |
-| `created_at` | `DATETIME` | False | False | — |
-| `updated_at` | `DATETIME` | False | False | — |
-| `project_id` | `CHAR(32)` | False | False | ppm_expenditures.project_id, ppm_projects.id |
+| `created_at` | `TIMESTAMP WITH TIME ZONE` | False | False | — |
+| `updated_at` | `TIMESTAMP WITH TIME ZONE` | False | False | — |
+| `project_id` | `UUID` | False | False | ppm_expenditures.project_id, ppm_projects.id |
 | `amount` | `NUMERIC(18, 2)` | False | False | — |
 | `currency` | `VARCHAR(3)` | False | False | — |
 | `spent_on` | `DATE` | False | False | — |
-| `reversal_of` | `CHAR(32)` | True | False | ppm_expenditures.id |
+| `reversal_of` | `UUID` | True | False | ppm_expenditures.id |
 
 - CheckConstraint (unnamed): (amount >= 0 AND reversal_of IS NULL) OR (amount < 0 AND reversal_of IS NOT NULL)
 - CheckConstraint (unnamed): revision > 0
@@ -1272,13 +1272,13 @@ Live organization membership → transaction-local principal/RLS → scoped doma
 
 | Column | SQL type | Nullable | Primary key | Foreign reference |
 | --- | --- | --- | --- | --- |
-| `id` | `CHAR(32)` | False | True | — |
-| `organization_id` | `CHAR(32)` | False | False | memberships.organization_id, organizations.id, ppm_frameworks.organization_id |
-| `created_at` | `DATETIME` | False | False | — |
-| `framework_id` | `CHAR(32)` | False | False | ppm_frameworks.id |
+| `id` | `UUID` | False | True | — |
+| `organization_id` | `UUID` | False | False | memberships.organization_id, organizations.id, ppm_frameworks.organization_id |
+| `created_at` | `TIMESTAMP WITH TIME ZONE` | False | False | — |
+| `framework_id` | `UUID` | False | False | ppm_frameworks.id |
 | `version` | `INTEGER` | False | False | — |
 | `snapshot` | `JSONB` | False | False | — |
-| `published_by` | `CHAR(32)` | False | False | memberships.user_id |
+| `published_by` | `UUID` | False | False | memberships.user_id |
 
 - CheckConstraint (unnamed): version > 0
 - ForeignKeyConstraint (unnamed): organization_id
@@ -1293,9 +1293,9 @@ Live organization membership → transaction-local principal/RLS → scoped doma
 
 | Column | SQL type | Nullable | Primary key | Foreign reference |
 | --- | --- | --- | --- | --- |
-| `id` | `CHAR(32)` | False | True | — |
-| `organization_id` | `CHAR(32)` | False | False | organizations.id |
-| `created_at` | `DATETIME` | False | False | — |
+| `id` | `UUID` | False | True | — |
+| `organization_id` | `UUID` | False | False | organizations.id |
+| `created_at` | `TIMESTAMP WITH TIME ZONE` | False | False | — |
 | `definition` | `JSONB` | False | False | — |
 | `revision` | `INTEGER` | False | False | — |
 
@@ -1309,15 +1309,15 @@ Live organization membership → transaction-local principal/RLS → scoped doma
 
 | Column | SQL type | Nullable | Primary key | Foreign reference |
 | --- | --- | --- | --- | --- |
-| `id` | `CHAR(32)` | False | True | — |
-| `organization_id` | `CHAR(32)` | False | False | memberships.organization_id, organizations.id |
+| `id` | `UUID` | False | True | — |
+| `organization_id` | `UUID` | False | False | memberships.organization_id, organizations.id |
 | `name` | `VARCHAR(160)` | False | False | — |
 | `description` | `TEXT` | False | False | — |
 | `revision` | `INTEGER` | False | False | — |
 | `archived` | `BOOLEAN` | False | False | — |
-| `created_at` | `DATETIME` | False | False | — |
-| `updated_at` | `DATETIME` | False | False | — |
-| `owner_id` | `CHAR(32)` | True | False | memberships.user_id |
+| `created_at` | `TIMESTAMP WITH TIME ZONE` | False | False | — |
+| `updated_at` | `TIMESTAMP WITH TIME ZONE` | False | False | — |
+| `owner_id` | `UUID` | True | False | memberships.user_id |
 
 - CheckConstraint (unnamed): revision > 0
 - ForeignKeyConstraint (unnamed): organization_id
@@ -1330,17 +1330,17 @@ Live organization membership → transaction-local principal/RLS → scoped doma
 
 | Column | SQL type | Nullable | Primary key | Foreign reference |
 | --- | --- | --- | --- | --- |
-| `id` | `CHAR(32)` | False | True | — |
-| `organization_id` | `CHAR(32)` | False | False | memberships.organization_id, organizations.id, ppm_portfolios.organization_id, ppm_projects.organization_id |
+| `id` | `UUID` | False | True | — |
+| `organization_id` | `UUID` | False | False | memberships.organization_id, organizations.id, ppm_portfolios.organization_id, ppm_projects.organization_id |
 | `name` | `VARCHAR(160)` | False | False | — |
 | `description` | `TEXT` | False | False | — |
 | `revision` | `INTEGER` | False | False | — |
 | `archived` | `BOOLEAN` | False | False | — |
-| `created_at` | `DATETIME` | False | False | — |
-| `updated_at` | `DATETIME` | False | False | — |
-| `user_id` | `CHAR(32)` | False | False | memberships.user_id |
-| `project_id` | `CHAR(32)` | True | False | ppm_projects.id |
-| `portfolio_id` | `CHAR(32)` | True | False | ppm_portfolios.id |
+| `created_at` | `TIMESTAMP WITH TIME ZONE` | False | False | — |
+| `updated_at` | `TIMESTAMP WITH TIME ZONE` | False | False | — |
+| `user_id` | `UUID` | False | False | memberships.user_id |
+| `project_id` | `UUID` | True | False | ppm_projects.id |
+| `portfolio_id` | `UUID` | True | False | ppm_portfolios.id |
 | `access` | `VARCHAR(10)` | False | False | — |
 
 - CheckConstraint (unnamed): (project_id IS NULL) <> (portfolio_id IS NULL)
@@ -1360,17 +1360,17 @@ Live organization membership → transaction-local principal/RLS → scoped doma
 
 | Column | SQL type | Nullable | Primary key | Foreign reference |
 | --- | --- | --- | --- | --- |
-| `id` | `CHAR(32)` | False | True | — |
-| `organization_id` | `CHAR(32)` | False | False | organizations.id, ppm_baselines.organization_id, ppm_calendars.organization_id, ppm_projects.organization_id |
+| `id` | `UUID` | False | True | — |
+| `organization_id` | `UUID` | False | False | organizations.id, ppm_baselines.organization_id, ppm_calendars.organization_id, ppm_projects.organization_id |
 | `name` | `VARCHAR(160)` | False | False | — |
 | `description` | `TEXT` | False | False | — |
 | `revision` | `INTEGER` | False | False | — |
 | `archived` | `BOOLEAN` | False | False | — |
-| `created_at` | `DATETIME` | False | False | — |
-| `updated_at` | `DATETIME` | False | False | — |
-| `project_id` | `CHAR(32)` | False | False | ppm_baselines.project_id, ppm_projects.id |
-| `baseline_id` | `CHAR(32)` | False | False | ppm_baselines.id |
-| `calendar_id` | `CHAR(32)` | False | False | ppm_calendars.id |
+| `created_at` | `TIMESTAMP WITH TIME ZONE` | False | False | — |
+| `updated_at` | `TIMESTAMP WITH TIME ZONE` | False | False | — |
+| `project_id` | `UUID` | False | False | ppm_baselines.project_id, ppm_projects.id |
+| `baseline_id` | `UUID` | False | False | ppm_baselines.id |
+| `calendar_id` | `UUID` | False | False | ppm_calendars.id |
 | `forecast_cost` | `NUMERIC(18, 2)` | True | False | — |
 
 - CheckConstraint (unnamed): forecast_cost IS NULL OR forecast_cost >= 0
@@ -1389,14 +1389,14 @@ Live organization membership → transaction-local principal/RLS → scoped doma
 
 | Column | SQL type | Nullable | Primary key | Foreign reference |
 | --- | --- | --- | --- | --- |
-| `id` | `CHAR(32)` | False | True | — |
-| `organization_id` | `CHAR(32)` | False | False | organizations.id |
+| `id` | `UUID` | False | True | — |
+| `organization_id` | `UUID` | False | False | organizations.id |
 | `name` | `VARCHAR(160)` | False | False | — |
 | `description` | `TEXT` | False | False | — |
 | `revision` | `INTEGER` | False | False | — |
 | `archived` | `BOOLEAN` | False | False | — |
-| `created_at` | `DATETIME` | False | False | — |
-| `updated_at` | `DATETIME` | False | False | — |
+| `created_at` | `TIMESTAMP WITH TIME ZONE` | False | False | — |
+| `updated_at` | `TIMESTAMP WITH TIME ZONE` | False | False | — |
 | `amber` | `NUMERIC(5, 2)` | False | False | — |
 | `red` | `NUMERIC(5, 2)` | False | False | — |
 | `stale_days` | `INTEGER` | False | False | — |
@@ -1414,15 +1414,15 @@ Live organization membership → transaction-local principal/RLS → scoped doma
 
 | Column | SQL type | Nullable | Primary key | Foreign reference |
 | --- | --- | --- | --- | --- |
-| `id` | `CHAR(32)` | False | True | — |
-| `organization_id` | `CHAR(32)` | False | False | organizations.id, ppm_projects.organization_id |
+| `id` | `UUID` | False | True | — |
+| `organization_id` | `UUID` | False | False | organizations.id, ppm_projects.organization_id |
 | `name` | `VARCHAR(160)` | False | False | — |
 | `description` | `TEXT` | False | False | — |
 | `revision` | `INTEGER` | False | False | — |
 | `archived` | `BOOLEAN` | False | False | — |
-| `created_at` | `DATETIME` | False | False | — |
-| `updated_at` | `DATETIME` | False | False | — |
-| `project_id` | `CHAR(32)` | False | False | ppm_projects.id |
+| `created_at` | `TIMESTAMP WITH TIME ZONE` | False | False | — |
+| `updated_at` | `TIMESTAMP WITH TIME ZONE` | False | False | — |
+| `project_id` | `UUID` | False | False | ppm_projects.id |
 | `due_date` | `DATE` | False | False | — |
 | `actual_date` | `DATE` | True | False | — |
 | `critical` | `BOOLEAN` | False | False | — |
@@ -1439,15 +1439,15 @@ Live organization membership → transaction-local principal/RLS → scoped doma
 
 | Column | SQL type | Nullable | Primary key | Foreign reference |
 | --- | --- | --- | --- | --- |
-| `id` | `CHAR(32)` | False | True | — |
-| `organization_id` | `CHAR(32)` | False | False | memberships.organization_id, organizations.id |
+| `id` | `UUID` | False | True | — |
+| `organization_id` | `UUID` | False | False | memberships.organization_id, organizations.id |
 | `name` | `VARCHAR(160)` | False | False | — |
 | `description` | `TEXT` | False | False | — |
 | `revision` | `INTEGER` | False | False | — |
 | `archived` | `BOOLEAN` | False | False | — |
-| `created_at` | `DATETIME` | False | False | — |
-| `updated_at` | `DATETIME` | False | False | — |
-| `owner_id` | `CHAR(32)` | True | False | memberships.user_id |
+| `created_at` | `TIMESTAMP WITH TIME ZONE` | False | False | — |
+| `updated_at` | `TIMESTAMP WITH TIME ZONE` | False | False | — |
+| `owner_id` | `UUID` | True | False | memberships.user_id |
 
 - CheckConstraint (unnamed): revision > 0
 - ForeignKeyConstraint (unnamed): organization_id
@@ -1460,16 +1460,16 @@ Live organization membership → transaction-local principal/RLS → scoped doma
 
 | Column | SQL type | Nullable | Primary key | Foreign reference |
 | --- | --- | --- | --- | --- |
-| `id` | `CHAR(32)` | False | True | — |
-| `organization_id` | `CHAR(32)` | False | False | memberships.organization_id, organizations.id, ppm_portfolios.organization_id |
+| `id` | `UUID` | False | True | — |
+| `organization_id` | `UUID` | False | False | memberships.organization_id, organizations.id, ppm_portfolios.organization_id |
 | `name` | `VARCHAR(160)` | False | False | — |
 | `description` | `TEXT` | False | False | — |
 | `revision` | `INTEGER` | False | False | — |
 | `archived` | `BOOLEAN` | False | False | — |
-| `created_at` | `DATETIME` | False | False | — |
-| `updated_at` | `DATETIME` | False | False | — |
-| `portfolio_id` | `CHAR(32)` | False | False | ppm_portfolios.id |
-| `owner_id` | `CHAR(32)` | True | False | memberships.user_id |
+| `created_at` | `TIMESTAMP WITH TIME ZONE` | False | False | — |
+| `updated_at` | `TIMESTAMP WITH TIME ZONE` | False | False | — |
+| `portfolio_id` | `UUID` | False | False | ppm_portfolios.id |
+| `owner_id` | `UUID` | True | False | memberships.user_id |
 
 - CheckConstraint (unnamed): revision > 0
 - ForeignKeyConstraint (unnamed): organization_id
@@ -1484,25 +1484,25 @@ Live organization membership → transaction-local principal/RLS → scoped doma
 
 | Column | SQL type | Nullable | Primary key | Foreign reference |
 | --- | --- | --- | --- | --- |
-| `id` | `CHAR(32)` | False | True | — |
-| `organization_id` | `CHAR(32)` | False | False | memberships.organization_id, memberships.organization_id, organizations.id, ppm_departments.organization_id, ppm_portfolios.organization_id, ppm_programs.organization_id, ppm_teams.organization_id |
+| `id` | `UUID` | False | True | — |
+| `organization_id` | `UUID` | False | False | memberships.organization_id, memberships.organization_id, organizations.id, ppm_departments.organization_id, ppm_portfolios.organization_id, ppm_programs.organization_id, ppm_teams.organization_id |
 | `name` | `VARCHAR(160)` | False | False | — |
 | `description` | `TEXT` | False | False | — |
 | `revision` | `INTEGER` | False | False | — |
 | `archived` | `BOOLEAN` | False | False | — |
-| `created_at` | `DATETIME` | False | False | — |
-| `updated_at` | `DATETIME` | False | False | — |
+| `created_at` | `TIMESTAMP WITH TIME ZONE` | False | False | — |
+| `updated_at` | `TIMESTAMP WITH TIME ZONE` | False | False | — |
 | `priority` | `VARCHAR(30)` | True | False | — |
 | `industry` | `VARCHAR(30)` | True | False | — |
 | `category` | `VARCHAR(30)` | True | False | — |
 | `methodology` | `VARCHAR(30)` | True | False | — |
 | `size_band` | `VARCHAR(30)` | True | False | — |
-| `portfolio_id` | `CHAR(32)` | False | False | ppm_portfolios.id, ppm_programs.portfolio_id |
-| `program_id` | `CHAR(32)` | True | False | ppm_programs.id |
-| `department_id` | `CHAR(32)` | True | False | ppm_departments.id |
-| `team_id` | `CHAR(32)` | True | False | ppm_teams.id |
-| `owner_id` | `CHAR(32)` | True | False | memberships.user_id |
-| `created_by` | `CHAR(32)` | False | False | memberships.user_id |
+| `portfolio_id` | `UUID` | False | False | ppm_portfolios.id, ppm_programs.portfolio_id |
+| `program_id` | `UUID` | True | False | ppm_programs.id |
+| `department_id` | `UUID` | True | False | ppm_departments.id |
+| `team_id` | `UUID` | True | False | ppm_teams.id |
+| `owner_id` | `UUID` | True | False | memberships.user_id |
+| `created_by` | `UUID` | False | False | memberships.user_id |
 | `status` | `VARCHAR(20)` | False | False | — |
 | `reported_health` | `VARCHAR(10)` | False | False | — |
 | `currency` | `VARCHAR(3)` | False | False | — |
@@ -1537,12 +1537,12 @@ Live organization membership → transaction-local principal/RLS → scoped doma
 
 | Column | SQL type | Nullable | Primary key | Foreign reference |
 | --- | --- | --- | --- | --- |
-| `organization_id` | `CHAR(32)` | False | True | memberships.organization_id |
-| `user_id` | `CHAR(32)` | False | True | memberships.user_id |
-| `key` | `CHAR(32)` | False | True | — |
+| `organization_id` | `UUID` | False | True | memberships.organization_id |
+| `user_id` | `UUID` | False | True | memberships.user_id |
+| `key` | `UUID` | False | True | — |
 | `fingerprint` | `VARCHAR(64)` | False | False | — |
 | `resource` | `VARCHAR(30)` | False | False | — |
-| `target_id` | `CHAR(32)` | False | False | — |
+| `target_id` | `UUID` | False | False | — |
 
 - ForeignKeyConstraint (unnamed): organization_id, user_id
 - PrimaryKeyConstraint (unnamed): organization_id, user_id, key
@@ -1551,16 +1551,16 @@ Live organization membership → transaction-local principal/RLS → scoped doma
 
 | Column | SQL type | Nullable | Primary key | Foreign reference |
 | --- | --- | --- | --- | --- |
-| `id` | `CHAR(32)` | False | True | — |
-| `organization_id` | `CHAR(32)` | False | False | memberships.organization_id, organizations.id, ppm_resources.organization_id |
+| `id` | `UUID` | False | True | — |
+| `organization_id` | `UUID` | False | False | memberships.organization_id, organizations.id, ppm_resources.organization_id |
 | `name` | `VARCHAR(160)` | False | False | — |
 | `description` | `TEXT` | False | False | — |
 | `revision` | `INTEGER` | False | False | — |
 | `archived` | `BOOLEAN` | False | False | — |
-| `created_at` | `DATETIME` | False | False | — |
-| `updated_at` | `DATETIME` | False | False | — |
-| `resource_id` | `CHAR(32)` | False | False | ppm_resources.id |
-| `user_id` | `CHAR(32)` | False | False | memberships.user_id |
+| `created_at` | `TIMESTAMP WITH TIME ZONE` | False | False | — |
+| `updated_at` | `TIMESTAMP WITH TIME ZONE` | False | False | — |
+| `resource_id` | `UUID` | False | False | ppm_resources.id |
+| `user_id` | `UUID` | False | False | memberships.user_id |
 | `manage` | `BOOLEAN` | False | False | — |
 | `effort` | `BOOLEAN` | False | False | — |
 
@@ -1577,15 +1577,15 @@ Live organization membership → transaction-local principal/RLS → scoped doma
 
 | Column | SQL type | Nullable | Primary key | Foreign reference |
 | --- | --- | --- | --- | --- |
-| `id` | `CHAR(32)` | False | True | — |
-| `organization_id` | `CHAR(32)` | False | False | organizations.id, ppm_resources.organization_id |
+| `id` | `UUID` | False | True | — |
+| `organization_id` | `UUID` | False | False | organizations.id, ppm_resources.organization_id |
 | `name` | `VARCHAR(160)` | False | False | — |
 | `description` | `TEXT` | False | False | — |
 | `revision` | `INTEGER` | False | False | — |
 | `archived` | `BOOLEAN` | False | False | — |
-| `created_at` | `DATETIME` | False | False | — |
-| `updated_at` | `DATETIME` | False | False | — |
-| `resource_id` | `CHAR(32)` | False | False | ppm_resources.id |
+| `created_at` | `TIMESTAMP WITH TIME ZONE` | False | False | — |
+| `updated_at` | `TIMESTAMP WITH TIME ZONE` | False | False | — |
+| `resource_id` | `UUID` | False | False | ppm_resources.id |
 | `skill` | `VARCHAR(80)` | False | False | — |
 
 - CheckConstraint (unnamed): revision > 0
@@ -1599,18 +1599,18 @@ Live organization membership → transaction-local principal/RLS → scoped doma
 
 | Column | SQL type | Nullable | Primary key | Foreign reference |
 | --- | --- | --- | --- | --- |
-| `id` | `CHAR(32)` | False | True | — |
-| `organization_id` | `CHAR(32)` | False | False | organizations.id, ppm_resources.organization_id, ppm_teams.organization_id |
+| `id` | `UUID` | False | True | — |
+| `organization_id` | `UUID` | False | False | organizations.id, ppm_resources.organization_id, ppm_teams.organization_id |
 | `name` | `VARCHAR(160)` | False | False | — |
 | `description` | `TEXT` | False | False | — |
 | `revision` | `INTEGER` | False | False | — |
 | `archived` | `BOOLEAN` | False | False | — |
-| `created_at` | `DATETIME` | False | False | — |
-| `updated_at` | `DATETIME` | False | False | — |
-| `resource_id` | `CHAR(32)` | False | False | ppm_resources.id |
+| `created_at` | `TIMESTAMP WITH TIME ZONE` | False | False | — |
+| `updated_at` | `TIMESTAMP WITH TIME ZONE` | False | False | — |
+| `resource_id` | `UUID` | False | False | ppm_resources.id |
 | `start_date` | `DATE` | False | False | — |
 | `end_date` | `DATE` | False | False | — |
-| `team_id` | `CHAR(32)` | False | False | ppm_teams.id |
+| `team_id` | `UUID` | False | False | ppm_teams.id |
 
 - CheckConstraint (unnamed): end_date > start_date
 - CheckConstraint (unnamed): revision > 0
@@ -1625,15 +1625,15 @@ Live organization membership → transaction-local principal/RLS → scoped doma
 
 | Column | SQL type | Nullable | Primary key | Foreign reference |
 | --- | --- | --- | --- | --- |
-| `id` | `CHAR(32)` | False | True | — |
-| `organization_id` | `CHAR(32)` | False | False | memberships.organization_id, organizations.id |
+| `id` | `UUID` | False | True | — |
+| `organization_id` | `UUID` | False | False | memberships.organization_id, organizations.id |
 | `name` | `VARCHAR(160)` | False | False | — |
 | `description` | `TEXT` | False | False | — |
 | `revision` | `INTEGER` | False | False | — |
 | `archived` | `BOOLEAN` | False | False | — |
-| `created_at` | `DATETIME` | False | False | — |
-| `updated_at` | `DATETIME` | False | False | — |
-| `user_id` | `CHAR(32)` | True | False | memberships.user_id |
+| `created_at` | `TIMESTAMP WITH TIME ZONE` | False | False | — |
+| `updated_at` | `TIMESTAMP WITH TIME ZONE` | False | False | — |
+| `user_id` | `UUID` | True | False | memberships.user_id |
 
 - CheckConstraint (unnamed): revision > 0
 - ForeignKeyConstraint (unnamed): organization_id
@@ -1646,16 +1646,16 @@ Live organization membership → transaction-local principal/RLS → scoped doma
 
 | Column | SQL type | Nullable | Primary key | Foreign reference |
 | --- | --- | --- | --- | --- |
-| `id` | `CHAR(32)` | False | True | — |
-| `organization_id` | `CHAR(32)` | False | False | memberships.organization_id, organizations.id, ppm_projects.organization_id |
+| `id` | `UUID` | False | True | — |
+| `organization_id` | `UUID` | False | False | memberships.organization_id, organizations.id, ppm_projects.organization_id |
 | `name` | `VARCHAR(160)` | False | False | — |
 | `description` | `TEXT` | False | False | — |
 | `revision` | `INTEGER` | False | False | — |
 | `archived` | `BOOLEAN` | False | False | — |
-| `created_at` | `DATETIME` | False | False | — |
-| `updated_at` | `DATETIME` | False | False | — |
-| `project_id` | `CHAR(32)` | False | False | ppm_projects.id |
-| `owner_id` | `CHAR(32)` | True | False | memberships.user_id |
+| `created_at` | `TIMESTAMP WITH TIME ZONE` | False | False | — |
+| `updated_at` | `TIMESTAMP WITH TIME ZONE` | False | False | — |
+| `project_id` | `UUID` | False | False | ppm_projects.id |
+| `owner_id` | `UUID` | True | False | memberships.user_id |
 | `severity` | `INTEGER` | False | False | — |
 | `likelihood` | `INTEGER` | False | False | — |
 | `mitigation` | `TEXT` | False | False | — |
@@ -1678,16 +1678,16 @@ Live organization membership → transaction-local principal/RLS → scoped doma
 
 | Column | SQL type | Nullable | Primary key | Foreign reference |
 | --- | --- | --- | --- | --- |
-| `id` | `CHAR(32)` | False | True | — |
-| `organization_id` | `CHAR(32)` | False | False | memberships.organization_id, organizations.id, ppm_portfolios.organization_id |
+| `id` | `UUID` | False | True | — |
+| `organization_id` | `UUID` | False | False | memberships.organization_id, organizations.id, ppm_portfolios.organization_id |
 | `name` | `VARCHAR(160)` | False | False | — |
 | `description` | `TEXT` | False | False | — |
 | `revision` | `INTEGER` | False | False | — |
 | `archived` | `BOOLEAN` | False | False | — |
-| `created_at` | `DATETIME` | False | False | — |
-| `updated_at` | `DATETIME` | False | False | — |
-| `user_id` | `CHAR(32)` | False | False | memberships.user_id |
-| `portfolio_id` | `CHAR(32)` | True | False | ppm_portfolios.id |
+| `created_at` | `TIMESTAMP WITH TIME ZONE` | False | False | — |
+| `updated_at` | `TIMESTAMP WITH TIME ZONE` | False | False | — |
+| `user_id` | `UUID` | False | False | memberships.user_id |
+| `portfolio_id` | `UUID` | True | False | ppm_portfolios.id |
 | `start_date` | `DATE` | False | False | — |
 | `end_date` | `DATE` | False | False | — |
 | `dashboard` | `VARCHAR(20)` | False | False | — |
@@ -1706,14 +1706,14 @@ Live organization membership → transaction-local principal/RLS → scoped doma
 
 | Column | SQL type | Nullable | Primary key | Foreign reference |
 | --- | --- | --- | --- | --- |
-| `id` | `CHAR(32)` | False | True | — |
-| `organization_id` | `CHAR(32)` | False | False | organizations.id |
+| `id` | `UUID` | False | True | — |
+| `organization_id` | `UUID` | False | False | organizations.id |
 | `name` | `VARCHAR(160)` | False | False | — |
 | `description` | `TEXT` | False | False | — |
 | `revision` | `INTEGER` | False | False | — |
 | `archived` | `BOOLEAN` | False | False | — |
-| `created_at` | `DATETIME` | False | False | — |
-| `updated_at` | `DATETIME` | False | False | — |
+| `created_at` | `TIMESTAMP WITH TIME ZONE` | False | False | — |
+| `updated_at` | `TIMESTAMP WITH TIME ZONE` | False | False | — |
 | `timezone` | `VARCHAR(80)` | False | False | — |
 | `currency` | `VARCHAR(3)` | False | False | — |
 
@@ -1728,17 +1728,17 @@ Live organization membership → transaction-local principal/RLS → scoped doma
 
 | Column | SQL type | Nullable | Primary key | Foreign reference |
 | --- | --- | --- | --- | --- |
-| `id` | `CHAR(32)` | False | True | — |
-| `organization_id` | `CHAR(32)` | False | False | organizations.id, ppm_projects.organization_id, ppm_sprints.organization_id, ppm_teams.organization_id |
+| `id` | `UUID` | False | True | — |
+| `organization_id` | `UUID` | False | False | organizations.id, ppm_projects.organization_id, ppm_sprints.organization_id, ppm_teams.organization_id |
 | `name` | `VARCHAR(160)` | False | False | — |
 | `description` | `TEXT` | False | False | — |
 | `revision` | `INTEGER` | False | False | — |
 | `archived` | `BOOLEAN` | False | False | — |
-| `created_at` | `DATETIME` | False | False | — |
-| `updated_at` | `DATETIME` | False | False | — |
-| `project_id` | `CHAR(32)` | False | False | ppm_projects.id, ppm_sprints.project_id |
-| `sprint_id` | `CHAR(32)` | False | False | ppm_sprints.id |
-| `team_id` | `CHAR(32)` | False | False | ppm_teams.id |
+| `created_at` | `TIMESTAMP WITH TIME ZONE` | False | False | — |
+| `updated_at` | `TIMESTAMP WITH TIME ZONE` | False | False | — |
+| `project_id` | `UUID` | False | False | ppm_projects.id, ppm_sprints.project_id |
+| `sprint_id` | `UUID` | False | False | ppm_sprints.id |
+| `team_id` | `UUID` | False | False | ppm_teams.id |
 | `end_date` | `DATE` | False | False | — |
 | `points` | `NUMERIC(18, 2)` | False | False | — |
 | `complete` | `BOOLEAN` | False | False | — |
@@ -1759,16 +1759,16 @@ Live organization membership → transaction-local principal/RLS → scoped doma
 
 | Column | SQL type | Nullable | Primary key | Foreign reference |
 | --- | --- | --- | --- | --- |
-| `id` | `CHAR(32)` | False | True | — |
-| `organization_id` | `CHAR(32)` | False | False | organizations.id, ppm_projects.organization_id, ppm_teams.organization_id |
+| `id` | `UUID` | False | True | — |
+| `organization_id` | `UUID` | False | False | organizations.id, ppm_projects.organization_id, ppm_teams.organization_id |
 | `name` | `VARCHAR(160)` | False | False | — |
 | `description` | `TEXT` | False | False | — |
 | `revision` | `INTEGER` | False | False | — |
 | `archived` | `BOOLEAN` | False | False | — |
-| `created_at` | `DATETIME` | False | False | — |
-| `updated_at` | `DATETIME` | False | False | — |
-| `project_id` | `CHAR(32)` | False | False | ppm_projects.id |
-| `team_id` | `CHAR(32)` | False | False | ppm_teams.id |
+| `created_at` | `TIMESTAMP WITH TIME ZONE` | False | False | — |
+| `updated_at` | `TIMESTAMP WITH TIME ZONE` | False | False | — |
+| `project_id` | `UUID` | False | False | ppm_projects.id |
+| `team_id` | `UUID` | False | False | ppm_teams.id |
 | `start_date` | `DATE` | False | False | — |
 | `end_date` | `DATE` | False | False | — |
 | `status` | `VARCHAR(12)` | False | False | — |
@@ -1788,15 +1788,15 @@ Live organization membership → transaction-local principal/RLS → scoped doma
 
 | Column | SQL type | Nullable | Primary key | Foreign reference |
 | --- | --- | --- | --- | --- |
-| `id` | `CHAR(32)` | False | True | — |
-| `organization_id` | `CHAR(32)` | False | False | organizations.id, ppm_projects.organization_id |
+| `id` | `UUID` | False | True | — |
+| `organization_id` | `UUID` | False | False | organizations.id, ppm_projects.organization_id |
 | `name` | `VARCHAR(160)` | False | False | — |
 | `description` | `TEXT` | False | False | — |
 | `revision` | `INTEGER` | False | False | — |
 | `archived` | `BOOLEAN` | False | False | — |
-| `created_at` | `DATETIME` | False | False | — |
-| `updated_at` | `DATETIME` | False | False | — |
-| `project_id` | `CHAR(32)` | False | False | ppm_projects.id |
+| `created_at` | `TIMESTAMP WITH TIME ZONE` | False | False | — |
+| `updated_at` | `TIMESTAMP WITH TIME ZONE` | False | False | — |
+| `project_id` | `UUID` | False | False | ppm_projects.id |
 | `reported_health` | `VARCHAR(10)` | False | False | — |
 
 - CheckConstraint (unnamed): reported_health IN ('Green','Amber','Red','Unknown')
@@ -1812,16 +1812,16 @@ Live organization membership → transaction-local principal/RLS → scoped doma
 
 | Column | SQL type | Nullable | Primary key | Foreign reference |
 | --- | --- | --- | --- | --- |
-| `id` | `CHAR(32)` | False | True | — |
-| `organization_id` | `CHAR(32)` | False | False | memberships.organization_id, organizations.id, ppm_teams.organization_id |
+| `id` | `UUID` | False | True | — |
+| `organization_id` | `UUID` | False | False | memberships.organization_id, organizations.id, ppm_teams.organization_id |
 | `name` | `VARCHAR(160)` | False | False | — |
 | `description` | `TEXT` | False | False | — |
 | `revision` | `INTEGER` | False | False | — |
 | `archived` | `BOOLEAN` | False | False | — |
-| `created_at` | `DATETIME` | False | False | — |
-| `updated_at` | `DATETIME` | False | False | — |
-| `team_id` | `CHAR(32)` | False | False | ppm_teams.id |
-| `user_id` | `CHAR(32)` | False | False | memberships.user_id |
+| `created_at` | `TIMESTAMP WITH TIME ZONE` | False | False | — |
+| `updated_at` | `TIMESTAMP WITH TIME ZONE` | False | False | — |
+| `team_id` | `UUID` | False | False | ppm_teams.id |
+| `user_id` | `UUID` | False | False | memberships.user_id |
 | `start_date` | `DATE` | False | False | — |
 | `end_date` | `DATE` | True | False | — |
 
@@ -1838,16 +1838,16 @@ Live organization membership → transaction-local principal/RLS → scoped doma
 
 | Column | SQL type | Nullable | Primary key | Foreign reference |
 | --- | --- | --- | --- | --- |
-| `id` | `CHAR(32)` | False | True | — |
-| `organization_id` | `CHAR(32)` | False | False | memberships.organization_id, organizations.id, ppm_departments.organization_id |
+| `id` | `UUID` | False | True | — |
+| `organization_id` | `UUID` | False | False | memberships.organization_id, organizations.id, ppm_departments.organization_id |
 | `name` | `VARCHAR(160)` | False | False | — |
 | `description` | `TEXT` | False | False | — |
 | `revision` | `INTEGER` | False | False | — |
 | `archived` | `BOOLEAN` | False | False | — |
-| `created_at` | `DATETIME` | False | False | — |
-| `updated_at` | `DATETIME` | False | False | — |
-| `department_id` | `CHAR(32)` | True | False | ppm_departments.id |
-| `owner_id` | `CHAR(32)` | True | False | memberships.user_id |
+| `created_at` | `TIMESTAMP WITH TIME ZONE` | False | False | — |
+| `updated_at` | `TIMESTAMP WITH TIME ZONE` | False | False | — |
+| `department_id` | `UUID` | True | False | ppm_departments.id |
+| `owner_id` | `UUID` | True | False | memberships.user_id |
 
 - CheckConstraint (unnamed): revision > 0
 - ForeignKeyConstraint (unnamed): organization_id
@@ -1861,15 +1861,15 @@ Live organization membership → transaction-local principal/RLS → scoped doma
 
 | Column | SQL type | Nullable | Primary key | Foreign reference |
 | --- | --- | --- | --- | --- |
-| `id` | `CHAR(32)` | False | True | — |
-| `organization_id` | `CHAR(32)` | False | False | organizations.id, ppm_resources.organization_id |
+| `id` | `UUID` | False | True | — |
+| `organization_id` | `UUID` | False | False | organizations.id, ppm_resources.organization_id |
 | `name` | `VARCHAR(160)` | False | False | — |
 | `description` | `TEXT` | False | False | — |
 | `revision` | `INTEGER` | False | False | — |
 | `archived` | `BOOLEAN` | False | False | — |
-| `created_at` | `DATETIME` | False | False | — |
-| `updated_at` | `DATETIME` | False | False | — |
-| `resource_id` | `CHAR(32)` | False | False | ppm_resources.id |
+| `created_at` | `TIMESTAMP WITH TIME ZONE` | False | False | — |
+| `updated_at` | `TIMESTAMP WITH TIME ZONE` | False | False | — |
+| `resource_id` | `UUID` | False | False | ppm_resources.id |
 | `start_date` | `DATE` | False | False | — |
 | `end_date` | `DATE` | False | False | — |
 | `hours_per_day` | `NUMERIC(4, 2)` | False | False | — |
@@ -1887,19 +1887,19 @@ Live organization membership → transaction-local principal/RLS → scoped doma
 
 | Column | SQL type | Nullable | Primary key | Foreign reference |
 | --- | --- | --- | --- | --- |
-| `id` | `CHAR(32)` | False | True | — |
-| `organization_id` | `CHAR(32)` | False | False | memberships.organization_id, organizations.id, ppm_projects.organization_id, ppm_sprints.organization_id |
+| `id` | `UUID` | False | True | — |
+| `organization_id` | `UUID` | False | False | memberships.organization_id, organizations.id, ppm_projects.organization_id, ppm_sprints.organization_id |
 | `name` | `VARCHAR(160)` | False | False | — |
 | `description` | `TEXT` | False | False | — |
 | `revision` | `INTEGER` | False | False | — |
 | `archived` | `BOOLEAN` | False | False | — |
-| `created_at` | `DATETIME` | False | False | — |
-| `updated_at` | `DATETIME` | False | False | — |
+| `created_at` | `TIMESTAMP WITH TIME ZONE` | False | False | — |
+| `updated_at` | `TIMESTAMP WITH TIME ZONE` | False | False | — |
 | `priority` | `VARCHAR(30)` | True | False | — |
 | `work_type` | `VARCHAR(30)` | True | False | — |
-| `project_id` | `CHAR(32)` | False | False | ppm_projects.id, ppm_sprints.project_id |
-| `sprint_id` | `CHAR(32)` | True | False | ppm_sprints.id |
-| `owner_id` | `CHAR(32)` | True | False | memberships.user_id |
+| `project_id` | `UUID` | False | False | ppm_projects.id, ppm_sprints.project_id |
+| `sprint_id` | `UUID` | True | False | ppm_sprints.id |
+| `owner_id` | `UUID` | True | False | memberships.user_id |
 | `status` | `VARCHAR(12)` | False | False | — |
 | `blocked` | `BOOLEAN` | False | False | — |
 | `points` | `NUMERIC(10, 2)` | True | False | — |
@@ -1925,9 +1925,9 @@ Live organization membership → transaction-local principal/RLS → scoped doma
 
 | Column | SQL type | Nullable | Primary key | Foreign reference |
 | --- | --- | --- | --- | --- |
-| `id` | `CHAR(32)` | False | True | — |
-| `organization_id` | `CHAR(32)` | False | False | organizations.id, source_versions.organization_id |
-| `version_id` | `CHAR(32)` | False | False | source_versions.id |
+| `id` | `UUID` | False | True | — |
+| `organization_id` | `UUID` | False | False | organizations.id, source_versions.organization_id |
+| `version_id` | `UUID` | False | False | source_versions.id |
 | `ordinal` | `INTEGER` | False | False | — |
 | `location` | `VARCHAR(200)` | False | False | — |
 | `text` | `TEXT` | False | False | — |
@@ -1944,16 +1944,16 @@ Live organization membership → transaction-local principal/RLS → scoped doma
 
 | Column | SQL type | Nullable | Primary key | Foreign reference |
 | --- | --- | --- | --- | --- |
-| `id` | `CHAR(32)` | False | True | — |
-| `organization_id` | `CHAR(32)` | False | False | organizations.id, ppm_projects.organization_id |
-| `project_id` | `CHAR(32)` | True | False | ppm_projects.id |
+| `id` | `UUID` | False | True | — |
+| `organization_id` | `UUID` | False | False | organizations.id, ppm_projects.organization_id |
+| `project_id` | `UUID` | True | False | ppm_projects.id |
 | `title` | `VARCHAR(160)` | False | False | — |
 | `category` | `VARCHAR(24)` | False | False | — |
-| `created_at` | `DATETIME` | False | False | — |
+| `created_at` | `TIMESTAMP WITH TIME ZONE` | False | False | — |
 | `revision` | `INTEGER` | False | False | — |
-| `deleted_at` | `DATETIME` | True | False | — |
+| `deleted_at` | `TIMESTAMP WITH TIME ZONE` | True | False | — |
 | `legal_hold` | `BOOLEAN` | False | False | — |
-| `retain_until` | `DATETIME` | False | False | — |
+| `retain_until` | `TIMESTAMP WITH TIME ZONE` | False | False | — |
 | `policy` | `JSONB` | True | False | — |
 
 - CheckConstraint (unnamed): category IN ('SRS','BRD','PRD','MOM','sprint_report','risk_log','charter','policy')
@@ -1966,10 +1966,10 @@ Live organization membership → transaction-local principal/RLS → scoped doma
 
 | Column | SQL type | Nullable | Primary key | Foreign reference |
 | --- | --- | --- | --- | --- |
-| `id` | `CHAR(32)` | False | True | — |
-| `organization_id` | `CHAR(32)` | False | False | organizations.id, ppm_evidence_attachments.organization_id, source_versions.organization_id |
-| `version_id` | `CHAR(32)` | False | False | source_versions.id |
-| `attachment_id` | `CHAR(32)` | False | False | ppm_evidence_attachments.id |
+| `id` | `UUID` | False | True | — |
+| `organization_id` | `UUID` | False | False | organizations.id, ppm_evidence_attachments.organization_id, source_versions.organization_id |
+| `version_id` | `UUID` | False | False | source_versions.id |
+| `attachment_id` | `UUID` | False | False | ppm_evidence_attachments.id |
 
 - ForeignKeyConstraint (unnamed): organization_id
 - ForeignKeyConstraint (unnamed): organization_id, attachment_id
@@ -1982,16 +1982,16 @@ Live organization membership → transaction-local principal/RLS → scoped doma
 
 | Column | SQL type | Nullable | Primary key | Foreign reference |
 | --- | --- | --- | --- | --- |
-| `id` | `CHAR(32)` | False | True | — |
-| `organization_id` | `CHAR(32)` | False | False | memberships.organization_id, organizations.id, source_documents.organization_id |
-| `document_id` | `CHAR(32)` | False | False | source_documents.id |
+| `id` | `UUID` | False | True | — |
+| `organization_id` | `UUID` | False | False | memberships.organization_id, organizations.id, source_documents.organization_id |
+| `document_id` | `UUID` | False | False | source_documents.id |
 | `number` | `INTEGER` | False | False | — |
 | `sha256` | `VARCHAR(64)` | False | False | — |
 | `filename` | `VARCHAR(160)` | False | False | — |
 | `size` | `INTEGER` | False | False | — |
 | `object_key` | `VARCHAR(300)` | False | False | — |
-| `uploaded_by` | `CHAR(32)` | False | False | memberships.user_id |
-| `created_at` | `DATETIME` | False | False | — |
+| `uploaded_by` | `UUID` | False | False | memberships.user_id |
+| `created_at` | `TIMESTAMP WITH TIME ZONE` | False | False | — |
 | `status` | `VARCHAR(24)` | False | False | — |
 | `diagnostic` | `VARCHAR(48)` | True | False | — |
 | `scanner` | `VARCHAR(48)` | True | False | — |

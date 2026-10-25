@@ -1,5 +1,11 @@
 # Sprint 12 documentation closure
 
+26 October 2026. [Reviewed closeout](../../../10-reference/SPRINT-12-LOCAL-CLOSEOUT.md)
+and [final application review/CI receipt](../../../verification/sprint12/final-review.json)
+are the current application acceptance evidence. Maintained documents are reconciled
+with normal schema 0018, the pushed fixes and retained live/model gates. Documentation
+refresh checks are recorded separately in [the testing report](TESTING_REPORT.md).
+
 | Shared obligation | Canonical evidence |
 | --- | --- |
 | Requirement/package trace | Report tracker, roadmap and coverage PPM-12-001/002/003 |
@@ -16,3 +22,13 @@
 
 Historical reports/source prompts keep their original results and failure evidence.
 Final validation results are recorded only after commands finish.
+
+The [documentation command receipt](../../../verification/sprint12/documentation-final-checks.json)
+records this refresh's actual exit codes; application CI/review is pinned to `f93a596`.
+
+The reconciliation covers root entry instructions, current status/catalogue/coverage,
+planning and traceability, architecture/generated schema/API/code inventories, local
+setup, user/presentation/demo/learning guides, contracts/ADR, reports/receipts/handoffs,
+plain-language reporting and the documentation tracker. Current pointers supersede
+dated checkpoints without rewriting their measured outcomes. Explicitly archived Word
+and generator snapshots remain unchanged; the maintained Markdown path is current.

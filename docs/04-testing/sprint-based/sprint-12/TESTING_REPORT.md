@@ -1,5 +1,31 @@
 # Sprint 12 actual validation
 
+## Final application checkpoint — 26 October 2026
+
+Application `f93a596` passed both hosted Foundation workflows and CodeRabbit's final
+review produced no actionable comments. Normal schema is 0018. [Closeout](../../../10-reference/SPRINT-12-LOCAL-CLOSEOUT.md)
+and [review evidence](../../../verification/sprint12/REVIEW_FIXES.md) identify exact
+commits, commands and repaired failures. The 36-case final affected-path run, the
+separately strengthened case and six final browser journeys passed; they overlap.
+The earlier full local gate passed 535/one skipped before the last two source fixes;
+the subsequent hosted workflows cover final application regression. Do not add counts
+across runs or claim synthetic scores as real-world accuracy. AT17 remains BLOCKED.
+
+## Documentation refresh — 26 October 2026
+
+Validation is recorded in
+[the command receipt](../../../verification/sprint12/documentation-final-checks.json).
+It checks Markdown links/anchors, prior-sprint packages, generated inventories,
+source hashes, Ruff/mypy, generated contracts and frontend static checks. PostgreSQL
+UUID/timestamp type rendering was compared with the normal schema read-only. Original
+26 frozen inputs, applied 0017/0018 hashes and the 21 pre-existing artifacts remain
+unchanged. Application code, tests, locks, migrations and runtime configuration are
+unchanged by this refresh; the preceding application CI/review evidence is retained.
+No new local application/browser regression run or live/model qualification is claimed
+for a documentation-only change. Newly triggered hosted CI is a separate result.
+
+## Original implementation checkpoint — 25 October 2026
+
 25 October 2026. **LOCAL SAMPLE ACCEPTED; full original live/model acceptance OPEN.**
 Starting HEAD `c192d69a49c55240876d22c641360d44522d1eba` plus uncommitted work.
 Raw receipts/starting diff/dump/hashes are private in `artifacts/local/sprint12`.
@@ -60,5 +86,6 @@ unverified. No completed projects/closed sprint snapshots or complete genuine ou
 history existed. Organization-attested manual data is not independently verified.
 No external real dataset was downloaded: license and exact-target suitability review
 is still required. Native MLflow tracking/import and XGBoost/DistilBERT comparisons
-remain explicit limitations. AT17 remains BLOCKED. No serving/promotion, hosted CI,
-production deployment, PR, push or Sprint 13 work is claimed.
+remain explicit limitations. AT17 remains BLOCKED. Publication and application hosted
+CI are now verified in the closeout. No serving/promotion, production deployment, merge
+or Sprint 13 work is claimed.

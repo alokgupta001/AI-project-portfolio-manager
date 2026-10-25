@@ -1,5 +1,12 @@
 # Documentation audit results — 9 October 2026
 
+## 26 October 2026 — Sprint 12 documentation reconciliation
+
+26 October 2026. Current local sample: Sprint 12 at normal schema **0018**. [Reviewed closeout](SPRINT-12-LOCAL-CLOSEOUT.md) records application commit `f93a596`, both passing hosted CI runs and CodeRabbit's final review with no actionable comments. Live connectors/genuine model quality remain unverified and AT17 remains BLOCKED. Earlier dated checkpoints below retain their original scope; stop before Sprint 13. Current entry points, schema/contract/learning/user/demo pages, planning/coverage,
+reports, handoffs and review evidence are reconciled. Source/prompts, dated test
+results and explicitly archived Word/generator snapshots are preserved. Documentation
+checks are recorded in the Sprint 12 testing report; new documentation CI is separate.
+
 **Closeout — 16 October 2026: Sprints 8.1 and 10 are COMPLETED for their implemented development scope.** The reviewed application checkpoint `631c149` passed [hosted CI](https://github.com/alokgupta001/AI-project-portfolio-manager/actions/runs/38885041673), including regression, migration and browser checks. The current pilot Word guide is rendered and visually verified in the linked closeout evidence. Earlier blocked/active statements below describe their recorded checkpoints. Production deployment, broad real-model/agent quality and scale remain OPEN release/successor gates. Stop before 11. [Current closeout](../10-reference/SPRINT-8.1-AND-10-CLOSEOUT.md).
 
 ## Historical record before closeout

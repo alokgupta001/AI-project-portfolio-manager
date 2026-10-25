@@ -1,10 +1,14 @@
-# Antigravity entry point — next sprint
+# Antigravity entry point — reviewed local checkpoint
 
-Current Sprint 11 checkpoint: read the [handoff](docs/03-sprints/completed/sprint-11/HANDOFF.md). Nine typed specialists, semantic suggestions and independent review are implemented; real-model quality UNVERIFIED/BLOCKED. Preserve normal 0012 data, objects, credentials and existing history. 0013 is tested only in disposable databases. No commit/push/deployment; stop before Sprint 12.
+26 October 2026. Current local sample: Sprint 12 at normal schema **0018**. [Reviewed closeout](docs/10-reference/SPRINT-12-LOCAL-CLOSEOUT.md) records application commit `f93a596`, both passing hosted CI runs and CodeRabbit's final review with no actionable comments. Live connectors/genuine model quality remain unverified and AT17 remains BLOCKED. Earlier dated checkpoints below retain their original scope; stop before Sprint 13. The owner authorized documentation reconciliation and pushing to existing PR 7; no merge or deployment. Preserve all 21 unrelated artifact edits, provider scopes/ceilings and applied migrations.
+
+## Historical checkpoints before Sprint 12
+
+Historical Sprint 11 checkpoint: read the [handoff](docs/03-sprints/completed/sprint-11/HANDOFF.md). Nine typed specialists, semantic suggestions and independent review are implemented; real-model quality UNVERIFIED/BLOCKED. Preserve normal 0012 data, objects, credentials and existing history. 0013 is tested only in disposable databases. No commit/push/deployment; stop before Sprint 12.
 
 ## Historical checkpoints before Sprint 11
 
-Current checkpoint — 16 October 2026: Sprints 8.1 and 10 are COMPLETED for their implemented development scope at `0012_ai_runtime`. Reviewed application checkpoint `631c149` passed hosted CI; 201 backend tests and the document browser regression passed. A current pilot Word guide is rendered and visually verified. Gemini bounded completion/embedding smoke passed at maximum spend $0; confirmation does not expire daily. Production deployment, scale and broad agent/model quality remain OPEN release/successor gates. Sprint 11 is not started. Stop before 11.
+Historical checkpoint — 16 October 2026: Sprints 8.1 and 10 are COMPLETED for their implemented development scope at `0012_ai_runtime`. Reviewed application checkpoint `631c149` passed hosted CI; 201 backend tests and the document browser regression passed. A current pilot Word guide is rendered and visually verified. Gemini bounded completion/embedding smoke passed at maximum spend $0; confirmation does not expire daily. Production deployment, scale and broad agent/model quality remain OPEN release/successor gates. Sprint 11 is not started. Stop before 11.
 Read [LATEST](docs/handoffs/LATEST.md), [MASTER](docs/prompts/MASTER.md) and
 [Sprint 10 handoff](docs/03-sprints/completed/sprint-10/HANDOFF.md). Preserve all applied
 0001–0012 migrations, .env, established data/objects and prior uncommitted work.

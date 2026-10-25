@@ -1,5 +1,7 @@
 # AI runtime operator guide
 
+26 October 2026. Current local sample: Sprint 12 at normal schema **0018**. [Reviewed closeout](../10-reference/SPRINT-12-LOCAL-CLOSEOUT.md) records application commit `f93a596`, both passing hosted CI runs and CodeRabbit's final review with no actionable comments. Live connectors/genuine model quality remain unverified and AT17 remains BLOCKED. Earlier dated checkpoints below retain their original scope; stop before Sprint 13.
+
 Sprint 11 operators: [specialist contract](../contracts/agents.md), [handoff](../03-sprints/completed/sprint-11/HANDOFF.md) and [test commands](../04-testing/sprint-based/sprint-11/TESTING_REPORT.md). Model allowlist, confirmation, budget/request/retry/output/cancellation limits remain unchanged. One batch serves nine agents; no paid failover. Normal data remains 0012; forward 0013 adoption is not deployed by this task. No live provider call is made in Sprint 11 acceptance.
 
 ## Historical checkpoints before Sprint 11

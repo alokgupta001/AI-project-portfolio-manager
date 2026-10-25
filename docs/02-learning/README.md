@@ -1,6 +1,12 @@
 # Learn the current application
 
-Current Sprint 11: [Specialists and human review](06-ai-and-analytics/SPECIALISTS_REVIEW.md) traces the actual code, separate score records, bounded calls, privacy, source revocation and independent decisions. Real-model quality remains unverified. Earlier sprint boundaries below retain their historical scope.
+26 October 2026. Current local sample: Sprint 12 at normal schema **0018**. [Reviewed closeout](../10-reference/SPRINT-12-LOCAL-CLOSEOUT.md) records application commit `f93a596`, both passing hosted CI runs and CodeRabbit's final review with no actionable comments. Live connectors/genuine model quality remain unverified and AT17 remains BLOCKED. Earlier dated checkpoints below retain their original scope; stop before Sprint 13.
+
+Use the local history/dataset/baseline walkthrough linked from the closeout and
+`/integrations` for authority/conflict review. Synthetic results are not real accuracy;
+existing guided-provider quotas, access and $0 controls remain unchanged.
+
+Earlier Sprint 11 scope: [Specialists and human review](06-ai-and-analytics/SPECIALISTS_REVIEW.md) traces the actual code, separate score records, bounded calls, privacy, source revocation and independent decisions. Real-model quality remains unverified. Earlier sprint boundaries below retain their historical scope.
 
 Follow [the practical reading order](00-getting-started/README.md). Fourteen existing cross-sprint chapters were retained and corrected for Sprint 8.1; they trace the real UI, API, data, authorization, formulas, failures and debugging path.
 

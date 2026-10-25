@@ -129,9 +129,9 @@ Source-derived AST inventory. Search symbols instead of relying on line numbers;
 
 [Source](../../scripts/documentation_inventory.py)
 
-- `cell` — line 16
-- `inventories` — line 20
-- `main` — line 198
+- `cell` — line 19
+- `inventories` — line 23
+- `main` — line 205
 
 ## scripts/fill_current_portal.py
 

@@ -1,5 +1,7 @@
 # AI-PPM Future Product Vision and User Guide
 
+26 October 2026. Current local sample: Sprint 12 at normal schema **0018**. [Reviewed closeout](../10-reference/SPRINT-12-LOCAL-CLOSEOUT.md) records application commit `f93a596`, both passing hosted CI runs and CodeRabbit's final review with no actionable comments. Live connectors/genuine model quality remain unverified and AT17 remains BLOCKED. Earlier dated checkpoints below retain their original scope; stop before Sprint 13.
+
 Availability update, 15 October 2026: [current status](CURRENT_STATUS.md) and
 [the document library guide](../03-sprints/completed/sprint-09/USER_GUIDE.md) record
 implemented Sprint 09 intake/OCR/keyword/policy controls. Future-tense semantic

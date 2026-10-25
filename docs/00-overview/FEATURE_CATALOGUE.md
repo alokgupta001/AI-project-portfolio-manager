@@ -1,6 +1,6 @@
 # Feature catalogue
 
-**Sprint 12 current implementation:** [local report](../03-sprints/completed/sprint-12/SPRINT_REPORT.md) and [actual checks](../04-testing/sprint-based/sprint-12/TESTING_REPORT.md) supersede earlier unstarted statements below. Local sample acceptance is complete at schema 0017 with healthy local services. Live source/model quality and AT17 remain blocked; stop before 13.
+26 October 2026. Current local sample: Sprint 12 at normal schema **0018**. [Reviewed closeout](../10-reference/SPRINT-12-LOCAL-CLOSEOUT.md) records application commit `f93a596`, both passing hosted CI runs and CodeRabbit's final review with no actionable comments. Live connectors/genuine model quality remain unverified and AT17 remains BLOCKED. Earlier dated checkpoints below retain their original scope; stop before Sprint 13.
 
 Sprint 11 current disposition: [nine specialists, semantic suggestions and independent review](../03-sprints/completed/sprint-11/README.md) are locally verified with deterministic responses. Real-model quality UNVERIFIED/BLOCKED. [Actual tests](../04-testing/sprint-based/sprint-11/TESTING_REPORT.md); earlier dated notes retain their historical scope.
 
@@ -30,9 +30,9 @@ Code and retained local evidence establish current capability; original acceptan
 | G-016 Nine agents and semantic maturity scoring | IMPLEMENTED LOCALLY; real-model quality blocked | Build all nine agents with evidence and distinct suggested/reviewer scores. | PPM-11-001 / 11 |
 | G-017 Recommendation review versus application | IMPLEMENTED LOCALLY; real-model quality blocked | Separate accepted recommendation from applied change; no generic mutation before 15. | PPM-11-003 / 11 |
 | G-018 Repeat assessments, due dates and trend/export | PARTIALLY IMPLEMENTED | Extend the existing assessment lifecycle and connect workflow reminders, keeping published score history immutable. | PPM-15-002 / 15 |
-| G-019 Unattended connector identity and conflict resolution | PARTIALLY IMPLEMENTED | Add narrow renewable connector authority, source identity uniqueness and reviewable conflict resolution. | PPM-12-001 / 12 |
+| G-019 Unattended connector identity and conflict resolution | PARTIALLY IMPLEMENTED | Local narrow authority, identity uniqueness and reviewable conflicts are verified; live/provider operational acceptance remains open. | PPM-12-001 / 12 |
 | G-020 Live Jira/GitHub acceptance | BLOCKED | Run authorized read-only provider checks and controlled import with scoped credentials in 12; preserve fixtures and mark blocked until supplied. | PPM-12-001 / 12 |
-| G-021 Historical features, labels and models | PLANNED | Capture justified historical fields and consented notes, validate labels and evaluate baseline models. | PPM-12-002 / 12 |
+| G-021 Historical features, labels and models | PARTIALLY IMPLEMENTED | Numeric versioned history, outcome/provenance gates and CPU baselines are verified locally; no raw notes, independently verified genuine outcomes or real model quality. | PPM-12-002 / 12 |
 | G-022 Production model promotion evidence | BLOCKED | Require real temporal evaluation and suitability evidence; demo fixtures cannot satisfy promotion. | PPM-13-001 / 13 |
 | G-023 Forecast serving | PLANNED | Serve eligible versions with uncertainty and honest unavailable/fallback states. | PPM-13-002 / 13 |
 | G-024 Copilot, scoped context and natural language analytics | PLANNED | Build bounded authorized tools and cited conversation UI after evidence runtime. | PPM-14-001 / 14 |

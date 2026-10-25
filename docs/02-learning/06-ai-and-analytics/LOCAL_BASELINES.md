@@ -36,3 +36,13 @@ is an expected result when outcomes/splits/classes are missing. A withdrawn hist
 causes source_unavailable/409 and blocks descendants. New authorization requires a
 new history version. Native MLflow import, larger candidates, live source equality,
 independent label verification and deployment remain separate work.
+
+## Why the final source identity fixes matter
+
+API creation uses `ConnectorConfig.model_fields_set` to distinguish an omitted CSV
+namespace from an explicitly shared `manual` value. A deterministic integration UUID
+makes the generated namespace stable across a create replay. During sync, `apply_source`
+orders canonical keyed matches before own legacy NULL-key matches, preserving existing
+targets and avoiding a uniqueness collision. [Final review/CI closeout](../../10-reference/SPRINT-12-LOCAL-CLOSEOUT.md)
+and the keyed/legacy/omission regressions record the verification; they do not establish
+live provider equality. Loading/poll cancellation examples are in the frontend contract.

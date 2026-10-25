@@ -1,5 +1,7 @@
 # Feature-to-document mapping and implementation boundaries
 
+26 October 2026. Current local sample: Sprint 12 at normal schema **0018**. [Reviewed closeout](../10-reference/SPRINT-12-LOCAL-CLOSEOUT.md) records application commit `f93a596`, both passing hosted CI runs and CodeRabbit's final review with no actionable comments. Live connectors/genuine model quality remain unverified and AT17 remains BLOCKED. Earlier dated checkpoints below retain their original scope; stop before Sprint 13.
+
 Current closeout: Sprints 8.1 and 10 are completed for development scope; hosted CI and the current pilot Word guide are verified. Broad agent/model quality, production and scale remain successor/release gates. See [acceptance disposition](../10-reference/SPRINT-8.1-AND-10-CLOSEOUT.md). Earlier dated evidence below retains its historical scope.
 
 Every original crosswalk requirement and confirmed gap is listed below. The roadmap is the canonical detailed plan; update documents by impact. Named future files/functions in that plan are proposals. Current general guides explain foundations and link here for missing capabilities.

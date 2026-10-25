@@ -4,11 +4,17 @@ Use the existing local stack and account at http://localhost:3000. Select an
 organization where you are Admin. Existing roles and the four users' guided grants
 are preserved; research administration does not grant access to another organization.
 
+Normal schema is 0018. [The reviewed closeout](../../../10-reference/SPRINT-12-LOCAL-CLOSEOUT.md)
+records the pushed application, passing CI/review and current limitations; local
+acceptance is not real-world model qualification.
+
 1. Open **Integrations & jobs**. Create a CSV fixture connection for an accessible
    project. The namespace identifies the source: share it for two connections to the
    same source; change it for unrelated CSVs whose IDs overlap. Preview and start sync.
    Older CSV connections without an explicit namespace receive their own integration
    namespace on upgrade. Explicit `manual` namespaces remain shared as configured.
+   New API connections with an omitted namespace are also isolated automatically;
+   the UI's explicit namespace remains your choice of source identity.
 2. Under **Organization connector authority**, approve the connection. It can now
    complete queued work after logout. Rotate to invalidate earlier queued generations;
    submit new work afterward. Revoke to stop scheduled/queued work. Live polling needs

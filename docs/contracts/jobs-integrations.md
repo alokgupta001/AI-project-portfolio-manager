@@ -178,3 +178,16 @@ versioned evaluation and disabled fallback. durable_jobs references exactly one
 integration, document version or AI run; existing event/SSE/authority rules remain.
 Bounded Gemini free-tier smoke verified; broad model quality unverified. No semantic agents, private assessment ingestion,
 metric changes or automatic plan edits. Admin-only restricted operations apply.
+
+## Sprint 12 authority, identity and CPU extension
+
+The current durable-job source constraint permits exactly one integration, document
+version, AI run or local ML run. Enrolled connector authority is independent of its
+creator session and remains scoped to one approved connection/project; generation
+rotation/revocation fences queued work. Scheduling failures roll back per connector
+and back off separately so other connectors/due jobs continue. Omitted CSV namespaces
+are integration-specific; explicit namespaces remain shareable. Canonical keys take
+precedence over legacy NULL keys; local edits require version-checked conflict review.
+CPU runs reuse the existing dispatcher/worker and produce explicit blocked/insufficient
+or evaluated cards. [The ML/connector contract](ml.md) owns current semantics; earlier
+extension sections above describe their migration checkpoints. Normal schema is 0018.

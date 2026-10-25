@@ -1,5 +1,11 @@
 # Current demo guide
 
+26 October 2026. Current local sample: Sprint 12 at normal schema **0018**. [Reviewed closeout](../10-reference/SPRINT-12-LOCAL-CLOSEOUT.md) records application commit `f93a596`, both passing hosted CI runs and CodeRabbit's final review with no actionable comments. Live connectors/genuine model quality remain unverified and AT17 remains BLOCKED. Earlier dated checkpoints below retain their original scope; stop before Sprint 13.
+
+Use the local history/dataset/baseline walkthrough linked from the closeout and
+`/integrations` for authority/conflict review. Synthetic results are not real accuracy;
+existing guided-provider quotas, access and $0 controls remain unchanged.
+
 ## Sprint 12 local pipeline
 
 [Demo steps](sprint-based/sprint-12/README.md) cover import/history → as-of dataset → CPU baseline → model card and withdrawal. Synthetic results demonstrate the pipeline only; live connector and real predictive quality remain unverified.

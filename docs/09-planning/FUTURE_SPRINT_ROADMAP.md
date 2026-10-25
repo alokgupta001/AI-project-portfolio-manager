@@ -1,5 +1,7 @@
 # Complete future sprint roadmap
 
+26 October 2026. Current local sample: Sprint 12 at normal schema **0018**. [Reviewed closeout](../10-reference/SPRINT-12-LOCAL-CLOSEOUT.md) records application commit `f93a596`, both passing hosted CI runs and CodeRabbit's final review with no actionable comments. Live connectors/genuine model quality remain unverified and AT17 remains BLOCKED. Earlier dated checkpoints below retain their original scope; stop before Sprint 13.
+
 **Earlier checkpoint before Sprint 12 (25 October 2026; superseded):** Sprint 11/11.1 is complete for the
 local guided-sample scope; Sprint 12 local foundations are ready to start, not yet
 implemented. Broad AI accuracy **AT17 remains BLOCKED**. Normal schema is 0016;

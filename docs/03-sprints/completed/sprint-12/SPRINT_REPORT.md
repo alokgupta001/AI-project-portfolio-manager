@@ -1,16 +1,12 @@
 # Sprint 12 local implementation report
 
-25 October 2026. **LOCAL SAMPLE ACCEPTED. Full original live/model acceptance remains OPEN.** Starting HEAD `c192d69a49c55240876d22c641360d44522d1eba`; current HEAD
-and starting diff are captured privately in `artifacts/local/sprint12`. Changes are
-captured at the local acceptance checkpoint. The owner subsequently authorized a new
-`sprint-12-local-foundations` branch and PR; local validation below predates publication.
-No fresh hosted CI or independent acceptance is claimed.
-
-26 October follow-up: [PR 7](https://github.com/alokgupta001/AI-project-portfolio-manager/pull/7)
-is published; the original implementation passed both hosted Foundation runs.
-[Review corrections and fresh validation](../../../verification/sprint12/REVIEW_FIXES.md)
-track seven verified findings plus the scheduling-test nitpick. Normal schema is 0018
-with all established data preserved. Later fixes require their own validation evidence.
+26 October 2026. **LOCAL SAMPLE ACCEPTED; full original live/model acceptance OPEN.**
+Application commit `f93a596` is pushed to [PR 7](https://github.com/alokgupta001/AI-project-portfolio-manager/pull/7).
+Both hosted CI runs passed and CodeRabbit's final review generated no actionable
+comments. Nine findings and one test nitpick were corrected. Normal schema is 0018;
+[the closeout](../../../10-reference/SPRINT-12-LOCAL-CLOSEOUT.md) records the current
+status, preservation and remaining gates. This documentation refresh follows that
+reviewed application checkpoint; it does not establish new live/model acceptance.
 
 ## Scope and tracker
 
@@ -31,7 +27,7 @@ complete dated outcome labels. No public external dataset was downloaded.
 
 Twenty-one pre-existing verification artifact modifications were preserved. Frozen
 .env, applied 0001–0016 migrations, original source/prompts and provider policies
-are hashed. New schema is forward-only 0017. Legacy session-delegated connections
+are hashed. The forward migrations are 0017 plus the 0018 legacy CSV identity backfill. Legacy session-delegated connections
 remain compatible until explicitly enrolled; enrollment never silently expands scope.
 
 ## Delivered journey
@@ -62,19 +58,21 @@ comparison, real label quality and product deployment remain unresolved.
 ## Final disposition and preservation
 
 All three packages meet the bounded local definition of done. Full original external/model
-acceptance remains OPEN. The full gate passed 528 tests/one skipped, with the inherited
-Starlette warning; 14 offline and four DB cases verify the final tree, and five final
-browser journeys pass. Static/contract/inventory/source/audit checks pass. The test sets
+acceptance remains OPEN. The original implementation gate passed 528 tests/one skipped. The first correction
+passed a full local 535-case gate/one skipped with the inherited warning. Final affected
+checks passed 36 backend cases plus a strengthened case and six browser journeys.
+Full hosted CI subsequently passed the final application commit `f93a596`. Static/contract/inventory/source/audit checks pass. The test sets
 overlap and are not additive. See the test report for the exact sequence and repaired failures.
 
-Normal schema is 0017, services healthy; 77 original table counts/hashes, five objects,
+Normal schema is 0018, services verified healthy; 77 original table counts/hashes, five objects,
 26 frozen file hashes and eight original job/AI associations match. No inference occurred.
 All 21 starting artifact modifications are preserved byte-for-byte. The installed dependency
 inventory is deliberately regenerated; fresh browser regressions are saved under a new
 Sprint 12 folder. No original source/prompts or applied 0001–0016 migration was edited.
-After the normal upgrade, 0017 is frozen too. No database/usage reset, new AI scope,
-new human grant, PR, commit/push/merge, production deployment or Sprint 13 work.
+After the normal upgrades, 0017 and 0018 are frozen too. No database/usage reset, new AI scope,
+new human grant, merge, production deployment or Sprint 13 work. The implementation
+and review fixes are committed/pushed to PR 7 with explicit owner authorization.
 
-Publication follow-up: the owner authorized committing/pushing the Sprint 12 changes
-and opening a PR on `sprint-12-local-foundations`. The 21 unrelated artifact edits
-remain outside that commit. This does not authorize merge, deployment or Sprint 13.
+Publication is complete on `sprint-12-local-foundations`; all 21 unrelated artifact
+edits remain outside the commits. The owner authorized the current documentation
+reconciliation and push to the same PR. This does not authorize merge, deployment or Sprint 13.

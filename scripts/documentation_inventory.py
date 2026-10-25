@@ -6,11 +6,14 @@ import json
 import sys
 from pathlib import Path
 
+from sqlalchemy.dialects import postgresql
+
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "services/api"))
 
 from ppm_api.database import Base  # noqa: E402
 from ppm_api.main import create_app  # noqa: E402
+from ppm_api.schemas import SCHEMA_REVISION  # noqa: E402
 
 
 def cell(value: object) -> str:
@@ -87,9 +90,10 @@ def inventories() -> dict[str, str]:
     db = [
         "# Current source-derived database dictionary",
         "",
-        "Generated from SQLAlchemy `Base.metadata` without a database connection. Source chain "
-        "ends at `0012_ai_runtime`; the normal local applied head is independently recorded "
-        "in the [Sprint 10 handoff](../03-sprints/completed/sprint-10/HANDOFF.md). "
+        "Generated from SQLAlchemy `Base.metadata` without a database connection; "
+        "SQL types use the PostgreSQL dialect. Source chain "
+        f"ends at `{SCHEMA_REVISION}`; the normal applied head and preservation evidence "
+        "are independently recorded in the [latest handoff](../handoffs/LATEST.md). "
         "Run `python scripts/documentation_inventory.py --check` for drift. "
         "SQL-only RLS, triggers, privileges and security-definer functions require reading "
         "[the migrations](../../services/api/migrations/versions) and "
@@ -104,7 +108,10 @@ def inventories() -> dict[str, str]:
         "`source_chunks` is replaceable derived text; "
         "`source_evidence_links` references separately "
         "authorized released attachments. `durable_jobs` references exactly one integration, "
-        "document version or AI run according to job kind. AI run provenance/budgets, "
+        "document version, AI run or local ML run according to job kind. "
+        "Connector principals, source conflicts, immutable histories/datasets and CPU "
+        "run lineage follow the [local baseline contract](../contracts/ml.md). "
+        "AI run provenance/budgets, "
         "attempt accounting and rebuildable vectors follow the [AI contract](../contracts/ai.md). "
         "Originals remain private objects; logical deletion "
         "revokes reads, guarded purge removes bytes/text/links but retains tombstones. "
@@ -131,7 +138,7 @@ def inventories() -> dict[str, str]:
                     cell(x)
                     for x in (
                         f"`{col.name}`",
-                        f"`{col.type}`",
+                        f"`{col.type.compile(dialect=postgresql.dialect())}`",
                         col.nullable,
                         col.primary_key,
                         ", ".join(sorted(fk.target_fullname for fk in col.foreign_keys)) or "—",

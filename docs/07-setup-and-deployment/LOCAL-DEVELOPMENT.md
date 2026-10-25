@@ -1,8 +1,12 @@
 # Local development and foundation checks
 
-Current source checkpoint: Sprint 10 implementation; normal rollout is recorded in the handoff, migration `0012_ai_runtime`; earlier Sprint 8.1 parent acceptance remains open. Use [document processing setup/recovery](DOCUMENT-PROCESSING.md) for the mandatory scanner override, runtime locks and exact source limits. See the [pilot report](../03-sprints/completed/sprint-8.1/SPRINT_REPORT.md) and [tester guide](../03-sprints/completed/sprint-8.1/SPRINT_8_1_USER_GUIDE.md). Identity, shell, delivery, capacity, assessments, command center and durable integrations are implemented within their documented bounds. Workspace overview is at `/`, component gallery at `/design-system` and technical diagnostics at `/system`. Use [IDENTITY-DEVELOPMENT](IDENTITY-DEVELOPMENT.md) for first-admin activation and secure localhost access, and [current verification](../04-testing/SPRINT_VERIFICATION_REPORT.md) for tested behavior and remaining blockers. Production remains disabled.
+26 October 2026. Current local sample: Sprint 12 at normal schema **0018**. [Reviewed closeout](../10-reference/SPRINT-12-LOCAL-CLOSEOUT.md) records application commit `f93a596`, both passing hosted CI runs and CodeRabbit's final review with no actionable comments. Live connectors/genuine model quality remain unverified and AT17 remains BLOCKED. Earlier dated checkpoints below retain their original scope; stop before Sprint 13. Existing installation setup retains the
+approved Compose overlays, private environment, database and object volumes.
+Use [the latest handoff](../handoffs/LATEST.md) for exact restart commands and
+[document processing](DOCUMENT-PROCESSING.md) for scanner/source limits.
 
-This is a local development stack with identity and organization authorization. Assessment evidence supports bounded UTF-8 text with manual quarantine release; the separate document library now supports bounded PDF/DOCX/TXT/CSV/XLSX/image intake, English OCR and keyword citations. Semantic AI remains planned. Jira/GitHub live sync requires operator credentials and remains unverified. The API rejects `PPM_APP_ENV=production`. Compose binds published ports to `127.0.0.1`; production acceptance is not established.
+This is a local development stack with identity and organization authorization. Assessment evidence supports bounded UTF-8 text with manual quarantine release; the separate document library now supports bounded PDF/DOCX/TXT/CSV/XLSX/image intake, English OCR and keyword citations. Guided AI and CPU baseline controls are implemented locally; unrestricted model
+quality and forecast serving remain unverified/planned. Jira/GitHub live sync requires operator credentials and remains unverified. The API rejects `PPM_APP_ENV=production`. Compose binds published ports to `127.0.0.1`; production acceptance is not established.
 
 ## Start with Docker
 
