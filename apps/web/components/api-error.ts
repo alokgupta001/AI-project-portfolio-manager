@@ -9,6 +9,7 @@ export function apiError(payload: unknown, status: number): string {
     403: "You do not have permission for this action in the selected organization.",
     404: "The requested record is not available.",
     409: "This operation conflicts with the current state. Reload and try again.",
+    413: "This import exceeds the size limit. Split it into smaller batches.",
     422: "Check the highlighted fields and try again.",
     429: "Too many attempts. Wait before trying again.",
   };

@@ -1,6 +1,8 @@
 # AI-PPM documentation
 
-**Current disposition — 25 October 2026:** Sprint 11/11.1 is complete for the
+**Sprint 12 current implementation:** [local report](03-sprints/completed/sprint-12/SPRINT_REPORT.md) and [actual checks](04-testing/sprint-based/sprint-12/TESTING_REPORT.md) supersede earlier unstarted statements below. Local sample acceptance is complete at schema 0017 with healthy local services. Live source/model quality and AT17 remain blocked; stop before 13.
+
+**Earlier checkpoint before Sprint 12 (25 October 2026; superseded):** Sprint 11/11.1 is complete for the
 local guided-sample scope; Sprint 12 local foundations are ready to start, not yet
 implemented. Broad AI accuracy **AT17 remains BLOCKED**. Normal schema is 0016;
 Gemini/Puter/Groq guided access covers the two approved projects with shared

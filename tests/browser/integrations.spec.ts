@@ -199,6 +199,10 @@ test("CSV preview, durable sync, live progress, repeat effects and revoked scope
   await page.getByLabel("Connection name", { exact: true }).focus();
   await page.keyboard.press("Tab");
   await expect(
+    page.getByLabel("Source namespace", { exact: true }),
+  ).toBeFocused();
+  await page.keyboard.press("Tab");
+  await expect(
     page.getByRole("searchbox", { name: "Find project", exact: true }),
   ).toBeFocused();
   await page.keyboard.press("Tab");

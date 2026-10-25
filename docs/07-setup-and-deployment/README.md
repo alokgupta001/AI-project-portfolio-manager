@@ -1,5 +1,9 @@
 # Setup And Deployment
 
+## Sprint 12 local runtime
+
+The existing Compose API/worker/beat stack runs the baseline lab; pandas/scikit-learn are pinned in the normal lockfile. No Ollama/new service is required. Follow [user steps](../03-sprints/completed/sprint-12/USER_GUIDE.md) after the verified forward migration. Production concerns stay in [future deployment points](../limitations/FUTURE_DEPLOYMENT_POINTS.md).
+
 [Gemini free-tier development ($0)](GEMINI-FREE-TIER.md) covers private key setup,
 operator-confirmed no-billing projects, one-time confirmation, quotas and fallback.
 

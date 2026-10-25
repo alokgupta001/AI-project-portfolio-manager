@@ -52,7 +52,11 @@ async def sync(policy: ModelPolicy) -> None:
     try:
         async with engine.begin() as conn:
             revision = await conn.scalar(sa.text("SELECT version_num FROM alembic_version"))
-            if revision not in {"0015_agent_task_runtime", "0016_guided_project_access"}:
+            if revision not in {
+                "0015_agent_task_runtime",
+                "0016_guided_project_access",
+                "0017_local_ml_foundations",
+            }:
                 raise ValueError
             for row in scope_rows(policy):
                 values = {k: v for k, v in row.items() if k not in ("failure_count", "revision")}

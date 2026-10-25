@@ -1,5 +1,9 @@
 # AI runtime, sources and durable jobs
 
+## Sprint 12 local foundations
+
+[Source authority, outcome history and baseline trace](LOCAL_BASELINES.md) explains the implemented Connector principal, current conflict diff, immutable manifests and offline CPU evaluation. Broad AT17 stays BLOCKED and supplies no training labels.
+
 Sprint 11 implementation: [trace specialist evidence to human review](SPECIALISTS_REVIEW.md), [contract](../../contracts/agents.md) and [tests](../../04-testing/sprint-based/sprint-11/TESTING_REPORT.md). One bounded completion batches nine read-only agents; shared metrics/scoring/jobs/ledger remain authoritative. Original scores, suggestions and reviewer decisions are distinct. Real semantic quality remains UNVERIFIED/BLOCKED.
 
 ## Historical checkpoints before Sprint 11

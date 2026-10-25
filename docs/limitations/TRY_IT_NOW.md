@@ -1,5 +1,9 @@
 # Try the limited guided review
 
+## Sprint 12 local lab
+
+Open `/ml` as Admin in the existing synthetic demo organization. Load a synthetic numeric example, import an immutable history version, build an as-of dataset, run/repeat the CPU baseline and inspect/download its model card. [Full user steps](../03-sprints/completed/sprint-12/USER_GUIDE.md). `/integrations` now owns connector approval, rotation/revocation and source conflict review. No new AI keys, Ollama or services are needed. Real history without genuine outcomes yields insufficient_data; synthetic metrics are not real accuracy.
+
 **Current purpose: local sample use.** The 50/day provider ceilings are active.
 Production preparation is recorded separately in
 [Future deployment points](FUTURE_DEPLOYMENT_POINTS.md) for later; continue using

@@ -1,6 +1,7 @@
 # Sprint 12 local implementation plan
 
-25 October 2026. **READY TO START; NOT IMPLEMENTED.** Supplements the original
+25 October 2026. **Plan retained; local sample implemented and accepted; full external/model gates open.**
+[Current report](../../03-sprints/completed/sprint-12/SPRINT_REPORT.md). Supplements the original
 [Sprint 12 packages and acceptance](../FUTURE_SPRINT_ROADMAP.md#sprint-12--connector-reliability-and-historical-model-foundations)
 under the [current local plan](../LOCAL_SAMPLE_PLAN_UPDATE.md).
 

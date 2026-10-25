@@ -1,5 +1,9 @@
 # Current demo guide
 
+## Sprint 12 local pipeline
+
+[Demo steps](sprint-based/sprint-12/README.md) cover import/history → as-of dataset → CPU baseline → model card and withdrawal. Synthetic results demonstrate the pipeline only; live connector and real predictive quality remain unverified.
+
 Sprint 11 executable synthetic journey: [isolated specialist review demo](sprint-based/sprint-11/README.md). It persists mock semantic scores/review history, demonstrates discrepancies and disabled-provider fallback, and does not call a real provider. [Actual results](../04-testing/sprint-based/sprint-11/TESTING_REPORT.md). No quality/production claim follows from mock success.
 
 ## Historical checkpoints before Sprint 11

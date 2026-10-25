@@ -1,0 +1,1 @@
+{"status":"ready","dependencies":[{"name":"database","status":"ready"},{"name":"redis","status":"ready"},{"name":"storage","status":"ready"}]}

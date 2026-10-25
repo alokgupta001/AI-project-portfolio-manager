@@ -1,5 +1,9 @@
 # Identity tenant and permission contract
 
+## Sprint 12 local permissions
+
+[History/baselines and connectors](ml.md) add Admin-only research and connector-management routes. Connector workers have a narrow project-scoped Connector principal, never a new human Admin membership. ML jobs retain current Admin/session checks. Withdrawal and tenant/project access are checked again at artifact delivery. Existing four-user business/guided grants and provider data scopes do not expand.
+
 Sprint 11 [authority](agents.md): Admin starts/cancels analysis; ordinary reviews require an independent authorized project editor; assessment-linked reviews require the named independent reviewer plus project scope. Private-evidence access is rechecked. Agents have no approval/mutation privilege.
 
 Sprint 09 adds [source authorization](documents.md): project read grants bound library,

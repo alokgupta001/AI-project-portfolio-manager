@@ -1,0 +1,18 @@
+[
+  {
+    "exit": 0,
+    "command": "npm run contracts:check"
+  },
+  {
+    "exit": 0,
+    "command": "npm run typecheck"
+  },
+  {
+    "exit": 0,
+    "command": "npm run lint"
+  },
+  {
+    "exit": 0,
+    "command": "npm run format:check"
+  }
+]

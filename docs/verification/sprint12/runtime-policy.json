@@ -1,0 +1,1 @@
+{"guided": true, "cloud": true, "ollama": false, "spend_limit": "0", "providers": ["gemini", "groq", "puter"], "enabled_profiles": 3, "shared_daily_limit": 50, "per_minute": 1, "concurrency": 1, "inference_requests": 0}

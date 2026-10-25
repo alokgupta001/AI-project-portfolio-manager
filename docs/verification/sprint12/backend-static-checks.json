@@ -1,0 +1,22 @@
+[
+  {
+    "exit": 0,
+    "command": "ruff check services scripts tests"
+  },
+  {
+    "exit": 0,
+    "command": "ruff format --check services scripts tests"
+  },
+  {
+    "exit": 0,
+    "command": "mypy services/api/ppm_api services/worker/ppm_worker"
+  },
+  {
+    "exit": 0,
+    "command": "python scripts/check_sources.py"
+  },
+  {
+    "exit": 0,
+    "command": "python scripts/documentation_inventory.py --check"
+  }
+]

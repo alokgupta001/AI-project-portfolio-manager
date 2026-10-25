@@ -1,5 +1,9 @@
 # Durable jobs and ingestion — jobs-v1
 
+## Sprint 12 extension
+
+[Connector authority and conflict contract](ml.md) adds explicitly approved session-independent principals, scheduled polling, generation fencing, canonical identity and version-checked conflict review. Legacy connections retain their session gate until enrolled. Existing limits, source timestamps, cursor replay and durable jobs are reused.
+
 Sprint 08 adds `/integrations`, API `/api/v1/integrations`, Celery `pipeline.dispatch`
 and `pipeline.run`, and migration `0007_durable_jobs`. PostgreSQL is authoritative;
 Redis/Celery is replaceable dispatch transport. No AI, notification delivery, OCR,

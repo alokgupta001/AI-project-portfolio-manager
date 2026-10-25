@@ -15,7 +15,7 @@ complete by a reduced demo. See [Sprint 11/11.1 closeout](../10-reference/SPRINT
 | Admin-only analysis | Explicit scoped guided grants for four named users, without changing business roles |
 | Synthetic demo only | Synthetic demo plus approved Customer Onboarding Portal bounded observations |
 | Ten requests per provider/day | Fifty per rolling 24 hours, shared; same pacing, concurrency, $0 policy and retained usage history |
-| Stop before Sprint 12 | Sprint 11/11.1 local sample complete; Sprint 12 local foundations ready to start, not yet implemented |
+| Stop before Sprint 12 | Superseded by explicit Sprint 12 authorization; local sample accepted at 0017; full external/model gates open; stop before 13 |
 
 Gemini handles financial/schedule/resource; Puter handles risk/governance/agile_coach;
 Groq handles sentiment/team support/pmo/executive. One guided role/run uses at most
@@ -34,6 +34,8 @@ Current details: [scope](../limitations/API_DATA_SCOPE.md), [access](../limitati
    and evaluation evidence. A pipeline demo cannot promote an unqualified model.
 4. Later sprints retain the [original roadmap](FUTURE_SPRINT_ROADMAP.md). Deployment
    work is tracked separately in [future deployment points](../limitations/FUTURE_DEPLOYMENT_POINTS.md).
+
+Current implementation: [Sprint 12 report](../03-sprints/completed/sprint-12/SPRINT_REPORT.md). The dated planning directions above are retained; local sample acceptance is complete with the retained live/model gates open.
 
 Sprint 12 can depend on verified deterministic/source/job contracts. It must not
 depend on an unqualified specialist or use its output as true outcome labels.

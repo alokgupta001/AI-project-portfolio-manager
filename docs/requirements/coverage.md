@@ -1,6 +1,8 @@
 # Requirement coverage matrix
 
-**Current disposition — 25 October 2026:** Sprint 11/11.1 is complete for the
+**Sprint 12 current implementation:** [local report](../03-sprints/completed/sprint-12/SPRINT_REPORT.md) and [actual checks](../04-testing/sprint-based/sprint-12/TESTING_REPORT.md) supersede earlier unstarted statements below. Local sample acceptance is complete at schema 0017 with healthy local services. Live source/model quality and AT17 remain blocked; stop before 13.
+
+**Earlier checkpoint before Sprint 12 (25 October 2026; superseded):** Sprint 11/11.1 is complete for the
 local guided-sample scope; Sprint 12 local foundations are ready to start, not yet
 implemented. Broad AI accuracy **AT17 remains BLOCKED**. Normal schema is 0016;
 Gemini/Puter/Groq guided access covers the two approved projects with shared
@@ -107,10 +109,10 @@ Source keys resolve to exact headings in [source index](../source/INDEX.md). Eac
 | F-058 | F | W4/Portfolio Failure Prediction | Delivery confidence | 13 | 12 | Meaning/horizon distinct from risk score and source uncertainty shown | Planned | — |
 | F-059 | F | S5M | High Medium Low risk classifier | 13 | 12 | Held-out classification results and threshold policy recorded | Planned | — |
 | F-060 | F | S5M | NLP sentiment pipeline | 12 | 05,08,11 | Candidate evaluated on labeled text, not treated as workforce truth | Planned | — |
-| F-061 | F | S5D/PROMISE | PROMISE dataset suitability | 12 | 08,11 | License/labels/schema assessed; reject unsuitable task mapping | Planned | — |
-| F-062 | F | S5D/JIRA | Jira dataset suitability | 12 | 08,11 | Lineage/permission and temporal splits recorded | Planned | — |
+| F-061 | F | S5D/PROMISE | PROMISE dataset suitability | 12 | 08,11 | License/labels/schema assessed; reject unsuitable task mapping | PARTIALLY IMPLEMENTED: unreviewed external real data rejected; PROMISE-specific license/target review unavailable | [Sprint 12 checks](../04-testing/sprint-based/sprint-12/TESTING_REPORT.md) |
+| F-062 | F | S5D/JIRA | Jira dataset suitability | 12 | 08,11 | Lineage/permission and temporal splits recorded | PARTIALLY IMPLEMENTED: provenance/temporal contract; live Jira dataset/labels unavailable | [Sprint 12 checks](../04-testing/sprint-based/sprint-12/TESTING_REPORT.md) |
 | F-063 | F | S5D/Git Commit Logs | Authorized public repository data | 12 | 08,11 | Source/license/rate limits and as-of feature mapping recorded | Planned | — |
-| F-064 | F | S5D/Synthetic Project Data | Synthetic dataset generator | 12 | 08,11 | Seeded schema-valid fixtures isolated from real accuracy claims | Planned | — |
+| F-064 | F | S5D/Synthetic Project Data | Synthetic dataset generator | 12 | 08,11 | Seeded schema-valid fixtures isolated from real accuracy claims | IMPLEMENTED AND VERIFIED LOCALLY: isolated seed-12 numeric fixture; no real accuracy claim | [Sprint 12 checks](../04-testing/sprint-based/sprint-12/TESTING_REPORT.md) |
 
 ## Documents copilot and transformation
 
@@ -185,7 +187,7 @@ Source keys resolve to exact headings in [source index](../source/INDEX.md). Eac
 | N-012 | N | Master prompt | Versioned migrations and contracts | 01 | 00 | Clean/prior-state migration and API client drift checks exist | Foundation accepted; ongoing | [Sprint 01 checks](../04-testing/sprint-based/sprint-01/TESTING_REPORT.md); initial base/head lifecycle and contract drift pass; later revisions need new checks |
 | N-013 | N | Master prompt | Accessibility target | 03 | 02 | Core keyboard/screen-reader/contrast checks, then release regression | Core checks accepted; release-wide verification ongoing | [Sprint 03 checks](../04-testing/sprint-based/sprint-03/TESTING_REPORT.md); full assistive-technology certification not claimed |
 | N-014 | N | Master prompt | AI and retrieval access isolation | 09,10 | 09 | Adversarial source text and changed-access fixtures do not leak data | Accepted locally: deterministic/runtime/browser gates; real model acceptance not claimed | [Sprint 10 checks](../04-testing/sprint-based/sprint-10/TESTING_REPORT.md); [ADR 016](../architecture/adr/016-budgeted-ai-runtime.md) |
-| N-015 | N | Master prompt | Model validity and lineage | 12 | 08,11 | Temporal/entity split, model card, baseline and license evidence recorded | Planned | — |
+| N-015 | N | Master prompt | Model validity and lineage | 12 | 08,11 | Temporal/entity split, model card, baseline and license evidence recorded | PARTIALLY IMPLEMENTED: local manifests/splits/model cards; genuine outcome quality unverified | [Sprint 12 checks](../04-testing/sprint-based/sprint-12/TESTING_REPORT.md) |
 | N-016 | N | Master prompt | Audit retention and revocation | 22 | 02,21 | Revocation covers download/stream/cache/jobs; retention configured | Planned | — |
 | N-017 | N | Master prompt | Backup restore and deployment recovery | 09,23 | 22 | Restore/rollback exercise records measured results and remaining risks | Partial: pilot scratch restore verified; production/all-surface recovery pending 23 | [Recovery checks](../verification/PPM-09-003.md) |
 | N-018 | N | User request | Sprint report and follow-up document | 01 | 00 | Every sprint/sub-sprint updates report, handoff, coverage and evidence | Met through Sprint 02; ongoing | [Report](../03-sprints/completed/sprint-02/SPRINT_REPORT.md), [handoff](../03-sprints/completed/sprint-02/HANDOFF.md) |
@@ -197,7 +199,7 @@ Source keys resolve to exact headings in [source index](../source/INDEX.md). Eac
 | E-006 | E | Prompt pack enhancement | Scenario comparison | 17 | 13,15 | Baseline and scenario differences include assumptions | Planned | — |
 | E-007 | E | Prompt pack enhancement | Data-quality console | 08 | 07 | Import errors and rejected rows can be inspected/retried | Accepted locally: row errors, partial recovery and new corrected sync | [Sprint 08 checks](../04-testing/sprint-based/sprint-08/TESTING_REPORT.md); [jobs-v1](../contracts/jobs-integrations.md) |
 | E-008 | E | Prompt pack enhancement | AI usage console | 10 | 08,09 | Tenant usage/errors/budgets visible only to Admin | Accepted locally: deterministic/runtime/browser gates; real model acceptance not claimed | [Sprint 10 checks](../04-testing/sprint-based/sprint-10/TESTING_REPORT.md); [ADR 016](../architecture/adr/016-budgeted-ai-runtime.md) |
-| E-009 | E | Ingestion support | CSV Jira GitHub connectors | 08 | 04,07 | Preview/incremental sync/replay limits tested; live credentials explicit | Accepted locally: CSV/Jira issue+sprint/GitHub issue+PR fixtures; live auth/sync unverified | [Sprint 08 checks](../04-testing/sprint-based/sprint-08/TESTING_REPORT.md); [jobs-v1](../contracts/jobs-integrations.md) |
+| E-009 | E | Ingestion support | CSV Jira GitHub connectors | 08 | 04,07 | Preview/incremental sync/replay limits tested; live credentials explicit | PARTIALLY IMPLEMENTED: local authority/dedup/conflict/recovery controls; live source equality BLOCKED | [Sprint 12 checks](../04-testing/sprint-based/sprint-12/TESTING_REPORT.md) |
 
 ## Technology and source passages without product acceptance claims
 
@@ -210,8 +212,8 @@ Source keys resolve to exact headings in [source index](../source/INDEX.md). Eac
 | T-005 | T | W8; WT | Neo4j | 18 | 04,09,11 | Derived graph rebuild and scope tests pass | Planned | ADR 003 |
 | T-006 | T | WT; ST | LangChain; LlamaIndex alternative | 10 | 08,09 | One orchestration/tool contract, no duplicated framework stacks | Accepted local typed-native alternative; ADR 016 (no duplicate frameworks) | [Sprint 10 checks](../04-testing/sprint-based/sprint-10/TESTING_REPORT.md); [ADR 016](../architecture/adr/016-budgeted-ai-runtime.md) |
 | T-007 | T | WT; ST | OpenAI Gemini Ollama HuggingFace options | 10 | 08,09 | One configured adapter with supported model and explicit disabled mode | Adapter/disabled path implemented; real configured provider BLOCKED | [Sprint 10 checks](../04-testing/sprint-based/sprint-10/TESTING_REPORT.md); [ADR 016](../architecture/adr/016-budgeted-ai-runtime.md) |
-| T-008 | T | W4; WT; S5M | scikit-learn pandas XGBoost Random Forest MLflow | 12 | 08,11 | Reproducible baseline training/evaluation and lineage | Planned | ADR 005 |
-| T-009 | T | W4; WT; S5M | LightGBM LSTM time-series PyTorch DistilBERT candidates | 12 | 08,11 | Suitability assessed; experimental candidates not promised production | Planned | ADR 005 |
+| T-008 | T | W4; WT; S5M | scikit-learn pandas XGBoost Random Forest MLflow | 12 | 08,11 | Reproducible baseline training/evaluation and lineage | PARTIALLY IMPLEMENTED: pandas/scikit-learn constant/linear/RF; local JSON tracking; native MLflow/XGBoost deferred | [Sprint 12 checks](../04-testing/sprint-based/sprint-12/TESTING_REPORT.md) |
+| T-009 | T | W4; WT; S5M | LightGBM LSTM time-series PyTorch DistilBERT candidates | 12 | 08,11 | Suitability assessed; experimental candidates not promised production | DEFERRED: no suitable genuine labels/resources for larger/text candidates | [Sprint 12 checks](../04-testing/sprint-based/sprint-12/TESTING_REPORT.md) |
 | T-010 | T | WT; ST | Docker AWS ECS/RDS/S3 Terraform GitHub Actions | 23 | 01,22 | Reusable images/IaC/CI with explicit deployment evidence | Partial: local Compose and CI definition | ADR 007; [checks](../04-testing/sprint-based/sprint-01/TESTING_REPORT.md); hosted CI/cloud/IaC not executed |
 | T-011 | T | WT | Kubernetes deployment profile | 23 | 22 | Same application images/config; validation status explicit | Planned | ADR 006 |
 | T-012 | T | WT; ST | Google Cloud/GCS EC2 Kafka alternatives | 00 | None | Alternatives explicitly deferred with rationale, not unimplemented hidden requirements | Resolved in plan | ADRs 004,006 |
@@ -279,3 +281,13 @@ broader quality/release acceptance rather than missing provider authorization.
 Normal 0012 upgrade preserved 66 established tables, five original objects,
 .env, frozen sources/prompts and eleven predecessor migration files. No required
 capability was relabeled optional; overall acceptance stays OPEN. Stop before 11.
+
+## Sprint 12 package trace
+
+| Package | Implemented owning slice | Local evidence | Retained external gate |
+| --- | --- | --- | --- |
+| PPM-12-001 | Existing ingestion/jobs/UI plus connectors authority and conflict review | [Receipt](../verification/PPM-12-001.md) | Approved live Jira/GitHub source comparison |
+| PPM-12-002 | Versioned manual/fixture numeric history and as-of manifests | [Receipt](../verification/PPM-12-002.md) | Independently verified genuine labels and external dataset suitability |
+| PPM-12-003 | CPU baselines, artifacts, comparison/model cards | [Receipt](../verification/PPM-12-003.md) | Real quality, native MLflow import, justified larger candidates, Sprint 13 promotion |
+
+AT17 remains BLOCKED. Local pipeline acceptance never substitutes for model quality.

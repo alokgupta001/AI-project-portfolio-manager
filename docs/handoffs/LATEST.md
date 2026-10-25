@@ -1,6 +1,8 @@
 # Latest technical handoff
 
-**Current disposition — 25 October 2026:** Sprint 11/11.1 is complete for the
+**25 October 2026 — Sprint 12 local sample complete:** normal schema is **0017**, local services healthy. Connector authority/conflict review, versioned as-of datasets and reproducible CPU baseline/model-card UI/API are accepted locally. **528 backend tests passed, one skipped**; migration lifecycle/drift, five final browser journeys and static/contracts/audits pass. All 77 established table hashes/counts, 26 frozen file hashes and five original objects are preserved. Read [the Sprint 12 handoff](../03-sprints/completed/sprint-12/HANDOFF.md) and [actual checks](../04-testing/sprint-based/sprint-12/TESTING_REPORT.md). Live connectors/genuine model quality remain unavailable; AT17 remains BLOCKED. Gemini/Puter/Groq, 50/day shared, one/minute, $0, scopes and four-user access remain unchanged. Follow-up authorization: publish Sprint 12 on the new `sprint-12-local-foundations` branch and open a PR. No merge or production deployment is authorized. Stop before Sprint 13.
+
+**Earlier checkpoint before Sprint 12 (25 October 2026; superseded):** Sprint 11/11.1 is complete for the
 local guided-sample scope; Sprint 12 local foundations are ready to start, not yet
 implemented. Broad AI accuracy **AT17 remains BLOCKED**. Normal schema is 0016;
 Gemini/Puter/Groq guided access covers the two approved projects with shared

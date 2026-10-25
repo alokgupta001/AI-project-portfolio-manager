@@ -2234,6 +2234,91 @@
         "title": "AuditsView",
         "type": "object"
       },
+      "AuthorityInput": {
+        "additionalProperties": false,
+        "properties": {
+          "active": {
+            "default": true,
+            "title": "Active",
+            "type": "boolean"
+          },
+          "interval_minutes": {
+            "default": 0,
+            "maximum": 10080.0,
+            "minimum": 0.0,
+            "title": "Interval Minutes",
+            "type": "integer"
+          },
+          "secret_ref": {
+            "default": "",
+            "maxLength": 80,
+            "pattern": "^(PPM_CONNECTOR_[A-Z0-9_]+)?$",
+            "title": "Secret Ref",
+            "type": "string"
+          },
+          "webhook_secret_ref": {
+            "default": "",
+            "maxLength": 80,
+            "pattern": "^(PPM_CONNECTOR_[A-Z0-9_]+)?$",
+            "title": "Webhook Secret Ref",
+            "type": "string"
+          }
+        },
+        "title": "AuthorityInput",
+        "type": "object"
+      },
+      "AuthorityView": {
+        "properties": {
+          "active": {
+            "title": "Active",
+            "type": "boolean"
+          },
+          "generation": {
+            "title": "Generation",
+            "type": "integer"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "integration_id": {
+            "format": "uuid",
+            "title": "Integration Id",
+            "type": "string"
+          },
+          "interval_minutes": {
+            "title": "Interval Minutes",
+            "type": "integer"
+          },
+          "next_due": {
+            "format": "date-time",
+            "title": "Next Due",
+            "type": "string"
+          },
+          "revision": {
+            "title": "Revision",
+            "type": "integer"
+          },
+          "updated_at": {
+            "format": "date-time",
+            "title": "Updated At",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "integration_id",
+          "active",
+          "generation",
+          "revision",
+          "interval_minutes",
+          "next_due",
+          "updated_at"
+        ],
+        "title": "AuthorityView",
+        "type": "object"
+      },
       "AvailabilityInput": {
         "additionalProperties": false,
         "properties": {
@@ -3767,6 +3852,78 @@
         "title": "CompleteChallenge",
         "type": "object"
       },
+      "ConflictView": {
+        "properties": {
+          "candidate": {
+            "additionalProperties": true,
+            "title": "Candidate",
+            "type": "object"
+          },
+          "fingerprint": {
+            "title": "Fingerprint",
+            "type": "string"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "local": {
+            "additionalProperties": true,
+            "title": "Local",
+            "type": "object"
+          },
+          "project_id": {
+            "format": "uuid",
+            "title": "Project Id",
+            "type": "string"
+          },
+          "revision": {
+            "title": "Revision",
+            "type": "integer"
+          },
+          "source_id": {
+            "format": "uuid",
+            "title": "Source Id",
+            "type": "string"
+          },
+          "source_observed_at": {
+            "format": "date-time",
+            "title": "Source Observed At",
+            "type": "string"
+          },
+          "source_updated_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Source Updated At"
+          },
+          "status": {
+            "title": "Status",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "source_id",
+          "project_id",
+          "revision",
+          "status",
+          "candidate",
+          "local",
+          "source_updated_at",
+          "source_observed_at",
+          "fingerprint"
+        ],
+        "title": "ConflictView",
+        "type": "object"
+      },
       "ConnectorConfig": {
         "additionalProperties": false,
         "properties": {
@@ -3848,6 +4005,14 @@
             "title": "Secret Ref",
             "type": "string"
           },
+          "source_namespace": {
+            "default": "manual",
+            "maxLength": 80,
+            "minLength": 1,
+            "pattern": "^[A-Za-z0-9_.-]+$",
+            "title": "Source Namespace",
+            "type": "string"
+          },
           "status_map": {
             "additionalProperties": {
               "type": "string"
@@ -3917,6 +4082,101 @@
           "csrf_token"
         ],
         "title": "CsrfResponse",
+        "type": "object"
+      },
+      "DatasetInput": {
+        "additionalProperties": false,
+        "properties": {
+          "cutoff": {
+            "format": "date-time",
+            "title": "Cutoff",
+            "type": "string"
+          },
+          "history_id": {
+            "format": "uuid",
+            "title": "History Id",
+            "type": "string"
+          },
+          "horizon_days": {
+            "default": 30,
+            "maximum": 366.0,
+            "minimum": 1.0,
+            "title": "Horizon Days",
+            "type": "integer"
+          },
+          "target": {
+            "enum": [
+              "delay",
+              "overrun",
+              "risk",
+              "failure",
+              "sentiment"
+            ],
+            "title": "Target",
+            "type": "string"
+          },
+          "train_end": {
+            "format": "date-time",
+            "title": "Train End",
+            "type": "string"
+          },
+          "validation_end": {
+            "format": "date-time",
+            "title": "Validation End",
+            "type": "string"
+          }
+        },
+        "required": [
+          "history_id",
+          "target",
+          "train_end",
+          "validation_end",
+          "cutoff"
+        ],
+        "title": "DatasetInput",
+        "type": "object"
+      },
+      "DatasetView": {
+        "properties": {
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "digest": {
+            "title": "Digest",
+            "type": "string"
+          },
+          "history_id": {
+            "format": "uuid",
+            "title": "History Id",
+            "type": "string"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "manifest": {
+            "additionalProperties": true,
+            "title": "Manifest",
+            "type": "object"
+          },
+          "project_id": {
+            "format": "uuid",
+            "title": "Project Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "project_id",
+          "history_id",
+          "digest",
+          "manifest",
+          "created_at"
+        ],
+        "title": "DatasetView",
         "type": "object"
       },
       "DepartmentInput": {
@@ -5039,6 +5299,91 @@
         "title": "Fact",
         "type": "object"
       },
+      "Features": {
+        "additionalProperties": false,
+        "properties": {
+          "allocation_percent": {
+            "anyOf": [
+              {
+                "maximum": 1000.0,
+                "minimum": 0.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Allocation Percent"
+          },
+          "bugs": {
+            "anyOf": [
+              {
+                "maximum": 100000.0,
+                "minimum": 0.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Bugs"
+          },
+          "dependencies": {
+            "anyOf": [
+              {
+                "maximum": 100000.0,
+                "minimum": 0.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Dependencies"
+          },
+          "scope_change": {
+            "anyOf": [
+              {
+                "maximum": 100000.0,
+                "minimum": -100000.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Scope Change"
+          },
+          "spend_ratio": {
+            "anyOf": [
+              {
+                "maximum": 10000.0,
+                "minimum": 0.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Spend Ratio"
+          },
+          "velocity": {
+            "anyOf": [
+              {
+                "maximum": 100000.0,
+                "minimum": 0.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Velocity"
+          }
+        },
+        "title": "Features",
+        "type": "object"
+      },
       "FindingView": {
         "additionalProperties": false,
         "properties": {
@@ -5221,8 +5566,8 @@
             "type": "string"
           },
           "schema_revision": {
-            "const": "0016_guided_project_access",
-            "default": "0016_guided_project_access",
+            "const": "0017_local_ml_foundations",
+            "default": "0017_local_ml_foundations",
             "title": "Schema Revision",
             "type": "string"
           }
@@ -5656,6 +6001,89 @@
         "title": "HealthResponse",
         "type": "object"
       },
+      "HistoryInput": {
+        "additionalProperties": false,
+        "properties": {
+          "authorized": {
+            "title": "Authorized",
+            "type": "boolean"
+          },
+          "label_declaration": {
+            "enum": [
+              "observed-outcomes",
+              "synthetic-fixture",
+              "unlabeled"
+            ],
+            "title": "Label Declaration",
+            "type": "string"
+          },
+          "license": {
+            "enum": [
+              "organization-authorized",
+              "CC0-1.0"
+            ],
+            "title": "License",
+            "type": "string"
+          },
+          "lineage": {
+            "enum": [
+              "synthetic",
+              "real"
+            ],
+            "title": "Lineage",
+            "type": "string"
+          },
+          "name": {
+            "maxLength": 160,
+            "minLength": 1,
+            "title": "Name",
+            "type": "string"
+          },
+          "origin": {
+            "maxLength": 240,
+            "minLength": 3,
+            "title": "Origin",
+            "type": "string"
+          },
+          "permitted_use": {
+            "const": "local-research",
+            "default": "local-research",
+            "title": "Permitted Use",
+            "type": "string"
+          },
+          "privacy": {
+            "const": "aggregate-numeric-no-personal-data",
+            "default": "aggregate-numeric-no-personal-data",
+            "title": "Privacy",
+            "type": "string"
+          },
+          "project_id": {
+            "format": "uuid",
+            "title": "Project Id",
+            "type": "string"
+          },
+          "records": {
+            "items": {
+              "$ref": "#/components/schemas/Observation"
+            },
+            "maxItems": 500,
+            "title": "Records",
+            "type": "array"
+          }
+        },
+        "required": [
+          "project_id",
+          "name",
+          "origin",
+          "lineage",
+          "license",
+          "authorized",
+          "label_declaration",
+          "records"
+        ],
+        "title": "HistoryInput",
+        "type": "object"
+      },
       "HistoryView": {
         "properties": {
           "actor_id": {
@@ -5884,9 +6312,28 @@
             "type": "string"
           },
           "integration_id": {
-            "format": "uuid",
-            "title": "Integration Id",
-            "type": "string"
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Integration Id"
+          },
+          "ml_run_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Ml Run Id"
           },
           "position": {
             "title": "Position",
@@ -5950,6 +6397,58 @@
           "label"
         ],
         "title": "Level",
+        "type": "object"
+      },
+      "MLHistoryView": {
+        "properties": {
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "digest": {
+            "title": "Digest",
+            "type": "string"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "manifest": {
+            "additionalProperties": true,
+            "title": "Manifest",
+            "type": "object"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "project_id": {
+            "format": "uuid",
+            "title": "Project Id",
+            "type": "string"
+          },
+          "version": {
+            "title": "Version",
+            "type": "integer"
+          },
+          "withdrawn": {
+            "title": "Withdrawn",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "id",
+          "project_id",
+          "name",
+          "version",
+          "digest",
+          "manifest",
+          "withdrawn",
+          "created_at"
+        ],
+        "title": "MLHistoryView",
         "type": "object"
       },
       "MemberInput": {
@@ -6521,6 +7020,60 @@
         "title": "MoneyTotal",
         "type": "object"
       },
+      "Observation": {
+        "additionalProperties": false,
+        "properties": {
+          "entity_id": {
+            "maxLength": 80,
+            "minLength": 1,
+            "pattern": "^[A-Za-z0-9_.-]+$",
+            "title": "Entity Id",
+            "type": "string"
+          },
+          "entity_kind": {
+            "enum": [
+              "project",
+              "milestone",
+              "sprint",
+              "team"
+            ],
+            "title": "Entity Kind",
+            "type": "string"
+          },
+          "feature_asof": {
+            "format": "date-time",
+            "title": "Feature Asof",
+            "type": "string"
+          },
+          "features": {
+            "$ref": "#/components/schemas/Features"
+          },
+          "observed_at": {
+            "format": "date-time",
+            "title": "Observed At",
+            "type": "string"
+          },
+          "outcome": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Outcome"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": [
+          "entity_id",
+          "entity_kind",
+          "observed_at",
+          "feature_asof",
+          "features"
+        ],
+        "title": "Observation",
+        "type": "object"
+      },
       "OrganizationProfileInput": {
         "additionalProperties": false,
         "properties": {
@@ -6651,6 +7204,187 @@
           "keys"
         ],
         "title": "OrphanPurge",
+        "type": "object"
+      },
+      "Outcome": {
+        "additionalProperties": false,
+        "properties": {
+          "actual_finish": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Actual Finish"
+          },
+          "actual_spend": {
+            "anyOf": [
+              {
+                "maximum": 1000000000000.0,
+                "minimum": 0.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Actual Spend"
+          },
+          "adjudication": {
+            "anyOf": [
+              {
+                "const": "independent_outcome_review",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Adjudication"
+          },
+          "adverse_category": {
+            "anyOf": [
+              {
+                "enum": [
+                  0,
+                  1
+                ],
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Adverse Category"
+          },
+          "available_at": {
+            "format": "date-time",
+            "title": "Available At",
+            "type": "string"
+          },
+          "baseline_known_at": {
+            "format": "date-time",
+            "title": "Baseline Known At",
+            "type": "string"
+          },
+          "budget": {
+            "anyOf": [
+              {
+                "exclusiveMinimum": 0.0,
+                "maximum": 1000000000000.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Budget"
+          },
+          "consent": {
+            "default": false,
+            "title": "Consent",
+            "type": "boolean"
+          },
+          "disposition": {
+            "anyOf": [
+              {
+                "enum": [
+                  "cancelled",
+                  "abandoned",
+                  "missed_commitment",
+                  "accepted"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Disposition"
+          },
+          "evidence_ref": {
+            "maxLength": 160,
+            "minLength": 3,
+            "pattern": "^[A-Za-z0-9_:/.-]+$",
+            "title": "Evidence Ref",
+            "type": "string"
+          },
+          "kind": {
+            "enum": [
+              "observed",
+              "synthetic"
+            ],
+            "title": "Kind",
+            "type": "string"
+          },
+          "occurred_at": {
+            "format": "date-time",
+            "title": "Occurred At",
+            "type": "string"
+          },
+          "planned_finish": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Planned Finish"
+          },
+          "respondents": {
+            "anyOf": [
+              {
+                "maximum": 100000.0,
+                "minimum": 5.0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Respondents"
+          },
+          "survey_mean": {
+            "anyOf": [
+              {
+                "maximum": 5.0,
+                "minimum": 1.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Survey Mean"
+          },
+          "target": {
+            "enum": [
+              "delay",
+              "overrun",
+              "risk",
+              "failure",
+              "sentiment"
+            ],
+            "title": "Target",
+            "type": "string"
+          }
+        },
+        "required": [
+          "target",
+          "kind",
+          "evidence_ref",
+          "occurred_at",
+          "available_at",
+          "baseline_known_at"
+        ],
+        "title": "Outcome",
         "type": "object"
       },
       "PageView": {
@@ -7631,6 +8365,34 @@
         "title": "RegistrationInput",
         "type": "object"
       },
+      "Resolution": {
+        "additionalProperties": false,
+        "properties": {
+          "decision": {
+            "enum": [
+              "keep_local",
+              "accept_source"
+            ],
+            "title": "Decision",
+            "type": "string"
+          },
+          "local_revision": {
+            "title": "Local Revision",
+            "type": "integer"
+          },
+          "source_fingerprint": {
+            "title": "Source Fingerprint",
+            "type": "string"
+          }
+        },
+        "required": [
+          "decision",
+          "local_revision",
+          "source_fingerprint"
+        ],
+        "title": "Resolution",
+        "type": "object"
+      },
       "ResourceAccessInput": {
         "additionalProperties": false,
         "properties": {
@@ -8067,6 +8829,64 @@
           "review_on"
         ],
         "title": "RiskInput",
+        "type": "object"
+      },
+      "RunInput": {
+        "additionalProperties": false,
+        "properties": {
+          "dataset_id": {
+            "format": "uuid",
+            "title": "Dataset Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "dataset_id"
+        ],
+        "title": "RunInput",
+        "type": "object"
+      },
+      "RunView": {
+        "properties": {
+          "card": {
+            "additionalProperties": true,
+            "title": "Card",
+            "type": "object"
+          },
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "dataset_id": {
+            "format": "uuid",
+            "title": "Dataset Id",
+            "type": "string"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "project_id": {
+            "format": "uuid",
+            "title": "Project Id",
+            "type": "string"
+          },
+          "status": {
+            "title": "Status",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "project_id",
+          "dataset_id",
+          "status",
+          "card",
+          "created_at"
+        ],
+        "title": "RunView",
         "type": "object"
       },
       "SavedViewInput": {
@@ -16138,6 +16958,287 @@
         ]
       }
     },
+    "/api/v1/integrations/{id_}/authority": {
+      "get": {
+        "operationId": "authority_api_v1_integrations__id___authority_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id_",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Id ",
+              "type": "string"
+            }
+          },
+          {
+            "in": "header",
+            "name": "x-organization-id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Organization-Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "anyOf": [
+                    {
+                      "$ref": "#/components/schemas/AuthorityView"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ],
+                  "title": "Response Authority Api V1 Integrations  Id   Authority Get"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Authority",
+        "tags": [
+          "Connector authority and conflicts"
+        ]
+      },
+      "put": {
+        "description": "Each rotation fences queued work; secrets themselves never travel through this API.",
+        "operationId": "approve_api_v1_integrations__id___authority_put",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id_",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Id ",
+              "type": "string"
+            }
+          },
+          {
+            "in": "header",
+            "name": "x-organization-id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Organization-Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AuthorityInput"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthorityView"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Approve",
+        "tags": [
+          "Connector authority and conflicts"
+        ]
+      }
+    },
+    "/api/v1/integrations/{id_}/conflicts": {
+      "get": {
+        "operationId": "review_api_v1_integrations__id___conflicts_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id_",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Id ",
+              "type": "string"
+            }
+          },
+          {
+            "in": "header",
+            "name": "x-organization-id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Organization-Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/ConflictView"
+                  },
+                  "title": "Response Review Api V1 Integrations  Id   Conflicts Get",
+                  "type": "array"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Review",
+        "tags": [
+          "Connector authority and conflicts"
+        ]
+      }
+    },
+    "/api/v1/integrations/{id_}/conflicts/{conflict_id}/resolve": {
+      "post": {
+        "operationId": "resolve_api_v1_integrations__id___conflicts__conflict_id__resolve_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id_",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Id ",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "conflict_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Conflict Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "header",
+            "name": "x-organization-id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Organization-Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Resolution"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ConflictView"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Resolve",
+        "tags": [
+          "Connector authority and conflicts"
+        ]
+      }
+    },
     "/api/v1/integrations/{id_}/preview": {
       "post": {
         "operationId": "preview_api_v1_integrations__id___preview_post",
@@ -16410,6 +17511,663 @@
         "summary": "Webhook",
         "tags": [
           "Integrations and jobs"
+        ]
+      }
+    },
+    "/api/v1/ml/datasets": {
+      "get": {
+        "operationId": "dataset_list_api_v1_ml_datasets_get",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "x-organization-id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Organization-Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/DatasetView"
+                  },
+                  "title": "Response Dataset List Api V1 Ml Datasets Get",
+                  "type": "array"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Dataset List",
+        "tags": [
+          "Local datasets and baselines"
+        ]
+      },
+      "post": {
+        "operationId": "create_dataset_api_v1_ml_datasets_post",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "x-organization-id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Organization-Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DatasetInput"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DatasetView"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Create Dataset",
+        "tags": [
+          "Local datasets and baselines"
+        ]
+      }
+    },
+    "/api/v1/ml/datasets/{id_}": {
+      "get": {
+        "operationId": "dataset_detail_api_v1_ml_datasets__id___get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id_",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Id ",
+              "type": "string"
+            }
+          },
+          {
+            "in": "header",
+            "name": "x-organization-id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Organization-Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DatasetView"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Dataset Detail",
+        "tags": [
+          "Local datasets and baselines"
+        ]
+      }
+    },
+    "/api/v1/ml/histories": {
+      "get": {
+        "operationId": "history_list_api_v1_ml_histories_get",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "x-organization-id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Organization-Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/MLHistoryView"
+                  },
+                  "title": "Response History List Api V1 Ml Histories Get",
+                  "type": "array"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "History List",
+        "tags": [
+          "Local datasets and baselines"
+        ]
+      },
+      "post": {
+        "operationId": "import_history_api_v1_ml_histories_post",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "x-organization-id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Organization-Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HistoryInput"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MLHistoryView"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Import History",
+        "tags": [
+          "Local datasets and baselines"
+        ]
+      }
+    },
+    "/api/v1/ml/histories/{id_}/withdraw": {
+      "post": {
+        "operationId": "withdraw_api_v1_ml_histories__id___withdraw_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id_",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Id ",
+              "type": "string"
+            }
+          },
+          {
+            "in": "header",
+            "name": "x-organization-id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Organization-Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MLHistoryView"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Withdraw",
+        "tags": [
+          "Local datasets and baselines"
+        ]
+      }
+    },
+    "/api/v1/ml/runs": {
+      "get": {
+        "operationId": "run_list_api_v1_ml_runs_get",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "x-organization-id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Organization-Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/RunView"
+                  },
+                  "title": "Response Run List Api V1 Ml Runs Get",
+                  "type": "array"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Run List",
+        "tags": [
+          "Local datasets and baselines"
+        ]
+      },
+      "post": {
+        "operationId": "train_api_v1_ml_runs_post",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "x-organization-id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Organization-Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RunInput"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "202": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RunView"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Train",
+        "tags": [
+          "Local datasets and baselines"
+        ]
+      }
+    },
+    "/api/v1/ml/runs/{id_}": {
+      "get": {
+        "operationId": "run_detail_api_v1_ml_runs__id___get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id_",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Id ",
+              "type": "string"
+            }
+          },
+          {
+            "in": "header",
+            "name": "x-organization-id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Organization-Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RunView"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Run Detail",
+        "tags": [
+          "Local datasets and baselines"
+        ]
+      }
+    },
+    "/api/v1/ml/runs/{id_}/artifacts": {
+      "get": {
+        "operationId": "artifacts_api_v1_ml_runs__id___artifacts_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id_",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Id ",
+              "type": "string"
+            }
+          },
+          {
+            "in": "header",
+            "name": "x-organization-id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Organization-Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Artifacts Api V1 Ml Runs  Id   Artifacts Get",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Artifacts",
+        "tags": [
+          "Local datasets and baselines"
+        ]
+      }
+    },
+    "/api/v1/ml/template": {
+      "get": {
+        "operationId": "template_api_v1_ml_template_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "project_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Project Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "target",
+            "required": false,
+            "schema": {
+              "default": "delay",
+              "enum": [
+                "delay",
+                "overrun",
+                "risk",
+                "failure",
+                "sentiment"
+              ],
+              "title": "Target",
+              "type": "string"
+            }
+          },
+          {
+            "in": "header",
+            "name": "x-organization-id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Organization-Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Template Api V1 Ml Template Get",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Template",
+        "tags": [
+          "Local datasets and baselines"
         ]
       }
     },

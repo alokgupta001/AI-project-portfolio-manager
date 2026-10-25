@@ -55,7 +55,8 @@ class StageView(BaseModel):
 
 class JobView(BaseModel):
     id: UUID
-    integration_id: UUID
+    integration_id: UUID | None
+    ml_run_id: UUID | None = None
     status: str
     attempt: int
     position: int
@@ -125,6 +126,10 @@ async def get_job(p: Principal, id_: UUID, locked: bool = False) -> dict:
         from ppm_api.ai import access
 
         await access(p, row["ai_run_id"])
+    elif row.get("ml_run_id"):
+        from ppm_api.ml import access_run
+
+        await access_run(p, row["ml_run_id"])
     else:
         await get_integration(p, row["integration_id"])
     return dict(row)
@@ -290,6 +295,19 @@ async def enqueue(
 ) -> dict:
     if not integration["enabled"]:
         delivery.fail(409, "Integration is disabled")
+    from ppm_api.ml_tables import principals
+
+    authority = (
+        (
+            await p.conn.execute(
+                sa.select(principals).where(principals.c.integration_id == integration["id"])
+            )
+        )
+        .mappings()
+        .first()
+    )
+    if authority and not authority["active"]:
+        delivery.fail(409, "Connector authority is revoked; approve it before syncing")
     if not 1 <= len(key) <= 160:
         delivery.fail(428, "Idempotency key is required")
     config = ConnectorConfig(**integration["config"])
@@ -323,6 +341,7 @@ async def enqueue(
         integration_id=integration["id"],
         actor_id=p.user["id"],
         session_id=p.session["id"],
+        connector_generation=authority["generation"] if authority else None,
         key=key,
         request_hash=digest,
         config=integration["config"],
@@ -418,6 +437,8 @@ async def activity(p: Auth) -> list[dict]:
             sa.select(jobs).order_by(jobs.c.created_at.desc(), jobs.c.id).limit(100)
         )
     ).mappings():
+        if not r["integration_id"]:
+            continue
         try:
             await get_integration(p, r["integration_id"])
             result.append(dict(r))
@@ -581,6 +602,29 @@ async def worker_transaction(
     )
     # Tenant context alone permits only identifier-scoped owner reads. No role assumed yet.
     await context(conn, uid, oid, "")
+    connector_ref = (
+        (await conn.execute(sa.text("SELECT * FROM public.ppm_connector_job(:id)"), {"id": id_}))
+        .mappings()
+        .first()
+    )
+    if connector_ref:
+        from ppm_api.connectors import connector_principal
+
+        p = await connector_principal(conn, oid, uid, connector_ref["integration_id"])
+        if not p:
+            return None, None
+        row = (
+            (
+                await conn.execute(
+                    sa.select(jobs)
+                    .where(jobs.c.id == id_, jobs.c.actor_id == uid)
+                    .with_for_update()
+                )
+            )
+            .mappings()
+            .first()
+        )
+        return p, dict(row) if row else None
     sid = await conn.scalar(sa.text("SELECT public.ppm_job_session(:id)"), {"id": id_})
     if not sid:
         return None, None
@@ -601,16 +645,27 @@ async def worker_transaction(
     return p, dict(row)
 
 
-async def apply_source(p: Principal, row: dict, item: dict) -> None:
+async def apply_source(p: Principal, row: dict, item: dict) -> bool:
+    from ppm_api.connectors import logical_key, record_conflict
+    from ppm_api.ml_tables import conflicts
+
     config = ConnectorConfig(**row["config"])
     external, stamp, payload = normalize(config, item)
     digest = fingerprint(payload.model_dump(mode="json"))
+    identity = logical_key(config, external)
     prior = (
         (
             await p.conn.execute(
                 sa.select(sources).where(
-                    sources.c.integration_id == row["integration_id"],
-                    sources.c.external_id == external,
+                    sources.c.project_id == config.project_id,
+                    sa.or_(
+                        sources.c.logical_key == identity,
+                        sa.and_(
+                            sources.c.integration_id == row["integration_id"],
+                            sources.c.external_id == external,
+                            sources.c.logical_key.is_(None),
+                        ),
+                    ),
                 )
             )
         )
@@ -618,22 +673,66 @@ async def apply_source(p: Principal, row: dict, item: dict) -> None:
         .first()
     )
     observed_at = datetime.fromisoformat(row["input"]["observed_at"])
+    if not prior:
+        legacy = (
+            (
+                await p.conn.execute(
+                    sa.select(sources, integrations.c.config.label("source_config"))
+                    .join(integrations, sources.c.integration_id == integrations.c.id)
+                    .where(
+                        sources.c.project_id == config.project_id,
+                        sources.c.external_id == external,
+                        sources.c.logical_key.is_(None),
+                    )
+                )
+            )
+            .mappings()
+            .all()
+        )
+        matches = [
+            r
+            for r in legacy
+            if logical_key(ConnectorConfig(**r["source_config"]), external) == identity
+        ]
+        if len(matches) > 1:
+            raise ValueError("Legacy logical source duplicates require review before sync")
+        prior = matches[0] if matches else None
+    if prior and not prior["logical_key"]:
+        await p.conn.execute(
+            sources.update().where(sources.c.id == prior["id"]).values(logical_key=identity)
+        )
     if prior and (
         (stamp and prior["source_updated_at"] and stamp < prior["source_updated_at"])
         or (not stamp and observed_at < prior["source_observed_at"])
     ):
-        return
+        return True
     if prior and stamp and stamp == prior["source_updated_at"]:
         if digest != prior["fingerprint"]:
-            raise ValueError("Source version collision")
-        return
+            await record_conflict(
+                p, dict(prior), row, payload.model_dump(mode="json"), stamp, observed_at, digest
+            )
+            return False
+        return True
     if prior and digest == prior["fingerprint"]:
         await p.conn.execute(
             sources.update()
             .where(sources.c.id == prior["id"])
             .values(source_updated_at=stamp, source_observed_at=observed_at, job_id=row["id"])
         )
-        return
+        return True
+    if prior:
+        current = await delivery.get(p, prior["target_kind"], prior["target_id"])
+        pending = await p.conn.scalar(
+            sa.select(conflicts.c.id).where(
+                conflicts.c.source_id == prior["id"],
+                conflicts.c.status.in_(["pending", "keep_local"]),
+            )
+        )
+        if current["revision"] != prior["target_revision"] or pending:
+            await record_conflict(
+                p, dict(prior), row, payload.model_dump(mode="json"), stamp, observed_at, digest
+            )
+            return False
     # Never overwrite local edits. Existing domain lifecycle and revision gates are reused.
     request = SimpleNamespace(
         headers={"x-organization-id": str(row["organization_id"])},
@@ -675,6 +774,7 @@ async def apply_source(p: Principal, row: dict, item: dict) -> None:
             "Imported source update",
         )
     values = dict(
+        logical_key=identity,
         source_updated_at=stamp,
         source_observed_at=observed_at,
         fingerprint=digest,
@@ -698,6 +798,7 @@ async def apply_source(p: Principal, row: dict, item: dict) -> None:
                 **values,
             )
         )
+    return True
 
 
 async def run_job(
@@ -707,6 +808,10 @@ async def run_job(
     from ppm_api.ai import ai_worker
     from ppm_api.config import load_settings
     from ppm_api.documents import document_worker
+    from ppm_api.ml import ml_worker
+
+    if await ml_worker(engine, id_, oid, uid):
+        return
 
     if await ai_worker(engine, id_, oid, uid, load_settings()):
         return
@@ -862,8 +967,17 @@ async def run_job(
             accepted, errors = row["accepted"], row["errors"]
             try:
                 async with conn.begin_nested():
-                    await apply_source(p, row, item)
-                accepted += 1
+                    applied = await apply_source(p, row, item)
+                if applied:
+                    accepted += 1
+                else:
+                    errors = errors + [
+                        dict(
+                            page=data["page"],
+                            row=row["position"] + 1,
+                            code="LOCAL_REVISION_CONFLICT",
+                        )
+                    ]
                 _, stamp, _ = normalize(ConnectorConfig(**row["config"]), item)
                 source_time = stamp.isoformat() if stamp else None
                 data = data | dict(
@@ -923,7 +1037,22 @@ async def github_hook(id_: UUID, request: Request) -> dict:
             sa.text("SELECT pg_advisory_xact_lock(hashtextextended(:org,2))"),
             {"org": str(ref["organization_id"])},
         )
-        p = await worker_principal(conn, ref["organization_id"], ref["actor_id"], ref["session_id"])
+        from ppm_api.connectors import connector_principal
+
+        p = await connector_principal(conn, ref["organization_id"], ref["actor_id"], id_)
+        if not p:
+            # Once enrolled, revocation must never fall back to a creator session.
+            await context(conn, ref["actor_id"], ref["organization_id"], "Admin")
+            from ppm_api.ml_tables import principals
+
+            enrolled = await conn.scalar(
+                sa.select(principals.c.id).where(principals.c.integration_id == id_)
+            )
+            if enrolled:
+                delivery.fail(403, "Webhook authority is no longer active")
+            p = await worker_principal(
+                conn, ref["organization_id"], ref["actor_id"], ref["session_id"]
+            )
         if not p:
             delivery.fail(403, "Webhook authority is no longer active")
         integration = await get_integration(p, id_)

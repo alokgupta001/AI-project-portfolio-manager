@@ -1,5 +1,9 @@
 # Current user guide
 
+## Local history and baseline lab
+
+[Use Sprint 12](../03-sprints/completed/sprint-12/USER_GUIDE.md): connector approval/conflict review in `/integrations`; versioned manual history, isolated synthetic examples, as-of datasets and reproducible baseline model cards in `/ml`. Research actions require Admin; no external data scope or business permission expands.
+
 Sprint 11 adds **Agents & recommendations** at `/agents`: [role-specific steps](../03-sprints/completed/sprint-11/USER_GUIDE.md). Inspect exact evidence, compare original/suggested/approved maturity and record independent accept/reject decisions. Acceptance never applies a project change. Missing providers/agents/evidence remain explicit; real-model quality is unverified. Normal runtime adoption requires the tested forward 0013 migration; this task does not deploy it.
 
 ## Historical checkpoints before Sprint 11

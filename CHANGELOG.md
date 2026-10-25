@@ -1,5 +1,13 @@
 # Changelog
 
+## 2026-10-25 — Sprint 12 local foundations
+
+- Scoped organization connector principals with generation rotation/revocation, existing-beat schedules, canonical source identity and current local/source conflict review.
+- Immutable aggregate history and as-of dataset manifests with five outcome contracts, permission/lineage checks, temporal embargo/entity purging and permanent withdrawal.
+- `/ml` import-to-model-card flow, durable bounded CPU baselines, comparison tables, JSON artifacts and explicit demo/research/insufficient-data states.
+- Forward 0017 migration; final checks and preservation are recorded in the [Sprint 12 report](docs/03-sprints/completed/sprint-12/SPRINT_REPORT.md).
+- Real connector equality, genuine model quality, native MLflow tracking and promotion remain unavailable/deferred. AT17 remains BLOCKED; no Sprint 13, PR/push or deployment.
+
 ## 25 October 2026 — PR 6 dependency audit fix
 
 Pin pypdf 6.21.2 and regenerate its lockfile entry to address the three advisories

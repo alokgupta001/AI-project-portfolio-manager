@@ -1,5 +1,9 @@
 # Documentation update tracker
 
+## Sprint 12 local documentation closure
+
+[Closure matrix](../04-testing/sprint-based/sprint-12/DOCUMENTATION_CHECKS.md) maps the three packages to implementation, local user/demo/learning, contracts/schema/inventories, tests and limitations. [Report](../03-sprints/completed/sprint-12/SPRINT_REPORT.md) records actual status. Normal 0017, passed local checks and preservation are recorded. Historical failures and AT17 remain unchanged.
+
 **25 October 2026 — planning reconciliation:** added the [Sprint 11/11.1 local
 closeout](../10-reference/SPRINT-11-LOCAL-CLOSEOUT.md), [current plan](LOCAL_SAMPLE_PLAN_UPDATE.md), and linked Sprint 12 local
 implementation plan/starting prompt. Updated planning hubs, status/handoffs,

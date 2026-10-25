@@ -26,6 +26,7 @@ from ppm_api.assessment import router as assessment_router
 from ppm_api.capacity import router as capacity_router
 from ppm_api.command import router as command_router
 from ppm_api.config import Settings, load_settings
+from ppm_api.connectors import router as connectors_router
 from ppm_api.database import FoundationState, make_engine
 from ppm_api.delivery import DomainError
 from ppm_api.delivery import router as delivery_router
@@ -33,6 +34,7 @@ from ppm_api.documents import router as documents_router
 from ppm_api.identity import router as identity_router
 from ppm_api.job_limits import IntegrationBodyLimit
 from ppm_api.jobs import router as jobs_router
+from ppm_api.ml import router as ml_router
 from ppm_api.pilot import router as pilot_router
 from ppm_api.schemas import (
     SCHEMA_REVISION,
@@ -90,6 +92,8 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     app = FastAPI(title="Enterprise PPM foundation", version="0.1.0", lifespan=lifespan)
     app.add_middleware(IntegrationBodyLimit)
     app.include_router(jobs_router)
+    app.include_router(connectors_router)
+    app.include_router(ml_router)
     app.include_router(documents_router)
     app.include_router(ai_router)
     app.include_router(agents_router)

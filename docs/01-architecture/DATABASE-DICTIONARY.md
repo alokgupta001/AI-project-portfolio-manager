@@ -6,7 +6,7 @@ Generated from SQLAlchemy `Base.metadata` without a database connection. Source 
 
 Live organization membership → transaction-local principal/RLS → scoped domain facts. Published assessment history remains immutable. `source_documents` owns scope/retention; `source_versions` owns immutable byte identity and mutable processing status; `source_chunks` is replaceable derived text; `source_evidence_links` references separately authorized released attachments. `durable_jobs` references exactly one integration, document version or AI run according to job kind. AI run provenance/budgets, attempt accounting and rebuildable vectors follow the [AI contract](../contracts/ai.md). Originals remain private objects; logical deletion revokes reads, guarded purge removes bytes/text/links but retains tombstones. `ai_embeddings` stores the bounded exact JSONB projection; no pgvector/ANN or semantic-finding table is activated.
 
-**Inventory:** 76 metadata tables (Alembic's runtime version table is separate).
+**Inventory:** 82 metadata tables (Alembic's runtime version table is separate).
 
 ## agent_analyses
 
@@ -218,6 +218,20 @@ Live organization membership → transaction-local principal/RLS → scoped doma
 - UniqueConstraint (unnamed): chunk_id
 - UniqueConstraint (unnamed): organization_id, id
 
+## ai_guided_grants
+
+| Column | SQL type | Nullable | Primary key | Foreign reference |
+| --- | --- | --- | --- | --- |
+| `organization_id` | `CHAR(32)` | False | True | memberships.organization_id, ppm_projects.organization_id |
+| `user_id` | `CHAR(32)` | False | True | memberships.user_id |
+| `project_id` | `CHAR(32)` | False | True | ppm_projects.id |
+| `enabled` | `BOOLEAN` | False | False | — |
+| `created_at` | `DATETIME` | False | False | — |
+
+- ForeignKeyConstraint (unnamed): organization_id, project_id
+- ForeignKeyConstraint (unnamed): organization_id, user_id
+- PrimaryKeyConstraint (unnamed): organization_id, user_id, project_id
+
 ## ai_provider_scopes
 
 | Column | SQL type | Nullable | Primary key | Foreign reference |
@@ -300,15 +314,39 @@ Live organization membership → transaction-local principal/RLS → scoped doma
 - PrimaryKeyConstraint (unnamed): id
 - UniqueConstraint (unnamed): organization_id, id
 
+## connector_principals
+
+| Column | SQL type | Nullable | Primary key | Foreign reference |
+| --- | --- | --- | --- | --- |
+| `id` | `CHAR(32)` | False | True | — |
+| `organization_id` | `CHAR(32)` | False | False | job_integrations.organization_id, memberships.organization_id, organizations.id |
+| `integration_id` | `CHAR(32)` | False | False | job_integrations.id |
+| `active` | `BOOLEAN` | False | False | — |
+| `generation` | `INTEGER` | False | False | — |
+| `revision` | `INTEGER` | False | False | — |
+| `interval_minutes` | `INTEGER` | False | False | — |
+| `next_due` | `DATETIME` | False | False | — |
+| `approved_by` | `CHAR(32)` | False | False | memberships.user_id |
+| `updated_at` | `DATETIME` | False | False | — |
+
+- ForeignKeyConstraint (unnamed): organization_id
+- ForeignKeyConstraint (unnamed): organization_id, approved_by
+- ForeignKeyConstraint (unnamed): organization_id, integration_id
+- PrimaryKeyConstraint (unnamed): id
+- UniqueConstraint (unnamed): integration_id
+- UniqueConstraint (unnamed): organization_id, id
+
 ## durable_jobs
 
 | Column | SQL type | Nullable | Primary key | Foreign reference |
 | --- | --- | --- | --- | --- |
 | `id` | `CHAR(32)` | False | True | — |
-| `organization_id` | `CHAR(32)` | False | False | ai_runs.organization_id, job_integrations.organization_id, memberships.organization_id, organizations.id, source_versions.organization_id |
+| `organization_id` | `CHAR(32)` | False | False | ai_runs.organization_id, job_integrations.organization_id, memberships.organization_id, ml_runs.organization_id, organizations.id, source_versions.organization_id |
 | `integration_id` | `CHAR(32)` | True | False | job_integrations.id |
 | `document_version_id` | `CHAR(32)` | True | False | source_versions.id |
 | `ai_run_id` | `CHAR(32)` | True | False | ai_runs.id |
+| `ml_run_id` | `CHAR(32)` | True | False | ml_runs.id |
+| `connector_generation` | `INTEGER` | True | False | — |
 | `actor_id` | `CHAR(32)` | False | False | memberships.user_id |
 | `session_id` | `CHAR(32)` | False | False | identity_sessions.id |
 | `key` | `VARCHAR(160)` | False | False | — |
@@ -329,10 +367,11 @@ Live organization membership → transaction-local principal/RLS → scoped doma
 | `updated_at` | `DATETIME` | False | False | — |
 | `sequence` | `INTEGER` | False | False | — |
 
-- CheckConstraint (ck_job_source_kind): num_nonnulls(integration_id,document_version_id,ai_run_id)=1
+- CheckConstraint (ck_job_source_kind): num_nonnulls(integration_id,document_version_id,ai_run_id,ml_run_id)=1
 - CheckConstraint (unnamed): status IN ('queued','running','retry_wait','succeeded','partially_succeeded','failed','cancelled')
 - ForeignKeyConstraint (fk_job_ai_run): organization_id, ai_run_id
 - ForeignKeyConstraint (fk_job_document_version): organization_id, document_version_id
+- ForeignKeyConstraint (fk_job_ml_run): organization_id, ml_run_id
 - ForeignKeyConstraint (unnamed): organization_id
 - ForeignKeyConstraint (unnamed): organization_id, actor_id
 - ForeignKeyConstraint (unnamed): organization_id, integration_id
@@ -449,6 +488,31 @@ Live organization membership → transaction-local principal/RLS → scoped doma
 - PrimaryKeyConstraint (unnamed): id
 - UniqueConstraint (unnamed): email
 
+## ingestion_conflicts
+
+| Column | SQL type | Nullable | Primary key | Foreign reference |
+| --- | --- | --- | --- | --- |
+| `id` | `CHAR(32)` | False | True | — |
+| `organization_id` | `CHAR(32)` | False | False | durable_jobs.organization_id, ingestion_sources.organization_id, organizations.id, ppm_projects.organization_id |
+| `source_id` | `CHAR(32)` | False | False | ingestion_sources.id |
+| `project_id` | `CHAR(32)` | False | False | ppm_projects.id |
+| `revision` | `INTEGER` | False | False | — |
+| `status` | `VARCHAR(24)` | False | False | — |
+| `candidate` | `JSONB` | False | False | — |
+| `local` | `JSONB` | False | False | — |
+| `source_updated_at` | `DATETIME` | True | False | — |
+| `source_observed_at` | `DATETIME` | False | False | — |
+| `fingerprint` | `VARCHAR(64)` | False | False | — |
+| `job_id` | `CHAR(32)` | False | False | durable_jobs.id |
+
+- ForeignKeyConstraint (unnamed): organization_id
+- ForeignKeyConstraint (unnamed): organization_id, job_id
+- ForeignKeyConstraint (unnamed): organization_id, project_id
+- ForeignKeyConstraint (unnamed): organization_id, source_id
+- PrimaryKeyConstraint (unnamed): id
+- UniqueConstraint (unnamed): organization_id, id
+- UniqueConstraint (unnamed): source_id
+
 ## ingestion_sources
 
 | Column | SQL type | Nullable | Primary key | Foreign reference |
@@ -460,6 +524,7 @@ Live organization membership → transaction-local principal/RLS → scoped doma
 | `work_item_id` | `CHAR(32)` | True | False | ppm_work_items.id |
 | `sprint_id` | `CHAR(32)` | True | False | ppm_sprints.id |
 | `external_id` | `VARCHAR(160)` | False | False | — |
+| `logical_key` | `VARCHAR(64)` | True | False | — |
 | `source_updated_at` | `DATETIME` | True | False | — |
 | `source_observed_at` | `DATETIME` | False | False | — |
 | `fingerprint` | `VARCHAR(64)` | False | False | — |
@@ -478,6 +543,7 @@ Live organization membership → transaction-local principal/RLS → scoped doma
 - PrimaryKeyConstraint (unnamed): id
 - UniqueConstraint (unnamed): integration_id, external_id
 - UniqueConstraint (unnamed): organization_id, id
+- UniqueConstraint (uq_source_logical): organization_id, project_id, logical_key
 
 ## job_events
 
@@ -549,6 +615,70 @@ Live organization membership → transaction-local principal/RLS → scoped doma
 - ForeignKeyConstraint (unnamed): organization_id
 - ForeignKeyConstraint (unnamed): user_id
 - PrimaryKeyConstraint (unnamed): organization_id, user_id
+
+## ml_datasets
+
+| Column | SQL type | Nullable | Primary key | Foreign reference |
+| --- | --- | --- | --- | --- |
+| `id` | `CHAR(32)` | False | True | — |
+| `organization_id` | `CHAR(32)` | False | False | ml_histories.organization_id, organizations.id, ppm_projects.organization_id |
+| `project_id` | `CHAR(32)` | False | False | ml_histories.project_id, ppm_projects.id |
+| `created_at` | `DATETIME` | False | False | — |
+| `history_id` | `CHAR(32)` | False | False | ml_histories.id |
+| `digest` | `VARCHAR(64)` | False | False | — |
+| `manifest` | `JSONB` | False | False | — |
+| `records` | `JSONB` | False | False | — |
+
+- ForeignKeyConstraint (unnamed): organization_id
+- ForeignKeyConstraint (unnamed): organization_id, project_id
+- ForeignKeyConstraint (unnamed): organization_id, project_id, history_id
+- PrimaryKeyConstraint (unnamed): id
+- UniqueConstraint (unnamed): organization_id, id
+- UniqueConstraint (unnamed): organization_id, project_id, id
+
+## ml_histories
+
+| Column | SQL type | Nullable | Primary key | Foreign reference |
+| --- | --- | --- | --- | --- |
+| `id` | `CHAR(32)` | False | True | — |
+| `organization_id` | `CHAR(32)` | False | False | organizations.id, ppm_projects.organization_id |
+| `project_id` | `CHAR(32)` | False | False | ppm_projects.id |
+| `created_at` | `DATETIME` | False | False | — |
+| `name` | `VARCHAR(160)` | False | False | — |
+| `version` | `INTEGER` | False | False | — |
+| `digest` | `VARCHAR(64)` | False | False | — |
+| `manifest` | `JSONB` | False | False | — |
+| `records` | `JSONB` | False | False | — |
+| `withdrawn` | `BOOLEAN` | False | False | — |
+
+- ForeignKeyConstraint (unnamed): organization_id
+- ForeignKeyConstraint (unnamed): organization_id, project_id
+- PrimaryKeyConstraint (unnamed): id
+- UniqueConstraint (unnamed): organization_id, id
+- UniqueConstraint (unnamed): organization_id, project_id, id
+- UniqueConstraint (unnamed): organization_id, project_id, name, version
+
+## ml_runs
+
+| Column | SQL type | Nullable | Primary key | Foreign reference |
+| --- | --- | --- | --- | --- |
+| `id` | `CHAR(32)` | False | True | — |
+| `organization_id` | `CHAR(32)` | False | False | memberships.organization_id, ml_datasets.organization_id, organizations.id, ppm_projects.organization_id |
+| `project_id` | `CHAR(32)` | False | False | ml_datasets.project_id, ppm_projects.id |
+| `created_at` | `DATETIME` | False | False | — |
+| `dataset_id` | `CHAR(32)` | False | False | ml_datasets.id |
+| `actor_id` | `CHAR(32)` | False | False | memberships.user_id |
+| `status` | `VARCHAR(32)` | False | False | — |
+| `card` | `JSONB` | False | False | — |
+| `artifacts` | `JSONB` | False | False | — |
+
+- ForeignKeyConstraint (unnamed): organization_id
+- ForeignKeyConstraint (unnamed): organization_id, actor_id
+- ForeignKeyConstraint (unnamed): organization_id, project_id
+- ForeignKeyConstraint (unnamed): organization_id, project_id, dataset_id
+- PrimaryKeyConstraint (unnamed): id
+- UniqueConstraint (unnamed): organization_id, id
+- UniqueConstraint (unnamed): organization_id, project_id, id
 
 ## notification_preferences
 

@@ -1,5 +1,7 @@
 # Architecture decision records
 
+[ADR 019 — Scoped unattended connectors and local outcome baselines](019-local-model-foundations.md): Sprint 12 local architecture and explicit MLflow/live/quality limitations.
+
 Records 001–006 are the Sprint 00 **proposed baseline**. Record 007 describes the local foundation implemented under the user's Sprint 01 instruction. Each record states its own verification limits; production deployment choices are not automatically approved. Changing a decision requires a dated superseding record and consumer impact review.
 
 | Record | Decision |
