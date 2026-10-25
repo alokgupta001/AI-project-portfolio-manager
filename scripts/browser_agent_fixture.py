@@ -180,6 +180,18 @@ async def run() -> None:
                 )
                 result = (await c.get(f"/api/v1/agents/runs/{rid}")).json()
                 assert result["suggestions"][0]["suggested_score"] == "87.5000", result
+                from ppm_api.agent_task_tables import guided_grants
+
+                async with owner.begin() as conn:
+                    await conn.execute(
+                        guided_grants.insert().values(
+                            organization_id=org,
+                            user_id=reviewer,
+                            project_id=UUID(project["id"]),
+                            enabled=True,
+                            created_at=now(),
+                        )
+                    )
                 print(
                     json.dumps(
                         dict(

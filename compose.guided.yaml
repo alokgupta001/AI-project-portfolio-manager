@@ -1,0 +1,16 @@
+# Local limited review. Cloud egress remains off until the operator approves its scope.
+x-guided: &guided
+  environment:
+    PPM_AI_PROVIDER: disabled
+    PPM_AI_RUNTIME_V2_ENABLED: "true"
+    PPM_AI_GUIDED_ENABLED: "true"
+    PPM_AI_EXECUTION_MODE: disabled
+    PPM_AI_CLOUD_ENABLED: "false"
+    PPM_AI_REAL_CALLS_AUTHORIZED: "false"
+    PPM_AI_SPEND_LIMIT_USD: "0"
+    PPM_AI_OLLAMA_ENABLED: "false"
+services:
+  api:
+    <<: *guided
+  worker:
+    <<: *guided

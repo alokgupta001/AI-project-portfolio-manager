@@ -18,6 +18,14 @@ PROMPT = (
 def build_plan(snapshot: dict, selection: HybridSelection) -> dict:
     """Plan requested baseline and semantic sections within the bounded specialist DAG."""
     mode = selection.analysis_mode or "auto"
+    if mode == "guided":
+        from ppm_api.guided_review import plan
+
+        return plan(
+            snapshot,
+            (selection.requested_agents or ["financial"])[0],
+            str(getattr(selection, "project_id", "")),
+        )
     requested = list(selection.requested_agents or [r.agent for r in REGISTRY])
     explicit = selection.requested_agents is not None or mode == "all_specialists"
     sources = [s for s in snapshot["sources"] if s["fresh"] and s["text"].strip()]

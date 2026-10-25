@@ -1,5 +1,14 @@
 # Complete future sprint roadmap
 
+**Current disposition — 25 October 2026:** Sprint 11/11.1 is complete for the
+local guided-sample scope; Sprint 12 local foundations are ready to start, not yet
+implemented. Broad AI accuracy **AT17 remains BLOCKED**. Normal schema is 0016;
+Gemini/Puter/Groq guided access covers the two approved projects with shared
+50/day provider ceilings. See [the closeout](../10-reference/SPRINT-11-LOCAL-CLOSEOUT.md) and
+[reconciled plan](LOCAL_SAMPLE_PLAN_UPDATE.md) for evidence, current scope and the Sprint 12 prompt.
+This supersedes older runtime/rollout/stop statements below; dated test results
+and original full-product acceptance requirements remain unchanged.
+
 **Closeout — 16 October 2026: Sprints 8.1 and 10 are COMPLETED for their implemented development scope.** The reviewed application checkpoint `631c149` passed [hosted CI](https://github.com/alokgupta001/AI-project-portfolio-manager/actions/runs/38885041673), including regression, migration and browser checks. The current pilot Word guide is rendered and visually verified in the linked closeout evidence. Earlier blocked/active statements below describe their recorded checkpoints. Production deployment, broad real-model/agent quality and scale remain OPEN release/successor gates. Stop before 11. [Closeout](../10-reference/SPRINT-8.1-AND-10-CLOSEOUT.md).
 
 ## Historical record before closeout
@@ -289,7 +298,12 @@ The ten individually specified work packages and completion gate are in [SPRINT_
 
 ## Sprint 12 — Connector reliability and historical model foundations
 
-**State:** proposed. **Phase:** Evidence and intelligence. **Entry dependencies:** 05,08,11; 8.1 metadata.
+**State:** ready for local implementation, not started (25 October 2026).
+**Phase:** Evidence and intelligence. **Entry dependencies:** 05,08,11; 8.1 metadata.
+Use the [local implementation plan](sprint-12/LOCAL_IMPLEMENTATION_PLAN.md) and
+[starting prompt](sprint-12/START_PROMPT.md). Sprint 11/11.1's local guided scope is
+complete; unqualified broad AI output is not an input dependency or training truth.
+The original package acceptance below remains required for full completion.
 
 **Goal / why now:** Models need legitimate dated observations and connectors that keep working when a user logs out.
 

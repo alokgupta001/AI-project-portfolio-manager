@@ -12,6 +12,7 @@ import sqlalchemy as sa
 from ppm_api import agent_engine as E
 from ppm_api import agent_task_tables as T
 from ppm_api import ai_tables as A
+from ppm_api import guided_review as G
 from ppm_api import job_tables as J
 from ppm_api.agent_batch import batch_prompt, pack_batch, validate_batch
 from ppm_api.agent_context import pack, section_schema
@@ -60,14 +61,18 @@ async def initialize(conn: Any, run: dict, snapshot: dict) -> None:
                 input_manifest=node,
                 input_hash=digest(node),
                 schema_hash=digest(
-                    Critique.model_json_schema()
+                    G.Choice.model_json_schema()
+                    if node["mode"] == "guided"
+                    else Critique.model_json_schema()
                     if node["kind"] == "evaluator"
                     else ["compact-batch-v1", SectionOutput.model_json_schema()]
                     if node["mode"] == "batch"
                     else section_schema(node["mode"])
                 ),
                 prompt_hash=digest(
-                    REVIEW_PROMPT
+                    G.PROMPT
+                    if node["mode"] == "guided"
+                    else REVIEW_PROMPT
                     if node["kind"] == "evaluator"
                     else batch_prompt(node)
                     if node["mode"] == "batch"
@@ -220,10 +225,17 @@ async def complete_task(runtime: Any, task: dict, node: dict, context: dict, pol
 
     spec = BY_AGENT[node["agent"]]
     review = node["kind"] == "evaluator"
-    task_class = "semantic_review" if review else spec.task_class
-    additional_classes = tuple(BY_AGENT[m["agent"]].task_class for m in node.get("members", [])[1:])
+    guided = node["mode"] == "guided"
+    task_class = "guided_selection" if guided else "semantic_review" if review else spec.task_class
+    additional_classes = (
+        (spec.task_class,)
+        if guided
+        else tuple(BY_AGENT[m["agent"]].task_class for m in node.get("members", [])[1:])
+    )
     base_system = (
-        REVIEW_PROMPT
+        G.PROMPT
+        if guided
+        else REVIEW_PROMPT
         if review
         else batch_prompt(node)
         if node["mode"] == "batch"
@@ -237,7 +249,11 @@ async def complete_task(runtime: Any, task: dict, node: dict, context: dict, pol
     if task["prompt_hash"] != digest(base_system):
         raise ModelFailure("CONFIGURATION")
     schema = context["schema"]
-    output_limit = runtime.settings.ai_max_output_tokens
+    output_limit = (
+        min(128, runtime.settings.ai_max_output_tokens)
+        if guided
+        else runtime.settings.ai_max_output_tokens
+    )
     excluded: set[str] = set()
     for _ in range(2):
         async with runtime.engine.begin() as conn:
@@ -353,7 +369,11 @@ async def complete_task(runtime: Any, task: dict, node: dict, context: dict, pol
                 raise ModelFailure(
                     "TRUNCATED" if response.completion == "incomplete" else "REFUSED", "completed"
                 )
-            if review:
+            if guided:
+                wire = json.loads(response.text)
+                result = G.validate(context, wire)
+                output = wire
+            elif review:
                 output = Critique.model_validate_json(response.text)
                 result = validate_review(context, output)
                 result["review_model"] = dict(provider=profile.provider, model=profile.model)
@@ -434,6 +454,9 @@ async def complete_task(runtime: Any, task: dict, node: dict, context: dict, pol
             return result
         if failure is None:
             failure = ModelFailure("UNKNOWN", "unknown")
+        if guided:
+            # One optional call only. Quota, refusal or malformed output keeps the checklist usable.
+            raise failure
         remaining = (run["deadline"] - now()).total_seconds()
         task = await task_update(runtime, task["id"], state="RETRY_WAIT", diagnostic=failure.code)
         action = recovery(failure, task["attempt_count"], len(rows) + 1, remaining)
@@ -539,7 +562,9 @@ async def execute(runtime: Any, run: dict) -> tuple[dict, str | None]:
                     result = baseline(snapshot, node["agent"], prior, live)
                 else:
                     context = (
-                        pack_review(prior, live)
+                        G.pack(snapshot, node["agent"], live)
+                        if node["mode"] == "guided"
+                        else pack_review(prior, live)
                         if node["kind"] == "evaluator"
                         else pack_batch(
                             snapshot,
@@ -564,6 +589,8 @@ async def execute(runtime: Any, run: dict) -> tuple[dict, str | None]:
                             ],
                         )
                     )
+                    if node["mode"] == "guided" and not context["cards"]:
+                        raise ModelFailure("UNAVAILABLE")
                     if task["bound_at"] is None:
                         # Spaced JSON plus a margin stays below PostgreSQL's 90 KB bound.
                         if (
@@ -582,7 +609,9 @@ async def execute(runtime: Any, run: dict) -> tuple[dict, str | None]:
                         raise ModelFailure("AUTHORITY_REVOKED")
                     if task["candidate_payload"] is not None:
                         result = (
-                            validate_review(
+                            G.validate(context, task["candidate_payload"])
+                            if node["mode"] == "guided"
+                            else validate_review(
                                 context, Critique.model_validate(task["candidate_payload"])
                             )
                             if node["kind"] == "evaluator"
@@ -825,11 +854,18 @@ def assemble(snapshot: dict, sections: list, tasks: list, current: dict) -> dict
     suggestions = E.semantic_suggestions(snapshot, matches, current)
     for suggestion in suggestions:
         suggestion["confidence"] = None
+    guided = G.view(snapshot, sections, tasks, current) if plan["mode"] == "guided" else None
+    if guided:
+        useful = True  # A clearly labeled manual checklist remains available with no fresh data.
+        partial |= guided["status"] != "api_selected"
     return dict(
+        **({"guided_review": guided} if guided else {}),
         agents=states,
         findings=findings,
         suggestions=suggestions,
-        semantic_status="hybrid_partial" if partial else "hybrid_complete",
+        semantic_status=(
+            "guided_checklist" if guided else "hybrid_partial" if partial else "hybrid_complete"
+        ),
         runtime_version="v2",
         analysis_mode=plan["mode"],
         capability_details=details,

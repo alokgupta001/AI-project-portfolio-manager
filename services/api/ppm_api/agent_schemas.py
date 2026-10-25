@@ -9,6 +9,7 @@ from pydantic import Field
 
 from ppm_api.ai_schemas import AIRunView
 from ppm_api.document_schemas import Strict
+from ppm_api.guided_review import GuidedReview
 from ppm_api.jobs import StageView
 from ppm_api.model_contracts import AnalysisMode, CapabilityDetail, HybridSelection
 
@@ -85,6 +86,8 @@ class AgentDefinition(Strict):
     fallback: str
     output_schema: str = "SpecialistOutput"
     execution_policy: str | None = None
+    guided_enabled: bool = False
+    guided_project_ids: list[UUID] = Field(default_factory=list)
     task_class: str | None = None
     modes: list[str] = Field(default_factory=list)
     evaluation_cases: list[str] = ["supported", "missing", "contradictory", "malicious"]
@@ -184,6 +187,7 @@ class AnalysisView(Strict):
     stages: list[StageView]
     limitations: list[str]
     can_review: bool
+    can_cancel: bool = False
     runtime_version: str | None = None
     analysis_mode: AnalysisMode | None = None
     capability_details: list[CapabilityDetail] = Field(default_factory=list, max_length=9)
@@ -192,3 +196,4 @@ class AnalysisView(Strict):
     briefing: list[FindingView] = Field(default_factory=list, max_length=20)
     route_summary: list[dict] = Field(default_factory=list, max_length=4)
     blocked_reason: str | None = None
+    guided_review: GuidedReview | None = None

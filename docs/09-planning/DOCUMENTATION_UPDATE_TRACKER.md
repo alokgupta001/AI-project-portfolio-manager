@@ -1,5 +1,13 @@
 # Documentation update tracker
 
+**25 October 2026 — planning reconciliation:** added the [Sprint 11/11.1 local
+closeout](../10-reference/SPRINT-11-LOCAL-CLOSEOUT.md), [current plan](LOCAL_SAMPLE_PLAN_UPDATE.md), and linked Sprint 12 local
+implementation plan/starting prompt. Updated planning hubs, status/handoffs,
+requirement context, Sprint 11/11.1 entry pages and ADR 018. Local guided scope is
+complete; Sprint 12 is ready, not implemented. AT17/full-product gates remain open.
+Historical test receipts and frozen sources/prompts/migrations are preserved.
+This is a documentation-only reconciliation, not a new runtime verification.
+
 Sprint 11 — 16 October 2026: [checklist completion matrix](../04-testing/sprint-based/sprint-11/DOCUMENTATION_CHECKS.md) links the report/handoff, user/learning/demo/tests, agents contract/ADR, current status, requirement mapping and generated inventories. [Fresh validation](../04-testing/sprint-based/sprint-11/TESTING_REPORT.md) records actual commands. Real-provider quality, current hosted CI, production and scale remain open. Normal database is preserved; Sprint 12 unstarted.
 
 ## Historical checkpoints before Sprint 11

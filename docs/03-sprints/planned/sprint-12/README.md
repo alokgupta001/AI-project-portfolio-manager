@@ -1,6 +1,16 @@
 # Sprint 12 — Connector authority, historical labels and baseline models
 
-**PLANNED**. No implementation, executed tests or completed report is claimed. Purpose and intended work: Connector authority, historical labels and baseline models. Actual implementation/test result: none for this sprint in the audited tree. Incomplete: all planned packages and their external acceptance. Dependencies, exact tasks and acceptance remain in [the canonical roadmap](../../../09-planning/FUTURE_SPRINT_ROADMAP.md) (Sprint 12 section). Later extensions/dependencies are listed in its sequence.
+**READY TO START LOCALLY — NOT IMPLEMENTED**, 25 October 2026. Sprint 11/11.1's
+guided local scope is complete; broad AI accuracy AT17 remains blocked. Sprint 12
+can use verified source/job/deterministic interfaces without unqualified LLM output.
+No Sprint 12 implementation, tests or completed report is claimed. All three
+packages and their external acceptance remain to be done.
+
+Read the [local implementation plan](../../../09-planning/sprint-12/LOCAL_IMPLEMENTATION_PLAN.md)
+and [copyable starting prompt](../../../09-planning/sprint-12/START_PROMPT.md).
+The [canonical roadmap](../../../09-planning/FUTURE_SPRINT_ROADMAP.md) retains full
+acceptance; missing real credentials/labels must stay explicit blockers for the
+affected capability, even if the local fixture pipeline is accepted.
 
 ## Planned work packages
 

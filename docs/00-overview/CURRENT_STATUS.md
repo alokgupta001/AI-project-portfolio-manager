@@ -1,5 +1,38 @@
 # Current implementation and acceptance
 
+**Current disposition — 25 October 2026:** Sprint 11/11.1 is complete for the
+local guided-sample scope; Sprint 12 local foundations are ready to start, not yet
+implemented. Broad AI accuracy **AT17 remains BLOCKED**. Normal schema is 0016;
+Gemini/Puter/Groq guided access covers the two approved projects with shared
+50/day provider ceilings. See [the closeout](../10-reference/SPRINT-11-LOCAL-CLOSEOUT.md) and
+[reconciled plan](../09-planning/LOCAL_SAMPLE_PLAN_UPDATE.md) for evidence, current scope and the Sprint 12 prompt.
+This supersedes older runtime/rollout/stop statements below; dated test results
+and original full-product acceptance requirements remain unchanged.
+
+**25 October 2026 quota update:** verified Gemini's configured free quota and Puter's
+remaining monthly credit, then activated 50 requests/day per provider account in
+the local pilot. All nine role routes passed in the running API and worker. Scope,
+usage history, pacing and $0 policy are preserved. Puter throughput remains subject
+to token costs and monthly credit. [Evidence](../limitations/QUOTA_REVIEW.md).
+
+**Latest access update, 24 October 2026:** normal schema **0016** is deployed and
+healthy. Alok Gupta, Hement, Blaze and Ashu have demo membership and project-scoped
+guided permission; existing business roles are preserved. Explicit bounded data
+approval was received and cloud scope now includes Customer Onboarding Portal
+plus the synthetic demo.
+[Access and verification](../limitations/USER_ACCESS.md) supersedes the schema/test
+counts in the preceding limited-mode checkpoint below. Broad AT17 stays blocked.
+
+**24 October 2026:** [limited guided review](../limitations/IMPLEMENTATION_REPORT.md)
+is deployed locally on schema 0015 with preserved existing data and a separate
+synthetic demo. Nine manual checklists work immediately; one optional API selection
+per run is enabled for the explicitly approved synthetic demo only. One live request
+each to Gemini/Puter/Groq succeeded; [receipt](../limitations/LIVE_API_VERIFICATION.md). Backend
+509 passed/one skipped; two browser journeys passed. Broad accuracy AT17 remains
+blocked. See [usage](../limitations/TRY_IT_NOW.md) and
+[known limits/future solutions](../limitations/LIMITS_AND_FUTURE_SOLUTIONS.md).
+Earlier versions and deployment states below are historical.
+
 PR #3 review follow-up — 16 October 2026: [four review fixes and CI corrections](../04-testing/sprint-based/sprint-11/REVIEW_FIXES.md)
 are on `sprint-11-specialist-review`. Forward 0014 preserves existing migrations;
 normal database remains 0012. The requested output-budget increase is deferred

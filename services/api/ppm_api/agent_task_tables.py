@@ -130,4 +130,19 @@ quotas = sa.Table(
     sa.Index("ix_model_quota_time", "quota_scope_id", "admitted_at"),
     sa.Index("ix_model_quota_slots", "quota_scope_id", "slot_expires_at"),
 )
-TABLES = (tasks, sections, scopes, quotas)
+guided_grants = sa.Table(
+    "ai_guided_grants",
+    Base.metadata,
+    sa.Column("organization_id", sa.Uuid(), primary_key=True),
+    sa.Column("user_id", sa.Uuid(), primary_key=True),
+    sa.Column("project_id", sa.Uuid(), primary_key=True),
+    sa.Column("enabled", sa.Boolean(), nullable=False),
+    sa.Column("created_at", sa.DateTime(timezone=True), nullable=False),
+    sa.ForeignKeyConstraint(
+        ["organization_id", "user_id"], ["memberships.organization_id", "memberships.user_id"]
+    ),
+    sa.ForeignKeyConstraint(
+        ["organization_id", "project_id"], ["ppm_projects.organization_id", "ppm_projects.id"]
+    ),
+)
+TABLES = (tasks, sections, scopes, quotas, guided_grants)

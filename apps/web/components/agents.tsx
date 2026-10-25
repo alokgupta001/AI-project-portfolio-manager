@@ -27,7 +27,9 @@ export function Agents({
   const [selected, setSelected] = useState<Analysis | null>(null);
   const [definitions, setDefinitions] = useState<S["AgentDefinition"][]>([]);
   const [mode, setMode] =
-    useState<NonNullable<S["AnalysisInput"]["analysis_mode"]>>("auto");
+    useState<NonNullable<S["AnalysisInput"]["analysis_mode"]>>("metrics");
+  const [guidedRole, setGuidedRole] =
+    useState<S["AgentDefinition"]["agent"]>("financial");
   const [roles, setRoles] = useState<S["AgentDefinition"]["agent"][]>([]);
   const [project, setProject] = useState("");
   const [assessment, setAssessment] = useState("");
@@ -45,6 +47,12 @@ export function Agents({
   const hybrid = definitions.some(
     (d) => d.execution_policy === "hybrid_on_demand",
   );
+  const guidedEnabled = definitions.some((d) => d.guided_enabled);
+  const guidedProjects = definitions[0]?.guided_project_ids ?? [];
+  const guidedAccess = guidedEnabled && guidedProjects.length > 0;
+  useEffect(() => {
+    if (guidedEnabled) setMode("guided");
+  }, [guidedEnabled]);
   const api = useCallback(
     async <T,>(
       path: string,
@@ -233,6 +241,14 @@ export function Agents({
           Real-provider semantic quality: <strong>UNVERIFIED/BLOCKED</strong>.
           Confidence is separate from maturity.
         </p>
+        {guidedEnabled && (
+          <p>
+            <strong>Limited guided review is available.</strong> The application
+            computes observations and writes the review actions. An API can
+            select up to two observations for one role. Results remain usable
+            when an API is unavailable.
+          </p>
+        )}
       </header>
       {loading && <p role="status">Loading specialist runs…</p>}
       {error && (
@@ -243,7 +259,7 @@ export function Agents({
       <Button disabled={busy} onClick={() => void act(refresh)}>
         Refresh recommendations
       </Button>
-      {admin ? (
+      {admin || guidedAccess ? (
         <form
           className="panel"
           onSubmit={(e) => {
@@ -258,11 +274,13 @@ export function Agents({
                       runtime_version: "v2",
                       analysis_mode: mode,
                       requested_agents:
-                        mode === "all_specialists"
-                          ? null
-                          : roles.length
-                            ? roles
-                            : null,
+                        mode === "guided"
+                          ? [guidedRole]
+                          : mode === "all_specialists"
+                            ? null
+                            : roles.length
+                              ? roles
+                              : null,
                     }
                   : {}),
               });
@@ -272,6 +290,12 @@ export function Agents({
           }}
         >
           <h2>Start a scoped analysis</h2>
+          {!admin && (
+            <p>
+              You can run guided reviews for explicitly permitted projects. Your
+              existing project role is unchanged.
+            </p>
+          )}
           <RecordSelect
             label="Analysis project"
             kind="projects"
@@ -282,6 +306,7 @@ export function Agents({
           />
           <Field label="Assessment (optional)">
             <select
+              disabled={!admin}
               value={assessment}
               onChange={(e) => setAssessment(e.target.value)}
             >
@@ -300,55 +325,95 @@ export function Agents({
                   value={mode}
                   onChange={(e) => setMode(e.target.value as typeof mode)}
                 >
-                  <option value="auto">Automatic priorities</option>
-                  <option value="metrics">Metrics only · no model calls</option>
-                  <option value="domain">
-                    Selected specialist interpretation
-                  </option>
-                  <option value="assessment">Assessment rubric review</option>
-                  <option value="portfolio">Portfolio synthesis</option>
-                  <option value="executive">Executive synthesis</option>
-                  <option value="all_specialists">
-                    All nine specialists · up to four calls
-                  </option>
+                  {guidedEnabled && (
+                    <option value="guided">
+                      Guided review · limited, one API call
+                    </option>
+                  )}
+                  {admin && (
+                    <>
+                      <option value="auto">Automatic priorities</option>
+                      <option value="metrics">
+                        Metrics only · no model calls
+                      </option>
+                      <option value="domain">
+                        Selected specialist interpretation
+                      </option>
+                      <option value="assessment">
+                        Assessment rubric review
+                      </option>
+                      <option value="portfolio">Portfolio synthesis</option>
+                      <option value="executive">Executive synthesis</option>
+                      <option value="all_specialists">
+                        All nine specialists · up to four calls
+                      </option>
+                    </>
+                  )}
                 </select>
               </Field>
-              <fieldset>
-                <legend>
-                  Requested specialists (selection order sets priority)
-                </legend>
-                <p>
-                  {mode === "all_specialists"
-                    ? "All nine roles are requested in four bounded batches. Missing evidence, provider limits or a failed batch can leave partial coverage. Assessment answers require separate scoped analysis."
-                    : "Leave empty for automatic selection. Up to three initial AI sections fit in one run; other requested interpretations remain deferred."}{" "}
-                  Metrics and AI coverage are reported separately.
-                </p>
-                {definitions.map((d) => (
-                  <label key={d.agent}>
-                    <input
-                      type="checkbox"
-                      disabled={mode === "all_specialists"}
-                      checked={
-                        mode === "all_specialists" || roles.includes(d.agent)
-                      }
+              {mode === "guided" ? (
+                <>
+                  <Field label="Guided review role">
+                    <select
+                      value={guidedRole}
                       onChange={(e) =>
-                        setRoles((old) =>
-                          e.target.checked
-                            ? [...old, d.agent]
-                            : old.filter((r) => r !== d.agent),
-                        )
+                        setGuidedRole(e.target.value as typeof guidedRole)
                       }
-                    />{" "}
-                    {d.agent}
-                  </label>
-                ))}
-                {mode !== "all_specialists" && roles.length > 0 && (
-                  <p>Priority: {roles.join(" → ")}</p>
-                )}
-              </fieldset>
+                    >
+                      {definitions.map((d) => (
+                        <option key={d.agent} value={d.agent}>
+                          {d.agent}
+                        </option>
+                      ))}
+                    </select>
+                  </Field>
+                  <p>
+                    Gemini: financial, schedule and resource. Puter: risk,
+                    governance and agile coaching. Groq: team support, PMO and
+                    executive. All nine checklists remain available. One role
+                    per run keeps requests small. Only structured observations
+                    are sent; document text and assessment answers are excluded
+                    from this mode.
+                  </p>
+                </>
+              ) : (
+                <fieldset>
+                  <legend>
+                    Requested specialists (selection order sets priority)
+                  </legend>
+                  <p>
+                    {mode === "all_specialists"
+                      ? "All nine roles are requested in four bounded batches. Missing evidence, provider limits or a failed batch can leave partial coverage. Assessment answers require separate scoped analysis."
+                      : "Leave empty for automatic selection. Up to three initial AI sections fit in one run; other requested interpretations remain deferred."}{" "}
+                    Metrics and AI coverage are reported separately.
+                  </p>
+                  {definitions.map((d) => (
+                    <label key={d.agent}>
+                      <input
+                        type="checkbox"
+                        disabled={mode === "all_specialists"}
+                        checked={
+                          mode === "all_specialists" || roles.includes(d.agent)
+                        }
+                        onChange={(e) =>
+                          setRoles((old) =>
+                            e.target.checked
+                              ? [...old, d.agent]
+                              : old.filter((r) => r !== d.agent),
+                          )
+                        }
+                      />{" "}
+                      {d.agent}
+                    </label>
+                  ))}
+                  {mode !== "all_specialists" && roles.length > 0 && (
+                    <p>Priority: {roles.join(" → ")}</p>
+                  )}
+                </fieldset>
+              )}
             </>
           )}
-          <fieldset>
+          <fieldset disabled={!admin}>
             <legend>Ready document evidence (up to five)</legend>
             <p>
               Shows the first 100 project sources and organization policies from
@@ -383,6 +448,8 @@ export function Agents({
             disabled={
               busy ||
               !project ||
+              (!admin &&
+                (!guidedProjects.includes(project) || mode !== "guided")) ||
               (hybrid &&
                 ((mode === "domain" && roles.length === 0) ||
                   (mode === "assessment" && !assessment) ||
@@ -406,9 +473,62 @@ export function Agents({
         </form>
       ) : (
         <StatePanel kind="empty" title="Read and review access">
-          Starting analysis requires Admin. Independent project editors or
-          assigned assessment reviewers can review permitted results.
+          Starting analysis requires Admin or an explicit guided project grant.
+          Independent project editors or assigned assessment reviewers can
+          review permitted results.
         </StatePanel>
+      )}
+      {selected?.guided_review && (
+        <section className="panel" aria-label="Guided review results">
+          <h2>Guided review checklist</h2>
+          <p>
+            <strong>
+              {selected.guided_review.status === "api_selected"
+                ? "API selection completed"
+                : "Rules-only checklist"}
+            </strong>
+            {" · "}
+            {selected.guided_review.agent}
+            {" · assigned provider: "}
+            {selected.guided_review.provider}
+          </p>
+          <p>
+            Facts and actions below are produced by the application. API
+            selection does not establish accuracy, compliance, a forecast or an
+            approved recommendation.
+          </p>
+          {selected.guided_review.code && (
+            <p role="status">
+              API assistance unavailable ({selected.guided_review.code}). The
+              checklist is still usable. Rate or daily limits require waiting;
+              refreshing this page makes no API call.
+            </p>
+          )}
+          {(selected.guided_review.cards ?? []).length === 0 && (
+            <p>
+              No eligible fresh observations for this role. Use its checklist to
+              collect the missing evidence.
+            </p>
+          )}
+          {(selected.guided_review.cards ?? []).map((card) => (
+            <article key={card.source}>
+              <h3>{card.fact}</h3>
+              <p>{card.action}</p>
+              <p>Source: {card.location}</p>
+            </article>
+          ))}
+          <details>
+            <summary>Review actions for all nine roles</summary>
+            <ul>
+              {(selected.guided_review.checklists ?? []).map((entry) => (
+                <li key={entry.agent}>
+                  <strong>{entry.agent}</strong> ({entry.provider}):{" "}
+                  {entry.action}
+                </li>
+              ))}
+            </ul>
+          </details>
+        </section>
       )}
       <section className="panel">
         <h2>Analysis runs</h2>
@@ -622,7 +742,7 @@ export function Agents({
               ))}
             </ol>
           </details>
-          {admin && !terminal.has(selected.run.status) && (
+          {selected.can_cancel && !terminal.has(selected.run.status) && (
             <Button
               disabled={busy}
               onClick={() =>

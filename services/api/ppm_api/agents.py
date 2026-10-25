@@ -28,6 +28,7 @@ from ppm_api.agent_schemas import (
 from ppm_api.ai_provider import ProviderError
 from ppm_api.ai_retrieval import digest, index_chunks
 from ppm_api.ai_schemas import AIRunInput
+from ppm_api.guided_review import granted_projects as guided_granted_projects
 from ppm_api.identity import Auth, Principal, now, record
 from ppm_api.jobs import TERMINAL, stage
 
@@ -369,8 +370,17 @@ async def definitions(request: Request, p: Auth) -> list[dict]:
     """List the available typed specialist definitions for the current runtime."""
     if request.app.state.settings.ai_runtime_v2_enabled:
         from ppm_api.agent_registry import definitions as hybrid_definitions
+        from ppm_api.guided_review import granted_projects
 
-        return hybrid_definitions()
+        projects = await granted_projects(p) if request.app.state.settings.ai_guided_enabled else []
+        return [
+            d
+            | {
+                "guided_enabled": request.app.state.settings.ai_guided_enabled,
+                "guided_project_ids": projects,
+            }
+            for d in hybrid_definitions()
+        ]
     return E.definitions()
 
 
@@ -533,6 +543,7 @@ async def detail(id_: UUID, p: Auth) -> dict:
                 "capability_details",
                 "task_summary",
                 "validation_summary",
+                "guided_review",
             )
             if k in output
         },
@@ -555,6 +566,15 @@ async def detail(id_: UUID, p: Auth) -> dict:
         ],
         stages=await ai.stages(id_, p),
         can_review=job["status"] in TERMINAL and await can_review(p, row),
+        can_cancel=job["status"] not in TERMINAL
+        and (
+            p.role == "Admin"
+            or (
+                run["actor_id"] == p.user["id"]
+                and run["snapshot"].get("analysis_mode") == "guided"
+                and run["project_id"] in await guided_granted_projects(p)
+            )
+        ),
         limitations=[
             "Accepted means reviewed only; no project or original assessment changes.",
             "Confidence is uncalibrated source support, separate from maturity (0–100).",

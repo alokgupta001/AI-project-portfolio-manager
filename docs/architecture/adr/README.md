@@ -24,4 +24,7 @@ Records 001–006 are the Sprint 00 **proposed baseline**. Record 007 describes 
 
 ## Sprint 10 shared AI runtime
 
+[ADR 018 — Limited guided review](018-limited-guided-review.md): current local
+closed-choice assistance, nine manual checklists and separate cloud/quality gates.
+
 [Sprint 10 runtime and evidence](016-budgeted-ai-runtime.md). Local implementation and bounded Gemini free-tier smoke verified; general model/retrieval quality remains unverified. $0 authorization and source fallback apply; no daily renewal. Stop before 11.

@@ -1,5 +1,53 @@
 # Latest technical handoff
 
+**Current disposition — 25 October 2026:** Sprint 11/11.1 is complete for the
+local guided-sample scope; Sprint 12 local foundations are ready to start, not yet
+implemented. Broad AI accuracy **AT17 remains BLOCKED**. Normal schema is 0016;
+Gemini/Puter/Groq guided access covers the two approved projects with shared
+50/day provider ceilings. See [the closeout](../10-reference/SPRINT-11-LOCAL-CLOSEOUT.md) and
+[reconciled plan](../09-planning/LOCAL_SAMPLE_PLAN_UPDATE.md) for evidence, current scope and the Sprint 12 prompt.
+This supersedes older runtime/rollout/stop statements below; dated test results
+and original full-product acceptance requirements remain unchanged.
+
+**Current owner direction — local sample first, 25 October 2026:** continue with
+the active 50/day provider ceilings and existing guided access. Deployment-specific
+work is deferred to [Future deployment points](../limitations/FUTURE_DEPLOYMENT_POINTS.md).
+The checklist records future actions/evidence; it does not block local sample use
+or authorize deployment, billing changes or weaker access controls.
+
+**25 October 2026 — quota verification and activation:** the actual Gemini project
+shows Free tier with 500 requests/day for Gemini 3.5 Flash Lite. Puter read-only
+metering returned 962.41/1,000 monthly credits; the small guided demo's token use
+projects to about 226 credits for 50/day over 31 days, not a worst-case guarantee.
+Daily app ceilings are now 50 per provider, shared across users/projects, with the
+Gemini runtime guard also 50. API and worker verified all nine routes; usage,
+failures, quarantine, scopes and pacing are preserved. No model calls or billing
+changes were made. [Current quota report](../limitations/QUOTA_REVIEW.md).
+
+**Latest — 24 October 2026, named-user access:** schema 0016 is deployed locally.
+Alok Gupta, Hement, Blaze and Ashu now have demo-only Admin access and explicit
+guided access to Customer Onboarding Portal without changing their existing roles.
+Explicit business-project payload approval was received and applied for that
+project to Gemini/Puter/Groq; other projects remain blocked and shared caps unchanged.
+[Current access and validation](../limitations/USER_ACCESS.md),
+[handoff](../limitations/HANDOFF.md). Three browser journeys passed; full backend
+510 passed/one skipped/one stale-schema readiness failure, followed by all five
+targeted integration/access tests passing after correction. Established database
+rows and objects were preserved. Earlier checkpoint details below are historical.
+
+**Current — 24 October 2026, limited guided review:** the requested review and
+usable local mode are implemented. Follow [the current handoff](../limitations/HANDOFF.md),
+[local walkthrough](../limitations/TRY_IT_NOW.md) and
+[limitations/future solutions](../limitations/LIMITS_AND_FUTURE_SOLUTIONS.md).
+Normal schema is now **0015**, existing data/objects preserved, local services
+healthy, synthetic demo ready. Explicit synthetic-demo cloud approval was received
+and applied: one live request each to Gemini/Puter/Groq succeeded; saved UI results
+reopened without new calls. Other projects stay blocked. [Live receipt](../limitations/LIVE_API_VERIFICATION.md).
+509 backend tests passed/one skipped; two browser journeys and static checks passed.
+Broad AT17 remains BLOCKED.
+Changes remain uncommitted; no new PR or Sprint 12 work. Older deployment/version
+statements below are historical and are superseded by this entry.
+
 **Final — 23 October 2026, Sprint 11.1 review disposition:** 495 full backend tests
 and disposable lifecycle/drift checks pass (470.08 seconds, one inherited Starlette
 warning); focused 95 offline/nine runtime DB cases overlap. All verified review

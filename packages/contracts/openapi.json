@@ -407,7 +407,8 @@
                   "assessment",
                   "portfolio",
                   "executive",
-                  "all_specialists"
+                  "all_specialists",
+                  "guided"
                 ],
                 "type": "string"
               },
@@ -983,6 +984,19 @@
             "title": "Fallback",
             "type": "string"
           },
+          "guided_enabled": {
+            "default": false,
+            "title": "Guided Enabled",
+            "type": "boolean"
+          },
+          "guided_project_ids": {
+            "items": {
+              "format": "uuid",
+              "type": "string"
+            },
+            "title": "Guided Project Ids",
+            "type": "array"
+          },
           "inputs": {
             "items": {
               "type": "string"
@@ -1398,7 +1412,8 @@
                   "assessment",
                   "portfolio",
                   "executive",
-                  "all_specialists"
+                  "all_specialists",
+                  "guided"
                 ],
                 "type": "string"
               },
@@ -1572,7 +1587,8 @@
                   "assessment",
                   "portfolio",
                   "executive",
-                  "all_specialists"
+                  "all_specialists",
+                  "guided"
                 ],
                 "type": "string"
               },
@@ -1624,6 +1640,11 @@
             "title": "Briefing",
             "type": "array"
           },
+          "can_cancel": {
+            "default": false,
+            "title": "Can Cancel",
+            "type": "boolean"
+          },
           "can_review": {
             "title": "Can Review",
             "type": "boolean"
@@ -1661,6 +1682,16 @@
               }
             ],
             "title": "Framework Version Id"
+          },
+          "guided_review": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/GuidedReview"
+              },
+              {
+                "type": "null"
+              }
+            ]
           },
           "limitations": {
             "items": {
@@ -3446,6 +3477,70 @@
         "title": "CapacityWeek",
         "type": "object"
       },
+      "Card": {
+        "additionalProperties": false,
+        "properties": {
+          "action": {
+            "title": "Action",
+            "type": "string"
+          },
+          "fact": {
+            "title": "Fact",
+            "type": "string"
+          },
+          "location": {
+            "title": "Location",
+            "type": "string"
+          },
+          "source": {
+            "title": "Source",
+            "type": "string"
+          }
+        },
+        "required": [
+          "source",
+          "location",
+          "fact",
+          "action"
+        ],
+        "title": "Card",
+        "type": "object"
+      },
+      "Checklist": {
+        "additionalProperties": false,
+        "properties": {
+          "action": {
+            "title": "Action",
+            "type": "string"
+          },
+          "agent": {
+            "enum": [
+              "financial",
+              "schedule",
+              "sentiment",
+              "risk",
+              "resource",
+              "governance",
+              "agile_coach",
+              "pmo",
+              "executive"
+            ],
+            "title": "Agent",
+            "type": "string"
+          },
+          "provider": {
+            "title": "Provider",
+            "type": "string"
+          }
+        },
+        "required": [
+          "agent",
+          "provider",
+          "action"
+        ],
+        "title": "Checklist",
+        "type": "object"
+      },
       "ChunkView": {
         "properties": {
           "confidence": {
@@ -5126,8 +5221,8 @@
             "type": "string"
           },
           "schema_revision": {
-            "const": "0015_agent_task_runtime",
-            "default": "0015_agent_task_runtime",
+            "const": "0016_guided_project_access",
+            "default": "0016_guided_project_access",
             "title": "Schema Revision",
             "type": "string"
           }
@@ -5455,6 +5550,79 @@
           "user_id"
         ],
         "title": "GrantInput",
+        "type": "object"
+      },
+      "GuidedReview": {
+        "additionalProperties": false,
+        "properties": {
+          "agent": {
+            "enum": [
+              "financial",
+              "schedule",
+              "sentiment",
+              "risk",
+              "resource",
+              "governance",
+              "agile_coach",
+              "pmo",
+              "executive"
+            ],
+            "title": "Agent",
+            "type": "string"
+          },
+          "cards": {
+            "items": {
+              "$ref": "#/components/schemas/Card"
+            },
+            "maxItems": 2,
+            "title": "Cards",
+            "type": "array"
+          },
+          "checklists": {
+            "items": {
+              "$ref": "#/components/schemas/Checklist"
+            },
+            "maxItems": 9,
+            "title": "Checklists",
+            "type": "array"
+          },
+          "code": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Code"
+          },
+          "provider": {
+            "title": "Provider",
+            "type": "string"
+          },
+          "quality": {
+            "const": "LIMITED_SELECTION_NOT_SEMANTIC_QUALIFICATION",
+            "default": "LIMITED_SELECTION_NOT_SEMANTIC_QUALIFICATION",
+            "title": "Quality",
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "api_selected",
+              "rules_only",
+              "pending"
+            ],
+            "title": "Status",
+            "type": "string"
+          }
+        },
+        "required": [
+          "status",
+          "agent",
+          "provider"
+        ],
+        "title": "GuidedReview",
         "type": "object"
       },
       "HTTPValidationError": {

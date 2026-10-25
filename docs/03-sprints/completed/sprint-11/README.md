@@ -1,5 +1,14 @@
 # Sprint 11 — Specialists, semantic suggestions and reviewed recommendations
 
+**Current disposition — 25 October 2026:** Sprint 11/11.1 is complete for the
+local guided-sample scope; Sprint 12 local foundations are ready to start, not yet
+implemented. Broad AI accuracy **AT17 remains BLOCKED**. Normal schema is 0016;
+Gemini/Puter/Groq guided access covers the two approved projects with shared
+50/day provider ceilings. See [the closeout](../../../10-reference/SPRINT-11-LOCAL-CLOSEOUT.md) and
+[reconciled plan](../../../09-planning/LOCAL_SAMPLE_PLAN_UPDATE.md) for evidence, current scope and the Sprint 12 prompt.
+This supersedes older runtime/rollout/stop statements below; dated test results
+and original full-product acceptance requirements remain unchanged.
+
 Implemented local scope: PPM-11-001/002/003. Validation is recorded in the
 [report](SPRINT_REPORT.md) and [testing](../../../04-testing/sprint-based/sprint-11/TESTING_REPORT.md).
 Real-provider semantic quality remains **UNVERIFIED/BLOCKED**. Stop before Sprint 12.

@@ -1,5 +1,14 @@
 # Sprint history and future work
 
+**Current disposition — 25 October 2026:** Sprint 11/11.1 is complete for the
+local guided-sample scope; Sprint 12 local foundations are ready to start, not yet
+implemented. Broad AI accuracy **AT17 remains BLOCKED**. Normal schema is 0016;
+Gemini/Puter/Groq guided access covers the two approved projects with shared
+50/day provider ceilings. See [the closeout](../10-reference/SPRINT-11-LOCAL-CLOSEOUT.md) and
+[reconciled plan](../09-planning/LOCAL_SAMPLE_PLAN_UPDATE.md) for evidence, current scope and the Sprint 12 prompt.
+This supersedes older runtime/rollout/stop statements below; dated test results
+and original full-product acceptance requirements remain unchanged.
+
 Current: [Sprint 11.1 implementation](active/sprint-11.1/README.md), authorized after the architecture revision. Core v2 is locally verified behind a default-off flag; final controls/regression/browser receipts are linked. Normal 0012 and prior history remain preserved. Real-model qualification and rollout are open.
 
 [Sprint 11.1 architecture initialization](../09-planning/sprint-11.1/README.md), 17 October 2026: planning package and fresh offline baseline; no application implementation or deployment. It extends the Sprint 11 checkpoint before future implementation, without starting Sprint 12.

@@ -21,7 +21,7 @@ AgentId = Literal[
     "executive",
 ]
 AnalysisMode = Literal[
-    "auto", "metrics", "domain", "assessment", "portfolio", "executive", "all_specialists"
+    "auto", "metrics", "domain", "assessment", "portfolio", "executive", "all_specialists", "guided"
 ]
 SectionMode = Literal["findings", "rubric", "synthesis"]
 Outcome = Literal["supported", "no_findings", "insufficient_evidence"]
@@ -36,6 +36,7 @@ TaskClass = Literal[
     "portfolio_synthesis",
     "executive_synthesis",
     "semantic_review",
+    "guided_selection",
 ]
 Predicate = Literal[
     "budget_overrun",
@@ -69,6 +70,8 @@ class HybridSelection(Strict):
                 raise ValueError("Selections must be distinct")
         if self.analysis_mode == "domain" and not self.requested_agents:
             raise ValueError("Domain mode requires ordered requested agents")
+        if self.analysis_mode == "guided" and len(self.requested_agents or []) != 1:
+            raise ValueError("Guided review requires exactly one role per run")
         if (
             self.analysis_mode == "all_specialists"
             and self.requested_agents is not None
