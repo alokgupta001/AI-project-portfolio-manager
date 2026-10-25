@@ -36,6 +36,8 @@ class ModelProfile(Strict):
     # Assignment restricts routing; it never grants semantic qualification.
     assigned_task_classes: list[TaskClass] = Field(default_factory=list, max_length=10)
     benchmark_only: bool = True
+    # Independent permission for closed-choice assistance; never qualifies interpretation.
+    guided_selection_enabled: bool = False
     structured_mode: Literal["json_schema", "json_object", "none"] = "json_schema"
     context_tokens: int = Field(default=4096, ge=512, le=32768)
     max_output_tokens: int = Field(default=512, ge=64, le=512)

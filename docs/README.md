@@ -1,5 +1,14 @@
 # AI-PPM documentation
 
+**Current disposition — 25 October 2026:** Sprint 11/11.1 is complete for the
+local guided-sample scope; Sprint 12 local foundations are ready to start, not yet
+implemented. Broad AI accuracy **AT17 remains BLOCKED**. Normal schema is 0016;
+Gemini/Puter/Groq guided access covers the two approved projects with shared
+50/day provider ceilings. See [the closeout](10-reference/SPRINT-11-LOCAL-CLOSEOUT.md) and
+[reconciled plan](09-planning/LOCAL_SAMPLE_PLAN_UPDATE.md) for evidence, current scope and the Sprint 12 prompt.
+This supersedes older runtime/rollout/stop statements below; dated test results
+and original full-product acceptance requirements remain unchanged.
+
 17 October 2026 — [Sprint 11.1 implementation](03-sprints/active/sprint-11.1/README.md) follows the [architecture blueprint](09-planning/sprint-11.1/README.md). All nine roles have optional qualified AI paths alongside canonical Python services. V2 is default-off; [verification](verification/sprint11_1/IMPLEMENTATION.md) separates local control checks from blocked model/hardware qualification. Normal 0012 and existing data remain preserved; no deployment or Sprint 12.
 
 Current Sprint 11: [implementation hub](03-sprints/completed/sprint-11/README.md), [user steps](03-sprints/completed/sprint-11/USER_GUIDE.md), [learning](02-learning/06-ai-and-analytics/SPECIALISTS_REVIEW.md), [demo](05-demos/sprint-based/sprint-11/README.md), [tests](04-testing/sprint-based/sprint-11/TESTING_REPORT.md). Real-model quality remains UNVERIFIED/BLOCKED. No Sprint 12 work.

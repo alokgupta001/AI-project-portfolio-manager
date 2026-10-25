@@ -33,7 +33,23 @@ def eligibility(p: ModelProfile, r: RouteRequirements, s: Settings) -> str | Non
     ):
         return "SCOPE_NOT_AUTHORIZED"
     classes = {r.task_class, *r.additional_task_classes}
-    if p.benchmark_only or not classes <= set(p.qualified_task_classes):
+    guided = r.task_class == "guided_selection"
+    if guided:
+        from ppm_api.agent_registry import BY_AGENT
+        from ppm_api.guided_review import PROVIDERS
+
+        roles = [a for a, c in BY_AGENT.items() if (c.task_class,) == r.additional_task_classes]
+        if (
+            not s.ai_guided_enabled
+            or not p.guided_selection_enabled
+            or len(roles) != 1
+            or p.provider != PROVIDERS[roles[0]]
+        ):
+            return "QUALITY_UNVERIFIED"
+        classes.discard("guided_selection")
+        if not classes <= set(p.assigned_task_classes):
+            return "ROLE_NOT_ASSIGNED"
+    elif p.benchmark_only or not classes <= set(p.qualified_task_classes):
         return "QUALITY_UNVERIFIED"
     if p.assigned_task_classes and not classes <= set(p.assigned_task_classes):
         return "ROLE_NOT_ASSIGNED"

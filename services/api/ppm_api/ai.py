@@ -114,15 +114,10 @@ async def status(request: Request, p: Auth) -> dict:
 
 async def budget(p: Principal, create: bool = False) -> dict:
     """Lock and return the tenant budget, optionally creating its zero-limit defaults."""
-    row = (
-        (
-            await p.conn.execute(
-                sa.select(T.budgets).where(T.budgets.c.organization_id == oid(p)).with_for_update()
-            )
-        )
-        .mappings()
-        .first()
-    )
+    query = sa.select(T.budgets).where(T.budgets.c.organization_id == oid(p))
+    if p.role == "Admin":
+        query = query.with_for_update()
+    row = (await p.conn.execute(query)).mappings().first()
     if row:
         return dict(row)
     values = dict(
@@ -137,6 +132,8 @@ async def budget(p: Principal, create: bool = False) -> dict:
         circuit_until=None,
     )
     if create:
+        if p.role != "Admin":
+            delivery.fail(503, "An administrator must initialize the guided review budget")
         await p.conn.execute(T.budgets.insert().values(**values))
     return values
 
@@ -320,12 +317,26 @@ async def configure(body: AIBudgetInput, request: Request, p: Auth) -> dict:
 async def create(body: AIRunInput, request: Request, p: Auth) -> dict:
     """Queue an idempotent authorized run after reserving its budget and frozen inputs."""
     await delivery.lock(p, request)
-    admin(p)  # PM has no explicit costly-analysis grant in the current permission model.
+    if p.role != "Admin":
+        from ppm_api.guided_review import granted_projects
+
+        if (
+            body.operation != "agents"
+            or body.analysis_mode != "guided"
+            or not request.app.state.settings.ai_guided_enabled
+            or request.app.state.settings.ai_spend_limit_usd != ZERO
+            or body.project_id not in await granted_projects(p)
+        ):
+            delivery.fail(403, "Starting analysis requires Admin or a guided project grant")
+        if body.version_ids or body.assessment_id:
+            delivery.fail(403, "Guided project grants permit structured project observations only")
     await delivery.get(p, "projects", body.project_id, True)
     if body.uses_v2() and (
         body.operation != "agents" or not request.app.state.settings.ai_runtime_v2_enabled
     ):
         delivery.fail(422, "Hybrid runtime is unavailable for this request")
+    if body.analysis_mode == "guided" and not request.app.state.settings.ai_guided_enabled:
+        delivery.fail(422, "Guided review is not enabled")
     if (
         (body.operation == "query" and (not body.query.strip() or body.version_id))
         or (body.operation == "index" and (not body.version_id or body.query))
@@ -475,11 +486,12 @@ async def create(body: AIRunInput, request: Request, p: Auth) -> dict:
         # Task dependency checks use the same live analysis RLS as reads.
         # Publish its parent first within this transaction.
         await initialize(p.conn, run, analysis_snapshot)
-    await p.conn.execute(
-        T.budgets.update()
-        .where(T.budgets.c.id == b["id"])
-        .values(reserved_usd=b["reserved_usd"] + reservation)
-    )
+    if reservation != ZERO:
+        await p.conn.execute(
+            T.budgets.update()
+            .where(T.budgets.c.id == b["id"])
+            .values(reserved_usd=b["reserved_usd"] + reservation)
+        )
     job = dict(
         id=uuid4(),
         organization_id=oid(p),
@@ -539,8 +551,16 @@ async def create(body: AIRunInput, request: Request, p: Auth) -> dict:
 async def cancel(id_: UUID, request: Request, p: Auth) -> dict:
     """Cancel a visible run with revision checks and settle its remaining reservation."""
     await delivery.lock(p, request)
-    admin(p)
     run, job = await access(p, id_)
+    if p.role != "Admin":
+        from ppm_api.guided_review import granted_projects
+
+        if (
+            run["actor_id"] != p.user["id"]
+            or run["snapshot"].get("analysis_mode") != "guided"
+            or run["project_id"] not in await granted_projects(p)
+        ):
+            delivery.fail(403, "Only an administrator or the permitted guided-run owner may cancel")
     if request.headers.get("if-match") is None:
         delivery.fail(428, "Reload the run before cancellation")
     if request.headers.get("if-match") != str(job["sequence"]):
@@ -642,7 +662,7 @@ async def worker_context(
         return None, None, None
     if not ref["authorized"]:
         return None, {}, {}
-    p = await worker_principal(conn, tenant, actor, ref["session_id"])
+    p = await worker_principal(conn, tenant, actor, ref["session_id"], guided_run_id=ref["run_id"])
     if not p:
         return None, {}, {}
     run, job = await access(p, ref["run_id"])
@@ -664,14 +684,15 @@ async def settle(
     if run["settled"]:
         return
     b = await budget(p)
-    await p.conn.execute(
-        T.budgets.update()
-        .where(T.budgets.c.id == b["id"])
-        .values(
-            reserved_usd=b["reserved_usd"] - run["reservation"],
-            spent_usd=b["spent_usd"] + run["charged_usd"],
+    if run["reservation"] != ZERO or run["charged_usd"] != ZERO:
+        await p.conn.execute(
+            T.budgets.update()
+            .where(T.budgets.c.id == b["id"])
+            .values(
+                reserved_usd=b["reserved_usd"] - run["reservation"],
+                spent_usd=b["spent_usd"] + run["charged_usd"],
+            )
         )
-    )
     await p.conn.execute(
         T.runs.update()
         .where(T.runs.c.id == run["id"])

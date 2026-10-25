@@ -1,5 +1,22 @@
 # Requirement coverage matrix
 
+**Current disposition — 25 October 2026:** Sprint 11/11.1 is complete for the
+local guided-sample scope; Sprint 12 local foundations are ready to start, not yet
+implemented. Broad AI accuracy **AT17 remains BLOCKED**. Normal schema is 0016;
+Gemini/Puter/Groq guided access covers the two approved projects with shared
+50/day provider ceilings. See [the closeout](../10-reference/SPRINT-11-LOCAL-CLOSEOUT.md) and
+[reconciled plan](../09-planning/LOCAL_SAMPLE_PLAN_UPDATE.md) for evidence, current scope and the Sprint 12 prompt.
+This supersedes older runtime/rollout/stop statements below; dated test results
+and original full-product acceptance requirements remain unchanged.
+
+24 October 2026 additive evidence: [limited guided mode report](../limitations/IMPLEMENTATION_REPORT.md)
+and [current limitations](../limitations/LIMITS_AND_FUTURE_SOLUTIONS.md). Normal
+0015 rollout and a usable rules-only demo are verified. Closed-choice assistance
+is implemented separately from broad interpretation; explicitly approved synthetic-demo
+cloud activation passed one request each to Gemini/Puter/Groq. No accuracy criterion,
+original requirement or production gate is closed
+by this narrower mode. Older normal-rollout statements below are historical.
+
 Sprint 11.1 implementation supplements the existing Sprint 11 scope: [active report](../03-sprints/active/sprint-11.1/README.md), [local acceptance receipts](../verification/sprint11_1/IMPLEMENTATION.md) and [R01–R16 / AT01–AT20 traceability](../09-planning/sprint-11.1/SPRINT_11_1_TRACEABILITY.md). Nine hybrid role paths, checkpointed execution and separate baseline/semantic coverage are implemented behind a default-off flag. Broad semantic accuracy, model/hardware qualification, optional second provider/embedding work and normal rollout remain open; original scoring/privacy/review requirements are unchanged.
 
 Sprint 11 current evidence: [report](../03-sprints/completed/sprint-11/SPRINT_REPORT.md) and [tests](../04-testing/sprint-based/sprint-11/TESTING_REPORT.md). All three packages cover local controls; real-provider interpretation quality remains UNVERIFIED/BLOCKED. Dated notes below retain their historical scope.

@@ -1,5 +1,43 @@
 # Changelog
 
+## 25 October 2026 — local closeout and Sprint 12 planning
+
+Reconcile project planning with the delivered Sprint 11/11.1 local guided sample,
+schema 0016, approved project access and three shared 50/day provider ceilings.
+Record local-scope completion separately from blocked AT17/full-product acceptance.
+Add a Sprint 12 local implementation plan and copyable starting prompt; update
+documentation entry points, handoffs and ADR 018. No Sprint 12 code or new runtime
+verification is claimed by this documentation update.
+
+## 25 October 2026 — verified provider ceilings
+
+Activate 50 requests/day per provider in the private local pilot after checking
+Gemini's actual free-project quota and Puter's remaining credit/current rates.
+Preserve shared quota scope/history, one-request-per-minute pacing and the $0
+policy. Verify all nine routes in the running API and worker without model calls.
+Puter availability remains subject to monthly credits and token usage.
+
+## 24 October 2026 — project-scoped guided access
+
+Add owner-managed user/project grants, limited zero-cost guided-run permissions,
+worker revalidation and a guided-only UI for permitted non-Admin users. Preserve
+existing business roles; grant the four requested users synthetic-demo Admin
+membership. Deploy additive 0016 locally. Following explicit bounded data approval,
+enable Customer Onboarding Portal for the three providers while preserving shared
+caps and quota history. See [access validation](docs/limitations/USER_ACCESS.md).
+
+## 24 October 2026 — limited guided review
+
+Add one-role closed-choice API selection with application-owned facts/actions,
+128 output tokens, existing quota/egress controls and nine persistent manual
+checklists. Retain broad semantic qualification blocks. Add responsive guided UI,
+contract updates, negative/DB/browser tests, a separate local synthetic demo and
+the requested limitations/future-solutions folder. Normal backed-up database is
+forward-upgraded to 0015. Following explicit synthetic-demo scope approval, one
+live request each to Gemini/Puter/Groq succeeded; other projects stay blocked.
+Full backend: 509 passed, one skipped;
+two browser journeys passed. No model training or Sprint 12 execution.
+
 ## 23 October 2026 — Sprint 11.1 review closeout
 
 Bound local benchmark attempts to logical evidence across case/corpus/output

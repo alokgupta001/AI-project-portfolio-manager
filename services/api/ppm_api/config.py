@@ -52,6 +52,7 @@ class Settings(BaseSettings):
     ai_gemini_free_tier_key_sha256: str = Field(default="", max_length=64)
     ai_gemini_daily_call_limit: int = Field(default=20, ge=1, le=100)
     ai_runtime_v2_enabled: bool = False
+    ai_guided_enabled: bool = False
     ai_execution_mode: Literal["local_only", "hybrid", "disabled"] = "local_only"
     ai_cloud_enabled: bool = False
     ai_model_registry_path: Path | None = None

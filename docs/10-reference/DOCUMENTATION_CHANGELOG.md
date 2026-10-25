@@ -1,5 +1,51 @@
 # Documentation changelog
 
+**25 October 2026 — planning reconciliation:** added the [Sprint 11/11.1 local
+closeout](SPRINT-11-LOCAL-CLOSEOUT.md), [current plan](../09-planning/LOCAL_SAMPLE_PLAN_UPDATE.md), and linked Sprint 12 local
+implementation plan/starting prompt. Updated planning hubs, status/handoffs,
+requirement context, Sprint 11/11.1 entry pages and ADR 018. Local guided scope is
+complete; Sprint 12 is ready, not implemented. AT17/full-product gates remain open.
+Historical test receipts and frozen sources/prompts/migrations are preserved.
+This is a documentation-only reconciliation, not a new runtime verification.
+
+## 25 October 2026 — local sample and future deployment boundary
+
+Record the owner's direction to use the local sample now and address deployment
+concerns later. Add `limitations/FUTURE_DEPLOYMENT_POINTS.md` with current local
+behavior and deferred deployment actions/evidence covering quotas, monthly credits,
+billing, secrets, access/data scope, AI acceptance, reliability and recovery. Link
+it from the local walkthrough, limitations index and current handoffs. No runtime
+limits, provider scope or billing settings changed in this documentation update.
+
+## 25 October 2026 — account-specific 50/day activation
+
+Supersede the initial feasibility-only status with actual Gemini project quota and
+Puter credit/rate evidence. Document active 50/day shared app ceilings, unchanged
+scope/history/pacing, verified API/worker routing and the conditional monthly Puter
+cost estimate. Preserve prior tests and live-call receipts as historical evidence.
+
+## 25 October 2026 — approved cloud scope and quota feasibility
+
+Record activation of the explicitly approved Customer Onboarding Portal data scope
+for all three providers and all four users, preserving caps and quota history.
+Resolve the earlier pending scope approval. Add the 50/day feasibility review:
+in-memory routing validation passes, Groq published limits support it, while Gemini
+project quota and Puter monthly allowance remain unverified. Live limits stay ten.
+
+## 24 October 2026 — named-user guided access
+
+Document deployed 0016 project/user grants, preserved organization roles, four
+verified demo memberships, shared provider-account quotas and the pending explicit
+business-project cloud scope. Add current access/test/preservation receipts and
+update walkthrough/status/handoff pointers without replacing historical results.
+
+## 24 October 2026 — reviewed limited mode and limitations register
+
+Add `docs/limitations/` with the verified implementation review, bounded API design,
+exact proposed data scope, local demo walkthrough, implementation report, handoff
+and known limits/future solutions. Update current-status/coverage pointers while
+preserving historical reports and the blocked broad accuracy gate.
+
 ## 16 October 2026 — previous-sprint documentation completion
 
 Reconciled Sprint 00–10/8.1 current versus historical status, later Gmail/Gemini evidence, no daily confirmation expiry, current user/demo/operator/learning instructions, source inventories and all canonical sprint navigation. Added complete package/status validation and [a single closure record](PREVIOUS-SPRINTS-DOCUMENTATION-CLOSURE.md). Original test results, source/prompts, application/configuration and legacy Word snapshots remain preserved. No Sprint 11, provider calls or product behavior changes.

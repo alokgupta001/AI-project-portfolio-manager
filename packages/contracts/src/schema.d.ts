@@ -1866,7 +1866,7 @@ export interface components {
         /** AIRunInput */
         AIRunInput: {
             /** Analysis Mode */
-            analysis_mode?: ("auto" | "metrics" | "domain" | "assessment" | "portfolio" | "executive" | "all_specialists") | null;
+            analysis_mode?: ("auto" | "metrics" | "domain" | "assessment" | "portfolio" | "executive" | "all_specialists" | "guided") | null;
             /** Assessment Id */
             assessment_id?: string | null;
             /**
@@ -2066,6 +2066,13 @@ export interface components {
             execution_policy?: string | null;
             /** Fallback */
             fallback: string;
+            /**
+             * Guided Enabled
+             * @default false
+             */
+            guided_enabled: boolean;
+            /** Guided Project Ids */
+            guided_project_ids?: string[];
             /** Inputs */
             inputs: string[];
             /** Modes */
@@ -2250,7 +2257,7 @@ export interface components {
         /** AnalysisInput */
         AnalysisInput: {
             /** Analysis Mode */
-            analysis_mode?: ("auto" | "metrics" | "domain" | "assessment" | "portfolio" | "executive" | "all_specialists") | null;
+            analysis_mode?: ("auto" | "metrics" | "domain" | "assessment" | "portfolio" | "executive" | "all_specialists" | "guided") | null;
             /** Assessment Id */
             assessment_id?: string | null;
             /** Prior Run Id */
@@ -2295,7 +2302,7 @@ export interface components {
             /** Agents */
             agents: components["schemas"]["AgentState"][];
             /** Analysis Mode */
-            analysis_mode?: ("auto" | "metrics" | "domain" | "assessment" | "portfolio" | "executive" | "all_specialists") | null;
+            analysis_mode?: ("auto" | "metrics" | "domain" | "assessment" | "portfolio" | "executive" | "all_specialists" | "guided") | null;
             /** Assessment Id */
             assessment_id: string | null;
             /** Assessment Revision */
@@ -2304,6 +2311,11 @@ export interface components {
             blocked_reason?: string | null;
             /** Briefing */
             briefing?: components["schemas"]["FindingView"][];
+            /**
+             * Can Cancel
+             * @default false
+             */
+            can_cancel: boolean;
             /** Can Review */
             can_review: boolean;
             /** Capability Details */
@@ -2314,6 +2326,7 @@ export interface components {
             findings: components["schemas"]["FindingView"][];
             /** Framework Version Id */
             framework_version_id: string | null;
+            guided_review?: components["schemas"]["GuidedReview"] | null;
             /** Limitations */
             limitations: string[];
             /** Missing Agents */
@@ -3064,6 +3077,29 @@ export interface components {
              * Format: date
              */
             start_date: string;
+        };
+        /** Card */
+        Card: {
+            /** Action */
+            action: string;
+            /** Fact */
+            fact: string;
+            /** Location */
+            location: string;
+            /** Source */
+            source: string;
+        };
+        /** Checklist */
+        Checklist: {
+            /** Action */
+            action: string;
+            /**
+             * Agent
+             * @enum {string}
+             */
+            agent: "financial" | "schedule" | "sentiment" | "risk" | "resource" | "governance" | "agile_coach" | "pmo" | "executive";
+            /** Provider */
+            provider: string;
         };
         /** ChunkView */
         ChunkView: {
@@ -3846,10 +3882,10 @@ export interface components {
             instance_id: string;
             /**
              * Schema Revision
-             * @default 0015_agent_task_runtime
+             * @default 0016_guided_project_access
              * @constant
              */
-            schema_revision: "0015_agent_task_runtime";
+            schema_revision: "0016_guided_project_access";
         };
         /** FrameworkInput */
         "FrameworkInput-Input": {
@@ -3998,6 +4034,33 @@ export interface components {
              * Format: uuid
              */
             user_id: string;
+        };
+        /** GuidedReview */
+        GuidedReview: {
+            /**
+             * Agent
+             * @enum {string}
+             */
+            agent: "financial" | "schedule" | "sentiment" | "risk" | "resource" | "governance" | "agile_coach" | "pmo" | "executive";
+            /** Cards */
+            cards?: components["schemas"]["Card"][];
+            /** Checklists */
+            checklists?: components["schemas"]["Checklist"][];
+            /** Code */
+            code?: string | null;
+            /** Provider */
+            provider: string;
+            /**
+             * Quality
+             * @default LIMITED_SELECTION_NOT_SEMANTIC_QUALIFICATION
+             * @constant
+             */
+            quality: "LIMITED_SELECTION_NOT_SEMANTIC_QUALIFICATION";
+            /**
+             * Status
+             * @enum {string}
+             */
+            status: "api_selected" | "rules_only" | "pending";
         };
         /** HTTPValidationError */
         HTTPValidationError: {

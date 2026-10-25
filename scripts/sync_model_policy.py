@@ -24,7 +24,10 @@ def scope_rows(policy: ModelPolicy) -> list[dict]:
                 provider_id=first.provider,
                 policy_hash=policy.policy_hash,
                 billing_class=first.billing_class,
-                enabled=any(p.enabled and not p.benchmark_only for p in profiles),
+                enabled=any(
+                    p.enabled and (not p.benchmark_only or p.guided_selection_enabled)
+                    for p in profiles
+                ),
                 allowed_tenants=sorted({str(t) for p in profiles for t in p.allowed_tenants}),
                 allowed_models=sorted({p.model for p in profiles}),
                 concurrency_slots=first.concurrency,
@@ -49,7 +52,7 @@ async def sync(policy: ModelPolicy) -> None:
     try:
         async with engine.begin() as conn:
             revision = await conn.scalar(sa.text("SELECT version_num FROM alembic_version"))
-            if revision != "0015_agent_task_runtime":
+            if revision not in {"0015_agent_task_runtime", "0016_guided_project_access"}:
                 raise ValueError
             for row in scope_rows(policy):
                 values = {k: v for k, v in row.items() if k not in ("failure_count", "revision")}

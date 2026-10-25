@@ -1,5 +1,14 @@
 # Sprint 11.1 plan
 
+**Current disposition — 25 October 2026:** Sprint 11/11.1 is complete for the
+local guided-sample scope; Sprint 12 local foundations are ready to start, not yet
+implemented. Broad AI accuracy **AT17 remains BLOCKED**. Normal schema is 0016;
+Gemini/Puter/Groq guided access covers the two approved projects with shared
+50/day provider ceilings. See [the closeout](../../10-reference/SPRINT-11-LOCAL-CLOSEOUT.md) and
+[reconciled plan](../LOCAL_SAMPLE_PLAN_UPDATE.md) for evidence, current scope and the Sprint 12 prompt.
+This supersedes older runtime/rollout/stop statements below; dated test results
+and original full-product acceptance requirements remain unchanged.
+
 ## Problem and outcome
 
 The existing implementation has nine typed domain names, one shared provider completion and sound deterministic safety controls. It does not yet offer local inference, dynamic provider routing or durable section-level recovery. Its 512-token batch can omit agents and assessment matches; exact citations establish source identity but do not establish semantic entailment. The outcome of this sprint is a repository-specific implementation specification addressing these gaps without replacing the application foundation.

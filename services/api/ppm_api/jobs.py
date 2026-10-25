@@ -532,7 +532,9 @@ async def stream(id_: UUID, request: Request, p: Auth) -> StreamingResponse:
     )
 
 
-async def worker_principal(conn: Any, oid: UUID, uid: UUID, sid: UUID) -> Principal | None:
+async def worker_principal(
+    conn: Any, oid: UUID, uid: UUID, sid: UUID, guided_run_id: UUID | None = None
+) -> Principal | None:
     await context(conn, uid, oid, "")
     role = await conn.scalar(
         sa.select(memberships.c.role).where(
@@ -550,7 +552,7 @@ async def worker_principal(conn: Any, oid: UUID, uid: UUID, sid: UUID) -> Princi
     )
     user = (await conn.execute(sa.select(users).where(users.c.id == uid))).mappings().first()
     if (
-        role != "Admin"
+        (role != "Admin" and guided_run_id is None)
         or not user
         or not user["verified"]
         or not user["active"]
@@ -560,8 +562,12 @@ async def worker_principal(conn: Any, oid: UUID, uid: UUID, sid: UUID) -> Princi
         or session["organization_id"] != oid
     ):
         return None
-    await context(conn, uid, oid, "Admin")
-    return Principal(conn, user, session, "Admin")
+    await context(conn, uid, oid, str(role))
+    if role != "Admin" and not await conn.scalar(
+        sa.text("SELECT public.ppm_guided_run(:id)"), {"id": guided_run_id}
+    ):
+        return None
+    return Principal(conn, user, session, str(role))
 
 
 async def worker_transaction(

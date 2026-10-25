@@ -1,5 +1,12 @@
 # Using the hybrid analysis controls
 
+**24 October 2026 update:** a limited guided mode is now usable on the normal local
+application, with a separate synthetic demo. Follow [Try it now](../../../limitations/TRY_IT_NOW.md).
+It preserves all nine checklists and supports one bounded ID-selection request per
+role/run; external calls are enabled only for the explicitly approved synthetic demo.
+One live request each to Gemini/Puter/Groq succeeded. General semantic
+accuracy remains blocked. The deployment note below describes the earlier checkpoint.
+
 **Current deployment note:** Ollama is stopped. The requested
 [Groq/Gemini/Puter role split](CLOUD_SPECIALISTS.md) has synthetic calibration
 results, but is not enabled in the normal application. The latest repair trials

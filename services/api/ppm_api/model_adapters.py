@@ -81,6 +81,10 @@ class NativeAdapter:
         ):
             raise ModelFailure("CONFIGURATION")
         policy = load_policy(self.settings)
+        if request.task_class == "guided_selection":
+            from ppm_api.guided_review import check_request
+
+            check_request(request)
         eligible, _ = candidates(
             policy,
             RouteRequirements(

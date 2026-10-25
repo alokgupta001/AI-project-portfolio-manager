@@ -1,5 +1,14 @@
 # Sprint 11.1 — AI architecture implementation blueprint
 
+**Current disposition — 25 October 2026:** Sprint 11/11.1 is complete for the
+local guided-sample scope; Sprint 12 local foundations are ready to start, not yet
+implemented. Broad AI accuracy **AT17 remains BLOCKED**. Normal schema is 0016;
+Gemini/Puter/Groq guided access covers the two approved projects with shared
+50/day provider ceilings. See [the closeout](../../10-reference/SPRINT-11-LOCAL-CLOSEOUT.md) and
+[reconciled plan](../LOCAL_SAMPLE_PLAN_UPDATE.md) for evidence, current scope and the Sprint 12 prompt.
+This supersedes older runtime/rollout/stop statements below; dated test results
+and original full-product acceptance requirements remain unchanged.
+
 Planning checkpoint: 17 October 2026 (Asia/Calcutta). Source baseline: `d0ebe32e691a3d63166ced669450911c63151127`. This package records the selected architecture. The user subsequently authorized implementation; the current [implementation report](../../03-sprints/active/sprint-11.1/README.md), [tracker](SPRINT_11_1_TASK_TRACKER.md) and [receipts](../../verification/sprint11_1/IMPLEMENTATION.md) supersede the original planning-only status. Model qualification and normal rollout remain open.
 
 Selected direction (hybrid-role revision): retain nine business capability IDs, each combining deterministic services with optional qualified AI interpretation. Select model calls by requested analysis, evidence and budget, rather than permanently excluding six roles from AI. Extend the existing PostgreSQL/Celery runtime with bounded task checkpoints and provider-independent execution. Ollama supplies inference only. Existing scoring, privacy, review and zero-spend boundaries remain authoritative.

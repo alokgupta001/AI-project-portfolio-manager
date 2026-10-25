@@ -1,5 +1,14 @@
 # Implementation tracker and planning checkpoint
 
+**Current disposition — 25 October 2026:** Sprint 11/11.1 is complete for the
+local guided-sample scope; Sprint 12 local foundations are ready to start, not yet
+implemented. Broad AI accuracy **AT17 remains BLOCKED**. Normal schema is 0016;
+Gemini/Puter/Groq guided access covers the two approved projects with shared
+50/day provider ceilings. See [the closeout](../../10-reference/SPRINT-11-LOCAL-CLOSEOUT.md) and
+[reconciled plan](../LOCAL_SAMPLE_PLAN_UPDATE.md) for evidence, current scope and the Sprint 12 prompt.
+This supersedes older runtime/rollout/stop statements below; dated test results
+and original full-product acceptance requirements remain unchanged.
+
 **Current repair, 22 October:** [four-call batching and cloud acceptance](../../verification/sprint11_1/CLOUD_BATCH_REPAIR.md)
 and [reviewer packet](../../verification/sprint11_1/REVIEWER_GUIDE.md). T06–T10 now
 include an explicit all-nine mode with the same limits; three DB batch/budget/resume

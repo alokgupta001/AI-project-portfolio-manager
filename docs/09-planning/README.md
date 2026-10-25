@@ -1,5 +1,14 @@
 # Planning
 
+**Current disposition — 25 October 2026:** Sprint 11/11.1 is complete for the
+local guided-sample scope; Sprint 12 local foundations are ready to start, not yet
+implemented. Broad AI accuracy **AT17 remains BLOCKED**. Normal schema is 0016;
+Gemini/Puter/Groq guided access covers the two approved projects with shared
+50/day provider ceilings. See [the closeout](../10-reference/SPRINT-11-LOCAL-CLOSEOUT.md) and
+[reconciled plan](LOCAL_SAMPLE_PLAN_UPDATE.md) for evidence, current scope and the Sprint 12 prompt.
+This supersedes older runtime/rollout/stop statements below; dated test results
+and original full-product acceptance requirements remain unchanged.
+
 17 October 2026 — [Sprint 11.1 AI architecture package](sprint-11.1/README.md): discovery, nine hybrid specialist contracts with on-demand AI reasoning, local/hybrid routing, goal-aware execution and validation/recovery. The user subsequently authorized the [implementation checkpoint](../03-sprints/active/sprint-11.1/README.md); current [handoff](../03-sprints/active/sprint-11.1/HANDOFF.md) supersedes the original planning-only start point. Model qualification and normal rollout remain open.
 
 Sprint 11 local implementation is recorded in [its hub](../03-sprints/completed/sprint-11/README.md) and [test report](../04-testing/sprint-based/sprint-11/TESTING_REPORT.md). Real-provider semantic quality remains UNVERIFIED/BLOCKED. The roadmap retains future requirements and original thresholds. Stop before Sprint 12.
