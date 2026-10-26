@@ -1,0 +1,38 @@
+[
+  {
+    "command": ".venv/Scripts/ruff.exe check services scripts tests",
+    "exit_code": 0
+  },
+  {
+    "command": ".venv/Scripts/ruff.exe format --check services scripts tests",
+    "exit_code": 0
+  },
+  {
+    "command": ".venv/Scripts/mypy.exe services/api/ppm_api services/worker/ppm_worker",
+    "exit_code": 0
+  },
+  {
+    "command": "npm.cmd run contracts:check",
+    "exit_code": 0
+  },
+  {
+    "command": "npm.cmd run typecheck",
+    "exit_code": 0
+  },
+  {
+    "command": "npm.cmd run lint",
+    "exit_code": 0
+  },
+  {
+    "command": "npm.cmd run format:check",
+    "exit_code": 0
+  },
+  {
+    "command": ".venv/Scripts/python.exe scripts/check_sources.py",
+    "exit_code": 0
+  },
+  {
+    "command": ".venv/Scripts/python.exe scripts/documentation_inventory.py --check",
+    "exit_code": 0
+  }
+]

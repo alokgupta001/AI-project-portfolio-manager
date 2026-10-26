@@ -1,5 +1,37 @@
 # Changelog
 
+## 2026-10-26 — Sprint 12 documentation and reviewed closeout
+
+- Reconcile maintained root/status/planning/coverage, architecture/contracts/schema,
+  setup/user/presentation/demo/learning, report/tracker/handoff and evidence pages
+  with normal 0018 and reviewed application commit `f93a596`.
+- Record both passing hosted workflows, all nine corrected findings, the final
+  CodeRabbit review with no actionable comments and the follow-up paused at closure.
+- Regenerate the database guide using the current schema revision and PostgreSQL
+  type rendering; add the plain-language Sprint 12 report and canonical closeout.
+- Preserve source/prompts, applied migrations, raw historical evidence, Word archives
+  and all 21 original artifact edits. Live/model gates and AT17 remain open/BLOCKED.
+- This documentation refresh has its own checks and CI; it does not claim that a
+  newly pushed documentation revision has already passed the application review.
+
+## 2026-10-26 — Sprint 12 PR review fixes
+
+- Correct authority loading, saved-card clearing, stale polling and the ML breadcrumb.
+- Isolate connector scheduling failures and terminalize revoked ML lookup access.
+- Add forward 0018 legacy CSV namespace backfill, preserving explicit namespaces,
+  source targets, local edits and historical job configurations.
+- Isolate new CSV connections when namespaces are omitted; prefer canonical keys
+  when keyed and legacy sources coexist. Preserve explicit shared namespaces.
+- [Review evidence and validation](docs/verification/sprint12/REVIEW_FIXES.md).
+
+## 2026-10-25 — Sprint 12 local foundations
+
+- Scoped organization connector principals with generation rotation/revocation, existing-beat schedules, canonical source identity and current local/source conflict review.
+- Immutable aggregate history and as-of dataset manifests with five outcome contracts, permission/lineage checks, temporal embargo/entity purging and permanent withdrawal.
+- `/ml` import-to-model-card flow, durable bounded CPU baselines, comparison tables, JSON artifacts and explicit demo/research/insufficient-data states.
+- Forward 0017 migration; final checks and preservation are recorded in the [Sprint 12 report](docs/03-sprints/completed/sprint-12/SPRINT_REPORT.md).
+- Real connector equality, genuine model quality, native MLflow tracking and promotion remain unavailable/deferred. AT17 remains BLOCKED; no Sprint 13, PR/push or deployment.
+
 ## 25 October 2026 — PR 6 dependency audit fix
 
 Pin pypdf 6.21.2 and regenerate its lockfile entry to address the three advisories

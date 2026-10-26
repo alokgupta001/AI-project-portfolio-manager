@@ -1,5 +1,15 @@
 # Current user guide
 
+26 October 2026. Current local sample: Sprint 12 at normal schema **0018**. [Reviewed closeout](../10-reference/SPRINT-12-LOCAL-CLOSEOUT.md) records application commit `f93a596`, both passing hosted CI runs and CodeRabbit's final review with no actionable comments. Live connectors/genuine model quality remain unverified and AT17 remains BLOCKED. Earlier dated checkpoints below retain their original scope; stop before Sprint 13.
+
+Use the local history/dataset/baseline walkthrough linked from the closeout and
+`/integrations` for authority/conflict review. Synthetic results are not real accuracy;
+existing guided-provider quotas, access and $0 controls remain unchanged.
+
+## Local history and baseline lab
+
+[Use Sprint 12](../03-sprints/completed/sprint-12/USER_GUIDE.md): connector approval/conflict review in `/integrations`; versioned manual history, isolated synthetic examples, as-of datasets and reproducible baseline model cards in `/ml`. Research actions require Admin; no external data scope or business permission expands.
+
 Sprint 11 adds **Agents & recommendations** at `/agents`: [role-specific steps](../03-sprints/completed/sprint-11/USER_GUIDE.md). Inspect exact evidence, compare original/suggested/approved maturity and record independent accept/reject decisions. Acceptance never applies a project change. Missing providers/agents/evidence remain explicit; real-model quality is unverified. Normal runtime adoption requires the tested forward 0013 migration; this task does not deploy it.
 
 ## Historical checkpoints before Sprint 11

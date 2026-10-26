@@ -15,7 +15,7 @@ class IntegrationBodyLimit:
             scope["type"] != "http"
             or scope["method"] in {"GET", "HEAD", "OPTIONS"}
             or not scope["path"].startswith(
-                ("/api/v1/integrations", "/api/v1/documents", "/api/v1/ai")
+                ("/api/v1/integrations", "/api/v1/documents", "/api/v1/ai", "/api/v1/ml")
             )
         ):
             await self.app(scope, receive, send)

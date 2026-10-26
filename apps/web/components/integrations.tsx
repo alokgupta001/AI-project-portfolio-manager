@@ -3,6 +3,7 @@ import { useCallback, useEffect, useState } from "react";
 import { apiError } from "./api-error";
 import type { components } from "@ppm/contracts/schema";
 
+import { ConnectorControls } from "./connector-controls";
 import { RecordSelect } from "./record-select";
 type S = components["schemas"];
 type Integration = S["IntegrationView"];
@@ -223,6 +224,7 @@ export function Integrations({
                 const created = await api<Integration>("", "POST", {
                   name: f.get("name"),
                   provider,
+                  source_namespace: f.get("source_namespace") || "manual",
                   mode: f.get("mode"),
                   project_id: f.get("project"),
                   resource: f.get("resource") || "",
@@ -250,6 +252,21 @@ export function Integrations({
               Connection name
               <input name="name" required maxLength={160} />
             </label>
+            <label>
+              Source namespace
+              <input
+                name="source_namespace"
+                defaultValue="manual"
+                required
+                pattern="[A-Za-z0-9_.-]+"
+                maxLength={80}
+              />
+            </label>
+            <p className="muted">
+              Connections for the same logical source share a namespace. Use
+              distinct namespaces for unrelated manual files with overlapping
+              IDs.
+            </p>
             <RecordSelect
               transport={transport}
               kind="projects"
@@ -406,6 +423,14 @@ export function Integrations({
         </label>
         {integration && (
           <>
+            {admin && (
+              <ConnectorControls
+                key={integration.id}
+                integration={integration}
+                transport={transport}
+                refresh={refresh}
+              />
+            )}
             <p>Source cursor: {integration.cursor || "No completed sync"}</p>
             <button
               disabled={busy}

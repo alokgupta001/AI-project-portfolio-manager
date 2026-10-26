@@ -1,5 +1,16 @@
 # Documentation update tracker
 
+## 26 October 2026 — Sprint 12 documentation reconciliation
+
+26 October 2026. Current local sample: Sprint 12 at normal schema **0018**. [Reviewed closeout](../10-reference/SPRINT-12-LOCAL-CLOSEOUT.md) records application commit `f93a596`, both passing hosted CI runs and CodeRabbit's final review with no actionable comments. Live connectors/genuine model quality remain unverified and AT17 remains BLOCKED. Earlier dated checkpoints below retain their original scope; stop before Sprint 13. Current entry points, schema/contract/learning/user/demo pages, planning/coverage,
+reports, handoffs and review evidence are reconciled. Source/prompts, dated test
+results and explicitly archived Word/generator snapshots are preserved. Documentation
+checks are recorded in the Sprint 12 testing report; new documentation CI is separate.
+
+## Sprint 12 local documentation closure
+
+[Closure matrix](../04-testing/sprint-based/sprint-12/DOCUMENTATION_CHECKS.md) maps the three packages to implementation, local user/demo/learning, contracts/schema/inventories, tests and limitations. [Report](../03-sprints/completed/sprint-12/SPRINT_REPORT.md) records actual status. Normal 0018, passed local checks and preservation are recorded. [PR review follow-up](../verification/sprint12/REVIEW_FIXES.md) tracks each verified finding and regression. Historical failures and AT17 remain unchanged.
+
 **25 October 2026 — planning reconciliation:** added the [Sprint 11/11.1 local
 closeout](../10-reference/SPRINT-11-LOCAL-CLOSEOUT.md), [current plan](LOCAL_SAMPLE_PLAN_UPDATE.md), and linked Sprint 12 local
 implementation plan/starting prompt. Updated planning hubs, status/handoffs,

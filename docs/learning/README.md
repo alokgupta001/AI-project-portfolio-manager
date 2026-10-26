@@ -10,3 +10,7 @@ the [closeout](../10-reference/SPRINT-8.1-AND-10-CLOSEOUT.md). Archived bytes ar
 Use [canonical learning](../02-learning/README.md), [current user steps](../06-user-guides/USER_GUIDE.md)
 and the [tracker](../09-planning/DOCUMENTATION_UPDATE_TRACKER.md). Older learning/setup
 Word snapshots are not current instructions or newly validated deliverables.
+
+The maintained learning/user paths now include [Sprint 12](../11-plain-language-sprint-reports/completed/SPRINT-12.md)
+and [the current closeout](../10-reference/SPRINT-12-LOCAL-CLOSEOUT.md). The pilot Word
+guide remains evidence for its dated scope, not a regenerated Sprint 12 handbook.

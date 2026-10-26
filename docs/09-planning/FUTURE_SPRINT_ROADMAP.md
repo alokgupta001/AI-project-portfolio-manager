@@ -1,6 +1,8 @@
 # Complete future sprint roadmap
 
-**Current disposition — 25 October 2026:** Sprint 11/11.1 is complete for the
+26 October 2026. Current local sample: Sprint 12 at normal schema **0018**. [Reviewed closeout](../10-reference/SPRINT-12-LOCAL-CLOSEOUT.md) records application commit `f93a596`, both passing hosted CI runs and CodeRabbit's final review with no actionable comments. Live connectors/genuine model quality remain unverified and AT17 remains BLOCKED. Earlier dated checkpoints below retain their original scope; stop before Sprint 13.
+
+**Earlier checkpoint before Sprint 12 (25 October 2026; superseded):** Sprint 11/11.1 is complete for the
 local guided-sample scope; Sprint 12 local foundations are ready to start, not yet
 implemented. Broad AI accuracy **AT17 remains BLOCKED**. Normal schema is 0016;
 Gemini/Puter/Groq guided access covers the two approved projects with shared
@@ -298,7 +300,8 @@ The ten individually specified work packages and completion gate are in [SPRINT_
 
 ## Sprint 12 — Connector reliability and historical model foundations
 
-**State:** ready for local implementation, not started (25 October 2026).
+**State:** local sample accepted; full original live/model acceptance OPEN (25 October 2026).
+[Current report](../03-sprints/completed/sprint-12/SPRINT_REPORT.md). Full live/model acceptance remains open.
 **Phase:** Evidence and intelligence. **Entry dependencies:** 05,08,11; 8.1 metadata.
 Use the [local implementation plan](sprint-12/LOCAL_IMPLEMENTATION_PLAN.md) and
 [starting prompt](sprint-12/START_PROMPT.md). Sprint 11/11.1's local guided scope is
@@ -313,7 +316,7 @@ The original package acceptance below remains required for full completion.
 
 ### PPM-12-001 — Unattended connectors and usable conflicts
 
-**Status:** proposed, not implemented by this planning task. **Priority:** P1. **Complexity:** High (relative effort, not a calendar estimate). **Dependencies:** 05,08,11; 8.1 metadata.
+**Status:** local sample accepted; see receipts for passed checks and retained external gates. **Priority:** P1. **Complexity:** High (relative effort, not a calendar estimate). **Dependencies:** 05,08,11; 8.1 metadata.
 
 **Change and user benefit:** Narrow organization-approved connector principal/credential rotation/revocation, source identity deduplication and no inherited interactive-session authority. Add local/source diff resolution with source version checks. Extend mappings for work type/bug counts/scope change and authorized history, including justified public Git commit-log capture with source/license/rate limits and optional consented text fields; rate-limit/cursor/partial recovery semantics retained. Run authorized live Jira/GitHub smoke and controlled sync.
 
@@ -329,11 +332,11 @@ The original package acceptance below remains required for full completion.
 
 **Tests:** Run focused unit/API fixtures and the user journey described above, including two tenants, allowed/denied roles, missing data, stale source versions, retries and dependency failure. Record real external acceptance separately from deterministic doubles.
 
-**Completion evidence:** record exact revision, relevant API/browser/negative-case results and screenshots or rendered output in `docs/verification/PPM-12-001.md` (**proposed**), linked from the sprint report. Include command, environment, fixture size, expected/actual result and external checks still blocked. A code path alone is not acceptance.
+**Completion evidence:** record exact revision, relevant API/browser/negative-case results and screenshots or rendered output in [PPM-12-001 receipt](../verification/PPM-12-001.md), linked from the sprint report. Include command, environment, fixture size, expected/actual result and external checks still blocked. A code path alone is not acceptance.
 
 ### PPM-12-002 — As-of datasets and justified labels
 
-**Status:** proposed, not implemented by this planning task. **Priority:** P1. **Complexity:** High (relative effort, not a calendar estimate). **Dependencies:** 05,08,11; 8.1 metadata; PPM-12-001 interfaces.
+**Status:** local sample accepted; see receipts for passed checks and retained external gates. **Priority:** P1. **Complexity:** High (relative effort, not a calendar estimate). **Dependencies:** 05,08,11; 8.1 metadata; PPM-12-001 interfaces.
 
 **Change and user benefit:** Define delay/overrun/risk/failure/sentiment targets, horizons, observation cutoff and operational failure definition. Capture historical velocity, bugs, scope, spend, dependencies, allocation and optional consented notes. Manifest origin/license/schema/label suitability/date/privacy for PROMISE/Jira/GitHub; isolated seeded Faker demos.
 
@@ -349,11 +352,11 @@ The original package acceptance below remains required for full completion.
 
 **Tests:** Run focused unit/API fixtures and the user journey described above, including two tenants, allowed/denied roles, missing data, stale source versions, retries and dependency failure. Record real external acceptance separately from deterministic doubles.
 
-**Completion evidence:** record exact revision, relevant API/browser/negative-case results and screenshots or rendered output in `docs/verification/PPM-12-002.md` (**proposed**), linked from the sprint report. Include command, environment, fixture size, expected/actual result and external checks still blocked. A code path alone is not acceptance.
+**Completion evidence:** record exact revision, relevant API/browser/negative-case results and screenshots or rendered output in [PPM-12-002 receipt](../verification/PPM-12-002.md), linked from the sprint report. Include command, environment, fixture size, expected/actual result and external checks still blocked. A code path alone is not acceptance.
 
 ### PPM-12-003 — Reproducible training and model cards
 
-**Status:** proposed, not implemented by this planning task. **Priority:** P1. **Complexity:** High (relative effort, not a calendar estimate). **Dependencies:** 05,08,11; 8.1 metadata; PPM-12-001 and PPM-12-002 interfaces/results.
+**Status:** local sample accepted; see receipts for passed checks and retained external gates. **Priority:** P1. **Complexity:** High (relative effort, not a calendar estimate). **Dependencies:** 05,08,11; 8.1 metadata; PPM-12-001 and PPM-12-002 interfaces/results.
 
 **Change and user benefit:** Deterministic baselines, scikit-learn/pandas training commands, MLflow artifacts/hashes; compare XGBoost/Random Forest and DistilBERT where suitable. Assess other candidate models rather than promise every library. Report MAE, PR-AUC/recall/calibration/Brier with sample/imbalance context.
 
@@ -369,7 +372,7 @@ The original package acceptance below remains required for full completion.
 
 **Tests:** Run focused unit/API fixtures and the user journey described above, including two tenants, allowed/denied roles, missing data, stale source versions, retries and dependency failure. Record real external acceptance separately from deterministic doubles.
 
-**Completion evidence:** record exact revision, relevant API/browser/negative-case results and screenshots or rendered output in `docs/verification/PPM-12-003.md` (**proposed**), linked from the sprint report. Include command, environment, fixture size, expected/actual result and external checks still blocked. A code path alone is not acceptance.
+**Completion evidence:** record exact revision, relevant API/browser/negative-case results and screenshots or rendered output in [PPM-12-003 receipt](../verification/PPM-12-003.md), linked from the sprint report. Include command, environment, fixture size, expected/actual result and external checks still blocked. A code path alone is not acceptance.
 
 **Definition of done:** all three task acceptances pass for their claimed environment; module contracts and source requirement dispositions updated; user journey recorded; report/handoff states real versus fixture evidence and open blockers. Published scores/history and existing stored records are preserved. A blocked required real-provider or model criterion prevents full product acceptance even if its implementation slice is locally accepted.
 

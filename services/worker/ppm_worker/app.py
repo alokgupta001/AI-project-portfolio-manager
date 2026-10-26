@@ -54,6 +54,9 @@ def dispatch() -> int:
             from ppm_api.account_mail import deliver_due
 
             await deliver_due(engine, settings)
+            from ppm_api.connectors import schedule_connectors
+
+            await schedule_connectors(engine)
             async with engine.connect() as conn:
                 due = list(
                     (await conn.execute(sa.text("SELECT * FROM public.ppm_due_jobs()"))).mappings()

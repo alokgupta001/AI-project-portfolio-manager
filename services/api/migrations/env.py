@@ -11,6 +11,7 @@ from ppm_api import (  # noqa: F401
     document_tables,
     identity_tables,
     job_tables,
+    ml_tables,
     pilot_tables,
     ppm_tables,
 )

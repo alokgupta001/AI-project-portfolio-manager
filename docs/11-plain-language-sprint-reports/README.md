@@ -1,6 +1,11 @@
 # Sprint reports in plain language
 
-Current: [Sprint 11 evidence and human review](completed/SPRINT-11.md), with [actual validation](../04-testing/sprint-based/sprint-11/TESTING_REPORT.md). Real-model quality UNVERIFIED/BLOCKED; normal data preserved; Sprint 12 unstarted.
+Current local sample: [Sprint 12 history and baselines](completed/SPRINT-12.md),
+normal schema 0018. [Reviewed closeout](../10-reference/SPRINT-12-LOCAL-CLOSEOUT.md) separates passing local/CI
+checks from unverified live integration/model quality. AT17 remains BLOCKED. Earlier
+Sprint 11 and pilot narratives below are retained historical scope.
+
+Earlier Sprint 11 checkpoint: [Sprint 11 evidence and human review](completed/SPRINT-11.md), with [actual validation](../04-testing/sprint-based/sprint-11/TESTING_REPORT.md). Real-model quality UNVERIFIED/BLOCKED; normal data preserved; Sprint 12 was unstarted at that earlier checkpoint.
 
 Current documentation closure for all Sprints 00–10 (including 8.1): [coverage, corrections, recorded evidence and remaining gates](../10-reference/PREVIOUS-SPRINTS-DOCUMENTATION-CLOSURE.md).
 

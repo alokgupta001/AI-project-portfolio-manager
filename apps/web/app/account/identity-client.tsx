@@ -13,6 +13,7 @@ import {
   PersonalFeed,
 } from "../../components/pilot";
 import { WorkspaceHome } from "../../components/workspace-home";
+import { ML } from "../../components/ml";
 import { Integrations } from "../../components/integrations";
 import { AI } from "../../components/ai";
 import { Agents } from "../../components/agents";
@@ -98,6 +99,7 @@ export default function IdentityClient({
     | "capacity"
     | "assessment"
     | "command"
+    | "ml"
     | "integrations"
     | "documents"
     | "ai"
@@ -111,6 +113,7 @@ export default function IdentityClient({
     "capacity",
     "assessment",
     "command",
+    "ml",
     "integrations",
     "documents",
     "ai",
@@ -175,6 +178,7 @@ export default function IdentityClient({
         "capacity",
         "assessment",
         "command",
+        "ml",
         "integrations",
         "documents",
         "ai",
@@ -244,6 +248,7 @@ export default function IdentityClient({
         mode !== "capacity" &&
         mode !== "assessment" &&
         mode !== "command" &&
+        mode !== "ml" &&
         mode !== "integrations" &&
         mode !== "documents" &&
         mode !== "ai" &&
@@ -469,6 +474,13 @@ export default function IdentityClient({
       )}
       {account?.organization_id && mode === "documents" && (
         <Documents
+          key={account.organization_id}
+          account={account}
+          transport={transport}
+        />
+      )}
+      {account?.organization_id && mode === "ml" && (
+        <ML
           key={account.organization_id}
           account={account}
           transport={transport}

@@ -43,6 +43,13 @@ jobs = tenant_table(
     sa.Column("integration_id", sa.Uuid(), nullable=True),
     sa.Column("document_version_id", sa.Uuid(), nullable=True),
     sa.Column("ai_run_id", sa.Uuid(), nullable=True),
+    sa.Column("ml_run_id", sa.Uuid(), nullable=True),
+    sa.Column("connector_generation", sa.Integer(), nullable=True),
+    sa.ForeignKeyConstraint(
+        ["organization_id", "ml_run_id"],
+        ["ml_runs.organization_id", "ml_runs.id"],
+        name="fk_job_ml_run",
+    ),
     sa.ForeignKeyConstraint(
         ["organization_id", "ai_run_id"],
         ["ai_runs.organization_id", "ai_runs.id"],
@@ -54,7 +61,8 @@ jobs = tenant_table(
         name="fk_job_document_version",
     ),
     sa.CheckConstraint(
-        "num_nonnulls(integration_id,document_version_id,ai_run_id)=1", name="ck_job_source_kind"
+        "num_nonnulls(integration_id,document_version_id,ai_run_id,ml_run_id)=1",
+        name="ck_job_source_kind",
     ),
     sa.ForeignKeyConstraint(
         ["organization_id", "integration_id"],
@@ -138,6 +146,8 @@ sources = tenant_table(
         "AND sprint_id IS NOT NULL AND work_item_id IS NULL)"
     ),
     sa.Column("external_id", sa.String(160), nullable=False),
+    sa.Column("logical_key", sa.String(64), nullable=True),
+    sa.UniqueConstraint("organization_id", "project_id", "logical_key", name="uq_source_logical"),
     sa.UniqueConstraint("integration_id", "external_id"),
     sa.Column("source_updated_at", sa.DateTime(timezone=True), nullable=True),
     sa.Column("source_observed_at", sa.DateTime(timezone=True), nullable=False),

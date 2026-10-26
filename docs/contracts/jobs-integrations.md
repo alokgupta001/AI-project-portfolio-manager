@@ -1,5 +1,9 @@
 # Durable jobs and ingestion — jobs-v1
 
+## Sprint 12 extension
+
+[Connector authority and conflict contract](ml.md) adds explicitly approved session-independent principals, scheduled polling, generation fencing, canonical identity and version-checked conflict review. Legacy connections retain their session gate until enrolled. Existing limits, source timestamps, cursor replay and durable jobs are reused.
+
 Sprint 08 adds `/integrations`, API `/api/v1/integrations`, Celery `pipeline.dispatch`
 and `pipeline.run`, and migration `0007_durable_jobs`. PostgreSQL is authoritative;
 Redis/Celery is replaceable dispatch transport. No AI, notification delivery, OCR,
@@ -174,3 +178,16 @@ versioned evaluation and disabled fallback. durable_jobs references exactly one
 integration, document version or AI run; existing event/SSE/authority rules remain.
 Bounded Gemini free-tier smoke verified; broad model quality unverified. No semantic agents, private assessment ingestion,
 metric changes or automatic plan edits. Admin-only restricted operations apply.
+
+## Sprint 12 authority, identity and CPU extension
+
+The current durable-job source constraint permits exactly one integration, document
+version, AI run or local ML run. Enrolled connector authority is independent of its
+creator session and remains scoped to one approved connection/project; generation
+rotation/revocation fences queued work. Scheduling failures roll back per connector
+and back off separately so other connectors/due jobs continue. Omitted CSV namespaces
+are integration-specific; explicit namespaces remain shareable. Canonical keys take
+precedence over legacy NULL keys; local edits require version-checked conflict review.
+CPU runs reuse the existing dispatcher/worker and produce explicit blocked/insufficient
+or evaluated cards. [The ML/connector contract](ml.md) owns current semantics; earlier
+extension sections above describe their migration checkpoints. Normal schema is 0018.

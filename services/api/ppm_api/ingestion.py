@@ -22,6 +22,9 @@ from ppm_api.ppm_schemas import SprintInput, WorkInput
 
 
 class ConnectorConfig(BaseModel):
+    source_namespace: str = Field(
+        default="manual", min_length=1, max_length=80, pattern=r"^[A-Za-z0-9_.-]+$"
+    )
     model_config = ConfigDict(extra="forbid")
     name: str = Field(min_length=1, max_length=160)
     provider: Literal["csv", "github", "jira"]

@@ -2,7 +2,8 @@
 
 *Section functions required information and long term value*
 
-10 October 2026
+26 October 2026 — maintained Markdown edition; the root Word file is a dated
+10 October presentation snapshot and is not the current Sprint 12 guide.
 
 Enterprise PPM helps an organization plan projects, manage people and money, record risks, and review whether its work supports business goals. PPM means Project and Portfolio Management. This guide explains the workspace in plain language for presenters and audiences who are new to project management.
 
@@ -16,7 +17,9 @@ Each section explains its purpose, the information entered, why that information
 | Projects | What are we delivering and how is the work progressing? |
 | Maturity assessments | How consistently do we follow useful working practices? |
 | Command center | Where do managers need to investigate or act? |
-| Integrations and jobs | How do we bring in supported data and check the outcome? |
+| Integrations and jobs | How do we approve/revoke source authority, import supported data and review conflicts? |
+| History and baselines | Can we freeze dated history and inspect a small reproducible model card? |
+| Agents and recommendations | Which bounded evidence/checklist or guided suggestion needs human review? |
 | Document library | Which source version supports this claim, and who may read it? |
 | Resource planning | Do people have enough time for their commitments? |
 | Portfolios | How does our group of projects support business priorities? |
@@ -27,7 +30,8 @@ Each section explains its purpose, the information entered, why that information
 
 Required means the record or action needs that information. Optional information can still be important for reporting. Most business records require a Name and offer a Description. Selecting an Owner identifies responsibility; permissions must still be granted separately.
 
-The implemented features use saved records, defined calculations, and human review. Versioned Word/PDF/source intake, English OCR and keyword citations are now locally verified in Sprint 09. The bounded Gemini evidence preview is available at $0; semantic agent analysis and predictive models remain planned; use [the document demo](../05-demos/sprint-based/sprint-09/README.md) to demonstrate the current boundary.
+The implemented features use saved records, defined calculations, and human review. Versioned Word/PDF/source intake, English OCR and keyword citations are now locally verified in Sprint 09. The bounded Gemini evidence preview is available at $0; bounded guided specialist review and local CPU baseline research are implemented,
+while unrestricted model quality and forecast serving remain unverified/planned; use [the document demo](../05-demos/sprint-based/sprint-09/README.md) to demonstrate the current boundary.
 
 ## 1 Workspace overview
 
@@ -542,3 +546,13 @@ preview, inspect no-key diagnostics and manage a zero-spend tenant budget. Follo
 stays unavailable. Index embeddings and real model answers remain disabled until
 explicit provider/model/spend authorization. PM/Viewer use the document library;
 restricted Admin diagnostics are inaccessible. No semantic agents or plan edits.
+
+## Present Sprint 12 honestly
+
+An Admin can demonstrate `/integrations` approval, rotation/revocation and source
+conflict review, then `/ml` history import → as-of dataset → CPU baseline → repeated
+model card → artifact download → withdrawal. Choose a synthetic example and call its
+metrics demo evidence, not prediction accuracy. Genuine labels/live credentials were
+unavailable; insufficient-data states are expected. Existing roles/grants and provider
+quotas/$0 controls are unchanged. [User steps](../03-sprints/completed/sprint-12/USER_GUIDE.md)
+and [reviewed closeout](../10-reference/SPRINT-12-LOCAL-CLOSEOUT.md) supply the exact scope.

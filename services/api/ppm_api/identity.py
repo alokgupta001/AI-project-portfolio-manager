@@ -245,6 +245,7 @@ class Principal:
     user: Any
     session: Any
     role: str
+    connector_id: UUID | None = None
 
 
 @asynccontextmanager

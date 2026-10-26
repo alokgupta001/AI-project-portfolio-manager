@@ -1,0 +1,44 @@
+{
+  "application_commit": "f93a5960d105518a2851582d7eac64910b6d58e8",
+  "branch": "sprint-12-local-foundations",
+  "pull_request": "https://github.com/alokgupta001/AI-project-portfolio-manager/pull/7",
+  "normal_schema": "0018_csv_source_namespaces",
+  "coderabbit": {
+    "completed_at_utc": "2026-10-25 22:28:46 UTC",
+    "completed_at_ist": "2026-10-26 03:58:46 IST",
+    "run_id": "bbd3ba5a-3b48-43de-8896-5e22a77bd502",
+    "reviewed_range": "faf1668..f93a596",
+    "result": "No actionable comments were generated in the recent review",
+    "prior_findings_corrected": 9,
+    "test_nitpick_corrected": true,
+    "unresolved_inline_threads": 0,
+    "url": "https://github.com/alokgupta001/AI-project-portfolio-manager/pull/7#issuecomment-6400061532"
+  },
+  "hosted_ci": [
+    {
+      "run_id": 40235833334,
+      "conclusion": "success",
+      "commit": "f93a5960d105518a2851582d7eac64910b6d58e8"
+    },
+    {
+      "run_id": 40235828296,
+      "conclusion": "success",
+      "commit": "f93a5960d105518a2851582d7eac64910b6d58e8"
+    }
+  ],
+  "final_affected_local_checks": {
+    "backend_cases_passed": 36,
+    "strengthened_case_passed": 1,
+    "browser_journeys_passed": 6,
+    "sets_overlap": true
+  },
+  "preceding_full_local_gate": {
+    "passed": 535,
+    "skipped": 1,
+    "inherited_warnings": 1,
+    "predates_final_two_source_fixes": true
+  },
+  "original_modified_artifacts_preserved": 21,
+  "hourly_followup": "paused after clean application review and CI",
+  "documentation_refresh": "later revision; CI status must be checked separately"
+}

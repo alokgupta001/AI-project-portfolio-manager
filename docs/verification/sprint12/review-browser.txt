@@ -1,0 +1,7 @@
+Running 5 tests using 1 worker
+  ok 1 [chromium]  tests\browser\sprint12.spec.ts:5:5  Sprint 12 import history, freeze dataset, reproduce CPU baseline and withdraw (26.0s)
+  ok 2 [chromium]  tests\browser\sprint12.spec.ts:116:5  connector authority, local edit conflict and reviewed resolution are usable (27.0s)
+  ok 3 [chromium]  tests\browser\sprint12.spec.ts:250:5  connector authority form waits for persisted polling settings (2.4s)
+  ok 4 [chromium]  tests\browser\sprint12.spec.ts:332:7  old baseline poll success cannot replace the selected card (3.7s)
+  ok 5 [chromium]  tests\browser\sprint12.spec.ts:332:7  old baseline poll error cannot replace the selected card (3.6s)
+  5 passed (1.1m)

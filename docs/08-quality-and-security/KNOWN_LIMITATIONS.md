@@ -1,5 +1,11 @@
 # Quality, security and operational limitations
 
+26 October 2026. Current local sample: Sprint 12 at normal schema **0018**. [Reviewed closeout](../10-reference/SPRINT-12-LOCAL-CLOSEOUT.md) records application commit `f93a596`, both passing hosted CI runs and CodeRabbit's final review with no actionable comments. Live connectors/genuine model quality remain unverified and AT17 remains BLOCKED. Earlier dated checkpoints below retain their original scope; stop before Sprint 13.
+
+Use the local history/dataset/baseline walkthrough linked from the closeout and
+`/integrations` for authority/conflict review. Synthetic results are not real accuracy;
+existing guided-provider quotas, access and $0 controls remain unchanged.
+
 Current closeout: Sprints 8.1 and 10 are completed for development scope; hosted CI and the current pilot Word guide are verified. Broad agent/model quality, production and scale remain successor/release gates. See [acceptance disposition](../10-reference/SPRINT-8.1-AND-10-CLOSEOUT.md). Earlier dated evidence below retains its historical scope.
 
 [Current limitations](../00-overview/CURRENT_STATUS.md) identifies snapshot bounds, evidence/file transaction limits, notification presentation retention, SSE polling cost and open external/release gates. [Security walkthrough](../02-learning/05-security/AUTHENTICATION_AND_AUTHORIZATION.md) explains live membership, RLS, roles/grants/ownership and private effort. [Test strategy](../04-testing/TESTING_STRATEGY.md) maps negative cases; [Release criteria](../00-overview/FINAL_PRODUCT_SCOPE_AND_RELEASE_CRITERIA.md) retains performance/recovery/accessibility obligations. Existing local checks do not imply independent security certification, production throughput or full recovery acceptance.

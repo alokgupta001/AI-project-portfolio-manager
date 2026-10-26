@@ -1,8 +1,14 @@
 # Current system architecture
 
-Sprint 11 adds [specialists and independent review](../contracts/agents.md), [ADR 017](../architecture/adr/017-specialists-and-human-review.md): one bounded batch over the existing AI ledger and durable jobs, immutable source snapshots and append-only decisions. Existing metric/scoring/authorization services stay authoritative. The new two-table forward migration is 0013, tested only in disposable databases; normal data remains 0012. No execution/auto-plan mutation path.
+Current normal schema is **0018**. The modular monolith adds narrow connector
+authority/conflict review, immutable outcome history/as-of datasets and bounded CPU
+baseline runs to the existing ingestion/jobs/UI. [Local model foundations](../contracts/ml.md)
+and [ADR 019](../architecture/adr/019-local-model-foundations.md) define the boundaries.
+Existing specialists/guided review reuse the AI ledger; deterministic services remain
+authoritative. [Reviewed closeout](../10-reference/SPRINT-12-LOCAL-CLOSEOUT.md) records
+the code/CI/review evidence. No new always-on service, model serving or automatic plan mutation.
 
-## Historical checkpoints before Sprint 11
+## Components and data flow
 
 Status: **IMPLEMENTED AND VERIFIED** within retained local checks; future design is separately labeled in the preserved proposed architecture. Current source uses a modular monolith, not a separate microservice for each business feature.
 
@@ -32,7 +38,7 @@ flowchart LR
 | `delivery.py`, `capacity.py`, `assessment.py`, `command.py` | Domain rules with SQLAlchemy statements directly; no universal repository abstraction; deterministic scoring/metrics |
 | `jobs.py`, `ingestion.py`, `job_tables.py`, worker | Durable PostgreSQL state/outbox with Redis/Celery transport; CSV/fixture adapters and progress; live connector acceptance open |
 | `pilot.py`, `pilot_tables.py`, `account_mail.py` | Scoped search/setup/My work/cohorts/receipts/revision SSE, private account deliveries |
-| `database.py`, `*tables.py`, migrations 0001–0012 | Metadata, constraints, tenant/reference keys, app-role RLS, migration-owner/application-role separation |
+| `database.py`, `*tables.py`, migrations 0001–0018 | Metadata, constraints, tenant/reference keys, app-role RLS, migration-owner/application-role separation |
 
 ## Request, authorization and failure flow
 
@@ -72,3 +78,14 @@ snapshots preserve provenance and reservations. Existing source authorization,
 identity and metric services remain authority. [Contract](../contracts/ai.md) and
 [ADR 016](../architecture/adr/016-budgeted-ai-runtime.md) describe the bounded JSONB
 projection deviation, cancellation/replay, redacted diagnostics and blocked provider.
+
+## Local history and baseline flow
+
+`connector-controls.tsx` → `connectors.py` → existing ingestion/delivery/jobs;
+`ml.tsx` → `ml.py` → immutable history/dataset rows → durable worker →
+`ml_pipeline.py` → comparison/model card/JSON artifacts. `ml_tables.py` owns five
+tenant-scoped tables; migration 0018 backfills absent CSV namespaces without editing
+applied 0017 or source targets. Existing API/proxy body limits, RLS, CSRF, generation
+fences, organization locks, revocation/withdrawal and revision checks remain in force.
+Synthetic and real lineage never mix; genuine model quality and Sprint 13 serving
+are not consequences of a successful local training job.

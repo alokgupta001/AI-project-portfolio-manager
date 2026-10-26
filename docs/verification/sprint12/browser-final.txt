@@ -1,0 +1,7 @@
+Running 5 tests using 1 worker
+  ok 1 [chromium] › tests\browser\guided-access.spec.ts:5:5 › project manager can run a granted guided review without admin controls (21.0s)
+  ok 2 [chromium] › tests\browser\guided-review.spec.ts:5:5 › guided review remains usable without cloud and persists its nine checklists (22.6s)
+  ok 3 [chromium] › tests\browser\integrations.spec.ts:5:5 › CSV preview, durable sync, live progress, repeat effects and revoked scope (33.1s)
+  ok 4 [chromium] › tests\browser\sprint12.spec.ts:5:5 › Sprint 12 import history, freeze dataset, reproduce CPU baseline and withdraw (30.2s)
+  ok 5 [chromium] › tests\browser\sprint12.spec.ts:101:5 › connector authority, local edit conflict and reviewed resolution are usable (25.5s)
+  5 passed (2.3m)

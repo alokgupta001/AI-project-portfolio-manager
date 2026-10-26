@@ -1,6 +1,37 @@
 # Latest technical handoff
 
-**Current disposition — 25 October 2026:** Sprint 11/11.1 is complete for the
+**26 October 2026 — Sprint 12 local sample and review closed:** normal schema is
+**0018_csv_source_namespaces**. Application commit `f93a596` is pushed to
+[PR 7](https://github.com/alokgupta001/AI-project-portfolio-manager/pull/7) on
+`sprint-12-local-foundations`. Both hosted CI runs passed for that commit; CodeRabbit
+reviewed `faf1668..f93a596` and completed with **no actionable comments** at
+03:58:46 IST. Nine findings plus the test nitpick are corrected; seven original
+inline threads are resolved. [Closeout](../10-reference/SPRINT-12-LOCAL-CLOSEOUT.md),
+[handoff](../03-sprints/completed/sprint-12/HANDOFF.md) and
+[actual checks](../04-testing/sprint-based/sprint-12/TESTING_REPORT.md) are current.
+
+Final affected checks: **36 backend cases**, one strengthened keyed/legacy case and
+**six browser journeys** pass. The preceding full local gate passed **535 tests,
+one skipped**, plus lifecycle/drift; sets overlap. Current-head hosted CI covers the
+two final source fixes. All 77 established table hashes/counts, 26 frozen original
+inputs and 21 original artifact edits are preserved; applied 0001–0018 are frozen.
+
+The owner approved the hourly follow-up after its initial approval rejection. It
+was created, then **paused when review and CI were clean**. The first immediate
+request was rate-limited; only the subsequent completed review is acceptance evidence.
+The owner now authorized updating maintained documents and pushing to the same PR.
+This documentation refresh follows the reviewed application checkpoint; its newly
+triggered CI must be verified separately. Do not claim that it already passed.
+
+Gemini/Puter/Groq, 50/day shared ceilings, one/minute pacing, $0 policy, approved
+project scopes and four-user access remain unchanged; Ollama stays off. Live connector
+acceptance and genuine model quality remain unavailable; **AT17 stays BLOCKED**.
+No merge, deployment or Sprint 13 execution. Preserve historical sources/prompts,
+Word archives and dated results. New requested runtime work needs its own scope.
+
+## Historical checkpoints
+
+**Earlier checkpoint before Sprint 12 (25 October 2026; superseded):** Sprint 11/11.1 is complete for the
 local guided-sample scope; Sprint 12 local foundations are ready to start, not yet
 implemented. Broad AI accuracy **AT17 remains BLOCKED**. Normal schema is 0016;
 Gemini/Puter/Groq guided access covers the two approved projects with shared

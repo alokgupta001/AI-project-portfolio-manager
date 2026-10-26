@@ -105,6 +105,7 @@ export function Shell({
     { name: "Projects", href: "/projects", icon: "▤" },
     { name: "Maturity assessments", href: "/assessments", icon: "◉" },
     { name: "Command center", href: "/command-center", icon: "◈" },
+    { name: "History & baselines", href: "/ml", icon: "▤" },
     { name: "Integrations & jobs", href: "/integrations", icon: "◇" },
     { name: "Document library", href: "/documents", icon: "▤" },
     { name: "AI operations & evidence", href: "/ai", icon: "◇" },
@@ -236,19 +237,21 @@ export function Shell({
                         ? "Document library"
                         : path.startsWith("/integrations")
                           ? "Integrations & jobs"
-                          : path.startsWith("/command-center")
-                            ? "Command center"
-                            : path.startsWith("/assessments")
-                              ? "Maturity assessments"
-                              : path.startsWith("/resources")
-                                ? "Resource planning"
-                                : path.startsWith("/projects")
-                                  ? "Projects"
-                                  : path.startsWith("/portfolios")
-                                    ? "Portfolios"
-                                    : path === "/organization"
-                                      ? "Organization setup"
-                                      : "Account & access"}
+                          : path.startsWith("/ml")
+                            ? "History & baselines"
+                            : path.startsWith("/command-center")
+                              ? "Command center"
+                              : path.startsWith("/assessments")
+                                ? "Maturity assessments"
+                                : path.startsWith("/resources")
+                                  ? "Resource planning"
+                                  : path.startsWith("/projects")
+                                    ? "Projects"
+                                    : path.startsWith("/portfolios")
+                                      ? "Portfolios"
+                                      : path === "/organization"
+                                        ? "Organization setup"
+                                        : "Account & access"}
             </span>
           </nav>
           {children}

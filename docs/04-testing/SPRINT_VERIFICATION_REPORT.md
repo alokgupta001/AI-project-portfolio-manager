@@ -1,5 +1,11 @@
 # Sprint verification and repairs
 
+26 October 2026. Current local sample: Sprint 12 at normal schema **0018**. [Reviewed closeout](../10-reference/SPRINT-12-LOCAL-CLOSEOUT.md) records application commit `f93a596`, both passing hosted CI runs and CodeRabbit's final review with no actionable comments. Live connectors/genuine model quality remain unverified and AT17 remains BLOCKED. Earlier dated checkpoints below retain their original scope; stop before Sprint 13.
+
+Use the local history/dataset/baseline walkthrough linked from the closeout and
+`/integrations` for authority/conflict review. Synthetic results are not real accuracy;
+existing guided-provider quotas, access and $0 controls remain unchanged.
+
 **Current reconciliation — 16 October 2026:** Current verification is Sprint 10 at `0012_ai_runtime`: the recorded baseline is 150 backend/16 browser/12 offline gate cases; later Gemini smoke and 63 AI/provider regressions passed. See [current evidence](sprint-based/sprint-10/GEMINI-FOLLOWUP.md). The dated Sprint 09 and earlier records below remain historical; no new application test was run by this documentation audit.
 
 **Current checkpoint — 15 October 2026:** [Sprint 09 verification](sprint-based/sprint-09/TESTING_REPORT.md)

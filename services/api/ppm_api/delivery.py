@@ -126,6 +126,11 @@ async def can_edit(p: Principal, id_: UUID, manage: bool = False) -> bool:
 
 
 async def lock(p: Principal, request: Request) -> None:
+    if p.connector_id:
+        from ppm_api.connectors import recheck
+
+        await recheck(p)
+        return
     oid = p.session["organization_id"]
     if request.headers.get("x-organization-id") != str(oid):
         fail(409, "Reload the active organization")
@@ -161,6 +166,15 @@ async def lock(p: Principal, request: Request) -> None:
 
 
 async def authorize(p: Principal, kind: str, data: dict, old: Any = None) -> None:
+    if p.connector_id:
+        if kind not in {"work_items", "sprints"} or data.get("archived"):
+            fail(403, "Connector scope permits only active work and sprint imports")
+        if not await p.conn.scalar(
+            sa.text("SELECT public.ppm_connector_scope(:project)"),
+            {"project": data.get("project_id")},
+        ):
+            fail(403, "Connector project scope denied")
+        return
     from ppm_api import capacity
 
     if kind in capacity.KINDS:

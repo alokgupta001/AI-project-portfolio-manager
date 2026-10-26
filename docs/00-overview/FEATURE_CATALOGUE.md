@@ -1,5 +1,7 @@
 # Feature catalogue
 
+26 October 2026. Current local sample: Sprint 12 at normal schema **0018**. [Reviewed closeout](../10-reference/SPRINT-12-LOCAL-CLOSEOUT.md) records application commit `f93a596`, both passing hosted CI runs and CodeRabbit's final review with no actionable comments. Live connectors/genuine model quality remain unverified and AT17 remains BLOCKED. Earlier dated checkpoints below retain their original scope; stop before Sprint 13.
+
 Sprint 11 current disposition: [nine specialists, semantic suggestions and independent review](../03-sprints/completed/sprint-11/README.md) are locally verified with deterministic responses. Real-model quality UNVERIFIED/BLOCKED. [Actual tests](../04-testing/sprint-based/sprint-11/TESTING_REPORT.md); earlier dated notes retain their historical scope.
 
 Code and retained local evidence establish current capability; original acceptance obligations are unchanged. Read [current scope and evidence limits](CURRENT_STATUS.md). Current status labels below translate the existing traceability vocabulary; a multi-stage parent remains partial until all stages pass. Future sprints describe intended user outcomes, not available buttons.
@@ -28,9 +30,9 @@ Code and retained local evidence establish current capability; original acceptan
 | G-016 Nine agents and semantic maturity scoring | IMPLEMENTED LOCALLY; real-model quality blocked | Build all nine agents with evidence and distinct suggested/reviewer scores. | PPM-11-001 / 11 |
 | G-017 Recommendation review versus application | IMPLEMENTED LOCALLY; real-model quality blocked | Separate accepted recommendation from applied change; no generic mutation before 15. | PPM-11-003 / 11 |
 | G-018 Repeat assessments, due dates and trend/export | PARTIALLY IMPLEMENTED | Extend the existing assessment lifecycle and connect workflow reminders, keeping published score history immutable. | PPM-15-002 / 15 |
-| G-019 Unattended connector identity and conflict resolution | PARTIALLY IMPLEMENTED | Add narrow renewable connector authority, source identity uniqueness and reviewable conflict resolution. | PPM-12-001 / 12 |
+| G-019 Unattended connector identity and conflict resolution | PARTIALLY IMPLEMENTED | Local narrow authority, identity uniqueness and reviewable conflicts are verified; live/provider operational acceptance remains open. | PPM-12-001 / 12 |
 | G-020 Live Jira/GitHub acceptance | BLOCKED | Run authorized read-only provider checks and controlled import with scoped credentials in 12; preserve fixtures and mark blocked until supplied. | PPM-12-001 / 12 |
-| G-021 Historical features, labels and models | PLANNED | Capture justified historical fields and consented notes, validate labels and evaluate baseline models. | PPM-12-002 / 12 |
+| G-021 Historical features, labels and models | PARTIALLY IMPLEMENTED | Numeric versioned history, outcome/provenance gates and CPU baselines are verified locally; no raw notes, independently verified genuine outcomes or real model quality. | PPM-12-002 / 12 |
 | G-022 Production model promotion evidence | BLOCKED | Require real temporal evaluation and suitability evidence; demo fixtures cannot satisfy promotion. | PPM-13-001 / 13 |
 | G-023 Forecast serving | PLANNED | Serve eligible versions with uncertainty and honest unavailable/fallback states. | PPM-13-002 / 13 |
 | G-024 Copilot, scoped context and natural language analytics | PLANNED | Build bounded authorized tools and cited conversation UI after evidence runtime. | PPM-14-001 / 14 |
@@ -118,10 +120,10 @@ These are the complete 156 approved crosswalk rows, including scope exclusions a
 | F-058 | Delivery confidence | PLANNED | PPM-13-003 |
 | F-059 | High Medium Low risk classifier | PLANNED | PPM-13-001 |
 | F-060 | NLP sentiment pipeline | PLANNED | PPM-12-003 |
-| F-061 | PROMISE dataset suitability | PLANNED | PPM-12-002 |
-| F-062 | Jira dataset suitability | PLANNED | PPM-12-002 |
+| F-061 | PROMISE dataset suitability | PARTIALLY IMPLEMENTED: unreviewed external real data rejected; PROMISE-specific license/target review unavailable | PPM-12-002 |
+| F-062 | Jira dataset suitability | PARTIALLY IMPLEMENTED: provenance/temporal contract; live Jira dataset/labels unavailable | PPM-12-002 |
 | F-063 | Authorized public repository data | PLANNED | PPM-12-002 |
-| F-064 | Synthetic dataset generator | PLANNED | PPM-12-002 |
+| F-064 | Synthetic dataset generator | IMPLEMENTED AND VERIFIED LOCALLY: isolated seed-12 numeric fixture; no real accuracy claim | PPM-12-002 |
 | F-065 | SRS BRD PRD classification | IMPLEMENTED AND VERIFIED LOCALLY | PPM-09-001 |
 | F-066 | MOM and sprint report ingestion | PARTIALLY IMPLEMENTED; local review controls verified, real semantic quality blocked | PPM-11-003 |
 | F-067 | Risk log ingestion | PARTIALLY IMPLEMENTED; local review controls verified, real semantic quality blocked | PPM-11-003 |
@@ -181,7 +183,7 @@ These are the complete 156 approved crosswalk rows, including scope exclusions a
 | N-012 | Versioned migrations and contracts | PARTIALLY IMPLEMENTED | PPM-81-010 |
 | N-013 | Accessibility target | PARTIALLY IMPLEMENTED | PPM-23-001 |
 | N-014 | AI and retrieval access isolation | IMPLEMENTED AND VERIFIED LOCALLY | PPM-10-002 |
-| N-015 | Model validity and lineage | PLANNED | PPM-12-003 |
+| N-015 | Model validity and lineage | PARTIALLY IMPLEMENTED: local manifests/splits/model cards; genuine outcome quality unverified | PPM-12-003 |
 | N-016 | Audit retention and revocation | PLANNED | PPM-22-003 |
 | N-017 | Backup restore and deployment recovery | PARTIALLY IMPLEMENTED | PPM-23-002 |
 | N-018 | Sprint report and follow-up document | PARTIALLY IMPLEMENTED | PPM-81-010 |
@@ -193,7 +195,7 @@ These are the complete 156 approved crosswalk rows, including scope exclusions a
 | E-006 | Scenario comparison | PLANNED | PPM-17-002 |
 | E-007 | Data-quality console | IMPLEMENTED AND VERIFIED | PPM-81-010 |
 | E-008 | AI usage console | IMPLEMENTED AND VERIFIED LOCALLY | PPM-10-003 |
-| E-009 | CSV Jira GitHub connectors | BLOCKED | PPM-12-001 |
+| E-009 | CSV Jira GitHub connectors | PARTIALLY IMPLEMENTED: local authority/dedup/conflict/recovery controls; live source equality BLOCKED | PPM-12-001 |
 | T-001 | Next.js TypeScript Tailwind shadcn Motion Zustand Recharts; Chart.js alternative | PARTIALLY IMPLEMENTED | PPM-23-001 |
 | T-002 | FastAPI Python Uvicorn Pydantic; NestJS alternative | IMPLEMENTED AND VERIFIED | PPM-81-010 |
 | T-003 | PostgreSQL JSONB SQLAlchemy Alembic Redis | IMPLEMENTED AND VERIFIED | PPM-81-010 |
@@ -201,8 +203,8 @@ These are the complete 156 approved crosswalk rows, including scope exclusions a
 | T-005 | Neo4j | PLANNED | PPM-18-001 |
 | T-006 | LangChain; LlamaIndex alternative | IMPLEMENTED AND VERIFIED LOCALLY | PPM-10-002 |
 | T-007 | OpenAI Gemini Ollama HuggingFace options | PARTIALLY IMPLEMENTED | PPM-10-001 |
-| T-008 | scikit-learn pandas XGBoost Random Forest MLflow | PLANNED | PPM-12-003 |
-| T-009 | LightGBM LSTM time-series PyTorch DistilBERT candidates | PLANNED | PPM-12-003 |
+| T-008 | scikit-learn pandas XGBoost Random Forest MLflow | PARTIALLY IMPLEMENTED: pandas/scikit-learn constant/linear/RF; local JSON tracking; native MLflow/XGBoost deferred | PPM-12-003 |
+| T-009 | LightGBM LSTM time-series PyTorch DistilBERT candidates | DEFERRED: no suitable genuine labels/resources for larger/text candidates | PPM-12-003 |
 | T-010 | Docker AWS ECS/RDS/S3 Terraform GitHub Actions | PARTIALLY IMPLEMENTED | PPM-23-002 |
 | T-011 | Kubernetes deployment profile | PLANNED | PPM-23-002 |
 | T-012 | Google Cloud/GCS EC2 Kafka alternatives | NOT IN SCOPE | Scope decision: ADRs 004/006 |

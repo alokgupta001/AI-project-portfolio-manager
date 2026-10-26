@@ -1,6 +1,12 @@
 # Sprint 12 local implementation plan
 
-25 October 2026. **READY TO START; NOT IMPLEMENTED.** Supplements the original
+Execution status — 26 October 2026: this plan's bounded local scope is
+implemented at 0018 and reviewed on PR 7. [Closeout](../../10-reference/SPRINT-12-LOCAL-CLOSEOUT.md) records
+actual evidence and retained live/model gates. The original plan/acceptance below
+is retained; do not rerun the starting prompt or begin Sprint 13 automatically.
+
+25 October 2026. **Plan retained; local sample implemented and accepted; full external/model gates open.**
+[Current report](../../03-sprints/completed/sprint-12/SPRINT_REPORT.md). Supplements the original
 [Sprint 12 packages and acceptance](../FUTURE_SPRINT_ROADMAP.md#sprint-12--connector-reliability-and-historical-model-foundations)
 under the [current local plan](../LOCAL_SAMPLE_PLAN_UPDATE.md).
 

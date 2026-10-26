@@ -54,3 +54,16 @@ versioned evaluation and disabled fallback. durable_jobs references exactly one
 integration, document version or AI run; existing event/SSE/authority rules remain.
 Bounded Gemini free-tier smoke verified; broad model quality unverified. No semantic agents, private assessment ingestion,
 metric changes or automatic plan edits. Admin-only restricted operations apply.
+
+## Sprint 12 connector and research UI
+
+`connector-controls.tsx` waits for initial authority loading before rendering its
+uncontrolled form and keys it by integration/authority revision. Approval/rotation,
+revocation and source conflict review reuse the identity transport and existing jobs.
+`ml.tsx` connects manual/fixture history, immutable datasets, baseline jobs and saved
+model cards/artifact downloads. Empty run selection clears the active card; per-effect
+poll guards discard stale successes/errors after selection/withdrawal. `/ml` has the
+current-page breadcrumb **History & baselines**. Tables retain keyboard-scrollable
+mobile layouts. [User journey](../03-sprints/completed/sprint-12/USER_GUIDE.md) and
+[research/access contract](ml.md) define honest loading, unavailable, insufficient-data,
+withdrawn and synthetic-demo states. No serving/promotion UI is implemented.

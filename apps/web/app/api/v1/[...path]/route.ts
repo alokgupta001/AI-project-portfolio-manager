@@ -32,7 +32,10 @@ async function proxy(
     if (value) headers.set(name, value);
   }
   let body: string | undefined;
-  if (!["GET", "HEAD"].includes(request.method) && path[0] === "integrations") {
+  if (
+    !["GET", "HEAD"].includes(request.method) &&
+    ["integrations", "ml"].includes(path[0])
+  ) {
     const reader = request.body?.getReader();
     const decoder = new TextDecoder();
     let size = 0;

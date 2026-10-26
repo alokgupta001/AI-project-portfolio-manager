@@ -1553,6 +1553,18 @@ body > main > footer {
   padding: 1rem;
   overflow-wrap: anywhere;
 }
+.ml-workspace .table-scroll table,
+.connector-controls .table-scroll table {
+  min-width: 680px;
+  table-layout: auto;
+}
+.ml-workspace .table-scroll th,
+.ml-workspace .table-scroll td,
+.connector-controls .table-scroll th,
+.connector-controls .table-scroll td {
+  overflow-wrap: normal;
+  word-break: normal;
+}
 .table-scroll small {
   display: block;
   font-weight: normal;

@@ -1,5 +1,7 @@
 # Sprint 02 identity: local operation and acceptance
 
+26 October 2026. Current local sample: Sprint 12 at normal schema **0018**. [Reviewed closeout](../10-reference/SPRINT-12-LOCAL-CLOSEOUT.md) records application commit `f93a596`, both passing hosted CI runs and CodeRabbit's final review with no actionable comments. Live connectors/genuine model quality remain unverified and AT17 remains BLOCKED. Earlier dated checkpoints below retain their original scope; stop before Sprint 13.
+
 This page retains the operator-only local-preview alternative. Development Gmail signup, existing-account invitation and recovery are now verified. Normal users follow the [website manual](../06-user-guides/WEBSITE_WALKTHROUGH.md) and [member/PM access guide](../06-user-guides/MEMBERS_ROLES_AND_ACCESS.md); operators follow [Gmail SMTP setup](GMAIL-SMTP-SETUP.md) and [email delivery](EMAIL-DELIVERY.md). Current schema head is `0012_ai_runtime`; statements about the Sprint 02 migration below describe that historical checkpoint.
 
 Use the project root. Start Docker's Linux engine, then:
