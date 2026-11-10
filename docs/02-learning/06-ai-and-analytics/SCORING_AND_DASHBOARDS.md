@@ -4,7 +4,7 @@
 
 ## Assessment scores: first follow the stored answer
 
-Answers live in `ppm_answers`, tied to `assessment_id` and `question_id`. The definition lives in the assessment's frozen `ppm_framework_versions.snapshot`. `assessment.scoring` loads those inputs and passes them to [`compute_scores`](../../../services/api/ppm_api/assessment.py), along with valid human adjustments.
+Answers live in `ppm_answers`, tied to `assessment_id` and `question_id`. The definition lives in the assessment's frozen `ppm_framework_versions.snapshot`. [`service.scoring`](../../../services/api/ppm_api/modules/assessments/service.py) loads those inputs and passes them to [`compute_scores`](../../../services/api/ppm_api/modules/assessments/scoring.py), along with valid human adjustments.
 
 A dimension is a group of questions, such as one area in an example framework. Each dimension has an overall weight. Each question also has a positive weight within that dimension. Publication requires dimension weights to total exactly 1 and at least one numeric question per dimension.
 
@@ -147,6 +147,6 @@ The verified email invitation gave an existing account Viewer membership in anot
 
 ## Calendar setup used by the walkthrough
 
-[`capacity.tsx`](../../../apps/web/components/capacity.tsx) exposes Working calendars directly in Resource planning. A calendar is an immutable schedule version: timezone, seven daily hour values and holiday dates. Save a new version and reference it from a dated availability interval; changing a schedule does not rewrite old capacity inputs. [`capacity.py`](../../../services/api/ppm_api/capacity.py) computes from calendar, availability, time off and allocations. Missing coverage remains Unknown. Sensitive actual effort still needs its own grant, including for Admin.
+[`capacity.tsx`](../../../apps/web/components/capacity.tsx) exposes Working calendars directly in Resource planning. A calendar is an immutable schedule version: timezone, seven daily hour values and holiday dates. Save a new version and reference it from a dated availability interval; changing a schedule does not rewrite old capacity inputs. [`capacity.py`](../../../services/api/ppm_api/modules/capacity/router.py) computes from calendar, availability, time off and allocations. Missing coverage remains Unknown. Sensitive actual effort still needs its own grant, including for Admin.
 
 The prepared Northstar records use Asia/Kolkata, weekdays of eight hours and weekends of zero. The walkthrough closes a sprint with ten completed points and reviews the supplied answers independently. Deterministic scores and saved-change notices are current behavior; Broad document intake/OCR/keyword citations are now locally verified in Sprint 09; AI analysis remains PLANNED and never rewrites saved assessment scores. [Current repair evidence](../../04-testing/ACCOUNT_WORKFLOW_REPAIR_REPORT.md) distinguishes browser verification from external-provider acceptance.

@@ -39,8 +39,8 @@ This sprint added the information people need to run projects: portfolios, proje
 | Part | Implementation files |
 | --- | --- |
 | Setup, portfolio and project screens, forms and history | [Delivery screens](../../../apps/web/components/delivery.tsx), [field definitions](../../../apps/web/components/delivery-fields.ts) |
-| Save/access/archive/history rules | [Delivery service](../../../services/api/ppm_api/delivery.py) |
-| Records and original database structure | [Project tables](../../../services/api/ppm_api/ppm_tables.py), [delivery migration](../../../services/api/migrations/versions/0003_delivery.py) |
+| Save/access/archive/history rules | [Delivery service](../../../services/api/ppm_api/modules/delivery/router.py) |
+| Records and original database structure | [Project tables](../../../services/api/ppm_api/modules/delivery/tables.py), [delivery migration](../../../services/api/migrations/versions/0003_delivery.py) |
 | Browser check | [Delivery scenario](../../../tests/browser/delivery.spec.ts) |
 
 ## Recorded checks and limits

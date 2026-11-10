@@ -3,10 +3,10 @@
 from uuid import uuid4
 
 import pytest
-from ppm_api import guided_review as G
-from ppm_api.agent_schemas import AnalysisInput
-from ppm_api.model_registry import digest
-from ppm_api.selection_protocol import PROMPT, fixture_sources, protocol, summarize
+from ppm_api.modules.agents import guided_review as G
+from ppm_api.modules.agents.schemas import AnalysisInput
+from ppm_api.modules.ai.registry import digest
+from ppm_api.modules.selection.protocol import PROMPT, fixture_sources, protocol, summarize
 from pydantic import ValidationError
 
 

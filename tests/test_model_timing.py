@@ -2,12 +2,12 @@
 
 import json
 
-from ppm_api.model_timing import EVENTS, TransportTiming
+from ppm_api.modules.ai.timing import EVENTS, TransportTiming
 
 
 async def test_transport_timing_keeps_only_known_monotonic_offsets(monkeypatch):
     clock = [100.0]
-    monkeypatch.setattr("ppm_api.model_timing.perf_counter", lambda: clock[0])
+    monkeypatch.setattr("ppm_api.modules.ai.timing.perf_counter", lambda: clock[0])
     timing = TransportTiming()
     clock[0] = 100.125
     await timing.trace("connection.start_tls.complete", {"headers": "secret", "body": "private"})

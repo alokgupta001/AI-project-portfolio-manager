@@ -26,7 +26,12 @@ def anchors(content: str) -> set[str]:
 
 
 def main() -> None:
-    files = [ROOT / "README.md", ROOT / "ANTIGRAVITY.md", *sorted((ROOT / "docs").rglob("*.md"))]
+    files = [
+        ROOT / "README.md",
+        ROOT / "ANTIGRAVITY.md",
+        *sorted((ROOT / "docs").rglob("*.md")),
+        *sorted((ROOT / "services").rglob("README.md")),
+    ]
     errors = []
     references = 0
     cache: dict[Path, set[str]] = {}

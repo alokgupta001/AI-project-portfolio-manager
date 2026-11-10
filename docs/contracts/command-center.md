@@ -1,5 +1,9 @@
 # Command center — Sprint 07
 
+Current implementation: [command feature](../../services/api/ppm_api/modules/command/README.md).
+The [step 20 grouping](../04-testing/BACKEND_STRUCTURE_STEP_20.md) changes
+file/import ownership while preserving the contract and permission/workflow rules below.
+
 `GET /api/v1/command/snapshot?start=YYYY-MM-DD&end=YYYY-MM-DD&portfolio_id=UUID`
 returns `CommandSnapshot`, contract `command-v1`, risk rule `risk-rule-v1`.
 The authenticated active-organization header is mandatory. The service takes the

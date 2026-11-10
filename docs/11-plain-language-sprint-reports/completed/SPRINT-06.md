@@ -43,8 +43,8 @@ For a full worked example with framework fields and people, follow the assessmen
 | Part | Implementation files |
 | --- | --- |
 | Framework editor, answers, review and score screens | [Assessment screen](../../../apps/web/components/assessments.tsx) |
-| Assignment, scoring, permissions and workflow | [Assessment service](../../../services/api/ppm_api/assessment.py) |
-| Preserved versions and assessment history | [Assessment tables](../../../services/api/ppm_api/assessment_tables.py), [assessment migration](../../../services/api/migrations/versions/0005_assessment.py) |
+| Assignment, scoring, permissions and workflow | [Assessment service](../../../services/api/ppm_api/modules/assessments/router.py) |
+| Preserved versions and assessment history | [Assessment tables](../../../services/api/ppm_api/modules/assessments/tables.py), [assessment migration](../../../services/api/migrations/versions/0005_assessment.py) |
 | Browser check | [Assessment scenario](../../../tests/browser/assessment.spec.ts) |
 
 ## Recorded checks, later changes and limits

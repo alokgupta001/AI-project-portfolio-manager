@@ -1,5 +1,242 @@
 # Changelog
 
+## 10 November 2026 — complete remaining service/table separation
+
+Extract remaining HTTP operations and inline DTOs, make all feature handlers thin,
+and replace domain-to-router imports with direct operation dependencies. Move
+workforce, connector and mail tables to their owners and compose metadata explicitly.
+Update file guides and verify all 583 backend cases with no skips, including live
+scanner/OCR/worker recovery. API and table/index definitions remain identical.
+See [actual checks](docs/04-testing/BACKEND_STRUCTURE_STEP_32.md).
+
+## 10 November 2026 — backend feature organization complete
+
+Group remaining backend features, clarify workspace/selection ownership and add
+file guides. Replace chronological landing pages with current navigation, preserving
+their dated history. Extend documentation checking to feature guides. See the
+[project map](docs/01-architecture/PROJECT_MAP.md) and [actual checks](docs/04-testing/BACKEND_STRUCTURE_STEP_29.md).
+
+## 10 November 2026 — backend structure cleanup, step 28
+
+The selection files are grouped under modules/selection; callers use the new owners.
+Existing statements, API/table definitions and schema **0020** are preserved.
+Retarget source navigation and record actual checks in the [step 28 report](docs/04-testing/BACKEND_STRUCTURE_STEP_28.md).
+
+## 10 November 2026 — backend structure cleanup, step 27
+
+The workspace files are grouped under modules/workspace; callers use the new owners.
+Existing statements, API/table definitions and schema **0020** are preserved.
+Retarget source navigation and record actual checks in the [step 27 report](docs/04-testing/BACKEND_STRUCTURE_STEP_27.md).
+
+## 10 November 2026 — backend structure cleanup, step 26
+
+The agents files are grouped under modules/agents; callers use the new owners.
+Existing statements, API/table definitions and schema **0020** are preserved.
+Retarget source navigation and record actual checks in the [step 26 report](docs/04-testing/BACKEND_STRUCTURE_STEP_26.md).
+
+## 10 November 2026 — backend structure cleanup, step 25
+
+The ai files are grouped under modules/ai; callers use the new owners.
+Existing statements, API/table definitions and schema **0020** are preserved.
+Retarget source navigation and record actual checks in the [step 25 report](docs/04-testing/BACKEND_STRUCTURE_STEP_25.md).
+
+## 10 November 2026 — backend structure cleanup, step 24
+
+The ml files are grouped under modules/ml; callers use the new owners.
+Existing statements, API/table definitions and schema **0020** are preserved.
+Retarget source navigation and record actual checks in the [step 24 report](docs/04-testing/BACKEND_STRUCTURE_STEP_24.md).
+
+## 10 November 2026 — backend structure cleanup, step 23
+
+The integrations files are grouped under modules/integrations; callers use the new owners.
+Existing statements, API/table definitions and schema **0020** are preserved.
+Retarget source navigation and record actual checks in the [step 23 report](docs/04-testing/BACKEND_STRUCTURE_STEP_23.md).
+
+## 10 November 2026 — backend structure cleanup, step 22
+
+The identity files are grouped under modules/identity; callers use the new owners.
+Existing statements, API/table definitions and schema **0020** are preserved.
+Retarget source navigation and record actual checks in the [step 22 report](docs/04-testing/BACKEND_STRUCTURE_STEP_22.md).
+
+## 10 November 2026 — backend structure cleanup, step 21
+
+The delivery files are grouped under modules/delivery; callers use the new owners.
+Existing statements, API/table definitions and schema **0020** are preserved.
+Retarget source navigation and record actual checks in the [step 21 report](docs/04-testing/BACKEND_STRUCTURE_STEP_21.md).
+
+## 10 November 2026 — backend structure cleanup, step 20
+
+The command files are grouped under modules/command; callers use the new owners.
+Existing statements, API/table definitions and schema **0020** are preserved.
+Retarget source navigation and record actual checks in the [step 20 report](docs/04-testing/BACKEND_STRUCTURE_STEP_20.md).
+
+## 10 November 2026 — backend structure cleanup, step 19
+
+The capacity files are grouped under modules/capacity; callers use the new owners.
+Existing statements, API/table definitions and schema **0020** are preserved.
+Retarget source navigation and record actual checks in the [step 19 report](docs/04-testing/BACKEND_STRUCTURE_STEP_19.md).
+
+## 10 November 2026 — backend structure cleanup, step 18
+
+Seven lifecycle/retention handlers delegate to operations; the orphan-candidate helper moves with its callers. Authorization, revision, retention/hold, evidence-link and filesystem eligibility statements are preserved.
+Record compatibility and actual checks in the [step 18 report](docs/04-testing/BACKEND_STRUCTURE_STEP_18.md).
+
+## 10 November 2026 — backend structure cleanup, step 17
+
+Four file handlers delegate to operations for upload, download tickets, private downloads and reprocessing. Existing statement bodies, storage/hash checks and transport responses are preserved.
+Record compatibility and actual checks in the [step 17 report](docs/04-testing/BACKEND_STRUCTURE_STEP_17.md).
+
+## 10 November 2026 — backend structure cleanup, step 16
+
+Seven read handlers delegate to query operations with identical statement bodies. HTTP defaults/Query validation stay on the routes; operations receive Principal and explicit arguments. AI retrieval and agent citations use the query owner directly.
+Record compatibility and actual checks in the [step 16 report](docs/04-testing/BACKEND_STRUCTURE_STEP_16.md).
+
+## 10 November 2026 — backend structure cleanup, step 15
+
+Response loading, processing-job/outbox enqueueing and authorized replay now have a shared service owner. All three complete definitions move unchanged, reusing the existing scoped transaction.
+Record compatibility and actual checks in the [step 15 report](docs/04-testing/BACKEND_STRUCTURE_STEP_15.md).
+
+## 10 November 2026 — backend structure cleanup, step 14
+
+- Extract the unchanged document revision and request-identity helpers into
+  `mutations.py`; point document/AI/agent-review callers at the new owner.
+- Preserve canonical fingerprint inputs, UUID key validation, If-Match errors,
+  caller authorization, locking and replay order. AI no longer imports document routes.
+- Keep API/table definitions, tests, worker/parser/access behavior and unrelated work;
+  update current navigation and affected source-index entries.
+- Record actual checks in the [step 14 report](docs/04-testing/BACKEND_STRUCTURE_STEP_14.md).
+
+## 10 November 2026 — backend structure cleanup, step 13
+
+- Move `document_worker` and its nested authority resolver unchanged to `worker.py`;
+  preserve job dispatch order, lease fencing, parser/scanner/storage and publication.
+- Update dispatcher/recovery imports and existing scanner/parser test patch targets.
+- Reduce the document router from 859 to 730 lines, removing worker-only imports;
+  keep HTTP contracts, access checks, schema and unrelated work.
+- Record actual checks in the [step 13 report](docs/04-testing/BACKEND_STRUCTURE_STEP_13.md).
+
+## 10 November 2026 — backend structure cleanup, step 12
+
+- Extract three unchanged document access helpers into `access.py`: scoped document
+  lookup, version resolution and write eligibility, retaining deleted-source handling.
+- Point router/worker callers and direct AI/agent version readers at the new owner;
+  preserve endpoint bodies, contracts and tenant/project permission rules.
+- Reduce the document router from 897 to 859 lines and refresh affected navigation.
+- Record actual checks in the [step 12 report](docs/04-testing/BACKEND_STRUCTURE_STEP_12.md).
+
+## 10 November 2026 — backend structure cleanup, step 11
+
+- Group five existing document files under `modules/documents`: router, schemas,
+  tables, parser and retrieval types; add a file-responsibility guide.
+- Update imports/callers, worker dispatch, migration metadata registration and test
+  module targets. Preserve the bounded parser subprocess's effective Python path.
+- Keep public contracts, source/scanner/storage/retention rules, schema **0020** and
+  unrelated work; update affected navigation and source links.
+- Record actual checks in the [step 11 report](docs/04-testing/BACKEND_STRUCTURE_STEP_11.md).
+
+## 10 November 2026 — assessment structure cleanup, step 10
+
+- Separate six framework operations, their response helper and example loader
+  into `frameworks.py`; redirect six thin HTTP delegates to the new owner.
+- Reduce the assessment service from 591 to 423 lines while preserving all moved
+  functions and all 15 remaining service functions. The two services are independent.
+- Keep the example resource in place, reuse existing tests and preserve the API,
+  transactions, permissions, migrations and unrelated work.
+- Record actual checks in the [step 10 report](docs/04-testing/ASSESSMENT_STRUCTURE_STEP_10.md).
+
+## 10 November 2026 — assessment structure cleanup, step 9
+
+- Move grant creation/listing and private event-history reads to the service,
+  preserving operation statements and original route signatures/decorators.
+- Reduce the router from 282 to 219 lines; all 21 HTTP handlers now delegate to
+  operations, with SQL removed from the routing module.
+- Extend existing workflow assertions for grant listing/target validation, tenant
+  denial, result-reader history/grant denial and chronological event responses.
+- Record actual checks in the [step 9 report](docs/04-testing/ASSESSMENT_STRUCTURE_STEP_9.md).
+
+## 10 November 2026 — assessment structure cleanup, step 8
+
+- Extract six attachment operations into `evidence.py`; keep the HTTP signatures,
+  response models and mutation decorators and reduce the router by 136 lines.
+- Preserve private access, revisions, text/file limits, storage, SHA-256 checks,
+  quarantine/release, events and download headers with unchanged operation bodies.
+- Keep API/table definitions and unrelated work; update affected navigation and
+  record actual checks in the [step 8 report](docs/04-testing/ASSESSMENT_STRUCTURE_STEP_8.md).
+
+## 10 November 2026 — assessment structure cleanup, step 7
+
+- Delegate six assessment lifecycle routes to services, preserving HTTP metadata,
+  roles, revisions, scoring, state transitions, notifications and event statements.
+- Keep the answer-save read-back inside the service; reduce the router by 205 lines.
+- Preserve prior framework/helper operations, API contracts and table definitions;
+  refresh only the affected source navigation and current guides.
+- Record lifecycle/private-caller/cohort regression checks in the
+  [step 7 report](docs/04-testing/ASSESSMENT_STRUCTURE_STEP_7.md).
+
+## 10 November 2026 — assessment structure cleanup, step 6
+
+- Delegate six framework routes to service operations while preserving their
+  signatures, decorators and operation statements; reduce the router by 121 lines.
+- Move the unchanged example-resource loader to the same-package service and
+  retain immutable version publication, revision checks and scoped transactions.
+- Extend the existing database workflow with successful paginated framework reads,
+  empty next-page/bounds checks and immutable ordered version-history reads.
+- Record actual regression checks in the
+  [step 6 report](docs/04-testing/ASSESSMENT_STRUCTURE_STEP_6.md).
+
+## 10 November 2026 — assessment structure cleanup, step 5
+
+- Extract seven unchanged workflow/data helpers into the assessment service;
+  reduce the router by a further 94 lines.
+- Point the agent answer-loading caller at that service, removing its dependency
+  on the assessment HTTP router.
+- Preserve scoring, response fields, lifecycle events, completion checks, scoped
+  transactions, API contracts and table definitions; refresh current navigation.
+- Record actual regression checks in the
+  [step 5 report](docs/04-testing/ASSESSMENT_STRUCTURE_STEP_5.md).
+
+## 10 November 2026 — assessment structure cleanup, step 4
+
+- Move the unchanged assessment mutation decorator and revision check into
+  `modules/assessments/mutations.py`; reduce the router by a further 70 lines.
+- Preserve write locking, live access checks before replay, idempotency/conflict
+  handling, revision preconditions, sanitized errors and request audit recording.
+- Keep decorated endpoint signatures, OpenAPI and database definitions unchanged;
+  refresh the feature guide, source index and current handoff.
+- Record actual regression checks in the
+  [step 4 report](docs/04-testing/ASSESSMENT_STRUCTURE_STEP_4.md).
+
+## 10 November 2026 — assessment structure cleanup, step 3
+
+- Extract nine unchanged assessment authorization and tenant-lookup helpers into
+  `modules/assessments/access.py`; reduce the router by a further 77 lines.
+- Point document and agent permission callers at the owning access module.
+- Preserve live checks before idempotent replay, named respondent/reviewer rules,
+  tenant/grant/evidence boundaries, HTTP contracts and database definitions.
+- Record actual regression checks and preservation evidence in the
+  [step 3 report](docs/04-testing/ASSESSMENT_STRUCTURE_STEP_3.md).
+
+## 10 November 2026 — assessment structure cleanup, step 2
+
+- Extract unchanged deterministic scoring and framework/answer validation into
+  separate assessment feature modules; reduce the HTTP router by 101 lines.
+- Point agents, planner and existing tests directly at those rule modules.
+- Preserve HTTP/OpenAPI definitions, scoring formulas, table metadata and applied
+  migrations; refresh affected source navigation and the feature guide.
+- Record actual checks and remaining limits in the
+  [step 2 report](docs/04-testing/ASSESSMENT_STRUCTURE_STEP_2.md).
+
+## 5 November 2026 — assessment structure cleanup, step 1
+
+- Group assessment routes/workflow, schemas, tables and example frameworks under
+  `services/api/ppm_api/modules/assessments`; document each file's purpose.
+- Update callers, migration metadata registration, fixture/test imports and current
+  source links while preserving applied migrations and unrelated local edits.
+- Regenerate the single module-qualified `ReviewInput` contract reference; HTTP
+  endpoints and request/response definitions retain their existing behavior.
+- Record checks, Docker verification limitations and the next step in the
+  [structure report](docs/04-testing/ASSESSMENT_STRUCTURE_STEP_1.md).
+
 ## 31 October 2026 — local frontend redesign
 
 - Introduce forest/mint light/dark surfaces, local Geist, stroke icons and grouped navigation.

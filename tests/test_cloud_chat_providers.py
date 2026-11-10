@@ -6,10 +6,10 @@ from dataclasses import replace
 
 import httpx
 import pytest
-from ppm_api.model_adapters import CLOUD_CHAT_ORIGINS, NativeAdapter
-from ppm_api.model_contracts import ModelFailure
-from ppm_api.model_registry import ModelPolicy
-from ppm_api.model_router import RouteRequirements, candidates
+from ppm_api.modules.ai.adapters import CLOUD_CHAT_ORIGINS, NativeAdapter
+from ppm_api.modules.ai.contracts import ModelFailure
+from ppm_api.modules.ai.model_router import RouteRequirements, candidates
+from ppm_api.modules.ai.registry import ModelPolicy
 from test_model_routing import configured as configured
 
 
@@ -220,7 +220,7 @@ async def test_missing_usage_stays_unknown_and_provider_error_is_sanitized(cloud
 async def test_timeout_retains_safe_transport_milestones_without_retry(cloud, monkeypatch):
     settings, profile, _, request = cloud
     clock = [100.0]
-    monkeypatch.setattr("ppm_api.model_timing.perf_counter", lambda: clock[0])
+    monkeypatch.setattr("ppm_api.modules.ai.timing.perf_counter", lambda: clock[0])
     sent = []
 
     async def handler(req):

@@ -7,10 +7,10 @@ import os
 from uuid import UUID
 
 import sqlalchemy as sa
-from ppm_api.assessment_tables import assessments, framework_versions, frameworks
 from ppm_api.config import load_settings
-from ppm_api.identity_tables import memberships, users
-from ppm_api.ppm_tables import TABLES
+from ppm_api.modules.assessments.tables import assessments, framework_versions, frameworks
+from ppm_api.modules.identity.tables import memberships, users
+from ppm_api.shared.table_registry import TABLES
 from seed_walkthrough import ident
 from sqlalchemy.engine import make_url
 from sqlalchemy.ext.asyncio import create_async_engine

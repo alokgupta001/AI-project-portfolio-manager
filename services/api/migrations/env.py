@@ -2,25 +2,11 @@ import asyncio
 import os
 
 from alembic import context
-from ppm_api import (  # noqa: F401
-    agent_tables,
-    agent_task_tables,
-    ai_tables,
-    assessment_tables,
-    command_tables,
-    document_tables,
-    identity_tables,
-    job_tables,
-    ml_tables,
-    pilot_tables,
-    ppm_tables,
-    selection_tables,
-)
-from ppm_api.database import Base
+from ppm_api.shared.table_registry import metadata
 from sqlalchemy import pool
 from sqlalchemy.ext.asyncio import create_async_engine
 
-target_metadata = Base.metadata
+target_metadata = metadata
 
 
 def run_sync(connection):

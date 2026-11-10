@@ -43,8 +43,8 @@ If the result is Unknown, check availability/calendar dates and full-resource vi
 | Part | Implementation files |
 | --- | --- |
 | Staffing screen, heatmap and snapshots | [Capacity screen](../../../apps/web/components/capacity.tsx) |
-| Available/planned/actual hours and privacy rules | [Capacity service](../../../services/api/ppm_api/capacity.py) |
-| Saved capacity records | [Capacity migration](../../../services/api/migrations/versions/0004_capacity.py), [shared tables](../../../services/api/ppm_api/ppm_tables.py) |
+| Available/planned/actual hours and privacy rules | [Capacity service](../../../services/api/ppm_api/modules/capacity/router.py) |
+| Saved capacity records | [Capacity migration](../../../services/api/migrations/versions/0004_capacity.py), [shared tables](../../../services/api/ppm_api/modules/delivery/tables.py) |
 | Browser check | [Capacity scenario](../../../tests/browser/capacity.spec.ts) |
 
 ## Recorded checks and limits

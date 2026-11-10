@@ -4,9 +4,9 @@ from copy import deepcopy
 from uuid import uuid4
 
 import pytest
-from ppm_api.selection_audit import audit
-from ppm_api.selection_pilot import automated_allowed
-from ppm_api.selection_protocol import protocol
+from ppm_api.modules.selection.audit import audit
+from ppm_api.modules.selection.protocol import protocol
+from ppm_api.modules.selection.service import automated_allowed
 
 
 def test_exact_arithmetic_audit_is_reproducible_and_never_human():

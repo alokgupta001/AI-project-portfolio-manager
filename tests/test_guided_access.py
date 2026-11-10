@@ -7,13 +7,13 @@ from uuid import UUID, uuid4
 
 import pytest
 import sqlalchemy as sa
-from ppm_api import agent_task_tables as T
-from ppm_api import ai_tables as A
-from ppm_api.identity import context, now
-from ppm_api.identity_tables import memberships
-from ppm_api.model_contracts import ModelResult, ModelUsage
-from ppm_api.model_registry import ModelPolicy
-from ppm_api.ppm_tables import TABLES
+from ppm_api.modules.agents import task_tables as T
+from ppm_api.modules.ai import tables as A
+from ppm_api.modules.ai.contracts import ModelResult, ModelUsage
+from ppm_api.modules.ai.registry import ModelPolicy
+from ppm_api.modules.identity.service import context, now
+from ppm_api.modules.identity.tables import memberships
+from ppm_api.shared.table_registry import TABLES
 from sqlalchemy.exc import DBAPIError
 from test_agent_v2_runtime import configure
 from test_agents import start, work
@@ -177,7 +177,7 @@ async def test_guided_grant_preserves_role_and_checks_every_boundary(
             usage=ModelUsage(input_tokens=10, output_tokens=8, source="reported"),
         )
 
-    monkeypatch.setattr("ppm_api.agent_runtime.NativeAdapter.execute", execute)
+    monkeypatch.setattr("ppm_api.modules.agents.runtime.NativeAdapter.execute", execute)
     response = await start(c, project, **body)
     assert response.status_code == 202, response.text
     output, _ = await work(c, app, owner, ids | {"admin": ids[role]}, response.json())

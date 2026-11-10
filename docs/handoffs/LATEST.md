@@ -1,5 +1,514 @@
 # Latest technical handoff
 
+## 10 November 2026 — remaining structural cleanup completed
+
+The user explicitly requested completing the work left at step 29. Steps 30–32
+finish it: all 129 feature HTTP handlers across 13 routing modules delegate to
+operations; no SQL imports remain in those modules, and domain modules no longer
+import HTTP routers. Workforce tables belong to capacity, connector authority/
+conflicts to integrations, mail deliveries to identity. Shared record primitives
+and explicit table registration are in ppm_api/shared. Inline DTOs have schema
+owners. Current guides/inventories explain every file.
+
+Start with the [project map](../01-architecture/PROJECT_MAP.md) and
+[complete verification](../04-testing/BACKEND_STRUCTURE_STEP_32.md).
+**583 backend cases passed in one full Linux run; zero skipped/deselected.**
+Live ClamAV, real OCR and actual Celery crash/lease recovery passed. Static,
+contracts, source/DDL/API preservation, typing and documentation checks pass.
+OpenAPI (113 paths/all components) and all 83 table/index DDL definitions are
+identical to the pre-follow-through snapshot; no new contract rename/regeneration.
+
+Normal schema **0020**, applied migrations, .env, normal/demo data, source prompts,
+unrelated work, provider settings, stopped pilots and sprint boundaries remain.
+Temporary PostgreSQL/Redis/ClamAV containers/network are removed, volumes retained.
+No live model call, new pilot, successor sprint, commit, push or deployment occurred.
+The remaining structural tasks called out in the previous handoff are complete.
+
+## 10 November 2026 — backend organization pass complete
+
+User-authorized automatic continuation completed steps 19–29. The API root has
+seven shared Python files; twelve feature packages each explain their owners.
+Start with the [project map](../01-architecture/PROJECT_MAP.md) and
+[final verification](../04-testing/BACKEND_STRUCTURE_STEP_29.md).
+
+Full offline checks passed (416 backend cases; one Windows OCR skip); final static
+checks and 65 cross-feature Linux cases passed with zero skips and real OCR.
+One live-ClamAV case was explicitly deselected. Focused checks, including the
+225-case agent/guided selection and real Celery crash recovery, are recorded in
+the linked report. Counts overlap. A retained old test database's RLS policy drift
+was reproduced before the move; verification used a separate fresh test project.
+
+All 113 API paths/wire schemas remain, with one generated ReviewInput namespace
+rename and corresponding generated types. All 83 table/index DDL definitions,
+applied migrations, .env, source prompts and unrelated work are preserved.
+Temporary test containers/networks are removed and named volumes retained.
+Normal schema **0020**, data, stopped pilots, provider configuration and sprint
+boundaries remain. No new model call, commit, push, deployment or successor sprint.
+
+The current feature-folder/navigability pass is complete. Remaining shared table
+and large-router seams are documented in the map; do not infer independent
+microservices or full live-model acceptance from the folder layout.
+
+## 10 November 2026 — structure cleanup, step 28; automatic continuation
+
+The selection files are grouped under modules/selection; callers use the new owners.
+Existing statements, API/table definitions and schema **0020** are preserved.
+Read the [feature map](../../services/api/ppm_api/modules/README.md) and
+[verification](../04-testing/BACKEND_STRUCTURE_STEP_28.md). Full offline checks
+passed (416 backend cases, Windows OCR skip); 51 Linux cases passed
+with zero skips, including real OCR. API/table snapshots, migration drift and
+source/unrelated-file preservation passed. Existing fixtures/providers remain
+restricted; no normal/demo data reset, publication or sprint advancement.
+Finish the current architecture/file map, audit stale imports and run the final documentation and compatibility checks. The user authorized proceeding
+without another “next”. Isolated PostgreSQL/Redis remain running for continuation;
+remove temporary containers/network at the end, retaining named volumes.
+
+## 10 November 2026 — structure cleanup, step 27; automatic continuation
+
+The workspace files are grouped under modules/workspace; callers use the new owners.
+Existing statements, API/table definitions and schema **0020** are preserved.
+Read the [feature map](../../services/api/ppm_api/modules/README.md) and
+[verification](../04-testing/BACKEND_STRUCTURE_STEP_27.md). Full offline checks
+passed (416 backend cases, Windows OCR skip); 49 Linux cases passed
+with zero skips, including real OCR. API/table snapshots, migration drift and
+source/unrelated-file preservation passed. Existing fixtures/providers remain
+restricted; no normal/demo data reset, publication or sprint advancement.
+Group the bounded financial-selection research workflow, then finish the repository map and verify all current links/imports. The user authorized proceeding
+without another “next”. Isolated PostgreSQL/Redis remain running for continuation;
+remove temporary containers/network at the end, retaining named volumes.
+
+## 10 November 2026 — structure cleanup, step 26; automatic continuation
+
+The agents files are grouped under modules/agents; callers use the new owners.
+Existing statements, API/table definitions and schema **0020** are preserved.
+Read the [feature map](../../services/api/ppm_api/modules/README.md) and
+[verification](../04-testing/BACKEND_STRUCTURE_STEP_26.md). Full offline checks
+passed (416 backend cases, Windows OCR skip); 225 Linux cases passed
+with zero skips, including real OCR. API/table snapshots, migration drift and
+source/unrelated-file preservation passed. Existing fixtures/providers remain
+restricted; no normal/demo data reset, publication or sprint advancement.
+Group personal workspace/discovery and guided-review support, then isolate financial-selection research files and finish the architecture map. The user authorized proceeding
+without another “next”. Isolated PostgreSQL/Redis remain running for continuation;
+remove temporary containers/network at the end, retaining named volumes.
+
+## 10 November 2026 — structure cleanup, step 25; automatic continuation
+
+The ai files are grouped under modules/ai; callers use the new owners.
+Existing statements, API/table definitions and schema **0020** are preserved.
+Read the [feature map](../../services/api/ppm_api/modules/README.md) and
+[verification](../04-testing/BACKEND_STRUCTURE_STEP_25.md). Full offline checks
+passed (416 backend cases, Windows OCR skip); 103 Linux cases passed
+with zero skips, including real OCR. API/table snapshots, migration drift and
+source/unrelated-file preservation passed. Existing fixtures/providers remain
+restricted; no normal/demo data reset, publication or sprint advancement.
+Group agent planning, execution, validation, reviews and task-table definitions with a clear local file guide. The user authorized proceeding
+without another “next”. Isolated PostgreSQL/Redis remain running for continuation;
+remove temporary containers/network at the end, retaining named volumes.
+
+## 10 November 2026 — structure cleanup, step 24; automatic continuation
+
+The ml files are grouped under modules/ml; callers use the new owners.
+Existing statements, API/table definitions and schema **0020** are preserved.
+Read the [feature map](../../services/api/ppm_api/modules/README.md) and
+[verification](../04-testing/BACKEND_STRUCTURE_STEP_24.md). Full offline checks
+passed (416 backend cases, Windows OCR skip); 50 Linux cases passed
+with zero skips, including real OCR. API/table snapshots, migration drift and
+source/unrelated-file preservation passed. Existing fixtures/providers remain
+restricted; no normal/demo data reset, publication or sprint advancement.
+Group AI assistance and the operator-owned model runtime while preserving adjacent evaluation data and public contracts. The user authorized proceeding
+without another “next”. Isolated PostgreSQL/Redis remain running for continuation;
+remove temporary containers/network at the end, retaining named volumes.
+
+## 10 November 2026 — structure cleanup, step 23; automatic continuation
+
+The integrations files are grouped under modules/integrations; callers use the new owners.
+Existing statements, API/table definitions and schema **0020** are preserved.
+Read the [feature map](../../services/api/ppm_api/modules/README.md) and
+[verification](../04-testing/BACKEND_STRUCTURE_STEP_23.md). Full offline checks
+passed (416 backend cases, Windows OCR skip); 60 Linux cases passed
+with zero skips, including real OCR. API/table snapshots, migration drift and
+source/unrelated-file preservation passed. Existing fixtures/providers remain
+restricted; no normal/demo data reset, publication or sprint advancement.
+Group ML dataset/history and evaluation code, then group AI/model routing, agent execution and pilot workflows. The user authorized proceeding
+without another “next”. Isolated PostgreSQL/Redis remain running for continuation;
+remove temporary containers/network at the end, retaining named volumes.
+
+## 10 November 2026 — structure cleanup, step 22; automatic continuation
+
+The identity files are grouped under modules/identity; callers use the new owners.
+Existing statements, API/table definitions and schema **0020** are preserved.
+Read the [feature map](../../services/api/ppm_api/modules/README.md) and
+[verification](../04-testing/BACKEND_STRUCTURE_STEP_22.md). Full offline checks
+passed (416 backend cases, Windows OCR skip); 69 Linux cases passed
+with zero skips, including real OCR. API/table snapshots, migration drift and
+source/unrelated-file preservation passed. Existing fixtures/providers remain
+restricted; no normal/demo data reset, publication or sprint advancement.
+Group durable jobs, connector intake and ingestion under integrations, then organize the ML/AI runtime and agents. The user authorized proceeding
+without another “next”. Isolated PostgreSQL/Redis remain running for continuation;
+remove temporary containers/network at the end, retaining named volumes.
+
+## 10 November 2026 — structure cleanup, step 21; automatic continuation
+
+The delivery files are grouped under modules/delivery; callers use the new owners.
+Existing statements, API/table definitions and schema **0020** are preserved.
+Read the [feature map](../../services/api/ppm_api/modules/README.md) and
+[verification](../04-testing/BACKEND_STRUCTURE_STEP_21.md). Full offline checks
+passed (416 backend cases, Windows OCR skip); 45 Linux cases passed
+with zero skips, including real OCR. API/table snapshots, migration drift and
+source/unrelated-file preservation passed. Existing fixtures/providers remain
+restricted; no normal/demo data reset, publication or sprint advancement.
+Group identity/session authority and mail, then proceed through integration jobs and the remaining AI features. The user authorized proceeding
+without another “next”. Isolated PostgreSQL/Redis remain running for continuation;
+remove temporary containers/network at the end, retaining named volumes.
+
+## 10 November 2026 — structure cleanup, step 20; automatic continuation
+
+The command files are grouped under modules/command; callers use the new owners.
+Existing statements, API/table definitions and schema **0020** are preserved.
+Read the [feature map](../../services/api/ppm_api/modules/README.md) and
+[verification](../04-testing/BACKEND_STRUCTURE_STEP_20.md). Full offline checks
+passed (416 backend cases, Windows OCR skip); 35 Linux cases passed
+with zero skips, including real OCR. API/table snapshots, migration drift and
+source/unrelated-file preservation passed. Existing fixtures/providers remain
+restricted; no normal/demo data reset, publication or sprint advancement.
+Group delivery records, their schemas and shared table registry, then continue through the remaining cohesive backend features. The user authorized proceeding
+without another “next”. Isolated PostgreSQL/Redis remain running for continuation;
+remove temporary containers/network at the end, retaining named volumes.
+
+## 10 November 2026 — structure cleanup, step 19; automatic continuation
+
+The capacity files are grouped under modules/capacity; callers use the new owners.
+Existing statements, API/table definitions and schema **0020** are preserved.
+Read the [feature map](../../services/api/ppm_api/modules/README.md) and
+[verification](../04-testing/BACKEND_STRUCTURE_STEP_19.md). Full offline checks
+passed (416 backend cases, Windows OCR skip); 35 Linux cases passed
+with zero skips, including real OCR. API/table snapshots, migration drift and
+source/unrelated-file preservation passed. Existing fixtures/providers remain
+restricted; no normal/demo data reset, publication or sprint advancement.
+Group the command-center router, schemas and metric tables, checking caller imports before moving them. The user authorized proceeding
+without another “next”. Isolated PostgreSQL/Redis remain running for continuation;
+remove temporary containers/network at the end, retaining named volumes.
+
+## 10 November 2026 — structure cleanup, step 18; automatic continuation
+
+Seven lifecycle/retention handlers delegate to operations; the orphan-candidate helper moves with its callers. Authorization, revision, retention/hold, evidence-link and filesystem eligibility statements are preserved.
+Router: 301 → 140 lines.
+Read the [file map](../../services/api/ppm_api/modules/documents/README.md) and [verification](../04-testing/BACKEND_STRUCTURE_STEP_18.md).
+Full offline checks passed (416 backend, Windows OCR skip), as did all 43 Linux
+cases with zero skips and real OCR. One live ClamAV case is explicitly deselected;
+scanner/provider fixtures are used. Migration drift, API/table snapshots and source
+preservation passed. Isolated PostgreSQL/Redis remain running for continuation;
+remove temporary containers/network at the end, preserving named volumes.
+Use the completed feature layout as the template for the next backend feature, checking its callers before moving files. The user authorized proceeding without another “next”. Existing schema
+**0020**, pilot/provider/sprint and no-publication/deployment boundaries remain.
+
+## 10 November 2026 — structure cleanup, step 17; automatic continuation
+
+Four file handlers delegate to operations for upload, download tickets, private downloads and reprocessing. Existing statement bodies, storage/hash checks and transport responses are preserved.
+Router: 484 → 301 lines.
+Read the [file map](../../services/api/ppm_api/modules/documents/README.md) and [verification](../04-testing/BACKEND_STRUCTURE_STEP_17.md).
+Full offline checks passed (416 backend, Windows OCR skip), as did all 43 Linux
+cases with zero skips and real OCR. One live ClamAV case is explicitly deselected;
+scanner/provider fixtures are used. Migration drift, API/table snapshots and source
+preservation passed. Isolated PostgreSQL/Redis remain running for continuation;
+remove temporary containers/network at the end, preserving named volumes.
+Separate governance, cancellation, deletion/purge, evidence linking and orphan retention operations. The user authorized proceeding without another “next”. Existing schema
+**0020**, pilot/provider/sprint and no-publication/deployment boundaries remain.
+
+## 10 November 2026 — structure cleanup, step 16; automatic continuation
+
+Seven read handlers delegate to query operations with identical statement bodies. HTTP defaults/Query validation stay on the routes; operations receive Principal and explicit arguments. AI retrieval and agent citations use the query owner directly.
+Router: 607 → 484 lines.
+Read the [file map](../../services/api/ppm_api/modules/documents/README.md) and [verification](../04-testing/BACKEND_STRUCTURE_STEP_16.md).
+Full offline checks passed (416 backend, Windows OCR skip), as did all 43 Linux
+cases with zero skips and real OCR. One live ClamAV case is explicitly deselected;
+scanner/provider fixtures are used. Migration drift, API/table snapshots and source
+preservation passed. Isolated PostgreSQL/Redis remain running for continuation;
+remove temporary containers/network at the end, preserving named volumes.
+Separate upload, download-ticket/download and reprocessing operations behind thin HTTP adapters. The user authorized proceeding without another “next”. Existing schema
+**0020**, pilot/provider/sprint and no-publication/deployment boundaries remain.
+
+## 10 November 2026 — structure cleanup, step 15; automatic continuation
+
+Response loading, processing-job/outbox enqueueing and authorized replay now have a shared service owner. All three complete definitions move unchanged, reusing the existing scoped transaction.
+Router: 713 → 607 lines.
+Read the [file map](../../services/api/ppm_api/modules/documents/README.md) and [verification](../04-testing/BACKEND_STRUCTURE_STEP_15.md).
+Full offline checks passed (416 backend, Windows OCR skip), as did all 43 Linux
+cases with zero skips and real OCR. One live ClamAV case is explicitly deselected;
+scanner/provider fixtures are used. Migration drift, API/table snapshots and source
+preservation passed. Isolated PostgreSQL/Redis remain running for continuation;
+remove temporary containers/network at the end, preserving named volumes.
+Separate library/search/detail/preview/citation/job/evidence reads behind thin HTTP adapters. The user authorized proceeding without another “next”. Existing schema
+**0020**, pilot/provider/sprint and no-publication/deployment boundaries remain.
+
+## 10 November 2026 — structure cleanup, step 14; sequential continuation authorized
+
+Document revision and shared request fingerprints now live unchanged in
+`mutations.py`. Document routes, AI submissions and agent reviews use the new
+owner directly; AI no longer imports document routes. Caller canonical body
+selection, header errors, hash inputs and lock/authorization/replay order remain.
+Read the [file map](../../services/api/ppm_api/modules/documents/README.md) and
+[step 14 verification](../04-testing/BACKEND_STRUCTURE_STEP_14.md).
+Full offline checks passed (416 backend tests, one Windows OCR skip); all 43 focused
+Linux cases passed with zero skips, including real OCR. One live ClamAV case was
+explicitly deselected; scanner/provider calls use fixtures. Migration drift,
+API/table snapshots and source/caller/unrelated-file preservation passed.
+The user explicitly requested: keep doing the next cleanup steps automatically.
+Proceed sequentially to shared document service helpers and remaining operations;
+do not wait for another "next". Earlier checkpoint requests to wait are historical.
+Existing sprint/provider/pilot boundaries and schema **0020** still apply; no commit,
+publication, deployment, paid calls or normal/demo database reset is authorized.
+Isolated PostgreSQL/Redis remain running for this continuation; remove the temporary
+test containers/network at the end and retain named volumes.
+
+## 10 November 2026 — structure cleanup, step 13
+
+User-authorized work moves `document_worker`, including its nested authority
+resolver, unchanged into `modules/documents/worker.py`. Dispatcher and recovery
+imports plus scanner/parser test patch targets follow the new owner. The handler
+does not import document HTTP routes; dispatch order, lease fencing, cancellation,
+storage, scanner/parser and atomic publication statements are preserved. The
+router falls from 859 to 730 lines. Read the
+[file map](../../services/api/ppm_api/modules/documents/README.md) and
+[step 13 verification](../04-testing/BACKEND_STRUCTURE_STEP_13.md).
+The full offline workflow passed (416 backend tests, one Windows OCR skip), as did
+43 focused Linux cases with zero skips, including worker processing/failure and
+in-flight authority paths, real OCR and AI/agent/assessment callers. One live ClamAV
+acceptance case was explicitly deselected; scanner transport uses fixtures.
+Migration drift, full API/table snapshots, exact function/nested-helper/router/caller
+comparisons and unrelated-file preservation passed. Existing test assertions and
+fixtures remain. Temporary containers/network were removed with named volumes
+retained. No generated contract or applied-migration changes; no restore procedure ran.
+This does not advance a sprint or alter schema **0020**, provider authorization,
+quotas, stopped pilots or unrelated work. Next is separating revision and request-
+fingerprint helpers; do not perform that next extraction automatically.
+
+## 10 November 2026 — structure cleanup, step 12
+
+User-authorized work puts three unchanged document access helpers in `access.py`:
+`document`, `version` and `writable`. HTTP/worker callers use those imports; agents
+and AI retrieval read versions directly from the access owner. Remaining router
+logic, endpoint metadata, tenant/project rules and deleted-source handling are
+preserved. The router falls from 897 to 859 lines. Read the
+[file map](../../services/api/ppm_api/modules/documents/README.md) and
+[step 12 verification](../04-testing/BACKEND_STRUCTURE_STEP_12.md).
+The full offline workflow passed (416 backend tests, one Windows OCR skip), as did
+42 focused Linux cases plus one distinct agent document/review case, with zero
+skips. Real OCR executed; one live ClamAV acceptance case was explicitly deselected
+and scanner transport uses fixtures. Migration drift, full API/table snapshots,
+exact function/router/caller comparisons and unrelated-file preservation passed.
+Tests were reused unchanged. Temporary containers/network were removed with named
+volumes retained. No generated contract or applied-migration changes.
+This does not advance a sprint or alter schema **0020**, provider authorization,
+quotas, stopped pilots or unrelated work. Next is separating `document_worker`
+from HTTP routes and updating dispatch/recovery/test callers; do not perform that
+next extraction automatically.
+
+## 10 November 2026 — structure cleanup, step 11
+
+User-authorized work groups the document-source feature in `modules/documents`:
+router/worker, schemas, tables, parser and retrieval types. Five files moved and
+22 Python callers follow their new imports/module targets. The parser child uses
+the new module path and still resolves its Python root to `services/api` through
+the adjusted relative depth. Schema/table bytes and workflow statements are
+preserved. Read the [file map](../../services/api/ppm_api/modules/documents/README.md)
+and [step 11 verification](../04-testing/BACKEND_STRUCTURE_STEP_11.md).
+The full offline workflow passed (416 backend tests, one Windows OCR skip), as did
+42 focused Linux cases with zero skips, including document workers/storage/access,
+retention, real OCR and selected AI/assessment/private callers. One live ClamAV
+acceptance case was explicitly deselected; scanner transport uses fixtures.
+Migration drift, full API/table snapshots, source comparisons and unrelated-file
+preservation passed. No generated contract changes. Temporary test containers and
+network were removed with named volumes retained. Earlier evidence remains intact.
+This does not advance a sprint or alter schema **0020**, provider authorization,
+quotas, stopped pilots or unrelated work. Next is extracting scoped document/version
+lookup and write-access helpers; do not perform that next extraction automatically.
+
+## 10 November 2026 — structure cleanup, step 10
+
+User-authorized refactoring moves six framework operations, their `fw_view`
+response helper and example loader into `frameworks.py`. All seven functions and
+the loader are unchanged; the example resource remains adjacent. Six HTTP handlers
+delegate to the new owner with original metadata; all 21 endpoint bodies stay thin.
+The assessment service falls from 591 to 423 lines and retains 15 unchanged
+functions. Neither service imports the other or the router; no forwarding aliases.
+Read the [feature map](../../services/api/ppm_api/modules/assessments/README.md)
+and [step 10 verification report](../04-testing/ASSESSMENT_STRUCTURE_STEP_10.md).
+The full offline workflow passed (416 backend tests, one Windows OCR skip), as did
+33 focused Linux cases with zero skips, including framework/version workflows,
+assessment/private callers and real OCR. Migration drift, API/table snapshots,
+function/loader/router comparisons and unrelated-file preservation passed. Existing
+tests were reused unchanged. Temporary test containers/network were removed with
+named volumes retained.
+This does not advance a sprint or alter schema **0020**, provider authorization,
+quotas, stopped pilots or unrelated work. The assessment file map now separates
+frameworks, workflows, evidence, access, safeguards and pure rules. Next is applying
+this feature-folder pattern to another backend feature after checking its folder
+and callers; do not start another feature automatically in this step.
+
+## 10 November 2026 — structure cleanup, step 9
+
+User-authorized refactoring moves grant writes/listing and private event-history
+reads into the assessment service with unchanged operation statements. All 21
+assessment endpoint bodies now delegate to operations; the router falls from 282
+to 219 lines and no longer imports SQLAlchemy or tables. Original HTTP signatures,
+decorators, response metadata, tenant/role/result-grant checks and event ordering
+are preserved. Read the [feature map](../../services/api/ppm_api/modules/assessments/README.md)
+and [step 9 verification report](../04-testing/ASSESSMENT_STRUCTURE_STEP_9.md).
+Existing workflow assertions now cover grant listing/target validation, tenant
+denial, result-reader history/grant denial and chronological event responses.
+The full offline workflow passed (416 backend tests, one Windows OCR skip), as did
+33 focused Linux cases with zero skips, including the extended assertions and real
+OCR. Migration drift, API/table snapshots, exact operation/route/prior-service
+comparisons and unrelated-file preservation passed. Temporary test containers and
+network were removed with named volumes retained.
+This does not advance a sprint or alter schema **0020**, provider authorization,
+quotas, stopped pilots or unrelated work. The router extraction is complete. Next
+is separating framework authoring/version operations from the shared service;
+do not perform that next extraction automatically.
+
+## 10 November 2026 — structure cleanup, step 8
+
+User-authorized refactoring puts six attachment operations in `evidence.py`;
+their HTTP adapters retain signatures, decorators and response metadata. Operation
+bodies, private access, revisions, bounds, storage, hashes, quarantine/release and
+lifecycle effects are preserved. The router falls from 418 to 282 lines.
+Read the [feature map](../../services/api/ppm_api/modules/assessments/README.md)
+and [step 8 verification report](../04-testing/ASSESSMENT_STRUCTURE_STEP_8.md).
+The full offline workflow passed (416 backend tests, one Windows OCR skip), as did
+33 focused Linux cases with zero skips, including all 24 parser tests and real OCR.
+Migration drift, complete API/table snapshots, exact operation/route comparisons
+and preservation of unrelated files passed. Temporary test containers/network
+were removed with named volumes retained. Existing tests were reused unchanged.
+This does not advance a sprint or alter schema **0020**, provider authorization,
+quotas, stopped pilots or unrelated work. Next is grant management and event-history
+operations behind thin adapters; do not perform that next extraction automatically.
+
+## 10 November 2026 — real OCR verification follow-up
+
+The Windows-skipped real OCR test was executed in the existing Linux application
+test image: **24 parser tests passed, zero skipped**, including scanned PDF, PNG
+and JPEG OCR, in 6.02 seconds. Tesseract 5.3.0, Poppler 22.12.0 and English data
+were present and matched the locked parser packages; relevant source/lock hashes
+matched the checkout. See the [verification follow-up](../04-testing/ASSESSMENT_STRUCTURE_STEP_7.md#10-november-2026--real-ocr-verification-follow-up).
+The temporary container had networking disabled, no host mounts and no database
+or application services; it was automatically removed. No Windows installation,
+code or dependency change was needed. Earlier Windows skip counts remain historical.
+The next structural step remains evidence/file handling, separately authorized.
+
+## 10 November 2026 — structure cleanup, step 7
+
+User-authorized refactoring puts six assessment lifecycle operations in the service:
+assignment, list/detail, answer saving, submission and review. The HTTP adapters
+retain their existing signatures, Query validation, response models and decorators.
+Answer saving reads refreshed detail through the service, not the HTTP adapter.
+Existing state transitions, SQL, events, notifications and scoped transactions are
+preserved. Read the [feature map](../../services/api/ppm_api/modules/assessments/README.md)
+and [step 7 verification report](../04-testing/ASSESSMENT_STRUCTURE_STEP_7.md).
+The full offline workflow passed (416 backend tests, one skip), as did nine focused
+Linux assessment/private-caller/cohort-paging cases and migration drift. API/table
+snapshots, operation statements and unrelated files are preserved. Temporary test
+containers/network were removed with named volumes retained.
+This does not advance a sprint or alter schema **0020**, provider authorization,
+quotas, stopped pilots or unrelated work. Next is separate evidence/file handling;
+do not perform that next extraction automatically.
+
+## 10 November 2026 — structure cleanup, step 6
+
+User-authorized refactoring puts six framework operations in the assessment service:
+list, create, edit, publish, version history and example seeding. Their HTTP handlers
+now delegate, retaining their existing signatures, Query validation, response models
+and mutation decorators. Operation statements and existing service helpers are
+preserved; `examples.json` is loaded by its owning service in the same package.
+Read the [feature map](../../services/api/ppm_api/modules/assessments/README.md)
+and [step 6 verification report](../04-testing/ASSESSMENT_STRUCTURE_STEP_6.md).
+The full offline workflow passed (416 backend tests, one skip), as did all eight
+focused Linux cases, including new public pagination/version-history assertions,
+and migration drift. API/table snapshots, operation statements and unrelated files
+are preserved; temporary test containers/network were removed with volumes retained.
+This does not advance a sprint or alter schema **0020**, provider authorization,
+quotas, stopped pilots or unrelated work. Next is the assessment lifecycle routes;
+do not perform that next extraction automatically.
+
+## 10 November 2026 — structure cleanup, step 5
+
+User-authorized refactoring moves seven unchanged shared workflow/data helpers
+into `modules/assessments/service.py`. The router uses those helpers; agents load
+assessment answers from the service and no longer import assessment HTTP routes.
+Read the [feature map](../../services/api/ppm_api/modules/assessments/README.md)
+and [step 5 verification report](../04-testing/ASSESSMENT_STRUCTURE_STEP_5.md).
+The full offline workflow passed (416 backend tests, one skip), as did all eight
+focused Linux assessment/agent-review/document-privacy tests and migration drift.
+API/table snapshots, helper bodies and unrelated files are preserved; temporary
+test containers/network were removed with named volumes retained.
+Endpoint-specific operations and state transitions still remain in the router.
+This does not advance a sprint or alter schema **0020**, provider authorization,
+quotas, stopped pilots or unrelated local work. Next is extracting framework
+operations behind thin route handlers; do not perform that next step automatically.
+
+## 10 November 2026 — structure cleanup, step 4
+
+User-authorized refactoring moves the unchanged `mutation` decorator (including
+its nested wrapper) and `revision` helper into `modules/assessments/mutations.py`.
+The router imports them and retains HTTP endpoints, workflow/data helpers and
+lifecycle events. Locking, live authorization before replay, request fingerprinting,
+revision errors, response caching and audit recording keep their existing order.
+Read the [feature map](../../services/api/ppm_api/modules/assessments/README.md)
+and [step 4 verification report](../04-testing/ASSESSMENT_STRUCTURE_STEP_4.md).
+The full offline check workflow passed (416 backend tests, one skip), as did all
+eight focused Linux assessment/agent-review/document-privacy tests and migration
+drift. Source, decorator metadata/API and table comparisons match; test containers
+and network were removed with named volumes retained.
+This does not advance a sprint or change schema **0020**, provider authorization,
+quotas, stopped pilots or unrelated local work. Next is extracting workflow/data
+helpers into a service module; do not perform that next step automatically.
+
+## 10 November 2026 — structure cleanup, step 3
+
+User-authorized refactoring moves nine existing access helpers into
+`modules/assessments/access.py`. Assessment routes, document evidence links and
+private agent assessment reads use that module directly. HTTP registration,
+workflow transitions and write/idempotency safeguards remain in the router.
+Read the [feature map](../../services/api/ppm_api/modules/assessments/README.md)
+and [step 3 verification report](../04-testing/ASSESSMENT_STRUCTURE_STEP_3.md).
+The full offline check workflow passed (416 backend tests, one skip). All eight
+focused Linux assessment/agent-review/document-privacy tests and migration drift
+passed. API/table snapshots, helper bodies and unrelated files are preserved;
+temporary test containers/network were removed with named volumes retained.
+Schema **0020**, provider authorization, quotas, stopped pilots and unrelated work
+remain protected. This cleanup does not advance a sprint. Next is extracting
+write safeguards; do not perform that next step automatically. Earlier reports
+retain their historical verification scope.
+
+## 10 November 2026 — structure cleanup, step 2
+
+User-authorized incremental refactoring extracts five existing assessment rule
+functions into `modules/assessments/scoring.py` and `validation.py`. Agent engine,
+planner, context builder and tests import the rules directly. The router retains
+HTTP registration, authorization, database operations and workflow. Read the
+[feature map](../../services/api/ppm_api/modules/assessments/README.md) and
+[step 2 verification report](../04-testing/ASSESSMENT_STRUCTURE_STEP_2.md).
+The full offline check workflow passed (416 backend tests, one skip), as did the
+isolated five-case assessment suite, including three database workflows, and
+migration drift. API/table snapshots and protected files match; test containers
+were removed with named volumes retained. No ordinary stack was started or reset.
+This is not a new sprint: schema **0020**, provider authorization, stopped pilots,
+quotas, data and existing unrelated work remain protected. The next cleanup step
+is assessment access checks; do not start it automatically. The earlier checkpoints
+below retain their original verification scope.
+
+## 5 November 2026 — structure cleanup, step 1
+
+User-authorized organization work groups the assessment backend into
+`services/api/ppm_api/modules/assessments`. Read the [feature map](../../services/api/ppm_api/modules/assessments/README.md)
+and [verification report](../04-testing/ASSESSMENT_STRUCTURE_STEP_1.md) before
+continuing the cleanup. This is a structural refactor, not a successor sprint.
+Existing local changes are preserved. Normal schema remains **0020**; provider,
+pilot and quota checkpoints below remain in force. Normal services are not rebuilt
+by this step. Docker verification is blocked in this chat; offline checks and
+preservation results are recorded in the report. The next step is extracting
+assessment scoring/validation, not reorganizing another feature automatically.
+
 ## 31 October 2026 — frontend redesign follow-up
 
 The [frontend redesign report](../04-testing/FRONTEND_REDESIGN.md) records the

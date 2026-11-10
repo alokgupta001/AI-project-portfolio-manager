@@ -3,13 +3,13 @@
 import os
 from uuid import uuid4
 
-from ppm_api import assessment_tables as A
-from ppm_api.assessment_schemas import FrameworkInput
-from ppm_api.identity import now, password_hash
-from ppm_api.identity_tables import memberships, organizations, users
 from ppm_api.main import create_app  # noqa: F401 — register current table metadata
-from ppm_api.ppm_schemas import PortfolioInput, ProjectInput, SettingsInput, WorkInput
-from ppm_api.ppm_tables import TABLES
+from ppm_api.modules.assessments import tables as A
+from ppm_api.modules.assessments.schemas import FrameworkInput
+from ppm_api.modules.delivery.schemas import PortfolioInput, ProjectInput, SettingsInput, WorkInput
+from ppm_api.modules.identity.service import now, password_hash
+from ppm_api.modules.identity.tables import memberships, organizations, users
+from ppm_api.shared.table_registry import TABLES
 from sqlalchemy.engine import make_url
 from sqlalchemy.ext.asyncio import create_async_engine
 

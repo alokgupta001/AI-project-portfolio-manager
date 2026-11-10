@@ -12,17 +12,18 @@ from uuid import UUID, uuid4
 
 import pytest
 import sqlalchemy as sa
-from ppm_api import agent_engine as E
-from ppm_api import agent_tables as T
-from ppm_api import ai_tables as A
-from ppm_api import assessment_tables as AT
-from ppm_api import job_tables as J
-from ppm_api.agent_provider import AgentProvider
-from ppm_api.agent_schemas import AGENTS, AgentBatch
-from ppm_api.ai import ai_worker
-from ppm_api.ai_provider import ProviderError, ProviderResult
-from ppm_api.identity import context, now
-from ppm_api.identity_tables import memberships
+from ppm_api.modules.agents import engine as E
+from ppm_api.modules.agents import tables as T
+from ppm_api.modules.agents.provider import AgentProvider
+from ppm_api.modules.agents.schemas import AGENTS, AgentBatch
+from ppm_api.modules.ai import tables as A
+from ppm_api.modules.ai.provider import ProviderError, ProviderResult
+from ppm_api.modules.ai.service import ai_worker
+from ppm_api.modules.assessments import tables as AT
+from ppm_api.modules.assessments.validation import questions as framework_questions
+from ppm_api.modules.identity.service import context, now
+from ppm_api.modules.identity.tables import memberships
+from ppm_api.modules.integrations import tables as J
 from pydantic import ValidationError
 from sqlalchemy.exc import DBAPIError
 from test_ai import fixture as ai_fixture
@@ -235,7 +236,7 @@ class Double:
             )
         matches = []
         if snapshot.get("framework"):
-            for q in E.assessment.questions(snapshot["framework"]).values():
+            for q in framework_questions(snapshot["framework"]).values():
                 s = next(
                     (s for s in snapshot["sources"] if s["source"] == "answer:" + q["id"]), None
                 )
@@ -278,7 +279,9 @@ async def fixture(identity, monkeypatch, gemini=None, adapter=None):
         for field in type(gemini).model_fields:
             if field.startswith("ai_"):
                 setattr(app.state.settings, field, getattr(gemini, field))
-    monkeypatch.setattr("ppm_api.agent_provider.AgentProvider", lambda _: adapter or Double())
+    monkeypatch.setattr(
+        "ppm_api.modules.agents.provider.AgentProvider", lambda _: adapter or Double()
+    )
     return c, app, owner, ids, emails, project, accepted
 
 
@@ -315,8 +318,8 @@ async def test_hidden_risk_disabled_replay_independent_review_and_preservation(
             pytest.fail("Run summaries must not resolve details or revalidate evidence")
 
         for name in ("detail", "capture", "current_sources"):
-            scoped.setattr("ppm_api.agents." + name, no_evidence_walk)
-        scoped.setattr("ppm_api.ai.view", no_evidence_walk)
+            scoped.setattr("ppm_api.modules.agents.service." + name, no_evidence_walk)
+        scoped.setattr("ppm_api.modules.ai.service.view", no_evidence_walk)
         listed = await c.get("/api/v1/agents/runs")
         assert listed.status_code == 200, listed.text
         assert listed.json() == [
@@ -727,7 +730,7 @@ async def test_all_nine_agents_group_threshold_and_live_revocation(identity, mon
 @pytest.mark.integration
 @integration
 async def test_terminal_job_cannot_hide_new_run_diagnostics(identity, monkeypatch):
-    from ppm_api import delivery
+    from ppm_api.modules.delivery import service as delivery
     from test_ai import start as start_ai
 
     c, app, owner, ids, _, project, _ = await fixture(identity, monkeypatch)
@@ -770,8 +773,8 @@ def test_worker_metrics_register_without_web_application_startup():
         [
             sys.executable,
             "-c",
-            "import sys; import ppm_api.agents; "
-            "from ppm_api.ppm_tables import TABLES; "
+            "import sys; import ppm_api.modules.agents.service; "
+            "from ppm_api.shared.table_registry import TABLES; "
             "assert {'metric_plans','metric_policies','risks','sprint_closures'} <= TABLES.keys(); "
             "assert 'ppm_api.main' not in sys.modules",
         ],

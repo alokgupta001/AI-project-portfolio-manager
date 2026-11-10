@@ -6769,7 +6769,7 @@ export interface components {
             work_type?: ("task" | "bug" | "story" | "feature" | "other") | null;
         };
         /** ReviewInput */
-        ppm_api__agent_schemas__ReviewInput: {
+        ppm_api__modules__agents__schemas__ReviewInput: {
             /** Approved Score */
             approved_score?: number | string | null;
             /**
@@ -6781,7 +6781,7 @@ export interface components {
             reason: string;
         };
         /** ReviewInput */
-        ppm_api__assessment_schemas__ReviewInput: {
+        ppm_api__modules__assessments__schemas__ReviewInput: {
             /**
              * Action
              * @enum {string}
@@ -6947,7 +6947,7 @@ export interface operations {
         };
         requestBody: {
             content: {
-                "application/json": components["schemas"]["ppm_api__agent_schemas__ReviewInput"];
+                "application/json": components["schemas"]["ppm_api__modules__agents__schemas__ReviewInput"];
             };
         };
         responses: {
@@ -8010,7 +8010,7 @@ export interface operations {
         };
         requestBody: {
             content: {
-                "application/json": components["schemas"]["ppm_api__assessment_schemas__ReviewInput"];
+                "application/json": components["schemas"]["ppm_api__modules__assessments__schemas__ReviewInput"];
             };
         };
         responses: {

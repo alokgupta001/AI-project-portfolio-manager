@@ -8,7 +8,7 @@ import zipfile
 import zlib
 
 import pytest
-from ppm_api.document_parser import IntakeError, extract, isolated_extract, validate
+from ppm_api.modules.documents.parser import IntakeError, extract, isolated_extract, validate
 
 
 def office(ext="docx", malicious=False):

@@ -1,5 +1,9 @@
 # Specialist analysis and independent review — specialists-rubric-v1
 
+Current implementation: [agents feature](../../services/api/ppm_api/modules/agents/README.md).
+The [step 26 grouping](../04-testing/BACKEND_STRUCTURE_STEP_26.md) changes
+file/import ownership while preserving the contract and permission/workflow rules below.
+
 ## Ordinary guided cloud deadline (30 October 2026)
 
 New ordinary v2 guided runs freeze `guided_cloud_timeout_seconds` in run versions

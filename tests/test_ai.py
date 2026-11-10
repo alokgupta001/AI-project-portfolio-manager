@@ -8,15 +8,15 @@ from uuid import UUID, uuid4
 
 import pytest
 import sqlalchemy as sa
-from ppm_api import ai_tables as A
-from ppm_api import document_tables as D
-from ppm_api import job_tables as J
-from ppm_api.ai import ai_worker, call_cap
-from ppm_api.ai_provider import ProviderError, ProviderResult
-from ppm_api.ai_retrieval import SourceTool, authorize_tool, evaluate
-from ppm_api.ai_schemas import AIOutput
-from ppm_api.identity import Principal, context, now
-from ppm_api.identity_tables import memberships
+from ppm_api.modules.ai import tables as A
+from ppm_api.modules.ai.provider import ProviderError, ProviderResult
+from ppm_api.modules.ai.retrieval import SourceTool, authorize_tool, evaluate
+from ppm_api.modules.ai.schemas import AIOutput
+from ppm_api.modules.ai.service import ai_worker, call_cap
+from ppm_api.modules.documents import tables as D
+from ppm_api.modules.identity.service import Principal, context, now
+from ppm_api.modules.identity.tables import memberships
+from ppm_api.modules.integrations import tables as J
 from pydantic import ValidationError
 from sqlalchemy.exc import DBAPIError
 from test_delivery import create, setup
@@ -98,7 +98,7 @@ async def fixture(identity, monkeypatch, configured=True, adapter=None):
             json={"limit_usd": "10", "concurrency": 4},
         )
         assert b.status_code == 200, b.text
-    monkeypatch.setattr("ppm_api.ai.P.provider", lambda _: adapter or Double())
+    monkeypatch.setattr("ppm_api.modules.ai.service.P.provider", lambda _: adapter or Double())
     # Hard fail if a test accidentally reaches the network instead of its labeled double.
     monkeypatch.setattr(
         "urllib.request.OpenerDirector.open",
@@ -331,7 +331,7 @@ async def test_inflight_revocation_or_cancel_fences_late_publication(
     run = (await start(c, project)).json()
     task = asyncio.create_task(work(c, app, owner, ids, run))
     await asyncio.wait_for(entered.wait(), 10)
-    from ppm_api import jobs as job_api
+    from ppm_api.modules.integrations import jobs as job_api
 
     first_poll = asyncio.Event()
     original_batch = job_api.event_batch
@@ -517,7 +517,7 @@ async def test_real_wait_timeout_missing_evidence_and_bad_vector_fallback(identi
             return await super().embed(texts)
 
     adapter = Timeout()
-    monkeypatch.setattr("ppm_api.ai_provider.CALL_TIMEOUT_SECONDS", 0.02)
+    monkeypatch.setattr("ppm_api.modules.ai.provider.CALL_TIMEOUT_SECONDS", 0.02)
     c, app, owner, ids, _, project, _ = await fixture(identity, monkeypatch, adapter=adapter)
     run = (await start(c, project)).json()
     result, _ = await work(c, app, owner, ids, run)
@@ -685,7 +685,7 @@ async def test_gemini_zero_ledger_quota_fallback_and_persistent_call_limit(
 ):
     import hashlib
 
-    from ppm_api import ai_provider as P
+    from ppm_api.modules.ai import provider as P
     from pydantic import SecretStr
 
     adapter = Double(embedding_error=ProviderError("PROVIDER_QUOTA") if quota else None)

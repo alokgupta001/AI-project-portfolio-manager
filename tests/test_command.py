@@ -6,9 +6,9 @@ from uuid import UUID, uuid4
 
 import pytest
 import sqlalchemy as sa
-from ppm_api.command import combined, workdays
-from ppm_api.identity import context, now
-from ppm_api.ppm_tables import TABLES
+from ppm_api.modules.command.service import combined, workdays
+from ppm_api.modules.identity.service import context, now
+from ppm_api.shared.table_registry import TABLES
 from sqlalchemy.exc import DBAPIError
 from test_delivery import change, create, setup
 from test_identity import identity as identity

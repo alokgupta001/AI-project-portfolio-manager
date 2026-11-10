@@ -5,7 +5,7 @@ from uuid import uuid4
 
 import pytest
 import sqlalchemy as sa
-from ppm_api.identity_tables import memberships, organizations, users
+from ppm_api.modules.identity.tables import memberships, organizations, users
 from test_delivery import create, setup
 from test_identity import PASSWORD, challenge, login, send
 from test_identity import identity as identity
@@ -41,7 +41,7 @@ async def test_no_membership_login_refresh_personal_profile_and_logout(identity)
 
 
 async def test_explicit_operator_status_preserves_memberships_and_last_admin(identity):
-    from ppm_api.identity_tables import sessions
+    from ppm_api.modules.identity.tables import sessions
 
     from scripts.account_status import set_status
 
@@ -88,7 +88,7 @@ async def test_duplicate_grant_preserves_business_reason_and_record_count(identi
     assert "already has a grant" in result.json()["error"]["message"]
     assert result.json()["error"]["request_id"]
     async with owner.connect() as conn:
-        from ppm_api.ppm_tables import TABLES
+        from ppm_api.shared.table_registry import TABLES
 
         g = TABLES["grants"]
         assert (

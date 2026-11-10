@@ -8,11 +8,17 @@ from uuid import UUID, uuid4
 
 import pytest
 import sqlalchemy as sa
-from ppm_api.identity import context, now
-from ppm_api.ingestion import ConnectorConfig, ImportInput, fetch_page, normalize, rows
-from ppm_api.job_tables import events, jobs, outbox, sources
-from ppm_api.jobs import run_job
-from ppm_api.ppm_tables import TABLES
+from ppm_api.modules.identity.service import context, now
+from ppm_api.modules.integrations.ingestion import (
+    ConnectorConfig,
+    ImportInput,
+    fetch_page,
+    normalize,
+    rows,
+)
+from ppm_api.modules.integrations.jobs import run_job
+from ppm_api.modules.integrations.tables import events, jobs, outbox, sources
+from ppm_api.shared.table_registry import TABLES
 from test_delivery import change, create, setup
 from test_identity import identity as identity
 from test_identity import login, send
@@ -46,7 +52,7 @@ async def test_overlapping_mapping_rejected_before_connection_is_persisted(ident
 @pytest.mark.integration
 async def test_public_signed_github_delivery_and_revoked_authority(identity, monkeypatch):
     import httpx
-    from ppm_api.identity_tables import sessions
+    from ppm_api.modules.identity.tables import sessions
 
     c, app, owner, ids, emails, portfolio, project = await setup(identity)
     webhook_ref = f"PPM_CONNECTOR_{ids['a'].hex.upper()}_GITHUB_WEBHOOK"
@@ -125,7 +131,7 @@ async def test_public_signed_github_delivery_and_revoked_authority(identity, mon
 
 @pytest.mark.integration
 async def test_retry_backoff_partial_page_recovery_and_dead_letter(identity, monkeypatch):
-    from ppm_api.ingestion import Retryable
+    from ppm_api.modules.integrations.ingestion import Retryable
 
     c, app, owner, ids, emails, portfolio, project = await setup(identity)
     integration = await connection(
@@ -154,7 +160,7 @@ async def test_retry_backoff_partial_page_recovery_and_dead_letter(identity, mon
             )
         ], "2" if page == 1 else None
 
-    monkeypatch.setattr("ppm_api.jobs.remote_page", remote)
+    monkeypatch.setattr("ppm_api.modules.integrations.jobs.remote_page", remote)
     first = await submit(c, integration)
     await execute(app, first, ids)
     row = (await c.get(f"/api/v1/integrations/activity/jobs/{first.json()['id']}")).json()
@@ -189,7 +195,7 @@ async def test_retry_backoff_partial_page_recovery_and_dead_letter(identity, mon
 @pytest.mark.integration
 @pytest.mark.parametrize("global_disable", [False, True])
 async def test_revoked_worker_and_progress_retention(identity, global_disable):
-    from ppm_api.identity_tables import memberships, users
+    from ppm_api.modules.identity.tables import memberships, users
 
     c, app, owner, ids, emails, portfolio, project = await setup(identity)
     integration = await connection(c, project)

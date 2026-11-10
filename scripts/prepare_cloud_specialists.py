@@ -9,9 +9,9 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path[:0] = [str(ROOT), str(ROOT / "services/api")]
 
-from ppm_api.ai_provider import gemini_block_reason  # noqa: E402
 from ppm_api.config import Settings  # noqa: E402
-from ppm_api.model_registry import ModelPolicy  # noqa: E402
+from ppm_api.modules.ai.provider import gemini_block_reason  # noqa: E402
+from ppm_api.modules.ai.registry import ModelPolicy  # noqa: E402
 
 from scripts.benchmark_agent_runtime import CORPUS, write_new  # noqa: E402
 from scripts.check_provider_setup import PRIVATE, read_keys  # noqa: E402

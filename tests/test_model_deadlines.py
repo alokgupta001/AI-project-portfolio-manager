@@ -5,11 +5,11 @@ from dataclasses import replace
 from datetime import timedelta
 
 import pytest
-from ppm_api.guided_review import PROMPT
-from ppm_api.identity import now
-from ppm_api.model_adapters import NativeAdapter
-from ppm_api.model_contracts import ModelFailure, ModelResult
-from ppm_api.model_deadlines import completion_timeout
+from ppm_api.modules.agents.guided_review import PROMPT
+from ppm_api.modules.ai.adapters import NativeAdapter
+from ppm_api.modules.ai.contracts import ModelFailure, ModelResult
+from ppm_api.modules.ai.deadlines import completion_timeout
+from ppm_api.modules.identity.service import now
 from test_model_routing import configured as configured
 
 

@@ -10,11 +10,14 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path[:0] = [str(ROOT), str(ROOT / "services/api")]
 
-from ppm_api.agent_batch import batch_prompt, normalize, validate_batch  # noqa: E402
-from ppm_api.agent_prompts import ROLE_PROVIDERS  # noqa: E402
-from ppm_api.model_contracts import ModelResult  # noqa: E402
-from ppm_api.model_qualification import ClassMeasurement, CloudQualificationReport  # noqa: E402
-from ppm_api.model_registry import digest  # noqa: E402
+from ppm_api.modules.agents.batch import batch_prompt, normalize, validate_batch  # noqa: E402
+from ppm_api.modules.agents.prompts import ROLE_PROVIDERS  # noqa: E402
+from ppm_api.modules.ai.contracts import ModelResult  # noqa: E402
+from ppm_api.modules.ai.qualification import (  # noqa: E402
+    ClassMeasurement,
+    CloudQualificationReport,
+)
+from ppm_api.modules.ai.registry import digest  # noqa: E402
 
 from scripts.benchmark_agent_runtime import (  # noqa: E402
     CLOUD_CORPUS,

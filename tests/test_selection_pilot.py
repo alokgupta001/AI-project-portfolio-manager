@@ -7,15 +7,15 @@ from uuid import UUID, uuid4
 
 import pytest
 import sqlalchemy as sa
-from ppm_api import agent_task_tables as T
-from ppm_api import ai_tables as A
-from ppm_api.ai_provider import GEMINI_COMPLETION_MODEL
-from ppm_api.identity import context, now
-from ppm_api.identity_tables import memberships
-from ppm_api.model_contracts import ModelFailure, ModelResult, ModelUsage
-from ppm_api.model_registry import ModelPolicy
-from ppm_api.selection_protocol import PROMPT, protocol
-from ppm_api.selection_tables import pilots
+from ppm_api.modules.agents import task_tables as T
+from ppm_api.modules.ai import tables as A
+from ppm_api.modules.ai.contracts import ModelFailure, ModelResult, ModelUsage
+from ppm_api.modules.ai.provider import GEMINI_COMPLETION_MODEL
+from ppm_api.modules.ai.registry import ModelPolicy
+from ppm_api.modules.identity.service import context, now
+from ppm_api.modules.identity.tables import memberships
+from ppm_api.modules.selection.protocol import PROMPT, protocol
+from ppm_api.modules.selection.tables import pilots
 from pydantic import SecretStr
 from test_agent_v2_runtime import configure
 from test_agents import work
@@ -54,7 +54,9 @@ async def setup(identity, monkeypatch, tmp_path):
     settings.ai_egress_policy_path.write_text(
         json.dumps({str(ids["a"]): {project["id"]: {"gemini": ["metric:usage"]}}}), encoding="utf-8"
     )
-    monkeypatch.setattr("ppm_api.model_router.ai_provider.gemini_block_reason", lambda _: None)
+    monkeypatch.setattr(
+        "ppm_api.modules.ai.model_router.ai_provider.gemini_block_reason", lambda _: None
+    )
     async with owner.begin() as conn:
         await conn.execute(
             T.scopes.update()
@@ -154,7 +156,7 @@ async def test_twelve_case_pilot_uses_normal_jobs_quota_and_never_promotes(
 
     async def execute(self, request):
         self.permit(request)
-        from ppm_api.guided_review import check_request
+        from ppm_api.modules.agents.guided_review import check_request
 
         check_request(request)
         assert request.system == PROMPT and request.max_output_tokens == 128
@@ -205,7 +207,7 @@ async def test_twelve_case_pilot_uses_normal_jobs_quota_and_never_promotes(
             usage=ModelUsage(input_tokens=80, output_tokens=8, source="reported"),
         )
 
-    monkeypatch.setattr("ppm_api.agent_runtime.NativeAdapter.execute", execute)
+    monkeypatch.setattr("ppm_api.modules.agents.runtime.NativeAdapter.execute", execute)
     assert (await post(c, f"/{item['id']}/cases/f07", {}, item["revision"])).status_code == 409
     generic = await send(
         c,
@@ -298,8 +300,8 @@ async def test_unavailable_or_stale_pilot_cannot_measure_or_count_fallback(
         )
 
     clock = iter([100.0, 122.0])
-    monkeypatch.setattr("ppm_api.agent_runtime.perf_counter", lambda: next(clock))
-    monkeypatch.setattr("ppm_api.agent_runtime.NativeAdapter.execute", execute)
+    monkeypatch.setattr("ppm_api.modules.agents.runtime.perf_counter", lambda: next(clock))
+    monkeypatch.setattr("ppm_api.modules.agents.runtime.NativeAdapter.execute", execute)
     if failure == "policy_changed":
         policy.profiles[0].enabled = False
         app.state.settings.ai_model_registry_path.write_text(policy.model_dump_json())
@@ -427,7 +429,7 @@ async def test_revoked_automated_authorization_stops_queued_worker_without_call(
         seen.append(True)
         raise AssertionError("Revoked mode must never reach the adapter")
 
-    monkeypatch.setattr("ppm_api.agent_runtime.NativeAdapter.execute", forbidden)
+    monkeypatch.setattr("ppm_api.modules.agents.runtime.NativeAdapter.execute", forbidden)
     app.state.settings.ai_fixture_automated_pilots = []
     output = (await c.get("/api/v1/agents/runs/" + run_id)).json()
     output, _ = await work(c, app, owner, ids, output)

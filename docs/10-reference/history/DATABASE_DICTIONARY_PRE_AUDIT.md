@@ -28,7 +28,7 @@ Generated from current SQLAlchemy metadata, not a live database dump. Migration 
 ## identity_audit
 
 **Purpose:** Append-only identity action record.
-**Model:** [audit](../../../services/api/ppm_api/identity_tables.py). **Primary key:** id.
+**Model:** [audit](../../../services/api/ppm_api/modules/identity/tables.py). **Primary key:** id.
 **Foreign keys:** (organization_id, actor_id) → (memberships.organization_id, memberships.user_id); ON DELETE NO ACTION (default).
 **Indexes:** ix_identity_audit_organization_id: identity_audit.organization_id.
 **Constraints:** PK/FK/nullability as below.
@@ -50,7 +50,7 @@ Generated from current SQLAlchemy metadata, not a live database dump. Migration 
 ## identity_challenges
 
 **Purpose:** Single-use activation/reset/invitation hashes.
-**Model:** [challenges](../../../services/api/ppm_api/identity_tables.py). **Primary key:** token_hash.
+**Model:** [challenges](../../../services/api/ppm_api/modules/identity/tables.py). **Primary key:** token_hash.
 **Foreign keys:** (organization_id) → (organizations.id); ON DELETE NO ACTION (default); (organization_id, inviter_id) → (memberships.organization_id, memberships.user_id); ON DELETE NO ACTION (default).
 **Indexes:** No explicit secondary index; PK/unique constraints also create supporting indexes.
 **Constraints:** kind IN ('activate','reset','invite').
@@ -73,7 +73,7 @@ Generated from current SQLAlchemy metadata, not a live database dump. Migration 
 ## identity_refresh_tokens
 
 **Purpose:** Rotating refresh credential hashes and replay state.
-**Model:** [refresh_tokens](../../../services/api/ppm_api/identity_tables.py). **Primary key:** token_hash.
+**Model:** [refresh_tokens](../../../services/api/ppm_api/modules/identity/tables.py). **Primary key:** token_hash.
 **Foreign keys:** (session_id) → (identity_sessions.id); ON DELETE NO ACTION (default).
 **Indexes:** No explicit secondary index; PK/unique constraints also create supporting indexes.
 **Constraints:** PK/FK/nullability as below.
@@ -91,7 +91,7 @@ Generated from current SQLAlchemy metadata, not a live database dump. Migration 
 ## identity_sessions
 
 **Purpose:** Live revocation/expiry/tenant and CSRF binding.
-**Model:** [sessions](../../../services/api/ppm_api/identity_tables.py). **Primary key:** id.
+**Model:** [sessions](../../../services/api/ppm_api/modules/identity/tables.py). **Primary key:** id.
 **Foreign keys:** (organization_id, user_id) → (memberships.organization_id, memberships.user_id); ON DELETE NO ACTION (default); (user_id) → (identity_users.id); ON DELETE NO ACTION (default).
 **Indexes:** ix_identity_sessions_user_id: identity_sessions.user_id.
 **Constraints:** PK/FK/nullability as below.
@@ -113,7 +113,7 @@ Generated from current SQLAlchemy metadata, not a live database dump. Migration 
 ## identity_users
 
 **Purpose:** Global verified identity and password hash.
-**Model:** [users](../../../services/api/ppm_api/identity_tables.py). **Primary key:** id.
+**Model:** [users](../../../services/api/ppm_api/modules/identity/tables.py). **Primary key:** id.
 **Foreign keys:** None.
 **Indexes:** No explicit secondary index; PK/unique constraints also create supporting indexes.
 **Constraints:** UNIQUE(email).
@@ -134,7 +134,7 @@ Generated from current SQLAlchemy metadata, not a live database dump. Migration 
 ## memberships
 
 **Purpose:** User-to-organization role and active state.
-**Model:** [memberships](../../../services/api/ppm_api/identity_tables.py). **Primary key:** organization_id, user_id.
+**Model:** [memberships](../../../services/api/ppm_api/modules/identity/tables.py). **Primary key:** organization_id, user_id.
 **Foreign keys:** (organization_id) → (organizations.id); ON DELETE NO ACTION (default); (user_id) → (identity_users.id); ON DELETE NO ACTION (default).
 **Indexes:** No explicit secondary index; PK/unique constraints also create supporting indexes.
 **Constraints:** role IN ('Admin','Project Manager','Viewer').
@@ -154,7 +154,7 @@ Generated from current SQLAlchemy metadata, not a live database dump. Migration 
 ## organizations
 
 **Purpose:** Tenant identity.
-**Model:** [organizations](../../../services/api/ppm_api/identity_tables.py). **Primary key:** id.
+**Model:** [organizations](../../../services/api/ppm_api/modules/identity/tables.py). **Primary key:** id.
 **Foreign keys:** None.
 **Indexes:** No explicit secondary index; PK/unique constraints also create supporting indexes.
 **Constraints:** PK/FK/nullability as below.
@@ -172,7 +172,7 @@ Generated from current SQLAlchemy metadata, not a live database dump. Migration 
 ## ppm_alignments
 
 **Purpose:** Weighted goal contributions.
-**Model:** [alignments](../../../services/api/ppm_api/ppm_tables.py). **Primary key:** id.
+**Model:** [alignments](../../../services/api/ppm_api/modules/delivery/tables.py). **Primary key:** id.
 **Foreign keys:** (organization_id) → (organizations.id); ON DELETE NO ACTION (default); (organization_id, goal_id) → (ppm_goals.organization_id, ppm_goals.id); ON DELETE NO ACTION (default); (organization_id, portfolio_id) → (ppm_portfolios.organization_id, ppm_portfolios.id); ON DELETE NO ACTION (default); (organization_id, project_id) → (ppm_projects.organization_id, ppm_projects.id); ON DELETE NO ACTION (default).
 **Indexes:** ix_ppm_alignments_org: ppm_alignments.organization_id.
 **Constraints:** (project_id IS NULL) <> (portfolio_id IS NULL); UNIQUE(organization_id, id); revision > 0; weight >= 0 AND weight <= 1 AND contribution >= 0 AND contribution <= 1.
@@ -200,7 +200,7 @@ Generated from current SQLAlchemy metadata, not a live database dump. Migration 
 ## ppm_allocations
 
 **Purpose:** Resource scheduled hours on a project.
-**Model:** [allocations](../../../services/api/ppm_api/ppm_tables.py). **Primary key:** id.
+**Model:** [allocations](../../../services/api/ppm_api/modules/delivery/tables.py). **Primary key:** id.
 **Foreign keys:** (organization_id) → (organizations.id); ON DELETE NO ACTION (default); (organization_id, project_id) → (ppm_projects.organization_id, ppm_projects.id); ON DELETE NO ACTION (default); (organization_id, resource_id) → (ppm_resources.organization_id, ppm_resources.id); ON DELETE NO ACTION (default).
 **Indexes:** ix_ppm_allocations_org: ppm_allocations.organization_id.
 **Constraints:** UNIQUE(organization_id, id); UNIQUE(organization_id, project_id, id); end_date > start_date; hours_per_day >= 0 AND hours_per_day <= 24; revision > 0.
@@ -228,7 +228,7 @@ Generated from current SQLAlchemy metadata, not a live database dump. Migration 
 ## ppm_answers
 
 **Purpose:** Per-question raw answer/evidence narrative and reviewer adjustment.
-**Model:** [answers](../../../services/api/ppm_api/assessment_tables.py). **Primary key:** id.
+**Model:** [answers](../../../services/api/ppm_api/modules/assessments/tables.py). **Primary key:** id.
 **Foreign keys:** (organization_id) → (organizations.id); ON DELETE NO ACTION (default); (organization_id, assessment_id) → (ppm_assessments.organization_id, ppm_assessments.id); ON DELETE NO ACTION (default).
 **Indexes:** ix_ppm_answers_org: ppm_answers.organization_id.
 **Constraints:** UNIQUE(organization_id, assessment_id, question_id); UNIQUE(organization_id, id); reviewer_score IS NULL OR (reviewer_score >= 0 AND reviewer_score <= 100).
@@ -252,7 +252,7 @@ Generated from current SQLAlchemy metadata, not a live database dump. Migration 
 ## ppm_assessment_access
 
 **Purpose:** Framework editor or assessment result grants.
-**Model:** [assessment_access](../../../services/api/ppm_api/assessment_tables.py). **Primary key:** id.
+**Model:** [assessment_access](../../../services/api/ppm_api/modules/assessments/tables.py). **Primary key:** id.
 **Foreign keys:** (organization_id) → (organizations.id); ON DELETE NO ACTION (default); (organization_id, assessment_id) → (ppm_assessments.organization_id, ppm_assessments.id); ON DELETE NO ACTION (default); (organization_id, framework_id) → (ppm_frameworks.organization_id, ppm_frameworks.id); ON DELETE NO ACTION (default); (organization_id, user_id) → (memberships.organization_id, memberships.user_id); ON DELETE NO ACTION (default).
 **Indexes:** ix_ppm_assessment_access_org: ppm_assessment_access.organization_id.
 **Constraints:** (framework_id IS NULL) <> (assessment_id IS NULL); UNIQUE(organization_id, id).
@@ -274,7 +274,7 @@ Generated from current SQLAlchemy metadata, not a live database dump. Migration 
 ## ppm_assessment_events
 
 **Purpose:** Append-only assessment actions and before/after details.
-**Model:** [assessment_events](../../../services/api/ppm_api/assessment_tables.py). **Primary key:** id.
+**Model:** [assessment_events](../../../services/api/ppm_api/modules/assessments/tables.py). **Primary key:** id.
 **Foreign keys:** (organization_id) → (organizations.id); ON DELETE NO ACTION (default); (organization_id, actor_id) → (memberships.organization_id, memberships.user_id); ON DELETE NO ACTION (default); (organization_id, assessment_id) → (ppm_assessments.organization_id, ppm_assessments.id); ON DELETE NO ACTION (default).
 **Indexes:** ix_ppm_assessment_events_org: ppm_assessment_events.organization_id.
 **Constraints:** UNIQUE(organization_id, id).
@@ -297,7 +297,7 @@ Generated from current SQLAlchemy metadata, not a live database dump. Migration 
 ## ppm_assessment_requests
 
 **Purpose:** Idempotent mutation fingerprint and response.
-**Model:** [assessment_requests](../../../services/api/ppm_api/assessment_tables.py). **Primary key:** id.
+**Model:** [assessment_requests](../../../services/api/ppm_api/modules/assessments/tables.py). **Primary key:** id.
 **Foreign keys:** (organization_id) → (organizations.id); ON DELETE NO ACTION (default); (organization_id, user_id) → (memberships.organization_id, memberships.user_id); ON DELETE NO ACTION (default).
 **Indexes:** ix_ppm_assessment_requests_org: ppm_assessment_requests.organization_id.
 **Constraints:** UNIQUE(organization_id, id); UNIQUE(organization_id, user_id, key).
@@ -319,7 +319,7 @@ Generated from current SQLAlchemy metadata, not a live database dump. Migration 
 ## ppm_assessments
 
 **Purpose:** Assignment, review state and frozen results.
-**Model:** [assessments](../../../services/api/ppm_api/assessment_tables.py). **Primary key:** id.
+**Model:** [assessments](../../../services/api/ppm_api/modules/assessments/tables.py). **Primary key:** id.
 **Foreign keys:** (organization_id) → (organizations.id); ON DELETE NO ACTION (default); (organization_id, assigned_to) → (memberships.organization_id, memberships.user_id); ON DELETE NO ACTION (default); (organization_id, department_id) → (ppm_departments.organization_id, ppm_departments.id); ON DELETE NO ACTION (default); (organization_id, framework_version_id) → (ppm_framework_versions.organization_id, ppm_framework_versions.id); ON DELETE NO ACTION (default); (organization_id, reviewer_id) → (memberships.organization_id, memberships.user_id); ON DELETE NO ACTION (default); (organization_id, submitted_by) → (memberships.organization_id, memberships.user_id); ON DELETE NO ACTION (default); (organization_id, team_id) → (ppm_teams.organization_id, ppm_teams.id); ON DELETE NO ACTION (default).
 **Indexes:** ix_ppm_assessments_org: ppm_assessments.organization_id.
 **Constraints:** UNIQUE(organization_id, id); assigned_to <> reviewer_id; revision > 0; status IN ('draft','submitted','in_review','returned','completed').
@@ -347,7 +347,7 @@ Generated from current SQLAlchemy metadata, not a live database dump. Migration 
 ## ppm_audit
 
 **Purpose:** Append-only before/after delivery history.
-**Model:** [audit](../../../services/api/ppm_api/ppm_tables.py). **Primary key:** id.
+**Model:** [audit](../../../services/api/ppm_api/modules/delivery/tables.py). **Primary key:** id.
 **Foreign keys:** (organization_id, actor_id) → (memberships.organization_id, memberships.user_id); ON DELETE NO ACTION (default); (organization_id, project_id) → (ppm_projects.organization_id, ppm_projects.id); ON DELETE NO ACTION (default).
 **Indexes:** No explicit secondary index; PK/unique constraints also create supporting indexes.
 **Constraints:** PK/FK/nullability as below.
@@ -372,7 +372,7 @@ Generated from current SQLAlchemy metadata, not a live database dump. Migration 
 ## ppm_availability
 
 **Purpose:** Effective resource-to-calendar period.
-**Model:** [availability](../../../services/api/ppm_api/ppm_tables.py). **Primary key:** id.
+**Model:** [availability](../../../services/api/ppm_api/modules/delivery/tables.py). **Primary key:** id.
 **Foreign keys:** (organization_id) → (organizations.id); ON DELETE NO ACTION (default); (organization_id, calendar_id) → (ppm_calendars.organization_id, ppm_calendars.id); ON DELETE NO ACTION (default); (organization_id, resource_id) → (ppm_resources.organization_id, ppm_resources.id); ON DELETE NO ACTION (default).
 **Indexes:** ix_ppm_availability_org: ppm_availability.organization_id.
 **Constraints:** UNIQUE(organization_id, id); end_date > start_date; revision > 0.
@@ -399,7 +399,7 @@ Generated from current SQLAlchemy metadata, not a live database dump. Migration 
 ## ppm_baselines
 
 **Purpose:** Versioned immutable project/work/milestone/sprint/budget snapshot.
-**Model:** [baselines](../../../services/api/ppm_api/ppm_tables.py). **Primary key:** id.
+**Model:** [baselines](../../../services/api/ppm_api/modules/delivery/tables.py). **Primary key:** id.
 **Foreign keys:** (organization_id) → (organizations.id); ON DELETE NO ACTION (default); (organization_id, project_id) → (ppm_projects.organization_id, ppm_projects.id); ON DELETE NO ACTION (default).
 **Indexes:** ix_ppm_baselines_org: ppm_baselines.organization_id.
 **Constraints:** UNIQUE(organization_id, id); UNIQUE(organization_id, project_id, id); UNIQUE(organization_id, project_id, version); revision > 0.
@@ -425,7 +425,7 @@ Generated from current SQLAlchemy metadata, not a live database dump. Migration 
 ## ppm_benefits
 
 **Purpose:** Target and realized benefit in a declared unit/period.
-**Model:** [benefits](../../../services/api/ppm_api/command_tables.py). **Primary key:** id.
+**Model:** [benefits](../../../services/api/ppm_api/modules/command/tables.py). **Primary key:** id.
 **Foreign keys:** (organization_id) → (organizations.id); ON DELETE NO ACTION (default); (organization_id, project_id) → (ppm_projects.organization_id, ppm_projects.id); ON DELETE NO ACTION (default).
 **Indexes:** ix_ppm_benefits_org: ppm_benefits.organization_id.
 **Constraints:** UNIQUE(organization_id, id); UNIQUE(organization_id, project_id, id); period_end > period_start; revision > 0.
@@ -454,7 +454,7 @@ Generated from current SQLAlchemy metadata, not a live database dump. Migration 
 ## ppm_blockers
 
 **Purpose:** Open/resolved delivery impediments.
-**Model:** [blockers](../../../services/api/ppm_api/ppm_tables.py). **Primary key:** id.
+**Model:** [blockers](../../../services/api/ppm_api/modules/delivery/tables.py). **Primary key:** id.
 **Foreign keys:** (organization_id) → (organizations.id); ON DELETE NO ACTION (default); (organization_id, owner_id) → (memberships.organization_id, memberships.user_id); ON DELETE NO ACTION (default); (organization_id, project_id) → (ppm_projects.organization_id, ppm_projects.id); ON DELETE NO ACTION (default); (organization_id, project_id, work_item_id) → (ppm_work_items.organization_id, ppm_work_items.project_id, ppm_work_items.id); ON DELETE NO ACTION (default).
 **Indexes:** ix_ppm_blockers_org: ppm_blockers.organization_id.
 **Constraints:** UNIQUE(organization_id, id); UNIQUE(organization_id, project_id, id); revision > 0; status IN ('open','resolved').
@@ -481,7 +481,7 @@ Generated from current SQLAlchemy metadata, not a live database dump. Migration 
 ## ppm_budget_lines
 
 **Purpose:** Approved or unapproved decimal funding lines.
-**Model:** [budget_lines](../../../services/api/ppm_api/ppm_tables.py). **Primary key:** id.
+**Model:** [budget_lines](../../../services/api/ppm_api/modules/delivery/tables.py). **Primary key:** id.
 **Foreign keys:** (organization_id) → (organizations.id); ON DELETE NO ACTION (default); (organization_id, project_id) → (ppm_projects.organization_id, ppm_projects.id); ON DELETE NO ACTION (default).
 **Indexes:** ix_ppm_budget_lines_org: ppm_budget_lines.organization_id.
 **Constraints:** UNIQUE(organization_id, id); UNIQUE(organization_id, project_id, id); amount >= 0; revision > 0.
@@ -508,7 +508,7 @@ Generated from current SQLAlchemy metadata, not a live database dump. Migration 
 ## ppm_calendars
 
 **Purpose:** Immutable weekly hours, holidays and timezone.
-**Model:** [calendars](../../../services/api/ppm_api/ppm_tables.py). **Primary key:** id.
+**Model:** [calendars](../../../services/api/ppm_api/modules/delivery/tables.py). **Primary key:** id.
 **Foreign keys:** (organization_id) → (organizations.id); ON DELETE NO ACTION (default).
 **Indexes:** ix_ppm_calendars_org: ppm_calendars.organization_id.
 **Constraints:** UNIQUE(organization_id, id); friday >= 0 AND friday <= 24; monday >= 0 AND monday <= 24; revision > 0; saturday >= 0 AND saturday <= 24; sunday >= 0 AND sunday <= 24; thursday >= 0 AND thursday <= 24; tuesday >= 0 AND tuesday <= 24; wednesday >= 0 AND wednesday <= 24.
@@ -540,7 +540,7 @@ Generated from current SQLAlchemy metadata, not a live database dump. Migration 
 ## ppm_capacity_snapshots
 
 **Purpose:** Frozen non-sensitive planning sources and daily results.
-**Model:** [capacity_snapshots](../../../services/api/ppm_api/ppm_tables.py). **Primary key:** id.
+**Model:** [capacity_snapshots](../../../services/api/ppm_api/modules/delivery/tables.py). **Primary key:** id.
 **Foreign keys:** (organization_id) → (organizations.id); ON DELETE NO ACTION (default); (organization_id, resource_id) → (ppm_resources.organization_id, ppm_resources.id); ON DELETE NO ACTION (default).
 **Indexes:** ix_ppm_capacity_snapshots_org: ppm_capacity_snapshots.organization_id.
 **Constraints:** UNIQUE(organization_id, id); end_date > start_date; revision > 0.
@@ -567,7 +567,7 @@ Generated from current SQLAlchemy metadata, not a live database dump. Migration 
 ## ppm_departments
 
 **Purpose:** Organizational grouping and owner.
-**Model:** [departments](../../../services/api/ppm_api/ppm_tables.py). **Primary key:** id.
+**Model:** [departments](../../../services/api/ppm_api/modules/delivery/tables.py). **Primary key:** id.
 **Foreign keys:** (organization_id) → (organizations.id); ON DELETE NO ACTION (default); (organization_id, owner_id) → (memberships.organization_id, memberships.user_id); ON DELETE NO ACTION (default).
 **Indexes:** ix_ppm_departments_org: ppm_departments.organization_id.
 **Constraints:** UNIQUE(organization_id, id); revision > 0.
@@ -591,7 +591,7 @@ Generated from current SQLAlchemy metadata, not a live database dump. Migration 
 ## ppm_dependencies
 
 **Purpose:** Directed project/work/milestone dependencies.
-**Model:** [dependencies](../../../services/api/ppm_api/ppm_tables.py). **Primary key:** id.
+**Model:** [dependencies](../../../services/api/ppm_api/modules/delivery/tables.py). **Primary key:** id.
 **Foreign keys:** (organization_id) → (organizations.id); ON DELETE NO ACTION (default); (organization_id, project_id) → (ppm_projects.organization_id, ppm_projects.id); ON DELETE NO ACTION (default); (organization_id, project_id, source_milestone_id) → (ppm_milestones.organization_id, ppm_milestones.project_id, ppm_milestones.id); ON DELETE NO ACTION (default); (organization_id, project_id, source_work_item_id) → (ppm_work_items.organization_id, ppm_work_items.project_id, ppm_work_items.id); ON DELETE NO ACTION (default); (organization_id, target_project_id) → (ppm_projects.organization_id, ppm_projects.id); ON DELETE NO ACTION (default); (organization_id, target_project_id, target_milestone_id) → (ppm_milestones.organization_id, ppm_milestones.project_id, ppm_milestones.id); ON DELETE NO ACTION (default); (organization_id, target_project_id, target_work_item_id) → (ppm_work_items.organization_id, ppm_work_items.project_id, ppm_work_items.id); ON DELETE NO ACTION (default).
 **Indexes:** ix_ppm_dependencies_org: ppm_dependencies.organization_id.
 **Constraints:** UNIQUE(organization_id, id); UNIQUE(organization_id, project_id, id); revision > 0; source_milestone_id IS NULL OR source_work_item_id IS NULL; target_milestone_id IS NULL OR target_work_item_id IS NULL.
@@ -620,7 +620,7 @@ Generated from current SQLAlchemy metadata, not a live database dump. Migration 
 ## ppm_effort
 
 **Purpose:** Sensitive actual and overtime hours.
-**Model:** [effort](../../../services/api/ppm_api/ppm_tables.py). **Primary key:** id.
+**Model:** [effort](../../../services/api/ppm_api/modules/delivery/tables.py). **Primary key:** id.
 **Foreign keys:** (organization_id) → (organizations.id); ON DELETE NO ACTION (default); (organization_id, project_id) → (ppm_projects.organization_id, ppm_projects.id); ON DELETE NO ACTION (default); (organization_id, resource_id) → (ppm_resources.organization_id, ppm_resources.id); ON DELETE NO ACTION (default).
 **Indexes:** ix_ppm_effort_org: ppm_effort.organization_id.
 **Constraints:** UNIQUE(organization_id, id); UNIQUE(organization_id, project_id, id); hours >= 0 AND hours <= 24; overtime_hours >= 0 AND overtime_hours <= hours; revision > 0.
@@ -648,7 +648,7 @@ Generated from current SQLAlchemy metadata, not a live database dump. Migration 
 ## ppm_effort_coverage
 
 **Purpose:** Explicit daily completeness attestation.
-**Model:** [effort_coverage](../../../services/api/ppm_api/ppm_tables.py). **Primary key:** id.
+**Model:** [effort_coverage](../../../services/api/ppm_api/modules/delivery/tables.py). **Primary key:** id.
 **Foreign keys:** (organization_id) → (organizations.id); ON DELETE NO ACTION (default); (organization_id, resource_id) → (ppm_resources.organization_id, ppm_resources.id); ON DELETE NO ACTION (default).
 **Indexes:** ix_ppm_effort_coverage_org: ppm_effort_coverage.organization_id.
 **Constraints:** UNIQUE(organization_id, id); UNIQUE(organization_id, resource_id, worked_on); revision > 0.
@@ -674,7 +674,7 @@ Generated from current SQLAlchemy metadata, not a live database dump. Migration 
 ## ppm_evidence_attachments
 
 **Purpose:** Private quarantined text-object metadata.
-**Model:** [evidence_attachments](../../../services/api/ppm_api/assessment_tables.py). **Primary key:** id.
+**Model:** [evidence_attachments](../../../services/api/ppm_api/modules/assessments/tables.py). **Primary key:** id.
 **Foreign keys:** (organization_id) → (organizations.id); ON DELETE NO ACTION (default); (organization_id, assessment_id) → (ppm_assessments.organization_id, ppm_assessments.id); ON DELETE NO ACTION (default); (organization_id, uploaded_by) → (memberships.organization_id, memberships.user_id); ON DELETE NO ACTION (default).
 **Indexes:** ix_ppm_evidence_attachments_org: ppm_evidence_attachments.organization_id.
 **Constraints:** UNIQUE(organization_id, id); file_size > 0 AND file_size <= 524288.
@@ -700,7 +700,7 @@ Generated from current SQLAlchemy metadata, not a live database dump. Migration 
 ## ppm_expenditures
 
 **Purpose:** Append-only spend and exact negative reversals.
-**Model:** [expenditures](../../../services/api/ppm_api/ppm_tables.py). **Primary key:** id.
+**Model:** [expenditures](../../../services/api/ppm_api/modules/delivery/tables.py). **Primary key:** id.
 **Foreign keys:** (organization_id) → (organizations.id); ON DELETE NO ACTION (default); (organization_id, project_id) → (ppm_projects.organization_id, ppm_projects.id); ON DELETE NO ACTION (default); (organization_id, project_id, reversal_of) → (ppm_expenditures.organization_id, ppm_expenditures.project_id, ppm_expenditures.id); ON DELETE NO ACTION (default).
 **Indexes:** ix_ppm_expenditures_org: ppm_expenditures.organization_id.
 **Constraints:** (amount >= 0 AND reversal_of IS NULL) OR (amount < 0 AND reversal_of IS NOT NULL); UNIQUE(organization_id, id); UNIQUE(organization_id, project_id, id); UNIQUE(organization_id, reversal_of); revision > 0.
@@ -728,7 +728,7 @@ Generated from current SQLAlchemy metadata, not a live database dump. Migration 
 ## ppm_framework_versions
 
 **Purpose:** Immutable published definitions.
-**Model:** [framework_versions](../../../services/api/ppm_api/assessment_tables.py). **Primary key:** id.
+**Model:** [framework_versions](../../../services/api/ppm_api/modules/assessments/tables.py). **Primary key:** id.
 **Foreign keys:** (organization_id) → (organizations.id); ON DELETE NO ACTION (default); (organization_id, framework_id) → (ppm_frameworks.organization_id, ppm_frameworks.id); ON DELETE NO ACTION (default); (organization_id, published_by) → (memberships.organization_id, memberships.user_id); ON DELETE NO ACTION (default).
 **Indexes:** ix_ppm_framework_versions_org: ppm_framework_versions.organization_id.
 **Constraints:** UNIQUE(organization_id, framework_id, version); UNIQUE(organization_id, id); version > 0.
@@ -750,7 +750,7 @@ Generated from current SQLAlchemy metadata, not a live database dump. Migration 
 ## ppm_frameworks
 
 **Purpose:** Editable framework JSON definition.
-**Model:** [frameworks](../../../services/api/ppm_api/assessment_tables.py). **Primary key:** id.
+**Model:** [frameworks](../../../services/api/ppm_api/modules/assessments/tables.py). **Primary key:** id.
 **Foreign keys:** (organization_id) → (organizations.id); ON DELETE NO ACTION (default).
 **Indexes:** ix_ppm_frameworks_org: ppm_frameworks.organization_id.
 **Constraints:** UNIQUE(organization_id, id); revision > 0.
@@ -770,7 +770,7 @@ Generated from current SQLAlchemy metadata, not a live database dump. Migration 
 ## ppm_goals
 
 **Purpose:** Strategic objective labels.
-**Model:** [goals](../../../services/api/ppm_api/ppm_tables.py). **Primary key:** id.
+**Model:** [goals](../../../services/api/ppm_api/modules/delivery/tables.py). **Primary key:** id.
 **Foreign keys:** (organization_id) → (organizations.id); ON DELETE NO ACTION (default); (organization_id, owner_id) → (memberships.organization_id, memberships.user_id); ON DELETE NO ACTION (default).
 **Indexes:** ix_ppm_goals_org: ppm_goals.organization_id.
 **Constraints:** UNIQUE(organization_id, id); revision > 0.
@@ -794,7 +794,7 @@ Generated from current SQLAlchemy metadata, not a live database dump. Migration 
 ## ppm_grants
 
 **Purpose:** User read/edit/manage scope on one project or portfolio.
-**Model:** [grants](../../../services/api/ppm_api/ppm_tables.py). **Primary key:** id.
+**Model:** [grants](../../../services/api/ppm_api/modules/delivery/tables.py). **Primary key:** id.
 **Foreign keys:** (organization_id) → (organizations.id); ON DELETE NO ACTION (default); (organization_id, portfolio_id) → (ppm_portfolios.organization_id, ppm_portfolios.id); ON DELETE NO ACTION (default); (organization_id, project_id) → (ppm_projects.organization_id, ppm_projects.id); ON DELETE NO ACTION (default); (organization_id, user_id) → (memberships.organization_id, memberships.user_id); ON DELETE NO ACTION (default).
 **Indexes:** ix_ppm_grants_org: ppm_grants.organization_id.
 **Constraints:** (project_id IS NULL) <> (portfolio_id IS NULL); UNIQUE(organization_id, id); UNIQUE(organization_id, user_id, portfolio_id); UNIQUE(organization_id, user_id, project_id); access IN ('read','edit','manage'); revision > 0.
@@ -821,7 +821,7 @@ Generated from current SQLAlchemy metadata, not a live database dump. Migration 
 ## ppm_metric_plans
 
 **Purpose:** Chosen baseline/calendar and forecast final cost.
-**Model:** [metric_plans](../../../services/api/ppm_api/command_tables.py). **Primary key:** id.
+**Model:** [metric_plans](../../../services/api/ppm_api/modules/command/tables.py). **Primary key:** id.
 **Foreign keys:** (organization_id) → (organizations.id); ON DELETE NO ACTION (default); (organization_id, calendar_id) → (ppm_calendars.organization_id, ppm_calendars.id); ON DELETE NO ACTION (default); (organization_id, project_id) → (ppm_projects.organization_id, ppm_projects.id); ON DELETE NO ACTION (default); (organization_id, project_id, baseline_id) → (ppm_baselines.organization_id, ppm_baselines.project_id, ppm_baselines.id); ON DELETE NO ACTION (default).
 **Indexes:** ix_ppm_metric_plans_org: ppm_metric_plans.organization_id.
 **Constraints:** UNIQUE(organization_id, id); UNIQUE(organization_id, project_id); UNIQUE(organization_id, project_id, id); forecast_cost IS NULL OR forecast_cost >= 0; revision > 0.
@@ -848,7 +848,7 @@ Generated from current SQLAlchemy metadata, not a live database dump. Migration 
 ## ppm_metric_policies
 
 **Purpose:** Organization risk thresholds and source-age cadence.
-**Model:** [metric_policies](../../../services/api/ppm_api/command_tables.py). **Primary key:** id.
+**Model:** [metric_policies](../../../services/api/ppm_api/modules/command/tables.py). **Primary key:** id.
 **Foreign keys:** (organization_id) → (organizations.id); ON DELETE NO ACTION (default).
 **Indexes:** ix_ppm_metric_policies_org: ppm_metric_policies.organization_id.
 **Constraints:** UNIQUE(organization_id); UNIQUE(organization_id, id); amber > 0 AND red > amber AND red <= 100; revision > 0; stale_days BETWEEN 1 AND 365.
@@ -874,7 +874,7 @@ Generated from current SQLAlchemy metadata, not a live database dump. Migration 
 ## ppm_milestones
 
 **Purpose:** Dated delivery gates and actual completion.
-**Model:** [milestones](../../../services/api/ppm_api/ppm_tables.py). **Primary key:** id.
+**Model:** [milestones](../../../services/api/ppm_api/modules/delivery/tables.py). **Primary key:** id.
 **Foreign keys:** (organization_id) → (organizations.id); ON DELETE NO ACTION (default); (organization_id, project_id) → (ppm_projects.organization_id, ppm_projects.id); ON DELETE NO ACTION (default).
 **Indexes:** ix_ppm_milestones_org: ppm_milestones.organization_id.
 **Constraints:** UNIQUE(organization_id, id); UNIQUE(organization_id, project_id, id); revision > 0.
@@ -901,7 +901,7 @@ Generated from current SQLAlchemy metadata, not a live database dump. Migration 
 ## ppm_portfolios
 
 **Purpose:** Top-level investment grouping.
-**Model:** [portfolios](../../../services/api/ppm_api/ppm_tables.py). **Primary key:** id.
+**Model:** [portfolios](../../../services/api/ppm_api/modules/delivery/tables.py). **Primary key:** id.
 **Foreign keys:** (organization_id) → (organizations.id); ON DELETE NO ACTION (default); (organization_id, owner_id) → (memberships.organization_id, memberships.user_id); ON DELETE NO ACTION (default).
 **Indexes:** ix_ppm_portfolios_org: ppm_portfolios.organization_id.
 **Constraints:** UNIQUE(organization_id, id); revision > 0.
@@ -925,7 +925,7 @@ Generated from current SQLAlchemy metadata, not a live database dump. Migration 
 ## ppm_programs
 
 **Purpose:** Grouping within a portfolio.
-**Model:** [programs](../../../services/api/ppm_api/ppm_tables.py). **Primary key:** id.
+**Model:** [programs](../../../services/api/ppm_api/modules/delivery/tables.py). **Primary key:** id.
 **Foreign keys:** (organization_id) → (organizations.id); ON DELETE NO ACTION (default); (organization_id, owner_id) → (memberships.organization_id, memberships.user_id); ON DELETE NO ACTION (default); (organization_id, portfolio_id) → (ppm_portfolios.organization_id, ppm_portfolios.id); ON DELETE NO ACTION (default).
 **Indexes:** ix_ppm_programs_org: ppm_programs.organization_id.
 **Constraints:** UNIQUE(organization_id, id); UNIQUE(organization_id, portfolio_id, id); revision > 0.
@@ -950,7 +950,7 @@ Generated from current SQLAlchemy metadata, not a live database dump. Migration 
 ## ppm_projects
 
 **Purpose:** Authoritative delivery plan and reported status.
-**Model:** [projects](../../../services/api/ppm_api/ppm_tables.py). **Primary key:** id.
+**Model:** [projects](../../../services/api/ppm_api/modules/delivery/tables.py). **Primary key:** id.
 **Foreign keys:** (organization_id) → (organizations.id); ON DELETE NO ACTION (default); (organization_id, created_by) → (memberships.organization_id, memberships.user_id); ON DELETE NO ACTION (default); (organization_id, department_id) → (ppm_departments.organization_id, ppm_departments.id); ON DELETE NO ACTION (default); (organization_id, owner_id) → (memberships.organization_id, memberships.user_id); ON DELETE NO ACTION (default); (organization_id, portfolio_id) → (ppm_portfolios.organization_id, ppm_portfolios.id); ON DELETE NO ACTION (default); (organization_id, portfolio_id, program_id) → (ppm_programs.organization_id, ppm_programs.portfolio_id, ppm_programs.id); ON DELETE NO ACTION (default); (organization_id, team_id) → (ppm_teams.organization_id, ppm_teams.id); ON DELETE NO ACTION (default).
 **Indexes:** ix_ppm_projects_org: ppm_projects.organization_id.
 **Constraints:** UNIQUE(organization_id, id); reported_health IN ('Green','Amber','Red','Unknown'); revision > 0; status IN ('draft','active','on_hold','completed','cancelled'); target_end_date IS NULL OR start_date IS NULL OR target_end_date >= start_date.
@@ -988,7 +988,7 @@ Generated from current SQLAlchemy metadata, not a live database dump. Migration 
 ## ppm_requests
 
 **Purpose:** Idempotent create receipts.
-**Model:** [requests](../../../services/api/ppm_api/ppm_tables.py). **Primary key:** organization_id, user_id, key.
+**Model:** [requests](../../../services/api/ppm_api/modules/delivery/tables.py). **Primary key:** organization_id, user_id, key.
 **Foreign keys:** (organization_id, user_id) → (memberships.organization_id, memberships.user_id); ON DELETE NO ACTION (default).
 **Indexes:** No explicit secondary index; PK/unique constraints also create supporting indexes.
 **Constraints:** PK/FK/nullability as below.
@@ -1009,7 +1009,7 @@ Generated from current SQLAlchemy metadata, not a live database dump. Migration 
 ## ppm_resource_access
 
 **Purpose:** Explicit manage/effort capabilities.
-**Model:** [resource_access](../../../services/api/ppm_api/ppm_tables.py). **Primary key:** id.
+**Model:** [resource_access](../../../services/api/ppm_api/modules/delivery/tables.py). **Primary key:** id.
 **Foreign keys:** (organization_id) → (organizations.id); ON DELETE NO ACTION (default); (organization_id, resource_id) → (ppm_resources.organization_id, ppm_resources.id); ON DELETE NO ACTION (default); (organization_id, user_id) → (memberships.organization_id, memberships.user_id); ON DELETE NO ACTION (default).
 **Indexes:** ix_ppm_resource_access_org: ppm_resource_access.organization_id.
 **Constraints:** UNIQUE(organization_id, id); UNIQUE(organization_id, resource_id, user_id); revision > 0.
@@ -1036,7 +1036,7 @@ Generated from current SQLAlchemy metadata, not a live database dump. Migration 
 ## ppm_resource_skills
 
 **Purpose:** Searchable resource skill labels.
-**Model:** [resource_skills](../../../services/api/ppm_api/ppm_tables.py). **Primary key:** id.
+**Model:** [resource_skills](../../../services/api/ppm_api/modules/delivery/tables.py). **Primary key:** id.
 **Foreign keys:** (organization_id) → (organizations.id); ON DELETE NO ACTION (default); (organization_id, resource_id) → (ppm_resources.organization_id, ppm_resources.id); ON DELETE NO ACTION (default).
 **Indexes:** ix_ppm_resource_skills_org: ppm_resource_skills.organization_id.
 **Constraints:** UNIQUE(organization_id, id); revision > 0.
@@ -1061,7 +1061,7 @@ Generated from current SQLAlchemy metadata, not a live database dump. Migration 
 ## ppm_resource_teams
 
 **Purpose:** Effective reporting-team membership.
-**Model:** [resource_teams](../../../services/api/ppm_api/ppm_tables.py). **Primary key:** id.
+**Model:** [resource_teams](../../../services/api/ppm_api/modules/delivery/tables.py). **Primary key:** id.
 **Foreign keys:** (organization_id) → (organizations.id); ON DELETE NO ACTION (default); (organization_id, resource_id) → (ppm_resources.organization_id, ppm_resources.id); ON DELETE NO ACTION (default); (organization_id, team_id) → (ppm_teams.organization_id, ppm_teams.id); ON DELETE NO ACTION (default).
 **Indexes:** ix_ppm_resource_teams_org: ppm_resource_teams.organization_id.
 **Constraints:** UNIQUE(organization_id, id); end_date > start_date; revision > 0.
@@ -1088,7 +1088,7 @@ Generated from current SQLAlchemy metadata, not a live database dump. Migration 
 ## ppm_resources
 
 **Purpose:** Independent workforce identity; not login authority.
-**Model:** [resources](../../../services/api/ppm_api/ppm_tables.py). **Primary key:** id.
+**Model:** [resources](../../../services/api/ppm_api/modules/delivery/tables.py). **Primary key:** id.
 **Foreign keys:** (organization_id) → (organizations.id); ON DELETE NO ACTION (default); (organization_id, user_id) → (memberships.organization_id, memberships.user_id); ON DELETE NO ACTION (default).
 **Indexes:** ix_ppm_resources_org: ppm_resources.organization_id.
 **Constraints:** UNIQUE(organization_id, id); revision > 0.
@@ -1112,7 +1112,7 @@ Generated from current SQLAlchemy metadata, not a live database dump. Migration 
 ## ppm_risks
 
 **Purpose:** Human-maintained project risk register.
-**Model:** [risks](../../../services/api/ppm_api/command_tables.py). **Primary key:** id.
+**Model:** [risks](../../../services/api/ppm_api/modules/command/tables.py). **Primary key:** id.
 **Foreign keys:** (organization_id) → (organizations.id); ON DELETE NO ACTION (default); (organization_id, owner_id) → (memberships.organization_id, memberships.user_id); ON DELETE NO ACTION (default); (organization_id, project_id) → (ppm_projects.organization_id, ppm_projects.id); ON DELETE NO ACTION (default).
 **Indexes:** ix_ppm_risks_org: ppm_risks.organization_id.
 **Constraints:** UNIQUE(organization_id, id); UNIQUE(organization_id, project_id, id); revision > 0; severity BETWEEN 1 AND 5 AND likelihood BETWEEN 1 AND 5; status IN ('open','mitigating','accepted','closed').
@@ -1143,7 +1143,7 @@ Generated from current SQLAlchemy metadata, not a live database dump. Migration 
 ## ppm_saved_views
 
 **Purpose:** User-owned dashboard filters.
-**Model:** [saved_views](../../../services/api/ppm_api/command_tables.py). **Primary key:** id.
+**Model:** [saved_views](../../../services/api/ppm_api/modules/command/tables.py). **Primary key:** id.
 **Foreign keys:** (organization_id) → (organizations.id); ON DELETE NO ACTION (default); (organization_id, portfolio_id) → (ppm_portfolios.organization_id, ppm_portfolios.id); ON DELETE NO ACTION (default); (organization_id, user_id) → (memberships.organization_id, memberships.user_id); ON DELETE NO ACTION (default).
 **Indexes:** ix_ppm_saved_views_org: ppm_saved_views.organization_id.
 **Constraints:** UNIQUE(organization_id, id); dashboard IN ('Executive','Delivery','Risk','Resource'); end_date > start_date AND end_date - start_date <= 366; revision > 0.
@@ -1171,7 +1171,7 @@ Generated from current SQLAlchemy metadata, not a live database dump. Migration 
 ## ppm_settings
 
 **Purpose:** One organization timezone/currency configuration.
-**Model:** [settings](../../../services/api/ppm_api/ppm_tables.py). **Primary key:** id.
+**Model:** [settings](../../../services/api/ppm_api/modules/delivery/tables.py). **Primary key:** id.
 **Foreign keys:** (organization_id) → (organizations.id); ON DELETE NO ACTION (default).
 **Indexes:** ix_ppm_settings_org: ppm_settings.organization_id.
 **Constraints:** UNIQUE(organization_id); UNIQUE(organization_id, id); revision > 0.
@@ -1196,7 +1196,7 @@ Generated from current SQLAlchemy metadata, not a live database dump. Migration 
 ## ppm_sprint_closures
 
 **Purpose:** Frozen completed-point evidence at sprint closure.
-**Model:** [sprint_closures](../../../services/api/ppm_api/command_tables.py). **Primary key:** id.
+**Model:** [sprint_closures](../../../services/api/ppm_api/modules/command/tables.py). **Primary key:** id.
 **Foreign keys:** (organization_id) → (organizations.id); ON DELETE NO ACTION (default); (organization_id, project_id) → (ppm_projects.organization_id, ppm_projects.id); ON DELETE NO ACTION (default); (organization_id, project_id, sprint_id) → (ppm_sprints.organization_id, ppm_sprints.project_id, ppm_sprints.id); ON DELETE NO ACTION (default); (organization_id, team_id) → (ppm_teams.organization_id, ppm_teams.id); ON DELETE NO ACTION (default).
 **Indexes:** ix_ppm_sprint_closures_org: ppm_sprint_closures.organization_id.
 **Constraints:** UNIQUE(organization_id, id); UNIQUE(organization_id, project_id, id); UNIQUE(organization_id, sprint_id); revision > 0.
@@ -1226,7 +1226,7 @@ Generated from current SQLAlchemy metadata, not a live database dump. Migration 
 ## ppm_sprints
 
 **Purpose:** Planned/active/closed timebox.
-**Model:** [sprints](../../../services/api/ppm_api/ppm_tables.py). **Primary key:** id.
+**Model:** [sprints](../../../services/api/ppm_api/modules/delivery/tables.py). **Primary key:** id.
 **Foreign keys:** (organization_id) → (organizations.id); ON DELETE NO ACTION (default); (organization_id, project_id) → (ppm_projects.organization_id, ppm_projects.id); ON DELETE NO ACTION (default); (organization_id, team_id) → (ppm_teams.organization_id, ppm_teams.id); ON DELETE NO ACTION (default).
 **Indexes:** ix_ppm_sprints_org: ppm_sprints.organization_id.
 **Constraints:** UNIQUE(organization_id, id); UNIQUE(organization_id, project_id, id); end_date >= start_date; revision > 0; status IN ('planned','active','closed').
@@ -1254,7 +1254,7 @@ Generated from current SQLAlchemy metadata, not a live database dump. Migration 
 ## ppm_status_updates
 
 **Purpose:** Append-only human-reported health narrative.
-**Model:** [status_updates](../../../services/api/ppm_api/ppm_tables.py). **Primary key:** id.
+**Model:** [status_updates](../../../services/api/ppm_api/modules/delivery/tables.py). **Primary key:** id.
 **Foreign keys:** (organization_id) → (organizations.id); ON DELETE NO ACTION (default); (organization_id, project_id) → (ppm_projects.organization_id, ppm_projects.id); ON DELETE NO ACTION (default).
 **Indexes:** ix_ppm_status_updates_org: ppm_status_updates.organization_id.
 **Constraints:** UNIQUE(organization_id, id); UNIQUE(organization_id, project_id, id); reported_health IN ('Green','Amber','Red','Unknown'); revision > 0.
@@ -1279,7 +1279,7 @@ Generated from current SQLAlchemy metadata, not a live database dump. Migration 
 ## ppm_team_members
 
 **Purpose:** Dated login-user membership of a delivery team.
-**Model:** [team_members](../../../services/api/ppm_api/ppm_tables.py). **Primary key:** id.
+**Model:** [team_members](../../../services/api/ppm_api/modules/delivery/tables.py). **Primary key:** id.
 **Foreign keys:** (organization_id) → (organizations.id); ON DELETE NO ACTION (default); (organization_id, team_id) → (ppm_teams.organization_id, ppm_teams.id); ON DELETE NO ACTION (default); (organization_id, user_id) → (memberships.organization_id, memberships.user_id); ON DELETE NO ACTION (default).
 **Indexes:** ix_ppm_team_members_org: ppm_team_members.organization_id.
 **Constraints:** UNIQUE(organization_id, id); end_date IS NULL OR end_date > start_date; revision > 0.
@@ -1306,7 +1306,7 @@ Generated from current SQLAlchemy metadata, not a live database dump. Migration 
 ## ppm_teams
 
 **Purpose:** Delivery team linked optionally to a department.
-**Model:** [teams](../../../services/api/ppm_api/ppm_tables.py). **Primary key:** id.
+**Model:** [teams](../../../services/api/ppm_api/modules/delivery/tables.py). **Primary key:** id.
 **Foreign keys:** (organization_id) → (organizations.id); ON DELETE NO ACTION (default); (organization_id, department_id) → (ppm_departments.organization_id, ppm_departments.id); ON DELETE NO ACTION (default); (organization_id, owner_id) → (memberships.organization_id, memberships.user_id); ON DELETE NO ACTION (default).
 **Indexes:** ix_ppm_teams_org: ppm_teams.organization_id.
 **Constraints:** UNIQUE(organization_id, id); revision > 0.
@@ -1331,7 +1331,7 @@ Generated from current SQLAlchemy metadata, not a live database dump. Migration 
 ## ppm_time_off
 
 **Purpose:** Dated unavailable hours.
-**Model:** [time_off](../../../services/api/ppm_api/ppm_tables.py). **Primary key:** id.
+**Model:** [time_off](../../../services/api/ppm_api/modules/delivery/tables.py). **Primary key:** id.
 **Foreign keys:** (organization_id) → (organizations.id); ON DELETE NO ACTION (default); (organization_id, resource_id) → (ppm_resources.organization_id, ppm_resources.id); ON DELETE NO ACTION (default).
 **Indexes:** ix_ppm_time_off_org: ppm_time_off.organization_id.
 **Constraints:** UNIQUE(organization_id, id); end_date > start_date; hours_per_day >= 0 AND hours_per_day <= 24; revision > 0.
@@ -1358,7 +1358,7 @@ Generated from current SQLAlchemy metadata, not a live database dump. Migration 
 ## ppm_work_items
 
 **Purpose:** Backlog/ready/in-progress/done work and optional points.
-**Model:** [work_items](../../../services/api/ppm_api/ppm_tables.py). **Primary key:** id.
+**Model:** [work_items](../../../services/api/ppm_api/modules/delivery/tables.py). **Primary key:** id.
 **Foreign keys:** (organization_id) → (organizations.id); ON DELETE NO ACTION (default); (organization_id, owner_id) → (memberships.organization_id, memberships.user_id); ON DELETE NO ACTION (default); (organization_id, project_id) → (ppm_projects.organization_id, ppm_projects.id); ON DELETE NO ACTION (default); (organization_id, project_id, sprint_id) → (ppm_sprints.organization_id, ppm_sprints.project_id, ppm_sprints.id); ON DELETE NO ACTION (default).
 **Indexes:** ix_ppm_work_items_org: ppm_work_items.organization_id.
 **Constraints:** UNIQUE(organization_id, id); UNIQUE(organization_id, project_id, id); due_date IS NULL OR start_date IS NULL OR due_date >= start_date; points IS NULL OR points >= 0; revision > 0; status IN ('backlog','ready','in_progress','done').

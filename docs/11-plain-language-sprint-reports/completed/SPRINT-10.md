@@ -48,10 +48,10 @@ The application relies on the operator's confirmation about the external project
 | Part | Implementation files |
 | --- | --- |
 | Evidence request, status, diagnostics and budgets | [AI screen](../../../apps/web/components/ai.tsx) |
-| Run admission, limits, cancellation and accounting | [AI service](../../../services/api/ppm_api/ai.py) |
-| Provider adapters and source retrieval | [Provider adapters](../../../services/api/ppm_api/ai_provider.py), [AI retrieval](../../../services/api/ppm_api/ai_retrieval.py) |
-| Saved AI state | [AI tables](../../../services/api/ppm_api/ai_tables.py), [AI migration](../../../services/api/migrations/versions/0012_ai_runtime.py) |
-| Evaluation and browser scenarios | [Evaluation](../../../services/api/ppm_api/ai_evaluation.py), [AI browser scenario](../../../tests/browser/ai.spec.ts), [Gemini browser scenario](../../../tests/browser/gemini.spec.ts) |
+| Run admission, limits, cancellation and accounting | [AI service](../../../services/api/ppm_api/modules/ai/router.py) |
+| Provider adapters and source retrieval | [Provider adapters](../../../services/api/ppm_api/modules/ai/provider.py), [AI retrieval](../../../services/api/ppm_api/modules/ai/retrieval.py) |
+| Saved AI state | [AI tables](../../../services/api/ppm_api/modules/ai/tables.py), [AI migration](../../../services/api/migrations/versions/0012_ai_runtime.py) |
+| Evaluation and browser scenarios | [Evaluation](../../../services/api/ppm_api/modules/ai/evaluation.py), [AI browser scenario](../../../tests/browser/ai.spec.ts), [Gemini browser scenario](../../../tests/browser/gemini.spec.ts) |
 
 ## Recorded checks and remaining work
 

@@ -7,9 +7,10 @@ from uuid import UUID, uuid4
 
 import pytest
 import sqlalchemy as sa
-from ppm_api.assessment import compute_scores, validate_definition
-from ppm_api.assessment_schemas import FrameworkInput
-from ppm_api.identity import context
+from ppm_api.modules.assessments.schemas import FrameworkInput
+from ppm_api.modules.assessments.scoring import compute_scores
+from ppm_api.modules.assessments.validation import validate_definition
+from ppm_api.modules.identity.service import context
 from sqlalchemy.exc import DBAPIError
 from test_delivery import create, setup
 from test_identity import identity as identity
@@ -228,6 +229,9 @@ async def test_two_departments_review_versions_evidence_and_retries(identity):
     assert complete["status"] == "completed" and Decimal(complete["overall_score"]) == 75
     history = (await c.get(f"/api/v1/assessment/assessments/{a['id']}/events")).json()
     assert any(e["event"] == "score_adjusted" and e["details"]["before"] for e in history)
+    assert [(e["created_at"], e["id"]) for e in history] == sorted(
+        (e["created_at"], e["id"]) for e in history
+    )
     c.cookies.clear()
     await login(c, emails, org=ids["a"])
     dep2 = await create(c, "departments", name="Operations")
@@ -299,6 +303,17 @@ async def test_two_departments_review_versions_evidence_and_retries(identity):
     fw = await ok(c, "PUT", f"/frameworks/{fw['id']}", changed, 2)
     new = await ok(c, "POST", f"/frameworks/{fw['id']}/publish", {}, fw["revision"])
     assert new["version"] == 2 and new["id"] != v["id"]
+    listed = await c.get("/api/v1/assessment/frameworks", params={"offset": 0, "limit": 1})
+    assert listed.status_code == 200, listed.text
+    assert [row["id"] for row in listed.json()] == [fw["id"]]
+    assert listed.json()[0]["published_version"] == 2
+    next_page = await c.get("/api/v1/assessment/frameworks", params={"offset": 1, "limit": 1})
+    assert next_page.status_code == 200 and next_page.json() == []
+    assert (await c.get("/api/v1/assessment/frameworks", params={"limit": 0})).status_code == 422
+    versions = await c.get(f"/api/v1/assessment/frameworks/{fw['id']}/versions")
+    assert versions.status_code == 200, versions.text
+    assert [row["id"] for row in versions.json()] == [new["id"], v["id"]]
+    assert versions.json()[1]["snapshot"] == v["snapshot"]
     old = (await c.get(f"/api/v1/assessment/assessments/{a['id']}")).json()
     assert (
         old["snapshot"]["name"] == "Governance fixture"
@@ -309,11 +324,28 @@ async def test_two_departments_review_versions_evidence_and_retries(identity):
     ).json()
     assert {r["department_id"] for r in cohort} == {a["department_id"], b["department_id"]}
     await ok(c, "POST", "/access", dict(user_id=str(ids["viewer"]), assessment_id=a["id"]))
+    grants = await c.get("/api/v1/assessment/access", params={"assessment_id": a["id"]})
+    assert grants.status_code == 200, grants.text
+    assert [row["user_id"] for row in grants.json()] == [str(ids["viewer"])]
+    assert all(row["active"] and row["assessment_id"] == a["id"] for row in grants.json())
+    other_grants = await c.get("/api/v1/assessment/access", params={"assessment_id": b["id"]})
+    assert other_grants.status_code == 200 and other_grants.json() == []
+    assert (await c.get("/api/v1/assessment/access")).status_code == 422
+    assert (
+        await c.get(
+            "/api/v1/assessment/access",
+            params={"assessment_id": a["id"], "framework_id": fw["id"]},
+        )
+    ).status_code == 422
     c.cookies.clear()
     await login(c, emails, "viewer")
     limited = (await c.get(f"/api/v1/assessment/assessments/{a['id']}")).json()
     assert limited["assessment"]["status"] == "completed" and limited["answers"] == []
     assert (await c.get(f"/api/v1/assessment/assessments/{a['id']}/evidence")).status_code == 403
+    assert (await c.get(f"/api/v1/assessment/assessments/{a['id']}/events")).status_code == 403
+    assert (
+        await c.get("/api/v1/assessment/access", params={"assessment_id": a["id"]})
+    ).status_code == 403
     assert (
         await write(
             c,
@@ -334,7 +366,9 @@ async def test_tenants_rls_immutable_and_invalid_input(identity):
         assert (
             await conn.scalar(
                 sa.select(sa.func.count()).select_from(
-                    __import__("ppm_api.assessment_tables", fromlist=["frameworks"]).frameworks
+                    __import__(
+                        "ppm_api.modules.assessments.tables", fromlist=["frameworks"]
+                    ).frameworks
                 )
             )
             == 0
@@ -401,6 +435,9 @@ async def test_tenants_rls_immutable_and_invalid_input(identity):
     await login(c, emails, "other")
     assert (await c.get(f"/api/v1/assessment/assessments/{a['id']}")).status_code == 404
     assert (await c.get(f"/api/v1/assessment/frameworks/{fw['id']}/versions")).status_code == 404
+    assert (
+        await c.get("/api/v1/assessment/access", params={"framework_id": fw["id"]})
+    ).status_code == 404
 
 
 @pytest.mark.integration

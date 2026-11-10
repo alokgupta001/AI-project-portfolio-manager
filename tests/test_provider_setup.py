@@ -4,7 +4,7 @@ import json
 
 import httpx
 import pytest
-from ppm_api import local_model_readiness as local
+from ppm_api.modules.ai import readiness as local
 
 from scripts.check_provider_setup import PROVIDERS, inspect
 

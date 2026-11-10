@@ -14,9 +14,9 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path[:0] = [str(ROOT), str(ROOT / "services/api")]
 
-from ppm_api.agent_validation import validate_section  # noqa: E402
-from ppm_api.model_contracts import ModelResult, SectionOutput  # noqa: E402
-from ppm_api.model_qualification import ClassMeasurement, QualificationReport  # noqa: E402
+from ppm_api.modules.agents.validation import validate_section  # noqa: E402
+from ppm_api.modules.ai.contracts import ModelResult, SectionOutput  # noqa: E402
+from ppm_api.modules.ai.qualification import ClassMeasurement, QualificationReport  # noqa: E402
 
 from scripts.benchmark_agent_runtime import (  # noqa: E402
     CORPUS,

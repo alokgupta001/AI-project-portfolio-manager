@@ -1,5 +1,9 @@
 # Identity tenant and permission contract
 
+Current implementation: [identity feature](../../services/api/ppm_api/modules/identity/README.md).
+The [step 22 grouping](../04-testing/BACKEND_STRUCTURE_STEP_22.md) changes
+file/import ownership while preserving the contract and permission/workflow rules below.
+
 The [financial selection pilot](selection-pilot.md) requires current Admin plus an
 existing explicit guided project grant on every endpoint. A different authorized
 Admin must approve fixture labels by default. A separate owner-approved local

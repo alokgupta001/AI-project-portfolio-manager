@@ -3,7 +3,7 @@
 import httpx
 import pytest
 from fastapi import FastAPI
-from ppm_api.identity import Auth, principal
+from ppm_api.modules.identity.service import Auth, principal
 
 
 @pytest.mark.parametrize("commit_fails", [False, True])

@@ -91,7 +91,7 @@ Source-derived AST inventory. Search symbols instead of relying on line numbers;
 
 [Source](../../scripts/check_model_qualification.py)
 
-- `main` — line 13
+- `main` — line 16
 
 ## scripts/check_previous_sprint_docs.py
 
@@ -195,7 +195,7 @@ Source-derived AST inventory. Search symbols instead of relying on line numbers;
 
 [Source](../../scripts/score_cloud_benchmark.py)
 
-- `score` — line 30
+- `score` — line 33
 
 ## scripts/seed_delivery_demo.py
 
@@ -351,8 +351,8 @@ Source-derived AST inventory. Search symbols instead of relying on line numbers;
 
 [Source](../../services/api/migrations/env.py)
 
-- `run_sync` — line 26
-- `run_async` — line 32
+- `run_sync` — line 12
+- `run_async` — line 18
 
 ## services/api/migrations/versions/0001_foundation.py
 
@@ -533,19 +533,53 @@ Source-derived AST inventory. Search symbols instead of relying on line numbers;
 - `upgrade` — line 45
 - `downgrade` — line 50
 
-## services/api/ppm_api/account_mail.py
+## services/api/ppm_api/config.py
 
-[Source](../../services/api/ppm_api/account_mail.py)
+[Source](../../services/api/ppm_api/config.py)
 
-- `local_delivery` — line 20
-- `account_message` — line 32
-- `smtp_delivery` — line 94
-- `enqueue` — line 107
-- `deliver_due` — line 132
+- `Settings` — line 22
+- `validate_mail` — line 82
+- `validate_key` — line 106
+- `validate_origin` — line 114
+- `validate_database` — line 129
+- `validate_redis` — line 141
+- `load_settings` — line 151
 
-## services/api/ppm_api/agent_batch.py
+## services/api/ppm_api/database.py
 
-[Source](../../services/api/ppm_api/agent_batch.py)
+[Source](../../services/api/ppm_api/database.py)
+
+- `Base` — line 11
+- `FoundationState` — line 15
+- `make_engine` — line 25
+
+## services/api/ppm_api/errors.py
+
+[Source](../../services/api/ppm_api/errors.py)
+
+- `DomainError` — line 6
+
+## services/api/ppm_api/main.py
+
+[Source](../../services/api/ppm_api/main.py)
+
+- `error_response` — line 57
+- `create_app` — line 69
+- `lifespan` — line 73
+- `request_context` — line 105
+- `http_error` — line 167
+- `validation_error` — line 203
+- `live` — line 217
+- `ready` — line 227
+- `database_probe` — line 230
+- `redis_probe` — line 240
+- `storage_probe` — line 244
+- `probe` — line 249
+- `foundation` — line 274
+
+## services/api/ppm_api/modules/agents/batch.py
+
+[Source](../../services/api/ppm_api/modules/agents/batch.py)
 
 - `batch_prompt` — line 12
 - `strings` — line 32
@@ -556,75 +590,105 @@ Source-derived AST inventory. Search symbols instead of relying on line numbers;
 - `normalize` — line 189
 - `validate_batch` — line 255
 
-## services/api/ppm_api/agent_context.py
+## services/api/ppm_api/modules/agents/context.py
 
-[Source](../../services/api/ppm_api/agent_context.py)
+[Source](../../services/api/ppm_api/modules/agents/context.py)
 
 - `section_schema` — line 10
 - `visit` — line 20
 - `pack` — line 41
 
-## services/api/ppm_api/agent_critique.py
+## services/api/ppm_api/modules/agents/critique.py
 
-[Source](../../services/api/ppm_api/agent_critique.py)
+[Source](../../services/api/ppm_api/modules/agents/critique.py)
 
 - `Decision` — line 20
 - `Critique` — line 27
 - `pack_review` — line 32
 - `validate_review` — line 78
 
-## services/api/ppm_api/agent_engine.py
+## services/api/ppm_api/modules/agents/engine.py
 
-[Source](../../services/api/ppm_api/agent_engine.py)
+[Source](../../services/api/ppm_api/modules/agents/engine.py)
 
-- `canonical` — line 61
-- `definitions` — line 65
-- `supported_spans` — line 78
-- `aggregate` — line 88
-- `deterministic` — line 134
-- `semantic_suggestions` — line 171
-- `evaluate` — line 235
+- `canonical` — line 62
+- `definitions` — line 66
+- `supported_spans` — line 79
+- `aggregate` — line 89
+- `deterministic` — line 135
+- `semantic_suggestions` — line 172
+- `evaluate` — line 236
 
-## services/api/ppm_api/agent_planner.py
+## services/api/ppm_api/modules/agents/guided_review.py
 
-[Source](../../services/api/ppm_api/agent_planner.py)
+[Source](../../services/api/ppm_api/modules/agents/guided_review.py)
 
-- `build_plan` — line 18
-- `batch_plan` — line 184
-- `base` — line 188
-- `group` — line 202
+- `prompt` — line 34
+- `granted_projects` — line 43
+- `Choice` — line 78
+- `distinct` — line 82
+- `Observation` — line 89
+- `SelectionInput` — line 94
+- `Card` — line 99
+- `Checklist` — line 106
+- `GuidedReview` — line 112
+- `plan` — line 125
+- `fact` — line 174
+- `pack` — line 209
+- `validate` — line 250
+- `view` — line 264
+- `check_request` — line 290
 
-## services/api/ppm_api/agent_prompts.py
+## services/api/ppm_api/modules/agents/planner.py
 
-[Source](../../services/api/ppm_api/agent_prompts.py)
+[Source](../../services/api/ppm_api/modules/agents/planner.py)
+
+- `build_plan` — line 19
+- `batch_plan` — line 185
+- `base` — line 189
+- `group` — line 203
+
+## services/api/ppm_api/modules/agents/prompts.py
+
+[Source](../../services/api/ppm_api/modules/agents/prompts.py)
 
 - `cloud_prompt` — line 35
 
-## services/api/ppm_api/agent_provider.py
+## services/api/ppm_api/modules/agents/provider.py
 
-[Source](../../services/api/ppm_api/agent_provider.py)
+[Source](../../services/api/ppm_api/modules/agents/provider.py)
 
 - `AgentProvider` — line 11
 - `__init__` — line 12
 - `embed` — line 16
 - `complete` — line 19
 
-## services/api/ppm_api/agent_recovery.py
+## services/api/ppm_api/modules/agents/recovery.py
 
-[Source](../../services/api/ppm_api/agent_recovery.py)
+[Source](../../services/api/ppm_api/modules/agents/recovery.py)
 
 - `recovery` — line 6
 
-## services/api/ppm_api/agent_registry.py
+## services/api/ppm_api/modules/agents/registry.py
 
-[Source](../../services/api/ppm_api/agent_registry.py)
+[Source](../../services/api/ppm_api/modules/agents/registry.py)
 
 - `Capability` — line 9
 - `definitions` — line 106
 
-## services/api/ppm_api/agent_runtime.py
+## services/api/ppm_api/modules/agents/router.py
 
-[Source](../../services/api/ppm_api/agent_runtime.py)
+[Source](../../services/api/ppm_api/modules/agents/router.py)
+
+- `definitions` — line 21
+- `create` — line 27
+- `listing` — line 33
+- `detail` — line 39
+- `review` — line 45
+
+## services/api/ppm_api/modules/agents/runtime.py
+
+[Source](../../services/api/ppm_api/modules/agents/runtime.py)
 
 - `initialize` — line 47
 - `task_update` — line 97
@@ -638,9 +702,9 @@ Source-derived AST inventory. Search symbols instead of relying on line numbers;
 - `reviewed_findings` — line 734
 - `assemble` — line 765
 
-## services/api/ppm_api/agent_schemas.py
+## services/api/ppm_api/modules/agents/schemas.py
 
-[Source](../../services/api/ppm_api/agent_schemas.py)
+[Source](../../services/api/ppm_api/modules/agents/schemas.py)
 
 - `AnalysisInput` — line 43
 - `Span` — line 49
@@ -659,9 +723,29 @@ Source-derived AST inventory. Search symbols instead of relying on line numbers;
 - `AnalysisSummary` — line 167
 - `AnalysisView` — line 172
 
-## services/api/ppm_api/agent_validation.py
+## services/api/ppm_api/modules/agents/service.py
 
-[Source](../../services/api/ppm_api/agent_validation.py)
+[Source](../../services/api/ppm_api/modules/agents/service.py)
+
+- `internal_request` — line 41
+- `private_access` — line 46
+- `capture` — line 55
+- `add` — line 68
+- `get_analysis` — line 315
+- `current_sources` — line 329
+- `can_review` — line 361
+- `definitions` — line 375
+- `create` — line 393
+- `listing` — line 399
+- `detail` — line 429
+- `item` — line 463
+- `review` — line 596
+- `execute` — line 663
+- `publish` — line 707
+
+## services/api/ppm_api/modules/agents/validation.py
+
+[Source](../../services/api/ppm_api/modules/agents/validation.py)
 
 - `numbers` — line 20
 - `validate_section` — line 25
@@ -669,70 +753,77 @@ Source-derived AST inventory. Search symbols instead of relying on line numbers;
 - `item` — line 48
 - `reconcile` — line 205
 
-## services/api/ppm_api/agents.py
+## services/api/ppm_api/modules/ai/adapters.py
 
-[Source](../../services/api/ppm_api/agents.py)
+[Source](../../services/api/ppm_api/modules/ai/adapters.py)
 
-- `internal_request` — line 38
-- `private_access` — line 43
-- `capture` — line 52
-- `add` — line 65
-- `get_analysis` — line 312
-- `current_sources` — line 326
-- `can_review` — line 358
-- `definitions` — line 373
-- `create` — line 392
-- `listing` — line 399
-- `detail` — line 430
-- `item` — line 464
-- `review` — line 598
-- `execute` — line 663
-- `publish` — line 707
+- `strict_schema` — line 35
+- `visit` — line 39
+- `NativeAdapter` — line 64
+- `__init__` — line 65
+- `permit` — line 77
+- `origin` — line 125
+- `execute` — line 149
+- `gemini_chat` — line 222
+- `puter_chat` — line 249
+- `puter_result` — line 304
+- `read` — line 337
+- `cloud_chat` — line 427
+- `check_openrouter_price` — line 478
+- `chat_result` — line 503
+- `ollama_result` — line 577
+- `gemini_result` — line 604
 
-## services/api/ppm_api/ai.py
+## services/api/ppm_api/modules/ai/contracts.py
 
-[Source](../../services/api/ppm_api/ai.py)
+[Source](../../services/api/ppm_api/modules/ai/contracts.py)
 
-- `oid` — line 64
-- `admin` — line 69
-- `call_cap` — line 75
-- `provider_status` — line 89
-- `status` — line 110
-- `budget` — line 115
-- `access` — line 141
-- `view` — line 165
-- `tokens` — line 195
-- `listing` — line 241
-- `detail` — line 256
-- `evaluation` — line 262
-- `operations` — line 271
-- `configure` — line 294
-- `create` — line 317
-- `cancel` — line 561
-- `progress` — line 592
-- `stages` — line 601
-- `diagnostics` — line 618
-- `worker_context` — line 657
-- `settle` — line 682
-- `Branch` — line 732
-- `Runtime` — line 738
-- `__init__` — line 739
-- `state` — line 753
-- `call` — line 769
-- `keyword_branch` — line 921
-- `hybrid_branch` — line 930
-- `index` — line 970
-- `ai_worker` — line 1002
+- `HybridSelection` — line 66
+- `distinct_selection` — line 76
+- `uses_v2` — line 114
+- `CompactSpan` — line 119
+- `nonempty` — line 125
+- `SectionFinding` — line 132
+- `SectionMatch` — line 144
+- `NarrativeItem` — line 150
+- `SectionGap` — line 160
+- `SectionOutput` — line 165
+- `consistent` — line 176
+- `CapabilityDetail` — line 196
+- `honest_coverage` — line 218
+- `ModelUsage` — line 228
+- `ModelResult` — line 235
+- `ModelFailure` — line 272
+- `__init__` — line 273
+- `ExecutionPermit` — line 285
+- `ModelRequest` — line 297
+- `ModelAdapter` — line 312
+- `execute` — line 313
 
-## services/api/ppm_api/ai_evaluation.py
+## services/api/ppm_api/modules/ai/deadlines.py
 
-[Source](../../services/api/ppm_api/ai_evaluation.py)
+[Source](../../services/api/ppm_api/modules/ai/deadlines.py)
+
+- `ordinary_guided` — line 7
+- `completion_timeout` — line 16
+
+## services/api/ppm_api/modules/ai/evaluation.py
+
+[Source](../../services/api/ppm_api/modules/ai/evaluation.py)
 
 - `run_evaluation` — line 12
 
-## services/api/ppm_api/ai_provider.py
+## services/api/ppm_api/modules/ai/model_router.py
 
-[Source](../../services/api/ppm_api/ai_provider.py)
+[Source](../../services/api/ppm_api/modules/ai/model_router.py)
+
+- `RouteRequirements` — line 17
+- `eligibility` — line 27
+- `candidates` — line 125
+
+## services/api/ppm_api/modules/ai/provider.py
+
+[Source](../../services/api/ppm_api/modules/ai/provider.py)
 
 - `ProviderError` — line 35
 - `__init__` — line 36
@@ -763,24 +854,77 @@ Source-derived AST inventory. Search symbols instead of relying on line numbers;
 - `complete` — line 321
 - `embed` — line 370
 
-## services/api/ppm_api/ai_retrieval.py
+## services/api/ppm_api/modules/ai/qualification.py
 
-[Source](../../services/api/ppm_api/ai_retrieval.py)
+[Source](../../services/api/ppm_api/modules/ai/qualification.py)
 
-- `digest` — line 20
-- `SourceTool` — line 24
-- `authorize_tool` — line 29
-- `snapshot` — line 36
-- `keyword` — line 45
-- `validate_snapshot` — line 50
-- `index_chunks` — line 65
-- `cosine` — line 96
-- `merge` — line 101
-- `evaluate` — line 113
+- `ClassMeasurement` — line 11
+- `denominators` — line 29
+- `qualifies` — line 44
+- `QualificationReport` — line 64
+- `distinct_classes` — line 82
+- `qualified_classes` — line 88
+- `CloudQualificationReport` — line 102
+- `distinct` — line 123
+- `qualified_classes` — line 129
 
-## services/api/ppm_api/ai_schemas.py
+## services/api/ppm_api/modules/ai/readiness.py
 
-[Source](../../services/api/ppm_api/ai_schemas.py)
+[Source](../../services/api/ppm_api/modules/ai/readiness.py)
+
+- `windows_memory` — line 14
+- `MemoryStatus` — line 19
+- `readiness` — line 40
+- `read` — line 83
+
+## services/api/ppm_api/modules/ai/registry.py
+
+[Source](../../services/api/ppm_api/modules/ai/registry.py)
+
+- `canonical` — line 16
+- `digest` — line 21
+- `ModelProfile` — line 26
+- `bounded_local` — line 62
+- `ModelPolicy` — line 74
+- `distinct` — line 79
+- `policy_hash` — line 109
+- `trusted_json` — line 114
+- `load_policy` — line 131
+
+## services/api/ppm_api/modules/ai/retrieval.py
+
+[Source](../../services/api/ppm_api/modules/ai/retrieval.py)
+
+- `digest` — line 21
+- `SourceTool` — line 25
+- `authorize_tool` — line 30
+- `snapshot` — line 37
+- `keyword` — line 46
+- `validate_snapshot` — line 51
+- `index_chunks` — line 66
+- `cosine` — line 97
+- `merge` — line 102
+- `evaluate` — line 114
+
+## services/api/ppm_api/modules/ai/router.py
+
+[Source](../../services/api/ppm_api/modules/ai/router.py)
+
+- `status` — line 25
+- `listing` — line 31
+- `detail` — line 39
+- `evaluation` — line 45
+- `operations` — line 51
+- `configure` — line 57
+- `create` — line 63
+- `cancel` — line 69
+- `progress` — line 75
+- `stages` — line 81
+- `diagnostics` — line 87
+
+## services/api/ppm_api/modules/ai/schemas.py
+
+[Source](../../services/api/ppm_api/modules/ai/schemas.py)
 
 - `AIRunInput` — line 19
 - `AIExcerpt` — line 28
@@ -794,62 +938,126 @@ Source-derived AST inventory. Search symbols instead of relying on line numbers;
 - `AIDiagnostics` — line 117
 - `AIEvaluation` — line 128
 
-## services/api/ppm_api/assessment.py
+## services/api/ppm_api/modules/ai/service.py
 
-[Source](../../services/api/ppm_api/assessment.py)
+[Source](../../services/api/ppm_api/modules/ai/service.py)
 
-- `BoundedRoute` — line 46
-- `get_route_handler` — line 47
-- `bounded` — line 50
-- `oid` — line 71
-- `get` — line 75
-- `grant` — line 90
-- `can_edit` — line 105
-- `eligible` — line 111
-- `respondent` — line 116
-- `reviewer` — line 122
-- `evidence_access` — line 128
-- `command_access` — line 135
-- `mutation` — line 155
-- `wrapped` — line 158
-- `revision` — line 214
-- `bump` — line 222
-- `event` — line 230
-- `questions` — line 245
-- `validate_definition` — line 249
-- `_normalize_rubric` — line 266
-- `valid_answer` — line 276
-- `compute_scores` — line 286
-- `answer_map` — line 347
-- `scoring` — line 364
-- `fw_view` — line 374
-- `a_view` — line 389
-- `list_frameworks` — line 419
-- `create_framework` — line 435
-- `edit_framework` — line 458
-- `publish_framework` — line 480
-- `versions` — line 521
-- `seed_examples` — line 537
-- `set_access` — line 580
-- `assign` — line 614
-- `list_assessments` — line 665
-- `detail` — line 688
-- `save_answers` — line 703
-- `finalize_check` — line 761
-- `submit` — line 770
-- `review` — line 809
-- `history` — line 868
-- `evidence_list` — line 884
-- `upload` — line 903
-- `download` — line 966
-- `delete_evidence` — line 990
-- `preview_evidence` — line 1011
-- `release_evidence` — line 1031
-- `access_list` — line 1065
+- `oid` — line 59
+- `admin` — line 64
+- `call_cap` — line 70
+- `provider_status` — line 84
+- `status` — line 104
+- `budget` — line 109
+- `access` — line 135
+- `view` — line 159
+- `tokens` — line 189
+- `listing` — line 234
+- `detail` — line 246
+- `evaluation` — line 251
+- `operations` — line 259
+- `configure` — line 281
+- `create` — line 303
+- `cancel` — line 546
+- `progress` — line 576
+- `stages` — line 584
+- `diagnostics` — line 600
+- `worker_context` — line 639
+- `settle` — line 664
+- `Branch` — line 714
+- `Runtime` — line 720
+- `__init__` — line 721
+- `state` — line 735
+- `call` — line 751
+- `keyword_branch` — line 903
+- `hybrid_branch` — line 912
+- `index` — line 952
+- `ai_worker` — line 984
 
-## services/api/ppm_api/assessment_schemas.py
+## services/api/ppm_api/modules/ai/timing.py
 
-[Source](../../services/api/ppm_api/assessment_schemas.py)
+[Source](../../services/api/ppm_api/modules/ai/timing.py)
+
+- `TransportTiming` — line 24
+- `__init__` — line 25
+- `trace` — line 30
+
+## services/api/ppm_api/modules/assessments/access.py
+
+[Source](../../services/api/ppm_api/modules/assessments/access.py)
+
+- `oid` — line 16
+- `get` — line 20
+- `grant` — line 35
+- `can_edit` — line 50
+- `eligible` — line 56
+- `respondent` — line 61
+- `reviewer` — line 67
+- `evidence_access` — line 73
+- `command_access` — line 80
+
+## services/api/ppm_api/modules/assessments/evidence.py
+
+[Source](../../services/api/ppm_api/modules/assessments/evidence.py)
+
+- `list_evidence` — line 25
+- `upload_evidence` — line 40
+- `download_evidence` — line 104
+- `delete_evidence` — line 128
+- `preview_evidence` — line 148
+- `release_evidence` — line 164
+
+## services/api/ppm_api/modules/assessments/frameworks.py
+
+[Source](../../services/api/ppm_api/modules/assessments/frameworks.py)
+
+- `fw_view` — line 26
+- `list_frameworks` — line 41
+- `create_framework` — line 53
+- `edit_framework` — line 74
+- `publish_framework` — line 94
+- `list_framework_versions` — line 132
+- `seed_examples` — line 146
+
+## services/api/ppm_api/modules/assessments/mutations.py
+
+[Source](../../services/api/ppm_api/modules/assessments/mutations.py)
+
+- `mutation` — line 22
+- `wrapped` — line 25
+- `revision` — line 81
+
+## services/api/ppm_api/modules/assessments/router.py
+
+[Source](../../services/api/ppm_api/modules/assessments/router.py)
+
+- `BoundedRoute` — line 34
+- `get_route_handler` — line 35
+- `bounded` — line 38
+- `list_frameworks` — line 57
+- `create_framework` — line 65
+- `edit_framework` — line 71
+- `publish_framework` — line 81
+- `versions` — line 90
+- `seed_examples` — line 96
+- `set_access` — line 102
+- `assign` — line 108
+- `list_assessments` — line 113
+- `detail` — line 126
+- `save_answers` — line 132
+- `submit` — line 142
+- `review` — line 150
+- `history` — line 157
+- `evidence_list` — line 162
+- `upload` — line 170
+- `download` — line 177
+- `delete_evidence` — line 185
+- `preview_evidence` — line 194
+- `release_evidence` — line 206
+- `access_list` — line 215
+
+## services/api/ppm_api/modules/assessments/schemas.py
+
+[Source](../../services/api/ppm_api/modules/assessments/schemas.py)
 
 - `Strict` — line 16
 - `Level` — line 20
@@ -876,37 +1084,61 @@ Source-derived AST inventory. Search symbols instead of relying on line numbers;
 - `AccessInput` — line 180
 - `one_scope` — line 187
 
-## services/api/ppm_api/assessment_tables.py
+## services/api/ppm_api/modules/assessments/scoring.py
 
-[Source](../../services/api/ppm_api/assessment_tables.py)
+[Source](../../services/api/ppm_api/modules/assessments/scoring.py)
+
+- `_normalize_rubric` — line 11
+- `compute_scores` — line 21
+
+## services/api/ppm_api/modules/assessments/service.py
+
+[Source](../../services/api/ppm_api/modules/assessments/service.py)
+
+- `bump` — line 31
+- `event` — line 39
+- `answer_map` — line 54
+- `scoring` — line 71
+- `a_view` — line 81
+- `finalize_check` — line 110
+- `assign_assessment` — line 117
+- `list_assessments` — line 167
+- `get_assessment` — line 185
+- `save_answers` — line 198
+- `submit_assessment` — line 256
+- `review_assessment` — line 295
+- `set_access_grant` — line 355
+- `list_assessment_events` — line 387
+- `list_access_grants` — line 402
+
+## services/api/ppm_api/modules/assessments/tables.py
+
+[Source](../../services/api/ppm_api/modules/assessments/tables.py)
 
 - `ref` — line 25
 - `member` — line 31
 - `tab` — line 37
 - `revision` — line 51
 
-## services/api/ppm_api/capacity.py
+## services/api/ppm_api/modules/assessments/validation.py
 
-[Source](../../services/api/ppm_api/capacity.py)
+[Source](../../services/api/ppm_api/modules/assessments/validation.py)
 
-- `access` — line 36
-- `authorize` — line 53
-- `validate` — line 81
-- `rows` — line 115
-- `ratio` — line 133
-- `in_period` — line 141
-- `calculate` — line 145
-- `bounded` — line 197
-- `sources_for` — line 202
-- `summary` — line 225
-- `snapshot` — line 290
-- `resource_summary` — line 309
-- `saved_snapshot` — line 316
-- `team_summary` — line 322
+- `questions` — line 11
+- `validate_definition` — line 15
+- `valid_answer` — line 32
 
-## services/api/ppm_api/capacity_schemas.py
+## services/api/ppm_api/modules/capacity/router.py
 
-[Source](../../services/api/ppm_api/capacity_schemas.py)
+[Source](../../services/api/ppm_api/modules/capacity/router.py)
+
+- `resource_summary` — line 16
+- `saved_snapshot` — line 25
+- `team_summary` — line 30
+
+## services/api/ppm_api/modules/capacity/schemas.py
+
+[Source](../../services/api/ppm_api/modules/capacity/schemas.py)
 
 - `CapacityCommon` — line 14
 - `ResourceInput` — line 21
@@ -933,22 +1165,55 @@ Source-derived AST inventory. Search symbols instead of relying on line numbers;
 - `TeamCapacityView` — line 181
 - `SnapshotView` — line 196
 
-## services/api/ppm_api/command.py
+## services/api/ppm_api/modules/capacity/service.py
 
-[Source](../../services/api/ppm_api/command.py)
+[Source](../../services/api/ppm_api/modules/capacity/service.py)
 
-- `workdays` — line 26
-- `combined` — line 40
-- `clamped` — line 48
-- `snapshot` — line 53
-- `load` — line 64
-- `freshness` — line 119
-- `fact` — line 128
-- `metric` — line 133
+- `access` — line 33
+- `authorize` — line 50
+- `validate` — line 78
+- `rows` — line 112
+- `ratio` — line 130
+- `in_period` — line 138
+- `calculate` — line 142
+- `bounded` — line 194
+- `sources_for` — line 199
+- `summary` — line 222
+- `snapshot` — line 287
+- `resource_summary` — line 305
+- `saved_snapshot` — line 311
+- `team_summary` — line 316
 
-## services/api/ppm_api/command_schemas.py
+## services/api/ppm_api/modules/capacity/tables.py
 
-[Source](../../services/api/ppm_api/command_schemas.py)
+[Source](../../services/api/ppm_api/modules/capacity/tables.py)
+
+- `resource` — line 32
+- `period` — line 36
+
+## services/api/ppm_api/modules/command/record_schemas.py
+
+[Source](../../services/api/ppm_api/modules/command/record_schemas.py)
+
+- `RiskInput` — line 13
+- `readiness` — line 24
+- `BenefitInput` — line 32
+- `period` — line 41
+- `MetricPlanInput` — line 47
+- `MetricPolicyInput` — line 54
+- `thresholds` — line 61
+- `SavedViewInput` — line 67
+- `period` — line 76
+
+## services/api/ppm_api/modules/command/router.py
+
+[Source](../../services/api/ppm_api/modules/command/router.py)
+
+- `snapshot` — line 17
+
+## services/api/ppm_api/modules/command/schemas.py
+
+[Source](../../services/api/ppm_api/modules/command/schemas.py)
 
 - `Fact` — line 14
 - `Metric` — line 22
@@ -958,75 +1223,149 @@ Source-derived AST inventory. Search symbols instead of relying on line numbers;
 - `TeamMetric` — line 67
 - `CommandSnapshot` — line 72
 
-## services/api/ppm_api/config.py
+## services/api/ppm_api/modules/command/service.py
 
-[Source](../../services/api/ppm_api/config.py)
+[Source](../../services/api/ppm_api/modules/command/service.py)
 
-- `Settings` — line 22
-- `validate_mail` — line 82
-- `validate_key` — line 106
-- `validate_origin` — line 114
-- `validate_database` — line 129
-- `validate_redis` — line 141
-- `load_settings` — line 151
+- `workdays` — line 25
+- `combined` — line 39
+- `clamped` — line 47
+- `snapshot` — line 51
+- `load` — line 62
+- `freshness` — line 117
+- `fact` — line 126
+- `metric` — line 131
 
-## services/api/ppm_api/connectors.py
+## services/api/ppm_api/modules/delivery/metrics.py
 
-[Source](../../services/api/ppm_api/connectors.py)
+[Source](../../services/api/ppm_api/modules/delivery/metrics.py)
 
-- `AuthorityInput` — line 23
-- `AuthorityView` — line 33
-- `ConflictView` — line 44
-- `Resolution` — line 57
-- `authority` — line 65
-- `approve` — line 78
-- `connector_principal` — line 125
-- `recheck` — line 157
-- `logical_key` — line 169
-- `record_conflict` — line 185
-- `review` — line 233
-- `resolve` — line 260
-- `schedule_connectors` — line 332
+- `budget_usage` — line 7
+- `alignment_score` — line 11
 
-## services/api/ppm_api/database.py
+## services/api/ppm_api/modules/delivery/router.py
 
-[Source](../../services/api/ppm_api/database.py)
+[Source](../../services/api/ppm_api/modules/delivery/router.py)
 
-- `Base` — line 11
-- `FoundationState` — line 15
-- `make_engine` — line 25
+- `people` — line 26
+- `history` — line 36
+- `portfolio_summary` — line 41
+- `summary` — line 46
+- `listing` — line 51
+- `detail` — line 84
+- `create` — line 89
+- `update` — line 102
 
-## services/api/ppm_api/delivery.py
+## services/api/ppm_api/modules/delivery/schemas.py
 
-[Source](../../services/api/ppm_api/delivery.py)
+[Source](../../services/api/ppm_api/modules/delivery/schemas.py)
 
-- `encode` — line 49
-- `fail` — line 53
-- `view` — line 57
-- `get` — line 83
-- `grant` — line 103
-- `can_edit` — line 120
-- `lock` — line 128
-- `authorize` — line 168
-- `refs` — line 221
-- `cycle_check` — line 295
-- `endpoint` — line 309
-- `audit_change` — line 341
-- `snapshot` — line 376
-- `archive_guard` — line 402
-- `people` — line 421
-- `history` — line 448
-- `portfolio_summary` — line 462
-- `summary` — line 501
-- `listing` — line 577
-- `detail` — line 641
-- `write` — line 645
-- `create` — line 937
-- `update` — line 985
+- `SettingsInput` — line 42
+- `valid_timezone` — line 49
+- `DepartmentInput` — line 57
+- `GoalInput` — line 61
+- `PortfolioInput` — line 65
+- `TeamInput` — line 69
+- `ProgramInput` — line 74
+- `ProjectInput` — line 79
+- `dates` — line 101
+- `GrantInput` — line 116
+- `target` — line 124
+- `TeamMemberInput` — line 132
+- `dates` — line 140
+- `SprintInput` — line 146
+- `dates` — line 154
+- `WorkInput` — line 160
+- `dates` — line 173
+- `MilestoneInput` — line 179
+- `BlockerInput` — line 186
+- `DependencyInput` — line 193
+- `endpoints` — line 202
+- `BudgetInput` — line 213
+- `ExpenditureInput` — line 220
+- `StatusInput` — line 228
+- `BaselineInput` — line 233
+- `AlignmentInput` — line 237
+- `target` — line 246
+- `RecordView` — line 292
+- `PageView` — line 301
+- `BaselineView` — line 309
+- `MoneyTotal` — line 317
+- `SummaryView` — line 325
+- `AlignmentSet` — line 339
+- `PersonView` — line 344
+- `HistoryView` — line 349
+- `PortfolioSummary` — line 357
 
-## services/api/ppm_api/document_parser.py
+## services/api/ppm_api/modules/delivery/service.py
 
-[Source](../../services/api/ppm_api/document_parser.py)
+[Source](../../services/api/ppm_api/modules/delivery/service.py)
+
+- `encode` — line 43
+- `fail` — line 47
+- `view` — line 51
+- `get` — line 77
+- `grant` — line 97
+- `can_edit` — line 114
+- `lock` — line 122
+- `authorize` — line 162
+- `refs` — line 215
+- `cycle_check` — line 289
+- `endpoint` — line 303
+- `audit_change` — line 335
+- `snapshot` — line 370
+- `archive_guard` — line 396
+- `people` — line 414
+- `history` — line 435
+- `portfolio_summary` — line 448
+- `summary` — line 486
+- `listing` — line 561
+- `detail` — line 624
+- `write` — line 628
+- `create` — line 919
+- `update` — line 962
+
+## services/api/ppm_api/modules/documents/access.py
+
+[Source](../../services/api/ppm_api/modules/documents/access.py)
+
+- `document` — line 14
+- `version` — line 33
+- `writable` — line 44
+
+## services/api/ppm_api/modules/documents/files.py
+
+[Source](../../services/api/ppm_api/modules/documents/files.py)
+
+- `upload` — line 26
+- `ticket` — line 130
+- `download` — line 153
+- `reprocess` — line 188
+
+## services/api/ppm_api/modules/documents/lifecycle.py
+
+[Source](../../services/api/ppm_api/modules/documents/lifecycle.py)
+
+- `orphan_keys` — line 24
+- `candidates` — line 40
+- `orphan_preview` — line 67
+- `orphan_purge` — line 71
+- `cancel` — line 82
+- `governance` — line 103
+- `delete` — line 134
+- `purge` — line 149
+- `link` — line 170
+
+## services/api/ppm_api/modules/documents/mutations.py
+
+[Source](../../services/api/ppm_api/modules/documents/mutations.py)
+
+- `revision` — line 13
+- `request_identity` — line 21
+
+## services/api/ppm_api/modules/documents/parser.py
+
+[Source](../../services/api/ppm_api/modules/documents/parser.py)
 
 - `IntakeError` — line 24
 - `validate` — line 28
@@ -1036,18 +1375,53 @@ Source-derived AST inventory. Search symbols instead of relying on line numbers;
 - `extract` — line 167
 - `isolated_extract` — line 314
 
-## services/api/ppm_api/document_retrieval.py
+## services/api/ppm_api/modules/documents/queries.py
 
-[Source](../../services/api/ppm_api/document_retrieval.py)
+[Source](../../services/api/ppm_api/modules/documents/queries.py)
+
+- `library` — line 18
+- `search` — line 42
+- `detail` — line 77
+- `preview` — line 81
+- `citation` — line 99
+- `job_status` — line 112
+- `evidence_references` — line 140
+
+## services/api/ppm_api/modules/documents/retrieval.py
+
+[Source](../../services/api/ppm_api/modules/documents/retrieval.py)
 
 - `EmbeddingRequest` — line 11
 - `EmbeddingBackend` — line 20
 - `index` — line 21
 - `CandidateFinding` — line 26
 
-## services/api/ppm_api/document_schemas.py
+## services/api/ppm_api/modules/documents/router.py
 
-[Source](../../services/api/ppm_api/document_schemas.py)
+[Source](../../services/api/ppm_api/modules/documents/router.py)
+
+- `orphan_preview` — line 32
+- `orphan_purge` — line 37
+- `library` — line 42
+- `search` — line 56
+- `detail` — line 67
+- `upload` — line 72
+- `preview` — line 77
+- `citation` — line 87
+- `ticket` — line 92
+- `download` — line 97
+- `job_status` — line 104
+- `reprocess` — line 109
+- `cancel` — line 114
+- `governance` — line 119
+- `delete` — line 124
+- `purge` — line 129
+- `link` — line 134
+- `evidence_references` — line 139
+
+## services/api/ppm_api/modules/documents/schemas.py
+
+[Source](../../services/api/ppm_api/modules/documents/schemas.py)
 
 - `Strict` — line 12
 - `Upload` — line 16
@@ -1070,120 +1444,65 @@ Source-derived AST inventory. Search symbols instead of relying on line numbers;
 - `OrphanPage` — line 146
 - `OrphanPurge` — line 152
 
-## services/api/ppm_api/document_tables.py
+## services/api/ppm_api/modules/documents/service.py
 
-[Source](../../services/api/ppm_api/document_tables.py)
+[Source](../../services/api/ppm_api/modules/documents/service.py)
+
+- `view` — line 17
+- `enqueue` — line 44
+- `replay` — line 100
+
+## services/api/ppm_api/modules/documents/tables.py
+
+[Source](../../services/api/ppm_api/modules/documents/tables.py)
 
 - `tab` — line 9
 
-## services/api/ppm_api/documents.py
+## services/api/ppm_api/modules/documents/worker.py
 
-[Source](../../services/api/ppm_api/documents.py)
+[Source](../../services/api/ppm_api/modules/documents/worker.py)
 
-- `orphan_keys` — line 56
-- `candidates` — line 72
-- `orphan_preview` — line 100
-- `orphan_purge` — line 105
-- `document` — line 116
-- `version` — line 135
-- `writable` — line 146
-- `revision` — line 155
-- `view` — line 163
-- `library` — line 191
-- `search` — line 221
-- `detail` — line 263
-- `enqueue` — line 267
-- `request_identity` — line 323
-- `replay` — line 332
-- `upload` — line 356
-- `preview` — line 461
-- `citation` — line 485
-- `ticket` — line 499
-- `download` — line 523
-- `job_status` — line 561
-- `reprocess` — line 590
-- `cancel` — line 618
-- `governance` — line 640
-- `delete` — line 672
-- `purge` — line 688
-- `link` — line 710
-- `evidence_references` — line 742
-- `document_worker` — line 775
-- `principal` — line 779
+- `document_worker` — line 27
+- `principal` — line 31
 
-## services/api/ppm_api/errors.py
+## services/api/ppm_api/modules/identity/mail.py
 
-[Source](../../services/api/ppm_api/errors.py)
+[Source](../../services/api/ppm_api/modules/identity/mail.py)
 
-- `DomainError` — line 6
+- `local_delivery` — line 19
+- `account_message` — line 31
+- `smtp_delivery` — line 93
+- `enqueue` — line 106
+- `deliver_due` — line 131
 
-## services/api/ppm_api/guided_review.py
+## services/api/ppm_api/modules/identity/router.py
 
-[Source](../../services/api/ppm_api/guided_review.py)
+[Source](../../services/api/ppm_api/modules/identity/router.py)
 
-- `prompt` — line 34
-- `granted_projects` — line 43
-- `Choice` — line 78
-- `distinct` — line 82
-- `Observation` — line 89
-- `SelectionInput` — line 94
-- `Card` — line 99
-- `Checklist` — line 106
-- `GuidedReview` — line 112
-- `plan` — line 125
-- `fact` — line 174
-- `pack` — line 209
-- `validate` — line 250
-- `view` — line 264
-- `check_request` — line 290
+- `csrf` — line 33
+- `login` — line 38
+- `refresh` — line 43
+- `me` — line 48
+- `profile` — line 53
+- `switch` — line 58
+- `logout` — line 65
+- `list_sessions` — line 70
+- `revoke` — line 75
+- `reset_request` — line 80
+- `complete` — line 85
+- `member_list` — line 90
+- `invite` — line 95
+- `change_member` — line 100
+- `audit_list` — line 113
+- `register` — line 118
+- `organization_profile` — line 123
+- `edit_organization` — line 128
+- `invitation_list` — line 138
+- `invitation_action` — line 143
 
-## services/api/ppm_api/identity.py
+## services/api/ppm_api/modules/identity/schemas.py
 
-[Source](../../services/api/ppm_api/identity.py)
-
-- `now` — line 57
-- `digest` — line 61
-- `delivery_instructions` — line 65
-- `deny` — line 82
-- `password_hash` — line 88
-- `password_matches` — line 94
-- `context` — line 101
-- `limited` — line 115
-- `cookie` — line 132
-- `access_cookie` — line 151
-- `record` — line 170
-- `issue_challenge` — line 193
-- `Principal` — line 243
-- `authenticated` — line 252
-- `principal` — line 325
-- `account_principal` — line 333
-- `admin` — line 343
-- `account` — line 364
-- `csrf` — line 389
-- `login` — line 396
-- `refresh` — line 441
-- `me` — line 521
-- `profile` — line 526
-- `switch` — line 533
-- `logout` — line 564
-- `list_sessions` — line 575
-- `revoke` — line 602
-- `reset_request` — line 618
-- `complete` — line 637
-- `member_list` — line 812
-- `invite` — line 830
-- `change_member` — line 856
-- `audit_list` — line 920
-- `register` — line 934
-- `organization_profile` — line 966
-- `edit_organization` — line 1032
-- `invitation_reference` — line 1061
-- `invitation_list` — line 1067
-- `invitation_action` — line 1108
-
-## services/api/ppm_api/identity_schemas.py
-
-[Source](../../services/api/ppm_api/identity_schemas.py)
+[Source](../../services/api/ppm_api/modules/identity/schemas.py)
 
 - `Input` — line 10
 - `Credentials` — line 14
@@ -1208,9 +1527,76 @@ Source-derived AST inventory. Search symbols instead of relying on line numbers;
 - `AuditView` — line 121
 - `AuditsView` — line 130
 
-## services/api/ppm_api/ingestion.py
+## services/api/ppm_api/modules/identity/service.py
 
-[Source](../../services/api/ppm_api/ingestion.py)
+[Source](../../services/api/ppm_api/modules/identity/service.py)
+
+- `now` — line 49
+- `digest` — line 53
+- `delivery_instructions` — line 57
+- `deny` — line 74
+- `password_hash` — line 80
+- `password_matches` — line 86
+- `context` — line 93
+- `limited` — line 107
+- `cookie` — line 124
+- `access_cookie` — line 143
+- `record` — line 162
+- `issue_challenge` — line 185
+- `Principal` — line 235
+- `authenticated` — line 244
+- `principal` — line 317
+- `account_principal` — line 325
+- `admin` — line 335
+- `account` — line 356
+- `csrf` — line 380
+- `login` — line 386
+- `refresh` — line 430
+- `me` — line 509
+- `profile` — line 513
+- `switch` — line 519
+- `logout` — line 549
+- `list_sessions` — line 559
+- `revoke` — line 585
+- `reset_request` — line 600
+- `complete` — line 618
+- `member_list` — line 792
+- `invite` — line 809
+- `change_member` — line 834
+- `audit_list` — line 893
+- `register` — line 906
+- `organization_profile` — line 937
+- `edit_organization` — line 1002
+- `invitation_reference` — line 1028
+- `invitation_list` — line 1033
+- `invitation_action` — line 1073
+
+## services/api/ppm_api/modules/integrations/connector_router.py
+
+[Source](../../services/api/ppm_api/modules/integrations/connector_router.py)
+
+- `authority` — line 20
+- `approve` — line 25
+- `review` — line 31
+- `resolve` — line 36
+
+## services/api/ppm_api/modules/integrations/connectors.py
+
+[Source](../../services/api/ppm_api/modules/integrations/connectors.py)
+
+- `authority` — line 24
+- `approve` — line 36
+- `connector_principal` — line 83
+- `recheck` — line 115
+- `logical_key` — line 127
+- `record_conflict` — line 143
+- `review` — line 190
+- `resolve` — line 216
+- `schedule_connectors` — line 288
+
+## services/api/ppm_api/modules/integrations/ingestion.py
+
+[Source](../../services/api/ppm_api/modules/integrations/ingestion.py)
 
 - `ConnectorConfig` — line 24
 - `mapping_allowlist` — line 55
@@ -1228,126 +1614,106 @@ Source-derived AST inventory. Search symbols instead of relying on line numbers;
 - `fetch_page` — line 206
 - `remote_page` — line 289
 
-## services/api/ppm_api/job_limits.py
+## services/api/ppm_api/modules/integrations/jobs.py
 
-[Source](../../services/api/ppm_api/job_limits.py)
+[Source](../../services/api/ppm_api/modules/integrations/jobs.py)
+
+- `source_evidence` — line 42
+- `get_integration` — line 57
+- `get_job` — line 69
+- `admin_write` — line 87
+- `secret_scope` — line 93
+- `stage` — line 102
+- `list_integrations` — line 126
+- `create_integration` — line 135
+- `enable_integration` — line 177
+- `preview` — line 206
+- `enqueue` — line 235
+- `sync` — line 351
+- `webhook` — line 358
+- `activity` — line 377
+- `job_detail` — line 394
+- `stage_history` — line 398
+- `cancel` — line 413
+- `event_batch` — line 424
+- `stream` — line 447
+- `generate` — line 456
+- `worker_principal` — line 496
+- `worker_transaction` — line 534
+- `apply_source` — line 588
+- `run_job` — line 752
+- `github_hook` — line 961
+
+## services/api/ppm_api/modules/integrations/limits.py
+
+[Source](../../services/api/ppm_api/modules/integrations/limits.py)
 
 - `IntegrationBodyLimit` — line 9
 - `__init__` — line 10
 - `__call__` — line 13
 - `bounded_receive` — line 48
 
-## services/api/ppm_api/job_tables.py
+## services/api/ppm_api/modules/integrations/router.py
 
-[Source](../../services/api/ppm_api/job_tables.py)
+[Source](../../services/api/ppm_api/modules/integrations/router.py)
 
-- `tenant_table` — line 11
+- `source_evidence` — line 27
+- `list_integrations` — line 32
+- `create_integration` — line 37
+- `enable_integration` — line 42
+- `preview` — line 47
+- `sync` — line 52
+- `webhook` — line 57
+- `activity` — line 63
+- `job_detail` — line 68
+- `stage_history` — line 73
+- `cancel` — line 78
+- `stream` — line 83
+- `github_hook` — line 88
 
-## services/api/ppm_api/jobs.py
+## services/api/ppm_api/modules/integrations/schemas.py
 
-[Source](../../services/api/ppm_api/jobs.py)
+[Source](../../services/api/ppm_api/modules/integrations/schemas.py)
 
-- `IntegrationView` — line 40
-- `StageView` — line 49
-- `JobView` — line 56
-- `Preview` — line 72
-- `EnabledInput` — line 78
-- `SourceView` — line 82
-- `source_evidence` — line 93
-- `get_integration` — line 108
-- `get_job` — line 120
-- `admin_write` — line 138
-- `secret_scope` — line 144
-- `stage` — line 153
-- `list_integrations` — line 178
-- `create_integration` — line 188
-- `enable_integration` — line 231
-- `preview` — line 261
-- `enqueue` — line 290
-- `sync` — line 407
-- `webhook` — line 415
-- `activity` — line 435
-- `job_detail` — line 453
-- `stage_history` — line 458
-- `cancel` — line 474
-- `event_batch` — line 485
-- `stream` — line 509
-- `generate` — line 518
-- `worker_principal` — line 558
-- `worker_transaction` — line 596
-- `apply_source` — line 650
-- `run_job` — line 814
-- `github_hook` — line 1024
+- `IntegrationView` — line 14
+- `StageView` — line 23
+- `JobView` — line 30
+- `Preview` — line 46
+- `EnabledInput` — line 52
+- `SourceView` — line 56
+- `AuthorityInput` — line 66
+- `AuthorityView` — line 76
+- `ConflictView` — line 87
+- `Resolution` — line 100
 
-## services/api/ppm_api/local_model_readiness.py
+## services/api/ppm_api/modules/ml/pipeline.py
 
-[Source](../../services/api/ppm_api/local_model_readiness.py)
-
-- `windows_memory` — line 14
-- `MemoryStatus` — line 19
-- `readiness` — line 40
-- `read` — line 83
-
-## services/api/ppm_api/main.py
-
-[Source](../../services/api/ppm_api/main.py)
-
-- `error_response` — line 60
-- `create_app` — line 72
-- `lifespan` — line 76
-- `request_context` — line 108
-- `http_error` — line 170
-- `validation_error` — line 206
-- `live` — line 220
-- `ready` — line 230
-- `database_probe` — line 233
-- `redis_probe` — line 243
-- `storage_probe` — line 247
-- `probe` — line 252
-- `foundation` — line 277
-
-## services/api/ppm_api/metric_math.py
-
-[Source](../../services/api/ppm_api/metric_math.py)
-
-- `budget_usage` — line 7
-- `alignment_score` — line 11
-
-## services/api/ppm_api/ml.py
-
-[Source](../../services/api/ppm_api/ml.py)
-
-- `admin` — line 32
-- `get` — line 38
-- `active_dataset` — line 47
-- `access_run` — line 55
-- `request_id` — line 61
-- `fixture` — line 68
-- `template` — line 133
-- `history_list` — line 140
-- `import_history` — line 153
-- `withdraw` — line 217
-- `dataset_list` — line 231
-- `create_dataset` — line 244
-- `dataset_detail` — line 288
-- `run_list` — line 293
-- `train` — line 311
-- `run_detail` — line 388
-- `artifacts` — line 393
-- `ml_worker` — line 398
-
-## services/api/ppm_api/ml_pipeline.py
-
-[Source](../../services/api/ppm_api/ml_pipeline.py)
+[Source](../../services/api/ppm_api/modules/ml/pipeline.py)
 
 - `label` — line 17
 - `build_dataset` — line 41
 - `evaluate` — line 167
 - `metrics` — line 266
 
-## services/api/ppm_api/ml_schemas.py
+## services/api/ppm_api/modules/ml/router.py
 
-[Source](../../services/api/ppm_api/ml_schemas.py)
+[Source](../../services/api/ppm_api/modules/ml/router.py)
+
+- `template` — line 23
+- `history_list` — line 28
+- `import_history` — line 33
+- `withdraw` — line 38
+- `dataset_list` — line 43
+- `create_dataset` — line 48
+- `dataset_detail` — line 53
+- `run_list` — line 58
+- `train` — line 63
+- `run_detail` — line 68
+- `artifacts` — line 73
+
+## services/api/ppm_api/modules/ml/schemas.py
+
+[Source](../../services/api/ppm_api/modules/ml/schemas.py)
 
 - `Strict` — line 27
 - `Features` — line 31
@@ -1364,197 +1730,132 @@ Source-derived AST inventory. Search symbols instead of relying on line numbers;
 - `RunInput` — line 168
 - `RunView` — line 172
 
-## services/api/ppm_api/ml_tables.py
+## services/api/ppm_api/modules/ml/service.py
 
-[Source](../../services/api/ppm_api/ml_tables.py)
+[Source](../../services/api/ppm_api/modules/ml/service.py)
 
-- `project_table` — line 51
+- `admin` — line 27
+- `get` — line 33
+- `active_dataset` — line 42
+- `access_run` — line 50
+- `request_id` — line 56
+- `fixture` — line 63
+- `template` — line 127
+- `history_list` — line 133
+- `import_history` — line 145
+- `withdraw` — line 208
+- `dataset_list` — line 221
+- `create_dataset` — line 233
+- `dataset_detail` — line 276
+- `run_list` — line 280
+- `train` — line 297
+- `run_detail` — line 373
+- `artifacts` — line 377
+- `ml_worker` — line 382
 
-## services/api/ppm_api/model_adapters.py
+## services/api/ppm_api/modules/ml/tables.py
 
-[Source](../../services/api/ppm_api/model_adapters.py)
+[Source](../../services/api/ppm_api/modules/ml/tables.py)
 
-- `strict_schema` — line 29
-- `visit` — line 33
-- `NativeAdapter` — line 58
-- `__init__` — line 59
-- `permit` — line 71
-- `origin` — line 119
-- `execute` — line 143
-- `gemini_chat` — line 216
-- `puter_chat` — line 243
-- `puter_result` — line 298
-- `read` — line 331
-- `cloud_chat` — line 421
-- `check_openrouter_price` — line 472
-- `chat_result` — line 497
-- `ollama_result` — line 571
-- `gemini_result` — line 598
+- `project_table` — line 9
 
-## services/api/ppm_api/model_contracts.py
+## services/api/ppm_api/modules/selection/audit.py
 
-[Source](../../services/api/ppm_api/model_contracts.py)
+[Source](../../services/api/ppm_api/modules/selection/audit.py)
 
-- `HybridSelection` — line 66
-- `distinct_selection` — line 76
-- `uses_v2` — line 114
-- `CompactSpan` — line 119
-- `nonempty` — line 125
-- `SectionFinding` — line 132
-- `SectionMatch` — line 144
-- `NarrativeItem` — line 150
-- `SectionGap` — line 160
-- `SectionOutput` — line 165
-- `consistent` — line 176
-- `CapabilityDetail` — line 196
-- `honest_coverage` — line 218
-- `ModelUsage` — line 228
-- `ModelResult` — line 235
-- `ModelFailure` — line 272
-- `__init__` — line 273
-- `ExecutionPermit` — line 285
-- `ModelRequest` — line 297
-- `ModelAdapter` — line 312
-- `execute` — line 313
+- `audit` — line 13
 
-## services/api/ppm_api/model_deadlines.py
+## services/api/ppm_api/modules/selection/protocol.py
 
-[Source](../../services/api/ppm_api/model_deadlines.py)
+[Source](../../services/api/ppm_api/modules/selection/protocol.py)
 
-- `ordinary_guided` — line 7
-- `completion_timeout` — line 16
+- `protocol` — line 34
+- `fixture_sources` — line 62
+- `summarize` — line 94
 
-## services/api/ppm_api/model_qualification.py
+## services/api/ppm_api/modules/selection/router.py
 
-[Source](../../services/api/ppm_api/model_qualification.py)
+[Source](../../services/api/ppm_api/modules/selection/router.py)
 
-- `ClassMeasurement` — line 11
-- `denominators` — line 29
-- `qualifies` — line 44
-- `QualificationReport` — line 64
-- `distinct_classes` — line 82
-- `qualified_classes` — line 88
-- `CloudQualificationReport` — line 102
-- `distinct` — line 123
-- `qualified_classes` — line 129
+- `listing` — line 15
+- `create` — line 21
+- `detail` — line 27
+- `approve` — line 33
+- `automated_review` — line 39
+- `measure` — line 45
 
-## services/api/ppm_api/model_registry.py
+## services/api/ppm_api/modules/selection/schemas.py
 
-[Source](../../services/api/ppm_api/model_registry.py)
+[Source](../../services/api/ppm_api/modules/selection/schemas.py)
 
-- `canonical` — line 16
-- `digest` — line 21
-- `ModelProfile` — line 26
-- `bounded_local` — line 62
-- `ModelPolicy` — line 74
-- `distinct` — line 79
-- `policy_hash` — line 109
-- `trusted_json` — line 114
-- `load_policy` — line 131
+- `PilotInput` — line 12
+- `LabelReview` — line 16
+- `AutomatedReview` — line 24
+- `PilotCase` — line 30
+- `PilotObservation` — line 44
+- `ProtocolCase` — line 51
+- `PilotProtocol` — line 58
+- `PilotView` — line 68
 
-## services/api/ppm_api/model_router.py
+## services/api/ppm_api/modules/selection/service.py
 
-[Source](../../services/api/ppm_api/model_router.py)
+[Source](../../services/api/ppm_api/modules/selection/service.py)
 
-- `RouteRequirements` — line 17
-- `eligibility` — line 27
-- `candidates` — line 125
+- `automated_allowed` — line 23
+- `scope` — line 32
+- `binding` — line 43
+- `get` — line 67
+- `reviewed` — line 79
+- `view` — line 112
+- `revision` — line 216
+- `listing` — line 222
+- `create` — line 236
+- `detail` — line 269
+- `approve` — line 274
+- `automated_review` — line 324
+- `snapshot` — line 387
+- `measure` — line 423
 
-## services/api/ppm_api/model_timing.py
+## services/api/ppm_api/modules/workspace/router.py
 
-[Source](../../services/api/ppm_api/model_timing.py)
+[Source](../../services/api/ppm_api/modules/workspace/router.py)
 
-- `TransportTiming` — line 24
-- `__init__` — line 25
-- `trace` — line 30
+- `search` — line 17
+- `my_work` — line 28
+- `setup` — line 35
+- `comparison` — line 40
+- `feed` — line 47
+- `preference` — line 52
+- `mark_read` — line 57
+- `stream` — line 62
 
-## services/api/ppm_api/pilot.py
+## services/api/ppm_api/modules/workspace/schemas.py
 
-[Source](../../services/api/ppm_api/pilot.py)
+[Source](../../services/api/ppm_api/modules/workspace/schemas.py)
 
-- `term` — line 29
-- `destination` — line 33
-- `SearchItem` — line 41
-- `SearchPage` — line 51
-- `records` — line 58
-- `search` — line 132
-- `my_work` — line 143
-- `setup` — line 150
-- `comparison` — line 197
-- `notify` — line 236
-- `eligible_notification` — line 256
-- `feed` — line 287
-- `PreferenceInput` — line 349
-- `preference` — line 355
-- `mark_read` — line 369
-- `freshness` — line 388
-- `stream` — line 418
-- `generate` — line 421
+- `SearchItem` — line 12
+- `SearchPage` — line 22
+- `PreferenceInput` — line 29
 
-## services/api/ppm_api/ppm_schemas.py
+## services/api/ppm_api/modules/workspace/service.py
 
-[Source](../../services/api/ppm_api/ppm_schemas.py)
+[Source](../../services/api/ppm_api/modules/workspace/service.py)
 
-- `Common` — line 70
-- `Owned` — line 77
-- `SettingsInput` — line 81
-- `valid_timezone` — line 88
-- `DepartmentInput` — line 96
-- `GoalInput` — line 100
-- `PortfolioInput` — line 104
-- `TeamInput` — line 108
-- `ProgramInput` — line 113
-- `ProjectInput` — line 118
-- `dates` — line 140
-- `GrantInput` — line 155
-- `target` — line 163
-- `TeamMemberInput` — line 171
-- `dates` — line 179
-- `ProjectChild` — line 185
-- `SprintInput` — line 189
-- `dates` — line 197
-- `WorkInput` — line 203
-- `dates` — line 216
-- `MilestoneInput` — line 222
-- `BlockerInput` — line 229
-- `DependencyInput` — line 236
-- `endpoints` — line 245
-- `BudgetInput` — line 256
-- `ExpenditureInput` — line 263
-- `StatusInput` — line 271
-- `BaselineInput` — line 276
-- `AlignmentInput` — line 280
-- `target` — line 289
-- `RiskInput` — line 295
-- `readiness` — line 306
-- `BenefitInput` — line 314
-- `period` — line 323
-- `MetricPlanInput` — line 329
-- `MetricPolicyInput` — line 336
-- `thresholds` — line 343
-- `SavedViewInput` — line 349
-- `period` — line 358
-- `RecordView` — line 404
-- `PageView` — line 413
-- `BaselineView` — line 421
-- `MoneyTotal` — line 429
-- `SummaryView` — line 437
-- `AlignmentSet` — line 451
-- `PersonView` — line 456
-- `HistoryView` — line 461
-- `PortfolioSummary` — line 469
-
-## services/api/ppm_api/ppm_tables.py
-
-[Source](../../services/api/ppm_api/ppm_tables.py)
-
-- `col` — line 13
-- `ref` — line 17
-- `table` — line 27
-- `owner` — line 50
-- `project` — line 59
-- `resource` — line 339
-- `period` — line 343
+- `term` — line 26
+- `destination` — line 30
+- `records` — line 38
+- `search` — line 111
+- `my_work` — line 117
+- `setup` — line 121
+- `comparison` — line 167
+- `notify` — line 206
+- `eligible_notification` — line 226
+- `feed` — line 256
+- `preference` — line 318
+- `mark_read` — line 331
+- `freshness` — line 350
+- `stream` — line 379
+- `generate` — line 382
 
 ## services/api/ppm_api/schemas.py
 
@@ -1568,46 +1869,24 @@ Source-derived AST inventory. Search symbols instead of relying on line numbers;
 - `ReadyResponse` — line 36
 - `FoundationResponse` — line 41
 
-## services/api/ppm_api/selection_audit.py
+## services/api/ppm_api/shared/record_schemas.py
 
-[Source](../../services/api/ppm_api/selection_audit.py)
+[Source](../../services/api/ppm_api/shared/record_schemas.py)
 
-- `audit` — line 13
+- `Common` — line 58
+- `Owned` — line 65
+- `ProjectChild` — line 69
 
-## services/api/ppm_api/selection_pilot.py
+## services/api/ppm_api/shared/table_base.py
 
-[Source](../../services/api/ppm_api/selection_pilot.py)
+[Source](../../services/api/ppm_api/shared/table_base.py)
 
-- `PilotInput` — line 23
-- `LabelReview` — line 27
-- `AutomatedReview` — line 35
-- `PilotCase` — line 41
-- `PilotObservation` — line 55
-- `ProtocolCase` — line 62
-- `PilotProtocol` — line 69
-- `PilotView` — line 79
-- `automated_allowed` — line 98
-- `scope` — line 107
-- `binding` — line 118
-- `get` — line 142
-- `reviewed` — line 154
-- `view` — line 187
-- `revision` — line 291
-- `listing` — line 298
-- `create` — line 313
-- `detail` — line 347
-- `approve` — line 353
-- `automated_review` — line 404
-- `snapshot` — line 465
-- `measure` — line 502
-
-## services/api/ppm_api/selection_protocol.py
-
-[Source](../../services/api/ppm_api/selection_protocol.py)
-
-- `protocol` — line 34
-- `fixture_sources` — line 62
-- `summarize` — line 94
+- `col` — line 13
+- `ref` — line 17
+- `table` — line 27
+- `owner` — line 50
+- `project` — line 59
+- `tenant_table` — line 67
 
 ## services/api/ppm_api/storage.py
 
@@ -1802,28 +2081,28 @@ Source-derived AST inventory. Search symbols instead of relying on line numbers;
 
 [Source](../../tests/test_agents.py)
 
-- `source` — line 37
-- `candidate` — line 50
-- `test_every_agent_support_missing_conflict_and_injection` — line 62
-- `test_deterministic_merge_order_partial_and_typed_limits` — line 87
-- `test_semantic_rubric_weights_gaps_levels_and_duplicate_matches` — line 119
-- `test_domain_transport_keeps_gemini_allowlist_and_output_bound` — line 163
-- `test_realistic_specialist_batch_truncation_keeps_existing_budget` — line 173
-- `Double` — line 206
-- `__init__` — line 209
-- `complete` — line 213
-- `start` — line 254
-- `work` — line 265
-- `fixture` — line 275
-- `test_hidden_risk_disabled_replay_independent_review_and_preservation` — line 287
-- `no_evidence_walk` — line 314
-- `test_semantic_review_scores_rejection_immutable_history_and_stale_answers` — line 416
-- `test_domain_provider_failures_are_honest_and_bounded` — line 542
-- `test_late_output_fenced_and_call_accounting_retained` — line 571
-- `test_all_nine_agents_group_threshold_and_live_revocation` — line 634
-- `test_terminal_job_cannot_hide_new_run_diagnostics` — line 729
-- `pause_after_snapshot` — line 743
-- `test_worker_metrics_register_without_web_application_startup` — line 768
+- `source` — line 38
+- `candidate` — line 51
+- `test_every_agent_support_missing_conflict_and_injection` — line 63
+- `test_deterministic_merge_order_partial_and_typed_limits` — line 88
+- `test_semantic_rubric_weights_gaps_levels_and_duplicate_matches` — line 120
+- `test_domain_transport_keeps_gemini_allowlist_and_output_bound` — line 164
+- `test_realistic_specialist_batch_truncation_keeps_existing_budget` — line 174
+- `Double` — line 207
+- `__init__` — line 210
+- `complete` — line 214
+- `start` — line 255
+- `work` — line 266
+- `fixture` — line 276
+- `test_hidden_risk_disabled_replay_independent_review_and_preservation` — line 290
+- `no_evidence_walk` — line 317
+- `test_semantic_review_scores_rejection_immutable_history_and_stale_answers` — line 419
+- `test_domain_provider_failures_are_honest_and_bounded` — line 545
+- `test_late_output_fenced_and_call_accounting_retained` — line 574
+- `test_all_nine_agents_group_threshold_and_live_revocation` — line 637
+- `test_terminal_job_cannot_hide_new_run_diagnostics` — line 732
+- `pause_after_snapshot` — line 746
+- `test_worker_metrics_register_without_web_application_startup` — line 771
 
 ## tests/test_ai.py
 
@@ -1888,31 +2167,31 @@ Source-derived AST inventory. Search symbols instead of relying on line numbers;
 
 [Source](../../tests/test_assessment.py)
 
-- `definition` — line 19
-- `test_weighting_unknown_and_coverage` — line 52
-- `test_invalid_rubrics_and_duplicate_ids` — line 68
-- `write` — line 84
-- `ok` — line 91
-- `fixture` — line 97
-- `save` — line 117
-- `test_two_departments_review_versions_evidence_and_retries` — line 140
-- `test_tenants_rls_immutable_and_invalid_input` — line 330
-- `test_examples_publish_and_text_completeness` — line 408
+- `definition` — line 20
+- `test_weighting_unknown_and_coverage` — line 53
+- `test_invalid_rubrics_and_duplicate_ids` — line 69
+- `write` — line 85
+- `ok` — line 92
+- `fixture` — line 98
+- `save` — line 118
+- `test_two_departments_review_versions_evidence_and_retries` — line 141
+- `test_tenants_rls_immutable_and_invalid_input` — line 362
+- `test_examples_publish_and_text_completeness` — line 445
 
 ## tests/test_capacity.py
 
 [Source](../../tests/test_capacity.py)
 
-- `calendar` — line 19
-- `fixture` — line 32
-- `summary` — line 48
-- `allocation` — line 56
-- `test_split_capacity_leave_holiday_zero_and_snapshot_history` — line 69
-- `test_dst_local_dates_and_part_time_boundary_validation` — line 114
-- `test_resource_manager_scope_viewer_hidden_projects_and_live_revoke` — line 146
-- `test_sensitive_effort_completeness_and_audit_revocation` — line 219
-- `test_allocation_concurrency_retry_and_database_isolation` — line 259
-- `test_team_privacy_skills_and_sustained_overload` — line 311
+- `calendar` — line 20
+- `fixture` — line 33
+- `summary` — line 49
+- `allocation` — line 57
+- `test_split_capacity_leave_holiday_zero_and_snapshot_history` — line 70
+- `test_dst_local_dates_and_part_time_boundary_validation` — line 115
+- `test_resource_manager_scope_viewer_hidden_projects_and_live_revoke` — line 147
+- `test_sensitive_effort_completeness_and_audit_revocation` — line 220
+- `test_allocation_concurrency_retry_and_database_isolation` — line 260
+- `test_team_privacy_skills_and_sustained_overload` — line 312
 
 ## tests/test_cloud_chat_providers.py
 
@@ -1981,19 +2260,19 @@ Source-derived AST inventory. Search symbols instead of relying on line numbers;
 
 [Source](../../tests/test_delivery.py)
 
-- `create` — line 17
-- `change` — line 29
-- `setup` — line 39
-- `test_hierarchy_delivery_money_and_baseline` — line 55
-- `test_scope_grants_and_live_revocation` — line 166
-- `test_idempotency_versions_dates_and_cross_tenant` — line 191
-- `test_dependencies_cycle_and_same_project_references` — line 241
-- `test_money_immutability_and_program_constraints` — line 291
-- `test_real_rls_missing_context_and_foreign_keys` — line 326
-- `test_pm_portfolio_creation_and_concurrent_revision` — line 344
-- `test_currency_groups_and_scoped_portfolio_totals` — line 356
-- `test_database_rejects_foreign_parent_and_ledger_mutation` — line 372
-- `test_seed_refuses_non_demo_database` — line 412
+- `create` — line 18
+- `change` — line 30
+- `setup` — line 40
+- `test_hierarchy_delivery_money_and_baseline` — line 56
+- `test_scope_grants_and_live_revocation` — line 167
+- `test_idempotency_versions_dates_and_cross_tenant` — line 192
+- `test_dependencies_cycle_and_same_project_references` — line 242
+- `test_money_immutability_and_program_constraints` — line 292
+- `test_real_rls_missing_context_and_foreign_keys` — line 327
+- `test_pm_portfolio_creation_and_concurrent_revision` — line 345
+- `test_currency_groups_and_scoped_portfolio_totals` — line 357
+- `test_database_rejects_foreign_parent_and_ledger_mutation` — line 373
+- `test_seed_refuses_non_demo_database` — line 413
 
 ## tests/test_document_parser.py
 
@@ -2023,13 +2302,13 @@ Source-derived AST inventory. Search symbols instead of relying on line numbers;
 - `test_library_versions_idempotency_retrieval_citations_and_download` — line 61
 - `test_scoped_roles_counts_revocation_worker_and_signed_capabilities` — line 128
 - `test_quarantine_failure_cancel_deletion_and_inflight_revocation` — line 206
-- `delayed` — line 248
-- `test_policy_retention_hold_purge_and_scope` — line 269
-- `test_category_matrix_and_labeled_retrieval_evaluation` — line 344
-- `test_real_clamd_and_processing_job` — line 369
-- `test_125_document_paging_bounds_and_concurrent_replay` — line 392
-- `test_transport_replay_integrity_expiry_orphans_and_holds` — line 429
-- `test_assessment_bridge_preserves_completed_scores_and_private_grants` — line 518
+- `delayed` — line 250
+- `test_policy_retention_hold_purge_and_scope` — line 271
+- `test_category_matrix_and_labeled_retrieval_evaluation` — line 346
+- `test_real_clamd_and_processing_job` — line 371
+- `test_125_document_paging_bounds_and_concurrent_replay` — line 394
+- `test_transport_replay_integrity_expiry_orphans_and_holds` — line 431
+- `test_assessment_bridge_preserves_completed_scores_and_private_grants` — line 520
 
 ## tests/test_gemini.py
 
@@ -2136,22 +2415,22 @@ Source-derived AST inventory. Search symbols instead of relying on line numbers;
 
 [Source](../../tests/test_jobs.py)
 
-- `test_overlapping_mapping_rejected_before_connection_is_persisted` — line 22
-- `test_public_signed_github_delivery_and_revoked_authority` — line 47
-- `signed` — line 79
-- `test_retry_backoff_partial_page_recovery_and_dead_letter` — line 127
-- `remote` — line 142
-- `test_revoked_worker_and_progress_retention` — line 191
-- `test_actual_celery_process_crash_and_lease_recovery` — line 246
-- `start` — line 270
-- `config` — line 350
-- `test_adapter_validation_and_network_allowlist` — line 354
-- `connection` — line 384
-- `submit` — line 396
-- `execute` — line 406
-- `test_import_atomic_replay_partial_recovery_revision_conflict_and_sse` — line 419
-- `test_signed_webhook_replay_cancellation_and_tenant_rls` — line 522
-- `test_github_jira_contract_fixtures_and_sprint_ingestion` — line 582
+- `test_overlapping_mapping_rejected_before_connection_is_persisted` — line 28
+- `test_public_signed_github_delivery_and_revoked_authority` — line 53
+- `signed` — line 85
+- `test_retry_backoff_partial_page_recovery_and_dead_letter` — line 133
+- `remote` — line 148
+- `test_revoked_worker_and_progress_retention` — line 197
+- `test_actual_celery_process_crash_and_lease_recovery` — line 252
+- `start` — line 276
+- `config` — line 356
+- `test_adapter_validation_and_network_allowlist` — line 360
+- `connection` — line 390
+- `submit` — line 402
+- `execute` — line 412
+- `test_import_atomic_replay_partial_recovery_revision_conflict_and_sse` — line 425
+- `test_signed_webhook_replay_cancellation_and_tenant_rls` — line 528
+- `test_github_jira_contract_fixtures_and_sprint_ingestion` — line 588
 
 ## tests/test_model_deadlines.py
 
@@ -2255,18 +2534,18 @@ Source-derived AST inventory. Search symbols instead of relying on line numbers;
 [Source](../../tests/test_selection_pilot.py)
 
 - `setup` — line 33
-- `post` — line 90
-- `review_body` — line 100
-- `approved` — line 110
-- `auto_approved` — line 127
-- `test_twelve_case_pilot_uses_normal_jobs_quota_and_never_promotes` — line 144
-- `execute` — line 155
-- `test_unavailable_or_stale_pilot_cannot_measure_or_count_fallback` — line 281
-- `execute` — line 287
-- `test_tenant_roles_grant_and_approval_binding_are_enforced` — line 364
-- `test_automated_review_is_local_one_pilot_bound_and_cannot_claim_human` — line 379
-- `test_revoked_automated_authorization_stops_queued_worker_without_call` — line 417
-- `forbidden` — line 426
+- `post` — line 92
+- `review_body` — line 102
+- `approved` — line 112
+- `auto_approved` — line 129
+- `test_twelve_case_pilot_uses_normal_jobs_quota_and_never_promotes` — line 146
+- `execute` — line 157
+- `test_unavailable_or_stale_pilot_cannot_measure_or_count_fallback` — line 283
+- `execute` — line 289
+- `test_tenant_roles_grant_and_approval_binding_are_enforced` — line 366
+- `test_automated_review_is_local_one_pilot_bound_and_cannot_claim_human` — line 381
+- `test_revoked_automated_authorization_stops_queued_worker_without_call` — line 419
+- `forbidden` — line 428
 
 ## tests/test_selection_protocol.py
 
@@ -2298,14 +2577,14 @@ Source-derived AST inventory. Search symbols instead of relying on line numbers;
 - `test_connector_schedule_survives_session_and_stops_after_revoke` — line 233
 - `remote` — line 270
 - `test_connector_schedule_failure_backs_off_and_continues` — line 306
-- `unreliable` — line 338
-- `test_csv_namespace_backfill_preserves_explicit_namespaces_and_source_targets` — line 369
-- `backfill` — line 396
-- `test_csv_omitted_namespace_is_unique_explicit_manual_and_replays_are_preserved` — line 441
-- `test_canonical_source_wins_over_legacy_null_key_without_rewriting_targets` — line 474
-- `test_ml_archived_project_blocks_lookup_even_when_cancelling` — line 523
-- `test_history_dataset_baseline_card_reproduction_withdrawal_and_access` — line 569
-- `test_unlabeled_real_history_insufficient_card_and_session_revocation` — line 653
+- `unreliable` — line 339
+- `test_csv_namespace_backfill_preserves_explicit_namespaces_and_source_targets` — line 370
+- `backfill` — line 397
+- `test_csv_omitted_namespace_is_unique_explicit_manual_and_replays_are_preserved` — line 442
+- `test_canonical_source_wins_over_legacy_null_key_without_rewriting_targets` — line 475
+- `test_ml_archived_project_blocks_lookup_even_when_cancelling` — line 524
+- `test_history_dataset_baseline_card_reproduction_withdrawal_and_access` — line 570
+- `test_unlabeled_real_history_insufficient_card_and_session_revocation` — line 654
 
 ## tests/test_transaction_boundary.py
 

@@ -8,10 +8,10 @@ from uuid import NAMESPACE_URL, uuid5
 
 import sqlalchemy as sa
 from ppm_api.config import load_settings
-from ppm_api.identity import issue_challenge
-from ppm_api.identity_tables import memberships, organizations, users
-from ppm_api.ppm_schemas import Input
-from ppm_api.ppm_tables import TABLES
+from ppm_api.modules.delivery.schemas import Input
+from ppm_api.modules.identity.service import issue_challenge
+from ppm_api.modules.identity.tables import memberships, organizations, users
+from ppm_api.shared.table_registry import TABLES
 from pydantic import TypeAdapter
 from sqlalchemy.engine import make_url
 from sqlalchemy.ext.asyncio import create_async_engine

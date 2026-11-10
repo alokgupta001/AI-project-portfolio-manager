@@ -147,7 +147,7 @@ docker compose logs --tail 100 redis
 
 If Redis stops, publishing or consuming Celery messages is interrupted, task result access fails, identity rate limiting becomes unavailable, and API readiness returns not ready. PostgreSQL still retains durable job records. When transport and workers recover, scheduled reconciliation can discover due jobs again; this should not be interpreted as an exactly-once delivery guarantee.
 
-Sources: [Compose configuration](../../compose.yaml), [Celery application](../../services/worker/ppm_worker/app.py), and [identity limiter](../../services/api/ppm_api/identity.py).
+Sources: [Compose configuration](../../compose.yaml), [Celery application](../../services/worker/ppm_worker/app.py), and [identity limiter](../../services/api/ppm_api/modules/identity/router.py).
 
 ## Migrate prepares the database schema
 
@@ -292,7 +292,7 @@ A responding worker normally returns `pong`. The inspector sends Celery control 
 
 If the worker stops, the web/API may remain usable, but ingestion and scheduled mail-delivery tasks stop executing. Compose gives this service no explicit health check.
 
-Sources: [Celery application](../../services/worker/ppm_worker/app.py), [ingestion execution](../../services/api/ppm_api/jobs.py), and [durable jobs contract](../contracts/jobs-integrations.md).
+Sources: [Celery application](../../services/worker/ppm_worker/app.py), [ingestion execution](../../services/api/ppm_api/modules/integrations/jobs.py), and [durable jobs contract](../contracts/jobs-integrations.md).
 
 ## Web serves the browser interface
 
@@ -391,7 +391,7 @@ The backend services share the object volume through a Compose configuration anc
 
 The screenshot has no separate mail server. Account messages are processed during worker execution of `pipeline.dispatch`. With `PPM_MAIL_MODE=local`, delivery writes private JSON artifacts under `/var/ppm/objects/__identity_mailbox__`. With configured SMTP mode, the worker connects to the external SMTP server. The default in Compose is local mode; the effective mode can be overridden by local configuration.
 
-Stopping the worker can therefore affect account invitation, activation, registration verification, or password-reset delivery even while the website remains accessible. See [account-mail implementation](../../services/api/ppm_api/account_mail.py) and [SMTP setup](GMAIL-SMTP-SETUP.md).
+Stopping the worker can therefore affect account invitation, activation, registration verification, or password-reset delivery even while the website remains accessible. See [account-mail implementation](../../services/api/ppm_api/modules/identity/mail.py) and [SMTP setup](GMAIL-SMTP-SETUP.md).
 
 ## Everyday commands
 

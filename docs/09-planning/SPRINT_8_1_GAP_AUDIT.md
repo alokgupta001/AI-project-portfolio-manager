@@ -358,9 +358,9 @@ Paths below are existing inspected files, relative to the repository root. New i
 
 ### I — Identity and account setup
 
-- [services/api/ppm_api/identity.py](../../services/api/ppm_api/identity.py)
-- [services/api/ppm_api/identity_tables.py](../../services/api/ppm_api/identity_tables.py)
-- [services/api/ppm_api/identity_schemas.py](../../services/api/ppm_api/identity_schemas.py)
+- [services/api/ppm_api/identity.py](../../services/api/ppm_api/modules/identity/router.py)
+- [services/api/ppm_api/identity_tables.py](../../services/api/ppm_api/modules/identity/tables.py)
+- [services/api/ppm_api/identity_schemas.py](../../services/api/ppm_api/modules/identity/schemas.py)
 - [apps/web/app/account/identity-client.tsx](../../apps/web/app/account/identity-client.tsx)
 - [scripts/bootstrap_identity.py](../../scripts/bootstrap_identity.py)
 - [scripts/local_mailbox.py](../../scripts/local_mailbox.py)
@@ -369,9 +369,9 @@ Paths below are existing inspected files, relative to the repository root. New i
 
 ### D — Delivery and project workspace
 
-- [services/api/ppm_api/delivery.py](../../services/api/ppm_api/delivery.py)
-- [services/api/ppm_api/ppm_tables.py](../../services/api/ppm_api/ppm_tables.py)
-- [services/api/ppm_api/ppm_schemas.py](../../services/api/ppm_api/ppm_schemas.py)
+- [services/api/ppm_api/delivery.py](../../services/api/ppm_api/modules/delivery/router.py)
+- [services/api/ppm_api/ppm_tables.py](../../services/api/ppm_api/modules/delivery/tables.py)
+- [services/api/ppm_api/ppm_schemas.py](../../services/api/ppm_api/modules/delivery/schemas.py)
 - [apps/web/components/delivery.tsx](../../apps/web/components/delivery.tsx)
 - [tests/test_delivery.py](../../tests/test_delivery.py)
 - [tests/browser/delivery.spec.ts](../../tests/browser/delivery.spec.ts)
@@ -379,9 +379,9 @@ Paths below are existing inspected files, relative to the repository root. New i
 
 ### C — Capacity
 
-- [services/api/ppm_api/capacity.py](../../services/api/ppm_api/capacity.py)
-- [services/api/ppm_api/ppm_tables.py](../../services/api/ppm_api/ppm_tables.py)
-- [services/api/ppm_api/capacity_schemas.py](../../services/api/ppm_api/capacity_schemas.py)
+- [services/api/ppm_api/capacity.py](../../services/api/ppm_api/modules/capacity/router.py)
+- [services/api/ppm_api/ppm_tables.py](../../services/api/ppm_api/modules/delivery/tables.py)
+- [services/api/ppm_api/capacity_schemas.py](../../services/api/ppm_api/modules/capacity/schemas.py)
 - [apps/web/components/capacity.tsx](../../apps/web/components/capacity.tsx)
 - [tests/test_capacity.py](../../tests/test_capacity.py)
 - [tests/browser/capacity.spec.ts](../../tests/browser/capacity.spec.ts)
@@ -389,8 +389,8 @@ Paths below are existing inspected files, relative to the repository root. New i
 
 ### A — Assessments
 
-- [services/api/ppm_api/assessment.py](../../services/api/ppm_api/assessment.py)
-- [services/api/ppm_api/assessment_tables.py](../../services/api/ppm_api/assessment_tables.py)
+- [services/api/ppm_api/assessment.py](../../services/api/ppm_api/modules/assessments/router.py)
+- [services/api/ppm_api/assessment_tables.py](../../services/api/ppm_api/modules/assessments/tables.py)
 - [apps/web/components/assessments.tsx](../../apps/web/components/assessments.tsx)
 - [tests/test_assessment.py](../../tests/test_assessment.py)
 - [tests/browser/assessment.spec.ts](../../tests/browser/assessment.spec.ts)
@@ -398,9 +398,9 @@ Paths below are existing inspected files, relative to the repository root. New i
 
 ### M — Metrics and dashboards
 
-- [services/api/ppm_api/command.py](../../services/api/ppm_api/command.py)
-- [services/api/ppm_api/metric_math.py](../../services/api/ppm_api/metric_math.py)
-- [services/api/ppm_api/command_tables.py](../../services/api/ppm_api/command_tables.py)
+- [services/api/ppm_api/command.py](../../services/api/ppm_api/modules/command/router.py)
+- [services/api/ppm_api/metric_math.py](../../services/api/ppm_api/modules/delivery/metrics.py)
+- [services/api/ppm_api/command_tables.py](../../services/api/ppm_api/modules/command/tables.py)
 - [apps/web/components/command-center.tsx](../../apps/web/components/command-center.tsx)
 - [tests/test_command.py](../../tests/test_command.py)
 - [tests/browser/command.spec.ts](../../tests/browser/command.spec.ts)
@@ -408,9 +408,9 @@ Paths below are existing inspected files, relative to the repository root. New i
 
 ### J — Jobs and imports
 
-- [services/api/ppm_api/jobs.py](../../services/api/ppm_api/jobs.py)
-- [services/api/ppm_api/ingestion.py](../../services/api/ppm_api/ingestion.py)
-- [services/api/ppm_api/job_tables.py](../../services/api/ppm_api/job_tables.py)
+- [services/api/ppm_api/jobs.py](../../services/api/ppm_api/modules/integrations/jobs.py)
+- [services/api/ppm_api/ingestion.py](../../services/api/ppm_api/modules/integrations/ingestion.py)
+- [services/api/ppm_api/job_tables.py](../../services/api/ppm_api/modules/integrations/tables.py)
 - [services/worker/ppm_worker/app.py](../../services/worker/ppm_worker/app.py)
 - [apps/web/components/integrations.tsx](../../apps/web/components/integrations.tsx)
 - [apps/web/components/live-jobs.ts](../../apps/web/components/live-jobs.ts)

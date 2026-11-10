@@ -62,7 +62,7 @@ for filename, names in expected.items():
     tree = ast.parse((ROOT / "services/api/ppm_api" / filename).read_text(encoding="utf-8-sig"))
     symbols = {node.name for node in ast.walk(tree) if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef))}
     errors += [f"Missing source symbol: {filename}:{name}" for name in names if name not in symbols]
-identity = (ROOT / "services/api/ppm_api/identity.py").read_text(encoding="utf-8")
+identity = (ROOT / "services/api/ppm_api/modules/identity/service.py").read_text(encoding="utf-8")
 if 'Depends(principal, scope="function")' not in identity:
     errors.append("Transaction-boundary explanation differs from Auth definition")
 frontend = (ROOT / "apps/web/components/delivery.tsx").read_text(encoding="utf-8")

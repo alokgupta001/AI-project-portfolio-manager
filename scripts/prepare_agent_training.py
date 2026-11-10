@@ -8,11 +8,11 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path[:0] = [str(ROOT), str(ROOT / "services/api")]
 
-from ppm_api.agent_prompts import cloud_prompt  # noqa: E402
-from ppm_api.agent_registry import BY_AGENT  # noqa: E402
-from ppm_api.agent_validation import validate_section  # noqa: E402
-from ppm_api.model_contracts import SectionOutput  # noqa: E402
-from ppm_api.model_registry import canonical, digest  # noqa: E402
+from ppm_api.modules.agents.prompts import cloud_prompt  # noqa: E402
+from ppm_api.modules.agents.registry import BY_AGENT  # noqa: E402
+from ppm_api.modules.agents.validation import validate_section  # noqa: E402
+from ppm_api.modules.ai.contracts import SectionOutput  # noqa: E402
+from ppm_api.modules.ai.registry import canonical, digest  # noqa: E402
 
 from scripts.benchmark_agent_runtime import fixture_context  # noqa: E402
 

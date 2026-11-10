@@ -12,13 +12,13 @@ from uuid import UUID, uuid4
 
 import httpx
 import sqlalchemy as sa
-from ppm_api import ai_provider as P
-from ppm_api import job_tables as J
-from ppm_api.ai import ai_worker
 from ppm_api.config import load_settings
-from ppm_api.identity import now, password_hash
-from ppm_api.identity_tables import memberships, organizations, users
 from ppm_api.main import create_app
+from ppm_api.modules.ai import provider as P
+from ppm_api.modules.ai.service import ai_worker
+from ppm_api.modules.identity.service import now, password_hash
+from ppm_api.modules.identity.tables import memberships, organizations, users
+from ppm_api.modules.integrations import tables as J
 from pydantic import SecretStr
 from sqlalchemy.engine import make_url
 from sqlalchemy.ext.asyncio import create_async_engine
@@ -99,7 +99,7 @@ async def run() -> None:
         )
         with (
             patch("urllib.request.OpenerDirector.open", no_network),
-            patch("ppm_api.agent_provider.AgentProvider", lambda _: Double()),
+            patch("ppm_api.modules.agents.provider.AgentProvider", lambda _: Double()),
         ):
             async with (
                 app.router.lifespan_context(app),
@@ -183,7 +183,7 @@ async def run() -> None:
                 )
                 result = (await c.get(f"/api/v1/agents/runs/{rid}")).json()
                 assert result["suggestions"][0]["suggested_score"] == "87.5000", result
-                from ppm_api.agent_task_tables import guided_grants
+                from ppm_api.modules.agents.task_tables import guided_grants
 
                 async with owner.begin() as conn:
                     for guided_actor in (reviewer, actor, pilot_reviewer):

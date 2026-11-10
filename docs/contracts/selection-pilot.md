@@ -1,5 +1,9 @@
 # Financial selection pilot contract v1
 
+Current implementation: [selection feature](../../services/api/ppm_api/modules/selection/README.md).
+The [step 28 grouping](../04-testing/BACKEND_STRUCTURE_STEP_28.md) changes
+file/import ownership while preserving the contract and permission/workflow rules below.
+
 Ordinary guided cloud reviews gained a separately approved maximum of 60 seconds
 on 30 October 2026. **This does not change fixture binding, its 22-second limit,
 the 20-second gate, or stopped-case behavior.** See [ordinary guided policy](agents.md).

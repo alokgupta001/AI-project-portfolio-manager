@@ -1,5 +1,9 @@
 # Sprint 8.1 pilot contracts
 
+Current implementation: [workspace feature](../../services/api/ppm_api/modules/workspace/README.md).
+The [step 27 grouping](../04-testing/BACKEND_STRUCTURE_STEP_27.md) changes
+file/import ownership while preserving the contract and permission/workflow rules below.
+
 Migration `0008_pilot_completion` adds nullable project/work metadata, registration fields, organization revision, a private delivery queue, and tenant/user notification receipts and preferences. Established rows receive no invented classification. Applied migrations 0001–0007 remain unchanged. Organization profile edits require Admin and If-Match. Registration consumes an email-scoped challenge under an advisory lock and creates one verified user, one organization and its first Admin atomically. Unverified requests create no organization.
 
 Account delivery is independent of providers. Local delivery preserves the operator-only preview. SMTP requires STARTTLS, stable Message-ID and bounded retries (five attempts with capped exponential backoff); expired, consumed or cancelled challenges stop delivery. Invitation retries revalidate the inviter's live Admin authority. Provider failures expose only DELIVERY_UNCONFIRMED; payloads are cleared on terminal states. Tokens are absent from HTTP invitation listings, audits and error messages. SMTP can accept a message before a transport timeout; replacement/cancellation and single-use challenges remain the authority, rather than a claim of exactly-once external mail.

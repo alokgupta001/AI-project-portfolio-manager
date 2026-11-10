@@ -8,8 +8,8 @@ from uuid import uuid4
 import sqlalchemy as sa
 from email_validator import validate_email
 from ppm_api.config import load_settings
-from ppm_api.identity import issue_challenge, now
-from ppm_api.identity_tables import memberships, organizations, users
+from ppm_api.modules.identity.service import issue_challenge, now
+from ppm_api.modules.identity.tables import memberships, organizations, users
 from sqlalchemy.ext.asyncio import create_async_engine
 
 

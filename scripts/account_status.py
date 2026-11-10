@@ -11,7 +11,7 @@ from uuid import UUID
 
 import sqlalchemy as sa
 from ppm_api.config import load_settings
-from ppm_api.identity_tables import memberships, sessions, users
+from ppm_api.modules.identity.tables import memberships, sessions, users
 from sqlalchemy.engine import make_url
 from sqlalchemy.ext.asyncio import create_async_engine
 

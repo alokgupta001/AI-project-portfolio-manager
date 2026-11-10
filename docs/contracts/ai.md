@@ -1,5 +1,9 @@
 # AI runtime — ai-evidence-v1
 
+Current implementation: [ai feature](../../services/api/ppm_api/modules/ai/README.md).
+The [step 25 grouping](../04-testing/BACKEND_STRUCTURE_STEP_25.md) changes
+file/import ownership while preserving the contract and permission/workflow rules below.
+
 Sprint 11 extends the runtime with the additive `agents` operation and [specialist contract](agents.md). It reuses calls/reservations/leases/cancellation; query/index replay hashes and all six PR #1 fixes remain. No model/ceiling/confirmation change.
 
 Sprint 10 adds a bounded evidence runtime, not Sprint 11 domain agents. `/ai` uses

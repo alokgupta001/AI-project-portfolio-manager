@@ -349,7 +349,7 @@ p('Upload limits: plain text .txt, nonempty, up to 512 KiB per file and 50 files
 
 page('12 Test the other question sets')
 p('These are the other built-in product examples. They are practice models, not certified industry assessments. Publish each once, assign it to Rohan with Meera as reviewer, enter the sample answers and complete the review without adjustments to check the scores below.')
-examples=json.loads((ROOT/'services/api/ppm_api/assessment_examples.json').read_text())
+examples=json.loads((ROOT/'services/api/ppm_api/modules/assessments/examples.json').read_text())
 answers={'Sprint ceremonies':'2 Consistent','Velocity stability':'Yes','Policy review cadence':'2 Annual','Estimation accuracy':'3 Calibrated','Milestone adherence':'2 70-90%'}
 for ex in examples[1:]:
     h(ex['name'].replace('&','and').replace('(','').replace(')',''))
@@ -439,7 +439,7 @@ p('Use the compose.demo.yaml commands and matching demo configuration described 
 p('docker compose -f compose.yaml -f compose.demo.yaml exec -T api python scripts/local_mailbox.py --email demo@example.com --kind activate')
 p('Keep private challenge links out of shared documentation. None of the example passwords in this guide are existing account credentials; the user sets a password during activation.')
 h('Project references for maintaining this guide')
-p('Screen names and sample fields follow the current website components: identity-client.tsx, delivery.tsx, delivery-fields.ts, capacity.tsx, assessments.tsx and command-center.tsx. The built-in questions come from services/api/ppm_api/assessment_examples.json. Account setup and review rules follow docs/IDENTITY-DEVELOPMENT.md and docs/contracts/assessment.md.')
+p('Screen names and sample fields follow the current website components: identity-client.tsx, delivery.tsx, delivery-fields.ts, capacity.tsx, assessments.tsx and command-center.tsx. The built-in questions come from services/api/ppm_api/modules/assessments/examples.json. Account setup and review rules follow docs/IDENTITY-DEVELOPMENT.md and docs/contracts/assessment.md.')
 
 OUT.parent.mkdir(parents=True,exist_ok=True)
 doc.core_properties.title='Enterprise PPM Website User Testing Guide'

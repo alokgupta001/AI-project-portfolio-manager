@@ -11173,7 +11173,7 @@
         "title": "WorkInput",
         "type": "object"
       },
-      "ppm_api__agent_schemas__ReviewInput": {
+      "ppm_api__modules__agents__schemas__ReviewInput": {
         "additionalProperties": false,
         "properties": {
           "approved_score": {
@@ -11215,7 +11215,7 @@
         "title": "ReviewInput",
         "type": "object"
       },
-      "ppm_api__assessment_schemas__ReviewInput": {
+      "ppm_api__modules__assessments__schemas__ReviewInput": {
         "additionalProperties": false,
         "properties": {
           "action": {
@@ -11545,7 +11545,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/ppm_api__agent_schemas__ReviewInput"
+                "$ref": "#/components/schemas/ppm_api__modules__agents__schemas__ReviewInput"
               }
             }
           },
@@ -13599,7 +13599,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/ppm_api__assessment_schemas__ReviewInput"
+                "$ref": "#/components/schemas/ppm_api__modules__assessments__schemas__ReviewInput"
               }
             }
           },

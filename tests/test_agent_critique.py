@@ -3,10 +3,10 @@
 from uuid import uuid4
 
 import pytest
-from ppm_api.agent_critique import Critique, pack_review, validate_review
-from ppm_api.agent_runtime import baseline, reviewed_findings
-from ppm_api.agent_validation import reconcile
-from ppm_api.model_contracts import ModelFailure
+from ppm_api.modules.agents.critique import Critique, pack_review, validate_review
+from ppm_api.modules.agents.runtime import baseline, reviewed_findings
+from ppm_api.modules.agents.validation import reconcile
+from ppm_api.modules.ai.contracts import ModelFailure
 
 
 def finding(key="risk", basis=None):

@@ -4,7 +4,7 @@
 
 This feature has a connected form, route, permission checks, database write and list refresh. Before trying it, activate an account using [the account setup guide](../../07-setup-and-deployment/IDENTITY-DEVELOPMENT.md). The organization needs timezone/currency settings and an accessible portfolio. An Admin can create a project; a Project Manager needs a manage grant on its portfolio.
 
-Keep [`delivery.tsx`](../../../apps/web/components/delivery.tsx), [`delivery.py`](../../../services/api/ppm_api/delivery.py), [`ppm_schemas.py`](../../../services/api/ppm_api/ppm_schemas.py) and [`identity.py`](../../../services/api/ppm_api/identity.py) open.
+Keep [`delivery.tsx`](../../../apps/web/components/delivery.tsx), [`delivery.py`](../../../services/api/ppm_api/modules/delivery/router.py), [`ppm_schemas.py`](../../../services/api/ppm_api/modules/delivery/schemas.py) and [`identity.py`](../../../services/api/ppm_api/modules/identity/router.py) open.
 
 ## Step 1: User action
 

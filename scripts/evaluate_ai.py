@@ -5,7 +5,7 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "services/api"))
-from ppm_api.ai_evaluation import run_evaluation  # noqa: E402
+from ppm_api.modules.ai.evaluation import run_evaluation  # noqa: E402
 
 result = run_evaluation()
 print(json.dumps(result, indent=2))

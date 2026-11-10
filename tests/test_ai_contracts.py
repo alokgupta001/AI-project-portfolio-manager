@@ -1,10 +1,10 @@
 """Pure offline provider/shape gates. No credentials or network access."""
 
 import pytest
-from ppm_api.ai_evaluation import run_evaluation
-from ppm_api.ai_provider import DisabledProvider, OpenAIProvider, ProviderError, vectors
-from ppm_api.ai_retrieval import SourceTool
-from ppm_api.ai_schemas import AIRunInput
+from ppm_api.modules.ai.evaluation import run_evaluation
+from ppm_api.modules.ai.provider import DisabledProvider, OpenAIProvider, ProviderError, vectors
+from ppm_api.modules.ai.retrieval import SourceTool
+from ppm_api.modules.ai.schemas import AIRunInput
 from pydantic import ValidationError
 
 

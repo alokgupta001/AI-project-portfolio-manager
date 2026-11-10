@@ -18,7 +18,7 @@ The steps below teach how future changes fit the project. This documentation rew
 | `services/api/ppm_api/ppm_schemas.py:ProjectInput`, `RecordView` | Defines public request and response data | FastAPI/adapter; depends on Pydantic â†’ route and validation tests |
 | `services/api/ppm_api/ppm_tables.py:TABLES` | Maps typed record kinds to database tables | Domain handlers; depends on shared metadata â†’ migration and dictionary |
 | `services/api/ppm_api/database.py:make_engine` | Creates reusable async database connections | App lifespan and worker â†’ `principal` transaction |
-| `services/api/ppm_api/assessment.py:compute_scores` | Calculates frozen-rubric scores | `scoring`, submission/review â†’ result schemas and assessment UI |
+| `services/api/ppm_api/modules/assessments/router.py:compute_scores` | Calculates frozen-rubric scores | `scoring`, submission/review â†’ result schemas and assessment UI |
 | `services/api/ppm_api/capacity.py:calculate` | Calculates daily hours from explicit sources | `summary`, planning snapshots â†’ capacity UI |
 | `services/api/ppm_api/command.py:snapshot` | Loads permitted facts and produces metrics | Snapshot route; depends on delivery/capacity/shared math â†’ `CommandCenter` |
 | `services/api/migrations/versions/*.py` | Applies frozen database changes | Alembic; depends on previous revision â†’ app-role and lifecycle tests |

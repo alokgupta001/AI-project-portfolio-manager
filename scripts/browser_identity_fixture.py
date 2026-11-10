@@ -7,8 +7,8 @@ import secrets
 from uuid import uuid4
 
 from ppm_api.config import load_settings
-from ppm_api.identity import now, password_hash
-from ppm_api.identity_tables import memberships, organizations, users
+from ppm_api.modules.identity.service import now, password_hash
+from ppm_api.modules.identity.tables import memberships, organizations, users
 from sqlalchemy.engine import make_url
 from sqlalchemy.ext.asyncio import create_async_engine
 

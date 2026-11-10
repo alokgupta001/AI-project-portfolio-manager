@@ -9,7 +9,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path[:0] = [str(ROOT), str(ROOT / "services/api")]
 
-from ppm_api.agent_registry import BY_AGENT  # noqa: E402
+from ppm_api.modules.agents.registry import BY_AGENT  # noqa: E402
 
 from scripts.benchmark_agent_runtime import PRIVATE, write_new  # noqa: E402
 

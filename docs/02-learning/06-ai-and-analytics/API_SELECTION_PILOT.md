@@ -29,31 +29,31 @@ flowchart LR
   F --> G[Saved counts and limitations]
 ```
 
-[`selection_protocol.protocol`](../../../services/api/ppm_api/selection_protocol.py)
+[`selection_protocol.protocol`](../../../services/api/ppm_api/modules/selection/protocol.py)
 constructs the versioned numeric fixtures and rule-derived expected IDs. These
 are synthetic rule-derived labels; review provenance is recorded separately. The six reserved cases
 must not be used for prompt tuning or presented as real-world evidence.
 
-[`selection_pilot.create`](../../../services/api/ppm_api/selection_pilot.py) checks
+[`selection_pilot.create`](../../../services/api/ppm_api/modules/selection/router.py) checks
 Admin/project/grant authority and stores the protocol binding in
 `ai_selection_pilots`. It makes no API call. `approve` checks a different actor,
 all twelve cases, current hashes and human attestation; an approval is immutable
 through the API. `measure` locks the pilot, enforces order/cooldown and reuses
-[`ai.create`](../../../services/api/ppm_api/ai.py) to create a durable job.
+[`ai.create`](../../../services/api/ppm_api/modules/ai/router.py) to create a durable job.
 
 For owner-approved pilot ce874a14 only, `automated_review` uses
-[`selection_audit.audit`](../../../services/api/ppm_api/selection_audit.py) to check
+[`selection_audit.audit`](../../../services/api/ppm_api/modules/selection/audit.py) to check
 the pinned original corpus with exact Fraction arithmetic, independently of the
 Decimal label generator. The default-empty one-ID local allowlist, current
 Admin/grant, unchanged binding and pre-inference checks all apply. This immutable
 record says `automated_rule_audit` and `human_reviewed=false`. It never simulates
 a personal attestation. Other pilots retain the distinct-person requirement.
 
-[`agent_runtime.complete_task`](../../../services/api/ppm_api/agent_runtime.py)
+[`agent_runtime.complete_task`](../../../services/api/ppm_api/modules/agents/runtime.py)
 uses existing SQL provider admission and settlement. Shared account limits and
 unknown outcomes cannot be reset by changing a pilot ID. The provider receives
 small numeric observations and aliases; source/project IDs remain local.
-[`guided_review.validate`](../../../services/api/ppm_api/guided_review.py) accepts
+[`guided_review.validate`](../../../services/api/ppm_api/modules/agents/guided_review.py) accepts
 only known IDs and resolves display text/actions from trusted context. Invalid
 output leaves a manual checklist, which is never counted as model success.
 

@@ -11,10 +11,10 @@ from uuid import UUID, uuid4
 
 import httpx
 from ppm_api.config import load_settings
-from ppm_api.documents import document_worker
-from ppm_api.identity import now, password_hash
-from ppm_api.identity_tables import memberships, organizations, users
 from ppm_api.main import create_app
+from ppm_api.modules.documents.worker import document_worker
+from ppm_api.modules.identity.service import now, password_hash
+from ppm_api.modules.identity.tables import memberships, organizations, users
 from pydantic import SecretStr
 from sqlalchemy.engine import make_url
 from sqlalchemy.ext.asyncio import create_async_engine

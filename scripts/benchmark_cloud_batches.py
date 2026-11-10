@@ -20,19 +20,19 @@ import httpx
 ROOT = Path(__file__).resolve().parents[1]
 sys.path[:0] = [str(ROOT), str(ROOT / "services/api")]
 
-from ppm_api.agent_batch import (  # noqa: E402
+from ppm_api.modules.agents.batch import (  # noqa: E402
     batch_prompt,
     compact_payload,
     compact_schema,
     obj,
     validate_batch,
 )
-from ppm_api.agent_prompts import ROLE_PROVIDERS  # noqa: E402
-from ppm_api.agent_registry import BY_AGENT  # noqa: E402
-from ppm_api.ai_provider import gemini_block_reason  # noqa: E402
-from ppm_api.model_adapters import NativeAdapter  # noqa: E402
-from ppm_api.model_contracts import ExecutionPermit, ModelFailure, ModelRequest  # noqa: E402
-from ppm_api.model_registry import ModelPolicy, canonical, digest  # noqa: E402
+from ppm_api.modules.agents.prompts import ROLE_PROVIDERS  # noqa: E402
+from ppm_api.modules.agents.registry import BY_AGENT  # noqa: E402
+from ppm_api.modules.ai.adapters import NativeAdapter  # noqa: E402
+from ppm_api.modules.ai.contracts import ExecutionPermit, ModelFailure, ModelRequest  # noqa: E402
+from ppm_api.modules.ai.provider import gemini_block_reason  # noqa: E402
+from ppm_api.modules.ai.registry import ModelPolicy, canonical, digest  # noqa: E402
 
 from scripts.benchmark_agent_runtime import (  # noqa: E402
     CLOUD_CORPUS,
@@ -61,15 +61,15 @@ def strategy_hash() -> str:
         [
             hashlib.sha256((ROOT / path).read_bytes()).hexdigest()
             for path in (
-                "services/api/ppm_api/agent_batch.py",
-                "services/api/ppm_api/agent_context.py",
-                "services/api/ppm_api/agent_prompts.py",
-                "services/api/ppm_api/agent_validation.py",
-                "services/api/ppm_api/model_adapters.py",
-                "services/api/ppm_api/model_contracts.py",
-                "services/api/ppm_api/model_router.py",
-                "services/api/ppm_api/agent_registry.py",
-                "services/api/ppm_api/agent_runtime.py",
+                "services/api/ppm_api/modules/agents/batch.py",
+                "services/api/ppm_api/modules/agents/context.py",
+                "services/api/ppm_api/modules/agents/prompts.py",
+                "services/api/ppm_api/modules/agents/validation.py",
+                "services/api/ppm_api/modules/ai/adapters.py",
+                "services/api/ppm_api/modules/ai/contracts.py",
+                "services/api/ppm_api/modules/ai/model_router.py",
+                "services/api/ppm_api/modules/agents/registry.py",
+                "services/api/ppm_api/modules/agents/runtime.py",
             )
         ]
     )

@@ -16,26 +16,24 @@ from redis.asyncio import Redis
 from sqlalchemy import select, text
 from starlette.exceptions import HTTPException
 
-import ppm_api.agent_task_tables  # noqa: F401
-import ppm_api.assessment_tables  # noqa: F401 — registers assessment tables into TABLES
-import ppm_api.command_tables  # noqa: F401
-import ppm_api.job_tables  # noqa: F401
-from ppm_api.agents import router as agents_router
-from ppm_api.ai import router as ai_router
-from ppm_api.assessment import router as assessment_router
-from ppm_api.capacity import router as capacity_router
-from ppm_api.command import router as command_router
+import ppm_api.shared.table_registry  # noqa: F401
 from ppm_api.config import Settings, load_settings
-from ppm_api.connectors import router as connectors_router
 from ppm_api.database import FoundationState, make_engine
-from ppm_api.delivery import DomainError
-from ppm_api.delivery import router as delivery_router
-from ppm_api.documents import router as documents_router
-from ppm_api.identity import router as identity_router
-from ppm_api.job_limits import IntegrationBodyLimit
-from ppm_api.jobs import router as jobs_router
-from ppm_api.ml import router as ml_router
-from ppm_api.pilot import router as pilot_router
+from ppm_api.errors import DomainError
+from ppm_api.modules.agents.router import router as agents_router
+from ppm_api.modules.ai.router import router as ai_router
+from ppm_api.modules.assessments.router import router as assessment_router
+from ppm_api.modules.capacity.router import router as capacity_router
+from ppm_api.modules.command.router import router as command_router
+from ppm_api.modules.delivery.router import router as delivery_router
+from ppm_api.modules.documents.router import router as documents_router
+from ppm_api.modules.identity.router import router as identity_router
+from ppm_api.modules.integrations.connector_router import router as connectors_router
+from ppm_api.modules.integrations.limits import IntegrationBodyLimit
+from ppm_api.modules.integrations.router import router as jobs_router
+from ppm_api.modules.ml.router import router as ml_router
+from ppm_api.modules.selection.router import router as selection_router
+from ppm_api.modules.workspace.router import router as pilot_router
 from ppm_api.schemas import (
     SCHEMA_REVISION,
     DependencyStatus,
@@ -46,7 +44,6 @@ from ppm_api.schemas import (
     HealthResponse,
     ReadyResponse,
 )
-from ppm_api.selection_pilot import router as selection_router
 from ppm_api.storage import LocalObjectStore
 
 logger = logging.getLogger("ppm.requests")

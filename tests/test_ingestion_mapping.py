@@ -3,7 +3,7 @@
 from uuid import uuid4
 
 import pytest
-from ppm_api.ingestion import ConnectorConfig, project_rows
+from ppm_api.modules.integrations.ingestion import ConnectorConfig, project_rows
 
 
 @pytest.mark.parametrize("paths", [("id", "id.title"), ("id.title", "id")])
