@@ -1,0 +1,788 @@
+{
+  "id": "3f0f3a7f-99c6-57f7-896b-205f9a54f0db",
+  "project_id": "3ba23317-7ce9-540c-9ca8-b34303d74c08",
+  "actor_id": "082042d4-09c6-4a33-b814-7e8ded465d28",
+  "created_at": "2026-10-27T18:50:17.683712Z",
+  "revision": 8,
+  "binding": {
+    "model": "gemini-3.5-flash-lite",
+    "lineage": "synthetic",
+    "protocol": {
+      "rule": "Select every usage observation at least 100%, or marked partial; otherwise abstain.",
+      "cases": [
+        {
+          "id": "f01",
+          "split": "calibration",
+          "expected": [
+            "o1"
+          ],
+          "observations": [
+            {
+              "id": "o1",
+              "fact": "Recorded usage: 112.50 %.",
+              "value": "112.50",
+              "partial": false
+            }
+          ]
+        },
+        {
+          "id": "f02",
+          "split": "calibration",
+          "expected": [],
+          "observations": [
+            {
+              "id": "o1",
+              "fact": "Recorded usage: 42.00 %.",
+              "value": "42.00",
+              "partial": false
+            }
+          ]
+        },
+        {
+          "id": "f03",
+          "split": "calibration",
+          "expected": [
+            "o1"
+          ],
+          "observations": [
+            {
+              "id": "o1",
+              "fact": "Recorded usage: 32.00 %. Incomplete inputs; this is a partial measure.",
+              "value": "32.00",
+              "partial": true
+            }
+          ]
+        },
+        {
+          "id": "f04",
+          "split": "calibration",
+          "expected": [
+            "o2"
+          ],
+          "observations": [
+            {
+              "id": "o1",
+              "fact": "Recorded usage: 99.99 %.",
+              "value": "99.99",
+              "partial": false
+            },
+            {
+              "id": "o2",
+              "fact": "Recorded usage: 100.00 %.",
+              "value": "100.00",
+              "partial": false
+            }
+          ]
+        },
+        {
+          "id": "f05",
+          "split": "calibration",
+          "expected": [
+            "o1",
+            "o2"
+          ],
+          "observations": [
+            {
+              "id": "o1",
+              "fact": "Recorded usage: 120.00 %.",
+              "value": "120.00",
+              "partial": false
+            },
+            {
+              "id": "o2",
+              "fact": "Recorded usage: 130.00 %.",
+              "value": "130.00",
+              "partial": false
+            }
+          ]
+        },
+        {
+          "id": "f06",
+          "split": "calibration",
+          "expected": [],
+          "observations": [
+            {
+              "id": "o1",
+              "fact": "Recorded usage: 0.00 %.",
+              "value": "0.00",
+              "partial": false
+            },
+            {
+              "id": "o2",
+              "fact": "Recorded usage: 99.00 %.",
+              "value": "99.00",
+              "partial": false
+            }
+          ]
+        },
+        {
+          "id": "f07",
+          "split": "held_out",
+          "expected": [
+            "o1"
+          ],
+          "observations": [
+            {
+              "id": "o1",
+              "fact": "Recorded usage: 100.01 %.",
+              "value": "100.01",
+              "partial": false
+            }
+          ]
+        },
+        {
+          "id": "f08",
+          "split": "held_out",
+          "expected": [],
+          "observations": [
+            {
+              "id": "o1",
+              "fact": "Recorded usage: 80.00 %.",
+              "value": "80.00",
+              "partial": false
+            }
+          ]
+        },
+        {
+          "id": "f09",
+          "split": "held_out",
+          "expected": [
+            "o1"
+          ],
+          "observations": [
+            {
+              "id": "o1",
+              "fact": "Recorded usage: 0.00 %. Incomplete inputs; this is a partial measure.",
+              "value": "0.00",
+              "partial": true
+            }
+          ]
+        },
+        {
+          "id": "f10",
+          "split": "held_out",
+          "expected": [
+            "o1"
+          ],
+          "observations": [
+            {
+              "id": "o1",
+              "fact": "Recorded usage: 100.00 %.",
+              "value": "100.00",
+              "partial": false
+            },
+            {
+              "id": "o2",
+              "fact": "Recorded usage: 25.00 %.",
+              "value": "25.00",
+              "partial": false
+            }
+          ]
+        },
+        {
+          "id": "f11",
+          "split": "held_out",
+          "expected": [
+            "o1",
+            "o2"
+          ],
+          "observations": [
+            {
+              "id": "o1",
+              "fact": "Recorded usage: 72.50 %. Incomplete inputs; this is a partial measure.",
+              "value": "72.50",
+              "partial": true
+            },
+            {
+              "id": "o2",
+              "fact": "Recorded usage: 105.75 %.",
+              "value": "105.75",
+              "partial": false
+            }
+          ]
+        },
+        {
+          "id": "f12",
+          "split": "held_out",
+          "expected": [],
+          "observations": [
+            {
+              "id": "o1",
+              "fact": "Recorded usage: 0.00 %.",
+              "value": "0.00",
+              "partial": false
+            },
+            {
+              "id": "o2",
+              "fact": "Recorded usage: 99.98 %.",
+              "value": "99.98",
+              "partial": false
+            }
+          ]
+        }
+      ],
+      "license": "CC0-1.0",
+      "lineage": "synthetic",
+      "version": "financial-selection-fixtures-v1",
+      "corpus_sha256": "537f42bb85456da4e298ef97d3cf9cc46584f3f20b9509a157f83c4e69e7322a",
+      "strategy_sha256": "71c321aa1579a5e71c90eaa14a0b9c440c8f6837a9cd8fa8c5d29925bd8de4e0"
+    },
+    "provider": "gemini",
+    "max_calls": 12,
+    "corpus_sha256": "537f42bb85456da4e298ef97d3cf9cc46584f3f20b9509a157f83c4e69e7322a",
+    "output_tokens": 128,
+    "policy_sha256": "4c4983040b04912898dc031519aba6533602e2706fb32cbe1b32f885ab9838b5",
+    "guided_enabled": true,
+    "runtime_enabled": true,
+    "strategy_sha256": "71c321aa1579a5e71c90eaa14a0b9c440c8f6837a9cd8fa8c5d29925bd8de4e0",
+    "timeout_seconds": 22,
+    "measurement_version": "attempt-elapsed-v2",
+    "effective_output_tokens": 128
+  },
+  "review": {
+    "kind": "automated_rule_audit",
+    "audit": {
+      "checks": [
+        {
+          "case": "f01",
+          "split": "calibration",
+          "matches": true,
+          "expected": [
+            "o1"
+          ]
+        },
+        {
+          "case": "f02",
+          "split": "calibration",
+          "matches": true,
+          "expected": []
+        },
+        {
+          "case": "f03",
+          "split": "calibration",
+          "matches": true,
+          "expected": [
+            "o1"
+          ]
+        },
+        {
+          "case": "f04",
+          "split": "calibration",
+          "matches": true,
+          "expected": [
+            "o2"
+          ]
+        },
+        {
+          "case": "f05",
+          "split": "calibration",
+          "matches": true,
+          "expected": [
+            "o1",
+            "o2"
+          ]
+        },
+        {
+          "case": "f06",
+          "split": "calibration",
+          "matches": true,
+          "expected": []
+        },
+        {
+          "case": "f07",
+          "split": "held_out",
+          "matches": true,
+          "expected": [
+            "o1"
+          ]
+        },
+        {
+          "case": "f08",
+          "split": "held_out",
+          "matches": true,
+          "expected": []
+        },
+        {
+          "case": "f09",
+          "split": "held_out",
+          "matches": true,
+          "expected": [
+            "o1"
+          ]
+        },
+        {
+          "case": "f10",
+          "split": "held_out",
+          "matches": true,
+          "expected": [
+            "o1"
+          ]
+        },
+        {
+          "case": "f11",
+          "split": "held_out",
+          "matches": true,
+          "expected": [
+            "o1",
+            "o2"
+          ]
+        },
+        {
+          "case": "f12",
+          "split": "held_out",
+          "matches": true,
+          "expected": []
+        }
+      ],
+      "method": "exact_fraction_rule_check_v1",
+      "lineage": "synthetic",
+      "checked_cases": 12,
+      "corpus_sha256": "537f42bb85456da4e298ef97d3cf9cc46584f3f20b9509a157f83c4e69e7322a",
+      "human_reviewed": false,
+      "matching_cases": 12,
+      "evidence_sha256": "9006e9d8dc4c57f2e2ea79dd9e1022d7e9d23b4521d346ddc56712d3b9b791b6",
+      "strategy_sha256": "71c321aa1579a5e71c90eaa14a0b9c440c8f6837a9cd8fa8c5d29925bd8de4e0"
+    },
+    "reason": "Owner-authorized automated arithmetic check of synthetic fixtures; no personal human review.",
+    "actor_id": "082042d4-09c6-4a33-b814-7e8ded465d28",
+    "pilot_id": "3f0f3a7f-99c6-57f7-896b-205f9a54f0db",
+    "checked_at": "2026-10-27T18:52:38.045742+00:00",
+    "input_sha256": "c3776b64891449e7c3c28a4d193a8d154b014533326cca43bfc6c77cb525c445",
+    "corpus_sha256": "537f42bb85456da4e298ef97d3cf9cc46584f3f20b9509a157f83c4e69e7322a",
+    "human_reviewed": false,
+    "strategy_sha256": "71c321aa1579a5e71c90eaa14a0b9c440c8f6837a9cd8fa8c5d29925bd8de4e0"
+  },
+  "protocol": {
+    "version": "financial-selection-fixtures-v1",
+    "lineage": "synthetic",
+    "license": "CC0-1.0",
+    "rule": "Select every usage observation at least 100%, or marked partial; otherwise abstain.",
+    "cases": [
+      {
+        "id": "f01",
+        "split": "calibration",
+        "observations": [
+          {
+            "id": "o1",
+            "value": "112.50",
+            "partial": false,
+            "fact": "Recorded usage: 112.50 %."
+          }
+        ],
+        "expected": [
+          "o1"
+        ]
+      },
+      {
+        "id": "f02",
+        "split": "calibration",
+        "observations": [
+          {
+            "id": "o1",
+            "value": "42.00",
+            "partial": false,
+            "fact": "Recorded usage: 42.00 %."
+          }
+        ],
+        "expected": []
+      },
+      {
+        "id": "f03",
+        "split": "calibration",
+        "observations": [
+          {
+            "id": "o1",
+            "value": "32.00",
+            "partial": true,
+            "fact": "Recorded usage: 32.00 %. Incomplete inputs; this is a partial measure."
+          }
+        ],
+        "expected": [
+          "o1"
+        ]
+      },
+      {
+        "id": "f04",
+        "split": "calibration",
+        "observations": [
+          {
+            "id": "o1",
+            "value": "99.99",
+            "partial": false,
+            "fact": "Recorded usage: 99.99 %."
+          },
+          {
+            "id": "o2",
+            "value": "100.00",
+            "partial": false,
+            "fact": "Recorded usage: 100.00 %."
+          }
+        ],
+        "expected": [
+          "o2"
+        ]
+      },
+      {
+        "id": "f05",
+        "split": "calibration",
+        "observations": [
+          {
+            "id": "o1",
+            "value": "120.00",
+            "partial": false,
+            "fact": "Recorded usage: 120.00 %."
+          },
+          {
+            "id": "o2",
+            "value": "130.00",
+            "partial": false,
+            "fact": "Recorded usage: 130.00 %."
+          }
+        ],
+        "expected": [
+          "o1",
+          "o2"
+        ]
+      },
+      {
+        "id": "f06",
+        "split": "calibration",
+        "observations": [
+          {
+            "id": "o1",
+            "value": "0.00",
+            "partial": false,
+            "fact": "Recorded usage: 0.00 %."
+          },
+          {
+            "id": "o2",
+            "value": "99.00",
+            "partial": false,
+            "fact": "Recorded usage: 99.00 %."
+          }
+        ],
+        "expected": []
+      },
+      {
+        "id": "f07",
+        "split": "held_out",
+        "observations": [
+          {
+            "id": "o1",
+            "value": "100.01",
+            "partial": false,
+            "fact": "Recorded usage: 100.01 %."
+          }
+        ],
+        "expected": [
+          "o1"
+        ]
+      },
+      {
+        "id": "f08",
+        "split": "held_out",
+        "observations": [
+          {
+            "id": "o1",
+            "value": "80.00",
+            "partial": false,
+            "fact": "Recorded usage: 80.00 %."
+          }
+        ],
+        "expected": []
+      },
+      {
+        "id": "f09",
+        "split": "held_out",
+        "observations": [
+          {
+            "id": "o1",
+            "value": "0.00",
+            "partial": true,
+            "fact": "Recorded usage: 0.00 %. Incomplete inputs; this is a partial measure."
+          }
+        ],
+        "expected": [
+          "o1"
+        ]
+      },
+      {
+        "id": "f10",
+        "split": "held_out",
+        "observations": [
+          {
+            "id": "o1",
+            "value": "100.00",
+            "partial": false,
+            "fact": "Recorded usage: 100.00 %."
+          },
+          {
+            "id": "o2",
+            "value": "25.00",
+            "partial": false,
+            "fact": "Recorded usage: 25.00 %."
+          }
+        ],
+        "expected": [
+          "o1"
+        ]
+      },
+      {
+        "id": "f11",
+        "split": "held_out",
+        "observations": [
+          {
+            "id": "o1",
+            "value": "72.50",
+            "partial": true,
+            "fact": "Recorded usage: 72.50 %. Incomplete inputs; this is a partial measure."
+          },
+          {
+            "id": "o2",
+            "value": "105.75",
+            "partial": false,
+            "fact": "Recorded usage: 105.75 %."
+          }
+        ],
+        "expected": [
+          "o1",
+          "o2"
+        ]
+      },
+      {
+        "id": "f12",
+        "split": "held_out",
+        "observations": [
+          {
+            "id": "o1",
+            "value": "0.00",
+            "partial": false,
+            "fact": "Recorded usage: 0.00 %."
+          },
+          {
+            "id": "o2",
+            "value": "99.98",
+            "partial": false,
+            "fact": "Recorded usage: 99.98 %."
+          }
+        ],
+        "expected": []
+      }
+    ],
+    "corpus_sha256": "537f42bb85456da4e298ef97d3cf9cc46584f3f20b9509a157f83c4e69e7322a",
+    "strategy_sha256": "71c321aa1579a5e71c90eaa14a0b9c440c8f6837a9cd8fa8c5d29925bd8de4e0"
+  },
+  "cases": [
+    {
+      "id": "f01",
+      "split": "calibration",
+      "expected": [
+        "o1"
+      ],
+      "selected": [
+        "o1"
+      ],
+      "status": "measured",
+      "run_id": "e7db2b72-577f-4545-bd91-73b790c72c85",
+      "correct": true,
+      "latency_ms": 1833,
+      "elapsed_ms": 1833,
+      "timing_kind": "accepted_response",
+      "diagnostic": null
+    },
+    {
+      "id": "f02",
+      "split": "calibration",
+      "expected": [],
+      "selected": [],
+      "status": "measured",
+      "run_id": "bccc151a-7b7e-4c91-bbc1-9ea7ecc23574",
+      "correct": true,
+      "latency_ms": 981,
+      "elapsed_ms": 981,
+      "timing_kind": "accepted_response",
+      "diagnostic": null
+    },
+    {
+      "id": "f03",
+      "split": "calibration",
+      "expected": [
+        "o1"
+      ],
+      "selected": [
+        "o1"
+      ],
+      "status": "measured",
+      "run_id": "8e1a2c50-4a3c-493e-9a5c-750a0e2e8e3f",
+      "correct": true,
+      "latency_ms": 7936,
+      "elapsed_ms": 7936,
+      "timing_kind": "accepted_response",
+      "diagnostic": null
+    },
+    {
+      "id": "f04",
+      "split": "calibration",
+      "expected": [
+        "o2"
+      ],
+      "selected": [
+        "o2"
+      ],
+      "status": "measured",
+      "run_id": "f7766065-08be-457f-b03f-8ee5e1d236be",
+      "correct": true,
+      "latency_ms": 7404,
+      "elapsed_ms": 7404,
+      "timing_kind": "accepted_response",
+      "diagnostic": null
+    },
+    {
+      "id": "f05",
+      "split": "calibration",
+      "expected": [
+        "o1",
+        "o2"
+      ],
+      "selected": [
+        "o1",
+        "o2"
+      ],
+      "status": "measured",
+      "run_id": "dbee7e48-a69c-43e5-a01d-8a2c80830655",
+      "correct": true,
+      "latency_ms": 7437,
+      "elapsed_ms": 7437,
+      "timing_kind": "accepted_response",
+      "diagnostic": null
+    },
+    {
+      "id": "f06",
+      "split": "calibration",
+      "expected": [],
+      "selected": [],
+      "status": "unavailable",
+      "run_id": "bc6b9234-def3-4d26-96d1-4778029f7a9a",
+      "correct": null,
+      "latency_ms": 22037,
+      "elapsed_ms": 22037,
+      "timing_kind": "unavailable_attempt",
+      "diagnostic": "TIMEOUT"
+    },
+    {
+      "id": "f07",
+      "split": "held_out",
+      "expected": [
+        "o1"
+      ],
+      "selected": [],
+      "status": "not_started",
+      "run_id": null,
+      "correct": null,
+      "latency_ms": 0,
+      "elapsed_ms": null,
+      "timing_kind": "not_recorded",
+      "diagnostic": null
+    },
+    {
+      "id": "f08",
+      "split": "held_out",
+      "expected": [],
+      "selected": [],
+      "status": "not_started",
+      "run_id": null,
+      "correct": null,
+      "latency_ms": 0,
+      "elapsed_ms": null,
+      "timing_kind": "not_recorded",
+      "diagnostic": null
+    },
+    {
+      "id": "f09",
+      "split": "held_out",
+      "expected": [
+        "o1"
+      ],
+      "selected": [],
+      "status": "not_started",
+      "run_id": null,
+      "correct": null,
+      "latency_ms": 0,
+      "elapsed_ms": null,
+      "timing_kind": "not_recorded",
+      "diagnostic": null
+    },
+    {
+      "id": "f10",
+      "split": "held_out",
+      "expected": [
+        "o1"
+      ],
+      "selected": [],
+      "status": "not_started",
+      "run_id": null,
+      "correct": null,
+      "latency_ms": 0,
+      "elapsed_ms": null,
+      "timing_kind": "not_recorded",
+      "diagnostic": null
+    },
+    {
+      "id": "f11",
+      "split": "held_out",
+      "expected": [
+        "o1",
+        "o2"
+      ],
+      "selected": [],
+      "status": "not_started",
+      "run_id": null,
+      "correct": null,
+      "latency_ms": 0,
+      "elapsed_ms": null,
+      "timing_kind": "not_recorded",
+      "diagnostic": null
+    },
+    {
+      "id": "f12",
+      "split": "held_out",
+      "expected": [],
+      "selected": [],
+      "status": "not_started",
+      "run_id": null,
+      "correct": null,
+      "latency_ms": 0,
+      "elapsed_ms": null,
+      "timing_kind": "not_recorded",
+      "diagnostic": null
+    }
+  ],
+  "summary": {
+    "state": "insufficient_data",
+    "measured_cases": 5,
+    "correct_cases": 5,
+    "held_out_measured": 0,
+    "emitted_selections": 5,
+    "relevant_selections": 5,
+    "expected_selections": 5,
+    "precision": 1,
+    "recall": 1,
+    "abstention_cases": 1,
+    "correct_abstentions": 1,
+    "unavailable_cases": 1,
+    "p95_ms": 7936,
+    "deterministic_rule_available": true,
+    "added_interpretations": 0,
+    "at17": "BLOCKED",
+    "semantic_qualified_classes": [],
+    "limitation": "Synthetic closed-choice evidence only; no real-world accuracy or semantic promotion.",
+    "label_review_kind": "automated_rule_audit",
+    "independent_human_review": false
+  },
+  "binding_current": true,
+  "can_review": false,
+  "next_case_at": "2026-10-28T13:15:11.348272Z",
+  "can_automated_review": false,
+  "review_kind": "automated_rule_audit",
+  "human_reviewed": false
+}

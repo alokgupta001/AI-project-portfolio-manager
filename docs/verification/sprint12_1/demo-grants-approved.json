@@ -1,0 +1,21 @@
+{
+  "recorded_at": "2026-10-26T13:47:27.652688+00:00",
+  "authorization": "Direct owner reply: Approve all four demo Admins",
+  "organization": "Guided Review Demo \u00b7 synthetic",
+  "project": "Demo project",
+  "approved_accounts": [
+    "Alok Gupta",
+    "Ashu",
+    "Blaze",
+    "Hement"
+  ],
+  "enabled_grants": 4,
+  "only_target_demo_grants_changed": true,
+  "business_roles_unchanged": true,
+  "other_guided_grants_unchanged": true,
+  "provider_policy_unchanged": true,
+  "quota_ledger_unchanged": true,
+  "grant_check_preserved": true,
+  "label_review_approved": false,
+  "pilot_measurements": 0
+}

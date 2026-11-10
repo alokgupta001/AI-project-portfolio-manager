@@ -46,6 +46,7 @@ from ppm_api.schemas import (
     HealthResponse,
     ReadyResponse,
 )
+from ppm_api.selection_pilot import router as selection_router
 from ppm_api.storage import LocalObjectStore
 
 logger = logging.getLogger("ppm.requests")
@@ -97,6 +98,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     app.include_router(documents_router)
     app.include_router(ai_router)
     app.include_router(agents_router)
+    app.include_router(selection_router)
     app.include_router(command_router)
     app.include_router(capacity_router)
     app.include_router(assessment_router)

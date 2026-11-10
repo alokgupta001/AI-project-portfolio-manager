@@ -1,0 +1,246 @@
+{
+  "recorded_at": "2026-10-26T13:51:09.301070+00:00",
+  "pilot_id": "ce874a14-bbd0-50c5-b9b6-f7909a8bda8a",
+  "created_at": "2026-10-26T13:49:45.599216+00:00",
+  "creator": "Ashu",
+  "organization": "Guided Review Demo \u00b7 synthetic",
+  "project": "Demo project",
+  "state": "awaiting_label_review",
+  "independent_review": null,
+  "live_pilot_cases": 0,
+  "model_calls_by_preparation": 0,
+  "binding": {
+    "model": "gemini-3.5-flash-lite",
+    "lineage": "synthetic",
+    "protocol": {
+      "rule": "Select every usage observation at least 100%, or marked partial; otherwise abstain.",
+      "cases": [
+        {
+          "id": "f01",
+          "split": "calibration",
+          "expected": [
+            "o1"
+          ],
+          "observations": [
+            {
+              "id": "o1",
+              "fact": "Recorded usage: 112.50 %.",
+              "value": "112.50",
+              "partial": false
+            }
+          ]
+        },
+        {
+          "id": "f02",
+          "split": "calibration",
+          "expected": [],
+          "observations": [
+            {
+              "id": "o1",
+              "fact": "Recorded usage: 42.00 %.",
+              "value": "42.00",
+              "partial": false
+            }
+          ]
+        },
+        {
+          "id": "f03",
+          "split": "calibration",
+          "expected": [
+            "o1"
+          ],
+          "observations": [
+            {
+              "id": "o1",
+              "fact": "Recorded usage: 32.00 %. Incomplete inputs; this is a partial measure.",
+              "value": "32.00",
+              "partial": true
+            }
+          ]
+        },
+        {
+          "id": "f04",
+          "split": "calibration",
+          "expected": [
+            "o2"
+          ],
+          "observations": [
+            {
+              "id": "o1",
+              "fact": "Recorded usage: 99.99 %.",
+              "value": "99.99",
+              "partial": false
+            },
+            {
+              "id": "o2",
+              "fact": "Recorded usage: 100.00 %.",
+              "value": "100.00",
+              "partial": false
+            }
+          ]
+        },
+        {
+          "id": "f05",
+          "split": "calibration",
+          "expected": [
+            "o1",
+            "o2"
+          ],
+          "observations": [
+            {
+              "id": "o1",
+              "fact": "Recorded usage: 120.00 %.",
+              "value": "120.00",
+              "partial": false
+            },
+            {
+              "id": "o2",
+              "fact": "Recorded usage: 130.00 %.",
+              "value": "130.00",
+              "partial": false
+            }
+          ]
+        },
+        {
+          "id": "f06",
+          "split": "calibration",
+          "expected": [],
+          "observations": [
+            {
+              "id": "o1",
+              "fact": "Recorded usage: 0.00 %.",
+              "value": "0.00",
+              "partial": false
+            },
+            {
+              "id": "o2",
+              "fact": "Recorded usage: 99.00 %.",
+              "value": "99.00",
+              "partial": false
+            }
+          ]
+        },
+        {
+          "id": "f07",
+          "split": "held_out",
+          "expected": [
+            "o1"
+          ],
+          "observations": [
+            {
+              "id": "o1",
+              "fact": "Recorded usage: 100.01 %.",
+              "value": "100.01",
+              "partial": false
+            }
+          ]
+        },
+        {
+          "id": "f08",
+          "split": "held_out",
+          "expected": [],
+          "observations": [
+            {
+              "id": "o1",
+              "fact": "Recorded usage: 80.00 %.",
+              "value": "80.00",
+              "partial": false
+            }
+          ]
+        },
+        {
+          "id": "f09",
+          "split": "held_out",
+          "expected": [
+            "o1"
+          ],
+          "observations": [
+            {
+              "id": "o1",
+              "fact": "Recorded usage: 0.00 %. Incomplete inputs; this is a partial measure.",
+              "value": "0.00",
+              "partial": true
+            }
+          ]
+        },
+        {
+          "id": "f10",
+          "split": "held_out",
+          "expected": [
+            "o1"
+          ],
+          "observations": [
+            {
+              "id": "o1",
+              "fact": "Recorded usage: 100.00 %.",
+              "value": "100.00",
+              "partial": false
+            },
+            {
+              "id": "o2",
+              "fact": "Recorded usage: 25.00 %.",
+              "value": "25.00",
+              "partial": false
+            }
+          ]
+        },
+        {
+          "id": "f11",
+          "split": "held_out",
+          "expected": [
+            "o1",
+            "o2"
+          ],
+          "observations": [
+            {
+              "id": "o1",
+              "fact": "Recorded usage: 72.50 %. Incomplete inputs; this is a partial measure.",
+              "value": "72.50",
+              "partial": true
+            },
+            {
+              "id": "o2",
+              "fact": "Recorded usage: 105.75 %.",
+              "value": "105.75",
+              "partial": false
+            }
+          ]
+        },
+        {
+          "id": "f12",
+          "split": "held_out",
+          "expected": [],
+          "observations": [
+            {
+              "id": "o1",
+              "fact": "Recorded usage: 0.00 %.",
+              "value": "0.00",
+              "partial": false
+            },
+            {
+              "id": "o2",
+              "fact": "Recorded usage: 99.98 %.",
+              "value": "99.98",
+              "partial": false
+            }
+          ]
+        }
+      ],
+      "license": "CC0-1.0",
+      "lineage": "synthetic",
+      "version": "financial-selection-fixtures-v1",
+      "corpus_sha256": "537f42bb85456da4e298ef97d3cf9cc46584f3f20b9509a157f83c4e69e7322a",
+      "strategy_sha256": "71c321aa1579a5e71c90eaa14a0b9c440c8f6837a9cd8fa8c5d29925bd8de4e0"
+    },
+    "provider": "gemini",
+    "max_calls": 12,
+    "corpus_sha256": "537f42bb85456da4e298ef97d3cf9cc46584f3f20b9509a157f83c4e69e7322a",
+    "output_tokens": 128,
+    "policy_sha256": "4c4983040b04912898dc031519aba6533602e2706fb32cbe1b32f885ab9838b5",
+    "guided_enabled": true,
+    "runtime_enabled": true,
+    "strategy_sha256": "71c321aa1579a5e71c90eaa14a0b9c440c8f6837a9cd8fa8c5d29925bd8de4e0",
+    "effective_output_tokens": 128
+  },
+  "at17": "BLOCKED"
+}

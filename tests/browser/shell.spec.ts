@@ -1,4 +1,4 @@
-import { test, expect, type Page } from "@playwright/test";
+import { test, expect, type Page } from "./test";
 import AxeBuilder from "@axe-core/playwright";
 import { readFileSync } from "node:fs";
 
@@ -149,4 +149,16 @@ test("enterprise shell: themes, keyboard, responsive, gallery and permissions", 
   await page.keyboard.press("Escape");
   await accessible(page);
   expect(errors).toEqual([]);
+});
+
+// These regressions cover domain flows; tutorial.spec.ts exercises first-run onboarding.
+test.beforeEach(async ({ page }) => {
+  await page.addInitScript(() => {
+    const read = Storage.prototype.getItem;
+    Storage.prototype.getItem = function (key: string) {
+      return key.startsWith("ppm-tutorial-v1:")
+        ? JSON.stringify({ version: 1, status: "completed", step: 7 })
+        : read.call(this, key);
+    };
+  });
 });

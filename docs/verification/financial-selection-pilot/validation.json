@@ -1,0 +1,173 @@
+{
+  "recorded_at": "2026-10-26T13:09:42.162610+00:00",
+  "checks": [
+    {
+      "command": [
+        "ruff.exe",
+        "check",
+        "services",
+        "scripts",
+        "tests"
+      ],
+      "exit_code": 0,
+      "seconds": 0.05
+    },
+    {
+      "command": [
+        "ruff.exe",
+        "format",
+        "--check",
+        "services",
+        "scripts",
+        "tests"
+      ],
+      "exit_code": 0,
+      "seconds": 0.05
+    },
+    {
+      "command": [
+        "mypy.exe",
+        "services/api/ppm_api",
+        "services/worker/ppm_worker"
+      ],
+      "exit_code": 0,
+      "seconds": 0.62
+    },
+    {
+      "command": [
+        "cmd.exe",
+        "/d",
+        "/c",
+        "npm",
+        "run",
+        "contracts:check"
+      ],
+      "exit_code": 0,
+      "seconds": 5.61
+    },
+    {
+      "command": [
+        "cmd.exe",
+        "/d",
+        "/c",
+        "npm",
+        "run",
+        "typecheck"
+      ],
+      "exit_code": 0,
+      "seconds": 6.8
+    },
+    {
+      "command": [
+        "cmd.exe",
+        "/d",
+        "/c",
+        "npm",
+        "run",
+        "lint"
+      ],
+      "exit_code": 0,
+      "seconds": 4.91
+    },
+    {
+      "command": [
+        "cmd.exe",
+        "/d",
+        "/c",
+        "npm",
+        "run",
+        "format:check"
+      ],
+      "exit_code": 0,
+      "seconds": 3.08
+    },
+    {
+      "command": [
+        "python.exe",
+        "scripts/check_sources.py"
+      ],
+      "exit_code": 0,
+      "seconds": 0.1
+    },
+    {
+      "command": [
+        "python.exe",
+        "scripts/check_previous_sprint_docs.py"
+      ],
+      "exit_code": 0,
+      "seconds": 0.15
+    },
+    {
+      "command": [
+        "python.exe",
+        "scripts/check_documentation.py"
+      ],
+      "exit_code": 0,
+      "seconds": 3.74
+    },
+    {
+      "command": [
+        "python.exe",
+        "scripts/documentation_inventory.py",
+        "--check"
+      ],
+      "exit_code": 0,
+      "seconds": 3.99
+    },
+    {
+      "command": [
+        "git",
+        "-c",
+        "safe.directory=C:/Users/alokg/OneDrive/Documents/Codex/enterprise-ppm",
+        "diff",
+        "--check"
+      ],
+      "exit_code": 0,
+      "seconds": 0.32
+    }
+  ],
+  "protected_files": 40,
+  "frozen_source_files": 10,
+  "provider_configuration_unchanged": true,
+  "applied_0019_unchanged": true,
+  "full_backend": {
+    "passed": 552,
+    "skipped": 1,
+    "inherited_warnings": 1,
+    "seconds": 793.48
+  },
+  "browser": {
+    "unique_journeys": 3,
+    "widths": [
+      1440,
+      768,
+      360
+    ],
+    "axe_violations": 0,
+    "page_overflow": false
+  },
+  "normal_upgrade": {
+    "before": "0018_csv_source_namespaces",
+    "after": "0019_selection_pilot",
+    "original_table_hashes_unchanged": 82,
+    "checkpoint": "After migration, before the authorized connectivity run"
+  },
+  "pilot_human_label_review": false,
+  "live_pilot_cases": 0,
+  "at17": "BLOCKED",
+  "authority_tables_unchanged": {
+    "memberships": true,
+    "ai_guided_grants": true,
+    "ppm_grants": true,
+    "ai_provider_scopes": true
+  },
+  "normal_pilots_created": 0,
+  "normal_runtime": {
+    "readiness": "ready",
+    "schema": "0019_selection_pilot",
+    "environment": "local",
+    "web_status": 200,
+    "pilot_routes_present": true,
+    "final_api_description_present": true
+  }
+}

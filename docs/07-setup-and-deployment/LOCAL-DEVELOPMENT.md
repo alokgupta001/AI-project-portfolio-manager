@@ -1,9 +1,15 @@
 # Local development and foundation checks
 
-26 October 2026. Current local sample: Sprint 12 at normal schema **0018**. [Reviewed closeout](../10-reference/SPRINT-12-LOCAL-CLOSEOUT.md) records application commit `f93a596`, both passing hosted CI runs and CodeRabbit's final review with no actionable comments. Live connectors/genuine model quality remain unverified and AT17 remains BLOCKED. Earlier dated checkpoints below retain their original scope; stop before Sprint 13. Existing installation setup retains the
+## 30 October 2026 — ordinary guided cloud timeout
+
+[Approved timeout follow-up](../03-sprints/active/sprint-12.1/TIMEOUT_FOLLOWUP.md): new ordinary cloud guided reviews can wait up to **60 seconds**, recorded per run. Normal schema is **0020** after a forward-only migration; all 83 table hashes matched. Existing fixture pilots retain **22 seconds**, the **20-second gate**, and their stopped results. Legacy runs retain their original limit. Shared quotas, $0 policy and access remain unchanged; **AT17 stays BLOCKED**. No new model call, PR, push, deployment or Sprint 13 work.
+
+Validation: 580 full-suite passes plus two corrected test assertions verified in a **28-pass focused rerun** (overlapping); one skip. Migration lifecycle/drift, static/contracts and **two browser journeys** passed. See the linked report for exact evidence and limitations. Earlier dated sections below are historical.
+
+26 October 2026. Sprint 12 closeout checkpoint: schema **0018**. [Reviewed closeout](../10-reference/SPRINT-12-LOCAL-CLOSEOUT.md) records application commit `f93a596`, both passing hosted CI runs and CodeRabbit's final review with no actionable comments. Live connectors/genuine model quality remain unverified and AT17 remains BLOCKED. Earlier dated checkpoints below retain their original scope; stop before Sprint 13. Existing installation setup retains the
 approved Compose overlays, private environment, database and object volumes.
 Use [the latest handoff](../handoffs/LATEST.md) for exact restart commands and
-[document processing](DOCUMENT-PROCESSING.md) for scanner/source limits.
+[document processing](DOCUMENT-PROCESSING.md) for scanner/source limits. The subsequent financial selection pilot at schema 0019 is recorded in [the latest handoff](../handoffs/LATEST.md).
 
 This is a local development stack with identity and organization authorization. Assessment evidence supports bounded UTF-8 text with manual quarantine release; the separate document library now supports bounded PDF/DOCX/TXT/CSV/XLSX/image intake, English OCR and keyword citations. Guided AI and CPU baseline controls are implemented locally; unrestricted model
 quality and forecast serving remain unverified/planned. Jira/GitHub live sync requires operator credentials and remains unverified. The API rejects `PPM_APP_ENV=production`. Compose binds published ports to `127.0.0.1`; production acceptance is not established.
@@ -147,3 +153,110 @@ Use `docker compose -f compose.yaml -f compose.documents.yaml up -d --build`, wa
 for ClamAV health/signatures and follow [Document processing](DOCUMENT-PROCESSING.md).
 Base Compose deliberately leaves scanning unconfigured and source intake quarantines.
 Use the same override for guarded document tests; preserve existing `.env`/volumes.
+
+
+## Codex development capabilities
+
+27 October 2026. Workflow setup only; existing application features, dependencies,
+locks, provider policy and sprint authorization are retained. Open Codex in
+`enterprise-ppm` so it discovers [AGENTS.md](../../AGENTS.md) and `.agents/skills`.
+The entry point links to the existing Antigravity/handoff workflow. New skills
+are available on the next turn; restart Codex if they do not appear.
+
+Installed project skills:
+
+| Skill | Purpose | Verified source / license |
+| --- | --- | --- |
+| `frontend-app-builder` | New visual surfaces or explicitly requested redesigns; preserve this repository's Next.js stack | OpenAI `plugins`, commit `0722921d5542fc593105c27bd52630babd8b8c2a`; upstream manifest declares MIT |
+| `frontend-testing-debugging` | Focused rendered UI debugging, runtime errors, responsive and interaction verification | Same OpenAI commit / MIT manifest |
+| `ui-ux-pro-max` | Local searchable typography, palettes, dashboards, charts, UX and Next.js guidance; supplement existing tokens | Next Level Builder `ui-ux-pro-max-cli` 2.15.0; MIT license retained |
+
+The [requested OpenAI skills repository](https://github.com/openai/skills) now
+redirects users to [OpenAI plugins](https://github.com/openai/plugins). Only the two
+relevant skill directories were installed with the official skill-installer at
+the pinned commit. The [UI/UX Pro Max source](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill)
+recommends generated Codex templates. Its npm archive's SHA-512 was verified,
+installer code inspected, and templates generated offline in staging with no
+lifecycle scripts. Only the core skill was copied; six bundled banner, brand,
+design, design-system, slides and styling skills were excluded. No global CLI,
+extra application package, MCP server, subscription or provider call is required.
+Exact provenance and skill hashes are in `.agents/skills/SOURCES.json`.
+
+Use existing tokens/components and the frontend contract for normal changes;
+research suggestions are not instructions to replace the identity transport,
+add external fonts, change libraries or redesign the application. Image generation
+and paid provider calls are not authorized by this setup task.
+
+```powershell
+# Existing linters, formatters, app AND browser TypeScript, source/contract drift,
+# and offline pytest tests; no installs, migrations, resets or real AI calls.
+npm run check
+npm run check:static
+npm run check -- --build
+
+# No services or credentials required to list the existing 28 browser tests.
+npm run test:e2e:list
+
+# Synthetic accounts on the existing isolated Compose project (3001/8001).
+npm run test:e2e:smoke
+npm run test:e2e
+npm run test:e2e:debug -- assessment.spec.ts
+
+# Optional hybrid/pilot UI; test-only overlay still disables real providers.
+$env:PPM_TEST_AI_V2 = '1'
+try { npm run test:e2e -- agents-v2.spec.ts selection-pilot.spec.ts }
+finally { Remove-Item Env:PPM_TEST_AI_V2 -ErrorAction SilentlyContinue }
+
+# Focused design research, no API requests and no persisted design files.
+.\.venv\Scripts\python.exe .agents/skills/ui-ux-pro-max/scripts/search.py 'table accessibility' --domain ux
+.\.venv\Scripts\python.exe .agents/skills/ui-ux-pro-max/scripts/search.py 'forms accessibility' --stack nextjs
+```
+
+`check-quality.mjs` aggregates real exit statuses and fails if any check fails.
+It supplies a fresh ignored workspace TEMP directory for Windows sandbox sessions;
+it never deletes existing temp directories. Offline test children explicitly disable
+AI provider/cloud/local inference. Test failures and sandbox permission errors must
+be investigated and reported, never converted into passes. Security audits and
+PostgreSQL/RLS/migration/worker tests retain the established CI/guarded Compose
+commands above; run those when affected rather than replacing them with unit tests.
+
+The standard e2e command now invokes the existing isolated fixture runner instead of
+raw Playwright against normal port 3000. The config defaults to 3001, one worker,
+CI exclusive-test rejection, retained failure traces and failure screenshots.
+The smoke selection exercises identity/org switching, enterprise shell/accessibility,
+project management, assessments/results, command center and PMO assistant fallback.
+Hybrid/pilot cases require the explicit test overlay; a skipped test is not a pass.
+Use the runner for fixture-backed tests. Avoid raw `npx playwright test` for acceptance.
+`npm run typecheck:browser` checks browser tests/config separately from application
+TypeScript and is included in the existing CI static step. Existing Playwright,
+axe, lint, formatting, backend tools and Chromium were reused without upgrades.
+
+
+The browser runner now snapshots existing `docs/verification` bytes before running,
+including uncommitted evidence. Its `finally` block restores changed/deleted originals
+and keeps new renders under ignored `artifacts/local/browser-evidence/run-*/fresh/`.
+It never substitutes Git HEAD for the working baseline. Backups and a file manifest
+are retained for recovery after an interrupted process; new previously absent files
+are not discarded. `npm run test:tooling` covers binary restoration, failure/deletion
+recovery and preserving new/subsequent work using Node's built-in test runner. These
+checks also run in the quality command and existing CI static step.
+
+
+Setup verification (27 October 2026): final static/source/contract checks and app/browser
+TypeScript passed. Offline backend: **396 passed, one skipped, 166 integration cases
+deselected**, with one inherited Starlette/httpx deprecation warning; host and isolated
+production builds passed. Seven selected browser workflows passed. After adding the
+evidence guard, three overlapping screenshot-writing workflows passed again (exit 0),
+restoring all 11 changed historical artifacts byte-for-byte. Three Node preservation
+regressions passed. Desktop/mobile screenshots were inspected. All 123 baseline file
+hashes were checked; unrelated existing edits and both dependency locks were preserved,
+and this guide's original bytes remain an unchanged prefix.
+
+Initial restricted Windows unit attempts failed or stalled; the corrected workspace
+TEMP workflow passed under approved execution. An interrupted final browser build was
+rerun successfully. Neither attempt is counted as a pass. No application feature,
+normal database, credential or provider setting was changed. No paid API calls occurred.
+The complete 28-case browser suite, full backend migration lifecycle suite and a new
+hosted CI run were not executed for this tooling-only change. Exact local logs and
+receipts are ignored under `artifacts/local/tooling-upgrade/`; CI includes the new
+browser types/tooling checks and uploads fresh browser evidence, excluding originals.

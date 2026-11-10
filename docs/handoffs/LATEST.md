@@ -1,5 +1,88 @@
 # Latest technical handoff
 
+## 31 October 2026 — frontend redesign follow-up
+
+The [frontend redesign report](../04-testing/FRONTEND_REDESIGN.md) records the
+user-authorized visual refresh, live overview calculations, eight-step tutorial,
+shared table/editor fixes, feature coverage and exact verification results.
+Normal preview is **http://localhost:3000/**; **3001** is the disposable browser
+test environment and shuts down after verification. Backend authority remains the
+[ordinary timeout follow-up](../03-sprints/active/sprint-12.1/TIMEOUT_FOLLOWUP.md)
+below. Preserve schema **0020**, stopped pilot results, quotas and **AT17 BLOCKED**.
+
+## 30 October 2026 — ordinary guided cloud timeout
+
+[Approved timeout follow-up](../03-sprints/active/sprint-12.1/TIMEOUT_FOLLOWUP.md): new ordinary cloud guided reviews can wait up to **60 seconds**, recorded per run. Normal schema is **0020** after a forward-only migration; all 83 table hashes matched. Existing fixture pilots retain **22 seconds**, the **20-second gate**, and their stopped results. Legacy runs retain their original limit. Shared quotas, $0 policy and access remain unchanged; **AT17 stays BLOCKED**. No new model call, PR, push, deployment or Sprint 13 work.
+
+Validation: 580 full-suite passes plus two corrected test assertions verified in a **28-pass focused rerun** (overlapping); one skip. Migration lifecycle/drift, static/contracts and **two browser journeys** passed. See the linked report for exact evidence and limitations. Earlier dated sections below are historical.
+
+## 28 October 2026 — Sprint 12.1 timing repair
+
+[Current repair report](../03-sprints/active/sprint-12.1/REPAIR_FOLLOWUP.md) supersedes the operational checkpoint below. Failed calls retain elapsed timing; UI/downloads distinguish unavailable time from accepted-response p95. Separate repair pilot `3f0f3a7f`: **insufficient_data**, 5/12 measured, 5 exact matches, 1 unavailable, 0/6 reserved measured; accepted-case p95 7936 ms. Original ce874a14 history remains unchanged; experiments are not combined. Automated audit records **human_reviewed=false**. Broad **AT17 remains BLOCKED**.
+
+Fresh validation: **566 backend passed, 1 skipped**, one inherited warning; disposable migration lifecycle/drift, two browser journeys, static/contracts and tooling checks passed. Normal schema remains frozen **0019**. Provider configuration, explicit grants, shared limits and $0 policy are preserved. No commit, PR, push, deployment or Sprint 13 work. The single repair experiment is complete under its gate/stop rule; do not start another without authorization.
+
+## Earlier dated checkpoint (historical)
+
+**26 October 2026 — Sprint 12.1 final local checkpoint.**
+[Canonical handoff](../03-sprints/active/sprint-12.1/HANDOFF.md) ·
+[report](../03-sprints/active/sprint-12.1/SPRINT_REPORT.md) ·
+[actual run](../03-sprints/active/sprint-12.1/RUN_RECORD.md).
+
+The owner approved the local single-pilot automated arithmetic path and up to
+twelve paced Gemini cases, stopping on unavailable/unknown. The audit was saved
+through the app for ce874a14: 12/12 labels checked, **human_reviewed=false**.
+f01 matched o1 in 21.437 seconds. f02 TIMEOUT/unknown stopped the pilot. Actual
+state **insufficient_data**, one measured/match, one unavailable, ten unattempted,
+zero reserved measured. Fixture gate unmet; broad AT17 remains BLOCKED. No
+retry/reset, retuning, alternate provider, qualification or Sprint 13 serving.
+[Downloaded report](../verification/sprint12_1/live-pilot-report.json) ·
+[call/usage evidence](../verification/sprint12_1/live-evidence.json).
+
+**562 backend passed, one skipped, one inherited warning (852.16 seconds)**;
+disposable lifecycle/drift and two pilot browser journeys passed. Static/contracts/
+documentation checks are recorded in the named test report. Normal runtime is
+healthy at frozen **0019**; no new migration. Memberships/project/guided grants
+and provider configuration are unchanged since the approved grants. Only Gemini's
+normal failure counter changed to 1 on timeout; preserve it. Calls/reservations
+grew from four to six. All 40 protected files including 21 older artifact edits
+remain unchanged.
+
+The explicit guided-grant check is intact. Its earlier removal proposal was
+rejected by automatic approval review and did not apply. The owner instead
+approved four demo-only grants, then separately approved this one-pilot local
+audit. Default allowlist remains empty; other pilots retain personal review by
+a different authorized Admin. No impersonation or direct DB review write.
+
+Branch financial-api-qualification-pilot, base merged main 5d5ce87. All current
+implementation/docs remain uncommitted; no new PR/push/deployment authorization.
+The approved run is finished under its stop rule. Preserve history and wait for
+a separately authorized future experiment. Stop before Sprint 13.
+
+## Historical implementation checkpoint before the approved automated run
+
+**26 October 2026 — financial selection pilot implemented locally:** PR 7 is merged into
+main (`5d5ce87`). The owner authorized the one-task pilot using existing APIs.
+Branch `financial-api-qualification-pilot` preserves the 21 original artifact edits.
+Forward 0019 adds one pilot table; normal 0018 → **0019** is verified. All 82
+established table hashes matched after migration, before the new authorized
+connectivity run. Protected inputs and 21 original artifact edits remain intact.
+UI/API, frozen numeric fixtures, second-person label review and shared-ledger
+execution are implemented. **552 backend tests pass, one skipped, one inherited
+warning (793.48 seconds)**; lifecycle/drift and three browser journeys pass.
+Focused 59 cases overlap. Static/contracts/doc checks pass. [Checkpoint](../verification/financial-selection-pilot/README.md),
+[guide](../limitations/FINANCIAL_SELECTION_PILOT.md), [contract](../contracts/selection-pilot.md).
+One ordinary live Gemini financial guided call succeeded: one attempt, two IDs,
+18.477 seconds, app charge $0; this is connectivity, not qualification. Local
+API/web/worker/dispatcher are healthy. No real human label review or live pilot
+measurements occurred. Existing demo login lacks an explicit pilot grant; do not
+add one. The four granted users can use their existing demo Admin roles to prepare
+and independently review a pilot. No new keys, policy/grant changes, publication
+or Sprint 13. Applied 0001–0019 are frozen. Broad **AT17 remains BLOCKED**.
+
+The Sprint 12 closeout below is historical; its no-merge statement predates the
+owner's merge. The hourly review follow-up remains paused.
+
 **26 October 2026 — Sprint 12 local sample and review closed:** normal schema is
 **0018_csv_source_namespaces**. Application commit `f93a596` is pushed to
 [PR 7](https://github.com/alokgupta001/AI-project-portfolio-manager/pull/7) on

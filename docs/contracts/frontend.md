@@ -1,5 +1,16 @@
 # Frontend contract — Sprint 03
 
+Sprint 12.1 timing follow-up: pilot result cells wrap bounded timing text and
+differentiate accepted-response latency, unavailable-attempt elapsed time (excluded
+from p95), and unrecorded legacy timing. Downloads use the same typed API values.
+
+The `/agents` page now includes the [financial selection pilot](selection-pilot.md)
+for an Admin's explicitly guided project. Loading, empty/error, pending/cooldown,
+review-required, stale-binding, unavailable and synthetic-result states are visible.
+Automated-audit eligibility, kind and human-review=false are explicit. Forms
+use generated DTOs; polling cancels stale effect updates. Table regions scroll
+on narrow screens, and report download rechecks current server access.
+
 Sprint 05 adds `/resources` using the same identity transport and shell. Capacity
 forms extend the shared typed record editor; staffing lists, daily heatmap/table,
 weekly reconciliation, team signals, history and snapshots follow the
@@ -13,7 +24,10 @@ Implemented shell and connected delivery/capacity/assessment/command/source/job 
 
 - `apps/web/components/ui.tsx`: Button (primary/secondary/danger), Badge, Field, StatePanel (empty/error/forbidden/partial), Skeleton, MetricCard, native Modal/drawer, ConfirmDialog, typed DataTable and ChartFrame.
 - `components/shell.tsx`: Shell, AuthFrame, Brand and ThemeControl; organization control comes from the existing identity client. Navigation lists only functioning routes. Future modules are plain planned labels, not links.
-- `components/workspace-home.tsx`: current user's live role, organization count and session count (API cap 100), account actions and module availability. No project metrics are inferred.
+- `components/workspace-home.tsx`: authorized command snapshot, portfolio/date filters, project health distribution and linked project table; current user's live role, organization count and session count (API cap 100). Counts reconcile to returned non-archived projects; missing health is Unknown. Currency totals remain separate and expose period, quality and freshness.
+- `components/tutorial.tsx` / `tutorial.css`: eight-step guided discovery, welcome/skip/completion dialogs, spotlight, keyboard navigation and replay in workspace/account settings. Only versioned per-user tutorial progress is stored in localStorage, with page-session memory fallback; no records are created by the tutorial.
+- The main tour opens the matching destination when the user selects Next, Back, Skip step or a progress dot. Project detail uses a permitted project link when available and the projects list otherwise.
+- `components/page-guide.tsx` provides three tips per authenticated workspace page type. A browser-local preference remembers the first visit for each user and page type. The header's Page guide button replays the tips. Project detail pages share one guide, and page guides wait while the main tour is active.
 - `components/gallery.tsx`: authenticated local development gallery. All examples are labeled, in-memory and separate from tenant records.
 - `app/account/identity-client.tsx`: existing generated API transport and atomic account loading; owns account/membership mutations, organization preconditions and confirmation intents. No parallel auth provider or duplicated token store.
 
@@ -21,15 +35,15 @@ Routes: `/` workspace overview or sign-in entry; `/account` identity administrat
 
 ## Tokens and interaction
 
-`app/globals.css` owns semantic background/surface/surface-alt/text/muted/line/accent/on-accent/success/warning/danger/focus tokens plus radius, spacing, shadow and duration. Font is the local Arial/Helvetica sans-serif stack; no external font dependency. Layout uses 600/900/1150/1600px breakpoints, with acceptance at 360/768/1440px. Native controls retain accessible labels. Focus uses a 3px contrasting outline; reduced motion disables transitions and animations. Blur is limited to modal backdrops, not text surfaces.
+`app/globals.css` owns semantic background/surface/surface-alt/text/muted/line/accent/on-accent/success/warning/danger/focus tokens plus radius, spacing, shadow and duration. Self-hosted Geist regular/semibold (OFL license in public/fonts) uses Arial/Helvetica fallback. Forest/mint accents pair with neutral surfaces in both themes. Responsive acceptance covers 360/768/1024/1440/1920px. Native controls retain accessible labels. Focus uses a 3px contrasting outline; reduced motion disables transitions and animations. Blur is limited to overlays, not data surfaces.
 
 Light/dark theme initializes before render from `ppm-theme` or system preference, persists only that non-sensitive preference in localStorage, and falls back to in-memory changes if storage is unavailable. Credentials remain Secure/HttpOnly cookies. Theme storage must never become a session store.
 
 Modal uses `showModal()` for inert background and focus containment; Escape/close returns focus to the trigger, body scrolling is restored on cleanup. Cancel is the initial confirmation action. Session revocation and role/deactivation changes require confirmation before invoking the existing mutation. Backend authorization/revisions remain authoritative.
 
-Ctrl/Cmd+K opens page commands; search filters only available destinations, with Arrow keys/Tab/Enter/Escape. Members command is Admin-only. Notifications open an explicit unavailable state; there is no fabricated feed. Navigation search is not project/data search.
+Ctrl/Cmd+K opens page commands and the existing authorized record search, with Arrow keys/Tab/Enter/Escape. Members command is Admin-only. Notifications use the existing persisted in-app feed and read controls; no fabricated activity is inserted.
 
-DataTable accepts typed rows, stable keys, render/sort accessors and search text. Filtering, sorting, density and pagination apply only to loaded rows; labels disclose this. Server cursor loading remains separate. Reset tenant-specific table state with an organization key. Do not present loaded-row totals as organization totals. ChartFrame requires a description and equivalent table; decorative visual marks are hidden from assistive technology.
+DataTable accepts typed rows, stable keys, render/sort accessors and search text. Filtering, sorting, density, row count and pagination apply only to loaded rows; labels disclose this. External mode renders the complete supplied server page and leaves server filtering/pagination to its owner. Reset tenant-specific table state with an organization key. Do not present loaded-row totals as organization totals. ChartFrame requires a description and equivalent table; decorative visual marks are hidden from assistive technology. Shared delivery editors guard dirty Cancel/close/Escape and browser unload; a successful save closes directly.
 
 ## Limits
 

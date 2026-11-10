@@ -1,6 +1,12 @@
 # AI-PPM documentation
 
-26 October 2026. Current local sample: Sprint 12 at normal schema **0018**. [Reviewed closeout](10-reference/SPRINT-12-LOCAL-CLOSEOUT.md) records application commit `f93a596`, both passing hosted CI runs and CodeRabbit's final review with no actionable comments. Live connectors/genuine model quality remain unverified and AT17 remains BLOCKED. Earlier dated checkpoints below retain their original scope; stop before Sprint 13.
+Current continuation: [Sprint 12.1 — Current API financial selection pilot](03-sprints/active/sprint-12.1/README.md),
+with [exact label-review packet](09-planning/sprint-12.1/LABEL_REVIEW_PACKET.md)
+and [operational access proposal](09-planning/sprint-12.1/ACCESS_PROPOSAL.md).
+Implementation is locally verified. The owner-approved automated run stopped
+at f02 TIMEOUT with insufficient_data and human review false; fixture acceptance is unmet. AT17 remains BLOCKED.
+
+26 October 2026. Sprint 12 closeout checkpoint: schema **0018**. [Reviewed closeout](10-reference/SPRINT-12-LOCAL-CLOSEOUT.md) records application commit `f93a596`, both passing hosted CI runs and CodeRabbit's final review with no actionable comments. Live connectors/genuine model quality remain unverified and AT17 remains BLOCKED. Earlier dated checkpoints below retain their original scope; stop before Sprint 13. The subsequent financial selection pilot at schema 0019 is recorded in [the latest handoff](handoffs/LATEST.md).
 
 **Earlier checkpoint before Sprint 12 (25 October 2026; superseded):** Sprint 11/11.1 is complete for the
 local guided-sample scope; Sprint 12 local foundations are ready to start, not yet

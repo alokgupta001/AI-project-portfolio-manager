@@ -317,6 +317,11 @@ async def configure(body: AIBudgetInput, request: Request, p: Auth) -> dict:
 async def create(body: AIRunInput, request: Request, p: Auth) -> dict:
     """Queue an idempotent authorized run after reserving its budget and frozen inputs."""
     await delivery.lock(p, request)
+    if body.guided_pilot_id and getattr(request.state, "selection_case", None) != (
+        body.guided_pilot_id,
+        body.guided_case_id,
+    ):
+        delivery.fail(403, "Start fixture cases from the selection pilot")
     if p.role != "Admin":
         from ppm_api.guided_review import granted_projects
 
@@ -352,6 +357,8 @@ async def create(body: AIRunInput, request: Request, p: Auth) -> dict:
         if body.uses_v2()
         else body.model_dump(exclude=V2_FIELDS)
     )
+    if body.uses_v2() and not body.guided_pilot_id:
+        identity_body = body.model_dump(exclude={"guided_pilot_id", "guided_case_id"})
     key, fingerprint = documents.request_identity(request, identity_body)
     if body.operation == "agents":
         from ppm_api.agents import private_access
@@ -427,6 +434,7 @@ async def create(body: AIRunInput, request: Request, p: Auth) -> dict:
         provider_policy=P.policy_snapshot(config),
     )
     if hybrid:
+        from ppm_api.model_deadlines import ordinary_guided
         from ppm_api.model_registry import load_policy
 
         versions.update(
@@ -443,6 +451,8 @@ async def create(body: AIRunInput, request: Request, p: Auth) -> dict:
             embedding_model=None,
             call_cap_usd="0",
         )
+        if ordinary_guided(body.model_dump(mode="json")):
+            versions["guided_cloud_timeout_seconds"] = config.ai_guided_cloud_timeout_seconds
     run = dict(
         id=run_id,
         organization_id=oid(p),

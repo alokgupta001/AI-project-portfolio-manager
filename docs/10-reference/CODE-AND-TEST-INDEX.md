@@ -351,8 +351,8 @@ Source-derived AST inventory. Search symbols instead of relying on line numbers;
 
 [Source](../../services/api/migrations/env.py)
 
-- `run_sync` — line 25
-- `run_async` — line 31
+- `run_sync` — line 26
+- `run_async` — line 32
 
 ## services/api/migrations/versions/0001_foundation.py
 
@@ -518,6 +518,21 @@ Source-derived AST inventory. Search symbols instead of relying on line numbers;
 - `upgrade` — line 12
 - `downgrade` — line 31
 
+## services/api/migrations/versions/0019_selection_pilot.py
+
+[Source](../../services/api/migrations/versions/0019_selection_pilot.py)
+
+- `upgrade` — line 11
+- `downgrade` — line 33
+
+## services/api/migrations/versions/0020_guided_cloud_timeout.py
+
+[Source](../../services/api/migrations/versions/0020_guided_cloud_timeout.py)
+
+- `change` — line 26
+- `upgrade` — line 45
+- `downgrade` — line 50
+
 ## services/api/ppm_api/account_mail.py
 
 [Source](../../services/api/ppm_api/account_mail.py)
@@ -611,17 +626,17 @@ Source-derived AST inventory. Search symbols instead of relying on line numbers;
 
 [Source](../../services/api/ppm_api/agent_runtime.py)
 
-- `initialize` — line 45
-- `task_update` — line 95
-- `commit_section` — line 116
-- `baseline` — line 153
-- `heartbeat` — line 188
-- `batch_window_delay` — line 206
-- `complete_task` — line 222
-- `execute` — line 484
-- `live_sections` — line 668
-- `reviewed_findings` — line 710
-- `assemble` — line 741
+- `initialize` — line 47
+- `task_update` — line 97
+- `commit_section` — line 118
+- `baseline` — line 155
+- `heartbeat` — line 190
+- `batch_window_delay` — line 208
+- `complete_task` — line 224
+- `execute` — line 503
+- `live_sections` — line 692
+- `reviewed_findings` — line 734
+- `assemble` — line 765
 
 ## services/api/ppm_api/agent_schemas.py
 
@@ -661,18 +676,18 @@ Source-derived AST inventory. Search symbols instead of relying on line numbers;
 - `internal_request` — line 38
 - `private_access` — line 43
 - `capture` — line 52
-- `add` — line 61
-- `get_analysis` — line 308
-- `current_sources` — line 322
-- `can_review` — line 354
-- `definitions` — line 369
-- `create` — line 388
-- `listing` — line 395
-- `detail` — line 426
-- `item` — line 460
-- `review` — line 594
-- `execute` — line 659
-- `publish` — line 703
+- `add` — line 65
+- `get_analysis` — line 312
+- `current_sources` — line 326
+- `can_review` — line 358
+- `definitions` — line 373
+- `create` — line 392
+- `listing` — line 399
+- `detail` — line 430
+- `item` — line 464
+- `review` — line 598
+- `execute` — line 663
+- `publish` — line 707
 
 ## services/api/ppm_api/ai.py
 
@@ -693,21 +708,21 @@ Source-derived AST inventory. Search symbols instead of relying on line numbers;
 - `operations` — line 271
 - `configure` — line 294
 - `create` — line 317
-- `cancel` — line 551
-- `progress` — line 582
-- `stages` — line 591
-- `diagnostics` — line 608
-- `worker_context` — line 647
-- `settle` — line 672
-- `Branch` — line 722
-- `Runtime` — line 728
-- `__init__` — line 729
-- `state` — line 743
-- `call` — line 759
-- `keyword_branch` — line 911
-- `hybrid_branch` — line 920
-- `index` — line 960
-- `ai_worker` — line 992
+- `cancel` — line 561
+- `progress` — line 592
+- `stages` — line 601
+- `diagnostics` — line 618
+- `worker_context` — line 657
+- `settle` — line 682
+- `Branch` — line 732
+- `Runtime` — line 738
+- `__init__` — line 739
+- `state` — line 753
+- `call` — line 769
+- `keyword_branch` — line 921
+- `hybrid_branch` — line 930
+- `index` — line 970
+- `ai_worker` — line 1002
 
 ## services/api/ppm_api/ai_evaluation.py
 
@@ -947,13 +962,13 @@ Source-derived AST inventory. Search symbols instead of relying on line numbers;
 
 [Source](../../services/api/ppm_api/config.py)
 
-- `Settings` — line 21
-- `validate_mail` — line 78
-- `validate_key` — line 102
-- `validate_origin` — line 110
-- `validate_database` — line 125
-- `validate_redis` — line 137
-- `load_settings` — line 147
+- `Settings` — line 22
+- `validate_mail` — line 82
+- `validate_key` — line 106
+- `validate_origin` — line 114
+- `validate_database` — line 129
+- `validate_redis` — line 141
+- `load_settings` — line 151
 
 ## services/api/ppm_api/connectors.py
 
@@ -1106,20 +1121,21 @@ Source-derived AST inventory. Search symbols instead of relying on line numbers;
 
 [Source](../../services/api/ppm_api/guided_review.py)
 
-- `granted_projects` — line 34
-- `Choice` — line 69
-- `distinct` — line 73
-- `Observation` — line 80
-- `SelectionInput` — line 85
-- `Card` — line 90
-- `Checklist` — line 97
-- `GuidedReview` — line 103
-- `plan` — line 115
-- `fact` — line 164
-- `pack` — line 199
-- `validate` — line 239
-- `view` — line 253
-- `check_request` — line 278
+- `prompt` — line 34
+- `granted_projects` — line 43
+- `Choice` — line 78
+- `distinct` — line 82
+- `Observation` — line 89
+- `SelectionInput` — line 94
+- `Card` — line 99
+- `Checklist` — line 106
+- `GuidedReview` — line 112
+- `plan` — line 125
+- `fact` — line 174
+- `pack` — line 209
+- `validate` — line 250
+- `view` — line 264
+- `check_request` — line 290
 
 ## services/api/ppm_api/identity.py
 
@@ -1276,19 +1292,19 @@ Source-derived AST inventory. Search symbols instead of relying on line numbers;
 
 [Source](../../services/api/ppm_api/main.py)
 
-- `error_response` — line 59
-- `create_app` — line 71
-- `lifespan` — line 75
-- `request_context` — line 106
-- `http_error` — line 168
-- `validation_error` — line 204
-- `live` — line 218
-- `ready` — line 228
-- `database_probe` — line 231
-- `redis_probe` — line 241
-- `storage_probe` — line 245
-- `probe` — line 250
-- `foundation` — line 275
+- `error_response` — line 60
+- `create_app` — line 72
+- `lifespan` — line 76
+- `request_context` — line 108
+- `http_error` — line 170
+- `validation_error` — line 206
+- `live` — line 220
+- `ready` — line 230
+- `database_probe` — line 233
+- `redis_probe` — line 243
+- `storage_probe` — line 247
+- `probe` — line 252
+- `foundation` — line 277
 
 ## services/api/ppm_api/metric_math.py
 
@@ -1358,48 +1374,55 @@ Source-derived AST inventory. Search symbols instead of relying on line numbers;
 
 [Source](../../services/api/ppm_api/model_adapters.py)
 
-- `strict_schema` — line 28
-- `visit` — line 32
-- `NativeAdapter` — line 57
-- `__init__` — line 58
-- `permit` — line 69
-- `origin` — line 108
-- `execute` — line 132
-- `gemini_chat` — line 203
-- `puter_chat` — line 230
-- `puter_result` — line 285
-- `read` — line 318
-- `cloud_chat` — line 402
-- `check_openrouter_price` — line 453
-- `chat_result` — line 478
-- `ollama_result` — line 552
-- `gemini_result` — line 579
+- `strict_schema` — line 29
+- `visit` — line 33
+- `NativeAdapter` — line 58
+- `__init__` — line 59
+- `permit` — line 71
+- `origin` — line 119
+- `execute` — line 143
+- `gemini_chat` — line 216
+- `puter_chat` — line 243
+- `puter_result` — line 298
+- `read` — line 331
+- `cloud_chat` — line 421
+- `check_openrouter_price` — line 472
+- `chat_result` — line 497
+- `ollama_result` — line 571
+- `gemini_result` — line 598
 
 ## services/api/ppm_api/model_contracts.py
 
 [Source](../../services/api/ppm_api/model_contracts.py)
 
-- `HybridSelection` — line 58
-- `distinct_selection` — line 66
-- `uses_v2` — line 92
-- `CompactSpan` — line 97
-- `nonempty` — line 103
-- `SectionFinding` — line 110
-- `SectionMatch` — line 122
-- `NarrativeItem` — line 128
-- `SectionGap` — line 138
-- `SectionOutput` — line 143
-- `consistent` — line 154
-- `CapabilityDetail` — line 174
-- `honest_coverage` — line 196
-- `ModelUsage` — line 206
-- `ModelResult` — line 213
-- `ModelFailure` — line 250
-- `__init__` — line 251
-- `ExecutionPermit` — line 263
-- `ModelRequest` — line 274
-- `ModelAdapter` — line 289
-- `execute` — line 290
+- `HybridSelection` — line 66
+- `distinct_selection` — line 76
+- `uses_v2` — line 114
+- `CompactSpan` — line 119
+- `nonempty` — line 125
+- `SectionFinding` — line 132
+- `SectionMatch` — line 144
+- `NarrativeItem` — line 150
+- `SectionGap` — line 160
+- `SectionOutput` — line 165
+- `consistent` — line 176
+- `CapabilityDetail` — line 196
+- `honest_coverage` — line 218
+- `ModelUsage` — line 228
+- `ModelResult` — line 235
+- `ModelFailure` — line 272
+- `__init__` — line 273
+- `ExecutionPermit` — line 285
+- `ModelRequest` — line 297
+- `ModelAdapter` — line 312
+- `execute` — line 313
+
+## services/api/ppm_api/model_deadlines.py
+
+[Source](../../services/api/ppm_api/model_deadlines.py)
+
+- `ordinary_guided` — line 7
+- `completion_timeout` — line 16
 
 ## services/api/ppm_api/model_qualification.py
 
@@ -1436,6 +1459,14 @@ Source-derived AST inventory. Search symbols instead of relying on line numbers;
 - `RouteRequirements` — line 17
 - `eligibility` — line 27
 - `candidates` — line 125
+
+## services/api/ppm_api/model_timing.py
+
+[Source](../../services/api/ppm_api/model_timing.py)
+
+- `TransportTiming` — line 24
+- `__init__` — line 25
+- `trace` — line 30
 
 ## services/api/ppm_api/pilot.py
 
@@ -1536,6 +1567,47 @@ Source-derived AST inventory. Search symbols instead of relying on line numbers;
 - `DependencyStatus` — line 31
 - `ReadyResponse` — line 36
 - `FoundationResponse` — line 41
+
+## services/api/ppm_api/selection_audit.py
+
+[Source](../../services/api/ppm_api/selection_audit.py)
+
+- `audit` — line 13
+
+## services/api/ppm_api/selection_pilot.py
+
+[Source](../../services/api/ppm_api/selection_pilot.py)
+
+- `PilotInput` — line 23
+- `LabelReview` — line 27
+- `AutomatedReview` — line 35
+- `PilotCase` — line 41
+- `PilotObservation` — line 55
+- `ProtocolCase` — line 62
+- `PilotProtocol` — line 69
+- `PilotView` — line 79
+- `automated_allowed` — line 98
+- `scope` — line 107
+- `binding` — line 118
+- `get` — line 142
+- `reviewed` — line 154
+- `view` — line 187
+- `revision` — line 291
+- `listing` — line 298
+- `create` — line 313
+- `detail` — line 347
+- `approve` — line 353
+- `automated_review` — line 404
+- `snapshot` — line 465
+- `measure` — line 502
+
+## services/api/ppm_api/selection_protocol.py
+
+[Source](../../services/api/ppm_api/selection_protocol.py)
+
+- `protocol` — line 34
+- `fixture_sources` — line 62
+- `summarize` — line 94
 
 ## services/api/ppm_api/storage.py
 
@@ -1716,15 +1788,15 @@ Source-derived AST inventory. Search symbols instead of relying on line numbers;
 - `checkpoint` — line 645
 - `test_worker_cancellation_settles_and_propagates` — line 679
 - `interrupted` — line 690
-- `unavailable` — line 713
-- `test_failed_heartbeat_does_not_replace_completed_result` — line 775
-- `failed` — line 789
-- `test_worker_cancellation_during_heartbeat_cleanup_is_not_swallowed` — line 814
-- `lingering` — line 820
-- `test_oversized_bound_context_keeps_baseline_and_reports_partial` — line 849
-- `oversized` — line 866
-- `test_v2_late_output_is_fenced` — line 902
-- `paused` — line 913
+- `unavailable` — line 715
+- `test_failed_heartbeat_does_not_replace_completed_result` — line 779
+- `failed` — line 793
+- `test_worker_cancellation_during_heartbeat_cleanup_is_not_swallowed` — line 818
+- `lingering` — line 824
+- `test_oversized_bound_context_keeps_baseline_and_reports_partial` — line 853
+- `oversized` — line 870
+- `test_v2_late_output_is_fenced` — line 906
+- `paused` — line 917
 
 ## tests/test_agents.py
 
@@ -1858,6 +1930,8 @@ Source-derived AST inventory. Search symbols instead of relying on line numbers;
 - `handler` — line 184
 - `test_missing_usage_stays_unknown_and_provider_error_is_sanitized` — line 195
 - `fail` — line 208
+- `test_timeout_retains_safe_transport_milestones_without_retry` — line 220
+- `handler` — line 226
 
 ## tests/test_cloud_specialists.py
 
@@ -2079,6 +2153,19 @@ Source-derived AST inventory. Search symbols instead of relying on line numbers;
 - `test_signed_webhook_replay_cancellation_and_tenant_rls` — line 522
 - `test_github_jira_contract_fixtures_and_sprint_ingestion` — line 582
 
+## tests/test_model_deadlines.py
+
+[Source](../../tests/test_model_deadlines.py)
+
+- `test_timeout_scope` — line 50
+- `test_corrupt_frozen_bound_fails_closed` — line 58
+- `test_operator_can_reduce_but_not_extend_frozen_wait` — line 71
+- `test_adapter_rejects_unadmitted_or_nonordinary_long_wait` — line 90
+- `test_actual_delayed_response_past_old_deadline_is_accepted` — line 106
+- `delayed` — line 121
+- `test_expiring_permit_bounds_wait_and_retains_unknown` — line 137
+- `stalled` — line 151
+
 ## tests/test_model_qualification.py
 
 [Source](../../tests/test_model_qualification.py)
@@ -2110,6 +2197,12 @@ Source-derived AST inventory. Search symbols instead of relying on line numbers;
 - `test_shared_host_cannot_duplicate_quota_through_profile_alias` — line 208
 - `test_authorized_native_gemini_preserves_finish_usage_and_egress` — line 221
 - `respond` — line 263
+
+## tests/test_model_timing.py
+
+[Source](../../tests/test_model_timing.py)
+
+- `test_transport_timing_keeps_only_known_monotonic_offsets` — line 8
 
 ## tests/test_pilot.py
 
@@ -2149,6 +2242,39 @@ Source-derived AST inventory. Search symbols instead of relying on line numbers;
 - `handler` — line 96
 - `test_other_resident_model_does_not_silently_get_replaced` — line 107
 - `handler` — line 110
+
+## tests/test_selection_audit.py
+
+[Source](../../tests/test_selection_audit.py)
+
+- `test_exact_arithmetic_audit_is_reproducible_and_never_human` — line 12
+- `test_changed_labels_sources_and_protocols_cannot_be_automatically_approved` — line 24
+
+## tests/test_selection_pilot.py
+
+[Source](../../tests/test_selection_pilot.py)
+
+- `setup` — line 33
+- `post` — line 90
+- `review_body` — line 100
+- `approved` — line 110
+- `auto_approved` — line 127
+- `test_twelve_case_pilot_uses_normal_jobs_quota_and_never_promotes` — line 144
+- `execute` — line 155
+- `test_unavailable_or_stale_pilot_cannot_measure_or_count_fallback` — line 281
+- `execute` — line 287
+- `test_tenant_roles_grant_and_approval_binding_are_enforced` — line 364
+- `test_automated_review_is_local_one_pilot_bound_and_cannot_claim_human` — line 379
+- `test_revoked_automated_authorization_stops_queued_worker_without_call` — line 417
+- `forbidden` — line 426
+
+## tests/test_selection_protocol.py
+
+[Source](../../tests/test_selection_protocol.py)
+
+- `test_protocol_is_frozen_numeric_only_and_has_independent_reserved_cases` — line 13
+- `test_even_twelve_correct_synthetic_cases_cannot_qualify_semantics` — line 45
+- `test_pilot_selection_cannot_add_real_evidence_or_other_roles` — line 76
 
 ## tests/test_sprint11_preserve.py
 

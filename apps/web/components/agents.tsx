@@ -4,6 +4,7 @@ import type { components } from "@ppm/contracts/schema";
 import { apiError } from "./api-error";
 import { Button, Field, StatePanel } from "./ui";
 import { RecordSelect } from "./record-select";
+import { SelectionPilot } from "./selection-pilot";
 
 type S = components["schemas"];
 type Analysis = S["AnalysisView"];
@@ -250,6 +251,19 @@ export function Agents({
           </p>
         )}
       </header>
+      {admin &&
+        guidedEnabled &&
+        project &&
+        guidedProjects.includes(project) && (
+          <details className="panel">
+            <summary>Evaluate financial API selection</summary>
+            <SelectionPilot
+              key={project}
+              project={project}
+              transport={transport}
+            />
+          </details>
+        )}
       {loading && <p role="status">Loading specialist runs…</p>}
       {error && (
         <StatePanel kind="error" title="Analysis unavailable">
@@ -467,8 +481,11 @@ export function Agents({
             {hybrid ? "Run scoped analysis" : "Run nine specialists"}
           </Button>
           <p>
-            Existing provider settings, request limits, budget, retries and
-            cancellation apply. Missing providers produce explicit fallback.
+            Ordinary cloud guided reviews can wait up to 60 seconds for one API
+            response within the shared run deadline. Fixture pilots retain their
+            22-second limit and separate acceptance gate. Existing provider
+            settings, request limits, budget, retries and cancellation apply.
+            Missing providers produce explicit fallback.
           </p>
         </form>
       ) : (
@@ -481,6 +498,14 @@ export function Agents({
       {selected?.guided_review && (
         <section className="panel" aria-label="Guided review results">
           <h2>Guided review checklist</h2>
+          {selected.guided_review.lineage === "synthetic_fixture" && (
+            <p>
+              <strong>
+                Synthetic financial selection fixture. These values are not
+                project evidence.
+              </strong>
+            </p>
+          )}
           <p>
             <strong>
               {selected.guided_review.status === "api_selected"

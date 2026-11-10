@@ -1,4 +1,4 @@
-import { test, expect } from "@playwright/test";
+import { test, expect } from "./test";
 import AxeBuilder from "@axe-core/playwright";
 import { readFileSync } from "node:fs";
 
@@ -341,7 +341,11 @@ for (const staleResult of ["success", "error"] as const) {
       readFileSync(process.env.PPM_IDENTITY_FIXTURE!, "utf8"),
     );
     await page.goto("/login");
-    await page.getByLabel("Email address", { exact: true }).fill(f.agent_email);
+    // These mocked polling cases need no specialist data. Use the independent
+    // operator fixture so the full suite does not exhaust the analyst login quota.
+    await page
+      .getByLabel("Email address", { exact: true })
+      .fill(f.integration_email);
     await page.getByLabel("Password", { exact: true }).fill(f.password);
     await page.getByRole("button", { name: "Sign in", exact: true }).click();
     await expect(

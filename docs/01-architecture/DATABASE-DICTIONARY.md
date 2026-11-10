@@ -1,12 +1,12 @@
 # Current source-derived database dictionary
 
-Generated from SQLAlchemy `Base.metadata` without a database connection; SQL types use the PostgreSQL dialect. Source chain ends at `0018_csv_source_namespaces`; the normal applied head and preservation evidence are independently recorded in the [latest handoff](../handoffs/LATEST.md). Run `python scripts/documentation_inventory.py --check` for drift. SQL-only RLS, triggers, privileges and security-definer functions require reading [the migrations](../../services/api/migrations/versions) and [document contract](../contracts/documents.md); metadata is not a complete policy inventory.
+Generated from SQLAlchemy `Base.metadata` without a database connection; SQL types use the PostgreSQL dialect. Source chain ends at `0020_guided_cloud_timeout`; the normal applied head and preservation evidence are independently recorded in the [latest handoff](../handoffs/LATEST.md). Run `python scripts/documentation_inventory.py --check` for drift. SQL-only RLS, triggers, privileges and security-definer functions require reading [the migrations](../../services/api/migrations/versions) and [document contract](../contracts/documents.md); metadata is not a complete policy inventory.
 
 ## Important data flows
 
 Live organization membership → transaction-local principal/RLS → scoped domain facts. Published assessment history remains immutable. `source_documents` owns scope/retention; `source_versions` owns immutable byte identity and mutable processing status; `source_chunks` is replaceable derived text; `source_evidence_links` references separately authorized released attachments. `durable_jobs` references exactly one integration, document version, AI run or local ML run according to job kind. Connector principals, source conflicts, immutable histories/datasets and CPU run lineage follow the [local baseline contract](../contracts/ml.md). AI run provenance/budgets, attempt accounting and rebuildable vectors follow the [AI contract](../contracts/ai.md). Originals remain private objects; logical deletion revokes reads, guarded purge removes bytes/text/links but retains tombstones. `ai_embeddings` stores the bounded exact JSONB projection; no pgvector/ANN or semantic-finding table is activated.
 
-**Inventory:** 82 metadata tables (Alembic's runtime version table is separate).
+**Inventory:** 83 metadata tables (Alembic's runtime version table is separate).
 
 ## agent_analyses
 
@@ -311,6 +311,27 @@ Live organization membership → transaction-local principal/RLS → scoped doma
 - ForeignKeyConstraint (unnamed): organization_id, actor_id
 - ForeignKeyConstraint (unnamed): organization_id, project_id
 - ForeignKeyConstraint (unnamed): session_id
+- PrimaryKeyConstraint (unnamed): id
+- UniqueConstraint (unnamed): organization_id, id
+
+## ai_selection_pilots
+
+| Column | SQL type | Nullable | Primary key | Foreign reference |
+| --- | --- | --- | --- | --- |
+| `id` | `UUID` | False | True | — |
+| `organization_id` | `UUID` | False | False | memberships.organization_id, organizations.id, ppm_projects.organization_id |
+| `project_id` | `UUID` | False | False | ppm_projects.id |
+| `actor_id` | `UUID` | False | False | memberships.user_id |
+| `binding` | `JSONB` | False | False | — |
+| `review` | `JSONB` | True | False | — |
+| `case_runs` | `JSONB` | False | False | — |
+| `created_at` | `TIMESTAMP WITH TIME ZONE` | False | False | — |
+| `revision` | `INTEGER` | False | False | — |
+
+- CheckConstraint (unnamed): revision > 0 AND octet_length(case_runs::text) <= 2000
+- ForeignKeyConstraint (unnamed): organization_id
+- ForeignKeyConstraint (unnamed): organization_id, actor_id
+- ForeignKeyConstraint (unnamed): organization_id, project_id
 - PrimaryKeyConstraint (unnamed): id
 - UniqueConstraint (unnamed): organization_id, id
 

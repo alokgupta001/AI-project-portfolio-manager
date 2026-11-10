@@ -1,6 +1,7 @@
-import { test, expect, type Page, type Locator } from "@playwright/test";
+import { test, expect, type Page, type Locator } from "./test";
 import { readFileSync, writeFileSync } from "node:fs";
 import { spawnSync } from "node:child_process";
+import { completeGuides } from "./test";
 import {
   fields,
   labels,
@@ -37,6 +38,7 @@ test("complete Northstar website walkthrough through delivery, independent revie
   const [asha, priya, ravi, vera] = await Promise.all(
     contexts.map((c) => c.newPage()),
   );
+  await Promise.all(contexts.map(completeGuides));
   for (const p of [asha, priya, ravi, vera]) p.setDefaultTimeout(20000);
   const names = ["Asha Admin", "Priya Manager", "Ravi Reviewer", "Vera Viewer"];
   const roles = ["Admin", "Project Manager", "Project Manager", "Viewer"];

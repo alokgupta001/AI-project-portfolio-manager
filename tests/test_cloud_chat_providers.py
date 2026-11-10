@@ -215,3 +215,27 @@ async def test_missing_usage_stays_unknown_and_provider_error_is_sanitized(cloud
         await NativeAdapter(settings, profile, httpx.MockTransport(fail)).execute(request)
     assert error.value.code == "QUOTA_EXHAUSTED" and error.value.retry_after == 95
     assert len(paths) == 1 and "private" not in str(error.value)
+
+
+async def test_timeout_retains_safe_transport_milestones_without_retry(cloud, monkeypatch):
+    settings, profile, _, request = cloud
+    clock = [100.0]
+    monkeypatch.setattr("ppm_api.model_timing.perf_counter", lambda: clock[0])
+    sent = []
+
+    async def handler(req):
+        sent.append(req.method)
+        trace = req.extensions["trace"]
+        clock[0] = 100.05
+        await trace("connection.start_tls.complete", {"secret": req.headers})
+        clock[0] = 122.0
+        await trace("http11.receive_response_headers.failed", {"exception": "private"})
+        raise httpx.ReadTimeout("private timeout detail")
+
+    adapter = NativeAdapter(settings, profile, httpx.MockTransport(handler))
+    with pytest.raises(ModelFailure) as error:
+        await adapter.execute(request)
+    assert error.value.code == "TIMEOUT" and error.value.certainty == "unknown"
+    assert len(sent) == 1
+    assert adapter.timing.events["http11.receive_response_headers.failed"] == 22000
+    assert "private" not in str(error.value) + json.dumps(adapter.timing.events)

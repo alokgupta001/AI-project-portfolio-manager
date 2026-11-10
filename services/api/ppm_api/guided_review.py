@@ -31,6 +31,15 @@ PROVIDERS = {
 }
 
 
+def prompt(snapshot: dict) -> str:
+    """Keep the measured pilot strategy separate from the general guided checklist."""
+    if snapshot.get("selection_pilot"):
+        from ppm_api.selection_protocol import PROMPT as pilot_prompt
+
+        return pilot_prompt
+    return PROMPT
+
+
 async def granted_projects(p: object) -> list[UUID]:
     """Resolve explicit guided-run grants without expanding current source access."""
     from ppm_api.agent_task_tables import guided_grants
@@ -105,6 +114,7 @@ class GuidedReview(Strict):
     agent: AgentId
     provider: str
     code: str | None = None
+    lineage: Literal["project_observations", "synthetic_fixture"] = "project_observations"
     cards: list[Card] = Field(default_factory=list, max_length=2)
     checklists: list[Checklist] = Field(default_factory=list, max_length=9)
     quality: Literal["LIMITED_SELECTION_NOT_SEMANTIC_QUALIFICATION"] = (
@@ -228,6 +238,7 @@ def pack(snapshot: dict, agent: str, current: dict) -> dict:
     schema = Choice.model_json_schema()
     return dict(
         payload=payload,
+        **({"system": prompt(snapshot)} if snapshot.get("selection_pilot") else {}),
         schema=schema,
         evidence=evidence,
         cards=cards,
@@ -267,6 +278,7 @@ def view(snapshot: dict, sections: list, tasks: list, current: dict) -> dict:
         agent=agent,
         provider=PROVIDERS[agent],
         code=code,
+        lineage="synthetic_fixture" if snapshot.get("selection_pilot") else "project_observations",
         cards=cards,
         checklists=[
             Checklist(agent=c.agent, provider=PROVIDERS[c.agent], action=ACTIONS[c.agent])
@@ -278,6 +290,7 @@ def view(snapshot: dict, sections: list, tasks: list, current: dict) -> dict:
 def check_request(request: object) -> None:
     """Prevent the limited route from becoming a general-purpose prompt or schema bypass."""
     from ppm_api.model_contracts import ModelRequest
+    from ppm_api.selection_protocol import PROMPT as pilot_prompt
 
     if not isinstance(request, ModelRequest):
         raise ModelFailure("CONFIGURATION")
@@ -286,7 +299,7 @@ def check_request(request: object) -> None:
     except ValueError:
         raise ModelFailure("CONFIGURATION") from None
     if (
-        request.system != PROMPT
+        request.system not in ({PROMPT, pilot_prompt} if body.role == "financial" else {PROMPT})
         or request.schema != Choice.model_json_schema()
         or request.additional_task_classes != (BY_AGENT[body.role].task_class,)
         or request.permit.provider_id != PROVIDERS[body.role]

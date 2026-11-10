@@ -14,6 +14,7 @@ from ppm_api import (  # noqa: F401
     ml_tables,
     pilot_tables,
     ppm_tables,
+    selection_tables,
 )
 from ppm_api.database import Base
 from sqlalchemy import pool

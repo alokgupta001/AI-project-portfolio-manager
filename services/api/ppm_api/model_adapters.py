@@ -17,6 +17,7 @@ from ppm_api.config import Settings
 from ppm_api.model_contracts import ErrorCode, ModelFailure, ModelRequest, ModelResult, ModelUsage
 from ppm_api.model_registry import ModelProfile, load_policy
 from ppm_api.model_router import RouteRequirements, candidates
+from ppm_api.model_timing import TransportTiming
 
 CLOUD_CHAT_ORIGINS = {
     "groq": "https://api.groq.com/openai/v1",
@@ -65,17 +66,27 @@ class NativeAdapter:
         """Bind native transport to one validated model profile and settings snapshot."""
         self.settings, self.profile, self.transport = settings, profile, transport
         self.checkpoint_response = checkpoint_response
+        self.timing: TransportTiming | None = None
 
     def permit(self, request: ModelRequest) -> None:
         """Reject expired permits or provider and model identity mismatches."""
         p = request.permit
+        from ppm_api.guided_review import PROMPT as guided_prompt
+
+        timeout_cap = (
+            self.settings.ai_guided_cloud_timeout_seconds
+            if request.task_class == "guided_selection"
+            and self.profile.provider != "ollama"
+            and request.system == guided_prompt
+            else 22
+        )
         if (
             p.expires_at.tzinfo is None
             or p.expires_at <= datetime.now(UTC)
             or p.provider_id != self.profile.provider
             or p.model_id != self.profile.model
             or not self.profile.enabled
-            or not 0 < request.timeout <= 22
+            or not 0 < request.timeout <= p.timeout_seconds <= timeout_cap
             or not 0 < request.max_output_tokens <= 512
             or len(request.payload.encode()) > 100000
         ):
@@ -132,6 +143,7 @@ class NativeAdapter:
     async def execute(self, request: ModelRequest) -> ModelResult:
         """Recheck eligibility and admission before one bounded native provider request."""
         self.permit(request)
+        self.timing = TransportTiming()
         started = perf_counter()
         origin = self.origin()
         async with httpx.AsyncClient(
@@ -142,7 +154,8 @@ class NativeAdapter:
             limits=httpx.Limits(max_connections=1),
         ) as client:
             try:
-                async with asyncio.timeout(request.timeout):
+                remaining = (request.permit.expires_at - datetime.now(UTC)).total_seconds()
+                async with asyncio.timeout(min(request.timeout, max(0, remaining))):
                     if self.profile.provider == "ollama":
                         if not self.settings.ai_ollama_enabled:
                             raise ModelFailure("SPENDING_NOT_AUTHORIZED")
@@ -326,7 +339,13 @@ class NativeAdapter:
         """Read bounded provider JSON and classify HTTP failures without exposing raw bodies."""
         if body is not None and len(json.dumps(body).encode()) > 110000:
             raise ModelFailure("CONTEXT_LIMIT")
-        async with client.stream(method, url, json=body, headers=headers) as response:
+        async with client.stream(
+            method,
+            url,
+            json=body,
+            headers=headers,
+            extensions={"trace": self.timing.trace} if self.timing else {},
+        ) as response:
             if response.status_code != 200:
                 error_value = {}
                 if response.status_code == 400 or self.checkpoint_response is not None:

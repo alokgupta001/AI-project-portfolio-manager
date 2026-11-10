@@ -1,0 +1,31 @@
+{
+  "date": "2026-10-30",
+  "normal_schema_before": "0019_selection_pilot",
+  "normal_schema_after": "0020_guided_cloud_timeout",
+  "unchanged_table_hashes": 83,
+  "unchanged_configuration_migration_hashes": 24,
+  "unchanged_evidence_tooling_files": 134,
+  "additional_model_calls": 0,
+  "full_backend": {
+    "passed": 580,
+    "failed": 2,
+    "skipped": 1,
+    "seconds": 782.1,
+    "explanation": "Two test assertions inspected a successfully released slot; corrected to check the in-flight slot. No runtime change after this full run."
+  },
+  "focused_rerun": {
+    "passed": 28,
+    "seconds": 189.43,
+    "overlaps_full": true,
+    "includes_both_corrected_failures": true
+  },
+  "browser": {
+    "passed": 2,
+    "seconds": 46.0,
+    "providers": "mocked/disabled"
+  },
+  "migrations": "0020\u21920006\u21920020\u2192base\u21920020\u21920020; zero drift; normal forward only",
+  "static": "all ten checks passed",
+  "live_provider_60_seconds": "not measured",
+  "at17": "BLOCKED"
+}

@@ -4,7 +4,7 @@ from uuid import UUID
 
 from pydantic import BaseModel, Field
 
-SCHEMA_REVISION: Final = "0018_csv_source_namespaces"
+SCHEMA_REVISION: Final = "0020_guided_cloud_timeout"
 
 
 class ErrorDetail(BaseModel):
@@ -41,5 +41,5 @@ class ReadyResponse(BaseModel):
 class FoundationResponse(BaseModel):
     instance_id: UUID
     initialized_at: datetime
-    schema_revision: Literal["0018_csv_source_namespaces"] = SCHEMA_REVISION
+    schema_revision: Literal["0020_guided_cloud_timeout"] = SCHEMA_REVISION
     environment: Literal["local", "test", "demo"]

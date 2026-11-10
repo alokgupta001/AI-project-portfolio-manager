@@ -1,4 +1,4 @@
-import { expect, test } from "@playwright/test";
+import { expect, test } from "./test";
 
 test("web renders the real API database checkpoint and reloads it", async ({
   page,

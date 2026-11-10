@@ -1,4 +1,4 @@
-import { test, expect, type Page } from "@playwright/test";
+import { test, expect, completeGuides, type Page } from "./test";
 import AxeBuilder from "@axe-core/playwright";
 import { readFileSync } from "node:fs";
 import { spawnSync } from "node:child_process";
@@ -244,6 +244,7 @@ test("older records, selectors, full cohorts and browser result grants", async (
     access.getByRole("button", { name: "Revoke access", exact: true }),
   ).toBeVisible();
   const viewerContext = await browser.newContext();
+  await completeGuides(viewerContext);
   const viewer = await viewerContext.newPage();
   await login(viewer, f.pilot_viewer_email, f.password);
   await viewer.goto(`/assessments?assessment=${f.pilot_assessment}`);
@@ -292,6 +293,7 @@ test("My Work, persistent notifications and manual changes refresh a second sess
     page.getByRole("link", { name: "Pilot assigned work", exact: true }),
   ).toBeVisible();
   const adminContext = await browser.newContext();
+  await completeGuides(adminContext);
   const admin = await adminContext.newPage();
   await login(admin, f.pilot_email, f.password);
   const csrf = (await adminContext.cookies()).find(
@@ -381,4 +383,16 @@ test("My Work, persistent notifications and manual changes refresh a second sess
     page.getByRole("link", { name: "Pilot new assignment", exact: true }),
   ).toHaveCount(0);
   await adminContext.close();
+});
+
+// These regressions cover domain flows; tutorial.spec.ts exercises first-run onboarding.
+test.beforeEach(async ({ page }) => {
+  await page.addInitScript(() => {
+    const read = Storage.prototype.getItem;
+    Storage.prototype.getItem = function (key: string) {
+      return key.startsWith("ppm-tutorial-v1:")
+        ? JSON.stringify({ version: 1, status: "completed", step: 7 })
+        : read.call(this, key);
+    };
+  });
 });

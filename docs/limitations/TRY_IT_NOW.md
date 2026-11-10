@@ -1,5 +1,24 @@
 # Try the limited guided review
 
+## 30 October 2026 — ordinary guided cloud timeout
+
+[Approved timeout follow-up](../03-sprints/active/sprint-12.1/TIMEOUT_FOLLOWUP.md): new ordinary cloud guided reviews can wait up to **60 seconds**, recorded per run. Normal schema is **0020** after a forward-only migration; all 83 table hashes matched. Existing fixture pilots retain **22 seconds**, the **20-second gate**, and their stopped results. Legacy runs retain their original limit. Shared quotas, $0 policy and access remain unchanged; **AT17 stays BLOCKED**. No new model call, PR, push, deployment or Sprint 13 work.
+
+Validation: 580 full-suite passes plus two corrected test assertions verified in a **28-pass focused rerun** (overlapping); one skip. Migration lifecycle/drift, static/contracts and **two browser journeys** passed. See the linked report for exact evidence and limitations. Earlier dated sections below are historical.
+
+## 28 October 2026 — Sprint 12.1 timing repair
+
+[Current repair report](../03-sprints/active/sprint-12.1/REPAIR_FOLLOWUP.md) supersedes the operational checkpoint below. Failed calls retain elapsed timing; UI/downloads distinguish unavailable time from accepted-response p95. Separate repair pilot `3f0f3a7f`: **insufficient_data**, 5/12 measured, 5 exact matches, 1 unavailable, 0/6 reserved measured; accepted-case p95 7936 ms. Original ce874a14 history remains unchanged; experiments are not combined. Automated audit records **human_reviewed=false**. Broad **AT17 remains BLOCKED**.
+
+Fresh validation: **566 backend passed, 1 skipped**, one inherited warning; disposable migration lifecycle/drift, two browser journeys, static/contracts and tooling checks passed. Normal schema remains frozen **0019**. Provider configuration, explicit grants, shared limits and $0 policy are preserved. No commit, PR, push, deployment or Sprint 13 work. The single repair experiment is complete under its gate/stop rule; do not start another without authorization.
+
+## Earlier dated checkpoint (historical)
+
+For the new measured experiment, follow the [financial selection pilot](FINANCIAL_SELECTION_PILOT.md)
+in `/agents`: prepare 12 synthetic cases, obtain a second person's label review,
+then measure one case at a time using the existing Gemini quota ledger. Preparing
+and reading require no model call; AT17 remains BLOCKED.
+
 ## Sprint 12 local lab
 
 Open `/ml` as Admin in the existing synthetic demo organization. Load a synthetic numeric example, import an immutable history version, build an as-of dataset, run/repeat the CPU baseline and inspect/download its model card. [Full user steps](../03-sprints/completed/sprint-12/USER_GUIDE.md). `/integrations` now owns connector approval, rotation/revocation and source conflict review. No new AI keys, Ollama or services are needed. Real history without genuine outcomes yields insufficient_data; synthetic metrics are not real accuracy.

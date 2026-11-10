@@ -4,6 +4,7 @@ import asyncio
 import json
 import logging
 from datetime import timedelta
+from time import perf_counter
 from typing import Any
 from uuid import UUID, uuid4, uuid5
 
@@ -34,6 +35,7 @@ from ppm_api.model_contracts import (
     ModelRequest,
     SectionOutput,
 )
+from ppm_api.model_deadlines import completion_timeout
 from ppm_api.model_registry import canonical, digest, load_policy
 from ppm_api.model_router import RouteRequirements, candidates
 
@@ -70,7 +72,7 @@ async def initialize(conn: Any, run: dict, snapshot: dict) -> None:
                     else section_schema(node["mode"])
                 ),
                 prompt_hash=digest(
-                    G.PROMPT
+                    G.prompt(snapshot)
                     if node["mode"] == "guided"
                     else REVIEW_PROMPT
                     if node["kind"] == "evaluator"
@@ -233,7 +235,7 @@ async def complete_task(runtime: Any, task: dict, node: dict, context: dict, pol
         else tuple(BY_AGENT[m["agent"]].task_class for m in node.get("members", [])[1:])
     )
     base_system = (
-        G.PROMPT
+        context.get("system", G.PROMPT)
         if guided
         else REVIEW_PROMPT
         if review
@@ -289,7 +291,7 @@ async def complete_task(runtime: Any, task: dict, node: dict, context: dict, pol
         admitted = None
         for profile in options:
             aid = uuid4()
-            timeout = min(runtime.settings.ai_local_completion_timeout_seconds, 22)
+            timeout = completion_timeout(runtime.settings, run, profile.provider, guided)
             if node["mode"] == "batch":
                 while delay := batch_window_delay(rows, profile, now(), run["deadline"], timeout):
                     await asyncio.sleep(min(delay, 5))
@@ -343,13 +345,16 @@ async def complete_task(runtime: Any, task: dict, node: dict, context: dict, pol
             profile.model,
             policy.policy_hash,
             min(run["deadline"], now() + timedelta(seconds=timeout)),
+            timeout_seconds=timeout,
         )
         response, failure = None, None
         cancellation: asyncio.CancelledError | None = None
         output: SectionOutput | Critique | dict | None = None
         result: dict | None = None
+        adapter = NativeAdapter(runtime.settings, profile)
+        attempt_started = perf_counter()
         try:
-            response = await NativeAdapter(runtime.settings, profile).execute(
+            response = await adapter.execute(
                 ModelRequest(
                     permit,
                     system,
@@ -393,6 +398,20 @@ async def complete_task(runtime: Any, task: dict, node: dict, context: dict, pol
             cancellation = exc
         except Exception:
             failure = ModelFailure("UNKNOWN", "unknown")
+        elapsed_ms = max(0, int((perf_counter() - attempt_started) * 1000))
+        logger.log(
+            logging.WARNING if failure else logging.INFO,
+            json.dumps(
+                dict(
+                    event="model_attempt_timing",
+                    version="attempt-elapsed-v2",
+                    attempt_id=str(aid),
+                    elapsed_ms=elapsed_ms,
+                    outcome=failure.code if failure else "complete",
+                    transport_events_ms=adapter.timing.events if adapter.timing else {},
+                )
+            ),
+        )
         try:
             async with runtime.engine.begin() as conn:
                 # Reestablish context even when cancellation/revocation prevents publication.
@@ -434,7 +453,7 @@ async def complete_task(runtime: Any, task: dict, node: dict, context: dict, pol
                         usage_source=usage.source if usage else "unknown",
                         send_state="returned" if response else "unknown",
                         native_reason=response.native_finish_reason if response else None,
-                        latency_ms=response.latency_ms if response else 0,
+                        latency_ms=response.latency_ms if response else elapsed_ms,
                         response_hash=digest(response.text) if response else None,
                     )
                 )
@@ -496,6 +515,11 @@ async def execute(runtime: Any, run: dict) -> tuple[dict, str | None]:
         p, _, _ = await runtime.state(conn)
         analysis = await get_analysis(p, run["id"])
     snapshot, stop = analysis["snapshot"], asyncio.Event()
+    if snapshot.get("selection_pilot", {}).get("review_kind") == "automated_rule_audit":
+        from ppm_api.selection_pilot import automated_allowed
+
+        if not automated_allowed(runtime.settings, UUID(snapshot["selection_pilot"]["id"])):
+            raise ProviderError("AUTHORITY_REVOKED")
     pulse = asyncio.create_task(heartbeat(runtime, stop))
     try:
         for node in snapshot["hybrid_plan"]["nodes"]:

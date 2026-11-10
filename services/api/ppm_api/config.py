@@ -4,6 +4,7 @@ from datetime import datetime
 from decimal import Decimal
 from pathlib import Path
 from typing import Literal
+from uuid import UUID
 
 from pydantic import (
     EmailStr,
@@ -53,6 +54,8 @@ class Settings(BaseSettings):
     ai_gemini_daily_call_limit: int = Field(default=20, ge=1, le=100)
     ai_runtime_v2_enabled: bool = False
     ai_guided_enabled: bool = False
+    # Owner-controlled, local-only exception for one original synthetic fixture pilot.
+    ai_fixture_automated_pilots: list[UUID] = Field(default_factory=list, max_length=1)
     ai_execution_mode: Literal["local_only", "hybrid", "disabled"] = "local_only"
     ai_cloud_enabled: bool = False
     ai_model_registry_path: Path | None = None
@@ -72,6 +75,7 @@ class Settings(BaseSettings):
     ai_max_attempts_per_section: int = Field(default=2, ge=1, le=2)
     ai_max_tasks_per_run: int = Field(default=24, ge=12, le=24)
     ai_local_completion_timeout_seconds: int = Field(default=22, ge=1, le=22)
+    ai_guided_cloud_timeout_seconds: int = Field(default=60, ge=1, le=60)
     ai_local_embedding_model: str = ""
 
     @model_validator(mode="after")

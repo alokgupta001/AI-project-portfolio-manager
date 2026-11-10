@@ -1,4 +1,4 @@
-import { test, expect } from "@playwright/test";
+import { test, expect } from "./test";
 import { readFileSync, mkdirSync } from "node:fs";
 
 test("Gemini free-tier disclosure and paused recovery without real provider calls", async ({

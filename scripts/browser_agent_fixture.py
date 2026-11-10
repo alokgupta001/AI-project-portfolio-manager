@@ -56,6 +56,8 @@ async def run() -> None:
 
     try:
         org, actor, reviewer = uuid4(), uuid4(), uuid4()
+        pilot_reviewer = uuid4()
+        pilot_reviewer_email = f"pilot-{pilot_reviewer}@example.com"
         actor_email, reviewer_email = (
             f"agents-{actor}@example.com",
             f"agents-{reviewer}@example.com",
@@ -70,6 +72,7 @@ async def run() -> None:
             for uid, email, role in [
                 (actor, actor_email, "Admin"),
                 (reviewer, reviewer_email, "Project Manager"),
+                (pilot_reviewer, pilot_reviewer_email, "Admin"),
             ]:
                 await conn.execute(
                     users.insert().values(
@@ -183,15 +186,16 @@ async def run() -> None:
                 from ppm_api.agent_task_tables import guided_grants
 
                 async with owner.begin() as conn:
-                    await conn.execute(
-                        guided_grants.insert().values(
-                            organization_id=org,
-                            user_id=reviewer,
-                            project_id=UUID(project["id"]),
-                            enabled=True,
-                            created_at=now(),
+                    for guided_actor in (reviewer, actor, pilot_reviewer):
+                        await conn.execute(
+                            guided_grants.insert().values(
+                                organization_id=org,
+                                user_id=guided_actor,
+                                project_id=UUID(project["id"]),
+                                enabled=True,
+                                created_at=now(),
+                            )
                         )
-                    )
                 print(
                     json.dumps(
                         dict(
@@ -202,6 +206,7 @@ async def run() -> None:
                             agent_org=str(org),
                             agent_email=actor_email,
                             agent_reviewer_email=reviewer_email,
+                            pilot_reviewer_email=pilot_reviewer_email,
                         )
                     )
                 )

@@ -1,5 +1,68 @@
 # Changelog
 
+## 31 October 2026 — local frontend redesign
+
+- Introduce forest/mint light/dark surfaces, local Geist, stroke icons and grouped navigation.
+- Connect overview health, spend and drill-downs to the authorized command snapshot;
+  preserve organization calendar dates, unknown values and separate currencies.
+- Add an eight-step keyboard-accessible tutorial with skip confirmation, resume,
+  completion and replay from workspace/account settings.
+- Fix truncated external table pages and undefined project financial summaries;
+  add loaded-row controls, nested-route highlighting and dirty delivery-form guards.
+- Record actual checks and scope in [the redesign report](docs/04-testing/FRONTEND_REDESIGN.md).
+
+## 30 October 2026 — ordinary guided cloud timeout
+
+[Approved timeout follow-up](docs/03-sprints/active/sprint-12.1/TIMEOUT_FOLLOWUP.md): new ordinary cloud guided reviews can wait up to **60 seconds**, recorded per run. Normal schema is **0020** after a forward-only migration; all 83 table hashes matched. Existing fixture pilots retain **22 seconds**, the **20-second gate**, and their stopped results. Legacy runs retain their original limit. Shared quotas, $0 policy and access remain unchanged; **AT17 stays BLOCKED**. No new model call, PR, push, deployment or Sprint 13 work.
+
+Validation: 580 full-suite passes plus two corrected test assertions verified in a **28-pass focused rerun** (overlapping); one skip. Migration lifecycle/drift, static/contracts and **two browser journeys** passed. See the linked report for exact evidence and limitations. Earlier dated sections below are historical.
+
+## 28 October 2026 — Sprint 12.1 timing repair
+
+[Current repair report](docs/03-sprints/active/sprint-12.1/REPAIR_FOLLOWUP.md) supersedes the operational checkpoint below. Failed calls retain elapsed timing; UI/downloads distinguish unavailable time from accepted-response p95. Separate repair pilot `3f0f3a7f`: **insufficient_data**, 5/12 measured, 5 exact matches, 1 unavailable, 0/6 reserved measured; accepted-case p95 7936 ms. Original ce874a14 history remains unchanged; experiments are not combined. Automated audit records **human_reviewed=false**. Broad **AT17 remains BLOCKED**.
+
+Fresh validation: **566 backend passed, 1 skipped**, one inherited warning; disposable migration lifecycle/drift, two browser journeys, static/contracts and tooling checks passed. Normal schema remains frozen **0019**. Provider configuration, explicit grants, shared limits and $0 policy are preserved. No commit, PR, push, deployment or Sprint 13 work. The single repair experiment is complete under its gate/stop rule; do not start another without authorization.
+
+## Earlier dated checkpoint (historical)
+
+## 2026-10-26 — Sprint 12.1 automated fixture quality checks
+
+- Add an owner-approved local one-pilot exact arithmetic audit with immutable
+  machine provenance, human_reviewed=false, UI/API flow and queued revocation checks.
+- Preserve the separate personal-review path, explicit grants, frozen corpus,
+  shared provider ceilings, one/minute pacing, $0 policy and applied 0019.
+- Execute the actual run: f01 matched in 21.437 seconds; f02 TIMEOUT/unknown
+  stopped it. One measured, one unavailable, ten unattempted, no held-out results.
+  Fixture acceptance unmet; AT17 BLOCKED; no retry/reset or Sprint 13.
+- Record 562 passing backend tests/one skip, lifecycle/drift, two pilot browser
+  journeys, actual downloaded report and updated Sprint 12.1 documentation.
+
+## Earlier 2026-10-26 — Sprint 12.1 naming and operational preparation
+
+- Name the existing current-API financial selection experiment Sprint 12.1 in
+  its UI, sprint hub, plan, report, handoff, test/learning/user guides and indexes.
+- Publish the twelve-case draft label-review packet with frozen corpus/strategy
+  hashes and a specific demo-only access proposal.
+- Record the live access mismatch: existing demo Admin roles do not satisfy the
+  pilot's additional explicit-grant gate. Automatic approval review rejected
+  removing that gate; the rejected patch was not applied.
+- Apply the owner's explicit approval of four existing demo Admins' demo-only
+  grants, preserving all other grants, roles, policies and quota history. Ashu
+  prepared pilot ce874a14; independent human review and live cases remain open.
+- Preserve schema 0019 and unrelated artifacts.
+  AT17 remains BLOCKED; no Sprint 13 or publication.
+
+## 2026-10-26 — Financial selection pilot
+
+- Add a usable `/agents` UI/API for frozen synthetic financial selection fixtures,
+  a second person's label review, ordered one-case jobs, saved history and reports.
+- Reuse the current Gemini route and shared admission/usage controls; retain all
+  provider scopes, 50/day and one/minute ceilings, $0 and four-user access.
+- Add forward 0019 with one pilot table; preserve applied 0001–0018, existing rows,
+  source/prompts and the 21 unrelated artifact changes.
+- Keep fixture evaluation separate from semantic qualification, real outcomes and
+  Sprint 13. AT17 remains BLOCKED. [Checks](docs/verification/financial-selection-pilot/README.md).
+
 ## 2026-10-26 — Sprint 12 documentation and reviewed closeout
 
 - Reconcile maintained root/status/planning/coverage, architecture/contracts/schema,

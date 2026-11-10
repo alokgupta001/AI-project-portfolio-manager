@@ -692,6 +692,8 @@ async def test_worker_cancellation_settles_and_propagates(
         entered.set()
         await asyncio.Event().wait()
 
+    clock = iter([100.0, 107.25])
+    monkeypatch.setattr("ppm_api.agent_runtime.perf_counter", lambda: next(clock))
     monkeypatch.setattr("ppm_api.agent_runtime.NativeAdapter.execute", interrupted)
     created = await start(
         c,
@@ -739,6 +741,8 @@ async def test_worker_cancellation_settles_and_propagates(
             assert quota["outcome"] == "admitted"
         else:
             assert call["code"] == "CANCELLED" and call["completed_at"] is not None
+            assert call["latency_ms"] == 7250
+            assert call["input_tokens"] is None and call["output_tokens"] is None
             assert quota["outcome"] == "unknown"
         monkeypatch.setattr("ppm_api.ai.worker_context", worker_context)
         async with owner.begin() as conn:

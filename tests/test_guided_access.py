@@ -118,6 +118,55 @@ async def test_guided_grant_preserves_role_and_checks_every_boundary(
 
     async def execute(self, request):
         self.permit(request)
+        assert request.timeout == request.permit.timeout_seconds == 60
+        async with app.state.engine.begin() as conn:
+            await context(
+                conn, ids[role], ids["a"], "Project Manager" if role == "pm" else "Viewer"
+            )
+            call = (
+                (
+                    await conn.execute(
+                        sa.select(A.calls).where(A.calls.c.id == request.permit.attempt_id)
+                    )
+                )
+                .mappings()
+                .one()
+            )
+            task = (
+                (await conn.execute(sa.select(T.tasks).where(T.tasks.c.id == call["task_id"])))
+                .mappings()
+                .one()
+            )
+            rejected = await conn.scalar(
+                sa.text(
+                    "SELECT public.ppm_model_admit"
+                    "(:rid,:tid,:sid,:mid,:phash,:lease,:aid,10,128,61)"
+                ),
+                dict(
+                    rid=call["run_id"],
+                    tid=task["id"],
+                    sid=profile.quota_scope,
+                    mid=profile.model,
+                    phash=policy.policy_hash,
+                    lease=task["lease_token"],
+                    aid=uuid4(),
+                ),
+            )
+            assert rejected["code"] == "AUTHORITY_REVOKED"
+        async with owner.connect() as conn:
+            quota = (
+                (
+                    await conn.execute(
+                        sa.select(T.quotas).where(
+                            T.quotas.c.attempt_id == request.permit.attempt_id
+                        )
+                    )
+                )
+                .mappings()
+                .one()
+            )
+            assert (quota["slot_expires_at"] - quota["admitted_at"]).total_seconds() == 65
+            assert quota["outcome"] == "admitted"
         seen.append(request)
         return ModelResult(
             attempt_id=request.permit.attempt_id,
@@ -136,6 +185,16 @@ async def test_guided_grant_preserves_role_and_checks_every_boundary(
     assert len(seen) == 1
     expected_role = "Project Manager" if role == "pm" else "Viewer"
     async with owner.connect() as conn:
+        run_id = UUID(response.json()["run"]["id"])
+        versions = await conn.scalar(sa.select(A.runs.c.versions).where(A.runs.c.id == run_id))
+        assert versions["guided_cloud_timeout_seconds"] == 60
+        quota = (
+            (await conn.execute(sa.select(T.quotas).where(T.quotas.c.run_id == run_id)))
+            .mappings()
+            .one()
+        )
+        assert quota["outcome"] == "complete"
+        assert quota["request_count"] == 1
         assert (
             await conn.scalar(
                 sa.select(memberships.c.role).where(

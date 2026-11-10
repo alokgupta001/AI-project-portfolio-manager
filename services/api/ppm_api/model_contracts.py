@@ -52,7 +52,15 @@ Predicate = Literal[
 ]
 Alias = Annotated[str, Field(pattern=r"^[eqsfb][1-9][0-9]{0,3}$", max_length=5)]
 Nonnegative = Annotated[StrictInt, Field(ge=0)]
-V2_FIELDS = {"runtime_version", "analysis_mode", "requested_agents", "question_ids", "prior_run_id"}
+V2_FIELDS = {
+    "runtime_version",
+    "analysis_mode",
+    "requested_agents",
+    "question_ids",
+    "prior_run_id",
+    "guided_pilot_id",
+    "guided_case_id",
+}
 
 
 class HybridSelection(Strict):
@@ -61,10 +69,24 @@ class HybridSelection(Strict):
     requested_agents: list[AgentId] | None = Field(default=None, min_length=1, max_length=9)
     question_ids: list[UUID] | None = Field(default=None, max_length=50)
     prior_run_id: UUID | None = None
+    guided_pilot_id: UUID | None = None
+    guided_case_id: str | None = Field(default=None, pattern=r"^f(?:0[1-9]|1[0-2])$")
 
     @model_validator(mode="after")
     def distinct_selection(self) -> "HybridSelection":
         """Reject duplicate role and question selections and invalid prior-run modes."""
+        if self.guided_pilot_id or self.guided_case_id:
+            if (
+                not self.guided_pilot_id
+                or not self.guided_case_id
+                or self.analysis_mode != "guided"
+                or self.requested_agents != ["financial"]
+                or self.prior_run_id
+                or getattr(self, "version_ids", [])
+                or getattr(self, "assessment_id", None)
+                or getattr(self, "operation", "agents") != "agents"
+            ):
+                raise ValueError("Pilot requires a financial guided fixture without other inputs")
         for values in (self.requested_agents, self.question_ids):
             if values is not None and len(values) != len(set(values)):
                 raise ValueError("Selections must be distinct")
@@ -268,6 +290,7 @@ class ExecutionPermit:
     model_id: str
     policy_hash: str
     expires_at: datetime
+    timeout_seconds: int = 22
 
 
 @dataclass(frozen=True)

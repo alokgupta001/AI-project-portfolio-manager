@@ -51,6 +51,10 @@ async def private_access(p: Principal, aid: UUID | None) -> dict | None:
 
 async def capture(p: Principal, body: AIRunInput, period: dict | None = None) -> dict:
     """Freeze the selected authorized metrics, records, documents and assessment evidence."""
+    if body.guided_pilot_id:
+        from ppm_api.selection_pilot import snapshot as pilot_snapshot
+
+        return await pilot_snapshot(p, body)
     project = await delivery.get(p, "projects", body.project_id, True)
     a = await private_access(p, body.assessment_id)
     start = date.fromisoformat(period["start"]) if period else now().date()

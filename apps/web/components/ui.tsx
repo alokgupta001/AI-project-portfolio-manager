@@ -16,7 +16,13 @@ export function Button({
 }: ButtonHTMLAttributes<HTMLButtonElement> & {
   variant?: "primary" | "secondary" | "danger";
 }) {
-  return <button className={`button ${variant} ${className}`} {...props} />;
+  return (
+    <button
+      className={`button ${variant} ${className}`}
+      data-autofocus={props.autoFocus || undefined}
+      {...props}
+    />
+  );
 }
 export function Badge({
   children,
@@ -111,11 +117,22 @@ export function Modal({
 }) {
   const ref = useRef<HTMLDialogElement>(null);
   const id = useId();
+  const requestClose = () => {
+    if (
+      ref.current?.querySelector('form[data-unsaved="true"]') &&
+      !window.confirm(
+        "Discard unsaved changes? Your saved record will not change.",
+      )
+    )
+      return;
+    onClose();
+  };
   useEffect(() => {
     const dialog = ref.current;
     if (!dialog || !open) return;
     const previous = document.activeElement as HTMLElement | null;
     dialog.showModal();
+    dialog.querySelector<HTMLElement>('[data-autofocus="true"]')?.focus();
     const overflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
     return () => {
@@ -131,14 +148,14 @@ export function Modal({
       className={drawer ? "modal drawer" : "modal"}
       onCancel={(e) => {
         e.preventDefault();
-        onClose();
+        requestClose();
       }}
     >
       <div className="dialog-heading">
         <h2 id={id}>{title}</h2>
         <Button
           variant="secondary"
-          onClick={onClose}
+          onClick={requestClose}
           aria-label={`Close ${title}`}
         >
           ×
@@ -212,6 +229,7 @@ export function DataTable<T>({
   const [page, setPage] = useState(0);
   const [sort, setSort] = useState({ key: "", descending: false });
   const [density, setDensity] = useState("comfortable");
+  const [size, setSize] = useState(pageSize);
   const column = columns.find((c) => c.key === sort.key);
   const filtered = rows.filter((r) =>
     searchText(r).toLowerCase().includes(query.toLowerCase()),
@@ -225,8 +243,11 @@ export function DataTable<T>({
           { numeric: true },
         ) * (sort.descending ? -1 : 1),
     );
-  const pages = Math.max(1, Math.ceil(filtered.length / pageSize));
+  const pages = Math.max(1, Math.ceil(filtered.length / size));
   const current = Math.min(page, pages - 1);
+  const displayed = external
+    ? filtered
+    : filtered.slice(current * size, (current + 1) * size);
   return (
     <div className="data-table">
       <div className="table-tools">
@@ -249,6 +270,25 @@ export function DataTable<T>({
             <option value="compact">Compact</option>
           </select>
         </Field>
+        {!external && (
+          <Field label={`Rows per page for ${caption}`}>
+            <select
+              value={size}
+              onChange={(e) => {
+                setSize(Number(e.target.value));
+                setPage(0);
+              }}
+            >
+              {Array.from(new Set([pageSize, 5, 10, 25, 50]))
+                .sort((a, b) => a - b)
+                .map((n) => (
+                  <option key={n} value={n}>
+                    {n} rows
+                  </option>
+                ))}
+            </select>
+          </Field>
+        )}
       </div>
       <div
         className="table-scroll"
@@ -286,7 +326,14 @@ export function DataTable<T>({
                         setPage(0);
                       }}
                     >
-                      {c.label} <span aria-hidden="true">↕</span>
+                      {c.label}{" "}
+                      <span aria-hidden="true">
+                        {sort.key === c.key
+                          ? sort.descending
+                            ? "↓"
+                            : "↑"
+                          : "↕"}
+                      </span>
                     </button>
                   ) : (
                     c.label
@@ -296,15 +343,13 @@ export function DataTable<T>({
             </tr>
           </thead>
           <tbody>
-            {filtered
-              .slice(current * pageSize, (current + 1) * pageSize)
-              .map((row) => (
-                <tr key={rowKey(row)}>
-                  {columns.map((c) => (
-                    <td key={c.key}>{c.render(row)}</td>
-                  ))}
-                </tr>
-              ))}
+            {displayed.map((row) => (
+              <tr key={rowKey(row)}>
+                {columns.map((c) => (
+                  <td key={c.key}>{c.render(row)}</td>
+                ))}
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>
@@ -312,6 +357,17 @@ export function DataTable<T>({
         <p className="table-empty">
           No matching records. Try a different filter.
         </p>
+      )}
+      {!external && query && (
+        <Button
+          variant="secondary"
+          onClick={() => {
+            setQuery("");
+            setPage(0);
+          }}
+        >
+          Clear filters
+        </Button>
       )}
       {!external && (
         <div className="pagination">

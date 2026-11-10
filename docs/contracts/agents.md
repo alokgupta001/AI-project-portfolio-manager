@@ -1,5 +1,26 @@
 # Specialist analysis and independent review — specialists-rubric-v1
 
+## Ordinary guided cloud deadline (30 October 2026)
+
+New ordinary v2 guided runs freeze `guided_cloud_timeout_seconds` in run versions
+(default 60, allowed 1–60). Workers may reduce but cannot increase this frozen limit.
+Only an ordinary guided cloud request with the standard guided prompt can use an
+internal permit over 22 seconds. Legacy runs, fixture pilots, Ollama and other
+analysis modes retain their prior limits. SQL admission requires the recorded bound,
+no fixture ID, current authority and request duration plus five seconds remaining
+in the 90-second run. The quota slot lasts timeout + 5 seconds until settlement;
+success releases it, unknown usage remains unknown. All provider ceilings, scope,
+cancellation and grant checks remain. Migration 0020 replaces only checked fragments
+of admission; applied predecessors are frozen. See the
+[follow-up](../03-sprints/active/sprint-12.1/TIMEOUT_FOLLOWUP.md).
+
+Additive [financial selection pilot v1](selection-pilot.md) uses the existing guided
+runtime with separate synthetic lineage, frozen numeric fixtures and a second human's
+label approval by default. The explicitly owner-scoped local automated exception
+records human=false and preserves authority/egress/quota checks. Empty new pilot
+fields preserve existing request fingerprints.
+No semantic qualification or source/prompt record is rewritten.
+
 The additive v2 goal `all_specialists` requests nine roles in four batches with
 separate role coverage, unchanged 512/4/2/90 bounds and honest partial outcomes.
 It accepts all nine requested IDs or the default full selection. Multi-role batches

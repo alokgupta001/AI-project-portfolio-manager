@@ -1,5 +1,20 @@
 # Future deployment points — local sample first
 
+Ordinary guided reviews now have an owner-approved 60-second maximum. Before
+deployment, measure provider tail latency and align proxy, worker termination and
+shutdown grace periods with the existing 90-second run deadline. Verify sanitized
+timing-event retention across restarts; earlier local repair logs covered only two
+of six attempts. Longer waits are not evidence of provider reliability or AT17
+accuracy. These deployment concerns do not block the bounded local sample.
+
+Financial selection pilot follow-up: before deployment, define independent reviewer
+ownership, fixture/report retention and provider version stability. Expand to
+representative independently reviewed real cases only with an approved data scope.
+A synthetic selection pass is not broad semantic acceptance. The new pilot uses
+the normal shared SQL ledger; historical benchmark tools still require ledger
+reconciliation before concurrent use. These are future deployment items, not a
+requirement for using the bounded local pilot. [Current pilot](FINANCIAL_SELECTION_PILOT.md).
+
 ## Sprint 12 deployment follow-up — open/deferred
 
 Before deployment, move connector environment references into a chosen secret manager, test provider-side credential rotation/revocation and exact authorized live-source equality, and define connector approval/expiry ownership. Review immutable history/export retention, permanent withdrawal, erasure/backups and copies downloaded before withdrawal. Validate provenance and independent genuine outcome labels for each target. Establish production-sized CPU/memory limits, queue monitoring, model review and native MLflow tracking/import if required. XGBoost/text candidates need justified data/resources; no hosted fine-tuning is implied. Forecast promotion/serving is Sprint 13 and remains blocked. These items do not prevent the bounded local fixture/manual-import sample; no deployment is authorized.
@@ -68,3 +83,22 @@ The [full product release criteria](../00-overview/FINAL_PRODUCT_SCOPE_AND_RELEA
 remain authoritative for a full release. The detailed
 [limitations register](LIMITS_AND_FUTURE_SOLUTIONS.md) preserves the unresolved
 requirements; this file separates their deployment follow-up from today's local use.
+
+## Sprint 12.1 automated fixture audit — local boundary
+
+Timing repair follow-up: any future deployment needs a bounded retention/access
+policy for sanitized attempt-timing logs and monitoring that distinguishes client
+transport wait from provider-internal latency. The local diagnostic overlay may
+enable worker INFO logs for the single authorized experiment; do not carry that
+operator setting or its one-pilot allowlist into deployment defaults. Provider
+latency/capacity and independently verified billing remain separate deployment
+questions. None requires new infrastructure for this local repair.
+
+The owner-approved automated check is a local-only, default-off, single-pilot
+exception for original CC0 arithmetic fixtures. Keep its UUID allowlist out of
+deployment defaults. A future multi-operator deployment needs separately designed
+review-policy administration, approval/audit governance and config consistency
+across API/workers. This is a future deployment concern, not a prerequisite for
+the authorized local sample. Preserve explicit guided grants, provider egress,
+shared ledgers and human provenance. A fixture pass grants no broad AT17 quality,
+model qualification, forecast promotion or serving authority.
