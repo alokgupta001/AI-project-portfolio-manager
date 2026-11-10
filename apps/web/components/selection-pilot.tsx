@@ -22,7 +22,7 @@ export function SelectionPilot({
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
-  const [clock, setClock] = useState(0);
+  const [clock, setClock] = useState(() => Date.now());
   const selected = pilots.find((p) => p.id === selectedId) ?? null;
   const api = useCallback(
     async <T,>(

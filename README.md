@@ -31,7 +31,6 @@ artifacts/               Generated reports, fixtures and private local outputs
 The backend is a modular monolith: feature packages share one API deployment and
 database; the worker runs background jobs. Feature folders make ownership clear
 within this existing architecture. All feature HTTP handlers are thin adapters;
-operations and table definitions have explicit owners. All feature HTTP handlers are thin adapters;
 operations and table definitions have explicit owners.
 
 ## Run and verify

@@ -1,5 +1,56 @@
 # Latest technical handoff
 
+## 11 November 2026 — CodeRabbit batch 2 findings fixed; final review prepared
+
+The owner requested continuing until all review batches finish. Batches 1 and 2
+completed at eeeb56a and 3cef66f. Batch 2 raised four actionable findings, now fixed:
+
+- Pilot pacing initializes from Date.now; an expired deadline is immediately
+  available, while a future deadline still waits for the existing interval.
+- Evidence references use UUID-ordered batches of at most 100 database rows and
+  apply the response cap after the authoritative evidence_access check. The new
+  regression places 105 inaccessible links before 105 accessible ones and verifies
+  exactly the first 100 permitted links, in order, without private assessment data.
+- Explicit owner-only policy synchronization accepts applied revisions 0019/0020;
+  unknown revisions still fail before any write. This task never applies operator
+  policy to a normal database or makes a provider call.
+- The repeated architecture sentence is removed from README.
+
+Two ancillary review notes are addressed: benchmark approvals remain bound to
+current source hashes and need fresh independent review for newly authorized runs;
+browser cleanup attempts every action, keeps the original test/restore error,
+and still fails an otherwise successful run when shutdown fails. Port 3001 remains
+intentional for isolated acceptance. The artifact upload retains its warning when
+all evidence is missing; a missing optional fresh/ directory does not require
+suppressing that warning. Historical artifacts and stopped pilot results remain.
+
+Verification after these fixes: **42 focused Linux cases passed**, zero skips,
+in **87.32 seconds**, including the new private-reference regression, policy
+revision guards, real OCR and live ClamAV. Exact runtime packages and migration
+drift checks pass. **Seven tooling tests**, all static/contracts/typing checks,
+three regenerated source inventories, and **462 Markdown / 6,512 local links** pass.
+The opt-in browser run passed four cases; its fifth initially failed because the
+new paused-clock test also paused project-picker setup. The corrected regression
+advances setup timers only before mounting the pilot, then verifies first-render
+availability and subsequent expiry with the pilot interval paused/controlled.
+That fifth case passed in **10.5 seconds** (13.6-second focused run). All five
+unique opt-in cases are covered across these runs; counts are not added to the
+standard browser suite. Desktop/mobile evidence was inspected.
+
+Both hosted workflows on the earlier 3cef66f are green: 583 backend cases and
+30 standard browser cases, plus persistence across service restart. The five
+standard-profile skips were exercised with the disabled-model/cloud overlay.
+Those full runs precede the review fixes; fresh hosted CI is required after push.
+The final review batch contains **72 paths**, including the changed source/tests
+from batch 2 and the remaining original files. Broad filters must be restored
+only after the final review; compare final file blobs with the completed batches.
+The included allowance is one review per hour; no paid add-on is enabled.
+
+Isolated structure/browser services and networks are stopped, named volumes
+retained. Normal/demo data, applied migrations, private configuration, source
+prompts, provider limits, stopped pilots and sprint boundaries remain. The user
+has authorized publication/review, not a merge, deployment or new live experiment.
+
 ## 10 November 2026 — PR 8 publication and security verification
 
 The user explicitly approved publishing all verified application/tooling changes

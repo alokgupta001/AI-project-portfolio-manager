@@ -1,5 +1,20 @@
 # Antigravity entry point — reviewed local checkpoint
 
+## 11 November 2026 — PR 8 review fixes and final batch
+
+CodeRabbit batches 1 and 2 are complete. The four batch-2 findings are fixed:
+initial pilot pacing uses the current clock, permitted evidence links fill the
+100-item cap after access filtering, the policy tool accepts schema 0019/0020,
+and README duplication is removed. Browser cleanup preserves the original error;
+source-bound approval guidance is explicit. No migration/provider/pilot change.
+All 42 focused Linux cases passed (real OCR/ClamAV), seven tooling tests pass,
+static/contracts and 462 Markdown / 6,512 local-link checks pass. The five opt-in
+browser cases passed across focused runs; the corrected paused-clock regression
+passed in 10.5 seconds. Previous 3cef66f has both hosted CI runs green; fresh full
+CI will verify these later fixes. The final 72-path review includes the fixes.
+Restore the broad CodeRabbit filters afterward, then verify reviewed file versions.
+Test services are stopped, named volumes retained. PR 8 remains open; no merge.
+
 ## 10 November 2026 — PR 8 publication and audit follow-up
 
 The owner authorized publishing all verified application/tooling work together

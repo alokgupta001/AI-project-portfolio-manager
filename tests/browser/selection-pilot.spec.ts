@@ -138,6 +138,8 @@ test("mocked automated review provenance is explicit in the UI and downloaded re
     !process.env.PPM_IDENTITY_FIXTURE || process.env.PPM_TEST_AI_V2 !== "1",
     "Use isolated guided runner",
   );
+  const initialTime = new Date();
+  await page.clock.install({ time: initialTime });
   const f = JSON.parse(readFileSync(process.env.PPM_IDENTITY_FIXTURE!, "utf8"));
   await page.goto("/login");
   await page.getByLabel("Email address", { exact: true }).fill(f.agent_email);
@@ -228,6 +230,45 @@ test("mocked automated review provenance is explicit in the UI and downloaded re
   expect(saved.summary.independent_human_review).toBe(false);
   expect(saved.summary.measured_cases).toBe(0);
   expect(saved.summary.at17).toBe("BLOCKED");
+  const pausedAt = new Date(initialTime.getTime() + 60000);
+  report.next_case_at = new Date(pausedAt.getTime() - 1000).toISOString();
+  await page.clock.pauseAt(pausedAt);
+  await page.reload();
+  const projectSelector = page.getByRole("combobox", {
+    name: "Analysis project",
+    exact: true,
+  });
+  // Advance setup timers until choices arrive. The pilot is not mounted until
+  // selecting a project, so its first interval cannot repair the initial state.
+  await expect
+    .poll(async () => {
+      await page.clock.runFor(200);
+      return projectSelector
+        .locator(`option[value="${f.agent_project}"]`)
+        .count();
+    })
+    .toBe(1);
+  await projectSelector.selectOption(f.agent_project);
+  await page
+    .getByText("Evaluate financial API selection", { exact: true })
+    .click();
+  // No interval tick can repair an incorrect initial clock while time is paused.
+  await expect(
+    pilot.getByRole("button", { name: "Measure case f01", exact: true }),
+  ).toBeEnabled();
+  const mountedAt = await page.evaluate(() => Date.now());
+  report.next_case_at = new Date(mountedAt + 30000).toISOString();
+  await pilot
+    .getByRole("button", { name: "Refresh pilot", exact: true })
+    .click();
+  await expect(
+    pilot.getByRole("button", { name: "Measure case f01", exact: true }),
+  ).toBeDisabled();
+  await page.clock.runFor(30000);
+  await expect(
+    pilot.getByRole("button", { name: "Measure case f01", exact: true }),
+  ).toBeEnabled();
+  await page.clock.resume();
   report.cases[0] = {
     ...report.cases[0],
     status: "unavailable",

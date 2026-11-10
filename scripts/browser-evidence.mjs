@@ -9,6 +9,33 @@ import {
 } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 
+// These runner actions are synchronous. Always attempt every cleanup and keep
+// the original test/restore error authoritative if later cleanup also fails.
+export function runWithCleanup(action, cleanups, report = console.error) {
+  let result;
+  let failure;
+  let failed = false;
+  try {
+    result = action();
+  } catch (error) {
+    failure = error;
+    failed = true;
+  }
+  for (const cleanup of cleanups) {
+    try {
+      cleanup();
+    } catch (error) {
+      if (failed) report("Additional browser cleanup failure:", error);
+      else {
+        failure = error;
+        failed = true;
+      }
+    }
+  }
+  if (failed) throw failure;
+  return result;
+}
+
 // Older browser specs render into docs/verification. Preserve the working bytes,
 // including uncommitted evidence; never restore from Git HEAD.
 export function preserveBrowserEvidence(projectRoot) {

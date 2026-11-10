@@ -338,7 +338,7 @@ Source-derived AST inventory. Search symbols instead of relying on line numbers;
 
 - `scope_rows` — line 15
 - `sync` — line 45
-- `main` — line 77
+- `main` — line 79
 
 ## scripts/verify_gemini_runtime.py
 
@@ -2309,6 +2309,7 @@ Source-derived AST inventory. Search symbols instead of relying on line numbers;
 - `test_125_document_paging_bounds_and_concurrent_replay` — line 394
 - `test_transport_replay_integrity_expiry_orphans_and_holds` — line 431
 - `test_assessment_bridge_preserves_completed_scores_and_private_grants` — line 520
+- `test_evidence_reference_cap_follows_private_access_filter` — line 606
 
 ## tests/test_gemini.py
 
@@ -2444,6 +2445,13 @@ Source-derived AST inventory. Search symbols instead of relying on line numbers;
 - `delayed` — line 121
 - `test_expiring_permit_bounds_wait_and_retains_unknown` — line 137
 - `stalled` — line 151
+
+## tests/test_model_policy_sync.py
+
+[Source](../../tests/test_model_policy_sync.py)
+
+- `test_sync_accepts_current_schema_revisions` — line 12
+- `test_sync_rejects_unknown_schema_before_writing` — line 27
 
 ## tests/test_model_qualification.py
 

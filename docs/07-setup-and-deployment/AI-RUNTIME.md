@@ -1,5 +1,14 @@
 # AI runtime operator guide
 
+## 11 November 2026 — source-bound benchmark approvals
+
+Cloud benchmark reviews and independent approvals bind to the current strategy's
+source-file hashes. The feature-module refactor changes those bytes and paths, so
+older review/approval files cannot authorize scoring of the changed strategy.
+Preserve historical artifacts. Any newly authorized benchmark must regenerate its
+review packet and obtain fresh independent approval through the documented flow;
+do not bypass the hash check or restart a stopped pilot as part of this cleanup.
+
 ## 30 October 2026 — ordinary guided cloud timeout
 
 [Approved timeout follow-up](../03-sprints/active/sprint-12.1/TIMEOUT_FOLLOWUP.md): new ordinary cloud guided reviews can wait up to **60 seconds**, recorded per run. Normal schema is **0020** after a forward-only migration; all 83 table hashes matched. Existing fixture pilots retain **22 seconds**, the **20-second gate**, and their stopped results. Legacy runs retain their original limit. Shared quotas, $0 policy and access remain unchanged; **AT17 stays BLOCKED**. No new model call, PR, push, deployment or Sprint 13 work.

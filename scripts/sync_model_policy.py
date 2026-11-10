@@ -57,6 +57,8 @@ async def sync(policy: ModelPolicy) -> None:
                 "0016_guided_project_access",
                 "0017_local_ml_foundations",
                 "0018_csv_source_namespaces",
+                "0019_selection_pilot",
+                "0020_guided_cloud_timeout",
             }:
                 raise ValueError
             for row in scope_rows(policy):

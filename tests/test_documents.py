@@ -601,3 +601,77 @@ async def test_assessment_bridge_preserves_completed_scores_and_private_grants(
     assert response.status_code == 403
     hidden = await c.get(f"/api/v1/documents/versions/{source['version_id']}/assessment-links")
     assert hidden.status_code == 200 and hidden.json() == []
+
+
+async def test_evidence_reference_cap_follows_private_access_filter(identity, monkeypatch):
+    from ppm_api.modules.assessments.tables import assessments, evidence_attachments
+    from ppm_api.modules.identity.tables import memberships
+    from test_assessment import fixture
+
+    await clean_scanner(monkeypatch)
+    c, app, owner, ids, emails, _, v, assessment = await fixture(identity)
+    source = await upload(c, {"id": None}, category="policy")
+    await process(app, source, ids)
+    question = v["snapshot"]["dimensions"][0]["questions"][0]["id"]
+    hidden_id = uuid4()
+    prefix = uuid4().int & ~65535
+    attachment_ids = [UUID(int=prefix + i + 1) for i in range(210)]
+    async with owner.begin() as conn:
+        # A second eligible reviewer keeps these private assessments valid while
+        # excluding the caller from the first 105 evidence links.
+        await conn.execute(
+            memberships.update()
+            .where(
+                memberships.c.organization_id == ids["a"],
+                memberships.c.user_id == ids["viewer"],
+            )
+            .values(role="Project Manager", revision=2)
+        )
+        original = dict(
+            (
+                await conn.execute(
+                    sa.select(assessments).where(assessments.c.id == UUID(assessment["id"]))
+                )
+            )
+            .mappings()
+            .one()
+        )
+        await conn.execute(
+            assessments.insert().values(
+                **(
+                    original
+                    | {"id": hidden_id, "name": "Private cohort", "reviewer_id": ids["viewer"]}
+                )
+            )
+        )
+        for i, attachment_id in enumerate(attachment_ids):
+            await conn.execute(
+                evidence_attachments.insert().values(
+                    id=attachment_id,
+                    organization_id=ids["a"],
+                    created_at=now(),
+                    assessment_id=hidden_id if i < 105 else UUID(assessment["id"]),
+                    question_id=UUID(question),
+                    file_name="reference.txt",
+                    file_size=1,
+                    sha256="a" * 64,
+                    released=False,
+                    storage_path=f"fixtures/{attachment_id}",
+                    uploaded_by=ids["admin"],
+                )
+            )
+            await conn.execute(
+                D.links.insert().values(
+                    id=uuid4(),
+                    organization_id=ids["a"],
+                    version_id=UUID(source["version_id"]),
+                    attachment_id=attachment_id,
+                )
+            )
+    await login(c, emails, "pm", ids["a"])
+    response = await c.get(f"/api/v1/documents/versions/{source['version_id']}/assessment-links")
+    assert response.status_code == 200, response.text
+    items = response.json()
+    assert len(items) == 100
+    assert [item["attachment_id"] for item in items] == [str(i) for i in attachment_ids[105:205]]
+    assert {item["assessment_id"] for item in items} == {assessment["id"]}

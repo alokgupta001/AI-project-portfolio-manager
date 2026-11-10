@@ -1,7 +1,10 @@
 import { spawnSync } from "node:child_process";
 import { mkdirSync, writeFileSync, existsSync, unlinkSync } from "node:fs";
 import { resolve } from "node:path";
-import { preserveBrowserEvidence } from "./browser-evidence.mjs";
+import {
+  preserveBrowserEvidence,
+  runWithCleanup,
+} from "./browser-evidence.mjs";
 
 const docker = process.env.PPM_DOCKER || "docker";
 const args = [
@@ -41,7 +44,7 @@ function run(command, parameters, capture = false, input = undefined) {
   }
   return result.stdout;
 }
-try {
+runWithCleanup(() => {
   run(docker, [...args, "up", "--build", "-d", "--wait"]);
   run(docker, [...args, "--profile", "test", "build", "test"]);
   const fixture = JSON.parse(
@@ -94,13 +97,12 @@ try {
     "test",
     ...process.argv.slice(2),
   ]);
-} finally {
-  if (env.PPM_IDENTITY_FIXTURE && existsSync(env.PPM_IDENTITY_FIXTURE))
-    unlinkSync(env.PPM_IDENTITY_FIXTURE);
+}, [
+  () => {
+    if (env.PPM_IDENTITY_FIXTURE && existsSync(env.PPM_IDENTITY_FIXTURE))
+      unlinkSync(env.PPM_IDENTITY_FIXTURE);
+  },
+  () => evidence.restore(),
   // Preserve named volumes; never delete local/test data as an implicit cleanup step.
-  try {
-    evidence.restore();
-  } finally {
-    run(docker, [...args, "down"]);
-  }
-}
+  () => run(docker, [...args, "down"]),
+]);

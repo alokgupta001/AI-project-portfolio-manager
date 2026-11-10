@@ -8,7 +8,88 @@ import {
 } from "node:fs";
 import { join, resolve } from "node:path";
 import { test } from "node:test";
-import { preserveBrowserEvidence } from "../../scripts/browser-evidence.mjs";
+import {
+  preserveBrowserEvidence,
+  runWithCleanup,
+} from "../../scripts/browser-evidence.mjs";
+
+test("all cleanup runs and the original browser failure remains primary", () => {
+  const browser = new Error("browser assertion failed");
+  const restore = new Error("restore failed");
+  const down = new Error("down failed");
+  const calls = [];
+  const reported = [];
+  assert.throws(
+    () =>
+      runWithCleanup(
+        () => {
+          throw browser;
+        },
+        [
+          () => calls.push("fixture"),
+          () => {
+            calls.push("restore");
+            throw restore;
+          },
+          () => {
+            calls.push("down");
+            throw down;
+          },
+        ],
+        (_, error) => reported.push(error),
+      ),
+    (error) => error === browser,
+  );
+  assert.deepEqual(calls, ["fixture", "restore", "down"]);
+  assert.deepEqual(reported, [restore, down]);
+});
+
+test("restore failure remains primary and shutdown still runs", () => {
+  const restore = new Error("restore failed");
+  let stopped = false;
+  assert.throws(
+    () =>
+      runWithCleanup(() => {}, [
+        () => {
+          throw restore;
+        },
+        () => {
+          stopped = true;
+        },
+      ]),
+    (error) => error === restore,
+  );
+  assert.equal(stopped, true);
+});
+
+test("shutdown failure fails an otherwise successful run", () => {
+  const down = new Error("down failed");
+  assert.throws(
+    () =>
+      runWithCleanup(() => {}, [
+        () => {
+          throw down;
+        },
+      ]),
+    (error) => error === down,
+  );
+});
+
+test("successful acceptance returns its result after cleanup", () => {
+  let cleaned = false;
+  assert.equal(
+    runWithCleanup(
+      () => 42,
+      [
+        () => {
+          cleaned = true;
+        },
+      ],
+    ),
+    42,
+  );
+  assert.equal(cleaned, true);
+});
 
 function fixture() {
   const parent = resolve("artifacts/local/tooling-tests");

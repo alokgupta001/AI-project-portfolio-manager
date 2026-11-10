@@ -141,30 +141,40 @@ async def evidence_references(id_: UUID, p: Principal) -> list[dict]:
     from ppm_api.modules.assessments.tables import assessments, evidence_attachments
 
     await version(p, id_)
-    result = []
-    rows = (
-        await p.conn.execute(
-            sa.select(evidence_attachments.c.id.label("attachment_id"), assessments)
-            .select_from(
-                T.links.join(
-                    evidence_attachments, T.links.c.attachment_id == evidence_attachments.c.id
-                ).join(assessments, assessments.c.id == evidence_attachments.c.assessment_id)
-            )
-            .where(T.links.c.version_id == id_)
-            .order_by(evidence_attachments.c.id)
-            .limit(100)
+    result: list[dict] = []
+    query = (
+        sa.select(evidence_attachments.c.id.label("attachment_id"), assessments)
+        .select_from(
+            T.links.join(
+                evidence_attachments, T.links.c.attachment_id == evidence_attachments.c.id
+            ).join(assessments, assessments.c.id == evidence_attachments.c.assessment_id)
         )
-    ).mappings()
-    for row in rows:
-        try:
-            evidence_access(p, row)
-        except DomainError:
-            continue
-        result.append(
-            dict(
-                attachment_id=row["attachment_id"],
-                assessment_id=row["id"],
-                assessment_name=row["name"],
+        .where(T.links.c.version_id == id_)
+        .order_by(evidence_attachments.c.id)
+    )
+    after: UUID | None = None
+    while len(result) < 100:
+        page = query.limit(100)
+        if after is not None:
+            page = page.where(evidence_attachments.c.id > after)
+        rows = (await p.conn.execute(page)).mappings().all()
+        if not rows:
+            break
+        for row in rows:
+            after = row["attachment_id"]
+            try:
+                evidence_access(p, row)
+            except DomainError:
+                continue
+            result.append(
+                dict(
+                    attachment_id=row["attachment_id"],
+                    assessment_id=row["id"],
+                    assessment_name=row["name"],
+                )
             )
-        )
+            if len(result) == 100:
+                break
+        if len(rows) < 100:
+            break
     return result
