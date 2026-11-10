@@ -1,5 +1,42 @@
 # Latest technical handoff
 
+## 11 November 2026 — completed full reviews and final publication follow-up
+
+All three full CodeRabbit batches completed: 100 paths at eeeb56a, 100 at 3cef66f,
+and 72 at cfd3327. The final batch reported two test-only issues. The agent test
+now waits for definitions before choosing its runtime branch, requires the goal
+control when PPM_TEST_AI_V2=1, and keeps visibility detection for other explicit
+configurations. Redesign screenshots now use ignored artifacts/local/frontend-redesign
+rather than a personal Windows path. Earlier review fixes remain unchanged.
+
+Verification: all **three focused v2 browser cases passed** (1.1 minutes), and the
+agent flow also passed under the **legacy profile** (23.2 seconds; 24.7-second run).
+Resolved non-overlay Compose flags are absent and use the false application
+defaults, so this actually covers both branches. Browser typing/lint/format pass;
+source inventories and **462 Markdown / 6,512 local-link** checks pass.
+
+Both hosted workflows on cfd3327 are green. The recorded run passed **all 587
+backend cases**, zero skipped, in **648.96 seconds**, **30 standard browser cases**
+in 6.1 minutes, and persistence across service restart. Five standard-profile
+browser cases are gated on the opt-in overlay and were verified separately with
+model/cloud access disabled. The earlier focused counts overlap those suites.
+Python dependency audit: zero known vulnerabilities. The npm high-severity gate
+passes; ten moderate development-dependency advisories remain.
+
+The original broad CodeRabbit path filters have been restored byte-for-byte from
+the pre-batch configuration. The only later changes are the two browser test fixes,
+filter restoration, and current status prose. Those are a small incremental review
+scope; the one-run scope override does not narrow the committed configuration.
+The owner explicitly requested continuing through all reviews; use included
+allowance only. Record publication-head CI/review completion on PR 8 without
+creating another source change solely to update a running-check status. Verify
+final file blobs against the completed full batches and the incremental follow-up.
+
+All local structure/browser services and networks are stopped; named volumes,
+normal/demo data, applied migrations, private configuration, source prompts,
+provider limits, stopped pilots and sprint boundaries remain. PR 8 stays open;
+publication and review are authorized, but merge/deployment/new live runs are not.
+
 ## 11 November 2026 — CodeRabbit batch 2 findings fixed; final review prepared
 
 The owner requested continuing until all review batches finish. Batches 1 and 2

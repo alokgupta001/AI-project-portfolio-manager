@@ -1,5 +1,21 @@
 # Antigravity entry point — reviewed local checkpoint
 
+## 11 November 2026 — three review batches complete; broad filters restored
+
+All three full CodeRabbit batches completed (100, 100 and 72 selected paths).
+The six application/documentation/test findings are fixed. The final two test
+fixes wait for loaded agent definitions, require v2 controls when explicitly
+enabled, and write redesign screenshots to ignored artifacts/local output.
+Three focused v2 browser cases and one legacy case passed, zero skips; types,
+lint and formatting pass. Both hosted workflows on cfd3327 are green: all 587
+backend cases, 30 standard browser cases and persistence restart checks. The
+five gated browser cases were covered separately with model/cloud access disabled.
+The original broad CodeRabbit filters are restored byte-for-byte; final test and
+status/config changes are the scope of a small incremental follow-up review.
+See PR 8 for the publication-head CI/review results. Keep the final source fixed
+while checking that follow-up and its file versions. All local test services are
+stopped, volumes retained; no merge, deployment, paid add-on or new live pilot.
+
 ## 11 November 2026 — PR 8 review fixes and final batch
 
 CodeRabbit batches 1 and 2 are complete. The four batch-2 findings are fixed:

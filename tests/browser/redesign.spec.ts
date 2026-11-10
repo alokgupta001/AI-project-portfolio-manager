@@ -5,8 +5,7 @@ import type { components } from "@ppm/contracts/schema";
 
 type S = components["schemas"];
 type Snapshot = S["CommandSnapshot"];
-const evidenceDirectory =
-  "C:/Users/alokg/OneDrive/Documents/Codex/output/frontend-redesign";
+const evidenceDirectory = "artifacts/local/frontend-redesign";
 const widths = [360, 768, 1024, 1440, 1920];
 
 test.beforeAll(() => mkdirSync(evidenceDirectory, { recursive: true }));

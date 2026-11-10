@@ -132,8 +132,14 @@ test("persistent semantic review, evidence, discrepancies, privacy and disabled 
     name: "Analysis goal",
     exact: true,
   });
-  const hybrid = await goal.isVisible();
-  if (hybrid) await goal.selectOption("all_specialists");
+  await expect(
+    page.getByText("Loading specialist runs…", { exact: true }),
+  ).toHaveCount(0);
+  const hybrid = process.env.PPM_TEST_AI_V2 === "1" || (await goal.isVisible());
+  if (hybrid) {
+    await expect(goal).toBeVisible();
+    await goal.selectOption("all_specialists");
+  }
   await page
     .getByRole("button", { name: /^Run (nine specialists|scoped analysis)$/ })
     .click();
