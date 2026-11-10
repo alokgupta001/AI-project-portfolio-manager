@@ -1,5 +1,58 @@
 # Latest technical handoff
 
+## 10 November 2026 — PR 8 publication and security verification
+
+The user explicitly approved publishing all verified application/tooling changes
+with the refactor. [PR 8](https://github.com/alokgupta001/AI-project-portfolio-manager/pull/8)
+is open from codex/ai-ppm-structure-cleanup to main. Commit 6b7c9b9 preserves the
+previously unpublished selection/timeout, UI and quality tooling snapshot;
+cd4922c contains the structural pass. Relative to main the PR includes forward
+migrations 0019/0020; the refactor itself preserves the already-local 0020 model.
+Local skills, private files and unrelated output remain unpublished.
+
+The initial hosted dependency audit found eight advisories in dnspython/pypdf.
+Commit 8e8faf4 changes only dnspython 2.8.0 to 2.9.0 and pypdf 6.21.2 to 6.21.4.
+A new frozen-requirements pip-audit 2.9.0 run reports **zero known vulnerabilities**.
+All **69 focused Linux cases passed, zero skips**, in 68.01 seconds, covering
+identity, account mail/repair, delivery and real PDF/image OCR. Exact document
+runtime packages, migration upgrade/drift, all static/contracts checks and the
+three source inventories pass. Local links still pass (462 Markdown files,
+6,511 links). These results follow the historical 583-case run below; that run
+does not certify the later dependency versions. A separate hosted Linux run on
+eeeb56a passed **all 583 backend cases** with those patched dependencies in
+**798.97 seconds**, before the workflow failed during browser acceptance.
+
+Hosted browser evidence showed two ML tests using the fixture's Viewer tenant,
+a walkthrough excluding today's assessment with a fixed November 7 cutoff, and
+an intermittent tutorial Escape pressed immediately after a route commit.
+Commit e2d4087 fixes those three test setups without changing application behavior:
+select the fixture's Admin organization, use UTC dates spanning the current run,
+and wait for the destination tutorial's focus before Escape. All **six Sprint 12/
+walkthrough** cases and **four tutorial** regressions passed locally, zero skips.
+Browser typing, ESLint and Prettier pass; desktop/mobile screenshots were inspected.
+The Browser plugin is not available, so the existing Playwright runner was used.
+Original tutorial screenshots are restored; fresh evidence remains outside Git.
+All **five opt-in browser cases passed**, zero skips, in 2.0 minutes using the
+model/cloud-disabled overlay: hybrid goal coverage, granted Project Manager access,
+persisted guided checklists, independent fixture labels and explicit mocked audit
+provenance. Standard CI gates those five cases on the overlay. A fresh hosted
+workflow is in progress for the browser fixes.
+
+CodeRabbit completed batch 1 at eeeb56a: 100 selected paths, two deleted paths with
+no reviewable changes, and one actionable configuration comment requiring broad
+review filters to be restored before merging. No application issue was posted in
+that batch. The second 100-path batch is prepared; two reviews remain pending
+the included allowance of one review per hour.
+The owner explicitly asked to keep checking until all batches finish. Temporary
+review path filters must be restored afterward; no paid add-on is enabled.
+
+The 69-case check reused the existing isolated structure-test PostgreSQL/Redis.
+The browser cases used a new enterprise-ppm-browser-pr8-20261110 project with
+synthetic accounts and disabled providers. Both projects' services/network are
+removed, with named volumes retained. Normal/demo data, applied migrations,
+credentials and provider/pilot/sprint boundaries remain.
+No paid review add-on, model call, merge or deployment is authorized.
+
 ## 10 November 2026 — remaining structural cleanup completed
 
 The user explicitly requested completing the work left at step 29. Steps 30–32

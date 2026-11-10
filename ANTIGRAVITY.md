@@ -1,5 +1,28 @@
 # Antigravity entry point — reviewed local checkpoint
 
+## 10 November 2026 — PR 8 publication and audit follow-up
+
+The owner authorized publishing all verified application/tooling work together
+with the structure refactor. [PR 8](https://github.com/alokgupta001/AI-project-portfolio-manager/pull/8)
+is open on codex/ai-ppm-structure-cleanup; no merge or deployment is authorized.
+The hosted audit found eight advisories in two dependencies. Commit 8e8faf4
+updates only pypdf 6.21.2 to 6.21.4 and dnspython 2.8.0 to 2.9.0. The frozen
+Python dependency audit now reports zero known vulnerabilities. All 69 focused
+Linux identity/mail/delivery/parser cases passed, zero skipped, with real OCR;
+static/contracts and current documentation checks pass. This is additional
+verification after the historical 583-case run below. Hosted CI also passed all
+583 backend cases with the patched dependencies (798.97 seconds), then exposed
+browser test setup issues. Three test fixes now select the explicit Admin tenant,
+use current-run UTC comparison dates, and wait for tutorial focus after navigation.
+All six Sprint 12/walkthrough and four tutorial cases passed locally, zero skips.
+All five model-disabled opt-in browser cases also passed, zero skips. A fresh
+hosted workflow is in progress. Test services are stopped; volumes are retained.
+CodeRabbit completed the first 100-path batch (two deleted paths had no reviewable
+changes); its only application-independent finding is to restore broad filters.
+The second 100-path batch is prepared; two reviews remain pending the included
+one-review-per-hour allowance;
+temporary review filters must be restored after completion. No paid add-on is enabled.
+
 ## 10 November 2026 — remaining structure work completed
 
 All 129 feature handlers are thin; domain callers use operations directly. Tables
