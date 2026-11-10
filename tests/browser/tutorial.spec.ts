@@ -206,6 +206,10 @@ test("tutorial: skip step three requires confirmation and replay remains availab
     })
     .click();
   await expectStep(page, tour, 2);
+  // The step label updates before client navigation has mounted its keyboard
+  // handler. Exercise Escape after the destination tour owns focus.
+  await expect(page).toHaveURL(/\/projects$/);
+  await expect(tour).toBeFocused();
   await page.keyboard.press("Escape");
   const confirmation = page.getByRole("dialog", {
     name: "Skip the tutorial?",
@@ -217,6 +221,7 @@ test("tutorial: skip step three requires confirmation and replay remains availab
   ).toBeFocused();
   await confirmation.getByRole("button", { name: "Keep exploring" }).click();
   await expectStep(page, tour, 2);
+  await expect(tour).toBeFocused();
   await page.keyboard.press("Escape");
   await confirmation.getByRole("button", { name: "Confirm skip" }).click();
   await expect(tour).not.toBeVisible();

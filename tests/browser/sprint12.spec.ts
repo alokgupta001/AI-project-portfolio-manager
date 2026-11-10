@@ -351,6 +351,14 @@ for (const staleResult of ["success", "error"] as const) {
     await expect(
       page.getByRole("button", { name: "Sign out", exact: true }),
     ).toBeVisible();
+    // This fixture also belongs to a Viewer organization; login need not select
+    // its Admin membership. Select the authorized lab organization explicitly.
+    const organization = page.getByRole("combobox", {
+      name: "Organization",
+      exact: true,
+    });
+    await organization.selectOption(f.integration_org);
+    await expect(organization).toHaveValue(f.integration_org);
     const old = { id: crypto.randomUUID(), status: "queued", card: {} };
     const current = {
       id: crypto.randomUUID(),

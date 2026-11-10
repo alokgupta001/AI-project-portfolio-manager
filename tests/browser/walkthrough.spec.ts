@@ -13,6 +13,7 @@ test("complete Northstar website walkthrough through delivery, independent revie
 }) => {
   test.setTimeout(900000);
   test.skip(!process.env.PPM_IDENTITY_FIXTURE, "Use isolated browser runner");
+  const startedOn = new Date().toISOString().slice(0, 10);
   const fixture = JSON.parse(
     readFileSync(process.env.PPM_IDENTITY_FIXTURE!, "utf8"),
   );
@@ -1106,8 +1107,12 @@ test("complete Northstar website walkthrough through delivery, independent revie
       "14.1/15.3",
       "Share and read completed scores without private evidence or respondent actions",
     );
-    await vera.getByLabel("Comparison from").fill("2026-10-01");
-    await vera.getByLabel("Comparison through").fill("2026-11-07");
+    // Department comparisons use creation dates in UTC. Include records created
+    // by this run, including a walkthrough that crosses midnight.
+    await vera.getByLabel("Comparison from").fill(startedOn);
+    await vera
+      .getByLabel("Comparison through")
+      .fill(new Date().toISOString().slice(0, 10));
     await expect(
       vera.getByRole("region", { name: "Department comparison scores" }),
     ).toContainText("Digital Delivery");
