@@ -8,12 +8,12 @@ from uuid import UUID, uuid4
 
 import pytest
 import sqlalchemy as sa
-from ppm_api import document_tables as D
-from ppm_api import job_tables as J
-from ppm_api.document_parser import IntakeError, scan
-from ppm_api.documents import document_worker
-from ppm_api.identity import context, now
-from ppm_api.ppm_tables import TABLES
+from ppm_api.modules.documents import tables as D
+from ppm_api.modules.documents.parser import IntakeError, scan
+from ppm_api.modules.documents.worker import document_worker
+from ppm_api.modules.identity.service import context, now
+from ppm_api.modules.integrations import tables as J
+from ppm_api.shared.table_registry import TABLES
 from sqlalchemy.exc import DBAPIError
 from test_delivery import create, setup
 from test_identity import identity as identity
@@ -55,7 +55,7 @@ async def process(app, accepted, ids, actor="admin"):
 
 async def clean_scanner(monkeypatch):
     # Explicit transport double; separate live daemon acceptance is below.
-    monkeypatch.setattr("ppm_api.documents.scan", lambda *_: "fixture-clean")
+    monkeypatch.setattr("ppm_api.modules.documents.worker.scan", lambda *_: "fixture-clean")
 
 
 async def test_library_versions_idempotency_retrieval_citations_and_download(identity, monkeypatch):
@@ -63,7 +63,7 @@ async def test_library_versions_idempotency_retrieval_citations_and_download(ide
     c, app, owner, ids, emails, _, project = await setup(identity)
     key = str(uuid4())
     one = await upload(c, project, headers={"idempotency-key": key})
-    from ppm_api.jobs import run_job
+    from ppm_api.modules.integrations.jobs import run_job
 
     await run_job(app.state.engine, UUID(one["job_id"]), ids["b"], ids["other"])
     async with owner.connect() as conn:
@@ -211,7 +211,7 @@ async def test_quarantine_failure_cancel_deletion_and_inflight_revocation(identi
         await c.get(f"/api/v1/documents/versions/{bad['version_id']}/preview")
     ).status_code == 409
     monkeypatch.setattr(
-        "ppm_api.documents.scan",
+        "ppm_api.modules.documents.worker.scan",
         lambda *_: (_ for _ in ()).throw(IntakeError("SCANNER_UNAVAILABLE")),
     )
     blocked = await upload(c, project)
@@ -241,7 +241,9 @@ async def test_quarantine_failure_cancel_deletion_and_inflight_revocation(identi
     await process(app, queued, ids)
     assert not (await c.get("/api/v1/documents/search?q=Cancelled")).json()["items"]
     running = await upload(c, project, b"In-flight source")
-    original = __import__("ppm_api.documents", fromlist=["isolated_extract"]).isolated_extract
+    original = __import__(
+        "ppm_api.modules.documents.worker", fromlist=["isolated_extract"]
+    ).isolated_extract
     # Simulate deletion while parser is running outside the database transaction.
     entered, release = __import__("threading").Event(), __import__("threading").Event()
 
@@ -250,7 +252,7 @@ async def test_quarantine_failure_cancel_deletion_and_inflight_revocation(identi
         assert release.wait(10)
         return original(*args)
 
-    monkeypatch.setattr("ppm_api.documents.isolated_extract", delayed)
+    monkeypatch.setattr("ppm_api.modules.documents.worker.isolated_extract", delayed)
     task = asyncio.create_task(process(app, running, ids))
     assert await asyncio.to_thread(entered.wait, 10)
     assert (
@@ -518,7 +520,7 @@ async def test_transport_replay_integrity_expiry_orphans_and_holds(identity, mon
 async def test_assessment_bridge_preserves_completed_scores_and_private_grants(
     identity, monkeypatch
 ):
-    from ppm_api.assessment_tables import assessments
+    from ppm_api.modules.assessments.tables import assessments
     from test_assessment import fixture, ok, save
 
     await clean_scanner(monkeypatch)
@@ -599,3 +601,77 @@ async def test_assessment_bridge_preserves_completed_scores_and_private_grants(
     assert response.status_code == 403
     hidden = await c.get(f"/api/v1/documents/versions/{source['version_id']}/assessment-links")
     assert hidden.status_code == 200 and hidden.json() == []
+
+
+async def test_evidence_reference_cap_follows_private_access_filter(identity, monkeypatch):
+    from ppm_api.modules.assessments.tables import assessments, evidence_attachments
+    from ppm_api.modules.identity.tables import memberships
+    from test_assessment import fixture
+
+    await clean_scanner(monkeypatch)
+    c, app, owner, ids, emails, _, v, assessment = await fixture(identity)
+    source = await upload(c, {"id": None}, category="policy")
+    await process(app, source, ids)
+    question = v["snapshot"]["dimensions"][0]["questions"][0]["id"]
+    hidden_id = uuid4()
+    prefix = uuid4().int & ~65535
+    attachment_ids = [UUID(int=prefix + i + 1) for i in range(210)]
+    async with owner.begin() as conn:
+        # A second eligible reviewer keeps these private assessments valid while
+        # excluding the caller from the first 105 evidence links.
+        await conn.execute(
+            memberships.update()
+            .where(
+                memberships.c.organization_id == ids["a"],
+                memberships.c.user_id == ids["viewer"],
+            )
+            .values(role="Project Manager", revision=2)
+        )
+        original = dict(
+            (
+                await conn.execute(
+                    sa.select(assessments).where(assessments.c.id == UUID(assessment["id"]))
+                )
+            )
+            .mappings()
+            .one()
+        )
+        await conn.execute(
+            assessments.insert().values(
+                **(
+                    original
+                    | {"id": hidden_id, "name": "Private cohort", "reviewer_id": ids["viewer"]}
+                )
+            )
+        )
+        for i, attachment_id in enumerate(attachment_ids):
+            await conn.execute(
+                evidence_attachments.insert().values(
+                    id=attachment_id,
+                    organization_id=ids["a"],
+                    created_at=now(),
+                    assessment_id=hidden_id if i < 105 else UUID(assessment["id"]),
+                    question_id=UUID(question),
+                    file_name="reference.txt",
+                    file_size=1,
+                    sha256="a" * 64,
+                    released=False,
+                    storage_path=f"fixtures/{attachment_id}",
+                    uploaded_by=ids["admin"],
+                )
+            )
+            await conn.execute(
+                D.links.insert().values(
+                    id=uuid4(),
+                    organization_id=ids["a"],
+                    version_id=UUID(source["version_id"]),
+                    attachment_id=attachment_id,
+                )
+            )
+    await login(c, emails, "pm", ids["a"])
+    response = await c.get(f"/api/v1/documents/versions/{source['version_id']}/assessment-links")
+    assert response.status_code == 200, response.text
+    items = response.json()
+    assert len(items) == 100
+    assert [item["attachment_id"] for item in items] == [str(i) for i in attachment_ids[105:205]]
+    assert {item["assessment_id"] for item in items} == {assessment["id"]}

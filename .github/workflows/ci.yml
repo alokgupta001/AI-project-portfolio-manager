@@ -32,6 +32,8 @@ jobs:
           npm run contracts:check
           npm run lint
           npm run typecheck
+          npm run typecheck:browser
+          npm run test:tooling
           npm run format:check
           npm audit --audit-level=high
           uv export --format requirements-txt --no-hashes --output-file /tmp/ppm-audit.txt
@@ -56,6 +58,7 @@ jobs:
           path: |
             playwright-report/
             test-results/
+            artifacts/local/browser-evidence/run-*/fresh/
       - name: Stop this CI stack
         if: always()
         run: |

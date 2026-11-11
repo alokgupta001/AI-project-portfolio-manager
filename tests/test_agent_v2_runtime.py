@@ -10,13 +10,13 @@ from uuid import UUID, uuid4
 
 import pytest
 import sqlalchemy as sa
-from ppm_api import agent_task_tables as T
-from ppm_api import ai_tables as A
-from ppm_api import job_tables as J
-from ppm_api.ai import ai_worker
-from ppm_api.identity import now
-from ppm_api.model_contracts import ModelFailure, ModelResult, ModelUsage
-from ppm_api.model_registry import ModelPolicy, ModelProfile
+from ppm_api.modules.agents import task_tables as T
+from ppm_api.modules.ai import tables as A
+from ppm_api.modules.ai.contracts import ModelFailure, ModelResult, ModelUsage
+from ppm_api.modules.ai.registry import ModelPolicy, ModelProfile
+from ppm_api.modules.ai.service import ai_worker
+from ppm_api.modules.identity.service import now
+from ppm_api.modules.integrations import tables as J
 from sqlalchemy.exc import DBAPIError
 from test_agents import fixture, start, work
 from test_delivery import create
@@ -151,7 +151,7 @@ async def configure(identity, monkeypatch, tmp_path, with_profile=False, provide
                 usage=ModelUsage(input_tokens=11, output_tokens=13, source="reported"),
             )
 
-        monkeypatch.setattr("ppm_api.agent_runtime.NativeAdapter.execute", execute)
+        monkeypatch.setattr("ppm_api.modules.agents.runtime.NativeAdapter.execute", execute)
     return c, app, owner, ids, project, accepted, seen
 
 
@@ -159,10 +159,10 @@ async def configure(identity, monkeypatch, tmp_path, with_profile=False, provide
 async def test_nine_roles_use_four_durable_admissions_and_never_hide_a_fifth(
     identity, monkeypatch, tmp_path, repair
 ):
-    from ppm_api import agents
-    from ppm_api.agent_planner import build_plan
-    from ppm_api.agent_registry import BY_AGENT, DOMAIN
-    from ppm_api.model_registry import digest
+    from ppm_api.modules.agents import service as agents
+    from ppm_api.modules.agents.planner import build_plan
+    from ppm_api.modules.agents.registry import BY_AGENT, DOMAIN
+    from ppm_api.modules.ai.registry import digest
     from test_agent_batches import compact
 
     c, app, owner, ids, project, accepted, _ = await configure(
@@ -253,11 +253,11 @@ async def test_nine_roles_use_four_durable_admissions_and_never_hide_a_fifth(
             usage=ModelUsage(input_tokens=100, output_tokens=300, source="reported"),
         )
 
-    monkeypatch.setattr("ppm_api.agent_runtime.NativeAdapter.execute", batch_execute)
+    monkeypatch.setattr("ppm_api.modules.agents.runtime.NativeAdapter.execute", batch_execute)
     response = await start(c, project, runtime_version="v2", analysis_mode="all_specialists")
     assert response.status_code == 202, response.text
     if repair == "checkpoint":
-        from ppm_api import agent_runtime
+        from ppm_api.modules.agents import runtime as agent_runtime
 
         class ProcessLost(BaseException):
             pass
@@ -394,7 +394,7 @@ async def test_metrics_runs_persist_tasks_and_never_call_model(identity, monkeyp
             == 0
         )
     async with app.state.engine.begin() as conn:
-        from ppm_api.identity import context
+        from ppm_api.modules.identity.service import context
 
         await context(conn, ids["other"], ids["b"], "Admin")
         assert not (await conn.execute(sa.select(T.tasks))).all()
@@ -462,7 +462,7 @@ async def test_v2_flag_does_not_enable_itself(identity, monkeypatch):
     response = await start(c, project, runtime_version="v2", analysis_mode="metrics")
     assert response.status_code == 422
     async with app.state.engine.begin() as conn:
-        from ppm_api.identity import context
+        from ppm_api.modules.identity.service import context
 
         await context(conn, ids["admin"], ids["a"], "Admin")
         with pytest.raises(DBAPIError):
@@ -476,7 +476,7 @@ async def test_truncation_uses_one_smaller_replacement_and_retains_usage(
     c, app, owner, ids, project, accepted, seen = await configure(
         identity, monkeypatch, tmp_path, True
     )
-    from ppm_api.agent_runtime import NativeAdapter
+    from ppm_api.modules.agents.runtime import NativeAdapter
 
     original = NativeAdapter.execute
     requests = []
@@ -524,7 +524,7 @@ async def test_unknown_outcome_is_not_replayed_and_quarantines_local_host(
         attempts.append(request.permit.attempt_id)
         raise ModelFailure("OUTCOME_UNKNOWN", "unknown")
 
-    monkeypatch.setattr("ppm_api.agent_runtime.NativeAdapter.execute", unknown)
+    monkeypatch.setattr("ppm_api.modules.agents.runtime.NativeAdapter.execute", unknown)
     response = await start(
         c,
         project,
@@ -590,7 +590,7 @@ async def test_two_workers_share_one_local_generation(identity, monkeypatch, tmp
     c, app, owner, ids, project, accepted, seen = await configure(
         identity, monkeypatch, tmp_path, True
     )
-    from ppm_api.agent_runtime import NativeAdapter
+    from ppm_api.modules.agents.runtime import NativeAdapter
 
     original = NativeAdapter.execute
     entered, release = asyncio.Event(), asyncio.Event()
@@ -634,7 +634,7 @@ async def test_crash_after_candidate_resumes_without_second_inference(
     c, app, owner, ids, project, accepted, seen = await configure(
         identity, monkeypatch, tmp_path, True
     )
-    from ppm_api import agent_runtime
+    from ppm_api.modules.agents import runtime as agent_runtime
 
     class ProcessLost(BaseException):
         pass
@@ -679,7 +679,7 @@ async def test_crash_after_candidate_resumes_without_second_inference(
 async def test_worker_cancellation_settles_and_propagates(
     identity, monkeypatch, tmp_path, settlement_fails, provider
 ):
-    from ppm_api.ai import worker_context
+    from ppm_api.modules.ai.service import worker_context
 
     c, app, owner, ids, project, accepted, _ = await configure(
         identity, monkeypatch, tmp_path, True, provider
@@ -692,7 +692,9 @@ async def test_worker_cancellation_settles_and_propagates(
         entered.set()
         await asyncio.Event().wait()
 
-    monkeypatch.setattr("ppm_api.agent_runtime.NativeAdapter.execute", interrupted)
+    clock = iter([100.0, 107.25])
+    monkeypatch.setattr("ppm_api.modules.agents.runtime.perf_counter", lambda: next(clock))
+    monkeypatch.setattr("ppm_api.modules.agents.runtime.NativeAdapter.execute", interrupted)
     created = await start(
         c,
         project,
@@ -713,7 +715,7 @@ async def test_worker_cancellation_settles_and_propagates(
             async def unavailable(*args):
                 raise RuntimeError("synthetic settlement failure")
 
-            monkeypatch.setattr("ppm_api.ai.worker_context", unavailable)
+            monkeypatch.setattr("ppm_api.modules.ai.service.worker_context", unavailable)
         worker.cancel("synthetic shutdown")
         with pytest.raises(asyncio.CancelledError):
             await asyncio.wait_for(worker, 10)
@@ -739,8 +741,10 @@ async def test_worker_cancellation_settles_and_propagates(
             assert quota["outcome"] == "admitted"
         else:
             assert call["code"] == "CANCELLED" and call["completed_at"] is not None
+            assert call["latency_ms"] == 7250
+            assert call["input_tokens"] is None and call["output_tokens"] is None
             assert quota["outcome"] == "unknown"
-        monkeypatch.setattr("ppm_api.ai.worker_context", worker_context)
+        monkeypatch.setattr("ppm_api.modules.ai.service.worker_context", worker_context)
         async with owner.begin() as conn:
             await conn.execute(
                 J.jobs.update()
@@ -775,7 +779,7 @@ async def test_worker_cancellation_settles_and_propagates(
 async def test_failed_heartbeat_does_not_replace_completed_result(
     identity, monkeypatch, tmp_path, failure, caplog
 ):
-    from ppm_api import ai_provider
+    from ppm_api.modules.ai import provider as ai_provider
 
     c, app, owner, ids, project, _, _ = await configure(identity, monkeypatch, tmp_path)
     await create(
@@ -791,7 +795,7 @@ async def test_failed_heartbeat_does_not_replace_completed_result(
             raise RuntimeError("private-heartbeat-payload-must-stay-unlogged")
         raise ai_provider.ProviderError(failure)
 
-    monkeypatch.setattr("ppm_api.agent_runtime.heartbeat", failed)
+    monkeypatch.setattr("ppm_api.modules.agents.runtime.heartbeat", failed)
     created = await start(c, project, analysis_mode="metrics")
     result, _ = await work(c, app, owner, ids, created.json())
     assert result["run"]["status"] == "succeeded", result
@@ -800,7 +804,7 @@ async def test_failed_heartbeat_does_not_replace_completed_result(
     diagnostics = [
         json.loads(r.message)
         for r in caplog.records
-        if r.name == "ppm_api.agent_runtime" and "agent_heartbeat_failed" in r.message
+        if r.name == "ppm_api.modules.agents.runtime" and "agent_heartbeat_failed" in r.message
     ]
     assert diagnostics == [
         dict(
@@ -824,7 +828,7 @@ async def test_worker_cancellation_during_heartbeat_cleanup_is_not_swallowed(
             cleanup.set()
             await release.wait()
 
-    monkeypatch.setattr("ppm_api.agent_runtime.heartbeat", lingering)
+    monkeypatch.setattr("ppm_api.modules.agents.runtime.heartbeat", lingering)
     created = await start(c, project, analysis_mode="metrics")
     rid = UUID(created.json()["run"]["id"])
     async with owner.connect() as conn:
@@ -849,7 +853,7 @@ async def test_worker_cancellation_during_heartbeat_cleanup_is_not_swallowed(
 async def test_oversized_bound_context_keeps_baseline_and_reports_partial(
     identity, monkeypatch, tmp_path
 ):
-    from ppm_api import agent_runtime
+    from ppm_api.modules.agents import runtime as agent_runtime
 
     c, app, owner, ids, project, accepted, seen = await configure(
         identity, monkeypatch, tmp_path, True
@@ -903,9 +907,9 @@ async def test_v2_late_output_is_fenced(identity, monkeypatch, tmp_path, mode):
     c, app, owner, ids, project, accepted, seen = await configure(
         identity, monkeypatch, tmp_path, True
     )
-    from ppm_api import agent_tables
-    from ppm_api.agent_runtime import NativeAdapter
-    from ppm_api.identity_tables import memberships
+    from ppm_api.modules.agents import tables as agent_tables
+    from ppm_api.modules.agents.runtime import NativeAdapter
+    from ppm_api.modules.identity.tables import memberships
 
     original = NativeAdapter.execute
     entered, release = asyncio.Event(), asyncio.Event()

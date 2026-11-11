@@ -9,13 +9,13 @@ from types import SimpleNamespace
 
 import httpx
 import pytest
-from ppm_api.agent_prompts import ROLE_PROVIDERS, cloud_prompt
-from ppm_api.agent_registry import BY_AGENT
-from ppm_api.agent_runtime import complete_task
-from ppm_api.model_adapters import NativeAdapter
-from ppm_api.model_contracts import ModelFailure
-from ppm_api.model_registry import ModelPolicy
-from ppm_api.model_router import RouteRequirements, candidates
+from ppm_api.modules.agents.prompts import ROLE_PROVIDERS, cloud_prompt
+from ppm_api.modules.agents.registry import BY_AGENT
+from ppm_api.modules.agents.runtime import complete_task
+from ppm_api.modules.ai.adapters import NativeAdapter
+from ppm_api.modules.ai.contracts import ModelFailure
+from ppm_api.modules.ai.model_router import RouteRequirements, candidates
+from ppm_api.modules.ai.registry import ModelPolicy
 from test_model_routing import configured as configured
 
 from scripts import benchmark_cloud_specialists as cloud_benchmark

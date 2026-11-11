@@ -1,7 +1,7 @@
 """Synthetic arithmetic for qualification gates; these tests do not qualify a model."""
 
 import pytest
-from ppm_api.model_qualification import (
+from ppm_api.modules.ai.qualification import (
     ClassMeasurement,
     CloudQualificationReport,
     QualificationReport,

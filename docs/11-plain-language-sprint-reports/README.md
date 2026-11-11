@@ -1,5 +1,9 @@
 # Sprint reports in plain language
 
+Active continuation: [Sprint 12.1 — Testing one task with the existing APIs](active/SPRINT-12.1.md).
+The software is locally tested and the actual pilot is prepared; independent
+review and live fixture measurement remain open. AT17 remains BLOCKED.
+
 Current local sample: [Sprint 12 history and baselines](completed/SPRINT-12.md),
 normal schema 0018. [Reviewed closeout](../10-reference/SPRINT-12-LOCAL-CLOSEOUT.md) separates passing local/CI
 checks from unverified live integration/model quality. AT17 remains BLOCKED. Earlier
@@ -41,7 +45,8 @@ The closeout links the later Gmail, hosted CI and current guide evidence. Produc
 | 8.1, between 08 and 09 | Signup, setup guidance, access sharing, record search, My work, notifications and updates | [Pilot improvements](completed/SPRINT-8.1.md). Development scope is completed. Later account repairs are identified separately. |
 | 10, after 09 | Controlled AI evidence previews, run history and budget controls | [AI evidence tools](completed/SPRINT-10.md). Gateway/evaluation scope is completed; broad model quality remains a successor gate. Includes the 16 October Gemini follow-up. |
 
-Sprint 11 onward is planned work and has no completed report here.
+Sprint 11 and 12 now have the completed local reports linked above; Sprint 12.1
+has the active report linked at the top. Later sprints remain planned.
 
 ## Find a feature quickly
 

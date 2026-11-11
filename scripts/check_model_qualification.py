@@ -7,7 +7,10 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "services/api"))
 
-from ppm_api.model_qualification import CloudQualificationReport, QualificationReport  # noqa: E402
+from ppm_api.modules.ai.qualification import (  # noqa: E402
+    CloudQualificationReport,
+    QualificationReport,
+)
 
 
 def main() -> None:

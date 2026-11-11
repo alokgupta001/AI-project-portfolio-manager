@@ -45,8 +45,8 @@ plain-report-001,Prepare launch checklist,2026-10-16T09:00:00Z,backlog
 | Part | Implementation files |
 | --- | --- |
 | Connections, previews and progress screen | [Integrations screen](../../../apps/web/components/integrations.tsx) |
-| Job state, progress and import/provider rules | [Jobs service](../../../services/api/ppm_api/jobs.py), [ingestion](../../../services/api/ppm_api/ingestion.py) |
-| Worker, dispatch and saved recovery state | [Worker](../../../services/worker/ppm_worker/app.py), [job tables](../../../services/api/ppm_api/job_tables.py), [jobs migration](../../../services/api/migrations/versions/0007_durable_jobs.py) |
+| Job state, progress and import/provider rules | [Jobs service](../../../services/api/ppm_api/modules/integrations/jobs.py), [ingestion](../../../services/api/ppm_api/modules/integrations/ingestion.py) |
+| Worker, dispatch and saved recovery state | [Worker](../../../services/worker/ppm_worker/app.py), [job tables](../../../services/api/ppm_api/modules/integrations/tables.py), [jobs migration](../../../services/api/migrations/versions/0007_durable_jobs.py) |
 | Live progress and browser check | [Live jobs client](../../../apps/web/components/live-jobs.ts), [integrations scenario](../../../tests/browser/integrations.spec.ts) |
 
 ## Recorded checks and limits

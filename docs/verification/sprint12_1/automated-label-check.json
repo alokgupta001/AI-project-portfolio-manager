@@ -1,0 +1,137 @@
+{
+  "recorded_at": "2026-10-26T14:06:55.883749+00:00",
+  "kind": "automated_arithmetic_consistency_check",
+  "pilot_id": "ce874a14-bbd0-50c5-b9b6-f7909a8bda8a",
+  "method": "exact_fraction_rule_check_v1",
+  "corpus_sha256": "537f42bb85456da4e298ef97d3cf9cc46584f3f20b9509a157f83c4e69e7322a",
+  "strategy_sha256": "71c321aa1579a5e71c90eaa14a0b9c440c8f6837a9cd8fa8c5d29925bd8de4e0",
+  "checked_cases": 12,
+  "matching_cases": 12,
+  "results": [
+    {
+      "case": "f01",
+      "split": "calibration",
+      "checked_expected": [
+        "o1"
+      ],
+      "declared_expected": [
+        "o1"
+      ],
+      "matches": true
+    },
+    {
+      "case": "f02",
+      "split": "calibration",
+      "checked_expected": [],
+      "declared_expected": [],
+      "matches": true
+    },
+    {
+      "case": "f03",
+      "split": "calibration",
+      "checked_expected": [
+        "o1"
+      ],
+      "declared_expected": [
+        "o1"
+      ],
+      "matches": true
+    },
+    {
+      "case": "f04",
+      "split": "calibration",
+      "checked_expected": [
+        "o2"
+      ],
+      "declared_expected": [
+        "o2"
+      ],
+      "matches": true
+    },
+    {
+      "case": "f05",
+      "split": "calibration",
+      "checked_expected": [
+        "o1",
+        "o2"
+      ],
+      "declared_expected": [
+        "o1",
+        "o2"
+      ],
+      "matches": true
+    },
+    {
+      "case": "f06",
+      "split": "calibration",
+      "checked_expected": [],
+      "declared_expected": [],
+      "matches": true
+    },
+    {
+      "case": "f07",
+      "split": "held_out",
+      "checked_expected": [
+        "o1"
+      ],
+      "declared_expected": [
+        "o1"
+      ],
+      "matches": true
+    },
+    {
+      "case": "f08",
+      "split": "held_out",
+      "checked_expected": [],
+      "declared_expected": [],
+      "matches": true
+    },
+    {
+      "case": "f09",
+      "split": "held_out",
+      "checked_expected": [
+        "o1"
+      ],
+      "declared_expected": [
+        "o1"
+      ],
+      "matches": true
+    },
+    {
+      "case": "f10",
+      "split": "held_out",
+      "checked_expected": [
+        "o1"
+      ],
+      "declared_expected": [
+        "o1"
+      ],
+      "matches": true
+    },
+    {
+      "case": "f11",
+      "split": "held_out",
+      "checked_expected": [
+        "o1",
+        "o2"
+      ],
+      "declared_expected": [
+        "o1",
+        "o2"
+      ],
+      "matches": true
+    },
+    {
+      "case": "f12",
+      "split": "held_out",
+      "checked_expected": [],
+      "declared_expected": [],
+      "matches": true
+    }
+  ],
+  "independent_human_review": false,
+  "human_gate_satisfied": false,
+  "application_review_written": false,
+  "live_pilot_cases": 0,
+  "at17": "BLOCKED"
+}

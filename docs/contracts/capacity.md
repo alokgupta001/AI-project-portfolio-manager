@@ -1,5 +1,9 @@
 # Resource capacity contract — Sprint 05
 
+Current implementation: [capacity feature](../../services/api/ppm_api/modules/capacity/README.md).
+The [step 19 grouping](../04-testing/BACKEND_STRUCTURE_STEP_19.md) changes
+file/import ownership while preserving the contract and permission/workflow rules below.
+
 Migration `0004_capacity`, metric version `capacity-v1`, immutable planning snapshot
 `capacity-snapshot-v1`. Extends the existing delivery CRUD/API and session contracts.
 

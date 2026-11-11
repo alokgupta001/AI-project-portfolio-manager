@@ -7,13 +7,13 @@ from uuid import UUID, uuid4
 
 import pytest
 import sqlalchemy as sa
-from ppm_api import agent_task_tables as T
-from ppm_api import ai_tables as A
-from ppm_api.identity import context, now
-from ppm_api.identity_tables import memberships
-from ppm_api.model_contracts import ModelResult, ModelUsage
-from ppm_api.model_registry import ModelPolicy
-from ppm_api.ppm_tables import TABLES
+from ppm_api.modules.agents import task_tables as T
+from ppm_api.modules.ai import tables as A
+from ppm_api.modules.ai.contracts import ModelResult, ModelUsage
+from ppm_api.modules.ai.registry import ModelPolicy
+from ppm_api.modules.identity.service import context, now
+from ppm_api.modules.identity.tables import memberships
+from ppm_api.shared.table_registry import TABLES
 from sqlalchemy.exc import DBAPIError
 from test_agent_v2_runtime import configure
 from test_agents import start, work
@@ -118,6 +118,55 @@ async def test_guided_grant_preserves_role_and_checks_every_boundary(
 
     async def execute(self, request):
         self.permit(request)
+        assert request.timeout == request.permit.timeout_seconds == 60
+        async with app.state.engine.begin() as conn:
+            await context(
+                conn, ids[role], ids["a"], "Project Manager" if role == "pm" else "Viewer"
+            )
+            call = (
+                (
+                    await conn.execute(
+                        sa.select(A.calls).where(A.calls.c.id == request.permit.attempt_id)
+                    )
+                )
+                .mappings()
+                .one()
+            )
+            task = (
+                (await conn.execute(sa.select(T.tasks).where(T.tasks.c.id == call["task_id"])))
+                .mappings()
+                .one()
+            )
+            rejected = await conn.scalar(
+                sa.text(
+                    "SELECT public.ppm_model_admit"
+                    "(:rid,:tid,:sid,:mid,:phash,:lease,:aid,10,128,61)"
+                ),
+                dict(
+                    rid=call["run_id"],
+                    tid=task["id"],
+                    sid=profile.quota_scope,
+                    mid=profile.model,
+                    phash=policy.policy_hash,
+                    lease=task["lease_token"],
+                    aid=uuid4(),
+                ),
+            )
+            assert rejected["code"] == "AUTHORITY_REVOKED"
+        async with owner.connect() as conn:
+            quota = (
+                (
+                    await conn.execute(
+                        sa.select(T.quotas).where(
+                            T.quotas.c.attempt_id == request.permit.attempt_id
+                        )
+                    )
+                )
+                .mappings()
+                .one()
+            )
+            assert (quota["slot_expires_at"] - quota["admitted_at"]).total_seconds() == 65
+            assert quota["outcome"] == "admitted"
         seen.append(request)
         return ModelResult(
             attempt_id=request.permit.attempt_id,
@@ -128,7 +177,7 @@ async def test_guided_grant_preserves_role_and_checks_every_boundary(
             usage=ModelUsage(input_tokens=10, output_tokens=8, source="reported"),
         )
 
-    monkeypatch.setattr("ppm_api.agent_runtime.NativeAdapter.execute", execute)
+    monkeypatch.setattr("ppm_api.modules.agents.runtime.NativeAdapter.execute", execute)
     response = await start(c, project, **body)
     assert response.status_code == 202, response.text
     output, _ = await work(c, app, owner, ids | {"admin": ids[role]}, response.json())
@@ -136,6 +185,16 @@ async def test_guided_grant_preserves_role_and_checks_every_boundary(
     assert len(seen) == 1
     expected_role = "Project Manager" if role == "pm" else "Viewer"
     async with owner.connect() as conn:
+        run_id = UUID(response.json()["run"]["id"])
+        versions = await conn.scalar(sa.select(A.runs.c.versions).where(A.runs.c.id == run_id))
+        assert versions["guided_cloud_timeout_seconds"] == 60
+        quota = (
+            (await conn.execute(sa.select(T.quotas).where(T.quotas.c.run_id == run_id)))
+            .mappings()
+            .one()
+        )
+        assert quota["outcome"] == "complete"
+        assert quota["request_count"] == 1
         assert (
             await conn.scalar(
                 sa.select(memberships.c.role).where(

@@ -3,14 +3,14 @@
 from uuid import uuid4
 
 import pytest
-from ppm_api.agent_context import pack, section_schema
-from ppm_api.agent_planner import build_plan
-from ppm_api.agent_recovery import recovery
-from ppm_api.agent_registry import REGISTRY
-from ppm_api.agent_schemas import AnalysisInput
-from ppm_api.agent_validation import validate_section
-from ppm_api.model_contracts import ModelFailure, SectionOutput
-from ppm_api.model_registry import digest
+from ppm_api.modules.agents.context import pack, section_schema
+from ppm_api.modules.agents.planner import build_plan
+from ppm_api.modules.agents.recovery import recovery
+from ppm_api.modules.agents.registry import REGISTRY
+from ppm_api.modules.agents.schemas import AnalysisInput
+from ppm_api.modules.agents.validation import validate_section
+from ppm_api.modules.ai.contracts import ModelFailure, SectionOutput
+from ppm_api.modules.ai.registry import digest
 
 
 def snapshot():

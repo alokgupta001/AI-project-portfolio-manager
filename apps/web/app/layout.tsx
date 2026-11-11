@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import "../components/tutorial.css";
 
 export const metadata: Metadata = {
   title: "Enterprise PPM | Workspace",

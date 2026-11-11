@@ -14,9 +14,9 @@ from uuid import NAMESPACE_URL, uuid5
 import httpx
 import sqlalchemy as sa
 from ppm_api.config import load_settings
-from ppm_api.identity import now, password_hash
-from ppm_api.identity_tables import memberships, organizations, users
 from ppm_api.main import create_app
+from ppm_api.modules.identity.service import now, password_hash
+from ppm_api.modules.identity.tables import memberships, organizations, users
 from sqlalchemy.engine import make_url
 from sqlalchemy.ext.asyncio import create_async_engine
 

@@ -1,5 +1,35 @@
 # Document sources — sources-v1
 
+Current [step 18 extraction](../04-testing/BACKEND_STRUCTURE_STEP_18.md): Seven lifecycle/retention handlers delegate to operations; the orphan-candidate helper moves with its callers. Authorization, revision, retention/hold, evidence-link and filesystem eligibility statements are preserved.
+HTTP contracts, permission rules, transaction and replay behavior are preserved.
+
+Current [step 17 extraction](../04-testing/BACKEND_STRUCTURE_STEP_17.md): Four file handlers delegate to operations for upload, download tickets, private downloads and reprocessing. Existing statement bodies, storage/hash checks and transport responses are preserved.
+HTTP contracts, permission rules, transaction and replay behavior are preserved.
+
+Current [step 16 extraction](../04-testing/BACKEND_STRUCTURE_STEP_16.md): Seven read handlers delegate to query operations with identical statement bodies. HTTP defaults/Query validation stay on the routes; operations receive Principal and explicit arguments. AI retrieval and agent citations use the query owner directly.
+HTTP contracts, permission rules, transaction and replay behavior are preserved.
+
+Current [step 15 extraction](../04-testing/BACKEND_STRUCTURE_STEP_15.md): Response loading, processing-job/outbox enqueueing and authorized replay now have a shared service owner. All three complete definitions move unchanged, reusing the existing scoped transaction.
+HTTP contracts, permission rules, transaction and replay behavior are preserved.
+
+Current implementation: [`modules/documents`](../../services/api/ppm_api/modules/documents/README.md).
+The [step 14 mutation-helper extraction](../04-testing/BACKEND_STRUCTURE_STEP_14.md)
+moves revision preconditions and shared request fingerprints to `mutations.py`.
+Document, AI and agent-review callers preserve key validation, canonical hash inputs,
+error responses and existing lock/authorization/replay order.
+The [step 13 worker extraction](../04-testing/BACKEND_STRUCTURE_STEP_13.md) moves
+the existing processing handler and nested authorization resolver to `worker.py`.
+Dispatcher/recovery callers and test patch targets follow the new owner; authority,
+lease fencing, scanner/parser/storage boundaries and publication rules are preserved.
+The [step 12 access extraction](../04-testing/BACKEND_STRUCTURE_STEP_12.md) puts
+the unchanged document/version lookup and write-eligibility helpers in `access.py`.
+HTTP, worker and direct AI/agent version readers retain tenant/project checks,
+deleted-source handling and existing transaction/permission behavior.
+The [step 11 folder move](../04-testing/BACKEND_STRUCTURE_STEP_11.md) groups the
+existing routes/worker, schemas, tables, parser and retrieval types; Python callers
+and the bounded parser subprocess use their new module paths. Endpoint contracts,
+permissions, source processing and retention behavior below are preserved.
+
 Sprint 11 [candidate document findings](agents.md) consume selected ready source spans with current authorization/version/hash checks. Acceptance means reviewed only. Source version/revocation changes withhold unsupported outputs; source ingestion and original objects are unchanged.
 
 Sprint 09 extends the existing API, storage abstraction, durable_jobs/outbox/events,

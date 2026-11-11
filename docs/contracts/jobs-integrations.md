@@ -1,5 +1,9 @@
 # Durable jobs and ingestion — jobs-v1
 
+Current implementation: [integrations feature](../../services/api/ppm_api/modules/integrations/README.md).
+The [step 23 grouping](../04-testing/BACKEND_STRUCTURE_STEP_23.md) changes
+file/import ownership while preserving the contract and permission/workflow rules below.
+
 ## Sprint 12 extension
 
 [Connector authority and conflict contract](ml.md) adds explicitly approved session-independent principals, scheduled polling, generation fencing, canonical identity and version-checked conflict review. Legacy connections retain their session gate until enrolled. Existing limits, source timestamps, cursor replay and durable jobs are reused.

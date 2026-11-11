@@ -51,10 +51,10 @@ def dispatch() -> int:
 
         engine = make_engine(settings)
         try:
-            from ppm_api.account_mail import deliver_due
+            from ppm_api.modules.identity.mail import deliver_due
 
             await deliver_due(engine, settings)
-            from ppm_api.connectors import schedule_connectors
+            from ppm_api.modules.integrations.connectors import schedule_connectors
 
             await schedule_connectors(engine)
             async with engine.connect() as conn:
@@ -77,7 +77,7 @@ def dispatch() -> int:
 def pipeline_run(job_id: str, organization_id: str, actor_id: str) -> None:
     from uuid import UUID
 
-    from ppm_api.jobs import run_job
+    from ppm_api.modules.integrations.jobs import run_job
 
     async def run() -> None:
         engine = make_engine(settings)

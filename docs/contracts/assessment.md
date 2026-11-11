@@ -1,5 +1,41 @@
 # Sprint 06 assessment contract
 
+Current implementation: [`modules/assessments`](../../services/api/ppm_api/modules/assessments/README.md).
+The [framework-module separation](../04-testing/ASSESSMENT_STRUCTURE_STEP_10.md)
+moves the six framework operations, their response helper and example loader from
+the shared service to `frameworks.py`. Both service modules remain independent,
+with existing operation bodies, transactions, route metadata and API preserved.
+The [grant/history extraction](../04-testing/ASSESSMENT_STRUCTURE_STEP_9.md)
+places grant writes, grant listing and private event-history reads in the service,
+preserving role/tenant/result-grant checks, active membership and event ordering.
+All 21 HTTP handlers now delegate to operations with the same transport contract.
+The [evidence-operation extraction](../04-testing/ASSESSMENT_STRUCTURE_STEP_8.md)
+places attachment listing/intake, preview/download, draft removal and reviewer
+release in `evidence.py`, preserving private access, storage, bounds, revision and
+quarantine rules behind the same HTTP/mutation boundary.
+The [lifecycle-operation extraction](../04-testing/ASSESSMENT_STRUCTURE_STEP_7.md)
+places assignment, list/detail, answer-save, submission and review behind thin HTTP
+adapters while preserving state, role, scoring, event and notification behavior.
+The [initial framework-operation extraction](../04-testing/ASSESSMENT_STRUCTURE_STEP_6.md)
+placed list/create/edit/publish/version-history/example operations in the shared
+service; their current owner is `frameworks.py`. Six route signatures, decorators,
+permissions and stored versions are preserved.
+The [service-helper extraction](../04-testing/ASSESSMENT_STRUCTURE_STEP_5.md)
+separates shared answer/score/response loading, lifecycle events and completion
+checks. Agents use that service directly; transactions and workflow rules stay the same.
+The [write-safeguard extraction](../04-testing/ASSESSMENT_STRUCTURE_STEP_4.md)
+separates the existing mutation/revision helpers while preserving authorization
+before replay, error/precondition responses and request audit behavior.
+The [access-module extraction](../04-testing/ASSESSMENT_STRUCTURE_STEP_3.md)
+centralizes existing tenant, framework-grant, named responsibility, evidence and
+live write checks without changing the permission policy or API.
+The [10 November extraction](../04-testing/ASSESSMENT_STRUCTURE_STEP_2.md) separates
+scoring and validation from HTTP workflows while preserving the API and rules.
+The [5 November structure cleanup](../04-testing/ASSESSMENT_STRUCTURE_STEP_1.md)
+groups the existing router, schemas, tables and examples without changing the
+workflow below. One generated schema component name follows the new Python module;
+the report records that contract-reference change explicitly.
+
 Sprint 11 [semantic suggestions and reviews](agents.md) are separate immutable analysis/decision records. Existing published frameworks, answers, reviewer overrides, original scores, results and histories remain unchanged. Result-only grants never authorize analysis inputs.
 
 The API prefix is `/api/v1/assessment`; the UI is `/assessments`. OpenAPI is authoritative. All writes use the existing cookie/CSRF/active-organization transport, a UUID `Idempotency-Key`, and (when editing an existing aggregate) `If-Match`. Conflicts return 412, missing preconditions 428, reused keys with different requests 409. An organization transaction lock rechecks live membership before authorization or replay. Requests are capped at 2 MiB before JSON parsing.

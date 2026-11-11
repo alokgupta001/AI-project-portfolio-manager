@@ -84,6 +84,110 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/agents/selection-pilots": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Listing
+         * @description List ten recent authorized pilots, reconstructing measurements without inference.
+         */
+        get: operations["listing_api_v1_agents_selection_pilots_get"];
+        put?: never;
+        /**
+         * Create
+         * @description Prepare an idempotent frozen fixture protocol; make no model call or label approval.
+         */
+        post: operations["create_api_v1_agents_selection_pilots_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/agents/selection-pilots/{id_}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Detail
+         * @description Recheck current access and return a downloadable pilot report without inference.
+         */
+        get: operations["detail_api_v1_agents_selection_pilots__id___get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/agents/selection-pilots/{id_}/automated-review": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Automated Review
+         * @description Record a scoped machine audit with human_reviewed=false; preserve all human gates.
+         */
+        post: operations["automated_review_api_v1_agents_selection_pilots__id___automated_review_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/agents/selection-pilots/{id_}/cases/{case_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Measure
+         * @description Queue one ordered fixture through normal AI admission; retain duplicate/failed runs.
+         */
+        post: operations["measure_api_v1_agents_selection_pilots__id___cases__case_id__post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/agents/selection-pilots/{id_}/label-review": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Approve
+         * @description Freeze a different authorized human's review of every bound fixture label.
+         */
+        post: operations["approve_api_v1_agents_selection_pilots__id___label_review_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/ai/budget": {
         parameters: {
             query?: never;
@@ -2063,6 +2167,10 @@ export interface components {
             analysis_mode?: ("auto" | "metrics" | "domain" | "assessment" | "portfolio" | "executive" | "all_specialists" | "guided") | null;
             /** Assessment Id */
             assessment_id?: string | null;
+            /** Guided Case Id */
+            guided_case_id?: string | null;
+            /** Guided Pilot Id */
+            guided_pilot_id?: string | null;
             /**
              * Operation
              * @default query
@@ -2454,6 +2562,10 @@ export interface components {
             analysis_mode?: ("auto" | "metrics" | "domain" | "assessment" | "portfolio" | "executive" | "all_specialists" | "guided") | null;
             /** Assessment Id */
             assessment_id?: string | null;
+            /** Guided Case Id */
+            guided_case_id?: string | null;
+            /** Guided Pilot Id */
+            guided_pilot_id?: string | null;
             /** Prior Run Id */
             prior_run_id?: string | null;
             /**
@@ -2786,6 +2898,18 @@ export interface components {
              * Format: date-time
              */
             updated_at: string;
+        };
+        /** AutomatedReview */
+        AutomatedReview: {
+            /** Corpus Sha256 */
+            corpus_sha256: string;
+            /** Strategy Sha256 */
+            strategy_sha256: string;
+            /**
+             * Synthetic Only
+             * @constant
+             */
+            synthetic_only: true;
         };
         /** AvailabilityInput */
         AvailabilityInput: {
@@ -4251,10 +4375,10 @@ export interface components {
             instance_id: string;
             /**
              * Schema Revision
-             * @default 0018_csv_source_namespaces
+             * @default 0020_guided_cloud_timeout
              * @constant
              */
-            schema_revision: "0018_csv_source_namespaces";
+            schema_revision: "0020_guided_cloud_timeout";
         };
         /** FrameworkInput */
         "FrameworkInput-Input": {
@@ -4417,6 +4541,12 @@ export interface components {
             checklists?: components["schemas"]["Checklist"][];
             /** Code */
             code?: string | null;
+            /**
+             * Lineage
+             * @default project_observations
+             * @enum {string}
+             */
+            lineage: "project_observations" | "synthetic_fixture";
             /** Provider */
             provider: string;
             /**
@@ -4615,6 +4745,22 @@ export interface components {
              * Format: date-time
              */
             updated_at: string;
+        };
+        /** LabelReview */
+        LabelReview: {
+            /** Corpus Sha256 */
+            corpus_sha256: string;
+            /**
+             * Human Reviewed
+             * @constant
+             */
+            human_reviewed: true;
+            /** Reason */
+            reason: string;
+            /** Reviewed Case Ids */
+            reviewed_case_ids: string[];
+            /** Strategy Sha256 */
+            strategy_sha256: string;
         };
         /** Level */
         Level: {
@@ -5080,6 +5226,122 @@ export interface components {
             /** Name */
             name: string;
         };
+        /** PilotCase */
+        PilotCase: {
+            /** Correct */
+            correct: boolean | null;
+            /** Diagnostic */
+            diagnostic: string | null;
+            /** Elapsed Ms */
+            elapsed_ms: number | null;
+            /** Expected */
+            expected: string[];
+            /** Id */
+            id: string;
+            /** Latency Ms */
+            latency_ms: number;
+            /** Run Id */
+            run_id: string | null;
+            /** Selected */
+            selected: string[];
+            /** Split */
+            split: string;
+            /** Status */
+            status: string;
+            /**
+             * Timing Kind
+             * @enum {string}
+             */
+            timing_kind: "accepted_response" | "unavailable_attempt" | "not_recorded";
+        };
+        /** PilotInput */
+        PilotInput: {
+            /**
+             * Project Id
+             * Format: uuid
+             */
+            project_id: string;
+        };
+        /** PilotObservation */
+        PilotObservation: {
+            /** Fact */
+            fact: string;
+            /** Id */
+            id: string;
+            /** Partial */
+            partial: boolean;
+            /** Value */
+            value: string;
+        };
+        /** PilotProtocol */
+        PilotProtocol: {
+            /** Cases */
+            cases: components["schemas"]["ProtocolCase"][];
+            /** Corpus Sha256 */
+            corpus_sha256: string;
+            /** License */
+            license: string;
+            /** Lineage */
+            lineage: string;
+            /** Rule */
+            rule: string;
+            /** Strategy Sha256 */
+            strategy_sha256: string;
+            /** Version */
+            version: string;
+        };
+        /** PilotView */
+        PilotView: {
+            /**
+             * Actor Id
+             * Format: uuid
+             */
+            actor_id: string;
+            /** Binding */
+            binding: {
+                [key: string]: unknown;
+            };
+            /** Binding Current */
+            binding_current: boolean;
+            /** Can Automated Review */
+            can_automated_review: boolean;
+            /** Can Review */
+            can_review: boolean;
+            /** Cases */
+            cases: components["schemas"]["PilotCase"][];
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /** Human Reviewed */
+            human_reviewed: boolean;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Next Case At */
+            next_case_at: string | null;
+            /**
+             * Project Id
+             * Format: uuid
+             */
+            project_id: string;
+            protocol: components["schemas"]["PilotProtocol"];
+            /** Review */
+            review: {
+                [key: string]: unknown;
+            } | null;
+            /** Review Kind */
+            review_kind: ("human" | "automated_rule_audit") | null;
+            /** Revision */
+            revision: number;
+            /** Summary */
+            summary: {
+                [key: string]: unknown;
+            };
+        };
         /** Policy */
         Policy: {
             /** Applicability */
@@ -5297,6 +5559,17 @@ export interface components {
             portfolio_id: string;
             /** Reported Health */
             reported_health: string;
+        };
+        /** ProtocolCase */
+        ProtocolCase: {
+            /** Expected */
+            expected: string[];
+            /** Id */
+            id: string;
+            /** Observations */
+            observations: components["schemas"]["PilotObservation"][];
+            /** Split */
+            split: string;
         };
         /** Question */
         "Question-Input": {
@@ -6496,7 +6769,7 @@ export interface components {
             work_type?: ("task" | "bug" | "story" | "feature" | "other") | null;
         };
         /** ReviewInput */
-        ppm_api__agent_schemas__ReviewInput: {
+        ppm_api__modules__agents__schemas__ReviewInput: {
             /** Approved Score */
             approved_score?: number | string | null;
             /**
@@ -6508,7 +6781,7 @@ export interface components {
             reason: string;
         };
         /** ReviewInput */
-        ppm_api__assessment_schemas__ReviewInput: {
+        ppm_api__modules__assessments__schemas__ReviewInput: {
             /**
              * Action
              * @enum {string}
@@ -6674,7 +6947,7 @@ export interface operations {
         };
         requestBody: {
             content: {
-                "application/json": components["schemas"]["ppm_api__agent_schemas__ReviewInput"];
+                "application/json": components["schemas"]["ppm_api__modules__agents__schemas__ReviewInput"];
             };
         };
         responses: {
@@ -6685,6 +6958,215 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["AnalysisView"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    listing_api_v1_agents_selection_pilots_get: {
+        parameters: {
+            query: {
+                project_id: string;
+            };
+            header?: {
+                "x-organization-id"?: string | null;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PilotView"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_api_v1_agents_selection_pilots_post: {
+        parameters: {
+            query?: never;
+            header?: {
+                "x-organization-id"?: string | null;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PilotInput"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PilotView"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    detail_api_v1_agents_selection_pilots__id___get: {
+        parameters: {
+            query?: never;
+            header?: {
+                "x-organization-id"?: string | null;
+            };
+            path: {
+                id_: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PilotView"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    automated_review_api_v1_agents_selection_pilots__id___automated_review_post: {
+        parameters: {
+            query?: never;
+            header?: {
+                "x-organization-id"?: string | null;
+            };
+            path: {
+                id_: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AutomatedReview"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PilotView"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    measure_api_v1_agents_selection_pilots__id___cases__case_id__post: {
+        parameters: {
+            query?: never;
+            header?: {
+                "x-organization-id"?: string | null;
+            };
+            path: {
+                id_: string;
+                case_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PilotView"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    approve_api_v1_agents_selection_pilots__id___label_review_post: {
+        parameters: {
+            query?: never;
+            header?: {
+                "x-organization-id"?: string | null;
+            };
+            path: {
+                id_: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["LabelReview"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PilotView"];
                 };
             };
             /** @description Validation Error */
@@ -7528,7 +8010,7 @@ export interface operations {
         };
         requestBody: {
             content: {
-                "application/json": components["schemas"]["ppm_api__assessment_schemas__ReviewInput"];
+                "application/json": components["schemas"]["ppm_api__modules__assessments__schemas__ReviewInput"];
             };
         };
         responses: {

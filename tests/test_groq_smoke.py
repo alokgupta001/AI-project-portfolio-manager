@@ -7,7 +7,7 @@ from pathlib import Path
 
 import httpx
 import pytest
-from ppm_api.model_contracts import ModelFailure
+from ppm_api.modules.ai.contracts import ModelFailure
 
 from scripts import check_provider_setup as setup
 from scripts import smoke_groq_provider as smoke

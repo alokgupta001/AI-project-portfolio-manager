@@ -6,11 +6,11 @@ from uuid import UUID, uuid4
 
 import httpx
 import pytest
-from ppm_api.agent_planner import build_plan
-from ppm_api.agent_registry import REGISTRY
-from ppm_api.agent_schemas import AnalysisInput
-from ppm_api.model_contracts import CapabilityDetail, ModelFailure, SectionOutput
-from ppm_api.model_registry import ModelProfile
+from ppm_api.modules.agents.planner import build_plan
+from ppm_api.modules.agents.registry import REGISTRY
+from ppm_api.modules.agents.schemas import AnalysisInput
+from ppm_api.modules.ai.contracts import CapabilityDetail, ModelFailure, SectionOutput
+from ppm_api.modules.ai.registry import ModelProfile
 from pydantic import ValidationError
 
 from scripts import benchmark_agent_runtime as B
@@ -315,7 +315,7 @@ def test_review_must_match_candidate_and_can_reject_real_citation(tmp_path):
     )
     # Real offsets pass hard checks even though this deliberately unsupported interpretation
     # must receive a semantic failure from the independent reviewer.
-    from ppm_api.agent_validation import validate_section
+    from ppm_api.modules.agents.validation import validate_section
 
     validate_section(node, context, SectionOutput(**output))
     candidate = tmp_path / (attempt_id + ".json")

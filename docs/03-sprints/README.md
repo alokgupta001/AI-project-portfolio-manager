@@ -1,6 +1,11 @@
 # Sprint history and future work
 
-26 October 2026. Current local sample: Sprint 12 at normal schema **0018**. [Reviewed closeout](../10-reference/SPRINT-12-LOCAL-CLOSEOUT.md) records application commit `f93a596`, both passing hosted CI runs and CodeRabbit's final review with no actionable comments. Live connectors/genuine model quality remain unverified and AT17 remains BLOCKED. Earlier dated checkpoints below retain their original scope; stop before Sprint 13.
+**Active continuation:** [Sprint 12.1 — Current API financial selection pilot](active/sprint-12.1/README.md).
+Local software and the approved automated run are complete. The run stopped at
+f02 TIMEOUT: one measured match, ten unattempted, human review false. The live
+fixture gate is unmet; see the saved run record. Broad AT17 remains BLOCKED; Sprint 13 is not started.
+
+26 October 2026. Sprint 12 closeout checkpoint: schema **0018**. [Reviewed closeout](../10-reference/SPRINT-12-LOCAL-CLOSEOUT.md) records application commit `f93a596`, both passing hosted CI runs and CodeRabbit's final review with no actionable comments. Live connectors/genuine model quality remain unverified and AT17 remains BLOCKED. Earlier dated checkpoints below retain their original scope; stop before Sprint 13. The subsequent financial selection pilot at schema 0019 is recorded in [the latest handoff](../handoffs/LATEST.md).
 
 **Earlier checkpoint before Sprint 12 (25 October 2026; superseded):** Sprint 11/11.1 is complete for the
 local guided-sample scope; Sprint 12 local foundations are ready to start, not yet
@@ -37,6 +42,7 @@ Current documentation closure for all Sprints 00–10 (including 8.1): [coverage
 - [Completed Sprint 10 (gateway/evaluation scope): AI gateway, embeddings, orchestration and evaluation](completed/sprint-10/README.md)
 - [LOCAL Sprint 11: Nine agents, semantic assessment and reviewed recommendations](completed/sprint-11/README.md)
 - [LOCAL Sprint 12: Connector authority, historical labels and baseline models](completed/sprint-12/README.md)
+- [ACTIVE Sprint 12.1: Current API financial selection experiment](active/sprint-12.1/README.md)
 - [PLANNED Sprint 13: Eligible forecast serving with uncertainty](planned/sprint-13/README.md)
 - [PLANNED Sprint 14: Scoped copilot context and natural-language analytics](planned/sprint-14/README.md)
 - [PLANNED Sprint 15: Approvals, due-event reminders and assessment follow-through](planned/sprint-15/README.md)

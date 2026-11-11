@@ -8,10 +8,10 @@ from uuid import uuid4
 
 import pytest
 import sqlalchemy as sa
-from ppm_api.identity import context, digest, now
-from ppm_api.identity_tables import challenges, memberships, organizations, users
-from ppm_api.pilot import notify
-from ppm_api.pilot_tables import notifications
+from ppm_api.modules.identity.service import context, digest, now
+from ppm_api.modules.identity.tables import challenges, memberships, organizations, users
+from ppm_api.modules.workspace.service import notify
+from ppm_api.modules.workspace.tables import notifications
 from test_delivery import create
 from test_identity import PASSWORD, login, send
 from test_identity import identity as identity
@@ -241,7 +241,7 @@ async def test_search_125_records_roles_metadata_notifications_revocation(identi
 
 
 async def test_full_cohort_paging_result_grants_and_equal_timestamps(identity):
-    from ppm_api import assessment_tables as A
+    from ppm_api.modules.assessments import tables as A
     from test_assessment import fixture, ok
 
     c, app, owner, ids, emails, fw, v, a = await fixture(identity)
@@ -307,9 +307,9 @@ async def test_full_cohort_paging_result_grants_and_equal_timestamps(identity):
 
 
 async def test_mail_adapter_templates_retry_expiry_and_redaction(identity, monkeypatch):
-    from ppm_api.account_mail import deliver_due
-    from ppm_api.identity import issue_challenge
-    from ppm_api.pilot_tables import mail
+    from ppm_api.modules.identity.mail import deliver_due
+    from ppm_api.modules.identity.service import issue_challenge
+    from ppm_api.modules.identity.tables import mail
 
     c, app, owner, ids, emails = identity
     settings = app.state.settings.model_copy(update={"mail_mode": "smtp"})
@@ -318,7 +318,7 @@ async def test_mail_adapter_templates_retry_expiry_and_redaction(identity, monke
     def adapter(config, payload, delivery_id):
         sent.append(payload["kind"])
 
-    monkeypatch.setattr("ppm_api.account_mail.smtp_delivery", adapter)
+    monkeypatch.setattr("ppm_api.modules.identity.mail.smtp_delivery", adapter)
     async with app.state.engine.begin() as conn:
         await context(conn, ids["admin"], ids["a"], "Admin")
         for kind in ["register", "activate", "reset", "invite"]:
@@ -357,7 +357,7 @@ async def test_mail_adapter_templates_retry_expiry_and_redaction(identity, monke
     def timeout(*args):
         raise TimeoutError("SECRET-TOKEN-MUST-NOT-APPEAR")
 
-    monkeypatch.setattr("ppm_api.account_mail.smtp_delivery", timeout)
+    monkeypatch.setattr("ppm_api.modules.identity.mail.smtp_delivery", timeout)
     async with app.state.engine.begin() as conn:
         await issue_challenge(conn, settings, emails["pending"], "reset")
     assert await deliver_due(app.state.engine, settings) == 0
@@ -405,12 +405,12 @@ async def test_mail_adapter_templates_retry_expiry_and_redaction(identity, monke
         await conn.execute(
             memberships.update().where(memberships.c.user_id == ids["admin"]).values(active=False)
         )
-    monkeypatch.setattr("ppm_api.account_mail.smtp_delivery", adapter)
+    monkeypatch.setattr("ppm_api.modules.identity.mail.smtp_delivery", adapter)
     assert await deliver_due(app.state.engine, settings) == 0
 
 
 async def test_expired_invitation_visible_resend_and_historical_status(identity):
-    from ppm_api.pilot_tables import mail
+    from ppm_api.modules.identity.tables import mail
 
     c, app, owner, ids, emails = identity
     await login(c, emails, org=ids["a"])
@@ -460,9 +460,9 @@ async def test_expired_invitation_visible_resend_and_historical_status(identity)
 
 
 async def test_freshness_rollback_other_tenant_and_membership_revoke(identity):
-    from ppm_api.identity import Principal
-    from ppm_api.pilot import freshness
-    from ppm_api.ppm_tables import TABLES
+    from ppm_api.modules.identity.service import Principal
+    from ppm_api.modules.workspace.service import freshness
+    from ppm_api.shared.table_registry import TABLES
     from test_delivery import setup
 
     c, app, owner, ids, emails, portfolio, project = await setup(identity)
@@ -502,8 +502,8 @@ async def test_freshness_rollback_other_tenant_and_membership_revoke(identity):
 
 async def test_workspace_stream_reconnect_and_live_revocation(identity):
     from fastapi import Request
-    from ppm_api.identity import Principal
-    from ppm_api.pilot import stream
+    from ppm_api.modules.identity.service import Principal
+    from ppm_api.modules.workspace.service import stream
     from test_delivery import setup
 
     c, app, owner, ids, emails, portfolio, project = await setup(identity)

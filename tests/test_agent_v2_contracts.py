@@ -3,10 +3,10 @@
 from uuid import uuid4
 
 import pytest
-from ppm_api.agent_registry import REGISTRY
-from ppm_api.agent_schemas import AGENTS, AnalysisInput
-from ppm_api.ai_schemas import AIRunInput
-from ppm_api.model_contracts import V2_FIELDS, CapabilityDetail, ModelUsage, SectionOutput
+from ppm_api.modules.agents.registry import REGISTRY
+from ppm_api.modules.agents.schemas import AGENTS, AnalysisInput
+from ppm_api.modules.ai.contracts import V2_FIELDS, CapabilityDetail, ModelUsage, SectionOutput
+from ppm_api.modules.ai.schemas import AIRunInput
 from pydantic import ValidationError
 
 

@@ -9,8 +9,8 @@ reviews:
   review_status: true
   poem: false
   path_filters:
-    # Free OSS reviews currently allow at most 100 selected files. Keep code,
-    # infrastructure and tests in scope; documentation has dedicated checkers.
+    # Keep code, infrastructure and tests in scope. Documentation and generated
+    # artifacts use dedicated checkers; confirm the live OSS file limit per review.
     - "!docs/**"
     - "!artifacts/**"
     - "!packages/contracts/openapi.json"
@@ -31,7 +31,7 @@ reviews:
       instructions: |
         Check idempotency, retry behavior, transaction boundaries, bounded
         resource use, and safe handling of task failures.
-    - path: "services/api/ppm_api/ai*.py"
+    - path: "services/api/ppm_api/modules/ai/**"
       instructions: |
         Verify the Gemini free-tier-only, maximum USD 0 contract: explicit
         authorization, key-bound confirmation, exact allowed models, zero
@@ -41,6 +41,13 @@ reviews:
         cancellation, replay fencing and read-only orchestration. A daily
         confirmation expiry was intentionally removed; changing the API key
         must still invalidate the confirmation.
+    - path: "services/api/ppm_api/modules/agents/**"
+      instructions: |
+        Check explicit evidence/project grants, live revocation, independent
+        reviews and immutable results. Preserve deterministic arithmetic and
+        read-only model authority. Check bounded task graphs, cancellation,
+        lease/generation fencing, attempt limits and shared spending quotas.
+        Provider qualification and stopped-pilot gates must not be broadened.
     - path: "services/api/migrations/**"
       instructions: |
         Check upgrade/downgrade ordering, tenant-scoped constraints, row-level

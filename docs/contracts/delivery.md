@@ -1,5 +1,9 @@
 # Delivery system of record — Sprint 04
 
+Current implementation: [delivery feature](../../services/api/ppm_api/modules/delivery/README.md).
+The [step 21 grouping](../04-testing/BACKEND_STRUCTURE_STEP_21.md) changes
+file/import ownership while preserving the contract and permission/workflow rules below.
+
 Implemented 2026-10-06. Migration `0003_delivery`; API prefix `/api/v1/delivery`; generated OpenAPI and TypeScript in `packages/contracts`. These DTOs are the supported input to future dashboards. No computed health, resource capacity, ingestion or AI module is implemented.
 
 ## Authority and relationships

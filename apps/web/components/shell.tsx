@@ -2,6 +2,8 @@
 import { useEffect, useState, type ReactNode } from "react";
 import { usePathname } from "next/navigation";
 import { Button, Modal, Badge } from "./ui";
+import { Icon, type IconName } from "./icon";
+import { Tutorial } from "./tutorial";
 
 export function ThemeControl() {
   const [theme, setTheme] = useState("light");
@@ -21,10 +23,12 @@ export function ThemeControl() {
   return (
     <Button
       variant="secondary"
+      className="theme-control"
+      data-theme-state={theme}
       onClick={toggle}
       aria-label={`Switch to ${theme === "light" ? "dark" : "light"} theme`}
     >
-      <span aria-hidden="true">{theme === "light" ? "◐" : "☀"}</span>
+      <Icon name={theme === "light" ? "moon" : "sun"} />
       <span className="theme-label">
         {theme === "light" ? "Dark" : "Light"}
       </span>
@@ -42,7 +46,7 @@ export function Brand() {
   return (
     <a className="brand" href="/">
       <span className="brand-mark" aria-hidden="true">
-        P
+        <Icon name="command" size={24} />
       </span>
       <span>
         Enterprise PPM<small>INTELLIGENCE WORKSPACE</small>
@@ -83,12 +87,16 @@ export function AuthFrame({ children }: { children: ReactNode }) {
 }
 import { RecordSearch, PersonalFeed } from "./pilot";
 export function Shell({
+  userId,
+  organizationId,
   children,
   transport,
   name,
   role,
   organizationControl,
 }: {
+  userId: string;
+  organizationId: string;
   children: ReactNode;
   transport: typeof fetch;
   name: string;
@@ -100,27 +108,66 @@ export function Shell({
   const [palette, setPalette] = useState(false);
   const [notifications, setNotifications] = useState(false);
   const [query, setQuery] = useState("");
-  const destinations = [
-    { name: "Workspace overview", href: "/", icon: "◈" },
-    { name: "Projects", href: "/projects", icon: "▤" },
-    { name: "Maturity assessments", href: "/assessments", icon: "◉" },
-    { name: "Command center", href: "/command-center", icon: "◈" },
-    { name: "History & baselines", href: "/ml", icon: "▤" },
-    { name: "Integrations & jobs", href: "/integrations", icon: "◇" },
-    { name: "Document library", href: "/documents", icon: "▤" },
-    { name: "AI operations & evidence", href: "/ai", icon: "◇" },
-    { name: "Agents & recommendations", href: "/agents", icon: "◇" },
-    { name: "Resource planning", href: "/resources", icon: "▦" },
-    { name: "Portfolios", href: "/portfolios", icon: "▦" },
-    ...(role === "Admin"
-      ? [{ name: "Organization setup", href: "/organization", icon: "◇" }]
-      : []),
-    { name: "Account & access", href: "/account", icon: "◎" },
-    ...(role === "Admin"
-      ? [{ name: "Organization members", href: "/account#members", icon: "♙" }]
-      : []),
-    { name: "Component gallery", href: "/design-system", icon: "▦" },
+  const groups: {
+    name: string;
+    items: { name: string; href: string; icon: IconName }[];
+  }[] = [
+    {
+      name: "Plan & deliver",
+      items: [
+        { name: "Workspace overview", href: "/", icon: "overview" },
+        { name: "Projects", href: "/projects", icon: "projects" },
+        { name: "Portfolios", href: "/portfolios", icon: "portfolios" },
+        { name: "Resource planning", href: "/resources", icon: "resources" },
+        {
+          name: "Maturity assessments",
+          href: "/assessments",
+          icon: "assessments",
+        },
+        { name: "Command center", href: "/command-center", icon: "command" },
+      ],
+    },
+    {
+      name: "Evidence & intelligence",
+      items: [
+        { name: "Document library", href: "/documents", icon: "documents" },
+        {
+          name: "Integrations & jobs",
+          href: "/integrations",
+          icon: "integrations",
+        },
+        { name: "AI operations & evidence", href: "/ai", icon: "ai" },
+        { name: "Agents & recommendations", href: "/agents", icon: "agents" },
+        { name: "History & baselines", href: "/ml", icon: "history" },
+      ],
+    },
+    {
+      name: "Workspace",
+      items: [
+        ...(role === "Admin"
+          ? [
+              {
+                name: "Organization setup",
+                href: "/organization",
+                icon: "settings" as const,
+              },
+            ]
+          : []),
+        { name: "Account & access", href: "/account", icon: "account" },
+        ...(role === "Admin"
+          ? [
+              {
+                name: "Organization members",
+                href: "/account#members",
+                icon: "resources" as const,
+              },
+            ]
+          : []),
+        { name: "Component gallery", href: "/design-system", icon: "gallery" },
+      ],
+    },
   ];
+  const destinations = groups.flatMap((group) => group.items);
   const results = destinations.filter((d) =>
     d.name.toLowerCase().includes(query.toLowerCase()),
   );
@@ -136,36 +183,36 @@ export function Shell({
   }, []);
   const navigation = (
     <>
-      <p className="nav-label">WORKSPACE</p>
       <nav aria-label="Primary navigation">
-        {destinations.map((d) => (
-          <a
-            key={d.href}
-            href={d.href}
-            aria-current={path === d.href ? "page" : undefined}
-          >
-            <span aria-hidden="true">{d.icon}</span>
-            {d.name}
-          </a>
+        {groups.map((group) => (
+          <div className="nav-group" key={group.name}>
+            <p className="nav-label">{group.name}</p>
+            {group.items.map((d) => (
+              <a
+                key={d.href}
+                href={d.href}
+                onClick={() => setMenu(false)}
+                aria-current={
+                  !d.href.includes("#") &&
+                  (path === d.href ||
+                    (d.href !== "/" && path.startsWith(d.href + "/")))
+                    ? "page"
+                    : undefined
+                }
+              >
+                <Icon name={d.icon} size={18} />
+                <span className="nav-text">{d.name}</span>
+              </a>
+            ))}
+          </div>
         ))}
       </nav>
-      <p className="nav-label">COMING NEXT</p>
-      <ul className="future-nav">
-        {futureModules.map((d) => (
-          <li key={d.name}>
-            <span>{d.name}</span>
-            <span className="future-label">Planned</span>
-          </li>
-        ))}
-      </ul>
       <div className="sidebar-bottom">
         <Badge>Local workspace</Badge>
-        <p>
-          Built in stages.
-          <br />
-          Only available modules are active.
-        </p>
-        <a href="/system">Service diagnostics ↗</a>
+        <a href="/system">
+          <Icon name="pulse" size={17} />
+          Service diagnostics <span aria-hidden="true">↗</span>
+        </a>
       </div>
     </>
   );
@@ -186,10 +233,15 @@ export function Shell({
             onClick={() => setMenu(true)}
             aria-label="Open navigation"
           >
-            ☰
+            <Icon name="menu" />
           </Button>
           <div className="organization-control">{organizationControl}</div>
           <div className="top-actions">
+            <Tutorial
+              userId={userId}
+              organizationId={organizationId}
+              role={role}
+            />
             <Button
               variant="secondary"
               className="search-trigger"
@@ -199,7 +251,7 @@ export function Shell({
               }}
               aria-label="Search workspace commands"
             >
-              <span aria-hidden="true">⌕</span>
+              <Icon name="search" size={18} />
               <span className="search-label">Go to a page…</span>
               <kbd>Ctrl K</kbd>
             </Button>
@@ -209,7 +261,7 @@ export function Shell({
               aria-label="Open notifications"
               onClick={() => setNotifications(true)}
             >
-              ♧
+              <Icon name="bell" />
             </Button>
             <a
               className="avatar"

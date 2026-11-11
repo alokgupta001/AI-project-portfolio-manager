@@ -9,7 +9,10 @@ from collections import defaultdict
 ROOT = Path(__file__).resolve().parents[2]
 DOCS = ROOT / 'docs'
 sys.path.insert(0, str(ROOT / 'services/api'))
-from ppm_api import identity_tables, ppm_tables, assessment_tables, command_tables
+from ppm_api.modules.identity import tables as identity_tables
+from ppm_api.modules.delivery import tables as ppm_tables
+from ppm_api.modules.assessments import tables as assessment_tables
+from ppm_api.modules.command import tables as command_tables
 from ppm_api.database import Base
 from ppm_api.main import create_app
 from sqlalchemy.schema import CreateTable, CreateIndex
@@ -110,11 +113,12 @@ def build_references():
             rows.append(f'| {method.upper()} | `{path}` — {link(file,fn.__name__)}:{line} | {op.get("summary",fn.__name__)} | {auth} | {request} | {response or "raw response"} | {family} | `apps/web/{front}` |')
     rows += ['', 'All Auth routes additionally read live identity session/user/membership and establish transaction-local context. The database column names direct and major helper effects; conditional reference/grant queries are explained in lifecycle chapters. Evidence download returns bytes despite its broad generated response declaration. Decorator-required assessment headers are checked in code and may be absent from generated parameter lists.', '', '## Expanded delivery resources', '', '| kind | SQL table | Input schema | API operations | Frontend |', '|---|---|---|---|---|']
     from typing import get_args
-    from ppm_api.ppm_schemas import Kind, Input
+    from ppm_api.shared.record_schemas import Kind
+    from ppm_api.modules.delivery.schemas import Input
     schemas=spec['components']['schemas']
     for kind in get_args(Kind):
         found=[n for n,s in schemas.items() if s.get('properties',{}).get('kind',{}).get('const')==kind and n.endswith('Input')]
-        front='capacity.tsx' if kind in __import__('ppm_api.capacity',fromlist=['KINDS']).KINDS else 'command-center.tsx / delivery.tsx' if kind in ['risks','benefits','metric_plans','metric_policies','saved_views'] else 'delivery.tsx'
+        front='capacity.tsx' if kind in __import__('ppm_api.modules.capacity.service',fromlist=['KINDS']).KINDS else 'command-center.tsx / delivery.tsx' if kind in ['risks','benefits','metric_plans','metric_policies','saved_views'] else 'delivery.tsx'
         rows.append(f'| `{kind}` | `ppm_{kind}` | {", ".join(found)} | GET list/detail; POST create; PATCH update subject to immutable rules | `{front}` |')
     rows += ['', '`sprint_closures` is internal: created by sprint closure, not a public delivery Kind. Immutable public kinds reject PATCH. Full payload is required by PATCH; this is not JSON Merge Patch.', '', f'Current OpenAPI contains {sum(m in ["get","post","put","patch","delete"] for p in spec["paths"].values() for m in p)} operations. Committed OpenAPI equality: **{spec == committed}**. This checks the exported contract, not runtime authorization or deployment.']
     write('18-api-contracts.md','API contracts and complete inventory',API_INTRO+'\n\n'+'\n'.join(rows))
@@ -137,7 +141,7 @@ def build_references():
     model_locations['foundation_state']=('services/api/ppm_api/database.py','FoundationState')
     detail=['# Source-derived database dictionary','','[Database chapter](07-database.md) · [Master guide](AI-PPM-MASTER-LEARNING-GUIDE.md)','','Generated from current SQLAlchemy metadata, not a live database dump. Migration RLS/grants are documented separately. No database connection was opened. Full source files remain linked instead of reproducing large CREATE TABLE listings.','']
     for table in sorted(Base.metadata.tables.values(),key=lambda t:t.name):
-        file,symbol=model_locations.get(table.name,('services/api/ppm_api/ppm_tables.py',table.name))
+        file,symbol=model_locations.get(table.name,('services/api/ppm_api/modules/delivery/tables.py',table.name))
         kind=table.name.removeprefix('ppm_')
         assessment=table.name in [t.name for t in assessment_tables.metadata.tables.values() if t.name.removeprefix('ppm_') in assessment_tables.KINDS]
         if assessment: api='/api/v1/assessment/...'; frontend='apps/web/components/assessments.tsx'; used='assessment.py'; purpose=PURPOSES.get(kind,kind.replace('_',' '))
@@ -151,7 +155,7 @@ def build_references():
         if kind in get_args(Kind):
             found=[n for n,s in schemas.items() if s.get('properties',{}).get('kind',{}).get('const')==kind and n.endswith('Input')]
             schema=', '.join(found)+' → RecordView / PageView'
-            capacity_kind=kind in __import__('ppm_api.capacity',fromlist=['KINDS']).KINDS
+            capacity_kind=kind in __import__('ppm_api.modules.capacity.service',fromlist=['KINDS']).KINDS
             frontend='apps/web/components/capacity.tsx' if capacity_kind else 'apps/web/components/command-center.tsx and delivery.tsx' if kind in ['risks','benefits','metric_plans','metric_policies','saved_views'] else 'apps/web/components/delivery.tsx'
             test='tests/test_capacity.py' if capacity_kind else 'tests/test_command.py' if kind in ['risks','benefits','metric_plans','metric_policies','saved_views'] else 'tests/test_delivery.py'
             authority='delivery.authorize; tenant/project RLS; protected mutations use lock/revision checks'

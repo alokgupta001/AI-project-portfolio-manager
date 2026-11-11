@@ -7,16 +7,16 @@ from uuid import uuid4
 
 import httpx
 import pytest
-from ppm_api.agent_batch import batch_prompt, pack_batch, validate_batch
-from ppm_api.agent_planner import build_plan
-from ppm_api.agent_registry import BY_AGENT
-from ppm_api.agent_runtime import batch_window_delay, live_sections
-from ppm_api.agent_schemas import AnalysisInput
-from ppm_api.agent_validation import PREDICATES
-from ppm_api.model_adapters import NativeAdapter
-from ppm_api.model_contracts import ModelFailure, ModelResult, ModelUsage
-from ppm_api.model_registry import ModelPolicy, digest
-from ppm_api.model_router import candidates
+from ppm_api.modules.agents.batch import batch_prompt, pack_batch, validate_batch
+from ppm_api.modules.agents.planner import build_plan
+from ppm_api.modules.agents.registry import BY_AGENT
+from ppm_api.modules.agents.runtime import batch_window_delay, live_sections
+from ppm_api.modules.agents.schemas import AnalysisInput
+from ppm_api.modules.agents.validation import PREDICATES
+from ppm_api.modules.ai.adapters import NativeAdapter
+from ppm_api.modules.ai.contracts import ModelFailure, ModelResult, ModelUsage
+from ppm_api.modules.ai.model_router import candidates
+from ppm_api.modules.ai.registry import ModelPolicy, digest
 from test_agent_planner import snapshot
 from test_cloud_specialists import calibration as calibration
 from test_model_routing import configured as configured
@@ -130,7 +130,7 @@ def test_invalid_member_rejects_whole_batch(change):
 
 def test_batch_eligibility_requires_every_member_class(configured):
     settings, profile, _, req = configured
-    from ppm_api.model_router import RouteRequirements
+    from ppm_api.modules.ai.model_router import RouteRequirements
 
     requirements = RouteRequirements(
         req.tenant,
@@ -194,7 +194,7 @@ def test_batch_revocation_withholds_all_members_including_no_findings():
 
 
 def test_batched_and_individual_attempts_share_case_exhaustion():
-    from ppm_api.model_registry import ModelProfile
+    from ppm_api.modules.ai.registry import ModelProfile
 
     p = ModelProfile(
         id="probe",

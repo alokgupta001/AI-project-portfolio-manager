@@ -13,6 +13,7 @@ import {
   PersonalFeed,
 } from "../../components/pilot";
 import { WorkspaceHome } from "../../components/workspace-home";
+import { ReplayTutorialButton } from "../../components/tutorial";
 import { ML } from "../../components/ml";
 import { Integrations } from "../../components/integrations";
 import { AI } from "../../components/ai";
@@ -451,11 +452,17 @@ export default function IdentityClient({
         </section>
       )}
       {account?.organization_id && mode === "workspace" && (
-        <>
-          <SetupChecklist transport={transport} />
-          <WorkspaceHome account={account} sessionCount={sessions.length} />
-          <PersonalFeed transport={transport} />
-        </>
+        <div key={account.organization_id} className="workspace-home">
+          <WorkspaceHome
+            account={account}
+            sessionCount={sessions.length}
+            transport={transport}
+          />
+          <div className="home-support-grid">
+            <PersonalFeed transport={transport} />
+            <SetupChecklist transport={transport} />
+          </div>
+        </div>
       )}
       {account && mode === "gallery" && <Gallery />}
       {account?.organization_id && mode === "ai" && (
@@ -550,6 +557,7 @@ export default function IdentityClient({
           </section>
           <section className="panel" id="profile">
             <h2>Profile & security</h2>
+            <ReplayTutorialButton />
             <form
               className="identity-form"
               onSubmit={(e) => {
@@ -848,6 +856,8 @@ export default function IdentityClient({
   if (account && protectedMode)
     return (
       <Shell
+        userId={account.id}
+        organizationId={account.organization_id || ""}
         key={account.organization_id}
         transport={transport}
         name={account.name}
@@ -865,8 +875,8 @@ export default function IdentityClient({
             <p className="eyebrow">ENTERPRISE PPM</p>
             <h1>Your workspace awaits.</h1>
             <p className="lead">
-              Sign in to manage your account and organization. Portfolio and
-              intelligence modules are coming in later releases.
+              Sign in to manage your portfolio, delivery, evidence and
+              organization.
             </p>
           </section>
         )}

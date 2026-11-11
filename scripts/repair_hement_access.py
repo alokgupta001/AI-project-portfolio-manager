@@ -6,10 +6,10 @@ from uuid import UUID, uuid5
 
 import sqlalchemy as sa
 from ppm_api.config import load_settings
-from ppm_api.identity import now
-from ppm_api.identity_tables import memberships, users
-from ppm_api.ppm_schemas import GrantInput
-from ppm_api.ppm_tables import TABLES
+from ppm_api.modules.delivery.schemas import GrantInput
+from ppm_api.modules.identity.service import now
+from ppm_api.modules.identity.tables import memberships, users
+from ppm_api.shared.table_registry import TABLES
 from sqlalchemy.engine import make_url
 from sqlalchemy.ext.asyncio import create_async_engine
 

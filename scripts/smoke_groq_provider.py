@@ -22,18 +22,18 @@ import httpx
 ROOT = Path(__file__).resolve().parents[1]
 sys.path[:0] = [str(ROOT), str(ROOT / "services/api")]
 
-from ppm_api.agent_context import pack  # noqa: E402
-from ppm_api.agent_planner import PROMPT  # noqa: E402
-from ppm_api.agent_validation import validate_section  # noqa: E402
 from ppm_api.config import Settings  # noqa: E402
-from ppm_api.model_adapters import NativeAdapter, strict_schema  # noqa: E402
-from ppm_api.model_contracts import (  # noqa: E402
+from ppm_api.modules.agents.context import pack  # noqa: E402
+from ppm_api.modules.agents.planner import PROMPT  # noqa: E402
+from ppm_api.modules.agents.validation import validate_section  # noqa: E402
+from ppm_api.modules.ai.adapters import NativeAdapter, strict_schema  # noqa: E402
+from ppm_api.modules.ai.contracts import (  # noqa: E402
     ExecutionPermit,
     ModelFailure,
     ModelRequest,
     SectionOutput,
 )
-from ppm_api.model_registry import ModelPolicy, ModelProfile, digest  # noqa: E402
+from ppm_api.modules.ai.registry import ModelPolicy, ModelProfile, digest  # noqa: E402
 
 from scripts.check_provider_setup import PRIVATE, read_keys  # noqa: E402
 

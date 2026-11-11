@@ -24,20 +24,20 @@ import httpx
 ROOT = Path(__file__).resolve().parents[1]
 sys.path[:0] = [str(ROOT), str(ROOT / "services/api")]
 
-from ppm_api.agent_context import pack  # noqa: E402
-from ppm_api.agent_planner import PROMPT  # noqa: E402
-from ppm_api.agent_registry import BY_AGENT  # noqa: E402
-from ppm_api.agent_validation import validate_section  # noqa: E402
 from ppm_api.config import Settings  # noqa: E402
-from ppm_api.local_model_readiness import readiness, windows_memory  # noqa: E402
-from ppm_api.model_adapters import NativeAdapter  # noqa: E402
-from ppm_api.model_contracts import (  # noqa: E402
+from ppm_api.modules.agents.context import pack  # noqa: E402
+from ppm_api.modules.agents.planner import PROMPT  # noqa: E402
+from ppm_api.modules.agents.registry import BY_AGENT  # noqa: E402
+from ppm_api.modules.agents.validation import validate_section  # noqa: E402
+from ppm_api.modules.ai.adapters import NativeAdapter  # noqa: E402
+from ppm_api.modules.ai.contracts import (  # noqa: E402
     ExecutionPermit,
     ModelFailure,
     ModelRequest,
     SectionOutput,
 )
-from ppm_api.model_registry import ModelPolicy, canonical, digest  # noqa: E402
+from ppm_api.modules.ai.readiness import readiness, windows_memory  # noqa: E402
+from ppm_api.modules.ai.registry import ModelPolicy, canonical, digest  # noqa: E402
 
 CORPUS = ROOT / "tests/fixtures/agent_v2_quality.json"
 CLOUD_CORPUS = ROOT / "tests/fixtures/agent_v2_cloud_quality.json"

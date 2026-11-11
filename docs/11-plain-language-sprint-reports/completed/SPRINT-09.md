@@ -41,9 +41,9 @@ Open **Document library** at [Documents](http://localhost:3000/documents).
 | Part | Implementation files |
 | --- | --- |
 | Library, versions, search and policy/retention controls | [Document screen](../../../apps/web/components/documents.tsx) |
-| Uploads, downloads, access, policy and retention rules | [Document service](../../../services/api/ppm_api/documents.py) |
-| File parsing/OCR and keyword/source retrieval | [Parser](../../../services/api/ppm_api/document_parser.py), [retrieval](../../../services/api/ppm_api/document_retrieval.py) |
-| Saved document versions and scanner setup | [Document tables](../../../services/api/ppm_api/document_tables.py), [document migration](../../../services/api/migrations/versions/0011_document_sources.py), [scanner configuration](../../../compose.documents.yaml) |
+| Uploads, downloads, access, policy and retention rules | [Document service](../../../services/api/ppm_api/modules/documents/router.py) |
+| File parsing/OCR and keyword/source retrieval | [Parser](../../../services/api/ppm_api/modules/documents/parser.py), [retrieval](../../../services/api/ppm_api/modules/documents/retrieval.py) |
+| Saved document versions and scanner setup | [Document tables](../../../services/api/ppm_api/modules/documents/tables.py), [document migration](../../../services/api/migrations/versions/0011_document_sources.py), [scanner configuration](../../../compose.documents.yaml) |
 | Browser check | [Document scenario](../../../tests/browser/documents.spec.ts) |
 
 ## Recorded checks and limits

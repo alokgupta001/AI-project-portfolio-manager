@@ -9,16 +9,16 @@ import pytest
 import sqlalchemy as sa
 from alembic.migration import MigrationContext
 from alembic.operations import Operations
-from ppm_api.connectors import logical_key
-from ppm_api.identity import context, now
-from ppm_api.identity_tables import sessions
-from ppm_api.ingestion import ConnectorConfig
-from ppm_api.job_tables import integrations, jobs, sources
-from ppm_api.jobs import run_job
-from ppm_api.ml import fixture
-from ppm_api.ml_pipeline import build_dataset, evaluate
-from ppm_api.ml_schemas import DatasetInput, HistoryInput
-from ppm_api.ml_tables import principals, runs
+from ppm_api.modules.identity.service import context, now
+from ppm_api.modules.identity.tables import sessions
+from ppm_api.modules.integrations.connectors import logical_key
+from ppm_api.modules.integrations.ingestion import ConnectorConfig
+from ppm_api.modules.integrations.jobs import run_job
+from ppm_api.modules.integrations.tables import integrations, jobs, principals, sources
+from ppm_api.modules.ml.pipeline import build_dataset, evaluate
+from ppm_api.modules.ml.schemas import DatasetInput, HistoryInput
+from ppm_api.modules.ml.service import fixture
+from ppm_api.modules.ml.tables import runs
 from test_delivery import change, setup
 from test_identity import identity as identity
 from test_identity import login, send
@@ -231,7 +231,7 @@ async def test_connector_logout_dedup_conflict_rotation_revocation_and_tenant(id
 
 @pytest.mark.integration
 async def test_connector_schedule_survives_session_and_stops_after_revoke(identity, monkeypatch):
-    from ppm_api.connectors import schedule_connectors
+    from ppm_api.modules.integrations.connectors import schedule_connectors
 
     c, app, owner, ids, emails, portfolio, project = await setup(identity)
     integration = await connection(
@@ -272,7 +272,7 @@ async def test_connector_schedule_survives_session_and_stops_after_revoke(identi
             {"id": "1", "name": "Scheduled fixture double", "updated_at": "2026-10-01T00:00:00Z"}
         ], None
 
-    monkeypatch.setattr("ppm_api.jobs.remote_page", remote)
+    monkeypatch.setattr("ppm_api.modules.integrations.jobs.remote_page", remote)
     await run_job(app.state.engine, job["id"], ids["a"], ids["admin"])
     async with owner.connect() as conn:
         assert (
@@ -304,8 +304,9 @@ async def test_connector_schedule_survives_session_and_stops_after_revoke(identi
 @pytest.mark.integration
 @pytest.mark.parametrize("failure", ["recheck", "get_integration", "enqueue"])
 async def test_connector_schedule_failure_backs_off_and_continues(identity, monkeypatch, failure):
-    from ppm_api import connectors, delivery
-    from ppm_api import jobs as job_service
+    from ppm_api.modules.delivery import service as delivery
+    from ppm_api.modules.integrations import connectors as connectors
+    from ppm_api.modules.integrations import jobs as job_service
 
     c, app, owner, ids, emails, portfolio, project = await setup(identity)
     connections = []

@@ -6,13 +6,13 @@ from datetime import timedelta
 from uuid import uuid4
 
 import pytest
-from ppm_api import guided_review as G
-from ppm_api.agent_planner import build_plan
-from ppm_api.agent_runtime import assemble, live_sections
-from ppm_api.agent_schemas import AnalysisInput
-from ppm_api.identity import now
-from ppm_api.model_contracts import ExecutionPermit, ModelFailure, ModelRequest
-from ppm_api.model_registry import digest
+from ppm_api.modules.agents import guided_review as G
+from ppm_api.modules.agents.planner import build_plan
+from ppm_api.modules.agents.runtime import assemble, live_sections
+from ppm_api.modules.agents.schemas import AnalysisInput
+from ppm_api.modules.ai.contracts import ExecutionPermit, ModelFailure, ModelRequest
+from ppm_api.modules.ai.registry import digest
+from ppm_api.modules.identity.service import now
 from pydantic import ValidationError
 
 

@@ -4,9 +4,9 @@ import smtplib
 from uuid import uuid4
 
 import pytest
-from ppm_api.account_mail import account_message, smtp_delivery
 from ppm_api.config import Settings, load_settings
-from ppm_api.identity import delivery_instructions
+from ppm_api.modules.identity.mail import account_message, smtp_delivery
+from ppm_api.modules.identity.service import delivery_instructions
 from pydantic import SecretStr, ValidationError
 
 
@@ -88,7 +88,7 @@ def test_smtp_tls_auth_and_recipient_acceptance(settings, monkeypatch, refused):
             calls.append("send")
             return {"recipient@example.com": (550, b"rejected")} if refused else {}
 
-    monkeypatch.setattr("ppm_api.account_mail.smtplib.SMTP", Server)
+    monkeypatch.setattr("ppm_api.modules.identity.mail.smtplib.SMTP", Server)
     if refused:
         with pytest.raises(smtplib.SMTPRecipientsRefused):
             smtp_delivery(smtp_settings(settings), payload("invite"), uuid4())

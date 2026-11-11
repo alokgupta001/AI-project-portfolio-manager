@@ -1,0 +1,11 @@
+{
+  "date": "2026-10-29",
+  "normal_schema": "0019_selection_pilot",
+  "schema_verified_by": "ledger_snapshot.py assertion before export",
+  "all_seven_ledger_access_tables_unchanged_since_stop": true,
+  "additional_model_calls": 0,
+  "downloaded_report_hash_matches": true,
+  "run_history": "f06 opened; TIMEOUT with usable rules-only checklist",
+  "pilot_ui": "insufficient_data; f07 disabled; five matches, one unavailable, no held-out measurements",
+  "console_errors_or_warnings_observed": 0
+}

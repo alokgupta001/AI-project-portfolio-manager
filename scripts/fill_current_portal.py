@@ -10,14 +10,14 @@ import json
 import os
 from uuid import UUID, uuid4
 
-import ppm_api.command_tables  # noqa: F401 — register risk/benefit/metric tables
+import ppm_api.modules.command.tables  # noqa: F401 — register risk/benefit/metric tables
 import sqlalchemy as sa
 from fastapi import Request
-from ppm_api import delivery
 from ppm_api.config import load_settings
-from ppm_api.identity import Principal, context, now
-from ppm_api.identity_tables import memberships, sessions, users
-from ppm_api.ppm_tables import TABLES
+from ppm_api.modules.delivery import service as delivery
+from ppm_api.modules.identity.service import Principal, context, now
+from ppm_api.modules.identity.tables import memberships, sessions, users
+from ppm_api.shared.table_registry import TABLES
 from sqlalchemy.engine import make_url
 from sqlalchemy.ext.asyncio import create_async_engine
 

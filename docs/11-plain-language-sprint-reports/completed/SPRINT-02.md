@@ -37,7 +37,7 @@ People can sign in, manage their own accounts and work inside the correct organi
 | Part | Implementation files |
 | --- | --- |
 | Account screens and interactions | [Identity client](../../../apps/web/app/account/identity-client.tsx), [login](../../../apps/web/app/login/page.tsx), [recovery](../../../apps/web/app/account/reset/page.tsx), [completion](../../../apps/web/app/account/complete/page.tsx) |
-| Account, session and membership rules | [Identity service](../../../services/api/ppm_api/identity.py), [account tables](../../../services/api/ppm_api/identity_tables.py) |
+| Account, session and membership rules | [Identity service](../../../services/api/ppm_api/modules/identity/router.py), [account tables](../../../services/api/ppm_api/modules/identity/tables.py) |
 | Original account storage | [Identity migration](../../../services/api/migrations/versions/0002_identity.py) |
 | First-Admin and test-link tools | [Identity bootstrap](../../../scripts/bootstrap_identity.py), [private local mailbox](../../../scripts/local_mailbox.py) |
 

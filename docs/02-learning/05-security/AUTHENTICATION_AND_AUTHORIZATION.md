@@ -6,7 +6,7 @@ Authentication means identifying the logged-in user. Authorization means decidin
 
 ## Authentication: from login to the next request
 
-**What?** The app creates a revocable login session after checking credentials. **Why?** Every protected request needs a live identity, including after a role change or session revocation. **Where?** [`identity.py`](../../../services/api/ppm_api/identity.py), `identity_tables.py`, and the frontend's `IdentityClient` and `transport`.
+**What?** The app creates a revocable login session after checking credentials. **Why?** Every protected request needs a live identity, including after a role change or session revocation. **Where?** [`identity.py`](../../../services/api/ppm_api/modules/identity/router.py), `identity_tables.py`, and the frontend's `IdentityClient` and `transport`.
 
 The actual flow is:
 
@@ -116,7 +116,7 @@ Real Gmail signup, existing-account Viewer invitation acceptance and recovery ar
 
 ## Account status and membership are separate
 
-[`0009_account_repair`](../../../services/api/migrations/versions/0009_account_repair.py) adds global account status and nullable session organization. Revoking an organization membership immediately denies that organization's requests; it leaves personal profile/session access and other organizations intact. Refresh removes a revoked active organization, and selecting another accessible organization rechecks its own role. [`authenticated`](../../../services/api/ppm_api/identity.py) enforces this before route queries, and [`test_account_repair.py`](../../../tests/test_account_repair.py) tests the boundary.
+[`0009_account_repair`](../../../services/api/migrations/versions/0009_account_repair.py) adds global account status and nullable session organization. Revoking an organization membership immediately denies that organization's requests; it leaves personal profile/session access and other organizations intact. Refresh removes a revoked active organization, and selecting another accessible organization rechecks its own role. [`authenticated`](../../../services/api/ppm_api/modules/identity/router.py) enforces this before route queries, and [`test_account_repair.py`](../../../tests/test_account_repair.py) tests the boundary.
 
 [`account_status.py`](../../../scripts/account_status.py) is a separate development operator operation. Disabling a user preserves membership and project ownership, revokes sessions and protects the last active Admin. Organization administrators cannot call a global-disable API. Background jobs also read global status before effects.
 

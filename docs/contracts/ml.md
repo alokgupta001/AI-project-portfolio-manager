@@ -1,5 +1,9 @@
 # Local history and baseline contract — v1
 
+Current implementation: [ml feature](../../services/api/ppm_api/modules/ml/README.md).
+The [step 24 grouping](../04-testing/BACKEND_STRUCTURE_STEP_24.md) changes
+file/import ownership while preserving the contract and permission/workflow rules below.
+
 Owning modules: `connectors.py`, existing `jobs.py`/`ingestion.py`/`delivery.py`,
 `ml_schemas.py`, `ml_pipeline.py`, `ml.py`, `ml_tables.py`. Schema 0017 adds five
 scoped tables and two durable-job columns plus canonical source keys. See the

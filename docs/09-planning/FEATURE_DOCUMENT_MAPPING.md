@@ -1,6 +1,20 @@
 # Feature-to-document mapping and implementation boundaries
 
-26 October 2026. Current local sample: Sprint 12 at normal schema **0018**. [Reviewed closeout](../10-reference/SPRINT-12-LOCAL-CLOSEOUT.md) records application commit `f93a596`, both passing hosted CI runs and CodeRabbit's final review with no actionable comments. Live connectors/genuine model quality remain unverified and AT17 remains BLOCKED. Earlier dated checkpoints below retain their original scope; stop before Sprint 13.
+## 30 October 2026 — ordinary guided cloud timeout
+
+[Approved timeout follow-up](../03-sprints/active/sprint-12.1/TIMEOUT_FOLLOWUP.md): new ordinary cloud guided reviews can wait up to **60 seconds**, recorded per run. Normal schema is **0020** after a forward-only migration; all 83 table hashes matched. Existing fixture pilots retain **22 seconds**, the **20-second gate**, and their stopped results. Legacy runs retain their original limit. Shared quotas, $0 policy and access remain unchanged; **AT17 stays BLOCKED**. No new model call, PR, push, deployment or Sprint 13 work.
+
+Validation: 580 full-suite passes plus two corrected test assertions verified in a **28-pass focused rerun** (overlapping); one skip. Migration lifecycle/drift, static/contracts and **two browser journeys** passed. See the linked report for exact evidence and limitations. Earlier dated sections below are historical.
+
+## 28 October 2026 — Sprint 12.1 timing repair
+
+[Current repair report](../03-sprints/active/sprint-12.1/REPAIR_FOLLOWUP.md) supersedes the operational checkpoint below. Failed calls retain elapsed timing; UI/downloads distinguish unavailable time from accepted-response p95. Separate repair pilot `3f0f3a7f`: **insufficient_data**, 5/12 measured, 5 exact matches, 1 unavailable, 0/6 reserved measured; accepted-case p95 7936 ms. Original ce874a14 history remains unchanged; experiments are not combined. Automated audit records **human_reviewed=false**. Broad **AT17 remains BLOCKED**.
+
+Fresh validation: **566 backend passed, 1 skipped**, one inherited warning; disposable migration lifecycle/drift, two browser journeys, static/contracts and tooling checks passed. Normal schema remains frozen **0019**. Provider configuration, explicit grants, shared limits and $0 policy are preserved. No commit, PR, push, deployment or Sprint 13 work. The single repair experiment is complete under its gate/stop rule; do not start another without authorization.
+
+## Earlier dated checkpoint (historical)
+
+26 October 2026. Sprint 12 closeout checkpoint: schema **0018**. [Reviewed closeout](../10-reference/SPRINT-12-LOCAL-CLOSEOUT.md) records application commit `f93a596`, both passing hosted CI runs and CodeRabbit's final review with no actionable comments. Live connectors/genuine model quality remain unverified and AT17 remains BLOCKED. Earlier dated checkpoints below retain their original scope; stop before Sprint 13. The subsequent financial selection pilot at schema 0019 is recorded in [the latest handoff](../handoffs/LATEST.md).
 
 Current closeout: Sprints 8.1 and 10 are completed for development scope; hosted CI and the current pilot Word guide are verified. Broad agent/model quality, production and scale remain successor/release gates. See [acceptance disposition](../10-reference/SPRINT-8.1-AND-10-CLOSEOUT.md). Earlier dated evidence below retains its historical scope.
 
@@ -14,6 +28,7 @@ Every original crosswalk requirement and confirmed gap is listed below. The road
 | [10](../03-sprints/completed/sprint-10/README.md) | IMPLEMENTED, local implementation and bounded Gemini smoke verified; broader quality unverified | Shared runtime/protected source tools/Admin controls; Gemini free tier at $0 and fallback; stop before 11. | [practical gateway guide](../02-learning/06-ai-and-analytics/AI_GATEWAY.md) |
 | [11](../03-sprints/completed/sprint-11/README.md) | IMPLEMENTED: nine agents, semantic suggestions and review | Shared jobs/metrics/authority; local deterministic controls verified, real-model quality blocked. | [practical trace](../02-learning/06-ai-and-analytics/SPECIALISTS_REVIEW.md) |
 | [12](../03-sprints/completed/sprint-12/README.md) | Connector authority, outcome datasets and CPU baselines | Implemented local journey; live/model acceptance remains open. | [Practical trace](../02-learning/06-ai-and-analytics/LOCAL_BASELINES.md) |
+| [12.1](../03-sprints/active/sprint-12.1/README.md) | Current API financial selection pilot | Local workflow verified; owner-approved automated check has human=false. Live f01 matched, f02 timed out; fixture gate unmet and broad AT17 BLOCKED. | [Practical trace](../02-learning/06-ai-and-analytics/API_SELECTION_PILOT.md) |
 | [13](../03-sprints/planned/sprint-13/README.md) | Eligible forecast serving with uncertainty | Reuse current identity, domain facts, jobs and typed contracts; implementation and acceptance are not yet executed. | [topic guide](../02-learning/06-ai-and-analytics/AI_AND_JOBS.md) |
 | [14](../03-sprints/planned/sprint-14/README.md) | Scoped copilot context and natural-language analytics | Reuse current identity, domain facts, jobs and typed contracts; implementation and acceptance are not yet executed. | [topic guide](../02-learning/06-ai-and-analytics/AI_AND_JOBS.md) |
 | [15](../03-sprints/planned/sprint-15/README.md) | Approvals, due-event reminders and assessment follow-through | Reuse current identity, domain facts, jobs and typed contracts; implementation and acceptance are not yet executed. | [topic guide](../02-learning/01-project-foundations/FEATURE_WORKFLOWS.md) |

@@ -1,4 +1,4 @@
-import { test, expect } from "@playwright/test";
+import { test, expect } from "./test";
 import AxeBuilder from "@axe-core/playwright";
 import { readFileSync, mkdirSync } from "node:fs";
 import { createHash } from "node:crypto";

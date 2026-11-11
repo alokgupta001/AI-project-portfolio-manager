@@ -1,4 +1,4 @@
-import { test, expect } from "@playwright/test";
+import { test, expect } from "./test";
 import AxeBuilder from "@axe-core/playwright";
 import { readFileSync, mkdirSync } from "node:fs";
 
@@ -128,17 +128,34 @@ test("persistent semantic review, evidence, discrepancies, privacy and disabled 
   await page
     .getByRole("combobox", { name: "Analysis project", exact: true })
     .selectOption(f.agent_project);
+  const goal = page.getByRole("combobox", {
+    name: "Analysis goal",
+    exact: true,
+  });
+  await expect(
+    page.getByText("Loading specialist runs…", { exact: true }),
+  ).toHaveCount(0);
+  const hybrid = process.env.PPM_TEST_AI_V2 === "1" || (await goal.isVisible());
+  if (hybrid) {
+    await expect(goal).toBeVisible();
+    await goal.selectOption("all_specialists");
+  }
   await page
-    .getByRole("button", { name: "Run nine specialists", exact: true })
+    .getByRole("button", { name: /^Run (nine specialists|scoped analysis)$/ })
     .click();
   await expect(
     page.getByText(
-      "Execution: partially_succeeded · Semantic result: unavailable",
+      `Execution: partially_succeeded · Semantic result: ${hybrid ? "hybrid_partial" : "unavailable"}`,
       { exact: true },
     ),
   ).toBeVisible({ timeout: 30000 });
   await expect(
-    page.getByRole("cell", { name: "PROVIDER_DISABLED", exact: true }).first(),
+    page
+      .getByRole("cell", {
+        name: hybrid ? "UNAVAILABLE" : "PROVIDER_DISABLED",
+        exact: true,
+      })
+      .first(),
   ).toBeVisible();
   await expect(
     page.getByText(

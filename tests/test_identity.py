@@ -14,8 +14,9 @@ import jwt
 import pytest
 import sqlalchemy as sa
 from ppm_api.config import load_settings
-from ppm_api.identity import context, digest, now, password_hash
-from ppm_api.identity_tables import (
+from ppm_api.main import create_app
+from ppm_api.modules.identity.service import context, digest, now, password_hash
+from ppm_api.modules.identity.tables import (
     audit,
     challenges,
     memberships,
@@ -23,7 +24,6 @@ from ppm_api.identity_tables import (
     sessions,
     users,
 )
-from ppm_api.main import create_app
 from sqlalchemy.exc import DBAPIError
 from sqlalchemy.ext.asyncio import create_async_engine
 

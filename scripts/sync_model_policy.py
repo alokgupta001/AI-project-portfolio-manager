@@ -5,9 +5,9 @@ import asyncio
 import os
 
 import sqlalchemy as sa
-from ppm_api.agent_task_tables import scopes
 from ppm_api.config import load_settings
-from ppm_api.model_registry import ModelPolicy, load_policy
+from ppm_api.modules.agents.task_tables import scopes
+from ppm_api.modules.ai.registry import ModelPolicy, load_policy
 from sqlalchemy.dialects.postgresql import insert
 from sqlalchemy.ext.asyncio import create_async_engine
 
@@ -57,6 +57,8 @@ async def sync(policy: ModelPolicy) -> None:
                 "0016_guided_project_access",
                 "0017_local_ml_foundations",
                 "0018_csv_source_namespaces",
+                "0019_selection_pilot",
+                "0020_guided_cloud_timeout",
             }:
                 raise ValueError
             for row in scope_rows(policy):

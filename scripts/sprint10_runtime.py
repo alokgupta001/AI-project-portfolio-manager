@@ -28,7 +28,7 @@ config = json.loads(
             "python",
             "-c",
             "import json; from ppm_api.config import load_settings; "
-            "from ppm_api.ai_provider import enabled; s=load_settings(); "
+            "from ppm_api.modules.ai.provider import enabled; s=load_settings(); "
             "print(json.dumps(dict(provider=s.ai_provider,enabled=enabled(s),"
             "real_calls_authorized=s.ai_real_calls_authorized,spend_limit_usd=str(s.ai_spend_limit_usd))))",
         ],

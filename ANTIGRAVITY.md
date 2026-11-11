@@ -1,5 +1,362 @@
 # Antigravity entry point — reviewed local checkpoint
 
+## 11 November 2026 — three review batches complete; broad filters restored
+
+All three full CodeRabbit batches completed (100, 100 and 72 selected paths).
+The six application/documentation/test findings are fixed. The final two test
+fixes wait for loaded agent definitions, require v2 controls when explicitly
+enabled, and write redesign screenshots to ignored artifacts/local output.
+Three focused v2 browser cases and one legacy case passed, zero skips; types,
+lint and formatting pass. Both hosted workflows on cfd3327 are green: all 587
+backend cases, 30 standard browser cases and persistence restart checks. The
+five gated browser cases were covered separately with model/cloud access disabled.
+The original broad CodeRabbit filters are restored byte-for-byte; final test and
+status/config changes are the scope of a small incremental follow-up review.
+See PR 8 for the publication-head CI/review results. Keep the final source fixed
+while checking that follow-up and its file versions. All local test services are
+stopped, volumes retained; no merge, deployment, paid add-on or new live pilot.
+
+## 11 November 2026 — PR 8 review fixes and final batch
+
+CodeRabbit batches 1 and 2 are complete. The four batch-2 findings are fixed:
+initial pilot pacing uses the current clock, permitted evidence links fill the
+100-item cap after access filtering, the policy tool accepts schema 0019/0020,
+and README duplication is removed. Browser cleanup preserves the original error;
+source-bound approval guidance is explicit. No migration/provider/pilot change.
+All 42 focused Linux cases passed (real OCR/ClamAV), seven tooling tests pass,
+static/contracts and 462 Markdown / 6,512 local-link checks pass. The five opt-in
+browser cases passed across focused runs; the corrected paused-clock regression
+passed in 10.5 seconds. Previous 3cef66f has both hosted CI runs green; fresh full
+CI will verify these later fixes. The final 72-path review includes the fixes.
+Restore the broad CodeRabbit filters afterward, then verify reviewed file versions.
+Test services are stopped, named volumes retained. PR 8 remains open; no merge.
+
+## 10 November 2026 — PR 8 publication and audit follow-up
+
+The owner authorized publishing all verified application/tooling work together
+with the structure refactor. [PR 8](https://github.com/alokgupta001/AI-project-portfolio-manager/pull/8)
+is open on codex/ai-ppm-structure-cleanup; no merge or deployment is authorized.
+The hosted audit found eight advisories in two dependencies. Commit 8e8faf4
+updates only pypdf 6.21.2 to 6.21.4 and dnspython 2.8.0 to 2.9.0. The frozen
+Python dependency audit now reports zero known vulnerabilities. All 69 focused
+Linux identity/mail/delivery/parser cases passed, zero skipped, with real OCR;
+static/contracts and current documentation checks pass. This is additional
+verification after the historical 583-case run below. Hosted CI also passed all
+583 backend cases with the patched dependencies (798.97 seconds), then exposed
+browser test setup issues. Three test fixes now select the explicit Admin tenant,
+use current-run UTC comparison dates, and wait for tutorial focus after navigation.
+All six Sprint 12/walkthrough and four tutorial cases passed locally, zero skips.
+All five model-disabled opt-in browser cases also passed, zero skips. A fresh
+hosted workflow is in progress. Test services are stopped; volumes are retained.
+CodeRabbit completed the first 100-path batch (two deleted paths had no reviewable
+changes); its only application-independent finding is to restore broad filters.
+The second 100-path batch is prepared; two reviews remain pending the included
+one-review-per-hour allowance;
+temporary review filters must be restored after completion. No paid add-on is enabled.
+
+## 10 November 2026 — remaining structure work completed
+
+All 129 feature handlers are thin; domain callers use operations directly. Tables
+and typed record inputs have explicit feature/shared owners. Read the
+[project map](docs/01-architecture/PROJECT_MAP.md) and
+[full verification](docs/04-testing/BACKEND_STRUCTURE_STEP_32.md).
+All 583 backend cases passed, zero skipped/deselected, including live ClamAV,
+real OCR and actual Celery crash recovery. Static/contracts/docs checks pass.
+Schema **0020**, normal/demo data, applied migrations and provider/pilot/sprint
+boundaries remain. Test services are removed and volumes retained; no publication.
+
+## 10 November 2026 — backend organization pass complete
+
+The API root now has seven shared Python files and twelve feature packages with
+file guides. Start with the [project map](docs/01-architecture/PROJECT_MAP.md) and
+[final verification](docs/04-testing/BACKEND_STRUCTURE_STEP_29.md). Normal schema
+**0020**, data, applied migrations and provider/pilot/sprint boundaries remain.
+Temporary verification services are stopped; volumes are retained. No commit,
+publication, deployment or new pilot occurred.
+
+## 10 November 2026 — structure cleanup, step 28
+
+The selection files are grouped under modules/selection; callers use the new owners.
+Existing statements, API/table definitions and schema **0020** are preserved.
+Read the [latest handoff](docs/handoffs/LATEST.md) and [verification](docs/04-testing/BACKEND_STRUCTURE_STEP_28.md).
+Automatic sequential cleanup is authorized; no successor sprint, commit, publication,
+deployment or live provider calls are authorized.
+
+## 10 November 2026 — structure cleanup, step 27
+
+The workspace files are grouped under modules/workspace; callers use the new owners.
+Existing statements, API/table definitions and schema **0020** are preserved.
+Read the [latest handoff](docs/handoffs/LATEST.md) and [verification](docs/04-testing/BACKEND_STRUCTURE_STEP_27.md).
+Automatic sequential cleanup is authorized; no successor sprint, commit, publication,
+deployment or live provider calls are authorized.
+
+## 10 November 2026 — structure cleanup, step 26
+
+The agents files are grouped under modules/agents; callers use the new owners.
+Existing statements, API/table definitions and schema **0020** are preserved.
+Read the [latest handoff](docs/handoffs/LATEST.md) and [verification](docs/04-testing/BACKEND_STRUCTURE_STEP_26.md).
+Automatic sequential cleanup is authorized; no successor sprint, commit, publication,
+deployment or live provider calls are authorized.
+
+## 10 November 2026 — structure cleanup, step 25
+
+The ai files are grouped under modules/ai; callers use the new owners.
+Existing statements, API/table definitions and schema **0020** are preserved.
+Read the [latest handoff](docs/handoffs/LATEST.md) and [verification](docs/04-testing/BACKEND_STRUCTURE_STEP_25.md).
+Automatic sequential cleanup is authorized; no successor sprint, commit, publication,
+deployment or live provider calls are authorized.
+
+## 10 November 2026 — structure cleanup, step 24
+
+The ml files are grouped under modules/ml; callers use the new owners.
+Existing statements, API/table definitions and schema **0020** are preserved.
+Read the [latest handoff](docs/handoffs/LATEST.md) and [verification](docs/04-testing/BACKEND_STRUCTURE_STEP_24.md).
+Automatic sequential cleanup is authorized; no successor sprint, commit, publication,
+deployment or live provider calls are authorized.
+
+## 10 November 2026 — structure cleanup, step 23
+
+The integrations files are grouped under modules/integrations; callers use the new owners.
+Existing statements, API/table definitions and schema **0020** are preserved.
+Read the [latest handoff](docs/handoffs/LATEST.md) and [verification](docs/04-testing/BACKEND_STRUCTURE_STEP_23.md).
+Automatic sequential cleanup is authorized; no successor sprint, commit, publication,
+deployment or live provider calls are authorized.
+
+## 10 November 2026 — structure cleanup, step 22
+
+The identity files are grouped under modules/identity; callers use the new owners.
+Existing statements, API/table definitions and schema **0020** are preserved.
+Read the [latest handoff](docs/handoffs/LATEST.md) and [verification](docs/04-testing/BACKEND_STRUCTURE_STEP_22.md).
+Automatic sequential cleanup is authorized; no successor sprint, commit, publication,
+deployment or live provider calls are authorized.
+
+## 10 November 2026 — structure cleanup, step 21
+
+The delivery files are grouped under modules/delivery; callers use the new owners.
+Existing statements, API/table definitions and schema **0020** are preserved.
+Read the [latest handoff](docs/handoffs/LATEST.md) and [verification](docs/04-testing/BACKEND_STRUCTURE_STEP_21.md).
+Automatic sequential cleanup is authorized; no successor sprint, commit, publication,
+deployment or live provider calls are authorized.
+
+## 10 November 2026 — structure cleanup, step 20
+
+The command files are grouped under modules/command; callers use the new owners.
+Existing statements, API/table definitions and schema **0020** are preserved.
+Read the [latest handoff](docs/handoffs/LATEST.md) and [verification](docs/04-testing/BACKEND_STRUCTURE_STEP_20.md).
+Automatic sequential cleanup is authorized; no successor sprint, commit, publication,
+deployment or live provider calls are authorized.
+
+## 10 November 2026 — structure cleanup, step 19
+
+The capacity files are grouped under modules/capacity; callers use the new owners.
+Existing statements, API/table definitions and schema **0020** are preserved.
+Read the [latest handoff](docs/handoffs/LATEST.md) and [verification](docs/04-testing/BACKEND_STRUCTURE_STEP_19.md).
+Automatic sequential cleanup is authorized; no successor sprint, commit, publication,
+deployment or live provider calls are authorized.
+
+## 10 November 2026 — structure cleanup, step 18
+
+Seven lifecycle/retention handlers delegate to operations; the orphan-candidate helper moves with its callers. Authorization, revision, retention/hold, evidence-link and filesystem eligibility statements are preserved.
+Read the [latest handoff](docs/handoffs/LATEST.md) and [verification](docs/04-testing/BACKEND_STRUCTURE_STEP_18.md).
+Schema **0020**, existing rules and provider/pilot/sprint boundaries are preserved.
+Sequential structural continuation is authorized; no successor, commit, publication
+or deployment is authorized.
+
+## 10 November 2026 — structure cleanup, step 17
+
+Four file handlers delegate to operations for upload, download tickets, private downloads and reprocessing. Existing statement bodies, storage/hash checks and transport responses are preserved.
+Read the [latest handoff](docs/handoffs/LATEST.md) and [verification](docs/04-testing/BACKEND_STRUCTURE_STEP_17.md).
+Schema **0020**, existing rules and provider/pilot/sprint boundaries are preserved.
+Sequential structural continuation is authorized; no successor, commit, publication
+or deployment is authorized.
+
+## 10 November 2026 — structure cleanup, step 16
+
+Seven read handlers delegate to query operations with identical statement bodies. HTTP defaults/Query validation stay on the routes; operations receive Principal and explicit arguments. AI retrieval and agent citations use the query owner directly.
+Read the [latest handoff](docs/handoffs/LATEST.md) and [verification](docs/04-testing/BACKEND_STRUCTURE_STEP_16.md).
+Schema **0020**, existing rules and provider/pilot/sprint boundaries are preserved.
+Sequential structural continuation is authorized; no successor, commit, publication
+or deployment is authorized.
+
+## 10 November 2026 — structure cleanup, step 15
+
+Response loading, processing-job/outbox enqueueing and authorized replay now have a shared service owner. All three complete definitions move unchanged, reusing the existing scoped transaction.
+Read the [latest handoff](docs/handoffs/LATEST.md) and [verification](docs/04-testing/BACKEND_STRUCTURE_STEP_15.md).
+Schema **0020**, existing rules and provider/pilot/sprint boundaries are preserved.
+Sequential structural continuation is authorized; no successor, commit, publication
+or deployment is authorized.
+
+## 10 November 2026 — structure cleanup, step 14
+
+Document revision and request-fingerprint helpers now live in `mutations.py`;
+document, AI and agent-review callers use the same definitions directly. Read
+the [latest handoff](docs/handoffs/LATEST.md) and
+[step 14 verification](docs/04-testing/BACKEND_STRUCTURE_STEP_14.md).
+Canonical inputs, lock/replay order, public API and schema **0020** are preserved.
+Provider, pilot and sprint boundaries remain; no successor, publication or
+deployment is authorized.
+
+## 10 November 2026 — structure cleanup, step 13
+
+Document processing now lives in `modules/documents/worker.py`, called by the
+existing job dispatcher and recovery tool. Its complete handler and nested
+authorization body are preserved. Read the [latest handoff](docs/handoffs/LATEST.md)
+and [step 13 verification](docs/04-testing/BACKEND_STRUCTURE_STEP_13.md).
+Public API, permission/lease/scanner rules and schema **0020** are preserved.
+Provider, pilot and sprint boundaries remain; no successor, publication or
+deployment is authorized.
+
+## 10 November 2026 — structure cleanup, step 12
+
+Document/version lookup and write eligibility now live in `modules/documents/access.py`;
+HTTP, worker and direct AI/agent readers use the unchanged checks.
+Read the [latest handoff](docs/handoffs/LATEST.md) and
+[step 12 verification](docs/04-testing/BACKEND_STRUCTURE_STEP_12.md).
+Existing permission rules, public API and schema **0020** are preserved.
+Provider, pilot and sprint boundaries remain; no successor, publication or
+deployment is authorized.
+
+## 10 November 2026 — structure cleanup, step 11
+
+Document routes/worker, schemas, tables, parser and retrieval types are grouped in
+`modules/documents`, with callers and the bounded parser child path updated.
+Read the [latest handoff](docs/handoffs/LATEST.md) and
+[step 11 verification](docs/04-testing/BACKEND_STRUCTURE_STEP_11.md).
+Existing operation statements, public API and schema **0020** are preserved.
+Provider, pilot and sprint boundaries remain; no successor, publication or
+deployment is authorized.
+
+## 10 November 2026 — structure cleanup, step 10
+
+Framework operations, their response helper and example loader now live in
+`modules/assessments/frameworks.py`, independent of the assessment service.
+Read the [latest handoff](docs/handoffs/LATEST.md) and
+[step 10 verification](docs/04-testing/ASSESSMENT_STRUCTURE_STEP_10.md).
+Existing function bodies, route metadata and schema **0020** are preserved.
+Provider, pilot and sprint boundaries remain; no successor, publication or
+deployment is authorized.
+
+## 10 November 2026 — structure cleanup, step 9
+
+Grant management and private event-history operations now live in the assessment
+service. All 21 assessment handlers are thin HTTP adapters; the router has no SQL.
+Read the [latest handoff](docs/handoffs/LATEST.md) and
+[step 9 verification](docs/04-testing/ASSESSMENT_STRUCTURE_STEP_9.md).
+Existing rules, route metadata and schema **0020** are preserved. Provider, pilot
+and sprint boundaries remain; no successor, publication or deployment is authorized.
+
+## 10 November 2026 — structure cleanup, step 8
+
+Six evidence HTTP handlers now delegate to `modules/assessments/evidence.py`.
+Read the [latest handoff](docs/handoffs/LATEST.md) and
+[step 8 verification](docs/04-testing/ASSESSMENT_STRUCTURE_STEP_8.md).
+Private access, bounded intake, storage, integrity and quarantine/release behavior,
+routes and schema **0020** are preserved. Existing provider, pilot and sprint
+boundaries remain; this authorizes no successor, publication or deployment.
+
+## 10 November 2026 — structure cleanup, step 7
+
+Assessment lifecycle HTTP handlers now delegate to service operations; answer saving
+uses the service detail reader internally. Read the [latest handoff](docs/handoffs/LATEST.md)
+and [step 7 verification](docs/04-testing/ASSESSMENT_STRUCTURE_STEP_7.md).
+Routes, rules and schema **0020** are preserved. Existing provider, pilot and sprint
+boundaries remain; this refactor authorizes no successor, publication or deployment.
+
+## 10 November 2026 — structure cleanup, step 6
+
+Six framework HTTP handlers now delegate to assessment service operations. Read
+the [latest handoff](docs/handoffs/LATEST.md) and
+[step 6 verification](docs/04-testing/ASSESSMENT_STRUCTURE_STEP_6.md).
+Route signatures/decorators, business statements and schema **0020** are preserved.
+Existing provider, pilot and sprint boundaries remain; no successor, publication
+or deployment is authorized by this refactor.
+
+## 10 November 2026 — structure cleanup, step 5
+
+Shared assessment workflow/data helpers now live in `modules/assessments/service.py`.
+The agent caller uses that service without importing assessment HTTP routes. Read
+the [latest handoff](docs/handoffs/LATEST.md) and
+[step 5 verification](docs/04-testing/ASSESSMENT_STRUCTURE_STEP_5.md).
+The helper bodies, API and normal schema **0020** are preserved; existing provider,
+pilot and sprint boundaries remain in force. No successor, publication or deployment.
+
+## 10 November 2026 — structure cleanup, step 4
+
+Assessment write safeguards now live in `modules/assessments/mutations.py`, with
+the original decorator/revision bodies and endpoint metadata preserved. Read the
+[latest handoff](docs/handoffs/LATEST.md) and
+[step 4 verification](docs/04-testing/ASSESSMENT_STRUCTURE_STEP_4.md).
+Schema **0020** and the provider, pilot and sprint boundaries remain unchanged;
+this does not authorize successor execution, publication or deployment.
+
+## 10 November 2026 — structure cleanup, step 3
+
+Assessment permissions now live in `modules/assessments/access.py`; route,
+document and agent callers use the existing rules there. See the
+[latest handoff](docs/handoffs/LATEST.md) and
+[step 3 verification](docs/04-testing/ASSESSMENT_STRUCTURE_STEP_3.md).
+This step preserves schema **0020** and the existing provider, pilot and sprint
+boundaries. It does not authorize successor execution, publication or deployment.
+
+## 10 November 2026 — structure cleanup, step 2
+
+The assessment feature now has separate scoring and validation modules; existing
+rule bodies and HTTP contracts are preserved. See the [latest handoff](docs/handoffs/LATEST.md)
+and [step 2 verification](docs/04-testing/ASSESSMENT_STRUCTURE_STEP_2.md).
+This incremental cleanup does not advance a sprint, change schema **0020**, or
+authorize provider experiments, publication or deployment.
+
+## 5 November 2026 — structure cleanup, step 1
+
+Assessment backend files are grouped in `services/api/ppm_api/modules/assessments`.
+See the [latest handoff](docs/handoffs/LATEST.md) and
+[step 1 report](docs/04-testing/ASSESSMENT_STRUCTURE_STEP_1.md) for file mapping,
+verification, the generated schema-name change and the next small refactor.
+This organization work does not advance a sprint or alter schema **0020**, provider
+authorization, stopped pilots or the existing frontend checkpoint below.
+
+## 31 October 2026 — frontend redesign follow-up
+
+User-authorized local frontend work adds the forest/mint visual system, self-hosted
+Geist, grouped navigation, real permission-scoped overview metrics and an eight-step
+guided tutorial. Shared tables retain full server pages; delivery forms warn before
+discarding edits. See [redesign report](docs/04-testing/FRONTEND_REDESIGN.md) for
+coverage, actual verification and limitations. The ordinary timeout checkpoint
+below remains the backend/sprint authority: schema **0020**, stopped pilots,
+unchanged quotas and **AT17 BLOCKED**. No successor sprint or live-provider run.
+
+## 30 October 2026 — ordinary guided cloud timeout
+
+[Approved timeout follow-up](docs/03-sprints/active/sprint-12.1/TIMEOUT_FOLLOWUP.md): new ordinary cloud guided reviews can wait up to **60 seconds**, recorded per run. Normal schema is **0020** after a forward-only migration; all 83 table hashes matched. Existing fixture pilots retain **22 seconds**, the **20-second gate**, and their stopped results. Legacy runs retain their original limit. Shared quotas, $0 policy and access remain unchanged; **AT17 stays BLOCKED**. No new model call, PR, push, deployment or Sprint 13 work.
+
+Validation: 580 full-suite passes plus two corrected test assertions verified in a **28-pass focused rerun** (overlapping); one skip. Migration lifecycle/drift, static/contracts and **two browser journeys** passed. See the linked report for exact evidence and limitations. Earlier dated sections below are historical.
+
+## 28 October 2026 — Sprint 12.1 timing repair
+
+[Current repair report](docs/03-sprints/active/sprint-12.1/REPAIR_FOLLOWUP.md) supersedes the operational checkpoint below. Failed calls retain elapsed timing; UI/downloads distinguish unavailable time from accepted-response p95. Separate repair pilot `3f0f3a7f`: **insufficient_data**, 5/12 measured, 5 exact matches, 1 unavailable, 0/6 reserved measured; accepted-case p95 7936 ms. Original ce874a14 history remains unchanged; experiments are not combined. Automated audit records **human_reviewed=false**. Broad **AT17 remains BLOCKED**.
+
+Fresh validation: **566 backend passed, 1 skipped**, one inherited warning; disposable migration lifecycle/drift, two browser journeys, static/contracts and tooling checks passed. Normal schema remains frozen **0019**. Provider configuration, explicit grants, shared limits and $0 policy are preserved. No commit, PR, push, deployment or Sprint 13 work. The single repair experiment is complete under its gate/stop rule; do not start another without authorization.
+
+## Earlier dated checkpoint (historical)
+
+Current sub-sprint: **Sprint 12.1 — Current API financial selection pilot**.
+Read [the handoff](docs/03-sprints/active/sprint-12.1/HANDOFF.md) and
+[actual run](docs/03-sprints/active/sprint-12.1/RUN_RECORD.md).
+Authorized local work is complete. Owner-approved automated labels matched 12/12,
+human_reviewed=false. f01 matched but took 21.437 seconds; f02 TIMEOUT stopped the
+pilot with insufficient_data. No retries or further cases. Broad AT17 BLOCKED.
+
+Normal schema **0019**, applied migrations frozen. Fresh 562 backend passes/one
+skip, lifecycle/drift and two pilot browser checks pass. Preserve original 21
+artifact edits, all data, roles/grants, provider policy, quotas and timeout health
+state. The owner approved exactly four demo-only grants and the separate one-ID
+local automated audit. The explicit grant check remains intact; its earlier
+removal proposal was rejected and never applied. Do not ask for granted access
+again, invent a human attestation, restart the experiment or begin Sprint 13.
+No new commit/PR/push/deployment is authorized.
+
+## Historical Sprint 12 closeout before the pilot
+
 26 October 2026. Current local sample: Sprint 12 at normal schema **0018**. [Reviewed closeout](docs/10-reference/SPRINT-12-LOCAL-CLOSEOUT.md) records application commit `f93a596`, both passing hosted CI runs and CodeRabbit's final review with no actionable comments. Live connectors/genuine model quality remain unverified and AT17 remains BLOCKED. Earlier dated checkpoints below retain their original scope; stop before Sprint 13. The owner authorized documentation reconciliation and pushing to existing PR 7; no merge or deployment. Preserve all 21 unrelated artifact edits, provider scopes/ceilings and applied migrations.
 
 ## Historical checkpoints before Sprint 12

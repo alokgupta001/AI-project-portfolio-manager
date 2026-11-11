@@ -18,8 +18,9 @@ def get(url: str) -> dict:
 def main() -> None:
     config_script = (
         "import json; from datetime import UTC, datetime, timedelta; "
-        "from ppm_api.config import load_settings; from ppm_api.ai_provider import enabled; "
-        "from ppm_api.ai import provider_status; s=load_settings(); "
+        "from ppm_api.config import load_settings; "
+        "from ppm_api.modules.ai.provider import enabled; "
+        "from ppm_api.modules.ai.service import provider_status; s=load_settings(); "
         "old=s.model_copy(update={'ai_gemini_free_tier_confirmed_at':"
         "datetime.now(UTC)-timedelta(days=3650)}); "
         "print(json.dumps(dict(status=provider_status(s),"

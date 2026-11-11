@@ -13,20 +13,29 @@ for evidence rather than treating this explanation as a test result.
    existing same-origin client. `can_manage` controls available actions; the server
    independently checks every request. A PM needs project edit/manage, a Viewer can
    read scoped sources, and only Admin manages an organization-wide policy.
-2. [`documents.upload`](../../../services/api/ppm_api/documents.py) validates the
+2. [`documents.files.upload`](../../../services/api/ppm_api/modules/documents/files.py) validates the
    bounded input, live principal and idempotency fingerprint. Bytes are private objects;
    document/version, durable job, outbox, event and audit state commit together in PostgreSQL.
    A database rollback can leave an orphan object: object storage and SQL are not one transaction.
-3. [`document_tables`](../../../services/api/ppm_api/document_tables.py) defines
+   [`documents.mutations`](../../../services/api/ppm_api/modules/documents/mutations.py)
+   supplies the existing revision preconditions and request-path/body fingerprint;
+   authorization, locking and replay checks retain their order in the caller.
+   Shared response loading, processing-job enqueueing and authorized replay use
+   [`documents.service`](../../../services/api/ppm_api/modules/documents/service.py).
+3. [`documents.tables`](../../../services/api/ppm_api/modules/documents/tables.py) defines
    `source_documents`, `source_versions`, `source_chunks`, `source_evidence_links`.
    [`0011_document_sources`](../../../services/api/migrations/versions/0011_document_sources.py)
    installs RLS, immutable byte identity, guarded retention functions and document-job authority.
    A version number/hash identifies original bytes; status/chunks are replaceable derived state.
+   Scoped document/version lookups and write eligibility live in
+   [`documents.access`](../../../services/api/ppm_api/modules/documents/access.py),
+   shared by HTTP/worker callers and direct AI/agent version readers.
 4. The existing outbox dispatcher sends a durable job through Redis to Linux Celery.
-   `documents.document_worker` rechecks persisted actor/session/project authority under
+   [`documents.worker.document_worker`](../../../services/api/ppm_api/modules/documents/worker.py)
+   rechecks persisted actor/session/project authority under
    the organization lock, rereads the job with `FOR UPDATE`, and uses a fenced lease.
    A late/revoked/cancelled worker cannot publish derived text. Broker tuples are not authority.
-5. [`document_parser.scan`](../../../services/api/ppm_api/document_parser.py) streams
+5. [`documents.parser.scan`](../../../services/api/ppm_api/modules/documents/parser.py) streams
    bytes to real ClamAV. Failure/unavailability quarantines; there is no manual bypass.
    `isolated_extract` executes parsing in a bounded child. `extract` handles digital text,
    DOCX tables, CSV/XLSX and PDF/images; scanned pages/images use Poppler/Tesseract.
@@ -34,10 +43,10 @@ for evidence rather than treating this explanation as a test result.
 6. Processing atomically replaces chunks and sets the source ready only while authority
    and the lease remain valid. A retry does not append duplicate active chunks. A source
    exceeding 5,000 chunks fails rather than exposing only its beginning.
-7. `documents.search` applies tenant/project RLS before PostgreSQL simple keyword ranking.
-   Only the latest version participates and it must be ready. `documents.citation`
+7. `documents.queries.search` applies tenant/project RLS before PostgreSQL simple keyword ranking.
+   Only the latest version participates and it must be ready. `documents.queries.citation`
    rechecks latest version, access and deletion. Replacing a version can invalidate an old citation.
-   [`document_retrieval`](../../../services/api/ppm_api/document_retrieval.py) defines
+   [`documents.retrieval`](../../../services/api/ppm_api/modules/documents/retrieval.py) defines
    retrieval/candidate interfaces; its embedding boundary is implemented by Sprint 10 Runtime.index, with bounded Gemini free-tier smoke verified and broader retrieval quality unverified; see [the gateway trace](AI_GATEWAY.md).
 8. `ticket` issues a 60-second user/session/org/version/hash-bound JWT. `download` also
    authenticates current authority and checks original SHA-256. Attachment headers disable

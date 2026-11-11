@@ -315,11 +315,22 @@ export function RecordEditor({
   if (resourceId && fields[kind].some((f) => f.key === "resource_id"))
     initial.resource_id = resourceId;
   const [values, setValues] = useState(initial);
+  const [originalValues] = useState(() => JSON.stringify(initial));
   const [reason, setReason] = useState("");
   const [error, setError] = useState("");
   const [busy, setBusy] = useState(false);
   const [confirmation, setConfirmation] = useState<Confirmation | null>(null);
   const [command] = useState(() => crypto.randomUUID());
+  const dirty = JSON.stringify(values) !== originalValues || reason !== "";
+  useEffect(() => {
+    if (!dirty) return;
+    const warn = (event: BeforeUnloadEvent) => {
+      event.preventDefault();
+      event.returnValue = "";
+    };
+    window.addEventListener("beforeunload", warn);
+    return () => window.removeEventListener("beforeunload", warn);
+  }, [dirty]);
   async function save() {
     setBusy(true);
     setError("");
@@ -366,6 +377,7 @@ export function RecordEditor({
     <>
       <form
         className="delivery-form"
+        data-unsaved={dirty}
         onSubmit={(e) => {
           e.preventDefault();
           if (
@@ -500,7 +512,19 @@ export function RecordEditor({
         )}
         <div className="actions">
           <Button disabled={busy}>{busy ? "Saving…" : "Save record"}</Button>
-          <Button type="button" variant="secondary" onClick={onClose}>
+          <Button
+            type="button"
+            variant="secondary"
+            onClick={() => {
+              if (
+                !dirty ||
+                window.confirm(
+                  "Discard unsaved changes? Your saved record will not change.",
+                )
+              )
+                onClose();
+            }}
+          >
             Cancel
           </Button>
         </div>
@@ -977,14 +1001,27 @@ export function Delivery({
             />
             <MetricCard
               label="Approved budget"
-              value={`${summary.money[0]?.currency} ${summary.money[0]?.approved_budget}`}
+              value={
+                summary.money.length
+                  ? summary.money
+                      .map((m) => `${m.currency} ${m.approved_budget}`)
+                      .join(" · ")
+                  : "Unavailable"
+              }
               detail="Approved, active budget lines"
             />
             <MetricCard
               label="Recorded expenditure"
-              value={`${summary.money[0]?.currency} ${summary.money[0]?.recorded_spend}`}
+              value={
+                summary.money.length
+                  ? summary.money
+                      .map((m) => `${m.currency} ${m.recorded_spend}`)
+                      .join(" · ")
+                  : "Unavailable"
+              }
               detail={
-                summary.money[0]?.ledger_complete
+                summary.money.length > 0 &&
+                summary.money.every((m) => m.ledger_complete)
                   ? "Ledger marked complete"
                   : "Partial ledger · recorded entries only"
               }
@@ -1043,6 +1080,7 @@ export function Delivery({
           <h2>{labels[kind]}</h2>
           {canWrite && !(kind === "settings" && settings) && (
             <Button
+              data-tutorial={kind === "projects" ? "create-project" : undefined}
               disabled={Boolean(summary?.project.data.archived)}
               onClick={() => setEditor({ kind, row: null })}
             >

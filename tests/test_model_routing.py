@@ -7,11 +7,11 @@ from uuid import uuid4
 
 import httpx
 import pytest
-from ppm_api.identity import now
-from ppm_api.model_adapters import NativeAdapter
-from ppm_api.model_contracts import ExecutionPermit, ModelFailure, ModelRequest
-from ppm_api.model_registry import ModelPolicy, ModelProfile
-from ppm_api.model_router import RouteRequirements, candidates
+from ppm_api.modules.ai.adapters import NativeAdapter
+from ppm_api.modules.ai.contracts import ExecutionPermit, ModelFailure, ModelRequest
+from ppm_api.modules.ai.model_router import RouteRequirements, candidates
+from ppm_api.modules.ai.registry import ModelPolicy, ModelProfile
+from ppm_api.modules.identity.service import now
 from test_gemini import gemini as gemini
 from test_gemini import response as gemini_response
 
@@ -221,7 +221,7 @@ def test_shared_host_cannot_duplicate_quota_through_profile_alias(configured):
 async def test_authorized_native_gemini_preserves_finish_usage_and_egress(
     configured, gemini, monkeypatch, finish, expected
 ):
-    from ppm_api import ai_provider as P
+    from ppm_api.modules.ai import provider as P
 
     settings, profile, _, request = configured
     settings.ai_execution_mode, settings.ai_cloud_enabled = "hybrid", True

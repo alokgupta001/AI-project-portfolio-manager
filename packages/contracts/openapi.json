@@ -430,6 +430,30 @@
             ],
             "title": "Assessment Id"
           },
+          "guided_case_id": {
+            "anyOf": [
+              {
+                "pattern": "^f(?:0[1-9]|1[0-2])$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Guided Case Id"
+          },
+          "guided_pilot_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Guided Pilot Id"
+          },
           "operation": {
             "default": "query",
             "enum": [
@@ -1435,6 +1459,30 @@
             ],
             "title": "Assessment Id"
           },
+          "guided_case_id": {
+            "anyOf": [
+              {
+                "pattern": "^f(?:0[1-9]|1[0-2])$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Guided Case Id"
+          },
+          "guided_pilot_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Guided Pilot Id"
+          },
           "prior_run_id": {
             "anyOf": [
               {
@@ -2317,6 +2365,33 @@
           "updated_at"
         ],
         "title": "AuthorityView",
+        "type": "object"
+      },
+      "AutomatedReview": {
+        "additionalProperties": false,
+        "properties": {
+          "corpus_sha256": {
+            "pattern": "^[a-f0-9]{64}$",
+            "title": "Corpus Sha256",
+            "type": "string"
+          },
+          "strategy_sha256": {
+            "pattern": "^[a-f0-9]{64}$",
+            "title": "Strategy Sha256",
+            "type": "string"
+          },
+          "synthetic_only": {
+            "const": true,
+            "title": "Synthetic Only",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "corpus_sha256",
+          "strategy_sha256",
+          "synthetic_only"
+        ],
+        "title": "AutomatedReview",
         "type": "object"
       },
       "AvailabilityInput": {
@@ -5566,8 +5641,8 @@
             "type": "string"
           },
           "schema_revision": {
-            "const": "0018_csv_source_namespaces",
-            "default": "0018_csv_source_namespaces",
+            "const": "0020_guided_cloud_timeout",
+            "default": "0020_guided_cloud_timeout",
             "title": "Schema Revision",
             "type": "string"
           }
@@ -5941,6 +6016,15 @@
               }
             ],
             "title": "Code"
+          },
+          "lineage": {
+            "default": "project_observations",
+            "enum": [
+              "project_observations",
+              "synthetic_fixture"
+            ],
+            "title": "Lineage",
+            "type": "string"
           },
           "provider": {
             "title": "Provider",
@@ -6368,6 +6452,50 @@
           "sequence"
         ],
         "title": "JobView",
+        "type": "object"
+      },
+      "LabelReview": {
+        "additionalProperties": false,
+        "properties": {
+          "corpus_sha256": {
+            "pattern": "^[a-f0-9]{64}$",
+            "title": "Corpus Sha256",
+            "type": "string"
+          },
+          "human_reviewed": {
+            "const": true,
+            "title": "Human Reviewed",
+            "type": "boolean"
+          },
+          "reason": {
+            "maxLength": 1000,
+            "minLength": 12,
+            "title": "Reason",
+            "type": "string"
+          },
+          "reviewed_case_ids": {
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 12,
+            "minItems": 12,
+            "title": "Reviewed Case Ids",
+            "type": "array"
+          },
+          "strategy_sha256": {
+            "pattern": "^[a-f0-9]{64}$",
+            "title": "Strategy Sha256",
+            "type": "string"
+          }
+        },
+        "required": [
+          "corpus_sha256",
+          "strategy_sha256",
+          "reviewed_case_ids",
+          "human_reviewed",
+          "reason"
+        ],
+        "title": "LabelReview",
         "type": "object"
       },
       "Level": {
@@ -7443,6 +7571,325 @@
         "title": "PersonView",
         "type": "object"
       },
+      "PilotCase": {
+        "additionalProperties": false,
+        "properties": {
+          "correct": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Correct"
+          },
+          "diagnostic": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Diagnostic"
+          },
+          "elapsed_ms": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Elapsed Ms"
+          },
+          "expected": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Expected",
+            "type": "array"
+          },
+          "id": {
+            "title": "Id",
+            "type": "string"
+          },
+          "latency_ms": {
+            "title": "Latency Ms",
+            "type": "integer"
+          },
+          "run_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Run Id"
+          },
+          "selected": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Selected",
+            "type": "array"
+          },
+          "split": {
+            "title": "Split",
+            "type": "string"
+          },
+          "status": {
+            "title": "Status",
+            "type": "string"
+          },
+          "timing_kind": {
+            "enum": [
+              "accepted_response",
+              "unavailable_attempt",
+              "not_recorded"
+            ],
+            "title": "Timing Kind",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "split",
+          "expected",
+          "selected",
+          "status",
+          "run_id",
+          "correct",
+          "latency_ms",
+          "elapsed_ms",
+          "timing_kind",
+          "diagnostic"
+        ],
+        "title": "PilotCase",
+        "type": "object"
+      },
+      "PilotInput": {
+        "additionalProperties": false,
+        "properties": {
+          "project_id": {
+            "format": "uuid",
+            "title": "Project Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "project_id"
+        ],
+        "title": "PilotInput",
+        "type": "object"
+      },
+      "PilotObservation": {
+        "additionalProperties": false,
+        "properties": {
+          "fact": {
+            "title": "Fact",
+            "type": "string"
+          },
+          "id": {
+            "title": "Id",
+            "type": "string"
+          },
+          "partial": {
+            "title": "Partial",
+            "type": "boolean"
+          },
+          "value": {
+            "title": "Value",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "value",
+          "partial",
+          "fact"
+        ],
+        "title": "PilotObservation",
+        "type": "object"
+      },
+      "PilotProtocol": {
+        "additionalProperties": false,
+        "properties": {
+          "cases": {
+            "items": {
+              "$ref": "#/components/schemas/ProtocolCase"
+            },
+            "title": "Cases",
+            "type": "array"
+          },
+          "corpus_sha256": {
+            "title": "Corpus Sha256",
+            "type": "string"
+          },
+          "license": {
+            "title": "License",
+            "type": "string"
+          },
+          "lineage": {
+            "title": "Lineage",
+            "type": "string"
+          },
+          "rule": {
+            "title": "Rule",
+            "type": "string"
+          },
+          "strategy_sha256": {
+            "title": "Strategy Sha256",
+            "type": "string"
+          },
+          "version": {
+            "title": "Version",
+            "type": "string"
+          }
+        },
+        "required": [
+          "version",
+          "lineage",
+          "license",
+          "rule",
+          "cases",
+          "corpus_sha256",
+          "strategy_sha256"
+        ],
+        "title": "PilotProtocol",
+        "type": "object"
+      },
+      "PilotView": {
+        "additionalProperties": false,
+        "properties": {
+          "actor_id": {
+            "format": "uuid",
+            "title": "Actor Id",
+            "type": "string"
+          },
+          "binding": {
+            "additionalProperties": true,
+            "title": "Binding",
+            "type": "object"
+          },
+          "binding_current": {
+            "title": "Binding Current",
+            "type": "boolean"
+          },
+          "can_automated_review": {
+            "title": "Can Automated Review",
+            "type": "boolean"
+          },
+          "can_review": {
+            "title": "Can Review",
+            "type": "boolean"
+          },
+          "cases": {
+            "items": {
+              "$ref": "#/components/schemas/PilotCase"
+            },
+            "title": "Cases",
+            "type": "array"
+          },
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "human_reviewed": {
+            "title": "Human Reviewed",
+            "type": "boolean"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "next_case_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Next Case At"
+          },
+          "project_id": {
+            "format": "uuid",
+            "title": "Project Id",
+            "type": "string"
+          },
+          "protocol": {
+            "$ref": "#/components/schemas/PilotProtocol"
+          },
+          "review": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Review"
+          },
+          "review_kind": {
+            "anyOf": [
+              {
+                "enum": [
+                  "human",
+                  "automated_rule_audit"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Review Kind"
+          },
+          "revision": {
+            "title": "Revision",
+            "type": "integer"
+          },
+          "summary": {
+            "additionalProperties": true,
+            "title": "Summary",
+            "type": "object"
+          }
+        },
+        "required": [
+          "id",
+          "project_id",
+          "actor_id",
+          "created_at",
+          "revision",
+          "binding",
+          "review",
+          "protocol",
+          "cases",
+          "summary",
+          "binding_current",
+          "can_review",
+          "next_case_at",
+          "can_automated_review",
+          "review_kind",
+          "human_reviewed"
+        ],
+        "title": "PilotView",
+        "type": "object"
+      },
       "Policy": {
         "additionalProperties": false,
         "properties": {
@@ -8005,6 +8452,41 @@
           "metrics"
         ],
         "title": "ProjectMetrics",
+        "type": "object"
+      },
+      "ProtocolCase": {
+        "additionalProperties": false,
+        "properties": {
+          "expected": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Expected",
+            "type": "array"
+          },
+          "id": {
+            "title": "Id",
+            "type": "string"
+          },
+          "observations": {
+            "items": {
+              "$ref": "#/components/schemas/PilotObservation"
+            },
+            "title": "Observations",
+            "type": "array"
+          },
+          "split": {
+            "title": "Split",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "split",
+          "observations",
+          "expected"
+        ],
+        "title": "ProtocolCase",
         "type": "object"
       },
       "Question-Input": {
@@ -10691,7 +11173,7 @@
         "title": "WorkInput",
         "type": "object"
       },
-      "ppm_api__agent_schemas__ReviewInput": {
+      "ppm_api__modules__agents__schemas__ReviewInput": {
         "additionalProperties": false,
         "properties": {
           "approved_score": {
@@ -10733,7 +11215,7 @@
         "title": "ReviewInput",
         "type": "object"
       },
-      "ppm_api__assessment_schemas__ReviewInput": {
+      "ppm_api__modules__assessments__schemas__ReviewInput": {
         "additionalProperties": false,
         "properties": {
           "action": {
@@ -11063,7 +11545,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/ppm_api__agent_schemas__ReviewInput"
+                "$ref": "#/components/schemas/ppm_api__modules__agents__schemas__ReviewInput"
               }
             }
           },
@@ -11094,6 +11576,403 @@
         "summary": "Review",
         "tags": [
           "Specialists and recommendations"
+        ]
+      }
+    },
+    "/api/v1/agents/selection-pilots": {
+      "get": {
+        "description": "List ten recent authorized pilots, reconstructing measurements without inference.",
+        "operationId": "listing_api_v1_agents_selection_pilots_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "project_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Project Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "header",
+            "name": "x-organization-id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Organization-Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/PilotView"
+                  },
+                  "title": "Response Listing Api V1 Agents Selection Pilots Get",
+                  "type": "array"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Listing",
+        "tags": [
+          "Financial selection pilot"
+        ]
+      },
+      "post": {
+        "description": "Prepare an idempotent frozen fixture protocol; make no model call or label approval.",
+        "operationId": "create_api_v1_agents_selection_pilots_post",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "x-organization-id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Organization-Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PilotInput"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PilotView"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Create",
+        "tags": [
+          "Financial selection pilot"
+        ]
+      }
+    },
+    "/api/v1/agents/selection-pilots/{id_}": {
+      "get": {
+        "description": "Recheck current access and return a downloadable pilot report without inference.",
+        "operationId": "detail_api_v1_agents_selection_pilots__id___get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id_",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Id ",
+              "type": "string"
+            }
+          },
+          {
+            "in": "header",
+            "name": "x-organization-id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Organization-Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PilotView"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Detail",
+        "tags": [
+          "Financial selection pilot"
+        ]
+      }
+    },
+    "/api/v1/agents/selection-pilots/{id_}/automated-review": {
+      "post": {
+        "description": "Record a scoped machine audit with human_reviewed=false; preserve all human gates.",
+        "operationId": "automated_review_api_v1_agents_selection_pilots__id___automated_review_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id_",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Id ",
+              "type": "string"
+            }
+          },
+          {
+            "in": "header",
+            "name": "x-organization-id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Organization-Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AutomatedReview"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PilotView"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Automated Review",
+        "tags": [
+          "Financial selection pilot"
+        ]
+      }
+    },
+    "/api/v1/agents/selection-pilots/{id_}/cases/{case_id}": {
+      "post": {
+        "description": "Queue one ordered fixture through normal AI admission; retain duplicate/failed runs.",
+        "operationId": "measure_api_v1_agents_selection_pilots__id___cases__case_id__post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id_",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Id ",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "case_id",
+            "required": true,
+            "schema": {
+              "title": "Case Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "header",
+            "name": "x-organization-id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Organization-Id"
+            }
+          }
+        ],
+        "responses": {
+          "202": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PilotView"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Measure",
+        "tags": [
+          "Financial selection pilot"
+        ]
+      }
+    },
+    "/api/v1/agents/selection-pilots/{id_}/label-review": {
+      "post": {
+        "description": "Freeze a different authorized human's review of every bound fixture label.",
+        "operationId": "approve_api_v1_agents_selection_pilots__id___label_review_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id_",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Id ",
+              "type": "string"
+            }
+          },
+          {
+            "in": "header",
+            "name": "x-organization-id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Organization-Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LabelReview"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PilotView"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Approve",
+        "tags": [
+          "Financial selection pilot"
         ]
       }
     },
@@ -12720,7 +13599,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/ppm_api__assessment_schemas__ReviewInput"
+                "$ref": "#/components/schemas/ppm_api__modules__assessments__schemas__ReviewInput"
               }
             }
           },

@@ -1,0 +1,15 @@
+{
+  "date": "2026-10-28",
+  "scope": "Sprint 12.1 timing repair; software checks use mocked or disabled providers",
+  "backend": {"passed": 566, "skipped": 1, "warnings": 1, "seconds": 907.43, "warning": "Inherited Starlette httpx test-client deprecation"},
+  "focused": {"passed": 40, "seconds": 290.39, "overlaps_full_suite": true},
+  "migrations": {"database": "disposable ppm_test", "path": ["0019", "0006", "0019", "base", "0019", "0019"], "schema_drift": false},
+  "browser": {"passed": 2, "seconds": 45.9, "origin": "http://localhost:3001", "viewports": [360, 768, 1440], "axe_violations": 0, "page_overflow": false, "timing_case": "mocked TIMEOUT; normal API separate human-review/unavailable journey", "screenshots_visually_inspected": true, "browser_plugin": "Browser plugin not available; repository Playwright runner used"},
+  "static": {"python_lint": "passed", "python_format": "passed", "python_types": "passed", "source_preservation": "passed", "contracts": "passed", "eslint": "passed", "typescript_app": "passed", "typescript_browser": "passed", "prettier": "passed", "tooling_tests": "3 passed"},
+  "builds": {"api_worker_dispatcher_migrate_test": "passed", "web_after_mobile_wrapping": "passed"},
+  "prior_sprint_docs": {"packages": 13, "required_artifacts": 115, "result": "passed"},
+  "normal_schema": "0019_selection_pilot",
+  "at17": "BLOCKED",
+  "live_results": "Reported separately in live-pilot-report.json and live-evidence.json",
+  "documentation_closeout": {"date": "2026-10-29", "markdown_files": 406, "local_links_and_anchors": 5880, "missing": 0, "source_inventories": "3 match", "frozen_source_prompts": "7 hashes match", "git_diff_check": "passed; existing line-ending warnings", "protected_file_hashes": "144 match"}
+}

@@ -42,8 +42,8 @@ Missing schedule, financial or capacity inputs can leave composite risk/health u
 | Part | Implementation files |
 | --- | --- |
 | Four dashboard views, filters, evidence and export | [Command center screen](../../../apps/web/components/command-center.tsx) |
-| Authorized snapshot and calculations | [Command service](../../../services/api/ppm_api/command.py), [shared metric arithmetic](../../../services/api/ppm_api/metric_math.py) |
-| Risk, benefit, plan, policy and saved-view storage | [Command tables](../../../services/api/ppm_api/command_tables.py), [command migration](../../../services/api/migrations/versions/0006_command_center.py) |
+| Authorized snapshot and calculations | [Command service](../../../services/api/ppm_api/modules/command/router.py), [shared metric arithmetic](../../../services/api/ppm_api/modules/delivery/metrics.py) |
+| Risk, benefit, plan, policy and saved-view storage | [Command tables](../../../services/api/ppm_api/modules/command/tables.py), [command migration](../../../services/api/migrations/versions/0006_command_center.py) |
 | Browser check | [Command center scenario](../../../tests/browser/command.spec.ts) |
 
 ## Recorded checks and limits

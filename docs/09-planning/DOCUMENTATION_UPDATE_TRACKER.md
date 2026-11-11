@@ -1,11 +1,64 @@
 # Documentation update tracker
 
+## 30 October 2026 — ordinary guided cloud timeout
+
+[Approved timeout follow-up](../03-sprints/active/sprint-12.1/TIMEOUT_FOLLOWUP.md): new ordinary cloud guided reviews can wait up to **60 seconds**, recorded per run. Normal schema is **0020** after a forward-only migration; all 83 table hashes matched. Existing fixture pilots retain **22 seconds**, the **20-second gate**, and their stopped results. Legacy runs retain their original limit. Shared quotas, $0 policy and access remain unchanged; **AT17 stays BLOCKED**. No new model call, PR, push, deployment or Sprint 13 work.
+
+Validation: 580 full-suite passes plus two corrected test assertions verified in a **28-pass focused rerun** (overlapping); one skip. Migration lifecycle/drift, static/contracts and **two browser journeys** passed. See the linked report for exact evidence and limitations. Earlier dated sections below are historical.
+
+## 28 October 2026 — Sprint 12.1 timing repair
+
+[Current repair report](../03-sprints/active/sprint-12.1/REPAIR_FOLLOWUP.md) supersedes the operational checkpoint below. Failed calls retain elapsed timing; UI/downloads distinguish unavailable time from accepted-response p95. Separate repair pilot `3f0f3a7f`: **insufficient_data**, 5/12 measured, 5 exact matches, 1 unavailable, 0/6 reserved measured; accepted-case p95 7936 ms. Original ce874a14 history remains unchanged; experiments are not combined. Automated audit records **human_reviewed=false**. Broad **AT17 remains BLOCKED**.
+
+Fresh validation: **566 backend passed, 1 skipped**, one inherited warning; disposable migration lifecycle/drift, two browser journeys, static/contracts and tooling checks passed. Normal schema remains frozen **0019**. Provider configuration, explicit grants, shared limits and $0 policy are preserved. No commit, PR, push, deployment or Sprint 13 work. The single repair experiment is complete under its gate/stop rule; do not start another without authorization.
+
+## Earlier dated checkpoint (historical)
+
+## 26 October 2026 — Sprint 12.1 automated quality-check continuation
+
+Implemented the explicitly approved local one-ID exact arithmetic audit, immutable
+machine provenance, UI controls and queued revocation protection. Updated contract,
+ADR, guides, acceptance matrix, reports, coverage, inventories and handoffs.
+Recorded actual app audit/download plus two real attempts: f01 match at 21.437s,
+f02 TIMEOUT/unknown, ten unattempted, human=false, fixture gate unmet. Fresh 562
+backend passes/one skip, lifecycle/drift and two pilot browser journeys pass.
+No prompt/migration/provider policy/role/usage reset or Sprint 13. See
+[actual run](../03-sprints/active/sprint-12.1/RUN_RECORD.md).
+
+## Earlier 26 October 2026 — Sprint 12.1 canonical package
+
+The owner named the financial selection experiment Sprint 12.1. Added its
+[hub/report/handoff](../03-sprints/active/sprint-12.1/README.md),
+[plan and traceability](sprint-12.1/README.md), [frozen draft-label packet](sprint-12.1/LABEL_REVIEW_PACKET.md),
+[access proposal](sprint-12.1/ACCESS_PROPOSAL.md),
+[named testing report](../04-testing/sprint-based/sprint-12.1/TESTING_REPORT.md),
+[practical learning trace](../02-learning/06-ai-and-analytics/API_SELECTION_PILOT.md)
+and [plain-language report](../11-plain-language-sprint-reports/active/SPRINT-12.1.md).
+Updated UI naming and canonical status/user/coverage/roadmap indexes. Original
+implementation receipts keep their actual results. The owner approved all four
+demo Admins' demo-only grants and Ashu prepared pilot ce874a14. The independent
+human review remains absent. The later approved automated audit and actual stopped run are recorded below. Automatic approval review
+rejected the proposed grant-check removal; the original gate remains. No
+source/prompt/migration/role/policy/usage reset; other grants are preserved.
+
+## 26 October 2026 — financial selection pilot
+
+Updated local user/limitations guides, API/frontend/schema contract, ADR 020,
+coverage/catalogue/status, root changelog and handoff for the authorized one-task
+fixture pilot. [Actual verification](../verification/financial-selection-pilot/README.md)
+records 552 full backend passes/one skip, migration lifecycle/drift, three browser
+journeys, static/contracts checks and preserved normal upgrade to 0019. Twenty-eight
+dated closeout pointers now distinguish schema-0018 Sprint 12 from the later pilot.
+One ordinary live Gemini guided connectivity call passed. No genuine outcome labels,
+independent human approval, live pilot quality pass,
+publication or Sprint 13 are claimed. Historical Sprint 12 receipts stay unchanged.
+
 ## 26 October 2026 — Sprint 12 documentation reconciliation
 
-26 October 2026. Current local sample: Sprint 12 at normal schema **0018**. [Reviewed closeout](../10-reference/SPRINT-12-LOCAL-CLOSEOUT.md) records application commit `f93a596`, both passing hosted CI runs and CodeRabbit's final review with no actionable comments. Live connectors/genuine model quality remain unverified and AT17 remains BLOCKED. Earlier dated checkpoints below retain their original scope; stop before Sprint 13. Current entry points, schema/contract/learning/user/demo pages, planning/coverage,
+26 October 2026. Sprint 12 closeout checkpoint: schema **0018**. [Reviewed closeout](../10-reference/SPRINT-12-LOCAL-CLOSEOUT.md) records application commit `f93a596`, both passing hosted CI runs and CodeRabbit's final review with no actionable comments. Live connectors/genuine model quality remain unverified and AT17 remains BLOCKED. Earlier dated checkpoints below retain their original scope; stop before Sprint 13. Current entry points, schema/contract/learning/user/demo pages, planning/coverage,
 reports, handoffs and review evidence are reconciled. Source/prompts, dated test
 results and explicitly archived Word/generator snapshots are preserved. Documentation
-checks are recorded in the Sprint 12 testing report; new documentation CI is separate.
+checks are recorded in the Sprint 12 testing report; new documentation CI is separate. The subsequent financial selection pilot at schema 0019 is recorded in [the latest handoff](../handoffs/LATEST.md).
 
 ## Sprint 12 local documentation closure
 

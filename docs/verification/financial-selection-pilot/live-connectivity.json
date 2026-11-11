@@ -1,0 +1,29 @@
+{
+  "schema_version": "financial-guided-connectivity-v1",
+  "synthetic_demo": true,
+  "run_id": "d1e45b83-a425-4302-9f42-6ffaa7b4e565",
+  "status": "succeeded",
+  "guided_status": "api_selected",
+  "code": null,
+  "cards": 2,
+  "route_summary": [
+    {
+      "provider_id": "gemini",
+      "model_id": "gemini-3.5-flash-lite",
+      "run_attempt_no": 1,
+      "finish_category": "complete",
+      "code": null,
+      "input_tokens": 143,
+      "output_tokens": 9,
+      "reasoning_tokens": null,
+      "usage_source": "reported",
+      "latency_ms": 18477
+    }
+  ],
+  "charged_usd": "0.000000",
+  "model_quality": "UNVERIFIED/BLOCKED",
+  "pilot_label_approval": false,
+  "pilot_measurements": 0,
+  "at17": "BLOCKED",
+  "recorded_at": "2026-10-26T12:57:40.122943+00:00"
+}

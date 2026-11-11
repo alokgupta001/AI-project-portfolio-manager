@@ -26,6 +26,9 @@ Records 001–006 are the Sprint 00 **proposed baseline**. Record 007 describes 
 
 ## Sprint 10 shared AI runtime
 
+[ADR 020 — Financial selection pilot](020-financial-selection-pilot.md): reviewed
+synthetic fixtures through existing shared quota admission; no semantic promotion.
+
 [ADR 018 — Limited guided review](018-limited-guided-review.md): current local
 closed-choice assistance, nine manual checklists and separate cloud/quality gates.
 

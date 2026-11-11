@@ -44,9 +44,9 @@ The [account-email verification](../../04-testing/ACCOUNT_EMAIL_VERIFICATION.md)
 
 | Part | Implementation files |
 | --- | --- |
-| Signup and account/invitation controls | [Signup page](../../../apps/web/app/signup/page.tsx), [identity client](../../../apps/web/app/account/identity-client.tsx), [identity service](../../../services/api/ppm_api/identity.py), [mail adapter](../../../services/api/ppm_api/account_mail.py) |
-| Setup, record search, My work, notifications and comparison | [Pilot screen controls](../../../apps/web/components/pilot.tsx), [pilot service](../../../services/api/ppm_api/pilot.py), [live workspace updates](../../../apps/web/components/live-workspace.ts) |
-| Assessment sharing | [Assessment screen](../../../apps/web/components/assessments.tsx), [assessment service](../../../services/api/ppm_api/assessment.py) |
+| Signup and account/invitation controls | [Signup page](../../../apps/web/app/signup/page.tsx), [identity client](../../../apps/web/app/account/identity-client.tsx), [identity service](../../../services/api/ppm_api/modules/identity/router.py), [mail adapter](../../../services/api/ppm_api/modules/identity/mail.py) |
+| Setup, record search, My work, notifications and comparison | [Pilot screen controls](../../../apps/web/components/pilot.tsx), [pilot service](../../../services/api/ppm_api/modules/workspace/router.py), [live workspace updates](../../../apps/web/components/live-workspace.ts) |
+| Assessment sharing | [Assessment screen](../../../apps/web/components/assessments.tsx), [assessment service](../../../services/api/ppm_api/modules/assessments/router.py) |
 | Pilot records and subsequent account repairs | [Pilot migration](../../../services/api/migrations/versions/0008_pilot_completion.py), [account repair](../../../services/api/migrations/versions/0009_account_repair.py), [account authority](../../../services/api/migrations/versions/0010_account_authority.py) |
 | Browser checks | [Pilot scenario](../../../tests/browser/pilot.spec.ts), [account repair scenario](../../../tests/browser/account-repair.spec.ts) |
 

@@ -8,8 +8,8 @@ from datetime import UTC, datetime, timedelta
 from decimal import Decimal
 
 import pytest
-from ppm_api import ai_provider as P
-from ppm_api.ai import call_cap, provider_status
+from ppm_api.modules.ai import provider as P
+from ppm_api.modules.ai.service import call_cap, provider_status
 from pydantic import SecretStr
 
 

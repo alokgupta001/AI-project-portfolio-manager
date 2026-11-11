@@ -1,4 +1,4 @@
-import { test, expect, type Locator } from "@playwright/test";
+import { test, expect, type Locator } from "./test";
 import AxeBuilder from "@axe-core/playwright";
 import { readFileSync } from "node:fs";
 

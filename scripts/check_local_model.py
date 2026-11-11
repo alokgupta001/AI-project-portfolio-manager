@@ -7,7 +7,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "services/api"))
 
-from ppm_api.local_model_readiness import readiness  # noqa: E402
+from ppm_api.modules.ai.readiness import readiness  # noqa: E402
 
 
 def main() -> None:

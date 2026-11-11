@@ -1,0 +1,185 @@
+{
+  "status": "passed",
+  "recorded_at": "2026-10-26T15:37:02.729441+00:00",
+  "checks": [
+    {
+      "command": [
+        "ruff.exe",
+        "check",
+        "services",
+        "scripts",
+        "tests"
+      ],
+      "exit_code": 0,
+      "evidence": "Passed in preceding invocation; retained unchanged check log"
+    },
+    {
+      "command": [
+        "ruff.exe",
+        "format",
+        "--check",
+        "services",
+        "scripts",
+        "tests"
+      ],
+      "exit_code": 0,
+      "evidence": "Passed in preceding invocation; retained unchanged check log"
+    },
+    {
+      "command": [
+        "python.exe",
+        "-m",
+        "mypy",
+        "services/api/ppm_api",
+        "services/worker/ppm_worker"
+      ],
+      "exit_code": 0,
+      "evidence": "Passed in preceding invocation; retained unchanged check log"
+    },
+    {
+      "command": [
+        "cmd.exe",
+        "/d",
+        "/c",
+        "npm",
+        "run",
+        "contracts:check"
+      ],
+      "exit_code": 0,
+      "evidence": "Passed in preceding invocation; retained unchanged check log"
+    },
+    {
+      "command": [
+        "cmd.exe",
+        "/d",
+        "/c",
+        "npm",
+        "run",
+        "typecheck"
+      ],
+      "exit_code": 0,
+      "evidence": "Passed in preceding invocation; retained unchanged check log"
+    },
+    {
+      "command": [
+        "cmd.exe",
+        "/d",
+        "/c",
+        "npm",
+        "run",
+        "lint"
+      ],
+      "exit_code": 0,
+      "evidence": "Passed in preceding invocation; retained unchanged check log"
+    },
+    {
+      "command": [
+        "cmd.exe",
+        "/d",
+        "/c",
+        "npm",
+        "run",
+        "format:check"
+      ],
+      "exit_code": 0,
+      "evidence": "Passed in preceding invocation; retained unchanged check log"
+    },
+    {
+      "command": [
+        "python.exe",
+        "scripts/check_sources.py"
+      ],
+      "exit_code": 0,
+      "evidence": "Passed in preceding invocation; retained unchanged check log"
+    },
+    {
+      "command": [
+        "python.exe",
+        "scripts/check_previous_sprint_docs.py"
+      ],
+      "exit_code": 0,
+      "evidence": "Passed in preceding invocation; retained unchanged check log"
+    },
+    {
+      "command": [
+        "python.exe",
+        "scripts/check_documentation.py"
+      ],
+      "exit_code": 0,
+      "seconds": 2.95
+    },
+    {
+      "command": [
+        "python.exe",
+        "scripts/documentation_inventory.py",
+        "--check"
+      ],
+      "exit_code": 0,
+      "seconds": 3.48
+    },
+    {
+      "command": [
+        "git",
+        "-c",
+        "safe.directory=C:/Users/alokg/OneDrive/Documents/Codex/enterprise-ppm",
+        "diff",
+        "--check"
+      ],
+      "exit_code": 0,
+      "seconds": 0.21
+    }
+  ],
+  "protected_files": 40,
+  "original_artifacts_unchanged": 21,
+  "frozen_source_files": 10,
+  "applied_0019_unchanged": true,
+  "provider_configuration_unchanged": true,
+  "backend": {
+    "passed": 562,
+    "skipped": 1,
+    "inherited_warnings": 1,
+    "seconds": 852.16,
+    "migration_lifecycle": true,
+    "schema_drift": false
+  },
+  "focused": {
+    "passed": 24,
+    "seconds": 139.62,
+    "overlaps_full_suite": true
+  },
+  "browser": {
+    "passed": 2,
+    "seconds": 26.6,
+    "cloud_calls": false,
+    "automated_ui_provenance_mocked": true,
+    "widths": [
+      1440,
+      768,
+      360
+    ],
+    "axe_violations": 0,
+    "page_overflow": false
+  },
+  "node_audit": {
+    "vulnerabilities": 0,
+    "locked_dependencies_unchanged": true
+  },
+  "normal_schema": "0019_selection_pilot",
+  "actual_attempted_cases": 2,
+  "actual_measured_cases": 1,
+  "actual_unavailable_cases": 1,
+  "held_out_measured": 0,
+  "human_reviewed": false,
+  "live_fixture_acceptance": "NOT_MET",
+  "at17": "BLOCKED",
+  "serving_or_promotion": false,
+  "hosted_ci_run": false,
+  "publication": false,
+  "documentation_scan": {
+    "markdown_files": 403,
+    "local_links": 5824,
+    "missing_targets": 0
+  },
+  "normal_runtime_ready": true,
+  "preexisting_quota_rows_unchanged": true
+}

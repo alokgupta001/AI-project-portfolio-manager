@@ -6,12 +6,12 @@ from datetime import timedelta
 from uuid import UUID, uuid4
 
 import pytest
-from ppm_api import agent_task_tables as T
-from ppm_api import guided_review as G
-from ppm_api.identity import now
-from ppm_api.model_contracts import ModelFailure, ModelResult, ModelUsage
-from ppm_api.model_registry import ModelPolicy
-from ppm_api.model_router import RouteRequirements, candidates
+from ppm_api.modules.agents import guided_review as G
+from ppm_api.modules.agents import task_tables as T
+from ppm_api.modules.ai.contracts import ModelFailure, ModelResult, ModelUsage
+from ppm_api.modules.ai.model_router import RouteRequirements, candidates
+from ppm_api.modules.ai.registry import ModelPolicy
+from ppm_api.modules.identity.service import now
 from test_agent_v2_runtime import configure
 from test_agents import start, work
 from test_delivery import create
@@ -89,7 +89,7 @@ async def test_guided_selection_is_optional_single_call_and_never_qualifies_inte
             usage=ModelUsage(input_tokens=10, output_tokens=8, source="reported"),
         )
 
-    monkeypatch.setattr("ppm_api.agent_runtime.NativeAdapter.execute", execute)
+    monkeypatch.setattr("ppm_api.modules.agents.runtime.NativeAdapter.execute", execute)
     key = str(uuid4())
     body = dict(
         runtime_version="v2",
@@ -128,7 +128,7 @@ async def test_guided_selection_is_optional_single_call_and_never_qualifies_inte
         async def withdrawn(*args):
             return {}
 
-        monkeypatch.setattr("ppm_api.agents.current_sources", withdrawn)
+        monkeypatch.setattr("ppm_api.modules.agents.service.current_sources", withdrawn)
         reread = (await c.get("/api/v1/agents/runs/" + output["run"]["id"])).json()
         assert reread["guided_review"]["status"] == "rules_only"
         assert not reread["guided_review"]["cards"]

@@ -1,6 +1,29 @@
 # AI runtime operator guide
 
-26 October 2026. Current local sample: Sprint 12 at normal schema **0018**. [Reviewed closeout](../10-reference/SPRINT-12-LOCAL-CLOSEOUT.md) records application commit `f93a596`, both passing hosted CI runs and CodeRabbit's final review with no actionable comments. Live connectors/genuine model quality remain unverified and AT17 remains BLOCKED. Earlier dated checkpoints below retain their original scope; stop before Sprint 13.
+## 11 November 2026 — source-bound benchmark approvals
+
+Cloud benchmark reviews and independent approvals bind to the current strategy's
+source-file hashes. The feature-module refactor changes those bytes and paths, so
+older review/approval files cannot authorize scoring of the changed strategy.
+Preserve historical artifacts. Any newly authorized benchmark must regenerate its
+review packet and obtain fresh independent approval through the documented flow;
+do not bypass the hash check or restart a stopped pilot as part of this cleanup.
+
+## 30 October 2026 — ordinary guided cloud timeout
+
+[Approved timeout follow-up](../03-sprints/active/sprint-12.1/TIMEOUT_FOLLOWUP.md): new ordinary cloud guided reviews can wait up to **60 seconds**, recorded per run. Normal schema is **0020** after a forward-only migration; all 83 table hashes matched. Existing fixture pilots retain **22 seconds**, the **20-second gate**, and their stopped results. Legacy runs retain their original limit. Shared quotas, $0 policy and access remain unchanged; **AT17 stays BLOCKED**. No new model call, PR, push, deployment or Sprint 13 work.
+
+Validation: 580 full-suite passes plus two corrected test assertions verified in a **28-pass focused rerun** (overlapping); one skip. Migration lifecycle/drift, static/contracts and **two browser journeys** passed. See the linked report for exact evidence and limitations. Earlier dated sections below are historical.
+
+## 28 October 2026 — Sprint 12.1 timing repair
+
+[Current repair report](../03-sprints/active/sprint-12.1/REPAIR_FOLLOWUP.md) supersedes the operational checkpoint below. Failed calls retain elapsed timing; UI/downloads distinguish unavailable time from accepted-response p95. Separate repair pilot `3f0f3a7f`: **insufficient_data**, 5/12 measured, 5 exact matches, 1 unavailable, 0/6 reserved measured; accepted-case p95 7936 ms. Original ce874a14 history remains unchanged; experiments are not combined. Automated audit records **human_reviewed=false**. Broad **AT17 remains BLOCKED**.
+
+Fresh validation: **566 backend passed, 1 skipped**, one inherited warning; disposable migration lifecycle/drift, two browser journeys, static/contracts and tooling checks passed. Normal schema remains frozen **0019**. Provider configuration, explicit grants, shared limits and $0 policy are preserved. No commit, PR, push, deployment or Sprint 13 work. The single repair experiment is complete under its gate/stop rule; do not start another without authorization.
+
+## Earlier dated checkpoint (historical)
+
+26 October 2026. Sprint 12 closeout checkpoint: schema **0018**. [Reviewed closeout](../10-reference/SPRINT-12-LOCAL-CLOSEOUT.md) records application commit `f93a596`, both passing hosted CI runs and CodeRabbit's final review with no actionable comments. Live connectors/genuine model quality remain unverified and AT17 remains BLOCKED. Earlier dated checkpoints below retain their original scope; stop before Sprint 13. The subsequent financial selection pilot at schema 0019 is recorded in [the latest handoff](../handoffs/LATEST.md).
 
 Sprint 11 operators: [specialist contract](../contracts/agents.md), [handoff](../03-sprints/completed/sprint-11/HANDOFF.md) and [test commands](../04-testing/sprint-based/sprint-11/TESTING_REPORT.md). Model allowlist, confirmation, budget/request/retry/output/cancellation limits remain unchanged. One batch serves nine agents; no paid failover. Normal data remains 0012; forward 0013 adoption is not deployed by this task. No live provider call is made in Sprint 11 acceptance.
 
@@ -100,3 +123,19 @@ and [embedding API](https://developers.openai.com/api/reference/resources/embedd
 consulted 15 October 2026. Account/model compatibility, actual tariffs and real smoke
 are unverified. No production/provider acceptance, RTO/RPO or invoice claim follows
 from deterministic fixture success.
+
+## Sprint 12.1 local automated fixture audit
+
+The operator-approved exception uses `PPM_AI_FIXTURE_AUTOMATED_PILOTS`, a JSON
+list of at most one pilot UUID, default `[]`. It is effective only in the local
+environment. Set the same approved value on API and worker; do not add it to
+shared/deployment defaults or edit the existing provider policy to enable it.
+The current local activation uses a separate ignored compose overlay for saved
+pilot ce874a14 only. It grants no project/provider access and preserves explicit
+guided grants, shared SQL admission and the different-person path for other pilots.
+
+An automated audit records human_reviewed=false. Removing the allowlist prevents
+new/queued automated cases; retain existing reports and attempts. The approved
+run is already stopped after TIMEOUT and must not be retried/reset. See
+[the exact current record](../03-sprints/active/sprint-12.1/RUN_RECORD.md) and
+[contract](../contracts/selection-pilot.md). Broad AT17 remains BLOCKED.
